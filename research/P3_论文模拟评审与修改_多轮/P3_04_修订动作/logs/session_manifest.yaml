@@ -1,0 +1,10 @@
+round_id: p3-round-001
+sessions:
+- role: author
+  agent_id: codex
+  thread_or_session_id: current-turn
+  input_scope: P3 review issue register and critique digest
+  output_paths:
+  - artifacts/revision_action_map.yaml
+notes:
+- Revision actions are routed to P1/P2. No P3 direct manuscript rewrite was performed.

@@ -1,0 +1,268 @@
+migrations:
+- original_skill: ablation-planner
+  action: merge_into_canonical
+  target: experiment_design_or_execution
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: aggregate_reviews
+  action: keep_canonical
+  target: aggregate_reviews
+  rationale: Already close to current runtime scope; rewritten for clearer boundaries
+    and stricter contracts.
+- original_skill: analyze-results
+  action: merge_into_canonical
+  target: result_to_claim
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: arxiv
+  action: archive_reference_only
+  target: null
+  rationale: Useful as reference material, but outside the current runtime-critical
+    skill set for this research OS.
+- original_skill: auto-paper-improvement-loop
+  action: merge_into_canonical
+  target: manuscript_worker
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: auto-review-loop
+  action: merge_into_canonical
+  target: auto_review_loop
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: auto-review-loop-llm
+  action: merge_into_canonical
+  target: auto_review_loop
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: auto-review-loop-minimax
+  action: merge_into_canonical
+  target: auto_review_loop
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: auto_review_loop
+  action: keep_canonical
+  target: auto_review_loop
+  rationale: Already close to current runtime scope; rewritten for clearer boundaries
+    and stricter contracts.
+- original_skill: auto_research_campaign
+  action: keep_canonical
+  target: auto_research_campaign
+  rationale: Added as the prompt-facing bounded campaign entrypoint so broad "自动研究"
+    requests route through one controlled step instead of jumping straight into an
+    experiment worker.
+- original_skill: autoresearch-system-optimizer
+  action: keep_canonical
+  target: autoresearch-system-optimizer
+  rationale: Canonical repo-wide lane for bounded system self-optimization; kept
+    distinct from research progression so graph routing, validation, and low-risk
+    repair do not fragment across parallel loop skills.
+- original_skill: comm-lit-review
+  action: merge_into_canonical
+  target: idea_discovery_or_problem_formulation
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: draft_export_sync
+  action: keep_canonical
+  target: draft_export_sync
+  rationale: Already close to current runtime scope; rewritten for clearer boundaries
+    and stricter contracts.
+- original_skill: dse-loop
+  action: merge_into_canonical
+  target: experiment_design_or_execution
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: experiment-bridge
+  action: merge_into_canonical
+  target: experiment_design_or_execution
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: experiment-plan
+  action: merge_into_canonical
+  target: experiment_design_or_execution
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: experiment_design_or_execution
+  action: keep_canonical
+  target: experiment_design_or_execution
+  rationale: Already close to current runtime scope; rewritten for clearer boundaries
+    and stricter contracts.
+- original_skill: formula-derivation
+  action: archive_reference_only
+  target: null
+  rationale: Useful as reference material, but outside the current runtime-critical
+    skill set for this research OS.
+- original_skill: grant-proposal
+  action: merge_into_canonical
+  target: idea_discovery_or_problem_formulation
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: graph_driven_research_orchestrator
+  action: keep_canonical
+  target: graph_driven_research_orchestrator
+  rationale: Already close to current runtime scope; rewritten for clearer boundaries
+    and stricter contracts.
+- original_skill: idea-creator
+  action: merge_into_canonical
+  target: idea_discovery_or_problem_formulation
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: idea-discovery
+  action: merge_into_canonical
+  target: idea_discovery_or_problem_formulation
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: idea-discovery-robot
+  action: merge_into_canonical
+  target: idea_discovery_or_problem_formulation
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: idea_discovery_or_problem_formulation
+  action: keep_canonical
+  target: idea_discovery_or_problem_formulation
+  rationale: Already close to current runtime scope; rewritten for clearer boundaries
+    and stricter contracts.
+- original_skill: leaf_node_writer
+  action: keep_canonical
+  target: leaf_node_writer
+  rationale: Already close to current runtime scope; rewritten for clearer boundaries
+    and stricter contracts.
+- original_skill: manuscript_worker
+  action: keep_canonical
+  target: manuscript_worker
+  rationale: Already close to current runtime scope; rewritten for clearer boundaries
+    and stricter contracts.
+- original_skill: md_to_tex_sync
+  action: merge_into_canonical
+  target: draft_export_sync
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: mermaid-diagram
+  action: archive_reference_only
+  target: null
+  rationale: Useful as reference material, but outside the current runtime-critical
+    skill set for this research OS.
+- original_skill: monitor-experiment
+  action: merge_into_canonical
+  target: auto_experiment_worker
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: novelty-check
+  action: archive_reference_only
+  target: null
+  rationale: Useful as reference material, but outside the current runtime-critical
+    skill set for this research OS.
+- original_skill: paper-compile
+  action: merge_into_canonical
+  target: draft_export_sync
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: paper-figure
+  action: rename_canonical
+  target: paper_figure
+  rationale: Same core function kept, but canonical name narrowed or normalized for
+    runtime clarity.
+- original_skill: paper-illustration
+  action: merge_into_canonical
+  target: paper_figure
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: paper-plan
+  action: merge_into_canonical
+  target: manuscript_worker
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: paper-poster
+  action: merge_into_canonical
+  target: draft_export_sync
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: paper-slides
+  action: merge_into_canonical
+  target: draft_export_sync
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: paper-write
+  action: merge_into_canonical
+  target: manuscript_worker
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: paper-writing
+  action: merge_into_canonical
+  target: manuscript_worker
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: progress_evaluation
+  action: merge_into_canonical
+  target: graph_driven_research_orchestrator
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: proof-writer
+  action: archive_reference_only
+  target: null
+  rationale: Useful as reference material, but outside the current runtime-critical
+    skill set for this research OS.
+- original_skill: rebuttal
+  action: merge_into_canonical
+  target: response_worker
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: research-lit
+  action: archive_reference_only
+  target: null
+  rationale: Useful as reference material, but outside the current runtime-critical
+    skill set for this research OS.
+- original_skill: research-refine
+  action: archive_reference_only
+  target: null
+  rationale: Useful as reference material, but outside the current runtime-critical
+    skill set for this research OS.
+- original_skill: research-review
+  action: archive_reference_only
+  target: null
+  rationale: Useful as reference material, but outside the current runtime-critical
+    skill set for this research OS.
+- original_skill: research-wiki
+  action: archive_reference_only
+  target: null
+  rationale: Useful as reference material, but outside the current runtime-critical
+    skill set for this research OS.
+- original_skill: response_coverage_check
+  action: keep_canonical
+  target: response_coverage_check
+  rationale: Already close to current runtime scope; rewritten for clearer boundaries
+    and stricter contracts.
+- original_skill: response_worker
+  action: keep_canonical
+  target: response_worker
+  rationale: Already close to current runtime scope; rewritten for clearer boundaries
+    and stricter contracts.
+- original_skill: result-to-claim
+  action: rename_canonical
+  target: result_to_claim
+  rationale: Same core function kept, but canonical name narrowed or normalized for
+    runtime clarity.
+- original_skill: run-experiment
+  action: merge_into_canonical
+  target: auto_experiment_worker
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.
+- original_skill: semantic-scholar
+  action: archive_reference_only
+  target: null
+  rationale: Useful as reference material, but outside the current runtime-critical
+    skill set for this research OS.
+- original_skill: structured_map_builder
+  action: keep_canonical
+  target: structured_map_builder
+  rationale: Already close to current runtime scope; rewritten for clearer boundaries
+    and stricter contracts.
+- original_skill: system-profile
+  action: archive_reference_only
+  target: null
+  rationale: Useful as reference material, but outside the current runtime-critical
+    skill set for this research OS.
+- original_skill: training-check
+  action: merge_into_canonical
+  target: auto_experiment_worker
+  rationale: Overlapped strongly with an existing canonical worker; merged to reduce
+    alias pollution and routing ambiguity.

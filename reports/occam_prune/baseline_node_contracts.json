@@ -1,0 +1,1235 @@
+{
+  "errors": [],
+  "findings": [
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P0_项目申请书/P0_01_研究背景与调研/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_01_研究背景与调研/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_01_研究背景与调研/skills/local_entry.md",
+        "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/skills/local_entry.md",
+        "research/P0_项目申请书/P0_03_研究内容与创新点/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_03_研究内容与创新点/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_03_研究内容与创新点/skills/local_entry.md",
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/skills/SKILL.md",
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/skills/local_entry.md",
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/skills/SKILL.md",
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/skills/local_entry.md",
+        "research/P0_项目申请书/prompts/research_prompt.md",
+        "research/P0_项目申请书/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/skills/local_entry.md"
+      ],
+      "node": "research/P0_项目申请书"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P0_项目申请书/P0_01_研究背景与调研/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_01_研究背景与调研/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_01_研究背景与调研/skills/local_entry.md",
+        "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/skills/local_entry.md",
+        "research/P0_项目申请书/P0_03_研究内容与创新点/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_03_研究内容与创新点/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_03_研究内容与创新点/skills/local_entry.md",
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/skills/SKILL.md",
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/skills/local_entry.md",
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/skills/SKILL.md",
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/skills/local_entry.md",
+        "research/P0_项目申请书/prompts/research_prompt.md",
+        "research/P0_项目申请书/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/skills/local_entry.md"
+      ],
+      "node": "research/P0_项目申请书"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P0_项目申请书/P0_01_研究背景与调研/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_01_研究背景与调研/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_01_研究背景与调研/skills/local_entry.md"
+      ],
+      "node": "research/P0_项目申请书/P0_01_研究背景与调研"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P0_项目申请书/P0_01_研究背景与调研/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_01_研究背景与调研/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_01_研究背景与调研/skills/local_entry.md"
+      ],
+      "node": "research/P0_项目申请书/P0_01_研究背景与调研"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/skills/local_entry.md"
+      ],
+      "node": "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/skills/local_entry.md"
+      ],
+      "node": "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P0_项目申请书/P0_03_研究内容与创新点/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_03_研究内容与创新点/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_03_研究内容与创新点/skills/local_entry.md"
+      ],
+      "node": "research/P0_项目申请书/P0_03_研究内容与创新点"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P0_项目申请书/P0_03_研究内容与创新点/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_03_研究内容与创新点/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_03_研究内容与创新点/skills/local_entry.md"
+      ],
+      "node": "research/P0_项目申请书/P0_03_研究内容与创新点"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/skills/SKILL.md",
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/skills/local_entry.md"
+      ],
+      "node": "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/skills/SKILL.md",
+        "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/skills/local_entry.md"
+      ],
+      "node": "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/skills/SKILL.md",
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/skills/local_entry.md"
+      ],
+      "node": "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/prompts/research_prompt.md",
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/prompts/review_rubric.yaml",
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/skills/SKILL.md",
+        "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/skills/local_entry.md"
+      ],
+      "node": "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_02_伪代码/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_02_伪代码/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_02_伪代码/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_02_伪代码/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_02_伪代码/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_02_伪代码/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_02_伪代码/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_02_伪代码/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_02_伪代码/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_02_伪代码"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_02_伪代码/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_02_伪代码/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_02_伪代码/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_02_伪代码"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理"
+    },
+    {
+      "kind": "execution_missing_contract",
+      "node": "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理",
+      "path": "artifacts/execution_contract.yaml"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/skills/local_entry.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/prompts/research_prompt.md",
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/prompts/review_rubric.yaml",
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/skills/SKILL.md",
+        "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/skills/local_entry.md"
+      ],
+      "node": "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/skills/local_entry.md",
+        "research/P2_论文撰写/P2_03_定稿_tex/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_03_定稿_tex/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_03_定稿_tex/skills/SKILL.md",
+        "research/P2_论文撰写/P2_03_定稿_tex/skills/local_entry.md",
+        "research/P2_论文撰写/P2_04_形式检查/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_04_形式检查/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_04_形式检查/skills/SKILL.md",
+        "research/P2_论文撰写/P2_04_形式检查/skills/local_entry.md",
+        "research/P2_论文撰写/P2_05_去AI味道/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_05_去AI味道/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_05_去AI味道/skills/SKILL.md",
+        "research/P2_论文撰写/P2_05_去AI味道/skills/local_entry.md",
+        "research/P2_论文撰写/prompts/research_prompt.md",
+        "research/P2_论文撰写/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_03_定稿_tex/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_03_定稿_tex/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_03_定稿_tex/skills/SKILL.md",
+        "research/P2_论文撰写/P2_03_定稿_tex/skills/local_entry.md",
+        "research/P2_论文撰写/P2_04_形式检查/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_04_形式检查/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_04_形式检查/skills/SKILL.md",
+        "research/P2_论文撰写/P2_04_形式检查/skills/local_entry.md",
+        "research/P2_论文撰写/P2_05_去AI味道/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_05_去AI味道/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_05_去AI味道/skills/SKILL.md",
+        "research/P2_论文撰写/P2_05_去AI味道/skills/local_entry.md",
+        "research/P2_论文撰写/prompts/research_prompt.md",
+        "research/P2_论文撰写/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_02_初稿_md"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/skills/local_entry.md",
+        "research/P2_论文撰写/P2_02_初稿_md/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/prompts/review_rubric.yaml"
+      ],
+      "node": "research/P2_论文撰写/P2_02_初稿_md"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/skills/SKILL.md",
+        "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_03_定稿_tex/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_03_定稿_tex/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_03_定稿_tex/skills/SKILL.md",
+        "research/P2_论文撰写/P2_03_定稿_tex/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_03_定稿_tex"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_03_定稿_tex/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_03_定稿_tex/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_03_定稿_tex/skills/SKILL.md",
+        "research/P2_论文撰写/P2_03_定稿_tex/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_03_定稿_tex"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_04_形式检查/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_04_形式检查/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_04_形式检查/skills/SKILL.md",
+        "research/P2_论文撰写/P2_04_形式检查/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_04_形式检查"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_04_形式检查/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_04_形式检查/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_04_形式检查/skills/SKILL.md",
+        "research/P2_论文撰写/P2_04_形式检查/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_04_形式检查"
+    },
+    {
+      "kind": "execution_missing_contract",
+      "node": "research/P2_论文撰写/P2_04_形式检查",
+      "path": "artifacts/execution_contract.yaml"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_05_去AI味道/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_05_去AI味道/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_05_去AI味道/skills/SKILL.md",
+        "research/P2_论文撰写/P2_05_去AI味道/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_05_去AI味道"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P2_论文撰写/P2_05_去AI味道/prompts/research_prompt.md",
+        "research/P2_论文撰写/P2_05_去AI味道/prompts/review_rubric.yaml",
+        "research/P2_论文撰写/P2_05_去AI味道/skills/SKILL.md",
+        "research/P2_论文撰写/P2_05_去AI味道/skills/local_entry.md"
+      ],
+      "node": "research/P2_论文撰写/P2_05_去AI味道"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/skills/local_entry.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/skills/SKILL.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/skills/local_entry.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/skills/SKILL.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/skills/local_entry.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/skills/SKILL.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/skills/local_entry.md",
+        "research/P3_论文模拟评审与修改_多轮/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/skills/local_entry.md"
+      ],
+      "node": "research/P3_论文模拟评审与修改_多轮"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/skills/local_entry.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/skills/SKILL.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/skills/local_entry.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/skills/SKILL.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/skills/local_entry.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/skills/SKILL.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/skills/local_entry.md",
+        "research/P3_论文模拟评审与修改_多轮/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/skills/local_entry.md"
+      ],
+      "node": "research/P3_论文模拟评审与修改_多轮"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/skills/local_entry.md"
+      ],
+      "node": "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/skills/local_entry.md"
+      ],
+      "node": "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/skills/SKILL.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/skills/local_entry.md"
+      ],
+      "node": "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/skills/SKILL.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/skills/local_entry.md"
+      ],
+      "node": "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/skills/SKILL.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/skills/local_entry.md"
+      ],
+      "node": "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/skills/SKILL.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/skills/local_entry.md"
+      ],
+      "node": "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/skills/SKILL.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/skills/local_entry.md"
+      ],
+      "node": "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/prompts/research_prompt.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/prompts/review_rubric.yaml",
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/skills/SKILL.md",
+        "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/skills/local_entry.md"
+      ],
+      "node": "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_01_审稿意见收集/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_01_审稿意见收集/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_01_审稿意见收集/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_01_审稿意见收集/skills/local_entry.md",
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/skills/local_entry.md",
+        "research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_03_逐点回复草稿_md/skills/local_entry.md",
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/skills/local_entry.md",
+        "research/P4_论文回复_response/P4_05_覆盖检查/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_05_覆盖检查/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_05_覆盖检查/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_05_覆盖检查/skills/local_entry.md",
+        "research/P4_论文回复_response/P4_06_修改证据/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_06_修改证据/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_06_修改证据/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_06_修改证据/skills/local_entry.md",
+        "research/P4_论文回复_response/P4_07_再投稿打包/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_07_再投稿打包/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_07_再投稿打包/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_07_再投稿打包/skills/local_entry.md",
+        "research/P4_论文回复_response/prompts/research_prompt.md",
+        "research/P4_论文回复_response/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_01_审稿意见收集/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_01_审稿意见收集/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_01_审稿意见收集/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_01_审稿意见收集/skills/local_entry.md",
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/skills/local_entry.md",
+        "research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_03_逐点回复草稿_md/skills/local_entry.md",
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/skills/local_entry.md",
+        "research/P4_论文回复_response/P4_05_覆盖检查/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_05_覆盖检查/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_05_覆盖检查/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_05_覆盖检查/skills/local_entry.md",
+        "research/P4_论文回复_response/P4_06_修改证据/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_06_修改证据/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_06_修改证据/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_06_修改证据/skills/local_entry.md",
+        "research/P4_论文回复_response/P4_07_再投稿打包/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_07_再投稿打包/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_07_再投稿打包/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_07_再投稿打包/skills/local_entry.md",
+        "research/P4_论文回复_response/prompts/research_prompt.md",
+        "research/P4_论文回复_response/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_01_审稿意见收集/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_01_审稿意见收集/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_01_审稿意见收集/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_01_审稿意见收集/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response/P4_01_审稿意见收集"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_01_审稿意见收集/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_01_审稿意见收集/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_01_审稿意见收集/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_01_审稿意见收集/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response/P4_01_审稿意见收集"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response/P4_02_问题映射矩阵"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_02_问题映射矩阵/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response/P4_02_问题映射矩阵"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_03_逐点回复草稿_md/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response/P4_03_逐点回复草稿_md"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_03_逐点回复草稿_md/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response/P4_03_逐点回复草稿_md"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_05_覆盖检查/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_05_覆盖检查/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_05_覆盖检查/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_05_覆盖检查/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response/P4_05_覆盖检查"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_05_覆盖检查/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_05_覆盖检查/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_05_覆盖检查/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_05_覆盖检查/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response/P4_05_覆盖检查"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_06_修改证据/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_06_修改证据/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_06_修改证据/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_06_修改证据/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response/P4_06_修改证据"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_06_修改证据/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_06_修改证据/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_06_修改证据/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_06_修改证据/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response/P4_06_修改证据"
+    },
+    {
+      "kind": "duplicate_node_mode_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_07_再投稿打包/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_07_再投稿打包/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_07_再投稿打包/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_07_再投稿打包/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response/P4_07_再投稿打包"
+    },
+    {
+      "kind": "duplicate_node_profile_definition",
+      "locations": [
+        "research/P4_论文回复_response/P4_07_再投稿打包/prompts/research_prompt.md",
+        "research/P4_论文回复_response/P4_07_再投稿打包/prompts/review_rubric.yaml",
+        "research/P4_论文回复_response/P4_07_再投稿打包/skills/SKILL.md",
+        "research/P4_论文回复_response/P4_07_再投稿打包/skills/local_entry.md"
+      ],
+      "node": "research/P4_论文回复_response/P4_07_再投稿打包"
+    },
+    {
+      "kind": "execution_missing_contract",
+      "node": "research/P4_论文回复_response/P4_07_再投稿打包",
+      "path": "artifacts/execution_contract.yaml"
+    }
+  ],
+  "generated_at": "2026-04-27T14:33:59.342066+00:00",
+  "metrics": {
+    "duplicate_node_mode_definitions": 333,
+    "duplicate_node_profile_definitions": 331,
+    "execution_contract_coverage": 0.25,
+    "leaf_local_entry_coverage": 1.0,
+    "leaf_nodes": 37,
+    "next_node_exists": true,
+    "next_node_has_local_entry": true,
+    "next_node_is_leaf": true,
+    "node_contract_pass_rate": 0.0,
+    "research_nodes": 44,
+    "selected_leaf_local_entry_coverage": 1.0
+  },
+  "next_node": {
+    "id": "research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用",
+    "path": "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用"
+  },
+  "report_only": true,
+  "root": "/home/user/LQ/Q_paper/LQQL_OS/lqql_06_工作与项目/02_自动研究引擎/Autoresearch-with-human",
+  "status": "findings",
+  "tool": "validate_node_contracts",
+  "warnings": []
+}

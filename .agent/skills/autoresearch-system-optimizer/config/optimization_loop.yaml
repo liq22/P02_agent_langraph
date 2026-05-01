@@ -1,0 +1,101 @@
+meta:
+  version: "2.0"
+  description: "Bounded dual-lane optimization loop policy for AutoResearch system maintenance and research-rigor gating."
+
+node_validation_prompt: ".agent/skills/autoresearch-system-optimizer/references/node_validation.md"
+cycle_prompt: ".agent/skills/autoresearch-system-optimizer/references/system_optimizer_cycle.md"
+agents_config: ".agent/skills/autoresearch-system-optimizer/config/agents.yaml"
+validation_rules: ".agent/skills/autoresearch-system-optimizer/config/validation_rules.yaml"
+score_matrix: ".agent/skills/autoresearch-system-optimizer/config/score_matrix.yaml"
+score_policy: ".agent/skills/autoresearch-system-optimizer/config/score_policy.yaml"
+scorecard_template: ".agent/skills/autoresearch-system-optimizer/config/scorecard.template.yaml"
+immutable_anchor_paths:
+  - ".agent/skills/autoresearch-system-optimizer/config/immutable_core_rules.yaml"
+  - ".agent/skills/autoresearch-system-optimizer/config/research_gate_rules.yaml"
+research_gate_policy: ".agent/skills/autoresearch-system-optimizer/config/research_gate_rules.yaml"
+exploratory_policy:
+  boundary_class: exploratory
+  research_rigor_score_status: unscored_exploratory
+  human_gate_required: true
+  auto_apply_allowed: false
+
+max_cycles: 3
+default_mode: advisory
+default_validation_backend: local_command
+max_targets_per_cycle: 1
+graph_target_freeze_once: true
+default_agent_count: 1
+default_max_workers: 1
+optional_teammate_evaluation:
+  enabled_by_default: false
+  default_count: 3
+  role: evaluator
+  consensus_policy: majority_same_root_cause_or_fix_surface
+  may_patch: false
+node_campaign:
+  enabled_when_explicitly_requested: true
+  node_glob: "research/P*/**/status.yaml"
+  default_apply_mode: low-risk
+  default_enable_teammates: false
+  default_teammate_count: 3
+  default_max_workers: 3
+  output_root: "_reference/test/v2/results/node_campaigns"
+target_selection_mode:
+  - explicit_target_first
+  - otherwise_graph_driven_research_orchestrator_once
+
+preflight_checks:
+  - "python scripts/validate_skill_fit.py"
+  - "python scripts/validate_local_skills.py"
+
+advisory_rechecks:
+  redteam:
+    enabled: true
+    required: true
+    command: "python _reference/test/redteam/runners/run_redteam_suite.py --report-dir \"{cycle_dir}/10_redteam\""
+    summary_path: "{cycle_dir}/10_redteam/summary.json"
+  single_node_metrics:
+    enabled: true
+    required: true
+    command: "python _reference/test/v2/runners/run_single_node_metrics.py --check --write-report --output \"{cycle_dir}/11_single_node_metrics/latest.json\""
+    summary_path: "{cycle_dir}/11_single_node_metrics/latest.json"
+
+post_apply_rechecks:
+  skill_surface:
+    - "python scripts/validate_skill_fit.py"
+    - "python scripts/validate_local_skills.py"
+  validation_surface:
+    - "python _reference/test/v2/runners/run_v2_acceptance.py --cases 05_system_optimizer_loop.md 06_exploratory_gate.md 07_single_node_deterministic_metrics.md"
+  node_prompt_surface:
+    - "python scripts/validate_local_skills.py"
+    - "python test/run_live_repo_smoke.py"
+
+allowed_auto_apply_paths:
+  - ".agent/skills/**"
+  - "_reference/test/**"
+  - "research/**/prompts/*.md"
+  - "research/**/prompts/*.yaml"
+  - "research/**/skills/local_entry.md"
+  - "research/**/skills/SKILL.md"
+  - "test/fixtures/**"
+
+forbidden_auto_apply_paths:
+  - "research/**/status.yaml"
+  - "research/**/review/verdict.yaml"
+  - "backend/graph/*.json"
+  - "backend/relations/edge_registry.json"
+  - "research/**/artifacts/**"
+  - "research/**/logs/**"
+  - "research/**/docs/manuscript*"
+  - "research/**/docs/*.tex"
+  - "research/**/docs/*.doc"
+  - ".agent/skills/autoresearch-system-optimizer/config/immutable_core_rules.yaml"
+  - ".agent/skills/autoresearch-system-optimizer/config/research_gate_rules.yaml"
+
+stop_gates:
+  - critical_unverified_assumption
+  - validation_failed
+  - hard_gate_hit
+  - forbidden_change_required
+  - recheck_failed
+  - cycle_budget_reached

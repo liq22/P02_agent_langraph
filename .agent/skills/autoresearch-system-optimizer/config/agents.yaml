@@ -1,0 +1,49 @@
+meta:
+  version: "3.0"
+  description: "Minimal validation backend contract for the bounded optimizer."
+
+default_backend: local_command
+supports_parallel_validation: false
+
+optional_teammate_evaluation:
+  enabled_by_default: false
+  description: "Claude Code teammates are optional independent evaluators, not the default validation path."
+  role: evaluator
+  default_count: 3
+  consensus_policy: majority_same_root_cause_or_fix_surface
+  may_patch: false
+
+backends:
+  local_command:
+    enabled: true
+    description: "Run one explicit local command against one frozen target."
+    cwd_mode: repo
+    requires_explicit_command: true
+    command_template: []
+
+  external_agent:
+    enabled: true
+    description: "Compatibility backend for external agent CLIs. Not the default path."
+    cwd_mode: repo
+    default_agent: claude_code
+    command_templates:
+      claude_code:
+        - "claude"
+        - "-p"
+        - "{prompt}"
+      codex:
+        - "codex"
+        - "exec"
+        - "{prompt}"
+
+runtime:
+  default_timeout_sec: 1800
+  default_max_concurrent: 1
+  emit_validation_manifest: true
+  output_layout: single_target
+
+selection:
+  validation:
+    preferred_backend: local_command
+    fallback_backend: external_agent
+    require_frozen_target: true

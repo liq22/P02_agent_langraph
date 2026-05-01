@@ -1,0 +1,41 @@
+{
+  "node_path": "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议",
+  "harness": "/home/user/LQ/Q_paper/LQQL_OS/lqql_06_工作与项目/02_自动研究引擎/Autoresearch-with-human/research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/harness.yaml",
+  "run_id": "20260427-091707",
+  "updated_at": "2026-04-27T09:17:07.067482+00:00",
+  "score": 1.0,
+  "pass_threshold": 0.8,
+  "passed": true,
+  "blocking_validator": null,
+  "human_gate_required": true,
+  "results": [
+    {
+      "id": "markdown_structure",
+      "passed": true,
+      "score": 1.0,
+      "summary": "Markdown 结构可接受。",
+      "details": []
+    },
+    {
+      "id": "acceptance_checklist",
+      "passed": true,
+      "score": 1.0,
+      "summary": "验收契约完成率 14/14。",
+      "details": []
+    },
+    {
+      "id": "edit_scope_check",
+      "passed": true,
+      "score": 1.0,
+      "summary": "修改范围符合 harness。",
+      "details": []
+    },
+    {
+      "id": "node_status_check",
+      "passed": true,
+      "score": 1.0,
+      "summary": "status.yaml 检查完成，当前状态：seed。",
+      "details": []
+    }
+  ]
+}

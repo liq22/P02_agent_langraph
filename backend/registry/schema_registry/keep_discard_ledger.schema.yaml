@@ -1,0 +1,23 @@
+artifact: artifacts/keep_discard_ledger.yaml
+version: "0.1"
+description: Append-only decision log for keeping, discarding, or deferring claims, evidence, runs, figures, or response commitments.
+top_level:
+  decisions: list
+required_fields:
+  decision:
+    - item_id
+    - item_type
+    - decision
+    - rationale
+    - evidence_ref
+allowed_values:
+  decision:
+    - keep
+    - discard
+    - defer
+submission_hard_blocks:
+  decision:
+    - defer
+field_semantics:
+  rationale: Why this item was kept or discarded, especially when evidence is weak or negative.
+  evidence_ref: Concrete source, run, claim, figure, or review item behind the decision.

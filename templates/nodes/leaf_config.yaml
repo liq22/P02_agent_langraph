@@ -1,0 +1,4 @@
+# Optional node-local config. Do not create this file for a new node unless a
+# bounded local step needs an explicit local setting that cannot live in README.md,
+# status.yaml, or a node-local prompt/skill/artifact.
+enabled_skills: []

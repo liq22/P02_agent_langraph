@@ -1,0 +1,13 @@
+items:
+  - id: problem_defined
+    text: 问题边界明确
+    keywords: ["问题", "边界"]
+  - id: hypothesis_route
+    text: 假设和技术路线明确
+    keywords: ["假设", "技术路线"]
+  - id: evidence_and_risk
+    text: 证据和风险边界明确
+    keywords: ["证据", "风险"]
+  - id: next_action
+    text: 下一步动作明确
+    keywords: ["下一步"]

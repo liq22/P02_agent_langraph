@@ -1,0 +1,15 @@
+lifecycle:
+  stage: active
+progress_pct: 45
+review_gate:
+  ai_review_count: 0
+  human_review_count: 0
+  all_comments_responded: false
+can_enter_fix: false
+lens_matrix:
+  round_id: p3-round-001
+  artifact: artifacts/reviewer_lens_matrix.yaml
+  lens_count: 6
+heartbeat_at: 2026-04-20
+last_actor: codex
+author_agent_id: codex

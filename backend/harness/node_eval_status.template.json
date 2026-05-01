@@ -1,0 +1,11 @@
+{
+  "node_path": "research/Px_xxx/node",
+  "last_run_id": null,
+  "harness_passed": false,
+  "score": 0.0,
+  "blocking_validator": null,
+  "failure_reason": null,
+  "next_action": null,
+  "human_gate_required": true,
+  "updated_at": null
+}

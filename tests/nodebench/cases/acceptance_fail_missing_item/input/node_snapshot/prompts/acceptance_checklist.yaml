@@ -1,0 +1,10 @@
+items:
+  - id: problem
+    text: problem is present
+    keywords: ["Problem"]
+  - id: route
+    text: route is present
+    keywords: ["Route"]
+  - id: absent_item
+    text: deliberately absent token is present
+    keywords: ["UNMENTIONED_ACCEPTANCE_TOKEN"]

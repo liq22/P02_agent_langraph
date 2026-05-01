@@ -1,0 +1,132 @@
+node_id: research::P3_论文模拟评审与修改_多轮::P3_04_修订动作
+node_path: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作
+phase: P3
+node_kind: leaf
+prompt_assets:
+- path: prompts/research_prompt.md
+  status: required
+- path: prompts/acceptance_checklist.yaml
+  status: required
+- path: prompts/revision_prompt.md
+  status: recommended
+- path: prompts/review_rubric.yaml
+  status: required
+required_questions_answered:
+- item: 每条批评的最小修订动作是什么？
+  status: pending
+- item: 修改后如何验证问题真的被解决？
+  status: pending
+- item: revision_action_map 是否为每个 blocking issue 指定 target_phase、target_node、action_type、expected_evidence、validation_gate
+    与 next_iteration_trigger？
+  status: pending
+required_outputs:
+- path: revision action map
+  status: pending
+  description: 需由本节点形成或更新
+- path: artifacts/review_issue_register.yaml
+  description: profile-required local artifact
+- path: artifacts/critique_digest.yaml
+  description: profile-required local artifact
+- path: artifacts/revision_action_map.yaml
+  status: pending
+  description: 可路由、可验证的修订动作图
+quality_checks:
+- item: 围绕 reviewer 视角、blocking issues、comment clustering、revision actionability 组织内容
+  status: pending
+- item: 批评要具体、可执行、可验证
+  status: pending
+- item: comment -> action -> evidence -> file location 一一对应
+  status: pending
+- item: revision_action_map 中每个 action 都绑定 target_phase、target_node、action_type、expected_evidence、validation_gate
+    与 next_iteration_trigger。
+  status: pending
+- item: 若 target_node 当前有 unmet prerequisite，action 的验证说明允许 dependency closure 回退，而不是把 blocked target 伪装成 ready leaf
+  status: pending
+- item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
+  status: pending
+- item: hard-gate block 必须绑定 claim_id/evidence_id/location/actionable_fix；否则只能作为 advisory
+    critique。
+  status: pending
+handoff_ready_if:
+- item: 主要批评都有修订动作
+  status: pending
+- item: 动作可追踪到具体文件与证据
+  status: pending
+- item: 每个 blocking issue 都有 action 或 unresolved blocker，不允许静默消失
+  status: pending
+- item: target_node 若当前不可直达，其 prerequisite gap 已被显式记录
+  status: pending
+- item: 独立 reviewer agent 已生成 `review/verdict.yaml`
+  status: pending
+- item: '`review/verdict.yaml` 中 `review_complete == true`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `hard_fail == false`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
+  status: pending
+stop_if:
+- item: 缺关键输入或关键证据
+  status: pending
+- item: 本节点范围不清或越出节点职责
+  status: pending
+- item: 必须依赖的上游节点尚未就绪
+  status: pending
+- item: 缺少独立 reviewer verdict (`review/verdict.yaml`)
+  status: pending
+- item: 独立 reviewer verdict 尚未完成 (`review_complete != true`)
+  status: pending
+- item: 独立 reviewer 判定为 `revise` 或 `block`
+  status: pending
+- item: 独立 reviewer 提出 hard fail 且未关闭
+  status: pending
+- item: hard gate 缺 citation/figure/venue/coverage/revision evidence 中的适用工件。
+  status: pending
+- item: blocking issue 没有 claim_id/evidence_id/location/actionable_fix。
+  status: pending
+- item: revision action 缺 target node、expected evidence 或 validation gate。
+  status: pending
+- item: revision action 把 blocked target 写成 ready leaf，却没有允许 scheduler 回退到 prerequisite。
+  status: pending
+review_notes:
+- slot: 1
+  note: <待填写>
+- slot: 2
+  note: <待填写>
+external_review_gate:
+  required: true
+  reviewer_role: external_node_reviewer
+  reviewer_agent_must_be_distinct: true
+  rubric_path: prompts/review_rubric.yaml
+  verdict_path: review/verdict.yaml
+  pass_condition:
+    review_complete: true
+    overall_verdict: pass
+    hard_fail: false
+    independence_confirmed: true
+  required_reviewer_inputs:
+  - README.md
+  - status.yaml
+  - prompts/research_prompt.md
+  - prompts/acceptance_checklist.yaml
+  - prompts/review_rubric.yaml
+  - ../prompts/standards.md
+  - revision action map
+  - artifacts/review_issue_register.yaml
+  - artifacts/critique_digest.yaml
+  - artifacts/revision_action_map.yaml
+author_exit:
+- item: 'gate_inputs_verified: true'
+  status: pending
+- item: 'blocking_gaps_are_explicit: true'
+  status: pending
+node_close:
+- item: 'review/verdict.yaml:review_complete: true'
+  status: pending
+- item: 'review/verdict.yaml:overall_verdict: pass'
+  status: pending
+- item: 'review/verdict.yaml:hard_fail: false'
+  status: pending
+- item: 'review/verdict.yaml:independence_confirmed: true'
+  status: pending

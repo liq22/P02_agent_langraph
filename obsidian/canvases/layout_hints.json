@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "overview": {
+    "scheduler": {
+      "x": -700,
+      "y": -20,
+      "width": 580,
+      "height": 220
+    },
+    "phase": {
+      "x_start": 0,
+      "y": -80,
+      "width": 620,
+      "gap": 80,
+      "group_x_offset": -24,
+      "min_group_height": 520,
+      "label_y": -40,
+      "label_width": 220,
+      "label_height": 72
+    },
+    "node": {
+      "y_start": 80,
+      "y_gap": 170,
+      "readme_width": 520,
+      "readme_height": 96,
+      "badge_gap": 8,
+      "badge_width": 520,
+      "badge_height": 52
+    }
+  },
+  "focus": {
+    "scheduler": {
+      "x": 0,
+      "y": -260,
+      "width": 780,
+      "height": 200
+    },
+    "no_next": {
+      "x": 0,
+      "y": 0,
+      "width": 720,
+      "height": 120
+    },
+    "center": {
+      "x": 0,
+      "y": 0
+    },
+    "node_block": {
+      "card_width": 420,
+      "card_height": 160,
+      "status_height": 120,
+      "status_gap": 20,
+      "badge_height": 120,
+      "badge_gap": 20
+    },
+    "dependencies": {
+      "x": -560,
+      "y_start": 0,
+      "y_gap": 460
+    },
+    "downstream": {
+      "x": 560,
+      "y_start": 0,
+      "y_gap": 460
+    },
+    "skills": {
+      "x": 0,
+      "y_start": 480,
+      "width": 420,
+      "height": 140,
+      "gap": 160
+    },
+    "siblings": {
+      "x": 0,
+      "y_start": 700,
+      "y_gap": 132,
+      "width": 420,
+      "height": 96,
+      "badge_x": 440,
+      "badge_width": 340,
+      "badge_height": 96
+    }
+  }
+}

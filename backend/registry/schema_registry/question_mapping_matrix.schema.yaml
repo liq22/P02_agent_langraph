@@ -1,0 +1,27 @@
+artifact: artifacts/question_mapping_matrix.yaml
+version: "0.1"
+description: P4-local map from reviewer comment or critique to response item, claim, evidence, and location.
+top_level:
+  mappings: list
+required_fields:
+  mapping:
+    - critique_id_or_comment_id_or_issue_id
+    - response_item_id
+    - claim_id
+    - evidence_id
+    - location
+    - response_strategy
+    - status
+allowed_values:
+  status:
+    - mapped
+    - covered
+    - uncovered
+    - pending
+submission_hard_blocks:
+  status:
+    - uncovered
+    - pending
+field_semantics:
+  location: Manuscript, response, or artifact location that the response will modify or cite.
+  response_strategy: Direct answer, evidence addition, limitation acknowledgement, claim revision, or rebuttal.

@@ -1,0 +1,11 @@
+version: 1
+name: autoresearch-agent-cockpit
+python: ">=3.11,<3.13"
+venv: ".venv"
+pip:
+  - fastapi>=0.110
+  - uvicorn>=0.29
+  - pyyaml>=6.0
+external_commands:
+  - codex
+  - claude

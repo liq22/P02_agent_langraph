@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Research Agent Cockpit",
+  "version": "0.1.0",
+  "identifier": "com.local.research-agent-cockpit",
+  "build": {
+    "frontendDist": "../../../web/app",
+    "devUrl": "http://127.0.0.1:8765/app/"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Research Agent Cockpit",
+        "width": 1600,
+        "height": 980
+      }
+    ]
+  }
+}

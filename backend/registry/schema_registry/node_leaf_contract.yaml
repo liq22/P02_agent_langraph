@@ -1,0 +1,13 @@
+required_files:
+  - README.md
+  - index.md
+  - config.yaml
+  - status.yaml
+  - review/
+  - docs/manuscript.md
+  - docs/HUMAN_ONLY.md
+optional_slots:
+  - skills/
+  - templates/
+  - artifacts/
+  - logs/

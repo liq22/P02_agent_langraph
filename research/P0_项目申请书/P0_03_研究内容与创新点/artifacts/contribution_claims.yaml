@@ -1,0 +1,57 @@
+node_path: research/P0_项目申请书/P0_03_研究内容与创新点
+claim_policy: Candidate contributions must remain bounded until P1/P2/P3/P4 evidence and independent review are available.
+claims:
+  - claim_id: p0_claim_node_contract
+    candidate_claim: Treating a research node as an auditable scientific work unit may make unsupported completion states visible.
+    problem_addressed: produced files can be mistaken for completed research judgment
+    nearest_prior_boundary: generic agent workflows can execute tasks but do not necessarily bind outputs to evidence, failure conditions, and phase gates
+    evidence_status: template_required
+    required_evidence:
+      - NodeBench comparison against prompt-only workflow
+      - validator failure distribution
+      - independent reviewer verdict
+    current_evidence:
+      - test/NATURE_LEVEL_NODE_RUBRIC.md
+      - prompts/acceptance_checklist.yaml
+    limitation: Current local artifacts define the evaluation path but do not establish empirical quality gain.
+  - claim_id: p0_claim_cross_phase_traceability
+    candidate_claim: A shared claim/evidence/protocol registry may reduce untraceable claims across proposal, experiment, manuscript, review, and response phases.
+    problem_addressed: phase-local documents can be individually coherent while the evidence chain remains broken
+    nearest_prior_boundary: writing and experiment tools can track local artifacts but may not preserve one claim identity across P0-P4
+    evidence_status: template_required
+    required_evidence:
+      - claim registry coverage rate
+      - unsupported claim count before and after registry enforcement
+      - reviewer audit of claim-to-evidence links
+    current_evidence:
+      - artifacts/literature_gap_map.yaml
+    limitation: Registry completeness is not the same as scientific truth.
+  - claim_id: p0_claim_preregistered_protocol_gate
+    candidate_claim: Pre-execution protocol gates may reduce post-hoc metric selection and unsupported result narration.
+    problem_addressed: metrics and baselines can be chosen after seeing results
+    nearest_prior_boundary: experiment logs can record outcomes but may not block unsupported claims before writing
+    evidence_status: template_required
+    required_evidence:
+      - preregistered primary and secondary outcomes
+      - baseline/control definitions
+      - repeat and uncertainty records
+      - negative result interpretation
+    current_evidence:
+      - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/experiment_rigor_plan.yaml
+    limitation: Without real experiment execution, this remains a protocol-level claim.
+  - claim_id: p0_claim_independent_phase_gate
+    candidate_claim: Separating author exit from node close may reduce premature phase transition in automated research workflows.
+    problem_addressed: a single authoring agent can close its own work without external challenge
+    nearest_prior_boundary: self-review prompts provide critique but not independent transition authority
+    evidence_status: template_required
+    required_evidence:
+      - review/verdict.yaml from a distinct reviewer
+      - human gate records
+      - unresolved hard-fail tracking
+    current_evidence:
+      - prompts/review_rubric.yaml
+    limitation: Gate policy alone does not guarantee reviewer quality.
+author_exit:
+  required_artifacts_exist: true
+  key_research_judgment_answered_or_gap_reported: true
+  citation_status_checked_when_external_sources_are_used: true

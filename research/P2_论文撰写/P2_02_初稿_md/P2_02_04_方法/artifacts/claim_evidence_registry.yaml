@@ -1,0 +1,50 @@
+node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法
+research_anchor: AutoResearch as a human-agent research operating system
+claims:
+  - claim_id: p2_methods_unit_of_analysis
+    claim: The research node is the unit of analysis for evaluating AutoResearch.
+    evidence_id: p2_node_contract_record
+    evidence:
+      - docs/manuscript.md:Methods Scope
+      - docs/manuscript.md:研究设计与实现的关键决定是什么？
+      - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/experiment_rigor_plan.yaml
+    citation_status: local_protocol_and_method_record
+    boundary: This defines the study object; it does not establish outcome improvement.
+  - claim_id: p2_methods_intervention_definition
+    claim: The AutoResearch intervention consists of node-local framing, claim/evidence/protocol registry, protocol gates, independent review, and response coverage.
+    evidence_id: p2_intervention_record
+    evidence:
+      - docs/manuscript.md:Study Design
+      - docs/manuscript.md:Procedure
+      - research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/contribution_claims.yaml
+    citation_status: local_protocol_and_method_record
+    boundary: The intervention definition is necessary for comparison but not a result.
+  - claim_id: p2_methods_primary_metric
+    claim: Claim_evidence_validity_rate is the primary outcome for research-process auditability.
+    evidence_id: p2_metric_contract
+    evidence:
+      - docs/manuscript.md:Study Design
+      - docs/manuscript.md:Statistics, Data-Code, and Protocol Statements
+      - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/experiment_rigor_plan.yaml
+    citation_status: local_protocol_and_method_record
+    boundary: The metric must still be tested against baselines, repeats, and uncertainty.
+  - claim_id: p2_methods_reproducibility
+    claim: Reproducibility requires node paths, prompts, checklists, rubrics, budgets, reviewer assignments, commands or manual ledgers, and artifact schemas.
+    evidence_id: p2_reproduction_record
+    evidence:
+      - docs/manuscript.md:别人需要哪些细节才能理解与复现？
+      - docs/manuscript.md:Statistics, Data-Code, and Protocol Statements
+    citation_status: local_protocol_and_method_record
+    boundary: This supports procedural reproducibility, not acceptance by a venue.
+  - claim_id: p2_methods_negative_results
+    claim: Negative results and failed gates must remain visible in result ledgers and claim registries.
+    evidence_id: p2_failure_policy
+    evidence:
+      - docs/manuscript.md:Limitations and Negative Results
+      - logs/claim_evidence_map.md
+    citation_status: local_protocol_and_method_record
+    boundary: Human reviewers still decide final phase transition.
+author_exit:
+  claim_evidence_ids_are_explicit_or_gap_is_reported: true
+  negative_or_failed_results_recorded: true
+  protected_paths_respected: true

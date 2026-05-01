@@ -1,0 +1,77 @@
+# Minimal scheduler-compatible node status contract.
+# This documents current semantics; it does not add graph fields.
+
+identity_fields:
+  author_agent_id:
+    required_when:
+      - node is ready for external review
+      - node is handed off downstream
+      - submission readiness is claimed
+    semantics: Stable identity marker for the authoring agent or human owner of the accepted node truth.
+  last_actor:
+    semantics: Most recent actor label for operator visibility only; not sufficient to prove author/reviewer separation.
+
+status_source_precedence:
+  - status
+  - lifecycle.stage
+
+valid_statuses:
+  - seed
+  - active
+  - review
+  - fix
+  - done
+  - archive
+
+terminal_statuses:
+  - done
+  - archive
+
+unfinished_statuses:
+  - seed
+  - active
+  - review
+  - fix
+
+default_fallback:
+  missing_or_invalid_status: seed
+
+recommended_transitions:
+  seed:
+    - active
+    - archive
+  active:
+    - review
+    - archive
+  review:
+    - fix
+    - done
+    - archive
+  fix:
+    - review
+    - done
+    - archive
+  done:
+    - archive
+  archive: []
+
+auto_experiment_worker_default_transitions:
+  - seed -> active
+  - active -> review
+  - active -> archive
+
+fix_semantics:
+  description: fix is a review/response gate state, not the default crash state for experiment workers.
+  default_for_auto_experiment_worker_crash: false
+
+graph_projection:
+  graph_json_node_fields:
+    - path
+    - status
+  graph_status_json_fields:
+    - refresh_ok
+    - current_phase
+    - ready_nodes
+    - blocked_nodes
+    - next_node
+    - unfinished_count

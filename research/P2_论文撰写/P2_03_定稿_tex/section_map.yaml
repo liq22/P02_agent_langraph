@@ -1,0 +1,13 @@
+mappings:
+  - md_node: ../P2_02_初稿_md/P2_02_01_引言
+    md_source: ../P2_02_初稿_md/P2_02_01_引言/docs/manuscript.md
+    tex_target: tex/sections/introduction.tex
+  - md_node: ../P2_02_初稿_md/P2_02_02_preliminary
+    md_source: ../P2_02_初稿_md/P2_02_02_preliminary/docs/manuscript.md
+    tex_target: tex/sections/preliminary.tex
+  - md_node: ../P2_02_初稿_md/P2_02_04_方法
+    md_source: ../P2_02_初稿_md/P2_02_04_方法/docs/manuscript.md
+    tex_target: tex/sections/method.tex
+  - md_node: ../P2_02_初稿_md/P2_02_05_实验与讨论
+    md_source: ../P2_02_初稿_md/P2_02_05_实验与讨论/docs/manuscript.md
+    tex_target: tex/sections/experiment.tex

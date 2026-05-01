@@ -1,0 +1,52 @@
+artifact: artifacts/citation_registry.yaml
+version: "0.1"
+description: Node-local audit trail for citation facts and claim support. Structure validity is not a proof that the scientific claim is true.
+top_level:
+  citations: list
+required_fields:
+  citation:
+    - citation_key
+    - claim_id
+    - claim_context
+    - claim_criticality
+    - source_ref
+    - source_locator
+    - bibliographic_facts_checked
+    - support_status
+    - support_strength
+    - action
+allowed_values:
+  claim_criticality:
+    - core_claim
+    - background_context
+    - method_reference
+    - comparison_baseline
+    - format_supporting
+  support_status:
+    - verified
+    - minor_distortion
+    - major_distortion
+    - unverifiable
+    - unverifiable_access
+    - contradiction
+  action:
+    - keep
+    - revise_claim
+    - replace_source
+    - block_handoff
+submission_hard_blocks:
+  criticalities:
+    - core_claim
+    - comparison_baseline
+  support_status:
+    - major_distortion
+    - unverifiable
+    - unverifiable_access
+    - contradiction
+  action:
+    - block_handoff
+field_semantics:
+  claim_criticality: Distinguishes core scientific support from background or formatting citations so background uncertainty does not become noisy submission blocking.
+  support_status: Whether the cited source actually supports the local claim context after checking the source, not from memory.
+  support_strength: Short explanation of how directly the source supports the claim.
+  source_locator: DOI, URL, local PDF page, BibTeX entry, section, or other locator used during verification.

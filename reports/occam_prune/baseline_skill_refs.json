@@ -1,0 +1,19 @@
+{
+  "errors": [],
+  "findings": [],
+  "generated_at": "2026-04-27T14:33:54.015483+00:00",
+  "metrics": {
+    "broken_skill_refs": 0,
+    "catalog_skills": 21,
+    "deprecated_without_replacement": 0,
+    "global_skills": 21,
+    "local_entry_refs": 41,
+    "new_broken_refs": 0,
+    "operator_only_exposed_to_new_user": 0
+  },
+  "report_only": true,
+  "root": "/home/user/LQ/Q_paper/LQQL_OS/lqql_06_工作与项目/02_自动研究引擎/Autoresearch-with-human",
+  "status": "pass",
+  "tool": "validate_skill_refs",
+  "warnings": []
+}

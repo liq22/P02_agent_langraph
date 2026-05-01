@@ -1,0 +1,60 @@
+artifact: artifacts/claim_evidence_registry.yaml
+version: "0.1"
+description: Node-local audit trail for claim identity and evidence support. Structure validity is not proof that a claim is scientifically important.
+top_level:
+  claims: list
+required_fields:
+  claim:
+    - claim_id
+    - claim_type
+    - claim_text
+    - manuscript_location
+    - evidence_refs
+    - support_status
+    - action
+  evidence_ref:
+    - evidence_id
+    - evidence_type
+    - source_ref
+allowed_values:
+  claim_type:
+    - core_claim
+    - background
+    - method
+    - result
+    - limitation
+    - response_commitment
+  evidence_type:
+    - citation
+    - experiment
+    - figure
+    - table
+    - code
+    - review_comment
+    - revision_diff
+  support_status:
+    - supported
+    - weak
+    - contradicted
+    - pending
+    - not_applicable
+  action:
+    - keep
+    - revise_claim
+    - replace_source
+    - document_limitation
+    - block_handoff
+submission_hard_blocks:
+  claim_type:
+    - core_claim
+    - result
+    - response_commitment
+  support_status:
+    - contradicted
+    - pending
+  action:
+    - block_handoff
+field_semantics:
+  claim_id: Stable ID used by manuscript, figures, review issues, responses, and revision evidence.
+  evidence_refs: Concrete evidence objects backing the claim; do not replace this with prose confidence.
+  manuscript_location: Where the claim appears or is intended to appear.

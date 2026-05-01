@@ -1,0 +1,56 @@
+node_modes:
+  parent:
+    required_files:
+      - skills/local_entry.md
+      - prompts/research_prompt.md
+      - prompts/acceptance_checklist.yaml
+      - prompts/review_rubric.yaml
+    optional_files: []
+    forbidden_default_files:
+      - skills/SKILL.md
+      - skills/SOP.md
+      - skills/local_wrapper.md
+      - skills/local_execution.md
+    binder_any_of: []
+  lite:
+    required_files:
+      - skills/local_entry.md
+      - prompts/research_prompt.md
+      - prompts/acceptance_checklist.yaml
+      - prompts/review_rubric.yaml
+    optional_files: []
+    forbidden_default_files:
+      - skills/SKILL.md
+      - skills/SOP.md
+      - skills/local_wrapper.md
+      - skills/local_execution.md
+    binder_any_of: []
+  standard:
+    required_files:
+      - skills/local_entry.md
+      - skills/SKILL.md
+      - prompts/research_prompt.md
+      - prompts/acceptance_checklist.yaml
+      - prompts/review_rubric.yaml
+    optional_files:
+      - skills/local_wrapper.md
+    forbidden_default_files:
+      - skills/SOP.md
+      - skills/local_execution.md
+    binder_any_of: []
+  execution:
+    required_files:
+      - skills/local_entry.md
+      - skills/SKILL.md
+      - skills/SOP.md
+      - prompts/research_prompt.md
+      - prompts/acceptance_checklist.yaml
+      - prompts/review_rubric.yaml
+    optional_files:
+      - skills/local_wrapper.md
+      - skills/local_execution.md
+      - artifacts/execution_contract.yaml
+    forbidden_default_files: []
+    binder_any_of:
+      - skills/local_wrapper.md
+      - skills/local_execution.md

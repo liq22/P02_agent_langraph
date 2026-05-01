@@ -1,0 +1,10 @@
+items:
+  - id: reviewer
+    text: reviewer marker is present
+    keywords: ["Reviewer"]
+  - id: response
+    text: response marker is present
+    keywords: ["Response"]
+  - id: location
+    text: location marker is present
+    keywords: ["Section"]

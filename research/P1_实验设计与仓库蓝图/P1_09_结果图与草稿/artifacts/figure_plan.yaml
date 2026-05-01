@@ -1,0 +1,7 @@
+figures:
+  - figure_id: fig_main
+    purpose: 主结果可视化
+    linked_claims:
+      - c1
+    source_tables:
+      - main_results

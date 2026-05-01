@@ -1,0 +1,11 @@
+inputs:
+  - dataset_object
+  - task_protocol
+outputs:
+  - metrics
+  - artifacts
+  - evidence
+replaceable_modules:
+  - preprocessing
+  - model_core
+  - evaluator

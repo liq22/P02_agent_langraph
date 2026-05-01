@@ -1,0 +1,13 @@
+items:
+  - id: methods
+    text: methods and replication details present
+    keywords: ["Methods", "replication"]
+  - id: evidence
+    text: evidence and citation present
+    keywords: ["evidence", "citation"]
+  - id: boundary
+    text: boundary conditions present
+    keywords: ["boundary"]
+  - id: next_action
+    text: next action present
+    keywords: ["next action"]

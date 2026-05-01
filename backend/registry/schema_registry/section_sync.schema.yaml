@@ -1,0 +1,6 @@
+sync_mode:
+  enum: [manual_gate, selective_sync]
+fields:
+  - md_section
+  - tex_target
+  - status

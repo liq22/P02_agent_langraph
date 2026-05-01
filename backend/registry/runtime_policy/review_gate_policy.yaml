@@ -1,0 +1,20 @@
+version: 1
+
+defaults:
+  parent: no_external_review_gate
+  lite: no_external_review_gate
+  standard: review_gate_optional
+  execution: review_gate_optional
+
+mandatory_trigger_stages:
+  - review_requested
+  - revise
+
+forbidden_defaults:
+  - require_review_verdict_for_all_nodes
+  - require_review_rubric_for_all_nodes
+  - embed_reviewer_independence_in_every_local_entry
+
+rules:
+  - External review blocks progress only when the selected node explicitly requires it.
+  - A framework check cannot make a paper submission-ready.

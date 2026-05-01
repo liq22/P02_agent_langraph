@@ -1,0 +1,126 @@
+node_id: research::P2_论文撰写::P2_02_初稿_md
+node_path: research/P2_论文撰写/P2_02_初稿_md
+phase: P2
+node_kind: parent
+prompt_assets:
+- path: prompts/research_prompt.md
+  status: required
+- path: prompts/acceptance_checklist.yaml
+  status: required
+- path: prompts/revision_prompt.md
+  status: recommended
+- path: prompts/review_rubric.yaml
+  status: required
+required_questions_answered:
+- item: 每个章节是否只承担自己的论证职责？
+  status: pending
+- item: 跨章节符号、术语、贡献叙事是否一致？
+  status: pending
+- item: core claims 是否已经分配到明确 section，而不是悬空在父节点？
+  status: pending
+required_outputs:
+- path: 初稿主线摘要
+  status: pending
+  description: 需由本节点形成或更新
+- path: 跨章节一致性修正建议
+  status: pending
+  description: 需由本节点形成或更新
+- path: artifacts/outline_map.yaml
+  status: pending
+  description: draft 期章节顺序、职责、claim 分配与 figure/table 计划真源
+quality_checks:
+- item: 围绕 IMRAD、methods 可复现、results 顺序、figure/table 自解释、venue format 组织内容
+  status: pending
+- item: 正文服务主张，不重复图表，不夸大结论
+  status: pending
+- item: 遵循清晰 section 分工
+  status: pending
+- item: 不在一个章节重复另一个章节内容
+  status: pending
+- item: outline_map 为每个正文 section 明确写出 objective、must_cover、must_not_cover、claim_ids。
+  status: pending
+- item: outline_map 的 core claims 都有 section 归属，且 figure/table plan 已锚定到正文 section。
+  status: pending
+- item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
+  status: pending
+- item: 父节点只做 coordination/routing/summary，不替 leaf 子节点产出证据或正文。
+  status: pending
+handoff_ready_if:
+- item: 子章节间不冲突
+  status: pending
+- item: '`artifacts/outline_map.yaml` 已存在且可读'
+  status: pending
+- item: outline_map 已固定正文 section 顺序与非重叠职责
+  status: pending
+- item: outline_map 已把 core claims 分配到 section，并给出 figure/table 计划
+  status: pending
+- item: 至少形成一版可连续阅读的初稿框架
+  status: pending
+- item: 独立 reviewer agent 已生成 `review/verdict.yaml`
+  status: pending
+- item: '`review/verdict.yaml` 中 `review_complete == true`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `hard_fail == false`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
+  status: pending
+stop_if:
+- item: 缺关键输入或关键证据
+  status: pending
+- item: 本节点范围不清或越出节点职责
+  status: pending
+- item: 必须依赖的上游节点尚未就绪
+  status: pending
+- item: 缺少独立 reviewer verdict (`review/verdict.yaml`)
+  status: pending
+- item: 独立 reviewer verdict 尚未完成 (`review_complete != true`)
+  status: pending
+- item: 独立 reviewer 判定为 `revise` 或 `block`
+  status: pending
+- item: 独立 reviewer 提出 hard fail 且未关闭
+  status: pending
+- item: 父节点替 leaf 节点产出正文、实验、图表或审稿结论。
+  status: pending
+- item: 存在 ready child 但父节点继续深写，导致 route_child_first 被忽略。
+  status: pending
+- item: 缺少 `artifacts/outline_map.yaml` 或其中 section/claim 分配仍为空。
+  status: pending
+review_notes:
+- slot: 1
+  note: <待填写>
+- slot: 2
+  note: <待填写>
+external_review_gate:
+  required: true
+  reviewer_role: external_node_reviewer
+  reviewer_agent_must_be_distinct: true
+  rubric_path: prompts/review_rubric.yaml
+  verdict_path: review/verdict.yaml
+  pass_condition:
+    review_complete: true
+    overall_verdict: pass
+    hard_fail: false
+    independence_confirmed: true
+  required_reviewer_inputs:
+  - README.md
+  - status.yaml
+  - prompts/research_prompt.md
+  - prompts/acceptance_checklist.yaml
+  - prompts/review_rubric.yaml
+  - 初稿主线摘要
+  - 跨章节一致性修正建议
+  - artifacts/outline_map.yaml
+author_exit:
+- item: 'child_frontier_checked: true'
+  status: pending
+- item: 'route_child_first_or_frontier_gap_reported: true'
+  status: pending
+- item: 'no_leaf_content_authored_in_parent: true'
+  status: pending
+node_close:
+- item: 'all_required_children_closed_or_blocked_with_reason: true'
+  status: pending
+- item: 'parent_rollup_consistent_with_child_artifacts: true'
+  status: pending

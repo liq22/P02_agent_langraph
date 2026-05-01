@@ -1,0 +1,72 @@
+version: 1
+node_modes:
+  parent:
+    required_files:
+      - skills/local_entry.md
+      - prompts/research_prompt.md
+      - prompts/acceptance_checklist.yaml
+    optional_files:
+      - prompts/standards.md
+    conditional_files:
+      external_review_gate:
+        - prompts/review_rubric.yaml
+        - review/verdict.yaml
+    forbidden_default_files:
+      - skills/SKILL.md
+      - skills/SOP.md
+      - skills/local_wrapper.md
+      - skills/local_execution.md
+  lite:
+    required_files:
+      - skills/local_entry.md
+      - prompts/research_prompt.md
+      - prompts/acceptance_checklist.yaml
+    optional_files:
+      - prompts/standards.md
+    conditional_files:
+      external_review_gate:
+        - prompts/review_rubric.yaml
+        - review/verdict.yaml
+    forbidden_default_files:
+      - skills/SKILL.md
+      - skills/SOP.md
+      - skills/local_wrapper.md
+      - skills/local_execution.md
+  standard:
+    required_files:
+      - skills/local_entry.md
+      - skills/SKILL.md
+      - prompts/research_prompt.md
+      - prompts/acceptance_checklist.yaml
+    optional_files:
+      - skills/local_wrapper.md
+      - prompts/standards.md
+    conditional_files:
+      external_review_gate:
+        - prompts/review_rubric.yaml
+        - review/verdict.yaml
+    forbidden_default_files:
+      - skills/SOP.md
+      - skills/local_execution.md
+  execution:
+    required_files:
+      - skills/local_entry.md
+      - skills/SKILL.md
+      - skills/SOP.md
+      - prompts/research_prompt.md
+      - prompts/acceptance_checklist.yaml
+    optional_files:
+      - skills/local_wrapper.md
+      - skills/local_execution.md
+      - prompts/experiment_prompt.md
+      - prompts/revision_prompt.md
+      - prompts/standards.md
+      - artifacts/execution_contract.yaml
+    conditional_files:
+      external_review_gate:
+        - prompts/review_rubric.yaml
+        - review/verdict.yaml
+    binder_any_of:
+      - skills/local_wrapper.md
+      - skills/local_execution.md
+    forbidden_default_files: []

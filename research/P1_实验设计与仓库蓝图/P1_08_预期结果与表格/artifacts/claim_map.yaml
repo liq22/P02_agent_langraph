@@ -1,0 +1,8 @@
+claim_map:
+  - claim_id: c1
+    objective: 提升主任务准确率
+    task: 故障识别
+    protocol: split_by_machine_v1
+    table_ref: main_results
+    figure_ref: null
+    paper_section: P2_02_05_实验与讨论

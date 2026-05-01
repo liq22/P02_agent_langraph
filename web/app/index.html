@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research Agent Cockpit</title>
+  <meta name="description" content="Hierarchy-first bilingual research monitoring and agent cockpit" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <p class="eyebrow" data-i18n="brandEyebrow">Research OS</p>
+        <h1 data-i18n="brandTitle">研究 Agent 控制台</h1>
+        <p class="subtle" data-i18n="brandSubtitle">层级监控、研究看板与节点本地 agent 执行的一体化工作台。</p>
+      </div>
+
+      <div id="topbar-summary" class="topbar-summary"></div>
+
+      <div class="topbar-controls">
+        <button id="open-session-button" class="ghost-button primary-button hero-action" type="button" data-i18n="openSession">打开会话</button>
+
+        <label class="control search-control">
+          <span data-i18n="search">搜索</span>
+          <input id="global-search-input" type="text" placeholder="P0 / status / node..." />
+        </label>
+
+        <label class="control compact-control">
+          <span data-i18n="language">语言</span>
+          <select id="language-toggle">
+            <option value="zh">中文</option>
+            <option value="en">English</option>
+          </select>
+        </label>
+
+        <button id="refresh-button" class="ghost-button" type="button" data-i18n="refresh">刷新</button>
+        <div id="heartbeat" class="heartbeat" role="status" aria-live="polite" data-state="loading">Idle</div>
+      </div>
+    </header>
+
+    <main class="workspace drawer-collapsed">
+      <aside class="panel sidebar-left">
+        <section class="section-block tree-block">
+          <div class="section-header">
+            <p class="section-label" data-i18n="treeNavigator">树状导航</p>
+            <div class="section-actions">
+              <button id="collapse-all-button" class="mini-button" type="button" data-i18n="collapseAll">全部折叠</button>
+              <button id="expand-active-path-button" class="mini-button" type="button" data-i18n="expandActivePath">展开当前路径</button>
+            </div>
+          </div>
+          <div id="tree-root" class="tree-root" role="tree" aria-label="Node tree"></div>
+        </section>
+      </aside>
+
+      <section class="panel center-panel">
+        <div class="center-header">
+          <div>
+            <p class="section-label" data-i18n="workspace">工作区</p>
+            <h2 id="center-title">Overview</h2>
+          </div>
+
+          <div class="center-actions">
+            <details class="secondary-actions">
+              <summary id="more-actions-button" class="ghost-button more-actions-button" data-i18n="moreActions">更多操作</summary>
+              <div class="secondary-actions-menu">
+                <button id="sidebar-toggle-button" class="ghost-button" type="button" data-i18n="collapseNavigation">收起导航</button>
+                <button id="back-scope-button" class="ghost-button" type="button" data-i18n="backToParent">返回上一级</button>
+                <button id="focus-next-button" class="ghost-button" type="button" data-i18n="focusNextNode">聚焦 next node</button>
+                <button id="dependency-toggle-button" class="ghost-button" type="button" data-i18n="dependencyOff">依赖诊断关闭</button>
+                <button id="pin-node-button" class="ghost-button" type="button" data-i18n="pinNode">关注节点</button>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="workspace-tabs" role="tablist" aria-label="Workspace tabs">
+          <button id="workspace-tab-overview" class="workspace-tab active" data-tab="overview" type="button" role="tab" aria-selected="true" aria-controls="overview-view" tabindex="0" data-i18n="overviewMode">Overview</button>
+          <button id="workspace-tab-node" class="workspace-tab" data-tab="node" type="button" role="tab" aria-selected="false" aria-controls="node-view" tabindex="-1" data-i18n="nodeMode">Node</button>
+          <button id="workspace-tab-manuscript" class="workspace-tab" data-tab="manuscript" type="button" role="tab" aria-selected="false" aria-controls="manuscript-view" tabindex="-1" data-i18n="manuscriptMode">Manuscript</button>
+          <button id="workspace-tab-session" class="workspace-tab" data-tab="session" type="button" role="tab" aria-selected="false" aria-controls="session-view" tabindex="-1" data-i18n="sessionMode">Session</button>
+        </div>
+
+        <div id="overview-view" class="center-view active" role="tabpanel" aria-labelledby="workspace-tab-overview">
+          <div class="overview-workspace-grid">
+            <div class="overview-graph-card">
+              <div id="graph-canvas" class="graph-canvas"></div>
+              <div id="graph-empty" class="graph-empty hidden" data-i18n="graphUnavailable">Hierarchy graph unavailable.</div>
+              <div id="graph-tooltip" class="graph-tooltip hidden"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="node-view" class="center-view hidden" role="tabpanel" aria-labelledby="workspace-tab-node" hidden>
+          <div id="node-panel" class="node-panel"></div>
+        </div>
+
+        <div id="manuscript-view" class="center-view hidden" role="tabpanel" aria-labelledby="workspace-tab-manuscript" hidden>
+          <div class="manuscript-toolbar">
+            <div class="manuscript-meta">
+              <strong id="manuscript-path">docs/manuscript.md</strong>
+              <span id="manuscript-status" class="section-meta">No file loaded</span>
+            </div>
+            <div class="manuscript-actions">
+              <button id="reload-manuscript-button" class="ghost-button" type="button" data-i18n="reload">Reload</button>
+              <button id="revert-manuscript-button" class="ghost-button" type="button" data-i18n="revert">Revert</button>
+              <button id="save-manuscript-button" class="ghost-button primary-button" type="button" data-i18n="save">Save</button>
+            </div>
+          </div>
+
+          <div class="manuscript-split">
+            <div class="manuscript-editor-pane">
+              <textarea id="manuscript-editor" class="manuscript-editor" spellcheck="false"></textarea>
+            </div>
+            <div class="manuscript-preview-pane">
+              <div id="manuscript-preview" class="manuscript-preview"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="session-view" class="center-view hidden" role="tabpanel" aria-labelledby="workspace-tab-session" hidden>
+          <div id="session-header" class="session-header-card"></div>
+
+          <div class="session-composer">
+            <div class="session-form-row">
+              <label class="control">
+                <span data-i18n="sessionType">会话类型</span>
+                <select id="session-type-select">
+                  <option value="general" data-i18n="sessionGeneral">General</option>
+                  <option value="scope" data-i18n="sessionScope">Scope</option>
+                  <option value="node" data-i18n="sessionNode">Node</option>
+                </select>
+              </label>
+
+              <label class="control">
+                <span data-i18n="agent">Agent</span>
+                <select id="agent-select"></select>
+              </label>
+
+              <label class="control wide-control">
+                <span data-i18n="targetNode">目标节点</span>
+                <input id="target-node-input" type="text" list="node-options" placeholder="research::P1::..." />
+                <datalist id="node-options"></datalist>
+              </label>
+            </div>
+
+            <div id="prompt-actions" class="prompt-actions"></div>
+
+            <label class="control">
+              <span data-i18n="prompt">提示词</span>
+              <textarea id="agent-prompt" rows="7" placeholder="Use @current, @scope, @node, @readme, @status, @manuscript, @research::..."></textarea>
+            </label>
+
+            <div id="mention-suggestions" class="mention-suggestions hidden"></div>
+
+            <div class="agent-actions">
+              <button id="create-session-button" class="ghost-button" type="button" data-i18n="createSession">新建会话</button>
+              <button id="run-session-button" class="ghost-button primary-button" type="button" data-i18n="runPrompt">执行</button>
+              <button id="stop-session-button" class="ghost-button" type="button" data-i18n="stopSession">停止</button>
+            </div>
+
+            <div id="agent-run-status" class="section-meta"></div>
+          </div>
+
+          <div id="session-context-content" class="session-context-content"></div>
+
+          <div class="session-workspace-grid">
+            <section class="section-block sessions-block session-list-card">
+              <div class="section-header">
+                <p class="section-label" data-i18n="sessions">会话</p>
+                <span id="agent-meta" class="section-meta">0</span>
+              </div>
+              <div id="session-list" class="session-list"></div>
+            </section>
+
+            <div class="session-output">
+              <div class="subheader">
+                <span data-i18n="sessionLog">会话日志</span>
+              </div>
+              <pre id="session-log" class="session-log"></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside id="context-drawer" class="panel sidebar-right drawer-collapsed" aria-labelledby="context-drawer-title">
+        <div class="drawer-header">
+          <div>
+            <p id="context-drawer-title" class="section-label" data-i18n="contextDrawer">上下文抽屉</p>
+            <span class="section-meta" data-i18n="selectNode">选择一个节点</span>
+          </div>
+          <button id="drawer-toggle-button" class="mini-button" type="button" aria-expanded="false" aria-controls="context-drawer-panels" data-i18n="expandDrawer">展开</button>
+        </div>
+
+        <div id="context-drawer-panels">
+          <section class="section-block setup-block">
+            <div class="section-header">
+              <p class="section-label" data-i18n="setupStatus">启动状态</p>
+              <span class="section-meta">Gateway</span>
+            </div>
+            <div id="setup-content" class="setup-content"></div>
+          </section>
+
+          <section class="section-block focus-block">
+            <div class="section-header">
+              <p class="section-label" data-i18n="currentFocus">当前焦点</p>
+              <span class="section-meta" data-i18n="humanFlow">用于人类心流</span>
+            </div>
+            <div id="focus-card" class="focus-card"></div>
+          </section>
+
+          <section class="section-block watch-block">
+            <div class="section-header">
+              <p class="section-label" data-i18n="watchedNodes">关注工作集</p>
+              <span class="section-meta" data-i18n="humanFlow">用于人类心流</span>
+            </div>
+            <div id="watch-content" class="watch-content"></div>
+          </section>
+
+          <section class="section-block inspector-block">
+            <div class="section-header">
+              <p class="section-label" data-i18n="nodeInspector">节点检视器</p>
+              <span id="inspector-meta" class="section-meta" data-i18n="selectNode">选择一个节点</span>
+            </div>
+            <div id="inspector-content" class="inspector-content">
+              <div class="empty-state">
+                <h3 data-i18n="selectScopeTitle">请选择范围或节点</h3>
+                <p data-i18n="selectScopeBody">使用左侧树或中间层级图查看状态、评审、文件与局部关系。</p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="vendor/d3-7.9.0.min.js"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

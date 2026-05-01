@@ -1,0 +1,5 @@
+templates:
+  - parent_node_minimal
+  - leaf_node_minimal
+  - critique_matrix_minimal
+  - md_tex_sync_minimal

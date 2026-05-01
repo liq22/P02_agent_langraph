@@ -1,0 +1,464 @@
+{
+  "errors": [],
+  "findings": [
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/citation_registry.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/citation_registry.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/claim_evidence_registry.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/claim_evidence_registry.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/coverage_check_report.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/coverage_check_report.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/critique.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/critique.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/data_mode.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/data_mode.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/data_object.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/data_object.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/experiment_execution_contract.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/failure_register.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/failure_register.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/figure_manifest.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/figure_manifest.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/keep_discard_ledger.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/keep_discard_ledger.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/literature_gap_map.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/literature_gap_map.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/local_entry_implicit_convention.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/local_entry_minimal_contract.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/local_entry_skill_contract.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/local_execution_minimal_contract.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/local_wrapper_minimal_contract.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/negative_result_note.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/negative_result_note.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/node_leaf_contract.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/node_parent_contract.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/node_review_rubric.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/node_review_rubric.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/question_mapping_matrix.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/question_mapping_matrix.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/response_item.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/response_item.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/review_issue_register.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/review_issue_register.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/review_verdict.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/review_verdict.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/revision_action_map.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/revision_action_map.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/revision_evidence_map.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/revision_evidence_map.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/section_sync.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/section_sync.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/status_minimal_contract.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/submodule_ref.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/submodule_ref.schema.yaml"
+    },
+    {
+      "kind": "active_schema_without_validator",
+      "schema": "backend/registry/schema_registry/venue_requirements.schema.yaml",
+      "use": {
+        "active_node_contract": false,
+        "explicit_exemption": false,
+        "scripts": false,
+        "tests": false,
+        "verifier_registry": false
+      }
+    },
+    {
+      "kind": "orphan_artifact_schema",
+      "schema": "backend/registry/schema_registry/venue_requirements.schema.yaml"
+    },
+    {
+      "kind": "validator_without_schema_or_exemption",
+      "validator": "markdown_structure"
+    },
+    {
+      "kind": "validator_without_schema_or_exemption",
+      "validator": "acceptance_checklist"
+    },
+    {
+      "kind": "validator_without_schema_or_exemption",
+      "validator": "claim_evidence_check"
+    },
+    {
+      "kind": "validator_without_schema_or_exemption",
+      "validator": "citation_integrity"
+    },
+    {
+      "kind": "validator_without_schema_or_exemption",
+      "validator": "edit_scope_check"
+    },
+    {
+      "kind": "validator_without_schema_or_exemption",
+      "validator": "latex_build"
+    },
+    {
+      "kind": "validator_without_schema_or_exemption",
+      "validator": "response_coverage_check"
+    },
+    {
+      "kind": "validator_without_schema_or_exemption",
+      "validator": "node_status_check"
+    }
+  ],
+  "generated_at": "2026-04-27T14:34:10.595390+00:00",
+  "metrics": {
+    "active_schema_count": 30,
+    "active_schema_without_validator": 30,
+    "orphan_artifact_schema": 21,
+    "schema_use_coverage": 0.0,
+    "validator_without_schema_or_exemption": 8
+  },
+  "report_only": true,
+  "root": "/home/user/LQ/Q_paper/LQQL_OS/lqql_06_工作与项目/02_自动研究引擎/Autoresearch-with-human",
+  "status": "findings",
+  "tool": "validate_schema_use",
+  "warnings": []
+}

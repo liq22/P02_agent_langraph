@@ -1,0 +1,8 @@
+failures:
+  - failure_id: p4_04_missing_official_review_inputs
+    context: Official reviewer comments, manuscript ID, decision type, editor name, verified revision locations, and response evidence references are not available in the current node inputs.
+    affected_claim_id: p4_04_final_response_not_ready
+    severity: high
+    interpretation: This blocks final response completion and independent pass review, but it does not block creating the TeX scaffold.
+    action: document_limitation
+    status: open

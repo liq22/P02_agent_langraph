@@ -1,0 +1,75 @@
+rubric_version: nature_node_review_v1
+node_id: research::P2_论文撰写::P2_03_定稿_tex
+node_path: research/P2_论文撰写/P2_03_定稿_tex
+phase: P2
+node_kind: leaf
+node_mode: standard
+node_profile: evidence_leaf
+execution_profile: <none>
+reviewer_role: external_node_reviewer
+independence_requirement:
+  reviewer_agent_must_be_distinct: true
+  same_author_agent_forbidden: true
+  required_artifact: review/verdict.yaml
+scoring_dimensions:
+- name: originality_novelty
+  weight: 20
+  reviewer_standard: Clear advance over strong prior work, not incremental repackaging.
+- name: scientific_importance
+  weight: 20
+  reviewer_standard: Addresses a field-level scientific or engineering bottleneck.
+- name: evidence_technical_soundness
+  weight: 25
+  reviewer_standard: Claims are supported by robust data, baselines, uncertainty,
+    and controls.
+- name: reproducibility_transparency
+  weight: 15
+  reviewer_standard: Data, code, protocol, config, and limitations are inspectable.
+- name: broad_interest_story_clarity
+  weight: 10
+  reviewer_standard: A scientist outside the narrow subfield can understand why it
+    matters.
+- name: review_robustness
+  weight: 10
+  reviewer_standard: Anticipates alternative explanations, negative results, and reviewer
+    attacks.
+verdict_thresholds:
+  nature_ready_candidate_min_score: 90
+  strong_specialist_min_score: 80
+  revise_min_score: 60
+  block_below_score: 60
+  downstream_pass_min_score: 80
+hard_fail_conditions:
+- Unsupported central claim.
+- Material citation is missing, unverified, or mismatched with the claim it supports.
+- Figure lacks provenance, claim mapping, or evidence mapping.
+- Missing reproducibility path for data, code, protocol, or configuration.
+- Hidden negative result or omitted limitation.
+- Graph, Canvas, or dashboard treated as research truth.
+- Unbounded autonomous loop or undeclared handoff.
+- Reviewer-critical concern not mapped to evidence or revision action.
+phase_review_lenses:
+- 重点检查 claim-evidence 对齐、术语一致、方法复现性和讨论中的限制承认。
+- 重点检查写作是否压着证据走，而不是靠修辞放大结论。
+- one-sentence contribution、claim-evidence map、citation status 和 figure callout 都一致。
+- 方法可复现，结果客观报告，讨论承认限制。
+- 未验证 citation、无来源图、无证据 claim 均阻断完成态。
+node_level_5_criterion: TeX draft has complete structure, references, figures, supplementary
+  links, and availability statements.
+node_blocking_failure: Text and evidence are disconnected.
+required_reviewer_inputs:
+- README.md
+- status.yaml
+- prompts/research_prompt.md
+- prompts/acceptance_checklist.yaml
+- prompts/review_rubric.yaml
+- docs/manuscript.md
+- section_map.yaml
+- sync_map.yaml
+- tex 草稿或同步计划
+- 导出约束清单
+- artifacts/claim_evidence_registry.yaml
+required_review_outputs:
+- review/AI_001.md
+- review/verdict.yaml
+- review/response.yaml

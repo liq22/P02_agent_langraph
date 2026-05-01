@@ -1,0 +1,8 @@
+responses:
+  - comment_id: AI-001
+    responded: false
+    note: "Template scaffold created in artifacts/, but independent AI review remains pending because official reviewer comments and verified revision evidence are not available."
+
+  - comment_id: H-001
+    responded: false
+    note: "Human review remains pending. Current artifact is a TeX scaffold, not a final response package."

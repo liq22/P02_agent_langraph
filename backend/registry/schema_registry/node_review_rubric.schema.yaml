@@ -1,0 +1,34 @@
+required_fields:
+- rubric_version
+- node_id
+- node_path
+- phase
+- node_kind
+- node_mode
+- reviewer_role
+- independence_requirement
+- scoring_dimensions
+- verdict_thresholds
+- hard_fail_conditions
+- node_level_5_criterion
+- node_blocking_failure
+- required_reviewer_inputs
+- required_review_outputs
+field_semantics:
+  rubric_version: Stable rubric version for per-node external AI review.
+  reviewer_role: Runtime reviewer skill responsible for the external verdict.
+  independence_requirement: Declares that the reviewer must be distinct from the authoring autoresearch agent.
+  scoring_dimensions: Weighted review dimensions derived from the Nature-level node rubric.
+  verdict_thresholds: Score thresholds that control pass, revise, and block outcomes.
+  hard_fail_conditions: Conditions that block downstream handoff regardless of score.
+  node_level_5_criterion: Node-specific definition of the strongest acceptable reviewer outcome.
+  node_blocking_failure: Node-specific condition that should block downstream promotion.
+  required_reviewer_inputs: Minimal local inputs the external reviewer must inspect.
+  required_review_outputs: Files that the reviewer must emit for the gate to count.
+allowed_values:
+  reviewer_role:
+  - external_node_reviewer
+runtime_semantics:
+  read_by: external_node_reviewer
+  gate_surface: prompts/review_rubric.yaml
+  author_and_reviewer_must_be_distinct: true

@@ -1,0 +1,45 @@
+issues:
+- issue_id: issue-p3-001
+  critique_id: p3-round-001-placeholder-manuscript
+  source_comment_ids:
+  - p3-round-001:method_reproducibility_reviewer
+  - p3-round-001:broad_interest_editorial_reviewer
+  checklist_dimension: writing_venue_gate
+  triage_class: blocking
+  severity: fatal
+  claim_id: claim-core-placeholder-main-manuscript
+  evidence_id: ev-missing-manuscript-body
+  location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#document-body
+  evidence_gap: TeX body contains only a placeholder comment, so no introduction, method, result, discussion, claim, or limitation can be audited.
+  actionable_fix: Replace placeholder TeX with a manuscript draft whose sections bind claims to evidence and figures/tables.
+  next_action: Route to P2 manuscript nodes after evidence prerequisites are clarified.
+  status: open
+- issue_id: issue-p3-002
+  critique_id: p3-round-001-missing-results-ledger
+  source_comment_ids:
+  - p3-round-001:method_reproducibility_reviewer
+  checklist_dimension: method_reproducibility_gate
+  triage_class: blocking
+  severity: major
+  claim_id: claim-core-validation-result
+  evidence_id: ev-missing-p1-04-results-ledger
+  location: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml#blocked_missing_p104_ledger
+  evidence_gap: P1_05 records `blocked_missing_p104_ledger`; no validated result can support a paper claim.
+  actionable_fix: Generate or explicitly close the P1_04 results ledger, then update result_registry and hypothesis_status.
+  next_action: Route to P1_04/P1_05 before promoting validation claims into P2.
+  status: open
+- issue_id: issue-p3-003
+  critique_id: p3-round-001-figure-provenance
+  source_comment_ids:
+  - p3-round-001:cross_disciplinary_reader
+  - p3-round-001:devils_advocate
+  checklist_dimension: figure_table_gate
+  triage_class: blocking
+  severity: major
+  claim_id: claim-figure-main-result
+  evidence_id: ev-figure-provenance-missing
+  location: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_plan.yaml#fig_main
+  evidence_gap: The figure plan names `fig_main` but does not bind a verified evidence row, caption obligation, or manuscript callout.
+  actionable_fix: Bind figure plan to result evidence, caption, first callout location, and claim id before using it in the manuscript.
+  next_action: Route to P1_09 and then P2 figure/callout nodes.
+  status: open

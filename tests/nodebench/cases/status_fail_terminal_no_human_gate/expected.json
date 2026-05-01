@@ -1,0 +1,4 @@
+{
+  "passed": false,
+  "blocking_validator": "node_status_check"
+}

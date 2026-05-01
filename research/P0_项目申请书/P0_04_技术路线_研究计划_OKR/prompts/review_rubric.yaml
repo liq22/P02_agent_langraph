@@ -1,0 +1,74 @@
+rubric_version: nature_node_review_v1
+node_id: research::P0_项目申请书::P0_04_技术路线_研究计划_OKR
+node_path: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR
+phase: P0
+node_kind: leaf
+node_mode: standard
+node_profile: evidence_leaf
+execution_profile: <none>
+reviewer_role: external_node_reviewer
+independence_requirement:
+  reviewer_agent_must_be_distinct: true
+  same_author_agent_forbidden: true
+  required_artifact: review/verdict.yaml
+scoring_dimensions:
+- name: originality_novelty
+  weight: 20
+  reviewer_standard: Clear advance over strong prior work, not incremental repackaging.
+- name: scientific_importance
+  weight: 20
+  reviewer_standard: Addresses a field-level scientific or engineering bottleneck.
+- name: evidence_technical_soundness
+  weight: 25
+  reviewer_standard: Claims are supported by robust data, baselines, uncertainty,
+    and controls.
+- name: reproducibility_transparency
+  weight: 15
+  reviewer_standard: Data, code, protocol, config, and limitations are inspectable.
+- name: broad_interest_story_clarity
+  weight: 10
+  reviewer_standard: A scientist outside the narrow subfield can understand why it
+    matters.
+- name: review_robustness
+  weight: 10
+  reviewer_standard: Anticipates alternative explanations, negative results, and reviewer
+    attacks.
+verdict_thresholds:
+  nature_ready_candidate_min_score: 90
+  strong_specialist_min_score: 80
+  revise_min_score: 60
+  block_below_score: 60
+  downstream_pass_min_score: 80
+hard_fail_conditions:
+- Unsupported central claim.
+- Material citation is missing, unverified, or mismatched with the claim it supports.
+- Figure lacks provenance, claim mapping, or evidence mapping.
+- Missing reproducibility path for data, code, protocol, or configuration.
+- Hidden negative result or omitted limitation.
+- Graph, Canvas, or dashboard treated as research truth.
+- Unbounded autonomous loop or undeclared handoff.
+- Reviewer-critical concern not mapped to evidence or revision action.
+phase_review_lenses:
+- 重点检查问题是否真实存在、gap 是否具体、novelty 是否相对强基线而成立。
+- 重点检查目标、预期结果、impact、risk、resource 假设是否可检验。
+- gap、novelty、feasibility 和 risk 都能被 reviewer 独立检查。
+- 没有把 proposal 目标写成已经证实的论文结论。
+- 关键 citation 缺失或未验证时不得进入下游完成态，应转交 citation_verifier 或报告 citation gate。
+node_level_5_criterion: Route links hypothesis, experiments, metrics, and stop conditions.
+node_blocking_failure: OKR lists tasks but cannot validate a claim.
+required_reviewer_inputs:
+- README.md
+- status.yaml
+- prompts/research_prompt.md
+- prompts/acceptance_checklist.yaml
+- prompts/review_rubric.yaml
+- 技术路线草图
+- 阶段性计划与 OKR 草案
+- 风险分支说明
+- docs/manuscript.md
+- artifacts/claim_evidence_registry.yaml
+- artifacts/risk_decision_map.yaml
+required_review_outputs:
+- review/AI_001.md
+- review/verdict.yaml
+- review/response.yaml

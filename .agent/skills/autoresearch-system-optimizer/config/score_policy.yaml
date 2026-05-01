@@ -1,0 +1,65 @@
+meta:
+  version: "1.0"
+  description: "Score normalization policy for dual-lane optimizer scoring."
+
+score_ranges:
+  max_dimension_score: 10.0
+  normalized_total: 100.0
+
+status_weights:
+  satisfied: 1.0
+  strong: 1.0
+  partial: 0.7
+  mixed: 0.55
+  weak: 0.35
+  blocked: 0.2
+  unsupported: 0.15
+  unverified: 0.1
+  missing: 0.0
+  contradicted: 0.0
+
+severity_penalties:
+  low: 0.0
+  medium: 0.1
+  high: 0.2
+  critical: 0.35
+
+confidence_multiplier:
+  high: 1.0
+  medium: 0.85
+  low: 0.7
+  unknown: 0.6
+
+category_weights:
+  maintenance:
+    common: 1.0
+    node_mode: 1.0
+    node_profile: 1.0
+    execution_profile: 1.0
+  research_rigor:
+    common: 0.9
+    phase: 1.2
+    node_mode: 0.9
+    node_profile: 1.0
+    execution_profile: 1.0
+
+action_priority:
+  critical: 4
+  high: 3
+  medium: 2
+  low: 1
+
+auto_apply:
+  allowed_lane: maintenance
+  required_disposition: auto_apply
+  minimum_confidence: medium
+  forbid_research_gate_status:
+    - requires_human_review
+    - exploratory
+    - anchor_conflict
+
+score_stability:
+  default_status: not_compared
+  require_evidence_delta_for_score_change: true
+  unstable_disposition: manual_ticket
+  variance_threshold_points: 5.0

@@ -1,0 +1,39 @@
+---
+skill_id: P2_02_03_流程图草稿_local_entry
+purpose: 推进流程图草稿与图注描述，使其服务当前方法叙述。
+node_mode: standard
+node_profile: evidence_leaf
+required_prompt_refs:
+- prompts/research_prompt.md
+- prompts/acceptance_checklist.yaml
+- prompts/review_rubric.yaml
+default_delegate:
+  canonical_global_skill: paper_figure
+required_local_reads:
+- ../artifacts/outline_map.yaml
+- docs/manuscript.md
+outputs:
+- figures/
+- artifacts/figure_plan.yaml
+- artifacts/figure_manifest.yaml
+extra_status_updates:
+- progress_pct
+---
+
+Runtime entry shim for this standard node.
+
+This shim applies to `research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿`.
+
+Assume `README.md` and `status.yaml` are already loaded by the caller.
+
+Read in this order:
+1. `prompts/research_prompt.md`
+2. `prompts/acceptance_checklist.yaml`
+3. `prompts/review_rubric.yaml`
+4. `../artifacts/outline_map.yaml`
+5. `docs/manuscript.md`
+6. `skills/SKILL.md`
+
+After the tier-required local stack is loaded, honor `decision_rule` and `default_delegate` exactly once.
+Keep all work node-local, bounded, and auditable against the acceptance checklist.
+Do not synthesize deeper local layers than this tier requires.

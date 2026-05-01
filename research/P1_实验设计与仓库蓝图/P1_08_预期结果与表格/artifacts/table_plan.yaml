@@ -1,0 +1,34 @@
+tables:
+  - table_id: main_results
+    type: 主结果表
+    tasks:
+      - 故障识别
+    protocols:
+      - split_by_machine_v1
+    metrics:
+      - accuracy
+      - f1_macro
+    claims:
+      - c1
+  - table_id: ablation_results
+    type: 消融实验表
+    tasks:
+      - 故障识别
+    protocols:
+      - split_by_machine_v1
+    metrics:
+      - accuracy
+    claims:
+      - c2
+  - table_id: efficiency_results
+    type: 资源效率表
+    tasks:
+      - 故障识别
+    protocols:
+      - split_by_machine_v1
+    metrics:
+      - train_time
+      - params
+      - memory
+    claims:
+      - c3

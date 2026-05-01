@@ -1,0 +1,11 @@
+lifecycle:
+  stage: seed
+progress_pct: 0
+review_gate:
+  ai_review_count: 0
+  human_review_count: 0
+  all_comments_responded: false
+can_enter_fix: false
+heartbeat_at: 2026-04-10
+last_actor: system
+author_agent_id: <pending-author-agent>

@@ -1,0 +1,806 @@
+profile_defaults:
+  routing_parent:
+    node_researcher_lens:
+    - 只做 coordination/routing/summary；不得替 leaf 节点产出正文、实验或评审结论。
+    author_exit_if:
+      child_frontier_checked: true
+      route_child_first_or_frontier_gap_reported: true
+      no_leaf_content_authored_in_parent: true
+    node_close_if:
+      all_required_children_closed_or_blocked_with_reason: true
+      parent_rollup_consistent_with_child_artifacts: true
+    blocking_failure_modes:
+    - 父节点替 leaf 节点产出正文、实验、图表或审稿结论。
+    - 存在 ready child 但父节点继续深写，导致 route_child_first 被忽略。
+  lite_research_leaf:
+    node_researcher_lens:
+    - 用最小证据回答本节点关键研究判断；不靠增加 skill 数量冒充质量。
+    - 明确 claim/evidence 缺口，无法验证时写 gap，不写确定事实。
+    required_artifacts: [docs/manuscript.md]
+    author_exit_if:
+      required_artifacts_exist: true
+      key_research_judgment_answered_or_gap_reported: true
+      citation_status_checked_when_external_sources_are_used: true
+    node_close_if:
+      review/verdict.yaml:review_complete: true
+      review/verdict.yaml:overall_verdict: pass
+      review/verdict.yaml:hard_fail: false
+      review/verdict.yaml:independence_confirmed: true
+    blocking_failure_modes:
+    - 缺少本节点关键研究判断，或把未验证引用/证据写成确定事实。
+    - 作者退出条件与节点关闭条件混用，导致未评审内容伪装完成。
+  evidence_leaf:
+    node_researcher_lens:
+    - 直接产出证据、图表、claim map 或协议的节点必须保留 claim/evidence 身份层。
+    - 负结果、失败解释和 keep/discard 决策是一等工件，不得被正结果叙事覆盖。
+    required_artifacts:
+    - artifacts/claim_evidence_registry.yaml
+    - artifacts/failure_register.yaml
+    - artifacts/negative_result_note.md
+    - artifacts/keep_discard_ledger.yaml
+    author_exit_if:
+      claim_evidence_ids_are_explicit_or_gap_is_reported: true
+      negative_or_failed_results_recorded: true
+      read_only_paths_respected: true
+    node_close_if:
+      review/verdict.yaml:review_complete: true
+      review/verdict.yaml:overall_verdict: pass
+      review/verdict.yaml:hard_fail: false
+      review/verdict.yaml:independence_confirmed: true
+    blocking_failure_modes:
+    - 核心 claim 没有 claim_id/evidence_id，或 evidence registry 与正文不一致。
+    - 负结果、失败实验、反例或限制被删除、隐藏或改写成正结果。
+  hard_gate:
+    node_researcher_lens:
+    - 只在 review/submission/venue/response gate 阶段 hard block；authoring 阶段只能报告缺口。
+    - hard fail 必须带 claim_id/evidence_id/location/actionable_fix，否则降级为 advisory critique。
+    required_artifacts:
+    - artifacts/gate_report.md
+    author_exit_if:
+      gate_inputs_verified: true
+      blocking_gaps_are_explicit: true
+    node_close_if:
+      review/verdict.yaml:review_complete: true
+      review/verdict.yaml:overall_verdict: pass
+      review/verdict.yaml:hard_fail: false
+      review/verdict.yaml:independence_confirmed: true
+    blocking_failure_modes:
+    - hard gate 缺 citation/figure/venue/coverage/revision evidence 中的适用工件。
+    - blocking issue 没有 claim_id/evidence_id/location/actionable_fix。
+phase_profile_defaults:
+  P0:
+    lite_research_leaf:
+      node_researcher_lens:
+      - 像 PI 一样收敛 nearest prior work、真实 gap、科学/工程边界、可证伪问题和 feasibility。
+      required_artifacts: [docs/manuscript.md, artifacts/literature_gap_map.yaml]
+    evidence_leaf:
+      required_artifacts: [docs/manuscript.md, artifacts/claim_evidence_registry.yaml, artifacts/risk_decision_map.yaml]
+  P1:
+    evidence_leaf:
+      node_researcher_lens:
+      - 像实验负责人一样保护 data split、baseline、metric、variance/statistical validity、failure interpretation 和 reproducibility。
+      required_artifacts: [artifacts/claim_evidence_registry.yaml, artifacts/failure_register.yaml, artifacts/negative_result_note.md, artifacts/keep_discard_ledger.yaml]
+  P2:
+    evidence_leaf:
+      node_researcher_lens:
+      - 像顶会作者一样维护 one-sentence contribution、claim/evidence ID、citation/figure/venue linkage 和 limitations。
+      required_artifacts: [docs/manuscript.md, artifacts/claim_evidence_registry.yaml]
+    hard_gate:
+      required_artifacts: [artifacts/gate_report.md, artifacts/citation_registry.yaml, artifacts/figure_manifest.yaml, artifacts/venue_requirements.yaml]
+  P3:
+    hard_gate:
+      node_researcher_lens:
+      - 像独立审稿人一样用 source isolation、severity、evidence location、affected claim 和 actionable fix 约束批评。
+      required_artifacts: [artifacts/review_issue_register.yaml, artifacts/critique_digest.yaml]
+  P4:
+    hard_gate:
+      node_researcher_lens:
+      - 像负责任作者一样逐点绑定 reviewer comment、direct answer、正文位置、evidence 和 commitment status。
+      required_artifacts: [artifacts/question_mapping_matrix.yaml, artifacts/coverage_check_report.yaml, artifacts/revision_evidence_map.yaml]
+nodes:
+  research/P0_项目申请书:
+    purpose: 协调 `P0_项目申请书` 子树推进，并把执行保持在子节点而不是父节点壳层。
+    default_delegate:
+      local_action_only: true
+    decision_rule:
+    - when: 存在明确 ready 的子节点
+      stop_with: route_child_first
+    - when: 当前父节点仅需更新协调状态
+      then: keep_default_delegate
+    extra_status_updates:
+    - progress_pct
+    node_mode: parent
+  research/P0_项目申请书/P0_01_研究背景与调研:
+    purpose: 收敛本节点的研究背景综述、问题引入、nearest prior work 与相关工作定位边界。
+    default_delegate:
+      canonical_global_skill: idea_discovery_or_problem_formulation
+    outputs:
+    - docs/manuscript.md
+    - artifacts/positioning_matrix.yaml
+    - artifacts/literature_gap_map.yaml
+    extra_status_updates:
+    - lifecycle.stage
+    - progress_pct
+    node_mode: lite
+  research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题:
+    purpose: 把研究挑战、科学问题与工程问题分层写清，并形成可证伪问题假设。
+    default_delegate:
+      canonical_global_skill: idea_discovery_or_problem_formulation
+    outputs:
+    - docs/manuscript.md
+    - artifacts/problem_hypothesis.yaml
+    extra_status_updates:
+    - lifecycle.stage
+    - progress_pct
+    node_mode: lite
+  research/P0_项目申请书/P0_03_研究内容与创新点:
+    purpose: 收敛研究内容拆分、贡献 claim 身份与创新点边界，避免 claim 膨胀。
+    default_delegate:
+      canonical_global_skill: idea_discovery_or_problem_formulation
+    outputs:
+    - docs/manuscript.md
+    - artifacts/contribution_claims.yaml
+    extra_status_updates:
+    - lifecycle.stage
+    - progress_pct
+    node_mode: lite
+  research/P0_项目申请书/P0_04_技术路线_研究计划_OKR:
+    purpose: 把技术路线、研究计划与 OKR 对齐成可执行的局部蓝图。
+    default_delegate:
+      canonical_global_skill: structured_map_builder
+    outputs:
+    - docs/manuscript.md
+    - artifacts/okr_map.yaml
+    extra_status_updates:
+    - lifecycle.stage
+    - progress_pct
+    node_mode: standard
+  research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界:
+    purpose: 明确本项目的资源、计算、数据许可、伦理与失败边界，并压缩成局部决策工件。
+    default_delegate:
+      canonical_global_skill: structured_map_builder
+    node_profile: hard_gate
+    outputs:
+    - docs/manuscript.md
+    - artifacts/constraint_risk_map.yaml
+    extra_status_updates:
+    - lifecycle.stage
+    - progress_pct
+    node_mode: standard
+  research/P1_实验设计与仓库蓝图:
+    purpose: 协调 `P1_实验设计与仓库蓝图` 子树推进，并把执行保持在子节点而不是父节点壳层。
+    default_delegate:
+      local_action_only: true
+    decision_rule:
+    - when: 存在明确 ready 的子节点
+      stop_with: route_child_first
+    - when: 当前父节点仅需更新协调状态
+      then: keep_default_delegate
+    extra_status_updates:
+    - progress_pct
+    node_mode: parent
+  research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用:
+    purpose: 收敛数据对象、数据血缘与子模块引用关系，保持输入边界清晰。
+    default_delegate:
+      canonical_global_skill: structured_map_builder
+    outputs:
+    - docs/manuscript.md
+    - artifacts/data_lineage.yaml
+    - artifacts/submodule_ref.yaml
+    extra_status_updates:
+    - progress_pct
+    node_mode: standard
+  research/P1_实验设计与仓库蓝图/P1_02_伪代码:
+    purpose: 收敛伪代码与接口契约，使后续实现与评测协议对齐。
+    default_delegate:
+      canonical_global_skill: leaf_node_writer
+    outputs:
+    - docs/manuscript.md
+    - artifacts/interface_contract.yaml
+    extra_status_updates:
+    - progress_pct
+    node_mode: lite
+  research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图:
+    purpose: 把仓库蓝图压缩成模块映射与职责边界，而不是继续扩散细节。
+    default_delegate:
+      canonical_global_skill: structured_map_builder
+    outputs:
+    - docs/manuscript.md
+    - artifacts/repo_blueprint.yaml
+    extra_status_updates:
+    - progress_pct
+    node_mode: standard
+  research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证:
+    purpose: 在本节点内推进一轮有界轻量验证；若 contract 或 repo binding 未就绪则先补齐 blocker handoff。
+    default_delegate:
+      local_wrapper_skill: local_wrapper
+    node_profile: hard_gate
+    execution_profile: experiment_execution
+    decision_rule:
+    - when: artifacts/execution_contract.yaml 缺失
+      then:
+        canonical_global_skill: experiment_design_or_execution
+    - when: contract_mode != executable、contract 不完整、repo_path 缺失、repo_path 路径不存在或 run target 不可绑定
+      then:
+        canonical_global_skill: experiment_design_or_execution
+    - when: contract_mode == executable、contract 完整、repo_path 在 workspace 中存在且 run target 可绑定
+      then: keep_default_delegate
+    outputs:
+    - artifacts/gate_report.md
+    - artifacts/auto_experiment/results.tsv
+    - logs/auto_experiment/latest_run.log
+    required_local_reads:
+    - artifacts/execution_contract.yaml
+    optional_local_reads:
+    - docs/manuscript.md
+    extra_status_updates:
+    - lifecycle.stage
+    - progress_pct
+    node_mode: execution
+  research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理:
+    purpose: 收敛初步验证结果、证据状态与结论边界。
+    default_delegate:
+      local_execution_skill: local_execution
+    node_profile: hard_gate
+    execution_profile: result_synthesis
+    outputs: &id002
+    - artifacts/result_registry.yaml
+    - artifacts/hypothesis_status.yaml
+    - artifacts/claim_evidence_registry.yaml
+    - artifacts/paper_ready_result_summary.md
+    required_local_reads: &id001
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+    optional_local_reads:
+    - docs/manuscript.md
+    extra_status_updates: &id003
+    - lifecycle.stage
+    - progress_pct
+    node_mode: execution
+  research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略:
+    purpose: 协调 `P1_06_代码仓库_已有_重新初始化_子模块策略` 子树推进，并把执行保持在子节点而不是父节点壳层。
+    default_delegate:
+      local_action_only: true
+    decision_rule:
+    - when: 存在明确 ready 的子节点
+      stop_with: route_child_first
+    - when: 当前父节点仅需更新协调状态
+      then: keep_default_delegate
+    extra_status_updates:
+    - progress_pct
+    node_mode: parent
+  research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目:
+    purpose: 明确新仓库初始化策略、目录边界与最小启动步骤。
+    default_delegate:
+      canonical_global_skill: leaf_node_writer
+    outputs:
+    - docs/manuscript.md
+    node_mode: lite
+  research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入:
+    purpose: 明确现有仓库接入路径与最小改造边界。
+    default_delegate:
+      canonical_global_skill: leaf_node_writer
+    outputs:
+    - docs/manuscript.md
+    node_mode: lite
+  research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用:
+    purpose: 厘清子模块引用策略及其与主仓库的边界关系。
+    default_delegate:
+      canonical_global_skill: structured_map_builder
+    outputs:
+    - docs/manuscript.md
+    - artifacts/submodule_ref_map.yaml
+    node_mode: standard
+  research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略:
+    purpose: 收敛 feature branch 修改策略与分支治理规则。
+    default_delegate:
+      canonical_global_skill: structured_map_builder
+    outputs:
+    - docs/manuscript.md
+    - artifacts/branch_policy.yaml
+    node_mode: standard
+  research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议:
+    purpose: 把优化目标、任务、强基线、metric、seed/variance、ablation、statistics 与预算绑定成紧凑实验严谨性计划。
+    default_delegate:
+      local_wrapper_skill: local_wrapper
+    node_profile: hard_gate
+    outputs:
+    - artifacts/protocol_map.yaml
+    - artifacts/experiment_rigor_plan.yaml
+    extra_status_updates:
+    - progress_pct
+    node_mode: standard
+  research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格:
+    purpose: 把预期结果、表格结构与 claim 对齐成局部计划工件。
+    default_delegate:
+      local_wrapper_skill: local_wrapper
+    outputs:
+    - artifacts/table_plan.yaml
+    - artifacts/claim_map.yaml
+    extra_status_updates:
+    - progress_pct
+    node_mode: standard
+  research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿:
+    purpose: 推进结果图、图草稿与 claim-figure 对齐，而不是泛化成任意写作任务。
+    default_delegate:
+      local_wrapper_skill: local_wrapper
+    decision_rule:
+    - when: artifacts/figure_plan.yaml 缺失
+      then: keep_default_delegate
+    - when: artifacts/figure_plan.yaml 已存在但 artifacts/claim_figure_map.yaml 缺失
+      then:
+        canonical_global_skill: result_to_claim
+    - when: 上游 claim_map 缺失
+      stop_with: waiting_for_claim_map
+    outputs:
+    - artifacts/figure_plan.yaml
+    - artifacts/claim_figure_map.yaml
+    - artifacts/figure_manifest.yaml
+    - figures/
+    required_local_reads:
+    - docs/manuscript.md
+    - ../P1_08_预期结果与表格/artifacts/claim_map.yaml
+    - artifacts/figure_plan.yaml
+    extra_status_updates:
+    - progress_pct
+    node_mode: standard
+  research/P2_论文撰写:
+    purpose: 协调 `P2_论文撰写` 子树推进，并把执行保持在子节点而不是父节点壳层。
+    default_delegate:
+      local_action_only: true
+    decision_rule:
+    - when: 存在明确 ready 的子节点
+      stop_with: route_child_first
+    - when: 当前父节点仅需更新协调状态
+      then: keep_default_delegate
+    extra_status_updates:
+    - progress_pct
+    node_mode: parent
+  research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature:
+    purpose: 收敛目标 venue fit、contradiction list、证据缺口与局部写作规范。
+    default_delegate:
+      canonical_global_skill: manuscript_worker
+    outputs:
+    - docs/manuscript.md
+    - artifacts/venue_requirements.yaml
+    node_mode: lite
+  research/P2_论文撰写/P2_02_初稿_md:
+    purpose: 协调 `P2_02_初稿_md` 子树推进，并把执行保持在子节点而不是父节点壳层。
+    default_delegate:
+      local_action_only: true
+    decision_rule:
+    - when: 存在明确 ready 的子节点
+      stop_with: route_child_first
+    - when: 当前父节点仅需更新协调状态
+      then: keep_default_delegate
+    outputs:
+    - 初稿主线摘要
+    - 跨章节一致性修正建议
+    - artifacts/outline_map.yaml
+    coordination_notes:
+    - 只读取父节点 prompt 资产和当前轮明确依赖的 node-local artifacts，不代写 leaf 节点正文。
+    - 若 `artifacts/outline_map.yaml` 不存在，则先生成首版；若已存在，则只做增量修订和职责收敛。
+    - 固定 `paper.one_sentence_contribution`、`paper.core_claims` 与 `paper.skim_reader_path`，避免正文先写后补结构。
+    - 为 `P2_02_01_引言`、`P2_02_02_preliminary`、`P2_02_04_方法`、`P2_02_05_实验与讨论` 写清 `objective`、`must_cover`、`must_not_cover`、`claim_ids`、`expected_inputs` 与 `figure_table_plan`。
+    - 把 `P2_02_03_流程图草稿` 只当作 figure support，不放进正文 section 主序列；仅在相关 section 的 `figure_table_plan` 中引用它。
+    - 输出或更新 `初稿主线摘要` 与 `跨章节一致性修正建议`，并在发现 section 冲突时停在协调层报告缺口。
+    extra_status_updates:
+    - progress_pct
+    node_mode: parent
+  research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言:
+    purpose: 推进引言局部草稿，保持问题、背景与贡献叙事一致。
+    default_delegate:
+      canonical_global_skill: manuscript_worker
+    required_local_reads:
+    - ../artifacts/outline_map.yaml
+    outputs:
+    - docs/manuscript.md
+    extra_status_updates:
+    - progress_pct
+    node_mode: lite
+  research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary:
+    purpose: 推进 preliminary 与 related-work positioning 局部草稿，并压缩背景到支撑贡献定位的最小必要范围。
+    default_delegate:
+      canonical_global_skill: manuscript_worker
+    required_local_reads:
+    - ../artifacts/outline_map.yaml
+    outputs:
+    - docs/manuscript.md
+    - artifacts/positioning_matrix.yaml
+    extra_status_updates:
+    - progress_pct
+    node_mode: lite
+  research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿:
+    purpose: 推进流程图草稿与图注描述，使其服务当前方法叙述。
+    default_delegate:
+      canonical_global_skill: paper_figure
+    outputs:
+    - figures/
+    - artifacts/figure_plan.yaml
+    - artifacts/figure_manifest.yaml
+    required_local_reads:
+    - ../artifacts/outline_map.yaml
+    - docs/manuscript.md
+    extra_status_updates:
+    - progress_pct
+    node_mode: standard
+  research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法:
+    purpose: 推进方法章节局部草稿，保持术语、流程与符号一致。
+    default_delegate:
+      canonical_global_skill: manuscript_worker
+    required_local_reads:
+    - ../artifacts/outline_map.yaml
+    outputs:
+    - docs/manuscript.md
+    extra_status_updates:
+    - progress_pct
+    node_mode: standard
+  research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论:
+    purpose: 推进实验与讨论写作，并在必要时先做 claim-result 对齐。
+    default_delegate:
+      canonical_global_skill: manuscript_worker
+    decision_rule:
+    - when: 结果与 claim 尚未对齐
+      then:
+        canonical_global_skill: result_to_claim
+    - when: 已有清晰 claim-result 对齐
+      then: keep_default_delegate
+    outputs:
+    - docs/manuscript.md
+    - artifacts/claim_map.yaml
+    required_local_reads:
+    - ../artifacts/outline_map.yaml
+    - docs/manuscript.md
+    - artifacts/claim_map.yaml
+    - ../../../P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/claim_evidence_registry.yaml
+    extra_status_updates:
+    - progress_pct
+    node_mode: standard
+  research/P2_论文撰写/P2_03_定稿_tex:
+    purpose: 把当前定稿同步到 tex 导出目标，而不是扩成整套投稿流程。
+    default_delegate:
+      local_wrapper_skill: local_wrapper
+    outputs:
+    - tex/main.tex
+    required_local_reads:
+    - docs/manuscript.md
+    - section_map.yaml
+    - sync_map.yaml
+    node_mode: standard
+  research/P2_论文撰写/P2_04_形式检查:
+    purpose: 执行一次有界形式检查，核对 citation criticality、figure provenance、venue requirements 与高置信格式问题。
+    default_delegate:
+      local_execution_skill: local_execution
+    node_profile: hard_gate
+    outputs: &id005
+    - artifacts/formal_check_report.md
+    required_local_reads: &id004
+    - docs/manuscript.md
+    - ../P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+    - ../P2_03_定稿_tex/artifacts/citation_registry.yaml
+    - ../P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_manifest.yaml
+    extra_status_updates: &id006
+    - progress_pct
+    node_mode: execution
+  research/P2_论文撰写/P2_05_去AI味道:
+    purpose: 做学术表达与主张校准，提升 clarity、precision、claim restraint 与跨领域可读性，保持证据边界不变。
+    default_delegate:
+      canonical_global_skill: deai_cn_skill
+    outputs:
+    - docs/manuscript.md
+    - artifacts/academic_expression_claim_calibration.md
+    required_local_reads:
+    - docs/manuscript.md
+    extra_status_updates:
+    - progress_pct
+    node_mode: standard
+  research/P3_论文模拟评审与修改_多轮:
+    purpose: 协调 `P3_论文模拟评审与修改_多轮` 子树推进，并把执行保持在子节点而不是父节点壳层。
+    default_delegate:
+      local_action_only: true
+    decision_rule:
+    - when: 存在明确 ready 的子节点
+      stop_with: route_child_first
+    - when: 当前父节点仅需更新协调状态
+      then: keep_default_delegate
+    extra_status_updates:
+    - progress_pct
+    outputs:
+    - artifacts/paper_iteration_gate.yaml
+    node_mode: parent
+  research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次:
+    purpose: 推进单轮评审或单轮 critique 生成，不扩成全 repo review 系统。
+    default_delegate:
+      canonical_global_skill: auto_review_loop
+    required_local_reads:
+    - ../prompts/standards.md
+    - ../../P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    outputs:
+    - artifacts/review_round_notes.md
+    node_mode: lite
+  research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案:
+    purpose: 收敛 EIC、method expert、domain expert、cross-disciplinary reader 与 devil's advocate reviewer lenses。
+    default_delegate:
+      canonical_global_skill: structured_map_builder
+    outputs:
+    - artifacts/reviewer_profile_map.yaml
+    - artifacts/reviewer_lens_matrix.yaml
+    - logs/session_manifest.yaml
+    required_local_reads:
+    - ../prompts/standards.md
+    node_mode: standard
+  research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要:
+    purpose: 把本节点 review / critique 压缩成 digest，而不是继续扩写评论正文。
+    default_delegate:
+      canonical_global_skill: aggregate_reviews
+    outputs:
+    - artifacts/critique_digest.yaml
+    - artifacts/review_issue_register.yaml
+    - logs/session_manifest.yaml
+    required_local_reads:
+    - ../prompts/standards.md
+    - review/
+    node_mode: standard
+  research/P3_论文模拟评审与修改_多轮/P3_04_修订动作:
+    purpose: 把批评摘要转成可执行修订动作图，而不是泛化成任意 revision 任务。
+    default_delegate:
+      canonical_global_skill: structured_map_builder
+    node_profile: hard_gate
+    outputs:
+    - artifacts/revision_action_map.yaml
+    required_local_reads:
+    - ../prompts/standards.md
+    node_mode: standard
+  research/P4_论文回复_response:
+    purpose: 协调 `P4_论文回复_response` 子树推进，并把执行保持在子节点而不是父节点壳层。
+    default_delegate:
+      local_action_only: true
+    decision_rule:
+    - when: 存在明确 ready 的子节点
+      stop_with: route_child_first
+    - when: 当前父节点仅需更新协调状态
+      then: keep_default_delegate
+    extra_status_updates:
+    - progress_pct
+    node_mode: parent
+  research/P4_论文回复_response/P4_01_审稿意见收集:
+    purpose: 收集并压缩当前 node 的审稿意见，形成后续映射输入。
+    default_delegate:
+      canonical_global_skill: aggregate_reviews
+    outputs:
+    - artifacts/review_comment_register.yaml
+    node_mode: standard
+  research/P4_论文回复_response/P4_02_问题映射矩阵:
+    purpose: 把审稿问题映射成局部矩阵，而不是继续堆叠原始评论。
+    default_delegate:
+      local_wrapper_skill: local_wrapper
+    outputs:
+    - artifacts/question_mapping_matrix.yaml
+    node_mode: standard
+  research/P4_论文回复_response/P4_03_逐点回复草稿_md:
+    purpose: 推进逐点回复草稿，保持一条评论对应一条局部 response 逻辑。
+    default_delegate:
+      canonical_global_skill: response_worker
+    outputs:
+    - docs/manuscript.md
+    - artifacts/response_items.yaml
+    - logs/session_manifest.yaml
+    required_local_reads:
+    - ../../P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    - ../P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+    node_mode: lite
+  research/P4_论文回复_response/P4_04_正式回复_tex_或_doc:
+    purpose: 把当前回复草稿同步到正式 export 目标。
+    default_delegate:
+      local_wrapper_skill: local_wrapper
+    outputs:
+    - artifacts/response_letter.tex
+    node_mode: standard
+  research/P4_论文回复_response/P4_05_覆盖检查:
+    purpose: 检查当前 response node 对评论与证据的覆盖情况。
+    default_delegate:
+      local_wrapper_skill: local_wrapper
+    node_profile: hard_gate
+    outputs:
+    - artifacts/coverage_check_report.yaml
+    required_local_reads:
+    - ../P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+    - ../P4_03_逐点回复草稿_md/docs/manuscript.md
+    node_mode: standard
+  research/P4_论文回复_response/P4_06_修改证据:
+    purpose: 把局部修改证据压缩成可引用的证据映射。
+    default_delegate:
+      local_wrapper_skill: local_wrapper
+    outputs:
+    - artifacts/revision_evidence_map.yaml
+    required_local_reads:
+    - ../P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+    - ../P4_03_逐点回复草稿_md/docs/manuscript.md
+    - ../../P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    node_mode: standard
+  research/P4_论文回复_response/P4_07_再投稿打包:
+    purpose: 执行一次有界再投稿打包检查，核对 submission bundle consistency、citation registry、figure manifest、venue requirements 并生成 bundle manifest。
+    default_delegate:
+      local_execution_skill: local_execution
+    node_profile: hard_gate
+    outputs: &id008
+    - artifacts/resubmission_bundle_manifest.yaml
+    required_local_reads: &id007
+    - ../../P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    - ../P4_04_正式回复_tex_或_doc/artifacts/response_letter.tex
+    - ../P4_06_修改证据/artifacts/revision_evidence_map.yaml
+    - artifacts/evidence_registry.yaml
+    - artifacts/submission_metadata.yaml
+    - ../../P2_论文撰写/P2_03_定稿_tex/artifacts/citation_registry.yaml
+    - ../../P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_manifest.yaml
+    - ../../P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+    - artifacts/figures/
+    - artifacts/tables/
+    extra_status_updates: &id009
+    - progress_pct
+    node_mode: execution
+wrappers:
+  research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证:
+    purpose: 为 auto_experiment_worker 绑定本地 contract、ledger 与日志路径。
+    canonical_target: auto_experiment_worker
+    execution_profile: experiment_execution
+    required_local_reads:
+    - artifacts/execution_contract.yaml
+    optional_local_reads:
+    - docs/manuscript.md
+    io_contract:
+      inputs:
+      - artifacts/execution_contract.yaml
+      outputs:
+      - artifacts/auto_experiment/results.tsv
+      - logs/auto_experiment/latest_run.log
+    extra_status_updates:
+    - lifecycle.stage
+    - progress_pct
+  research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议:
+    purpose: 为 structured_map_builder 绑定协议图与实验严谨性计划的本地输入输出。
+    canonical_target: structured_map_builder
+    required_local_reads:
+    - docs/manuscript.md
+    io_contract:
+      inputs:
+      - docs/manuscript.md
+      outputs:
+      - artifacts/protocol_map.yaml
+      - artifacts/experiment_rigor_plan.yaml
+    extra_status_updates:
+    - progress_pct
+  research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格:
+    purpose: 为 structured_map_builder 绑定表格计划与 claim map 的本地路径。
+    canonical_target: structured_map_builder
+    required_local_reads:
+    - docs/manuscript.md
+    io_contract:
+      inputs:
+      - docs/manuscript.md
+      outputs:
+      - artifacts/table_plan.yaml
+      - artifacts/claim_map.yaml
+    extra_status_updates:
+    - progress_pct
+  research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿:
+    purpose: 为 paper_figure 绑定 figure plan、claim map 与 figures 输出路径。
+    canonical_target: paper_figure
+    required_local_reads:
+    - docs/manuscript.md
+    - ../P1_08_预期结果与表格/artifacts/claim_map.yaml
+    - artifacts/figure_plan.yaml
+    io_contract:
+      inputs:
+      - docs/manuscript.md
+      - ../P1_08_预期结果与表格/artifacts/claim_map.yaml
+      - artifacts/figure_plan.yaml
+      outputs:
+      - artifacts/figure_plan.yaml
+      - artifacts/claim_figure_map.yaml
+      - artifacts/figure_manifest.yaml
+      - figures/
+    extra_status_updates:
+    - progress_pct
+  research/P2_论文撰写/P2_03_定稿_tex:
+    purpose: 为 draft_export_sync 绑定 manuscript -> tex/main.tex 的局部同步目标。
+    canonical_target: draft_export_sync
+    required_local_reads:
+    - docs/manuscript.md
+    - section_map.yaml
+    - sync_map.yaml
+    io_contract:
+      inputs:
+      - docs/manuscript.md
+      - section_map.yaml
+      - sync_map.yaml
+      outputs:
+      - tex/main.tex
+  research/P4_论文回复_response/P4_02_问题映射矩阵:
+    purpose: 为 structured_map_builder 绑定审稿问题映射矩阵的本地工件路径。
+    canonical_target: structured_map_builder
+    required_local_reads:
+    - artifacts/review_comment_register.yaml
+    io_contract:
+      inputs:
+      - artifacts/review_comment_register.yaml
+      outputs:
+      - artifacts/question_mapping_matrix.yaml
+  research/P4_论文回复_response/P4_04_正式回复_tex_或_doc:
+    purpose: 为 draft_export_sync 绑定 response draft -> response letter 的局部导出目标。
+    canonical_target: draft_export_sync
+    required_local_reads:
+    - docs/manuscript.md
+    io_contract:
+      inputs:
+      - docs/manuscript.md
+      outputs:
+      - artifacts/response_letter.tex
+  research/P4_论文回复_response/P4_05_覆盖检查:
+    purpose: 为 response_coverage_check 绑定 mapping、response 与 report 路径。
+    canonical_target: response_coverage_check
+    required_local_reads:
+    - ../P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+    - ../P4_03_逐点回复草稿_md/docs/manuscript.md
+    io_contract:
+      inputs:
+      - ../P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+      - ../P4_03_逐点回复草稿_md/docs/manuscript.md
+      outputs:
+      - artifacts/coverage_check_report.yaml
+  research/P4_论文回复_response/P4_06_修改证据:
+    purpose: 为 structured_map_builder 绑定修改证据映射的本地输入输出。
+    canonical_target: structured_map_builder
+    required_local_reads:
+    - ../P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+    - ../P4_03_逐点回复草稿_md/docs/manuscript.md
+    - ../../P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    io_contract:
+      inputs:
+      - ../P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+      - ../P4_03_逐点回复草稿_md/docs/manuscript.md
+      - ../../P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+      outputs:
+      - artifacts/revision_evidence_map.yaml
+executions:
+  research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理:
+    purpose: 收敛初步验证结果、证据状态与结论边界。
+    execution_profile: result_synthesis
+    required_inputs:
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+    required_local_reads: *id001
+    optional_local_reads:
+    - docs/manuscript.md
+    outputs: *id002
+    extra_status_updates: *id003
+    stop_conditions:
+    - missing_results_tsv
+    - evidence_still_incoherent
+  research/P2_论文撰写/P2_04_形式检查:
+    purpose: 执行一次有界形式检查，只输出高置信格式问题。
+    required_inputs:
+    - docs/manuscript.md
+    required_local_reads: *id004
+    outputs: *id005
+    extra_status_updates: *id006
+    stop_conditions:
+    - missing_manuscript
+    - target_format_unspecified
+  research/P4_论文回复_response/P4_07_再投稿打包:
+    purpose: 执行一次有界再投稿打包检查并生成 bundle manifest。
+    required_inputs:
+    - ../../P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    - ../P4_04_正式回复_tex_或_doc/artifacts/response_letter.tex
+    - ../P4_06_修改证据/artifacts/revision_evidence_map.yaml
+    - artifacts/evidence_registry.yaml
+    - artifacts/submission_metadata.yaml
+    - ../../P2_论文撰写/P2_03_定稿_tex/artifacts/citation_registry.yaml
+    - ../../P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_manifest.yaml
+    - ../../P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+    - artifacts/figures/
+    - artifacts/tables/
+    required_local_reads: *id007
+    outputs: *id008
+    extra_status_updates: *id009
+    stop_conditions:
+    - missing_submission_assets
+    - naming_inconsistency_detected

@@ -1,0 +1,145 @@
+node_id: research::P0_项目申请书::P0_01_研究背景与调研
+node_path: research/P0_项目申请书/P0_01_研究背景与调研
+phase: P0
+node_kind: leaf
+prompt_assets:
+- path: prompts/research_prompt.md
+  status: required
+- path: prompts/acceptance_checklist.yaml
+  status: required
+- path: prompts/standards.md
+  status: optional
+- path: prompts/review_rubric.yaml
+  status: required
+required_questions_answered:
+- item: 当前领域的主线问题是什么？
+  status: pending
+- item: 已有方法各自解决了什么、没解决什么？
+  status: pending
+- item: 本工作真正要填补的 gap 是什么，而不是泛泛的 '还有不足'？
+  status: pending
+required_outputs:
+- path: docs/manuscript.md 中的背景与相关工作草稿
+  status: pending
+  description: 需由本节点形成或更新
+- path: 研究 gap 的一句话版本
+  status: pending
+  description: 需由本节点形成或更新
+- path: docs/manuscript.md
+  description: profile-required local artifact
+- path: artifacts/literature_gap_map.yaml
+  description: profile-required local artifact
+quality_checks:
+- item: 围绕 significance、gap、hypothesis/aims、expected outcomes、impact、feasibility 组织内容
+  status: pending
+- item: 避免空泛承诺，优先 reviewer 可快速判断的清晰目标
+  status: pending
+- item: 从重要问题出发，而不是从工具或方法名出发
+  status: pending
+- item: 背景综述应服务于问题收敛，不做无边界堆砌
+  status: pending
+- item: author draft 应先满足 author_exit，再交给独立 reviewer agent 基于 `prompts/review_rubric.yaml`
+    评审。
+  status: pending
+- item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
+  status: pending
+author_exit:
+- item: docs/manuscript.md 已形成背景与相关工作草稿
+  status: pending
+- item: 当前领域主线问题已被压缩成清晰问题背景
+  status: pending
+- item: 至少明确 1 个核心 gap 与 2–4 个相关工作簇
+  status: pending
+- item: 本节点研究边界已说明，且没有扩张到 P1/P2/P3/P4
+  status: pending
+- item: 'required_artifacts_exist: true'
+  status: pending
+- item: 'key_research_judgment_answered_or_gap_reported: true'
+  status: pending
+- item: 'citation_status_checked_when_external_sources_are_used: true'
+  status: pending
+handoff_ready_if:
+- item: 背景段落能自然导向具体问题
+  status: pending
+- item: 至少明确 1 个核心 gap 与 2–4 个相关工作簇
+  status: pending
+- item: 不再只是资料罗列
+  status: pending
+- item: 独立 reviewer agent 已生成 `review/verdict.yaml`
+  status: pending
+- item: '`review/verdict.yaml` 中 `review_complete == true`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `hard_fail == false`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
+  status: pending
+node_close:
+- item: 独立 reviewer agent 已生成 `review/verdict.yaml`
+  status: pending
+- item: '`review/verdict.yaml` 中 `review_complete == true`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `hard_fail == false`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
+  status: pending
+- item: 'review/verdict.yaml:review_complete: true'
+  status: pending
+- item: 'review/verdict.yaml:overall_verdict: pass'
+  status: pending
+- item: 'review/verdict.yaml:hard_fail: false'
+  status: pending
+- item: 'review/verdict.yaml:independence_confirmed: true'
+  status: pending
+stop_if:
+- item: 缺关键输入或关键证据
+  status: pending
+- item: 本节点范围不清或越出节点职责
+  status: pending
+- item: 必须依赖的上游节点尚未就绪
+  status: pending
+- item: 当前 stage 为 review_requested 但缺少 `prompts/review_rubric.yaml`
+  status: pending
+- item: 当前 stage 为 revise 但缺少 `review/verdict.yaml`
+  status: pending
+- item: 缺少独立 reviewer verdict (`review/verdict.yaml`)
+  status: pending
+- item: 独立 reviewer verdict 尚未完成 (`review_complete != true`)
+  status: pending
+- item: 独立 reviewer 判定为 `revise` 或 `block`
+  status: pending
+- item: 独立 reviewer 提出 hard fail 且未关闭
+  status: pending
+- item: 缺少本节点关键研究判断，或把未验证引用/证据写成确定事实。
+  status: pending
+- item: 作者退出条件与节点关闭条件混用，导致未评审内容伪装完成。
+  status: pending
+review_notes:
+- slot: 1
+  note: <待填写>
+- slot: 2
+  note: <待填写>
+external_review_gate:
+  required: true
+  reviewer_role: external_node_reviewer
+  reviewer_agent_must_be_distinct: true
+  rubric_path: prompts/review_rubric.yaml
+  verdict_path: review/verdict.yaml
+  pass_condition:
+    review_complete: true
+    overall_verdict: pass
+    hard_fail: false
+    independence_confirmed: true
+  required_reviewer_inputs:
+  - README.md
+  - status.yaml
+  - prompts/research_prompt.md
+  - prompts/acceptance_checklist.yaml
+  - prompts/review_rubric.yaml
+  - docs/manuscript.md 中的背景与相关工作草稿
+  - 研究 gap 的一句话版本
+  - docs/manuscript.md
+  - artifacts/literature_gap_map.yaml

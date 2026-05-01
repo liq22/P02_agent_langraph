@@ -1,0 +1,31 @@
+artifact: artifacts/review_issue_register.yaml
+version: "0.1"
+description: P3-local register of critique issues. Blocking issue labels require claim/evidence/location/actionable fix.
+top_level:
+  issues: list
+required_fields:
+  issue:
+    - issue_id
+    - critique_id
+    - triage_class
+    - severity
+    - claim_id
+    - evidence_id
+    - location
+    - actionable_fix
+    - status
+allowed_values:
+  triage_class:
+    - blocking
+    - non_blocking
+    - cosmetic
+  severity:
+    - fatal
+    - major
+    - minor
+  status:
+    - open
+    - resolved
+    - duplicated
+field_semantics:
+  blocking: Workflow blocker with concrete claim, evidence, location, and fix. Vague critique must remain advisory.

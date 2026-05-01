@@ -1,0 +1,35 @@
+artifact: artifacts/literature_gap_map.yaml
+version: "0.1"
+description: Node-local audit trail for prior work, true gap, novelty boundary, and falsifiable question. Structure validity is not proof of originality.
+top_level:
+  gaps: list
+required_fields:
+  gap:
+    - gap_id
+    - gap_statement
+    - nearest_prior_work
+    - citation_refs
+    - novelty_boundary
+    - falsifiable_question
+    - evidence_status
+    - action
+allowed_values:
+  evidence_status:
+    - supported
+    - weak
+    - pending
+    - contradicted
+  action:
+    - keep
+    - revise_claim
+    - block_handoff
+submission_hard_blocks:
+  evidence_status:
+    - pending
+    - contradicted
+  action:
+    - block_handoff
+field_semantics:
+  nearest_prior_work: Representative papers, surveys, or systems that define the closest baseline for this gap.
+  novelty_boundary: What is new relative to the nearest prior work, not a broad promotional claim.
+  falsifiable_question: The research question or hypothesis that can later be tested or falsified.

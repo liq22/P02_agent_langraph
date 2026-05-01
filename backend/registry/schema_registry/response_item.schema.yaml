@@ -1,0 +1,10 @@
+type: object
+required:
+  - response_id
+  - critique_ref
+  - status
+properties:
+  response_id: {type: string}
+  critique_ref: {type: string}
+  evidence_ref: {type: string}
+  status: {enum: [draft, covered, synced]}

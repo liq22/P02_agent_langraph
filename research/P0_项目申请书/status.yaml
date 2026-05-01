@@ -1,0 +1,21 @@
+lifecycle:
+  stage: seed
+progress_pct: 0
+child_status:
+  P0_01_研究背景与调研: seed
+  P0_02_研究挑战与科学问题_工程问题: seed
+  P0_03_研究内容与创新点: seed
+  P0_04_技术路线_研究计划_OKR: seed
+  P0_05_项目约束_资源预算_风险边界: seed
+rollup:
+  ready_children: 0
+  total_children: 5
+  all_children_ready: false
+review_gate:
+  ai_review_count: 0
+  human_review_count: 0
+  all_comments_responded: false
+can_enter_fix: false
+heartbeat_at: 2026-04-10
+last_actor: system
+author_agent_id: <pending-author-agent>

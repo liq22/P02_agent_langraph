@@ -1,0 +1,18 @@
+policy_version: "0.2"
+node_path:
+node_mode:
+node_profile:
+phase:
+scores:
+  research_quality:
+  smoothness:
+complexity_penalty:
+  L_excess:
+  R_dup:
+  value:
+final_score:
+hard_caps: []
+evidence:
+  files: []
+review_notes:
+next_action:

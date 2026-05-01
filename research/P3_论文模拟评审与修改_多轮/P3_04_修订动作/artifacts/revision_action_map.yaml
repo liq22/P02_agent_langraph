@@ -1,0 +1,56 @@
+actions:
+- action_id: action-p3-001
+  issue_id: issue-p3-001
+  claim_id: claim-core-placeholder-main-manuscript
+  evidence_id: ev-missing-manuscript-body
+  target_phase: P2
+  target_node: research/P2_论文撰写/P2_03_定稿_tex
+  target_path: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+  target_location: document body
+  action_type: manuscript_revision
+  expected_evidence:
+  - claim_evidence_registry
+  - result_registry
+  - figure_table_provenance
+  actionable_fix: Replace placeholder TeX with evidence-backed manuscript sections after P1 evidence blockers are resolved.
+  verification: Re-run P3 paper iteration gate and confirm central claims, evidence ids, figure/table callouts, and limitations are traceable.
+  validation_gate: P3 paper_iteration_gate plus external reviewer verdict
+  next_iteration_trigger: manuscript body no longer placeholder and central claims have evidence ids
+  status: blocked
+- action_id: action-p3-002
+  issue_id: issue-p3-002
+  claim_id: claim-core-validation-result
+  evidence_id: ev-missing-p1-04-results-ledger
+  target_phase: P1
+  target_node: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证
+  target_path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+  target_location: results ledger
+  action_type: evidence_generation_or_blocker_confirmation
+  expected_evidence:
+  - executable experiment contract
+  - result ledger rows
+  - keep_discard decision
+  actionable_fix: Generate the missing P1_04 results ledger or record a durable blocker; then update P1_05 result_registry and hypothesis_status.
+  verification: P1_05 no longer reports `blocked_missing_p104_ledger` and paper claims reference concrete result ids.
+  validation_gate: P1 result synthesis acceptance and P3 issue recheck
+  next_iteration_trigger: result_registry contains supported or explicitly negative evidence with ledger anchors
+  status: planned
+- action_id: action-p3-003
+  issue_id: issue-p3-003
+  claim_id: claim-figure-main-result
+  evidence_id: ev-figure-provenance-missing
+  target_phase: P1
+  target_node: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿
+  target_path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_plan.yaml
+  target_location: figures.fig_main
+  action_type: figure_provenance_mapping
+  expected_evidence:
+  - evidence_ref
+  - claim_ref
+  - caption_obligation
+  - first_callout_location
+  actionable_fix: Bind `fig_main` to a verified result claim, evidence source, caption, and manuscript callout before it enters P2.
+  verification: Figure plan includes provenance fields and P2 manuscript first-callout location.
+  validation_gate: P3 figure/table gate
+  next_iteration_trigger: figure plan can be audited from claim to evidence to manuscript callout
+  status: planned

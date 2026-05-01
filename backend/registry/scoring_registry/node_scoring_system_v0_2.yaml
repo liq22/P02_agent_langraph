@@ -1,0 +1,62 @@
+version: "0.2"
+goal: Score each node on research quality, stable local-path behavior, and unnecessary complexity without writing score data into graph projections.
+layers:
+  research_quality:
+    total: 100
+    common:
+      question_value_and_significance: 10
+      scope_precision: 8
+      core_question_or_claim_precision: 8
+      method_problem_fit: 10
+      evidence_chain_and_falsifiability: 12
+      reproducibility_or_executability: 8
+      artifact_quality_and_compression: 7
+      handoff_readiness: 4
+      risk_honesty_and_stop_mechanism: 3
+    phase_specific:
+      P0:
+        significance_gap_precision: 10
+        aims_innovation_discrimination: 10
+        feasibility_resource_risk: 10
+      P1:
+        protocol_quality: 10
+        metric_quality: 10
+        artifact_reproducibility_contract: 10
+      P2:
+        claim_evidence_alignment: 10
+        narrative_path_and_structure: 10
+        formal_quality_and_figure_logic: 10
+      P3:
+        critique_fidelity: 10
+        revision_actionability: 10
+        reviewer_robustness: 10
+      P4:
+        comment_response_completeness: 10
+        evidence_traceability: 10
+        submission_integrity: 10
+  smoothness:
+    total: 100
+    dimensions:
+      path_length: 20
+      inter_layer_duplication: 20
+      default_next_hop_clarity: 15
+      prompt_asset_truth_clarity: 15
+      stop_reason_clarity: 10
+      worker_boundary_clarity: 10
+      expected_handoff_success: 10
+complexity_penalty:
+  formula: C_penalty = alpha * L_excess + beta * R_dup
+  alpha: 3
+  beta: 2
+  definitions:
+    L_excess: number of layers beyond what node_mode requires
+    R_dup: duplication severity scored from 0 to 5
+final_formula: S_final = S_research + lambda * S_smooth - C_penalty
+lambda: 0.3
+usage_rules:
+  - Score all nodes with the same backbone rubric before role-specific interpretation.
+  - Treat each scorecard as selected-node local: the node must have a stable low-friction path through entry files, optional wrapper or execution files, worker handoff, evidence, and update boundary.
+  - Include node_mode in every scorecard.
+  - Penalize lite nodes that carry SOP or other execution-tier layers.
+  - Penalize execution nodes that lack SOP, declared binder, or required contract/result evidence.
+  - Keep scorecards node-local or under review artifacts; never write scores into graph.json or graph_status.json.

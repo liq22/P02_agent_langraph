@@ -1,0 +1,65 @@
+{
+  "nodes": [
+    {
+      "id": "gen:workbench:group",
+      "type": "group",
+      "label": "Framework workbench (manual)",
+      "x": -460,
+      "y": -180,
+      "width": 1480,
+      "height": 520,
+      "color": "6"
+    },
+    {
+      "id": "gen:workbench:methods",
+      "type": "text",
+      "text": "# Method sketches\n\nDraft exploratory method ideas here. Promote accepted changes through the inbox.",
+      "x": -420,
+      "y": -100,
+      "width": 360,
+      "height": 180,
+      "color": "6"
+    },
+    {
+      "id": "gen:workbench:skills",
+      "type": "text",
+      "text": "# Skill ideas\n\nKeep skill proposals here until they are ready for `.agent/skills/` or node-local `skills/`.",
+      "x": 0,
+      "y": -100,
+      "width": 360,
+      "height": 180,
+      "color": "6"
+    },
+    {
+      "id": "gen:workbench:relations",
+      "type": "text",
+      "text": "# Relation / framework proposals\n\nDo not treat Canvas lines as canonical edges. Write accepted proposals to the inbox.",
+      "x": 420,
+      "y": -100,
+      "width": 360,
+      "height": 180,
+      "color": "6"
+    },
+    {
+      "id": "gen:workbench:inbox",
+      "type": "file",
+      "file": "obsidian/inbox/canvas_proposals.md",
+      "x": -420,
+      "y": 120,
+      "width": 520,
+      "height": 160,
+      "color": "5"
+    },
+    {
+      "id": "gen:workbench:workflow",
+      "type": "file",
+      "file": "docs/architecture/obsidian_canvas_workflow.md",
+      "x": 140,
+      "y": 120,
+      "width": 520,
+      "height": 160,
+      "color": "5"
+    }
+  ],
+  "edges": []
+}

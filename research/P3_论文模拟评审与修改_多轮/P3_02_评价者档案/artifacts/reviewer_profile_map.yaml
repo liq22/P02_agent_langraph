@@ -1,0 +1,15 @@
+round_id: p3-round-001
+profiles:
+- profile_id: method_reproducibility_reviewer
+  lens_refs:
+  - method_expert
+  - reproducibility_skeptic
+  priority: high
+  expected_output: issues about missing experiment evidence, protocol gaps, and reproducibility blockers
+- profile_id: broad_interest_editorial_reviewer
+  lens_refs:
+  - eic
+  - cross_disciplinary_reader
+  - devils_advocate
+  priority: high
+  expected_output: issues about placeholder manuscript, unsupported novelty, and unclear paper story

@@ -1,0 +1,14 @@
+type: object
+required:
+  - critique_id
+  - reviewer
+  - severity
+  - status
+properties:
+  critique_id: {type: string}
+  reviewer: {type: string}
+  theme: {type: string}
+  severity: {enum: [low, medium, high]}
+  status: {enum: [unresolved, resolved, duplicated]}
+  response_item_ref: {type: string}
+  evidence_ref: {type: string}

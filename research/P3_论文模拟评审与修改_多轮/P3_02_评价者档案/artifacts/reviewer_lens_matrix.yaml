@@ -1,0 +1,73 @@
+round_id: p3-round-001
+manuscript_snapshot: p2-03-main-tex-2026-04-20
+lenses:
+- lens_id: eic
+  reviewer_role: editor_in_chief
+  primary_attack_surface: central contribution, broad interest, why-now pressure, and overclaiming
+  required_evidence:
+  - one_sentence_contribution
+  - positioning_against_strong_baselines
+  - paper_ready_result_summary
+  hard_fail_conditions:
+  - manuscript remains placeholder
+  - contribution cannot be stated without unsupported claims
+  - submission readiness is claimed while blockers remain open
+- lens_id: method_expert
+  reviewer_role: method_and_experiment_reviewer
+  primary_attack_surface: method soundness, baselines, metrics, ablations, and uncertainty
+  required_evidence:
+  - execution_contract
+  - result_registry
+  - hypothesis_status
+  - keep_discard_decision
+  hard_fail_conditions:
+  - missing upstream results ledger
+  - unsupported performance or mechanism claim
+  - no reproducible protocol for the key experiment
+- lens_id: domain_expert
+  reviewer_role: domain_reviewer
+  primary_attack_surface: novelty boundary, nearest prior work, and domain-specific failure modes
+  required_evidence:
+  - literature_gap_map
+  - strongest_baselines_list
+  - limitation_and_negative_result_notes
+  hard_fail_conditions:
+  - novelty is only a feature list
+  - nearest prior work is not identified
+  - limitations or negative results are hidden
+- lens_id: cross_disciplinary_reader
+  reviewer_role: broad_reader
+  primary_attack_surface: clarity, problem pressure, section role, and figure/table self-explanation
+  required_evidence:
+  - introduction_thesis
+  - figure_plan
+  - table_plan
+  - section_skim_path
+  hard_fail_conditions:
+  - manuscript body is absent
+  - figures or tables do not map to claims
+  - reader cannot tell why the work matters
+- lens_id: reproducibility_skeptic
+  reviewer_role: reproducibility_reviewer
+  primary_attack_surface: data, code, configuration, run logs, and artifact traceability
+  required_evidence:
+  - data_lineage
+  - run_log
+  - result_ledger
+  - configuration_record
+  hard_fail_conditions:
+  - data or code path cannot be inspected
+  - result ledger is missing
+  - claimed experiment cannot be rerun
+- lens_id: devils_advocate
+  reviewer_role: adversarial_reviewer
+  primary_attack_surface: alternative explanations, hidden null results, citation mismatch, and rhetorical overclaiming
+  required_evidence:
+  - failure_register
+  - negative_result_note
+  - citation_verification
+  - claim_evidence_registry
+  hard_fail_conditions:
+  - central claim has no evidence id
+  - citation cannot support the claim it is attached to
+  - prose resolves an evidence gap without new evidence

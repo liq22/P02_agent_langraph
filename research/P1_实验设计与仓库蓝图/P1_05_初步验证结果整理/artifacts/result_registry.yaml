@@ -1,0 +1,9 @@
+results:
+- result_id: blocked_missing_p104_ledger
+  status: unclear
+  source_ledger: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+  ledger_rows: []
+  evidence: Upstream P1_04 results ledger has not been generated, so no improvement
+    claim is supported.
+  claim_impact: Do not promote any validation claim into manuscript text.
+  blocking_gap: missing_upstream_results_tsv

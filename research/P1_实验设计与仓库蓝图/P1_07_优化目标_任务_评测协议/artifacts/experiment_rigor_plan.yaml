@@ -1,0 +1,74 @@
+node_path: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议
+research_anchor: AutoResearch as a human-agent research operating system
+protocol_id: fixed_node_set_controlled_comparison_v1
+objective:
+  statement: Evaluate whether AutoResearch improves auditability and phase-transition discipline in research-node production.
+  boundary: This protocol evaluates research-process quality, not domain-model performance.
+primary_outcome:
+  name: claim_evidence_validity_rate
+  direction: maximize
+  numerator: claims with valid claim_id, evidence_id, artifact path, citation status, boundary, and reviewer/human-gate status
+  denominator: all eligible proposal, manuscript, review, and response claims in the fixed node set
+  success_criterion: AutoResearch exceeds preregistered baselines under identical node set, budget, rubric, and audit procedure while reporting uncertainty and failure cases.
+secondary_outcomes:
+  - protocol_completeness
+  - independent_reviewer_pass_rate
+  - reproducibility_rerun_agreement
+  - unsupported_claim_count
+  - hard_fail_closure_rate
+  - human_gate_escalation_rate
+  - time_to_author_exit
+task_families:
+  - id: p0_problem_formulation
+    input: research prompt, acceptance checklist, related-work notes
+    output: gap map, candidate claims, innovation boundary, evidence gate
+    success_criterion: each research content unit maps to problem, prior-work boundary, evidence, and downgrade rule
+  - id: p1_protocol_design
+    input: candidate claims and research object
+    output: protocol_map, metrics, baselines, repeat plan, uncertainty plan, negative result policy
+    success_criterion: objective, task, protocol, metrics, baseline, and artifact path are aligned
+  - id: p2_methods_and_claim_registry
+    input: protocol and available evidence artifacts
+    output: methods draft, claim_evidence_registry, data-code/protocol availability statements, limitation boundary
+    success_criterion: a reviewer can reproduce data, parameters, statistics, and code path from the method record
+  - id: p3_p4_review_response
+    input: manuscript version, reviewer comments, evidence registry
+    output: critique severity map, revision actions, point-to-point response, coverage check
+    success_criterion: every fatal or major concern maps to evidence, location, action, and response status
+baselines:
+  - id: manual_checklist_workflow
+    role: human-process baseline
+    required_record: manual operation ledger, elapsed time, evidence artifact list, reviewer verdict
+  - id: prompt_only_agent_workflow
+    role: text-generation baseline
+    required_record: prompt, output, budget, reviewer verdict, unsupported claim count
+  - id: agent_without_independent_gate
+    role: gate ablation
+    required_record: same node contract without independent reviewer or human gate
+fair_comparison_controls:
+  - identical fixed node set
+  - identical acceptance checklist and review rubric
+  - identical time or token budget
+  - identical artifact audit procedure
+  - identical primary and secondary metric definitions
+repeat_and_uncertainty:
+  repeat_unit: random seed or independent reviewer assignment
+  minimum_report: point estimate plus confidence interval or bootstrap interval
+  low_power_policy: if repeat budget is insufficient, report limitation and block strong result claims
+failure_cases:
+  - missing_baseline_record
+  - missing_metric_definition
+  - missing_repeat_or_uncertainty
+  - unsupported_claim_without_boundary
+  - reviewer_hard_fail_without_actionable_fix
+  - author_exit_used_as_node_close
+required_artifacts:
+  - artifacts/protocol_map.yaml
+  - artifacts/gate_report.md
+  - artifacts/experiment_rigor_plan.yaml
+  - future_artifacts/result_ledger.yaml
+  - future_review/verdict.yaml
+  - future_logs/coverage_matrix.md
+author_exit:
+  gate_inputs_verified: true
+  blocking_gaps_are_explicit: true

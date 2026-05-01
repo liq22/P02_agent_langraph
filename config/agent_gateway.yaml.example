@@ -1,0 +1,33 @@
+# This example is also the default runnable config when the referenced binaries exist.
+# Copy it to config/agent_gateway.yaml only when you need local overrides.
+# Each command is a template list. "{prompt}" will be replaced by the run prompt.
+# "{cwd}" will be replaced by the working directory for the selected node when provided.
+
+host: 127.0.0.1
+port: 8765
+poll_interval_ms: 2000
+default_agent: codex
+
+agents:
+  codex:
+    label: Codex CLI
+    command:
+      - codex
+      - exec
+      - "{prompt}"
+    cwd_mode: node
+  claude_code:
+    # Optional teammate entry. It is used only when the local `claude` binary is installed.
+    label: Claude Code
+    command:
+      - claude
+      - -p
+      - "{prompt}"
+    cwd_mode: node
+  wrapper:
+    label: Local Wrapper
+    command:
+      - bash
+      - -lc
+      - "./scripts/run_worker.sh '{prompt}'"
+    cwd_mode: repo

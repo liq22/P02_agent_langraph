@@ -1,0 +1,19 @@
+aliases:
+  autonomous-lane: autonomous_research_lane
+  autonomous-research-lane: autonomous_research_lane
+  autoresearch-system-optimizer-lane: autoresearch-system-optimizer
+  auto-research-campaign: auto_research_campaign
+  citation-check: citation_verifier
+  citation-verifier: citation_verifier
+  citation_verify: citation_verifier
+  system-optimization-loop: autoresearch-system-optimizer
+  system-optimizer: autoresearch-system-optimizer
+  paper-figure: paper_figure
+  result-to-claim: result_to_claim
+  auto-review-loop: auto_review_loop
+  auto-review-loop-llm: auto_review_loop
+  auto-review-loop-minimax: auto_review_loop
+  md_to_tex_sync: draft_export_sync
+  paper-write: manuscript_worker
+  paper-writing: manuscript_worker
+  rebuttal: response_worker

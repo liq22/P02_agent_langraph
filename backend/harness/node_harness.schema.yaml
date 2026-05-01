@@ -1,0 +1,66 @@
+# Node Harness Schema v0.1
+# 用途：定义一个 research node 的可评测执行契约。
+
+required_fields:
+  - node_id
+  - node_path
+  - task_type
+  - inputs
+  - allowed_actions
+  - expected_outputs
+  - validators
+  - scorecard
+  - human_gate
+  - stop_rules
+
+fields:
+  node_id:
+    type: string
+    description: 节点唯一标识。
+  node_path:
+    type: string
+    description: 相对仓库根目录的节点路径。
+  stage:
+    type: string
+    optional: true
+    description: draft / review / revision / final 等生命周期状态。
+  task_type:
+    type: enum
+    values:
+      - proposal_node
+      - experiment_node
+      - manuscript_node
+      - review_node
+      - response_node
+      - generic_node
+  inputs:
+    type: object
+    required:
+      - required_files
+  allowed_actions:
+    type: object
+    required:
+      - can_modify
+      - cannot_modify
+  expected_outputs:
+    type: object
+    required:
+      - primary
+  validators:
+    type: list
+    item_schema:
+      id: string
+      required: boolean
+      weight: number_optional
+  scorecard:
+    type: object
+    required:
+      - pass_threshold
+      - dimensions
+  human_gate:
+    type: object
+    required:
+      - required_before_stage_change
+      - protected_files
+  stop_rules:
+    type: list

@@ -1,0 +1,16 @@
+type: object
+required:
+  - data_id
+  - mode
+  - storage_ref
+properties:
+  data_id:
+    type: string
+  mode:
+    enum: [centralized_data, submodule_ref_data, hybrid_data]
+  storage_ref:
+    type: string
+  split_policy:
+    type: string
+  lineage_ref:
+    type: string

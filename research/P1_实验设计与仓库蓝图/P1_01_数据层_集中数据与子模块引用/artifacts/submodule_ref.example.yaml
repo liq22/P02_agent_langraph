@@ -1,0 +1,6 @@
+repo_name: PHMbench
+role: data_provider
+ref: "@submodule_repo:PHMbench"
+branch: main
+path_hint: datasets/vibration
+boundary: 只复用预处理逻辑与评测协议，不复制上游原始数据

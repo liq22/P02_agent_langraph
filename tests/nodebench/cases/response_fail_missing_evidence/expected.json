@@ -1,0 +1,4 @@
+{
+  "passed": false,
+  "blocking_validator": "response_coverage_check"
+}

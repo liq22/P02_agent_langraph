@@ -1,0 +1,39 @@
+required_one_of:
+- default_delegate
+- stop_with
+required_fields:
+- skill_id
+- purpose
+optional_fields:
+- default_delegate
+- decision_rule
+- required_prompt_refs
+- required_local_reads
+- optional_local_reads
+- outputs
+- extra_status_updates
+- stop_with
+field_semantics:
+  skill_id: Stable local identifier derived from the node path.
+  purpose: Node-specific local routing responsibility.
+  default_delegate: Exactly one default worker path; not a menu.
+  decision_rule: Only declare real local branching conditions.
+  required_prompt_refs: Prompt assets the entry must read before delegation.
+  required_local_reads: Files beyond the implicit default local reads that must be loaded in the default read order.
+  optional_local_reads: Files that may be loaded only when they materially change the bounded round.
+  outputs: Node-specific outputs beyond the implicit status writeback.
+  extra_status_updates: Only status fields beyond heartbeat_at and last_actor.
+  stop_with: Explicit local stop reason when no worker should run.
+deleted_or_lifted_to_convention:
+- type
+- trigger
+- graph_reads
+- local_reads
+- refresh_policy
+- path_phase_kind_fit_check
+- stage_routes
+- prompt_read_surface
+- mutable_paths
+- protected_paths
+- append_only_artifacts
+- reviewer_independence

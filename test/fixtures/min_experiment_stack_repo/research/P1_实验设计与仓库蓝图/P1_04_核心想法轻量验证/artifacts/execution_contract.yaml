@@ -1,0 +1,14 @@
+contract_mode: executable
+repo_path: ./sandbox_repo
+editable_paths:
+  - train.py
+run_command: "python train.py"
+metric:
+  name: val_score
+  direction: higher_is_better
+  pattern: '^val_score:\s*([0-9.]+)'
+budget:
+  max_rounds: 3
+  max_no_improve_rounds: 1
+  max_crashes: 1
+  max_minutes_per_run: 10

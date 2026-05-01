@@ -1,0 +1,132 @@
+node_id: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+node_path: research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用
+phase: P1
+node_kind: leaf
+prompt_assets:
+- path: prompts/research_prompt.md
+  status: required
+- path: prompts/acceptance_checklist.yaml
+  status: required
+- path: prompts/experiment_prompt.md
+  status: recommended
+- path: prompts/standards.md
+  status: optional
+- path: prompts/review_rubric.yaml
+  status: required
+required_questions_answered:
+- item: 数据从哪里来、以什么版本和许可存在？
+  status: pending
+- item: 数据与代码/子模块如何绑定？
+  status: pending
+- item: 是否满足可发现、可访问、可复用的最小要求？
+  status: pending
+required_outputs:
+- path: 数据层描述
+  status: pending
+  description: 需由本节点形成或更新
+- path: 数据/子模块清单
+  status: pending
+  description: 需由本节点形成或更新
+- path: 最小 provenance 说明
+  status: pending
+  description: 需由本节点形成或更新
+- path: artifacts/claim_evidence_registry.yaml
+  description: profile-required local artifact
+- path: artifacts/failure_register.yaml
+  description: profile-required local artifact
+- path: artifacts/negative_result_note.md
+  description: profile-required local artifact
+- path: artifacts/keep_discard_ledger.yaml
+  description: profile-required local artifact
+quality_checks:
+- item: 围绕 baseline、metric、protocol、reproducibility、artifact 完整性组织内容
+  status: pending
+- item: 明确 documented / consistent / complete / exercisable 的最低要求
+  status: pending
+- item: 强调 metadata、version、license、access、provenance
+  status: pending
+- item: artifact 需 documented/consistent/complete/exercisable
+  status: pending
+- item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
+  status: pending
+handoff_ready_if:
+- item: 数据来源与版本明确
+  status: pending
+- item: 子模块引用关系明确
+  status: pending
+- item: 最小复现所需的数据与依赖已说明
+  status: pending
+- item: 独立 reviewer agent 已生成 `review/verdict.yaml`
+  status: pending
+- item: '`review/verdict.yaml` 中 `review_complete == true`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `hard_fail == false`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
+  status: pending
+stop_if:
+- item: 缺关键输入或关键证据
+  status: pending
+- item: 本节点范围不清或越出节点职责
+  status: pending
+- item: 必须依赖的上游节点尚未就绪
+  status: pending
+- item: 缺少独立 reviewer verdict (`review/verdict.yaml`)
+  status: pending
+- item: 独立 reviewer verdict 尚未完成 (`review_complete != true`)
+  status: pending
+- item: 独立 reviewer 判定为 `revise` 或 `block`
+  status: pending
+- item: 独立 reviewer 提出 hard fail 且未关闭
+  status: pending
+- item: 核心 claim 没有 claim_id/evidence_id，或 evidence registry 与正文不一致。
+  status: pending
+- item: 负结果、失败实验、反例或限制被删除、隐藏或改写成正结果。
+  status: pending
+review_notes:
+- slot: 1
+  note: <待填写>
+- slot: 2
+  note: <待填写>
+external_review_gate:
+  required: true
+  reviewer_role: external_node_reviewer
+  reviewer_agent_must_be_distinct: true
+  rubric_path: prompts/review_rubric.yaml
+  verdict_path: review/verdict.yaml
+  pass_condition:
+    review_complete: true
+    overall_verdict: pass
+    hard_fail: false
+    independence_confirmed: true
+  required_reviewer_inputs:
+  - README.md
+  - status.yaml
+  - prompts/research_prompt.md
+  - prompts/acceptance_checklist.yaml
+  - prompts/review_rubric.yaml
+  - 数据层描述
+  - 数据/子模块清单
+  - 最小 provenance 说明
+  - artifacts/claim_evidence_registry.yaml
+  - artifacts/failure_register.yaml
+  - artifacts/negative_result_note.md
+  - artifacts/keep_discard_ledger.yaml
+author_exit:
+- item: 'claim_evidence_ids_are_explicit_or_gap_is_reported: true'
+  status: pending
+- item: 'negative_or_failed_results_recorded: true'
+  status: pending
+- item: 'protected_paths_respected: true'
+  status: pending
+node_close:
+- item: 'review/verdict.yaml:review_complete: true'
+  status: pending
+- item: 'review/verdict.yaml:overall_verdict: pass'
+  status: pending
+- item: 'review/verdict.yaml:hard_fail: false'
+  status: pending
+- item: 'review/verdict.yaml:independence_confirmed: true'
+  status: pending

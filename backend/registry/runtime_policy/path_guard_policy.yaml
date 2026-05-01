@@ -1,0 +1,23 @@
+version: 1
+
+defaults:
+  writable_paths:
+    - docs/manuscript.md
+    - artifacts/
+    - logs/
+    - review/
+    - status.yaml
+  read_only_paths:
+    - README.md
+    - prompts/
+    - backend/graph/graph.json
+    - backend/graph/graph_status.json
+  append_only_paths:
+    - review/AI_*.md
+    - review/人类_*.md
+    - review/response.yaml
+
+rules:
+  - Node workers write only inside the selected node unless a declared contract says otherwise.
+  - Graph files are rebuilt by developer commands and are not direct research content stores.
+  - Node-local skills may declare exceptions, but should not repeat the full default path policy.

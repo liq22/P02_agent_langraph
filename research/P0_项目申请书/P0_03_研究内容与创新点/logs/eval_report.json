@@ -1,0 +1,57 @@
+{
+  "node_path": "research/P0_项目申请书/P0_03_研究内容与创新点",
+  "harness": "/home/user/LQ/Q_paper/LQQL_OS/lqql_06_工作与项目/02_自动研究引擎/Autoresearch-with-human/research/P0_项目申请书/P0_03_研究内容与创新点/harness.yaml",
+  "run_id": "20260427-091707",
+  "updated_at": "2026-04-27T09:17:07.044523+00:00",
+  "score": 0.9667,
+  "pass_threshold": 0.8,
+  "passed": true,
+  "blocking_validator": null,
+  "human_gate_required": true,
+  "results": [
+    {
+      "id": "markdown_structure",
+      "passed": true,
+      "score": 1.0,
+      "summary": "Markdown 结构可接受。",
+      "details": []
+    },
+    {
+      "id": "acceptance_checklist",
+      "passed": true,
+      "score": 1.0,
+      "summary": "验收契约完成率 17/17。",
+      "details": []
+    },
+    {
+      "id": "claim_evidence_check",
+      "passed": true,
+      "score": 1.0,
+      "summary": "识别强主张 3 条，缺证据 0 条。",
+      "details": [
+        "检测到 claim_evidence_map，可提升可审计性。"
+      ]
+    },
+    {
+      "id": "citation_integrity",
+      "passed": true,
+      "score": 0.8,
+      "summary": "检测到数字引用 27 个、链接 3 个。",
+      "details": []
+    },
+    {
+      "id": "edit_scope_check",
+      "passed": true,
+      "score": 1.0,
+      "summary": "修改范围符合 harness。",
+      "details": []
+    },
+    {
+      "id": "node_status_check",
+      "passed": true,
+      "score": 1.0,
+      "summary": "status.yaml 检查完成，当前状态：seed。",
+      "details": []
+    }
+  ]
+}

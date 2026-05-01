@@ -1,0 +1,46 @@
+artifact: artifacts/venue_requirements.yaml
+version: "0.1"
+description: Venue-fit contradiction and evidence-gap record. Passing this gate is not a claim of acceptance quality.
+top_level:
+  selected_profiles: list
+  active_gate_stage: string
+  venue_fit_decision: string
+  contradiction_list: list
+  evidence_gaps: list
+  scope_fit: map
+  summary_paragraph_requirements: map
+  submission_blockers: list
+allowed_values:
+  selected_profiles:
+    - nature_article
+    - ieee_tpami
+  active_gate_stage:
+    - draft
+    - review
+    - submission
+  venue_fit_decision:
+    - venue_gate_passed
+    - revise
+    - block
+    - not_fit
+forbidden_decision_terms:
+  - nature-ready
+  - tpami-ready
+  - ready
+profile_checks:
+  nature_article:
+    - originality
+    - outstanding_importance
+    - interdisciplinary_interest
+    - broad_readership
+    - broader_context
+  ieee_tpami:
+    - computer_vision
+    - pattern_analysis_or_recognition
+    - selected_machine_intelligence
+    - machine_learning_for_pattern_analysis
+field_semantics:
+  contradiction_list: Reasons the current work may not fit the selected venue, plus current resolution status.
+  evidence_gaps: Missing evidence classes that prevent a venue gate from passing.
+  scope_fit: Explicit venue scope boundary; evidence rigor is not the same as TPAMI scope fit.
+  summary_paragraph_requirements: Nature-style broad-reader summary constraints, not just template selection.

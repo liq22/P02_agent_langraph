@@ -1,0 +1,9 @@
+experiments:
+  - exp_id: quick_check_001
+    hypothesis: 新特征是否优于基线
+    dataset_ref: ../P1_01_数据层_集中数据与子模块引用
+    protocol_ref: ../P1_07_优化目标_任务_评测协议
+    budget:
+      max_hours: 2
+      max_gpu: 1
+    expected_signal: metric_delta > 0

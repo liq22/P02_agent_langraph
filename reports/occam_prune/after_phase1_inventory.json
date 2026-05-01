@@ -1,0 +1,21 @@
+{
+  "errors": [],
+  "findings": [],
+  "generated_at": "2026-04-27T15:17:01.087577+00:00",
+  "metrics": {
+    "ds_store_files": 0,
+    "empty_files": 321,
+    "empty_index_files": 0,
+    "pyc_files": 0,
+    "pycache_dirs": 0,
+    "research_nodes": 44,
+    "schemas_total": 30,
+    "skills_total": 21,
+    "total_files": 12160
+  },
+  "report_only": false,
+  "root": "/home/user/LQ/Q_paper/LQQL_OS/lqql_06_工作与项目/02_自动研究引擎/Autoresearch-with-human",
+  "status": "pass",
+  "tool": "inventory_repo",
+  "warnings": []
+}

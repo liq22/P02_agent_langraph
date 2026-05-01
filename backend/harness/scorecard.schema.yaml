@@ -1,0 +1,45 @@
+# Scorecard Schema v0.1
+
+required_fields:
+  - pass_threshold
+  - dimensions
+
+fields:
+  pass_threshold:
+    type: number
+    range: [0.0, 1.0]
+    description: 总分达到该阈值才可通过。
+  dimensions:
+    type: object
+    description: 评分维度及权重。权重建议总和为 1。
+
+recommended_dimensions:
+  proposal_node:
+    scientific_question: 0.25
+    hypothesis_testability: 0.25
+    route_clarity: 0.20
+    risk_boundary: 0.15
+    acceptance_metric: 0.15
+  experiment_node:
+    reproducibility: 0.25
+    baseline_fairness: 0.20
+    metric_definition: 0.20
+    data_availability: 0.20
+    artifact_plan: 0.15
+  manuscript_node:
+    structure: 0.20
+    claim_precision: 0.25
+    evidence_grounding: 0.25
+    writing_quality: 0.15
+    node_completion: 0.15
+  review_node:
+    criticism_coverage: 0.30
+    severity_calibration: 0.20
+    action_mapping: 0.25
+    unresolved_issue_tracking: 0.25
+  response_node:
+    response_coverage: 0.30
+    manuscript_change_link: 0.25
+    evidence_attachment: 0.20
+    tone_control: 0.15
+    completeness: 0.10

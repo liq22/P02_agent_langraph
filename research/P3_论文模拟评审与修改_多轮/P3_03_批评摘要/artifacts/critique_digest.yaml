@@ -1,0 +1,23 @@
+round_id: p3-round-001
+summary: Current paper snapshot is not review-ready; P3 should route blockers back to evidence and manuscript nodes.
+clusters:
+- cluster_id: cluster-placeholder-manuscript
+  issue_ids:
+  - issue-p3-001
+  severity: fatal
+  root_cause: P2_03 TeX manuscript is a placeholder.
+  next_action: Draft evidence-backed manuscript sections in P2 after upstream evidence is available.
+- cluster_id: cluster-evidence-ledger
+  issue_ids:
+  - issue-p3-002
+  severity: major
+  root_cause: P1 result ledger is missing, so validation claims are unsupported.
+  next_action: Resolve P1_04/P1_05 evidence before writing result claims.
+- cluster_id: cluster-figure-provenance
+  issue_ids:
+  - issue-p3-003
+  severity: major
+  root_cause: Figure plan is not yet bound to evidence, caption, and manuscript callout.
+  next_action: Update figure provenance before figure enters final manuscript.
+preserved_conflicts:
+- There is not enough manuscript content to distinguish weak prose from missing evidence; treat this as missing-content blocker, not style feedback.

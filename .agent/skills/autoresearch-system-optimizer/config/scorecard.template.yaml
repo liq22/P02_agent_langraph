@@ -1,0 +1,27 @@
+policy_version: "1.0"
+node_path:
+phase:
+node_mode:
+node_profile:
+execution_profile:
+lane:
+boundary_class:
+exploratory: false
+score_status: scored
+total_score:
+max_score: 100.0
+selected_dimensions: []
+dimension_scores: []
+summary:
+  counted_dimensions: 0
+  missing_dimensions: []
+  evidence_files: []
+  advisory_only: false
+score_stability:
+  status: not_compared
+  node_score_stable: true
+  prior_score_ref:
+  evidence_delta: []
+  variance_reason:
+review_notes: []
+next_action:

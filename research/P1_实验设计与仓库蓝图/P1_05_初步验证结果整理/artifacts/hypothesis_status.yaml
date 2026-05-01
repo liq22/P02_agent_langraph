@@ -1,0 +1,7 @@
+hypotheses:
+- hypothesis_id: h001
+  status: unclear
+  linked_results:
+  - blocked_missing_p104_ledger
+  source_ledger: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+  blocking_gap: missing_upstream_results_tsv

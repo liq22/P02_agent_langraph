@@ -1,0 +1,23 @@
+lifecycle:
+  stage: seed
+progress_pct: 0
+child_status:
+  P4_01_审稿意见收集: seed
+  P4_02_问题映射矩阵: seed
+  P4_03_逐点回复草稿_md: seed
+  P4_04_正式回复_tex_或_doc: seed
+  P4_05_覆盖检查: seed
+  P4_06_修改证据: seed
+  P4_07_再投稿打包: seed
+rollup:
+  ready_children: 0
+  total_children: 7
+  all_children_ready: false
+review_gate:
+  ai_review_count: 0
+  human_review_count: 0
+  all_comments_responded: false
+can_enter_fix: false
+heartbeat_at: 2026-04-10
+last_actor: system
+author_agent_id: <pending-author-agent>

@@ -1,0 +1,11 @@
+round_id: p3-round-001
+sessions:
+- role: author
+  agent_id: codex
+  thread_or_session_id: current-turn
+  input_scope: P3 child artifacts, P2_03 main.tex, P1 result and figure artifacts
+  output_paths:
+  - artifacts/paper_iteration_gate.yaml
+notes:
+- Gate is blocked by manuscript and evidence gaps.
+- External reviewer verdicts remain incomplete and were not overwritten.

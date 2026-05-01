@@ -1,0 +1,162 @@
+# Node Validation Rules
+#
+# 从 .agent/skills/autoresearch-system-optimizer/references/node_validation.md 提取的结构化验证规则
+# 用于配置和自动化验证检查
+
+meta:
+  version: "3.0"
+  source_prompt: ".agent/skills/autoresearch-system-optimizer/references/node_validation.md"
+  description: "Auto-Research 节点验证的结构化规则配置，含双评分车道输入契约。"
+
+stance:
+  role: hostile_verifier
+  principles:
+    - 假设皆伪，除非 repo 证明
+    - 使用第一性原理，而非便利性假设
+    - 不接受文件存在、绿色状态、形式完整作为充分证据
+    - 不接受内部框架术语替代可复核证据
+    - 如果结论无法追溯到具体 repo 证据，标记为 UNVERIFIED
+
+evidence_priority:
+  level_1_primary:
+    - node-local prompts/acceptance_checklist.yaml
+    - node-local README.md
+    - node-local status.yaml
+  level_2_artifacts:
+    - node-local required artifacts named by checklist
+    - node-local review gate artifacts (review/verdict.yaml)
+  level_3_validators:
+    - scripts/validate_research_truth.py
+    - scripts/validate_local_skills.py
+    - scripts/validate_skill_fit.py
+    - test/run_*.py
+  level_4_prompts:
+    - node-local prompt / skill / wrapper files
+  note: validators 和测试仅作为结构化信号，不作为科学有效性证明
+
+node_types:
+  parent:
+    description: 协调子节点的父节点
+  leaf:
+    description: 产生直接研究增量的叶节点
+  scoring_overlay:
+    node_mode_values: [parent, lite, standard, execution]
+    node_profile_values: [routing_parent, lite_research_leaf, evidence_leaf, hard_gate]
+    execution_profile_values: [experiment_execution, result_synthesis]
+
+checklist_rules:
+  primary_sections:
+    - required_questions_answered
+    - required_outputs
+    - quality_checks
+    - handoff_ready_if
+  strong_gating_overlays:
+    - stop_if
+    - external_review_gate
+  secondary_bookkeeping:
+    - author_exit
+    - node_close
+    - review_notes
+
+verdict_contract:
+  allowed_values: [WORKS, PARTIAL, DOES_NOT_WORK]
+  boundary_class_values: [maintenance_only, human_quality_gate, exploratory]
+  rule: 不要仅因为节点看起来有组织就升级为 WORKS
+
+structured_evaluation_payload:
+  required_fields:
+    - phase
+    - node_mode
+    - node_profile
+    - execution_profile
+    - boundary_class
+    - exploratory
+    - maintenance_findings
+    - research_findings
+    - score_inputs
+  score_input_required_fields:
+    - dimension_id
+    - observed_status
+    - severity
+    - confidence
+    - evidence_paths
+    - auto_apply_candidate
+  score_input_optional_fields:
+    - evidence_strength
+    - recheckability
+    - blast_radius
+    - score_stability_note
+    - delta_reason
+  optional_top_level_fields:
+    - score_stability
+  score_stability_status_values:
+    - not_compared
+    - stable
+    - changed
+    - unstable
+    - unstable_missing_evidence_delta
+  allowed_boundary_class:
+    - maintenance_only
+    - human_quality_gate
+    - exploratory
+  observed_status_examples:
+    - satisfied
+    - partial
+    - mixed
+    - weak
+    - missing
+    - contradicted
+    - unsupported
+    - unverified
+    - blocked
+  requirement: score_inputs 是 score 阶段主输入；缺失时 planner 必须降级为 manual_ticket
+
+adversarial_checks:
+  required:
+    - 节点是否仅在纸面上完成
+    - 节点是否依赖占位符 artifacts
+    - 节点是否重述上游假设而非增加研究价值
+    - 节点是否使用内部术语掩盖缺失证据
+    - validator 是否仅检查存在性或 schema 而非真值
+    - 强下游节点或 reviewer 是否仍确切知道下一步做什么
+  finding_row_fields:
+    - finding_id
+    - root_cause_id
+    - claim_or_surface
+    - severity
+    - confidence
+    - fix_surface
+    - auto_apply_candidate
+    - manual_only_reason
+  maintenance_finding_required_fields:
+    - root_cause_id
+    - finding_id
+    - severity
+    - confidence
+    - fix_surface
+    - auto_apply_candidate
+
+stop_conditions:
+  stop_immediately_when:
+    - 下一步依赖关键 UNVERIFIED 假设
+    - 证据冲突且无法从 repo 真值协调
+    - 节点在必须上游解决的 blocker 上失败
+    - 需要 external review gate 缺失或失败且无更窄本地步骤
+    - 当前预算或轮次限制耗尽
+
+required_output_format:
+  sections:
+    - Validation Target
+    - Why This Target Is High Risk Now
+    - Ground Truth Sources Used
+    - Assumptions / UNVERIFIED
+    - Validation Setup
+    - Execution / Inspection Steps
+    - Evidence Collected
+    - Adversarial Findings
+    - Verdict
+    - Handoff Readiness
+    - Residual Risks
+    - Next Node / Next Smallest Action
+  verdict_line_rule: Verdict 段必须显式给出 WORKS/PARTIAL/DOES_NOT_WORK 之一
+  structured_payload_rule: Verdict 段必须追加 Structured Evaluation Payload fenced YAML

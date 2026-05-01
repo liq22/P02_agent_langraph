@@ -1,0 +1,14 @@
+branch_policy:
+  default_mode: feature_branch
+  allowed_changes:
+    - adapter_code
+    - config_extension
+    - evaluation_wrapper
+  forbidden_changes:
+    - rewrite_core_identity
+    - silent_breaking_change
+  required_records:
+    - purpose
+    - diff_scope
+    - rollback_plan
+    - upstream_sync_plan

@@ -1,0 +1,40 @@
+required_fields:
+- review_id
+- review_complete
+- reviewer_agent_id
+- reviewer_skill
+- reviewed_node_path
+- rubric_path
+- rubric_version
+- overall_score
+- overall_verdict
+- hard_fail
+- dimension_scores
+- blocking_issues
+- required_actions
+- downstream_ready
+- independence_confirmed
+field_semantics:
+  review_complete: External reviewer has finished a bounded independent review round.
+  reviewer_agent_id: Identity marker for the distinct reviewer agent or thread.
+  reviewer_skill: Runtime reviewer skill that produced the verdict.
+  overall_verdict: Pass, revise, or block gate outcome for downstream handoff.
+  hard_fail: True when any hard-fail condition from the rubric is present.
+  downstream_ready: True only when the node is safe to hand off to downstream nodes.
+  independence_confirmed: Must remain false unless the reviewer was a distinct agent or thread from the author.
+allowed_values:
+  reviewer_skill:
+  - external_node_reviewer
+  overall_verdict:
+  - pass
+  - revise
+  - block
+handoff_gate_requires:
+- review_complete == true
+- overall_verdict == pass
+- hard_fail == false
+- independence_confirmed == true
+forbidden_states:
+- reviewer_agent_id is empty
+- reviewer_agent_id == <authoring_agent_id>
+- downstream_ready == true while hard_fail == true

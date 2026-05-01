@@ -1,0 +1,14 @@
+repo_blueprint:
+  repo_name: idea_validation_repo
+  entrypoints:
+    - scripts/run_train.py
+    - scripts/run_eval.py
+  modules:
+    - src/data
+    - src/models
+    - src/eval
+    - configs
+  tests:
+    - smoke_data_load
+    - smoke_train_step
+    - smoke_eval_step

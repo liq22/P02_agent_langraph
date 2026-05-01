@@ -1,0 +1,8 @@
+mappings:
+- critique_id: cr001
+  response_item_id: rsp001
+  claim_id: pending_claim_id
+  evidence_id: ev001
+  location: pending_manuscript_location
+  response_strategy: pending_direct_answer_with_evidence
+  status: uncovered

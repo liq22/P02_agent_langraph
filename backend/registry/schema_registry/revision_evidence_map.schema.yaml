@@ -1,0 +1,36 @@
+artifact: artifacts/revision_evidence_map.yaml
+version: "0.1"
+description: P4-local evidence that each response commitment is reflected in manuscript, figure, table, code, or package changes.
+top_level:
+  revisions: list
+required_fields:
+  revision:
+    - critique_id_or_comment_id_or_issue_id
+    - evidence_id
+    - response_item_id
+    - claim_id
+    - evidence_kind
+    - manuscript_location
+    - modified_nodes
+    - status
+allowed_values:
+  evidence_kind:
+    - manuscript
+    - figure
+    - table
+    - code
+    - data
+    - response
+    - package
+  status:
+    - applied
+    - verified
+    - pending
+    - missing
+submission_hard_blocks:
+  status:
+    - pending
+    - missing
+field_semantics:
+  modified_nodes: Node paths changed or checked to satisfy the response commitment.
+  revision_diff_ref: Optional but recommended pointer to a diff, patch, or concrete artifact list.

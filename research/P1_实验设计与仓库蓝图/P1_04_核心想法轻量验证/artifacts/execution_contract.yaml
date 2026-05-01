@@ -1,0 +1,19 @@
+# Review-only contract bound from the current P1 blueprint and protocol artifacts.
+# Promote to executable only after repo_path, run_command, and metric parsing are backed by a real runnable repo.
+contract_mode: review_only
+repo_path: ./idea_validation_repo
+editable_paths:
+  - src/data
+  - src/models
+  - src/eval
+  - configs
+run_command: "python scripts/run_train.py"
+metric:
+  name: accuracy
+  direction: higher_is_better
+  pattern: '^accuracy:\s*([0-9.]+)'
+budget:
+  max_rounds: 2
+  max_no_improve_rounds: 1
+  max_crashes: 1
+  max_minutes_per_run: 120

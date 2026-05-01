@@ -1,0 +1,7 @@
+deprecated: true
+reason: Skill descriptions and runtime behavior live in .agent/skills/*/SKILL.md.
+replacement: backend/registry/skill_registry/skill_catalog.yaml
+rules:
+  - This file is not runtime truth.
+  - Do not add purpose text here.
+  - Use skill_catalog.yaml only for role metadata and validation.

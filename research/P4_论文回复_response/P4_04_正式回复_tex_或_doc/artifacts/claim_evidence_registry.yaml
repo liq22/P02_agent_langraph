@@ -1,0 +1,30 @@
+node_path: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc
+research_anchor: formal response letter scaffold
+claims:
+  - claim_id: p4_04_tex_scaffold_established
+    claim_type: method
+    claim_text: The node-local formal response TeX scaffold has been created from the provided template structure.
+    manuscript_location: artifacts/response_letter.tex
+    evidence_refs:
+      - evidence_id: p4_04_template_main_tex
+        evidence_type: code
+        source_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/templates/review_response.tex
+      - evidence_id: p4_04_artifact_main_tex
+        evidence_type: code
+        source_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/response_letter.tex
+    support_status: supported
+    action: keep
+  - claim_id: p4_04_final_response_not_ready
+    claim_type: limitation
+    claim_text: The artifact is not a final response letter until official reviewer comments, manuscript metadata, verified revision locations, and evidence references are inserted.
+    manuscript_location: docs/manuscript.md#当前结论
+    evidence_refs:
+      - evidence_id: p4_04_open_input_gaps
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/docs/manuscript.md
+    support_status: supported
+    action: document_limitation
+author_exit:
+  claim_evidence_ids_are_explicit_or_gap_is_reported: true
+  negative_or_failed_results_recorded: true
+  protected_paths_respected: true

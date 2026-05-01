@@ -1,0 +1,62 @@
+node_id: research::P1_实验设计与仓库蓝图::P1_05_初步验证结果整理
+node_path: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理
+phase: P1
+node_kind: leaf
+prompt_assets:
+- path: prompts/research_prompt.md
+  status: required
+- path: prompts/acceptance_checklist.yaml
+  status: required
+- path: prompts/review_rubric.yaml
+  status: required
+required_outputs:
+- path: artifacts/result_registry.yaml
+  status: pending
+- path: artifacts/hypothesis_status.yaml
+  status: pending
+stop_if:
+- item: fixture_missing_inputs
+  status: pending
+- item: 缺少独立 reviewer verdict (`review/verdict.yaml`)
+  status: pending
+- item: 独立 reviewer verdict 尚未完成 (`review_complete != true`)
+  status: pending
+- item: 独立 reviewer 判定为 `revise` 或 `block`
+  status: pending
+- item: 独立 reviewer 提出 hard fail 且未关闭
+  status: pending
+handoff_ready_if:
+- item: 独立 reviewer agent 已生成 `review/verdict.yaml`
+  status: pending
+- item: '`review/verdict.yaml` 中 `review_complete == true`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `hard_fail == false`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
+  status: pending
+quality_checks:
+- item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
+  status: pending
+external_review_gate:
+  required: true
+  reviewer_role: external_node_reviewer
+  reviewer_agent_must_be_distinct: true
+  rubric_path: prompts/review_rubric.yaml
+  verdict_path: review/verdict.yaml
+  pass_condition:
+    review_complete: true
+    overall_verdict: pass
+    hard_fail: false
+    independence_confirmed: true
+  required_reviewer_inputs:
+  - README.md
+  - status.yaml
+  - prompts/research_prompt.md
+  - prompts/acceptance_checklist.yaml
+  - prompts/review_rubric.yaml
+  - artifacts/auto_experiment/results.tsv
+  - docs/manuscript.md
+  - artifacts/result_registry.yaml
+  - artifacts/hypothesis_status.yaml

@@ -1,0 +1,113 @@
+node_id: research::P0_项目申请书
+node_path: research/P0_项目申请书
+phase: P0
+node_kind: parent
+prompt_assets:
+- path: prompts/research_prompt.md
+  status: required
+- path: prompts/acceptance_checklist.yaml
+  status: required
+- path: prompts/standards.md
+  status: optional
+- path: prompts/review_rubric.yaml
+  status: required
+required_questions_answered:
+- item: 五个子节点的主线是否自洽，没有互相冲突的定义或目标？
+  status: pending
+- item: 项目的核心问题、预期结果、意义与资源边界是否能被同一评审视角快速理解？
+  status: pending
+- item: 是否存在过度承诺、目标过宽或 feasibility 不足的问题？
+  status: pending
+required_outputs:
+- path: docs/manuscript.md（项目申请书总控摘要或主线草图）
+  status: pending
+  description: 需由本节点形成或更新
+- path: 对子节点的一致性修正建议
+  status: pending
+  description: 需由本节点形成或更新
+quality_checks:
+- item: 围绕 significance、gap、hypothesis/aims、expected outcomes、impact、feasibility 组织内容
+  status: pending
+- item: 避免空泛承诺，优先 reviewer 可快速判断的清晰目标
+  status: pending
+- item: 目标明确、预期结果清楚、影响可解释、范围可完成
+  status: pending
+- item: 避免过度 ambition，保持 aims/路线/资源一致
+  status: pending
+- item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
+  status: pending
+- item: 父节点只做 coordination/routing/summary，不替 leaf 子节点产出证据或正文。
+  status: pending
+handoff_ready_if:
+- item: 五个子节点在术语、目标、方法、预期结果上保持一致
+  status: pending
+- item: 至少给出一版总控主线或总览摘要
+  status: pending
+- item: 没有明显过宽、不可评估、不可完成的承诺
+  status: pending
+- item: 独立 reviewer agent 已生成 `review/verdict.yaml`
+  status: pending
+- item: '`review/verdict.yaml` 中 `review_complete == true`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `hard_fail == false`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
+  status: pending
+stop_if:
+- item: 缺关键输入或关键证据
+  status: pending
+- item: 本节点范围不清或越出节点职责
+  status: pending
+- item: 必须依赖的上游节点尚未就绪
+  status: pending
+- item: 缺少独立 reviewer verdict (`review/verdict.yaml`)
+  status: pending
+- item: 独立 reviewer verdict 尚未完成 (`review_complete != true`)
+  status: pending
+- item: 独立 reviewer 判定为 `revise` 或 `block`
+  status: pending
+- item: 独立 reviewer 提出 hard fail 且未关闭
+  status: pending
+- item: 父节点替 leaf 节点产出正文、实验、图表或审稿结论。
+  status: pending
+- item: 存在 ready child 但父节点继续深写，导致 route_child_first 被忽略。
+  status: pending
+review_notes:
+- slot: 1
+  note: <待填写>
+- slot: 2
+  note: <待填写>
+external_review_gate:
+  required: true
+  reviewer_role: external_node_reviewer
+  reviewer_agent_must_be_distinct: true
+  rubric_path: prompts/review_rubric.yaml
+  verdict_path: review/verdict.yaml
+  pass_condition:
+    review_complete: true
+    overall_verdict: pass
+    hard_fail: false
+    independence_confirmed: true
+  required_reviewer_inputs:
+  - README.md
+  - status.yaml
+  - prompts/research_prompt.md
+  - prompts/acceptance_checklist.yaml
+  - prompts/review_rubric.yaml
+  - prompts/standards.md
+  - docs/manuscript.md（项目申请书总控摘要或主线草图）
+  - 对子节点的一致性修正建议
+author_exit:
+- item: 'child_frontier_checked: true'
+  status: pending
+- item: 'route_child_first_or_frontier_gap_reported: true'
+  status: pending
+- item: 'no_leaf_content_authored_in_parent: true'
+  status: pending
+node_close:
+- item: 'all_required_children_closed_or_blocked_with_reason: true'
+  status: pending
+- item: 'parent_rollup_consistent_with_child_artifacts: true'
+  status: pending

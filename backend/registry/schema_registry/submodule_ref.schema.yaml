@@ -1,0 +1,18 @@
+type: object
+required:
+  - repo_name
+  - role
+  - ref
+properties:
+  repo_name:
+    type: string
+  role:
+    enum: [repo_provider, data_provider, processing_provider, baseline_provider]
+  ref:
+    type: string
+  branch:
+    type: string
+  path_hint:
+    type: string
+  boundary:
+    type: string

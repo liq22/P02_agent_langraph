@@ -1,0 +1,23 @@
+meta:
+  version: "1.0"
+  description: "Human gate policy for research-rigor findings."
+
+boundary_classes:
+  maintenance_only:
+    human_gate_required: false
+    research_rigor_score_status: scored
+  human_quality_gate:
+    human_gate_required: true
+    research_rigor_score_status: scored
+  exploratory:
+    human_gate_required: true
+    research_rigor_score_status: unscored_exploratory
+
+research_lane_thresholds:
+  low_score_requires_human_gate: 70.0
+  critical_dimension_threshold: 45.0
+
+force_human_gate:
+  phases: [P3, P4]
+  node_profiles: [hard_gate]
+  boundary_classes: [human_quality_gate, exploratory]

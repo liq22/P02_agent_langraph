@@ -1,0 +1,68 @@
+node_path: research/P0_项目申请书/P0_03_研究内容与创新点
+research_anchor: AutoResearch as a human-agent research operating system
+standard:
+  target_level:
+    - Nature-level field significance and reproducibility
+    - IEEE/TPAMI-level methodological clarity and peer-review traceability
+  sources:
+    - id: ref_nature_editorial
+      url: https://www.nature.com/nature/for-authors/editorial-criteria-and-processes
+    - id: ref_nature_reporting
+      url: https://www.nature.com/ncomms/editorial-policies/reporting-standards
+    - id: ref_ieee_peer_review
+      url: https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/guidelines-and-policies/submission-and-peer-review-policies/
+gap_map:
+  - gap_id: gap_node_as_scientific_work_unit
+    nearest_prior_work_family: generic agent workflows and task orchestration systems
+    known_solution: agents can draft, revise, route, and execute bounded tasks
+    unresolved_gap: research completion is often represented by produced text or files rather than auditable research judgment
+    falsifiable_question: Does node-level contract enforcement expose unsupported claims and blocked transitions more reliably than a prompt-only workflow?
+    proposed_content_unit: node-level research contract
+    innovation_boundary: the advance is the auditable work-unit definition, not any specific harness field or dashboard
+    evidence_needed:
+      - NodeBench pass and failure distribution
+      - independent reviewer verdicts
+      - human gate transition records
+    downgrade_rule: Without controlled comparison, describe this as a governance design rather than quality improvement.
+  - gap_id: gap_cross_phase_claim_evidence_protocol
+    nearest_prior_work_family: automated writing tools, literature-review tools, and experiment trackers
+    known_solution: tools can generate manuscript sections, store experiment logs, or track citations
+    unresolved_gap: proposal aims, experimental protocols, manuscript claims, reviewer critiques, and response actions are not always linked by shared evidence IDs
+    falsifiable_question: Does a shared claim/evidence/protocol registry reduce untraceable manuscript claims across P0-P4?
+    proposed_content_unit: cross-phase claim-evidence-protocol chain
+    innovation_boundary: the advance is cross-phase traceability, not citation formatting alone
+    evidence_needed:
+      - claim registry coverage
+      - protocol map completeness
+      - response coverage matrix
+      - reviewer hard-fail closure records
+    downgrade_rule: Without reviewer confirmation, describe registry coverage as a process measure only.
+  - gap_id: gap_preregistered_experiment_contract
+    nearest_prior_work_family: experiment notebooks, MLOps ledgers, and post-hoc result tables
+    known_solution: metrics, baselines, and results can be recorded after execution
+    unresolved_gap: metrics, baselines, repeats, uncertainty, failure interpretation, and artifact paths are not always fixed before claim writing
+    falsifiable_question: Does preregistering protocol gates prevent unsupported or cherry-picked result claims?
+    proposed_content_unit: pre-execution evaluation protocol
+    innovation_boundary: the advance is reviewer-facing protocol discipline, not automatic result generation
+    evidence_needed:
+      - primary and secondary metric definitions
+      - baseline commands or manual-control protocol
+      - repeat and uncertainty plan
+      - negative result ledger
+    downgrade_rule: Missing baseline, repeat, or uncertainty blocks result-level claims.
+  - gap_id: gap_independent_gate_for_phase_transition
+    nearest_prior_work_family: single-agent autonomous research loops and self-review prompts
+    known_solution: one agent can critique and revise its own outputs
+    unresolved_gap: author exit and node closure are often conflated when no independent gate exists
+    falsifiable_question: Does an independent reviewer or human gate catch issues that an authoring thread would otherwise mark as complete?
+    proposed_content_unit: external review and human gate policy
+    innovation_boundary: the advance is controlled phase transition, not more critique text
+    evidence_needed:
+      - review/verdict.yaml
+      - response tracking records
+      - author-exit versus node-close logs
+    downgrade_rule: Without independent gate evidence, mark the node as author-exit only.
+author_exit:
+  required_artifacts_exist: true
+  key_research_judgment_answered_or_gap_reported: true
+  citation_status_checked_when_external_sources_are_used: true

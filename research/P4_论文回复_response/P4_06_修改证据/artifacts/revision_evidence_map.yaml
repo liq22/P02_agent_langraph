@@ -1,0 +1,11 @@
+revisions:
+- critique_id: cr001
+  evidence_id: ev001
+  response_item_id: rsp001
+  claim_id: pending_claim_id
+  evidence_kind: manuscript
+  manuscript_location: pending_manuscript_location
+  modified_nodes:
+  - ../../P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论
+  revision_diff_ref: pending_revision_diff
+  status: missing

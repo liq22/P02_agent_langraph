@@ -1,0 +1,12 @@
+version: 1
+
+defaults:
+  seed: keep_default_delegate
+  drafting: keep_default_delegate
+  review_requested: external_node_reviewer
+  revise: keep_default_delegate
+  pass: no_op
+
+rules:
+  - Node-local entries should declare only route exceptions that differ from these defaults.
+  - Stage routing does not override the selected node's local entry file.

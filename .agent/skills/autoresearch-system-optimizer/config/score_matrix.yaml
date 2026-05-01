@@ -1,0 +1,112 @@
+meta:
+  version: "1.0"
+  description: "Dual-lane score matrix for AutoResearch system optimizer."
+
+maintenance:
+  common:
+    - truth_boundary_clarity
+    - evidence_binding_quality
+    - handoff_readiness
+    - stop_reason_honesty
+    - validator_alignment
+    - runtime_self_consistency
+  node_mode:
+    parent:
+      - route_child_first_discipline
+      - child_artifact_grounded_rollup
+      - no_leaf_content_authorship
+      - coordination_clarity
+    lite:
+      - minimum_sufficient_artifact_quality
+      - claim_gap_honesty
+      - no_fake_completeness_layers
+    standard:
+      - evidence_compression_quality
+      - prompt_skill_boundary_clarity
+      - artifact_to_claim_traceability
+    execution:
+      - execution_contract_completeness
+      - binder_presence
+      - metric_baseline_keep_discard_explicitness
+      - results_logs_interpretability
+  node_profile:
+    routing_parent:
+      - coordination_integrity
+      - summary_restraint
+    lite_research_leaf:
+      - minimum_viable_research_increment
+      - gap_report_honesty
+    evidence_leaf:
+      - negative_result_preservation
+      - claim_evidence_identity_integrity
+    hard_gate:
+      - blocking_issue_rigor
+      - gate_input_completeness
+  execution_profile:
+    experiment_execution:
+      - executable_readiness
+      - run_contract_realism
+    result_synthesis:
+      - ledger_to_claim_binding
+      - keep_discard_fidelity
+
+research_rigor:
+  common:
+    - truth_boundary_clarity
+    - evidence_binding_quality
+    - handoff_readiness
+  phase:
+    P0:
+      - significance_and_gap_precision
+      - problem_falsifiability
+      - scope_resource_risk_honesty
+    P1:
+      - baseline_protocol_validity
+      - metric_quality
+      - reproducibility_executability
+    P2:
+      - claim_evidence_alignment
+      - narrative_structure
+      - figure_citation_venue_linkage
+    P3:
+      - critique_fidelity
+      - reviewer_independence_robustness
+      - revision_actionability
+    P4:
+      - comment_response_completeness
+      - evidence_traceability
+      - package_integrity
+  node_mode:
+    parent:
+      - route_child_first_discipline
+      - child_artifact_grounded_rollup
+    lite:
+      - minimum_sufficient_artifact_quality
+      - claim_gap_honesty
+    standard:
+      - artifact_to_claim_traceability
+      - evidence_compression_quality
+    execution:
+      - execution_contract_completeness
+      - metric_baseline_keep_discard_explicitness
+      - results_logs_interpretability
+  node_profile:
+    routing_parent:
+      - coordination_integrity
+      - summary_restraint
+    lite_research_leaf:
+      - minimum_viable_research_increment
+      - gap_report_honesty
+    evidence_leaf:
+      - negative_result_preservation
+      - claim_evidence_identity_integrity
+    hard_gate:
+      - blocking_issue_rigor
+      - gate_input_completeness
+  execution_profile:
+    experiment_execution:
+      - executable_readiness
+      - run_contract_realism
+    result_synthesis:
+      - ledger_to_claim_binding
+      - keep_discard_fidelity

@@ -1,0 +1,47 @@
+gate_id: p3-paper-iteration-gate-001
+round_id: p3-round-001
+created_at: 2026-04-20
+checklist_source: docs/progress/checklist_4-20.md
+gate_mode: gap_oriented_iteration
+manuscript_snapshot:
+  snapshot_id: p2-03-main-tex-2026-04-20
+  path: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+  status: placeholder
+  observed_blocker: TeX body contains only `% 待补充`.
+evidence_snapshot:
+  result_registry:
+    path: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml
+    status: blocked
+    blocker: blocked_missing_p104_ledger
+  hypothesis_status:
+    path: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+    status: unclear
+  figure_plan:
+    path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_plan.yaml
+    status: incomplete_provenance
+review_outputs:
+  review_round_notes: research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/artifacts/review_round_notes.md
+  reviewer_lens_matrix: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/artifacts/reviewer_lens_matrix.yaml
+  review_issue_register: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/artifacts/review_issue_register.yaml
+  revision_action_map: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+ready_for_next_iteration: false
+ready_for_p4_or_submission_gate: false
+recommended_next_route:
+- research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证
+- research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理
+- research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿
+- research/P2_论文撰写/P2_03_定稿_tex
+unresolved_blockers:
+- issue_id: issue-p3-001
+  reason: manuscript placeholder
+  required_action: action-p3-001
+- issue_id: issue-p3-002
+  reason: missing P1_04 result ledger
+  required_action: action-p3-002
+- issue_id: issue-p3-003
+  reason: missing figure provenance and manuscript callout
+  required_action: action-p3-003
+decision: block_submission_and_route_revision
+notes:
+- P3 did not rewrite P2 manuscript content or P4 response prose.
+- This gate intentionally records a failed readiness check so the next research step is concrete.

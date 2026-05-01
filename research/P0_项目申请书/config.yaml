@@ -1,0 +1,25 @@
+max_hours: 4
+child_scan_order:
+- P0_01_研究背景与调研
+- P0_02_研究挑战与科学问题_工程问题
+- P0_03_研究内容与创新点
+- P0_04_技术路线_研究计划_OKR
+- P0_05_项目约束_资源预算_风险边界
+enabled_skills: []
+agent_read_exclude:
+- docs/HUMAN_ONLY.md
+review_requirement:
+  ai: 1
+  human: 0
+human_interaction:
+  mode: on_demand
+  triggers:
+  - missing_research_input
+  - unresolved_scientific_tradeoff
+  - legal_or_ethics_blocker
+  - reviewer_block_not_closed
+  - final_submission_approval
+freeze_when:
+- ai_review_count >= 1
+- all_comments_responded == true
+- all_children_ready == true

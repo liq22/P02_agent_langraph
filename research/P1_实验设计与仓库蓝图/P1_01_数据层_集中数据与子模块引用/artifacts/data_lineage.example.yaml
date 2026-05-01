@@ -1,0 +1,13 @@
+lineage:
+  dataset_id: vib_hybrid_demo
+  upstream:
+    - type: local_copy
+      source: centralized_store/raw/vib_a
+    - type: submodule_ref
+      source: "@submodule_repo:PHMbench/datasets/vibration"
+  processing:
+    - normalize
+    - resample
+    - split_by_machine
+  outputs:
+    - curated/vib_hybrid_demo_v1

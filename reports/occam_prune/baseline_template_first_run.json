@@ -1,0 +1,27 @@
+{
+  "errors": [],
+  "findings": [],
+  "generated_at": "2026-04-27T14:34:15.923809+00:00",
+  "metrics": {
+    "broken_readme_links": 0,
+    "declared_worker_exists": true,
+    "dry_run_no_model_no_network": true,
+    "dry_run_time": 0.0007,
+    "next_node_exists": true,
+    "next_node_has_local_entry": true,
+    "next_node_is_leaf": true,
+    "required_concepts_before_first_run": 5,
+    "required_files_exist": true,
+    "template_first_run_pass": true
+  },
+  "next_node": {
+    "declared_worker": "structured_map_builder",
+    "id": "research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用",
+    "path": "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用"
+  },
+  "report_only": true,
+  "root": "/home/user/LQ/Q_paper/LQQL_OS/lqql_06_工作与项目/02_自动研究引擎/Autoresearch-with-human",
+  "status": "pass",
+  "tool": "validate_template_first_run",
+  "warnings": []
+}

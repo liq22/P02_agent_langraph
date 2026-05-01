@@ -1,0 +1,64 @@
+# Minimal local entry skill contract.
+# This is a human/agent convention, not a graph schema extension.
+
+version: 2
+applies_to: research/**/skills/local_entry.md
+
+required_fields:
+  - skill_id
+  - purpose
+
+required_one_of:
+  - default_delegate
+  - stop_with
+
+optional_fields:
+  - node_mode
+  - default_delegate
+  - decision_rule
+  - required_prompt_refs
+  - required_local_reads
+  - optional_local_reads
+  - outputs
+  - extra_status_updates
+  - stop_with
+
+field_semantics:
+  skill_id: Stable local identifier derived from the node path.
+  purpose: One-line node-specific local routing responsibility.
+  node_mode: Local stack depth marker from the registry.
+  default_delegate: Exactly one default worker path; not a menu.
+  decision_rule: Only declare real local branching conditions.
+  required_prompt_refs: Prompt assets the entry must read before delegation.
+  required_local_reads: Files beyond prompt assets that must be loaded in the default read order.
+  optional_local_reads: Files that may be loaded only when they materially change the bounded round.
+  outputs: Node-specific outputs beyond implicit status writeback.
+  extra_status_updates: Only status fields beyond heartbeat_at and last_actor.
+  stop_with: Explicit local stop reason when no worker should run.
+
+lifted_to_registry_policy:
+  - type
+  - trigger
+  - graph_reads
+  - local_reads
+  - refresh_policy
+  - stage_routes
+  - prompt_read_surface
+  - mutable_paths
+  - protected_paths
+  - append_only_artifacts
+  - reviewer_independence
+
+delegation_limits:
+  max_depth_after_local_entry: 2
+  allowed_paths:
+    - local_entry_skill -> local_execution_skill
+    - local_entry_skill -> canonical_global_skill
+    - local_entry_skill -> phase_fallback_worker
+    - local_entry_skill -> local_wrapper_skill -> terminal_worker
+
+boundaries:
+  - Do not make local entry skills read unrelated nodes by default.
+  - Do not make local entry skills refresh graph artifacts directly.
+  - Do not make local entry skills run unbounded worker loops.
+  - Do not repeat registry-level role, reviewer, or path policy in node-local frontmatter.

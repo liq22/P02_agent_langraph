@@ -1,0 +1,108 @@
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_01_引言
+node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言
+phase: P2
+node_kind: leaf
+prompt_assets:
+- path: prompts/research_prompt.md
+  status: required
+- path: prompts/acceptance_checklist.yaml
+  status: required
+- path: prompts/revision_prompt.md
+  status: recommended
+- path: prompts/review_rubric.yaml
+  status: required
+required_questions_answered:
+- item: 问题的重要性是否在前几段就清楚？
+  status: pending
+- item: gap 是否具体？
+  status: pending
+- item: 贡献预告是否与后文一致？
+  status: pending
+required_outputs:
+- path: 引言草稿
+  status: pending
+  description: 需由本节点形成或更新
+- path: docs/manuscript.md
+  description: profile-required local artifact
+quality_checks:
+- item: 围绕 IMRAD、methods 可复现、results 顺序、figure/table 自解释、venue format 组织内容
+  status: pending
+- item: 正文服务主张，不重复图表，不夸大结论
+  status: pending
+- item: 引言应自然导向方法与结果，不先塞细节结果
+  status: pending
+- item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
+  status: pending
+handoff_ready_if:
+- item: 引言能让外行 reviewer 理解问题、gap 和贡献预告
+  status: pending
+- item: 独立 reviewer agent 已生成 `review/verdict.yaml`
+  status: pending
+- item: '`review/verdict.yaml` 中 `review_complete == true`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `hard_fail == false`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
+  status: pending
+stop_if:
+- item: 缺关键输入或关键证据
+  status: pending
+- item: 本节点范围不清或越出节点职责
+  status: pending
+- item: 必须依赖的上游节点尚未就绪
+  status: pending
+- item: 缺少独立 reviewer verdict (`review/verdict.yaml`)
+  status: pending
+- item: 独立 reviewer verdict 尚未完成 (`review_complete != true`)
+  status: pending
+- item: 独立 reviewer 判定为 `revise` 或 `block`
+  status: pending
+- item: 独立 reviewer 提出 hard fail 且未关闭
+  status: pending
+- item: 缺少本节点关键研究判断，或把未验证引用/证据写成确定事实。
+  status: pending
+- item: 作者退出条件与节点关闭条件混用，导致未评审内容伪装完成。
+  status: pending
+review_notes:
+- slot: 1
+  note: <待填写>
+- slot: 2
+  note: <待填写>
+external_review_gate:
+  required: true
+  reviewer_role: external_node_reviewer
+  reviewer_agent_must_be_distinct: true
+  rubric_path: prompts/review_rubric.yaml
+  verdict_path: review/verdict.yaml
+  pass_condition:
+    review_complete: true
+    overall_verdict: pass
+    hard_fail: false
+    independence_confirmed: true
+  required_reviewer_inputs:
+  - README.md
+  - status.yaml
+  - prompts/research_prompt.md
+  - prompts/acceptance_checklist.yaml
+  - prompts/review_rubric.yaml
+  - ../artifacts/outline_map.yaml
+  - 引言草稿
+  - docs/manuscript.md
+author_exit:
+- item: 'required_artifacts_exist: true'
+  status: pending
+- item: 'key_research_judgment_answered_or_gap_reported: true'
+  status: pending
+- item: 'citation_status_checked_when_external_sources_are_used: true'
+  status: pending
+node_close:
+- item: 'review/verdict.yaml:review_complete: true'
+  status: pending
+- item: 'review/verdict.yaml:overall_verdict: pass'
+  status: pending
+- item: 'review/verdict.yaml:hard_fail: false'
+  status: pending
+- item: 'review/verdict.yaml:independence_confirmed: true'
+  status: pending

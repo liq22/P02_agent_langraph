@@ -1,0 +1,33 @@
+artifact: artifacts/coverage_check_report.yaml
+version: "0.1"
+description: P4-local coverage report proving each mapped reviewer issue has a direct response and manuscript/evidence anchor.
+top_level:
+  coverage: list
+required_fields:
+  coverage:
+    - critique_id_or_comment_id_or_issue_id
+    - response_item_id
+    - claim_id
+    - evidence_id
+    - manuscript_location
+    - actionable_fix
+    - severity
+    - coverage_status
+allowed_values:
+  severity:
+    - low
+    - medium
+    - high
+  coverage_status:
+    - covered
+    - partial
+    - uncovered
+    - pending
+submission_hard_blocks:
+  coverage_status:
+    - partial
+    - uncovered
+    - pending
+field_semantics:
+  covered: The response, evidence, and manuscript location are all present and mutually consistent.
+  actionable_fix: The concrete repair if coverage is incomplete.

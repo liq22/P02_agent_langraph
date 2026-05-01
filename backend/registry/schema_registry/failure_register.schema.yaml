@@ -1,0 +1,37 @@
+artifact: artifacts/failure_register.yaml
+version: "0.1"
+description: Append-only record of failed, weak, negative, or ambiguous evidence that affects claims.
+top_level:
+  failures: list
+required_fields:
+  failure:
+    - failure_id
+    - context
+    - affected_claim_id
+    - severity
+    - interpretation
+    - action
+    - status
+allowed_values:
+  severity:
+    - low
+    - medium
+    - high
+  status:
+    - open
+    - explained
+    - resolved
+    - accepted_limitation
+  action:
+    - revise_claim
+    - add_experiment
+    - document_limitation
+    - discard_claim
+    - no_action
+submission_hard_blocks:
+  open_failure_severity:
+    - medium
+    - high
+field_semantics:
+  interpretation: Why the failure happened or what alternative explanation remains.
+  accepted_limitation: The failure is not hidden; the manuscript scope or limitation text explicitly accounts for it.

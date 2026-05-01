@@ -1,0 +1,94 @@
+version: 1
+policy_id: context_hygiene_v1
+purpose: "Keep default agent context bounded, low-noise, and free of protected or external instruction sources."
+
+trusted_instruction_roots:
+  - AGENTS.md
+  - README.md
+  - CLAUDE.md
+  - docs/architecture/context_hygiene.md
+  - .agent/skills/*/SKILL.md
+
+default_read_allowlist:
+  - AGENTS.md
+  - README.md
+  - CLAUDE.md
+  - backend/graph/graph_status.json
+  - backend/graph/graph.json
+  - research/**/README.md
+  - research/**/status.yaml
+  - research/**/skills/local_entry.md
+  - research/**/prompts/research_prompt.md
+  - research/**/prompts/acceptance_checklist.yaml
+
+explicit_request_only_globs:
+  - research/**/docs/HUMAN_ONLY.md
+  - _reference/**
+  - reports/**
+  - obsidian/canvases/**
+  - backend/registry/skill_registry/reference_guidance_map.yaml
+
+never_read_content_globs:
+  - .env
+  - .env.*
+  - "**/.env"
+  - "**/.env.*"
+  - "**/*secret*"
+  - "**/*credential*"
+  - "**/*token*"
+  - "**/*private_key*"
+  - "**/id_rsa"
+  - "**/id_ed25519"
+
+default_exclude_globs:
+  - .git/**
+  - .venv/**
+  - __pycache__/**
+  - "**/__pycache__/**"
+  - .pytest_cache/**
+  - .mypy_cache/**
+  - .ruff_cache/**
+  - _reference/**
+  - reports/**
+  - web/app/vendor/**
+  - backend/graph/hierarchy.json
+  - backend/graph/node_details.json
+  - backend/graph/scope_rollup.json
+  - backend/graph/board_state.json
+  - obsidian/canvases/*.canvas
+  - "**/*.pyc"
+  - "**/*.pdf"
+  - "**/*.png"
+  - "**/*.jpg"
+  - "**/*.jpeg"
+  - "**/*.gif"
+  - "**/*.zip"
+
+human_only_globs:
+  - research/**/docs/HUMAN_ONLY.md
+
+generated_globs:
+  - backend/graph/*.json
+  - backend/views/**
+  - backend/indexes/**
+  - obsidian/canvases/*.canvas
+
+reference_quarantine_globs:
+  - _reference/**
+
+large_noise_globs:
+  - .venv/**
+  - _reference/**
+  - reports/**
+  - web/app/vendor/**
+  - "**/*.pdf"
+  - "**/*.png"
+  - "**/*.jpg"
+  - "**/*.jpeg"
+  - "**/*.gif"
+  - "**/package-lock.json"
+
+required_doc_refs:
+  - AGENTS.md
+  - README.md
+  - docs/architecture/context_hygiene.md

@@ -1,0 +1,12 @@
+required_files:
+  - README.md
+  - index.md
+  - config.yaml
+  - status.yaml
+  - review/
+optional_slots:
+  - docs/
+  - skills/
+  - templates/
+  - artifacts/
+  - logs/

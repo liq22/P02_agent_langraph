@@ -1,0 +1,162 @@
+skills:
+  - name: graph_driven_research_orchestrator
+    role: entry
+    scope: repo
+    requires_selected_node: false
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: core
+  - name: auto_research_campaign
+    role: entry
+    scope: repo_or_node
+    requires_selected_node: false
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: core
+  - name: research_material_intake
+    role: entry
+    scope: repo_or_node
+    requires_selected_node: false
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: core
+  - name: autonomous_research_lane
+    role: lane
+    scope: repo
+    requires_selected_node: false
+    requires_execution_contract: false
+    can_cross_nodes: true
+    default_visibility: operator_only
+  - name: autoresearch-system-optimizer
+    role: lane
+    scope: repo
+    requires_selected_node: false
+    requires_execution_contract: false
+    can_cross_nodes: true
+    default_visibility: operator_only
+  - name: system_update_patch_curator
+    role: lane
+    scope: repo_or_node
+    requires_selected_node: false
+    requires_execution_contract: false
+    can_cross_nodes: true
+    default_visibility: operator_only
+  - name: auto_experiment_worker
+    role: worker
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: true
+    can_cross_nodes: false
+    default_visibility: core
+  - name: idea_discovery_or_problem_formulation
+    role: worker
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: core
+  - name: experiment_design_or_execution
+    role: worker
+    scope: phase_or_node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: core
+  - name: manuscript_worker
+    role: worker
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: core
+  - name: auto_review_loop
+    role: worker
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: core
+  - name: external_node_reviewer
+    role: helper
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: operator_only
+  - name: response_worker
+    role: worker
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: core
+  - name: aggregate_reviews
+    role: helper
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: optional
+  - name: leaf_node_writer
+    role: helper
+    scope: leaf
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: optional
+  - name: citation_verifier
+    role: helper
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: optional
+  - name: paper_figure
+    role: helper
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: optional
+  - name: result_to_claim
+    role: helper
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: optional
+  - name: structured_map_builder
+    role: helper
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: optional
+  - name: draft_export_sync
+    role: helper
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: optional
+  - name: response_coverage_check
+    role: helper
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: optional
+  - name: karpathy-skills
+    role: profile
+    scope: operator
+    requires_selected_node: false
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: optional
+  - name: deai_cn_skill
+    role: profile
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: optional

@@ -1,0 +1,27 @@
+required_fields:
+- contract_mode
+- repo_path
+- editable_paths
+- run_command
+- metric.name
+- metric.direction
+- metric.pattern
+- budget.max_rounds
+- budget.max_no_improve_rounds
+- budget.max_crashes
+- budget.max_minutes_per_run
+optional_fields:
+- metric.min_delta
+contract_mode_values:
+- review_only
+- executable
+runtime_gate:
+  local_wrapper_and_auto_experiment_worker_require: executable
+forbidden_fallbacks:
+- do not guess repo_path
+- do not guess run_command
+- do not guess metric pattern
+- do not guess editable_paths
+derived_defaults:
+  ledger: artifacts/auto_experiment/results.tsv
+  latest_log: logs/auto_experiment/latest_run.log

@@ -1,0 +1,36 @@
+{
+  "nodes": {
+    "research::P0_parent": {
+      "path": "research/P0_parent",
+      "status": "seed"
+    },
+    "research::P0_parent::P0_01_done": {
+      "path": "research/P0_parent/P0_01_done",
+      "status": "done"
+    },
+    "research::P1_实验设计与仓库蓝图::P1_04_核心想法轻量验证": {
+      "path": "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证",
+      "status": "active"
+    },
+    "research::P1_实验设计与仓库蓝图::P1_05_初步验证结果整理": {
+      "path": "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理",
+      "status": "seed"
+    },
+    "research::P2_论文撰写::P2_02_初稿_md": {
+      "path": "research/P2_论文撰写/P2_02_初稿_md",
+      "status": "seed"
+    }
+  },
+  "edges": [
+    {
+      "src": "research::P1_实验设计与仓库蓝图::P1_05_初步验证结果整理",
+      "rel": "depends_on",
+      "dst": "research::P1_实验设计与仓库蓝图::P1_04_核心想法轻量验证"
+    },
+    {
+      "src": "research::P2_论文撰写::P2_02_初稿_md",
+      "rel": "depends_on",
+      "dst": "research::P1_实验设计与仓库蓝图::P1_05_初步验证结果整理"
+    }
+  ]
+}

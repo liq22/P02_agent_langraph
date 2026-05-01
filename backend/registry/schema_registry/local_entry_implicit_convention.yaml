@@ -1,0 +1,25 @@
+version: 1
+applies_to: research/**/skills/local_entry.md
+inference:
+  type: local_entry_skill
+  trigger: selected_by_graph_driven_research_orchestrator
+  default_local_reads:
+  - README.md
+  - status.yaml
+  refresh_policy: orchestrator_refreshes_after_return
+  default_status_updates:
+  - heartbeat_at
+  - last_actor
+forbidden_defaults:
+- graph_reads
+- graph_refresh
+- node_switch
+- repo_wide_mutation
+- unbounded_loop
+decision_semantics:
+  keep_default_delegate: continue with default_delegate
+  stop_with: return control without guessing a deeper worker
+default_stop_rule_if_omitted: if declared outputs already exist and no explicit branching
+  rule is given, stop_with ready_for_review
+minimal_body: Use implicit local-entry conventions from the registry. Do not repeat
+  path, phase, kind, trigger, or default reads in each node clone.

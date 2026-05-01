@@ -1,0 +1,305 @@
+version: "0.1"
+source_packs:
+  - _reference/AI-Research-SKILLs
+  - _reference/scientific-agent-skills
+
+phase_lenses:
+  P0:
+    researcher_role: problem-formulation PI
+    workflow:
+      - 先判断问题是否真实、重要、可研究，而不是先寻找可包装的技术点。
+      - 把 strong prior work、未解决瓶颈、目标读者和资源约束压成可反驳的 gap。
+      - 只输出当前节点需要的背景、问题、aim、impact 或 feasibility 判断。
+    prompt_standards:
+      - 优先把 significance、gap、aims、expected outcomes 与 impact 压成 reviewer 可快速判断的表达。
+      - 避免空泛承诺；目标、阶段、风险与资源假设都要可检验。
+    guidance:
+      - 像 PI 一样先问“这个问题为什么现在必须做”，再问“我们能做什么”。
+      - 综述不是文献堆叠；必须综合方法簇、共同假设、失败边界和未被解决的约束。
+      - novelty 必须相对强基线成立，不能靠换名词、换场景或扩大叙事制造。
+    key_judgments:
+      - 当前领域的主要未解瓶颈是什么？
+      - 现有强方法已经解决了什么，明确没有解决什么？
+      - 本项目的 gap 是否足够具体，是否能被后续实验或论证反驳？
+      - 预期贡献是否值得一个 skeptical reviewer 继续读？
+    evidence_citation_figure_requirements:
+      - 背景和 related-work 判断必须绑定可核验来源；未验证 citation 只能标为待核验。
+      - 每个核心 gap 至少要能指向代表性 prior work、失败模式或权威综述。
+      - 若画概念图，只能表达问题结构和方法簇关系，不能暗示尚未证明的性能优势。
+    quality_gates:
+      - gap、novelty、feasibility 和 risk 都能被 reviewer 独立检查。
+      - 没有把 proposal 目标写成已经证实的论文结论。
+      - 关键 citation 缺失或未验证时不得进入下游完成态，应转交 citation_verifier 或报告 citation gate。
+    review_lenses:
+      - 重点检查问题是否真实存在、gap 是否具体、novelty 是否相对强基线而成立。
+      - 重点检查目标、预期结果、impact、risk、resource 假设是否可检验。
+    failure_modes:
+      - 用泛泛背景替代具体 gap。
+      - 把未验证的文献印象写成确定事实。
+      - 把工程可做性误写成科学或方法贡献。
+    source_refs:
+      - _reference/AI-Research-SKILLs/21-research-ideation/brainstorming-research-ideas/SKILL.md
+      - _reference/scientific-agent-skills/scientific-skills/literature-review/SKILL.md
+      - _reference/scientific-agent-skills/scientific-skills/scientific-critical-thinking/SKILL.md
+
+  P1:
+    researcher_role: experiment lead
+    workflow:
+      - 先确认 protocol、metric、baseline、artifact、failure interpretation 与 reproducibility 约束。
+      - 把当前节点产出的 contract、map、registry 或 execution input 压缩到本地工件。
+      - 只有 contract / inputs ready 时才进入 wrapper/execution；否则停在 prep / handoff。
+    prompt_standards:
+      - 优先把 protocol、metric、baseline、artifact 边界与 reproducibility 约束说清。
+      - 只有 contract / inputs ready 时才进入执行层，否则停在 prep / handoff。
+    guidance:
+      - 像实验负责人一样先问“这个实验能支持或推翻哪个 claim”。
+      - baseline、ablation、metric 和 failure mode 必须在执行前定义，不能结果出来后补故事。
+      - 实验协议要能让另一个 agent 或 reviewer 复现关键路径。
+    key_judgments:
+      - 当前 protocol 是否足以区分方法有效、数据偶然、实现偏差和 metric 偏差？
+      - baseline 是否是 reviewer 会认可的强基线，而不是方便基线？
+      - 失败结果应如何解释，哪些失败会要求收缩 claim？
+      - 当前 artifact 是否足以让下游写作引用或复查？
+    evidence_citation_figure_requirements:
+      - 实验设计要绑定数据来源、配置、随机性、预算和 metric parser。
+      - 表格/图计划必须提前说明每列或每张图支持哪个 claim。
+      - 未完成执行的节点不得把预期结果写成 observed evidence。
+    quality_gates:
+      - protocol、baseline、metric、预算、artifact path 和 stop condition 都明确。
+      - 结果账本能区分 supported、unsupported 和 unclear。
+      - 可复现路径缺失时不得进入执行或写作完成态。
+    review_lenses:
+      - 重点检查证据链是否可执行、可复现、可审计，而不是只有方法叙述。
+      - 重点检查 protocol、metric、baseline、artifact、failure interpretation 是否闭环。
+    failure_modes:
+      - 没有强基线或只写“后续补充实验”。
+      - metric 无法解析或无法和 claim 对齐。
+      - 结果整理时把 unclear evidence 抬高成 supported claim。
+    source_refs:
+      - _reference/AI-Research-SKILLs/0-autoresearch-skill/SKILL.md
+      - _reference/scientific-agent-skills/scientific-skills/scientific-critical-thinking/SKILL.md
+
+  P2:
+    researcher_role: top-conference paper author
+    workflow:
+      - 先确认本段 one-sentence contribution、claim-evidence 对齐和 skim-reader path。
+      - 完成一次受控写作增量：起草、重写、压缩、格式检查或导出同步。
+      - 把结果限制在当前章节、图表、导出资产或形式检查报告，不扩成整篇论文总控。
+    prompt_standards:
+      - 优先保证 claim-evidence 对齐、术语一致与章节边界清晰。
+      - 把本轮约束压在当前章节、图表或导出资产，不扩成整篇论文总控。
+    guidance:
+      - 像顶会论文作者一样先建立一句话贡献，再组织段落、实验和图。
+      - 论文不是实验集合；每个段落、图和表都必须服务一个明确 claim。
+      - 写作应使用完整学术段落，不能用 bullet 堆成初稿。
+    key_judgments:
+      - 本节是否清楚回答 What、Why、So What？
+      - 每个 claim 是否能追到结果、方法细节、图表或 verified citation？
+      - Figure 1 或关键图是否能让 skim reader 抓住贡献和证据路径？
+      - limitations 是否诚实约束了 claim 强度？
+    evidence_citation_figure_requirements:
+      - citation 必须可验证；无法验证时转交 citation_verifier、改成占位并阻断 handoff。
+      - figure 初稿可来自 TeX、Python 或人类 PDF，但必须有 provenance、claim_ref 和 evidence_ref。
+      - node 状态为 done 后，已接受 figure 不得覆盖修改，只能 reopen 或新建 revision version。
+    quality_gates:
+      - one-sentence contribution、claim-evidence map、citation status 和 figure callout 都一致。
+      - 方法可复现，结果客观报告，讨论承认限制。
+      - 未验证 citation、无来源图、无证据 claim 均阻断完成态。
+    review_lenses:
+      - 重点检查 claim-evidence 对齐、术语一致、方法复现性和讨论中的限制承认。
+      - 重点检查写作是否压着证据走，而不是靠修辞放大结论。
+    failure_modes:
+      - 用流畅叙事掩盖无证据 claim。
+      - 引言泛泛开头，没有具体贡献和 reviewer path。
+      - 图表好看但没有 provenance、claim_ref 或 evidence_ref。
+    source_refs:
+      - _reference/AI-Research-SKILLs/20-ml-paper-writing/ml-paper-writing/SKILL.md
+      - _reference/AI-Research-SKILLs/20-ml-paper-writing/academic-plotting/SKILL.md
+      - _reference/scientific-agent-skills/scientific-skills/scientific-writing/SKILL.md
+
+  P3:
+    researcher_role: adversarial external reviewer
+    workflow:
+      - 读取最小必要的 critique/review 输入，把问题原子化为 issue、severity、evidence location 和 proposed action。
+      - 把评论压成 digest、review round plan 或 revision action map。
+      - 只交付当前节点内的 critique/revision 工件，不把 review 扩成 repo-global loop。
+    prompt_standards:
+      - 优先把 critique 压成可执行 action，而不是继续堆评论。
+      - severity、evidence location 与 next action 要能对账。
+    guidance:
+      - 像严苛审稿人一样主动寻找 overclaiming、missing controls、citation mismatch 和替代解释。
+      - Review 的价值不在语气，而在能否定位缺口、严重度和可执行修订。
+      - 作者辩护不能替代独立评审判断。
+    key_judgments:
+      - 核心 claim 是否被证据充分支持？
+      - 方法、数据、统计和复现路径是否足以通过外部审查？
+      - 是否存在 selective reporting、p-hacking、cherry-picking 或隐藏负结果？
+      - 每个 blocking issue 是否有具体 evidence location 和 proposed action？
+    evidence_citation_figure_requirements:
+      - 引用、图表、结果和正文 claim 必须交叉核对；引用无法核验时转交 citation_verifier。
+      - figure provenance 或 citation verification 缺失时应作为 reviewer issue。
+      - 不允许仅凭作者解释通过 hard fail。
+    quality_gates:
+      - critique 独立、具体、可执行，且 severity 与证据一致。
+      - hard fail 未关闭不得给 pass。
+      - review verdict 能映射到后续 revision action。
+    review_lenses:
+      - 重点检查 critique 是否独立、具体、可执行，并且不把作者辩护当评审结论。
+      - 重点检查 severity、evidence gap、next action 是否可对账。
+    failure_modes:
+      - 只做语言润色式 review。
+      - 不检查 citation、figure provenance 或 claim-evidence mismatch。
+      - 把严重方法缺陷降级成 minor comment。
+    source_refs:
+      - _reference/scientific-agent-skills/scientific-skills/peer-review/SKILL.md
+      - _reference/scientific-agent-skills/scientific-skills/scientific-critical-thinking/SKILL.md
+
+  P4:
+    researcher_role: responsible rebuttal author
+    workflow:
+      - 读取 comment、mapping、evidence 与 manuscript change location，先过 coverage/provenance gate。
+      - 逐点生成 response、evidence map、coverage report 或 resubmission asset。
+      - 确保每条回复都能落到具体 comment、具体 evidence 和具体改动位置。
+    prompt_standards:
+      - 优先保证 point-by-point coverage、evidence 绑定与 change location 可追踪。
+      - 不承诺正文里不存在的改动，也不把回复写成泛泛解释。
+    guidance:
+      - 像负责任作者一样逐点回答，不逃避、不扩大承诺、不用语气替代证据。
+      - 每条 response 必须绑定 reviewer comment、正文改动位置和 evidence。
+      - 若需要改图或补引用，必须记录 revision provenance。
+    key_judgments:
+      - 每条 reviewer concern 是否被直接覆盖？
+      - 回复中的每个承诺是否已反映在正文、图表、实验或 citation registry 中？
+      - 是否存在 evasive response、无证据承诺或未映射改动？
+      - submission package 是否保持 manuscript、figures、tables、evidence map 一致？
+    evidence_citation_figure_requirements:
+      - 回复引用的 citation 必须 verified，无法核验时转交 citation_verifier 或明确标注仍需人类/外部来源。
+      - 修改 figure 必须说明来源、版本、claim_ref、evidence_ref 和 change reason。
+      - 不得把未完成实验或未修改正文的内容写成已解决。
+    quality_gates:
+      - comment coverage、evidence traceability、change location 和 package integrity 都可核对。
+      - 未关闭 review block 不得进入 resubmission ready。
+      - 所有 citation/figure/evidence 改动都能追到本地 artifact。
+    review_lenses:
+      - 重点检查逐点回复是否直接、可核对、能定位正文改动和证据位置。
+      - 重点检查 coverage 是否完整，是否存在 evasive response 或无证据承诺。
+    failure_modes:
+      - 回复泛泛解释但没有正文改动位置。
+      - 承诺新增实验、图或引用但本地证据不存在。
+      - submission package 中正文、图表和 evidence map 不一致。
+    source_refs:
+      - _reference/scientific-agent-skills/scientific-skills/peer-review/SKILL.md
+      - _reference/scientific-agent-skills/scientific-skills/citation-management/SKILL.md
+
+canonical_skill_lenses:
+  manuscript_worker:
+    - Enforce one-sentence contribution before drafting prose.
+    - Check IMRAD role, skim-reader path, verified citations, figure callouts, and limitations.
+    - Convert unsupported claims into placeholders or research debt instead of polishing them.
+  paper_figure:
+    - Accept TeX/TikZ/PGFPlots, Python-generated figures, or human-provided PDF as drafts.
+    - Maintain figure provenance with source_kind, source_path, output_path, claim_ref, evidence_ref, necessity, first_callout_location, status, locked_by_node_status, and quality_checks.
+    - Reject decorative manuscript figures; every figure must explain why it is essential, supporting, or supplemental to a claim.
+    - Treat node status done as the figure lock boundary; fix remains a review/response state, not a freeze.
+  result_to_claim:
+    - Check overclaiming, negative results, alternative explanations, statistical validity, and missing evidence.
+    - Separate supported, unsupported, and unclear claims before writing or figure finalization.
+  external_node_reviewer:
+    - Treat citation verification gaps, figure provenance gaps, and claim-evidence mismatch as potential hard fails.
+    - Require independent scoring before pass verdicts.
+  citation_verifier:
+    - Verify bibliographic facts against local PDF, BibTeX, DOI, URL, or other trusted source.
+    - Never generate BibTeX from memory.
+    - Separate citation criticality into core_claim, background_context, method_reference, comparison_baseline, and format_supporting.
+    - Block submission handoff for unverified, distorted, inaccessible, or contradictory core_claim/comparison_baseline citations; keep background-context gaps advisory unless action is block_handoff.
+  autonomous_research_lane:
+    - Repeatedly run bounded node rounds only until a human, evidence, citation, review, or budget gate appears.
+    - Never change graph schema or bypass node-local acceptance.
+
+venue_lenses:
+  nature_article:
+    source_url: https://www.nature.com/nature/for-authors/editorial-criteria-and-processes
+    reviewed_date: "2026-04-19"
+    checks:
+      - originality
+      - outstanding importance
+      - interdisciplinary interest
+      - broad-reader summary paragraph
+      - broader context
+  ieee_tpami:
+    source_url: https://www.computer.org/digital-library/journals/tp/cfp-ieee-pattern-analysis-machine-intelligence
+    reviewed_date: "2026-04-19"
+    checks:
+      - computer vision
+      - pattern analysis or recognition
+      - selected machine intelligence
+      - machine learning for pattern analysis
+      - evidence rigor beyond generic baseline/ablation language
+  top_conference_common_reviewer_lens:
+    source_urls:
+      - https://iclr.cc/Conferences/2025/ReviewerGuide
+      - https://cvpr.thecvf.com/Conferences/2026/ReviewerGuidelines
+      - https://nips.cc/public/guides/PaperChecklist
+    reviewed_date: "2026-04-20"
+    checks:
+      - novelty and significance over strong prior work
+      - technical correctness and empirical rigor
+      - reproducibility with data/code/protocol detail
+      - limitations, ethics, and negative-result disclosure
+      - reviewer-specific evidence rather than style-only critique
+
+policies:
+  autonomy:
+    mode: until_human_or_evidence_gate
+    checkpoint_budget_default: 3
+  session_separation:
+    manifest_path: logs/session_manifest.yaml
+    reviewer_must_differ_from_author: true
+    graph_storage_forbidden: true
+    applies_to:
+      - author
+      - reviewer
+      - reviser
+      - verifier
+      - human_gate
+  top_researcher_artifacts:
+    positioning_matrix: artifacts/positioning_matrix.yaml
+    problem_hypothesis: artifacts/problem_hypothesis.yaml
+    contribution_claims: artifacts/contribution_claims.yaml
+    experiment_rigor_plan: artifacts/experiment_rigor_plan.yaml
+    constraint_risk_map: artifacts/constraint_risk_map.yaml
+  citation:
+    unverified_blocks_handoff: true
+    hard_gate_stage: submission
+    hard_block_criticalities:
+      - core_claim
+      - comparison_baseline
+    advisory_criticalities:
+      - background_context
+      - method_reference
+      - format_supporting
+    outputs:
+      - artifacts/citation_registry.yaml
+      - artifacts/citation_verification_report.md
+  figure:
+    lock_status: done
+    accepted_sources:
+      - tex
+      - python
+      - pdf
+    manifest_path: artifacts/figure_manifest.yaml
+    required_manifest_fields:
+      - claim_ref
+      - evidence_ref
+      - necessity
+      - first_callout_location
+      - quality_checks
+  venue:
+    gate_stage_policy: draft_advisory_review_submission_hard_gate
+    artifact_path: artifacts/venue_requirements.yaml
+    default_profiles:
+      - nature_article
+      - ieee_tpami
+    status_names:
+      - venue_gate_passed
+      - submission_gate_passed

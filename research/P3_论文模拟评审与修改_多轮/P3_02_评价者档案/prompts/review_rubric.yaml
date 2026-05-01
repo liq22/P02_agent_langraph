@@ -1,0 +1,77 @@
+rubric_version: nature_node_review_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_02_评价者档案
+node_path: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案
+phase: P3
+node_kind: leaf
+node_mode: standard
+node_profile: evidence_leaf
+execution_profile: <none>
+reviewer_role: external_node_reviewer
+independence_requirement:
+  reviewer_agent_must_be_distinct: true
+  same_author_agent_forbidden: true
+  required_artifact: review/verdict.yaml
+scoring_dimensions:
+- name: originality_novelty
+  weight: 20
+  reviewer_standard: Clear advance over strong prior work, not incremental repackaging.
+- name: scientific_importance
+  weight: 20
+  reviewer_standard: Addresses a field-level scientific or engineering bottleneck.
+- name: evidence_technical_soundness
+  weight: 25
+  reviewer_standard: Claims are supported by robust data, baselines, uncertainty,
+    and controls.
+- name: reproducibility_transparency
+  weight: 15
+  reviewer_standard: Data, code, protocol, config, and limitations are inspectable.
+- name: broad_interest_story_clarity
+  weight: 10
+  reviewer_standard: A scientist outside the narrow subfield can understand why it
+    matters.
+- name: review_robustness
+  weight: 10
+  reviewer_standard: Anticipates alternative explanations, negative results, and reviewer
+    attacks.
+verdict_thresholds:
+  nature_ready_candidate_min_score: 90
+  strong_specialist_min_score: 80
+  revise_min_score: 60
+  block_below_score: 60
+  downstream_pass_min_score: 80
+hard_fail_conditions:
+- Unsupported central claim.
+- Material citation is missing, unverified, or mismatched with the claim it supports.
+- Figure lacks provenance, claim mapping, or evidence mapping.
+- Missing reproducibility path for data, code, protocol, or configuration.
+- Hidden negative result or omitted limitation.
+- Graph, Canvas, or dashboard treated as research truth.
+- Unbounded autonomous loop or undeclared handoff.
+- Reviewer-critical concern not mapped to evidence or revision action.
+phase_review_lenses:
+- 重点检查 critique 是否独立、具体、可执行，并且不把作者辩护当评审结论。
+- 重点检查 severity、evidence gap、next action 是否可对账。
+- critique 独立、具体、可执行，且 severity 与证据一致。
+- hard fail 未关闭不得给 pass。
+- review verdict 能映射到后续 revision action。
+node_level_5_criterion: Reviewer personas cover domain, method, statistics, reproducibility,
+  and editor view.
+node_blocking_failure: Only friendly or single-perspective reviewer.
+required_reviewer_inputs:
+- README.md
+- status.yaml
+- prompts/research_prompt.md
+- prompts/acceptance_checklist.yaml
+- prompts/review_rubric.yaml
+- ../prompts/standards.md
+- reviewer profile 草案
+- artifacts/claim_evidence_registry.yaml
+- artifacts/failure_register.yaml
+- artifacts/negative_result_note.md
+- artifacts/keep_discard_ledger.yaml
+- artifacts/reviewer_lens_matrix.yaml
+- logs/session_manifest.yaml
+required_review_outputs:
+- review/AI_001.md
+- review/verdict.yaml
+- review/response.yaml

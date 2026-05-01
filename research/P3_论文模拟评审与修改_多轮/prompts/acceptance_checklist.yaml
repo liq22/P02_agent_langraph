@@ -1,0 +1,127 @@
+node_id: research::P3_论文模拟评审与修改_多轮
+node_path: research/P3_论文模拟评审与修改_多轮
+phase: P3
+node_kind: parent
+prompt_assets:
+- path: prompts/research_prompt.md
+  status: required
+- path: prompts/acceptance_checklist.yaml
+  status: required
+- path: prompts/revision_prompt.md
+  status: recommended
+- path: prompts/review_rubric.yaml
+  status: required
+required_questions_answered:
+- item: 本轮评审要模拟什么视角？
+  status: pending
+- item: 批评是 blocking 还是 non-blocking？
+  status: pending
+- item: 修订动作如何闭环？
+  status: pending
+required_outputs:
+- path: 本轮评审计划
+  status: pending
+  description: 需由本节点形成或更新
+- path: 关键问题列表
+  status: pending
+  description: 需由本节点形成或更新
+- path: artifacts/paper_iteration_gate.yaml
+  status: pending
+  description: 记录本轮论文质量门控、下一轮路由和 unresolved blockers
+quality_checks:
+- item: 围绕 reviewer 视角、blocking issues、comment clustering、revision actionability 组织内容
+  status: pending
+- item: 批评要具体、可执行、可验证
+  status: pending
+- item: 区分 major/minor/blocking
+  status: pending
+- item: 批评应可操作
+  status: pending
+- item: P3 只生成审查结论和修订地图，不直接改 P2 正文或 P4 回复。
+  status: pending
+- item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
+  status: pending
+- item: 父节点只做 coordination/routing/summary，不替 leaf 子节点产出证据或正文。
+  status: pending
+- item: paper_iteration_gate 的 next_route 只声明优先研究目标；不绕过显式 prerequisite，允许 scheduler 做 dependency closure
+  status: pending
+handoff_ready_if:
+- item: 至少形成一版轮次计划
+  status: pending
+- item: 批评与修订动作能闭环
+  status: pending
+- item: artifacts/paper_iteration_gate.yaml 明确 ready_for_next_iteration 与 unresolved_blockers
+  status: pending
+- item: artifacts/paper_iteration_gate.yaml 的 next_route 没有把 blocked target 伪装成可直接执行
+  status: pending
+- item: 独立 reviewer agent 已生成 `review/verdict.yaml`
+  status: pending
+- item: '`review/verdict.yaml` 中 `review_complete == true`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `hard_fail == false`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
+  status: pending
+stop_if:
+- item: 缺关键输入或关键证据
+  status: pending
+- item: 本节点范围不清或越出节点职责
+  status: pending
+- item: 必须依赖的上游节点尚未就绪
+  status: pending
+- item: 缺少独立 reviewer verdict (`review/verdict.yaml`)
+  status: pending
+- item: 独立 reviewer verdict 尚未完成 (`review_complete != true`)
+  status: pending
+- item: 独立 reviewer 判定为 `revise` 或 `block`
+  status: pending
+- item: 独立 reviewer 提出 hard fail 且未关闭
+  status: pending
+- item: 父节点替 leaf 节点产出正文、实验、图表或审稿结论。
+  status: pending
+- item: 存在 ready child 但父节点继续深写，导致 route_child_first 被忽略。
+  status: pending
+- item: P3 试图把 P2/P4 的正文或回复改写作为本节点完成标准。
+  status: pending
+- item: paper_iteration_gate 把 target node 写成“可直接执行”，却没有暴露 unmet prerequisite。
+  status: pending
+review_notes:
+- slot: 1
+  note: <待填写>
+- slot: 2
+  note: <待填写>
+external_review_gate:
+  required: true
+  reviewer_role: external_node_reviewer
+  reviewer_agent_must_be_distinct: true
+  rubric_path: prompts/review_rubric.yaml
+  verdict_path: review/verdict.yaml
+  pass_condition:
+    review_complete: true
+    overall_verdict: pass
+    hard_fail: false
+    independence_confirmed: true
+  required_reviewer_inputs:
+  - README.md
+  - status.yaml
+  - prompts/research_prompt.md
+  - prompts/acceptance_checklist.yaml
+  - prompts/review_rubric.yaml
+  - prompts/standards.md
+  - 本轮评审计划
+  - 关键问题列表
+  - artifacts/paper_iteration_gate.yaml
+author_exit:
+- item: 'child_frontier_checked: true'
+  status: pending
+- item: 'route_child_first_or_frontier_gap_reported: true'
+  status: pending
+- item: 'no_leaf_content_authored_in_parent: true'
+  status: pending
+node_close:
+- item: 'all_required_children_closed_or_blocked_with_reason: true'
+  status: pending
+- item: 'parent_rollup_consistent_with_child_artifacts: true'
+  status: pending

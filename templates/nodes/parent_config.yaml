@@ -1,0 +1,3 @@
+# Optional parent-node config. New parent nodes should start with only README.md
+# and status.yaml unless a bounded coordination step needs explicit local config.
+enabled_skills: []

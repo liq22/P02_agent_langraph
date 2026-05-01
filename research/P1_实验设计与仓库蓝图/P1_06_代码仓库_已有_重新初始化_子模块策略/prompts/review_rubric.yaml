@@ -1,0 +1,71 @@
+rubric_version: nature_node_review_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_06_代码仓库_已有_重新初始化_子模块策略
+node_path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略
+phase: P1
+node_kind: scope
+node_mode: parent
+node_profile: routing_parent
+execution_profile: <none>
+reviewer_role: external_node_reviewer
+independence_requirement:
+  reviewer_agent_must_be_distinct: true
+  same_author_agent_forbidden: true
+  required_artifact: review/verdict.yaml
+scoring_dimensions:
+- name: originality_novelty
+  weight: 20
+  reviewer_standard: Clear advance over strong prior work, not incremental repackaging.
+- name: scientific_importance
+  weight: 20
+  reviewer_standard: Addresses a field-level scientific or engineering bottleneck.
+- name: evidence_technical_soundness
+  weight: 25
+  reviewer_standard: Claims are supported by robust data, baselines, uncertainty,
+    and controls.
+- name: reproducibility_transparency
+  weight: 15
+  reviewer_standard: Data, code, protocol, config, and limitations are inspectable.
+- name: broad_interest_story_clarity
+  weight: 10
+  reviewer_standard: A scientist outside the narrow subfield can understand why it
+    matters.
+- name: review_robustness
+  weight: 10
+  reviewer_standard: Anticipates alternative explanations, negative results, and reviewer
+    attacks.
+verdict_thresholds:
+  nature_ready_candidate_min_score: 90
+  strong_specialist_min_score: 80
+  revise_min_score: 60
+  block_below_score: 60
+  downstream_pass_min_score: 80
+hard_fail_conditions:
+- Unsupported central claim.
+- Material citation is missing, unverified, or mismatched with the claim it supports.
+- Figure lacks provenance, claim mapping, or evidence mapping.
+- Missing reproducibility path for data, code, protocol, or configuration.
+- Hidden negative result or omitted limitation.
+- Graph, Canvas, or dashboard treated as research truth.
+- Unbounded autonomous loop or undeclared handoff.
+- Reviewer-critical concern not mapped to evidence or revision action.
+phase_review_lenses:
+- 重点检查证据链是否可执行、可复现、可审计，而不是只有方法叙述。
+- 重点检查 protocol、metric、baseline、artifact、failure interpretation 是否闭环。
+- protocol、baseline、metric、预算、artifact path 和 stop condition 都明确。
+- 结果账本能区分 supported、unsupported 和 unclear。
+- 可复现路径缺失时不得进入执行或写作完成态。
+node_level_5_criterion: Repository strategy is reproducible, isolated, and does not
+  create a second source of truth.
+node_blocking_failure: Manual path magic or unpinned dependency state.
+required_reviewer_inputs:
+- README.md
+- status.yaml
+- prompts/research_prompt.md
+- prompts/acceptance_checklist.yaml
+- prompts/review_rubric.yaml
+- 仓库策略摘要
+- 子策略对照表
+required_review_outputs:
+- review/AI_001.md
+- review/verdict.yaml
+- review/response.yaml

@@ -1,0 +1,21 @@
+lifecycle:
+  stage: seed
+progress_pct: 0
+child_status:
+  P2_01_风格选择_IEEE_Elsevier_Nature: seed
+  P2_02_初稿_md: seed
+  P2_03_定稿_tex: seed
+  P2_04_形式检查: seed
+  P2_05_去AI味道: seed
+rollup:
+  ready_children: 0
+  total_children: 5
+  all_children_ready: false
+review_gate:
+  ai_review_count: 0
+  human_review_count: 0
+  all_comments_responded: false
+can_enter_fix: false
+heartbeat_at: 2026-04-10
+last_actor: system
+author_agent_id: <pending-author-agent>

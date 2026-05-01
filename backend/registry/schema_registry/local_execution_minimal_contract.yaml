@@ -1,0 +1,15 @@
+required_fields:
+- skill_id
+- purpose
+- required_inputs
+- outputs
+- stop_conditions
+optional_fields:
+- required_local_reads
+- optional_local_reads
+- extra_status_updates
+boundaries:
+- local_execution only exists for stable closed-loop nodes
+- one bounded round only
+- no global routing
+- no graph refresh

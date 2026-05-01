@@ -1,0 +1,9 @@
+lifecycle:
+  stage: done
+progress_pct: 100
+review_gate:
+  ai_review_count: 1
+  human_review_count: 0
+  all_comments_responded: true
+last_actor: nodebench
+author_agent_id: nodebench-fixture

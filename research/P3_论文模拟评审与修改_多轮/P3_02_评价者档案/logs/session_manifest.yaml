@@ -1,0 +1,12 @@
+round_id: p3-round-001
+sessions:
+- role: author
+  agent_id: codex
+  thread_or_session_id: current-turn
+  input_scope: P3 standards, P2_03 main.tex, P1 available artifacts, checklist_4-20
+  output_paths:
+  - artifacts/reviewer_lens_matrix.yaml
+  - artifacts/reviewer_profile_map.yaml
+notes:
+- No independent external reviewer pass was claimed in this round.
+- Reviewer lenses were built for blocker discovery and future paper iteration.

@@ -1,0 +1,51 @@
+node_id: nodebench::citation_fail_numeric_only
+node_path: .nodebench_tmp/citation_fail_numeric_only
+stage: review
+task_type: proposal_node
+inputs:
+  required_files:
+    - README.md
+    - status.yaml
+    - docs/manuscript.md
+    - prompts/research_prompt.md
+    - prompts/acceptance_checklist.yaml
+allowed_actions:
+  can_modify:
+    - docs/*.md
+    - logs/*.md
+    - logs/*.json
+  cannot_modify:
+    - README.md
+    - status.yaml
+    - docs/HUMAN_ONLY.md
+expected_outputs:
+  primary:
+    - docs/manuscript.md
+validators:
+  - id: markdown_structure
+    required: true
+  - id: acceptance_checklist
+    required: true
+  - id: claim_evidence_check
+    required: true
+  - id: citation_integrity
+    required: true
+  - id: edit_scope_check
+    required: true
+  - id: node_status_check
+    required: true
+scorecard:
+  pass_threshold: 0.8
+  dimensions:
+    completion: 1.0
+human_gate:
+  required_before_stage_change: true
+  protected_files:
+    - status.yaml
+    - README.md
+    - docs/HUMAN_ONLY.md
+stop_rules:
+  - missing_required_input
+  - validator_failed
+  - score_below_threshold
+  - human_gate_required

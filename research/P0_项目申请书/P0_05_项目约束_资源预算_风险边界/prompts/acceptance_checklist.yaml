@@ -1,0 +1,122 @@
+node_id: research::P0_项目申请书::P0_05_项目约束_资源预算_风险边界
+node_path: research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界
+phase: P0
+node_kind: leaf
+prompt_assets:
+- path: prompts/research_prompt.md
+  status: required
+- path: prompts/acceptance_checklist.yaml
+  status: required
+- path: prompts/standards.md
+  status: optional
+- path: prompts/review_rubric.yaml
+  status: required
+required_questions_answered:
+- item: 项目最大的资源瓶颈是什么？
+  status: pending
+- item: 最可能失败的路径是什么？
+  status: pending
+- item: 哪些边界必须主动写清楚以避免 reviewer 误解？
+  status: pending
+required_outputs:
+- path: 资源预算草案
+  status: pending
+  description: 需由本节点形成或更新
+- path: 风险边界与降级计划
+  status: pending
+  description: 需由本节点形成或更新
+- path: 不做什么的边界说明
+  status: pending
+  description: 需由本节点形成或更新
+- path: artifacts/gate_report.md
+  description: profile-required local artifact
+quality_checks:
+- item: 围绕 significance、gap、hypothesis/aims、expected outcomes、impact、feasibility 组织内容
+  status: pending
+- item: 避免空泛承诺，优先 reviewer 可快速判断的清晰目标
+  status: pending
+- item: 范围必须与资源匹配
+  status: pending
+- item: 显式写出边界比模糊承诺更好
+  status: pending
+- item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
+  status: pending
+- item: hard-gate block 必须绑定 claim_id/evidence_id/location/actionable_fix；否则只能作为 advisory
+    critique。
+  status: pending
+handoff_ready_if:
+- item: 至少列出 3 类主要约束或风险
+  status: pending
+- item: 每类风险都有对应缓解/降级策略
+  status: pending
+- item: proposal 范围不再失控
+  status: pending
+- item: 独立 reviewer agent 已生成 `review/verdict.yaml`
+  status: pending
+- item: '`review/verdict.yaml` 中 `review_complete == true`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `hard_fail == false`'
+  status: pending
+- item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
+  status: pending
+stop_if:
+- item: 缺关键输入或关键证据
+  status: pending
+- item: 本节点范围不清或越出节点职责
+  status: pending
+- item: 必须依赖的上游节点尚未就绪
+  status: pending
+- item: 缺少独立 reviewer verdict (`review/verdict.yaml`)
+  status: pending
+- item: 独立 reviewer verdict 尚未完成 (`review_complete != true`)
+  status: pending
+- item: 独立 reviewer 判定为 `revise` 或 `block`
+  status: pending
+- item: 独立 reviewer 提出 hard fail 且未关闭
+  status: pending
+- item: hard gate 缺 citation/figure/venue/coverage/revision evidence 中的适用工件。
+  status: pending
+- item: blocking issue 没有 claim_id/evidence_id/location/actionable_fix。
+  status: pending
+review_notes:
+- slot: 1
+  note: <待填写>
+- slot: 2
+  note: <待填写>
+external_review_gate:
+  required: true
+  reviewer_role: external_node_reviewer
+  reviewer_agent_must_be_distinct: true
+  rubric_path: prompts/review_rubric.yaml
+  verdict_path: review/verdict.yaml
+  pass_condition:
+    review_complete: true
+    overall_verdict: pass
+    hard_fail: false
+    independence_confirmed: true
+  required_reviewer_inputs:
+  - README.md
+  - status.yaml
+  - prompts/research_prompt.md
+  - prompts/acceptance_checklist.yaml
+  - prompts/review_rubric.yaml
+  - 资源预算草案
+  - 风险边界与降级计划
+  - 不做什么的边界说明
+  - artifacts/gate_report.md
+author_exit:
+- item: 'gate_inputs_verified: true'
+  status: pending
+- item: 'blocking_gaps_are_explicit: true'
+  status: pending
+node_close:
+- item: 'review/verdict.yaml:review_complete: true'
+  status: pending
+- item: 'review/verdict.yaml:overall_verdict: pass'
+  status: pending
+- item: 'review/verdict.yaml:hard_fail: false'
+  status: pending
+- item: 'review/verdict.yaml:independence_confirmed: true'
+  status: pending

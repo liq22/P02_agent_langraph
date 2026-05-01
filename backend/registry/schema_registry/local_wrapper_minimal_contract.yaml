@@ -1,0 +1,19 @@
+required_fields:
+- skill_id
+- purpose
+- canonical_target
+- io_contract
+optional_fields:
+- required_local_reads
+- optional_local_reads
+- extra_status_updates
+- stop_with
+io_contract_shape:
+  inputs: node-local inputs required by the canonical worker
+  outputs: node-local outputs the wrapper binds
+boundaries:
+- wrapper does not choose a node
+- wrapper does not read graph
+- wrapper does not refresh graph
+- wrapper does not become a second orchestrator
+- wrapper only binds local IO then delegates one bounded round

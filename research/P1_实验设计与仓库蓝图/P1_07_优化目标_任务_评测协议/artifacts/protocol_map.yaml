@@ -1,0 +1,20 @@
+protocol_map:
+  - objective: Evaluate claim-evidence validity and phase-transition discipline for AutoResearch nodes.
+    task: node-level research production and review across P0-P4
+    protocol: fixed_node_set_controlled_comparison_v1
+    primary_metric: claim_evidence_validity_rate
+    secondary_metrics:
+      - protocol_completeness
+      - independent_reviewer_pass_rate
+      - reproducibility_rerun_agreement
+      - unsupported_claim_count
+      - hard_fail_closure_rate
+      - human_gate_escalation_rate
+    baselines:
+      - manual_checklist_workflow
+      - prompt_only_agent_workflow
+      - agent_without_independent_gate
+    artifacts:
+      - artifacts/gate_report.md
+      - artifacts/experiment_rigor_plan.yaml
+      - future_artifacts/result_ledger.yaml

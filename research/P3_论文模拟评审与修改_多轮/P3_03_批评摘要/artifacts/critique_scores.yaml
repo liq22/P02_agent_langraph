@@ -1,0 +1,6 @@
+critique_scores:
+  - critique_id: cr001
+    clarity: 2
+    severity: high
+    novelty_gap: 3
+    actionability: 3

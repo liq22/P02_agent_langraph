@@ -1,0 +1,5 @@
+lifecycle:
+  stage: review
+progress_pct: 85
+last_actor: nodebench
+author_agent_id: nodebench-fixture

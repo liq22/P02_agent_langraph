@@ -1,0 +1,27 @@
+max_hours: 4
+child_scan_order:
+- P4_01_审稿意见收集
+- P4_02_问题映射矩阵
+- P4_03_逐点回复草稿_md
+- P4_04_正式回复_tex_或_doc
+- P4_05_覆盖检查
+- P4_06_修改证据
+- P4_07_再投稿打包
+enabled_skills: []
+agent_read_exclude:
+- docs/HUMAN_ONLY.md
+review_requirement:
+  ai: 1
+  human: 0
+human_interaction:
+  mode: on_demand
+  triggers:
+  - missing_research_input
+  - unresolved_scientific_tradeoff
+  - legal_or_ethics_blocker
+  - reviewer_block_not_closed
+  - final_submission_approval
+freeze_when:
+- ai_review_count >= 1
+- all_comments_responded == true
+- all_children_ready == true

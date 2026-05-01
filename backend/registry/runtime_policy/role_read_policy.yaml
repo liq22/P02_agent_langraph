@@ -1,0 +1,26 @@
+version: 1
+
+roles:
+  author:
+    default_reads:
+      - README.md
+      - status.yaml
+      - skills/local_entry.md
+      - prompts/research_prompt.md
+      - prompts/acceptance_checklist.yaml
+  reviewer:
+    default_reads:
+      - prompts/acceptance_checklist.yaml
+      - prompts/review_rubric.yaml
+      - docs/manuscript.md
+      - artifacts/
+  reviser:
+    default_reads:
+      - review/verdict.yaml
+      - review/response.yaml
+      - docs/manuscript.md
+      - artifacts/
+
+rules:
+  - Node files may declare local exceptions, but should not repeat this default policy.
+  - Review files are read by reviewer or reviser roles only when the selected node requires that step.

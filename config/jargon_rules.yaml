@@ -1,0 +1,104 @@
+version: 1
+
+banned:
+  truth:
+    replacement: "source file / authoritative file"
+    reason: "Avoid philosophical ambiguity and mixed meanings."
+  source-of-truth:
+    replacement: "authoritative file"
+    reason: "Use file ownership language."
+  source of truth:
+    replacement: "authoritative file"
+    reason: "Use file ownership language."
+  live submission truth gate:
+    replacement: "final submission check"
+    reason: "Use the actual check name."
+  submission truth gate:
+    replacement: "final submission check"
+    reason: "Use the actual check name."
+  Anti-Cheating Rules:
+    replacement: "blocking conditions"
+    reason: "Use neutral failure language."
+  cockpit:
+    replacement: "web app / agent UI"
+    reason: "Avoid UI nickname language."
+  lane:
+    replacement: "workflow mode / execution mode"
+    reason: "Avoid overloading one workflow label."
+  campaign:
+    replacement: "bounded run"
+    reason: "Avoid implying open-ended automation."
+  entry surface:
+    replacement: "starting skill / entry file"
+    reason: "Use the file or skill that actually starts execution."
+  projection surface:
+    replacement: "generated view"
+    reason: "Use one name for rebuildable views."
+  derived surfaces:
+    replacement: "generated views"
+    reason: "Use one name for rebuildable views."
+  bounded control round:
+    replacement: "one limited run"
+    reason: "Use direct action language."
+  runtime truth:
+    replacement: "actual behavior source"
+    reason: "Use the concrete source for behavior."
+  archetype families:
+    replacement: "node types"
+    reason: "Use the operational category name."
+  research OS:
+    replacement: "research workspace"
+    reason: "Avoid product metaphor language."
+
+controlled:
+  node:
+    definition: "A folder-backed research unit under research/."
+  graph:
+    definition: "A scheduler file that selects the next node; it does not store content."
+  skill:
+    definition: "A procedure contract for an agent action."
+  worker:
+    definition: "A skill that performs one bounded task after a node is selected."
+  contract:
+    definition: "An explicit input/output agreement for a task."
+  projection:
+    definition: "A generated view, not an authoritative file."
+  gate:
+    definition: "A named check that can stop progress; its trigger and owner must be explicit."
+
+allowed_internal:
+  - node_mode
+  - node_profile
+  - execution_profile
+  - local_entry
+  - local_wrapper
+  - local_execution
+
+local_entry_forbidden_fields:
+  - prompt_read_surface
+  - mutable_paths
+  - protected_paths
+  - append_only_artifacts
+  - reviewer_independence
+  - stage_routes
+
+strict_default_paths:
+  - README.md
+  - docs/USER_GUIDEBOOK.md
+  - docs/CODEX_ONLY_WORKFLOW.md
+  - docs/architecture/entry_matrix.md
+
+default_skip:
+  - .git
+  - .claude
+  - .codex
+  - .venv
+  - __pycache__
+  - config/jargon_rules.yaml
+  - backend/registry/glossary
+  - backend/graph
+  - obsidian/canvases
+  - web/dashboard
+  - research/**/artifacts
+  - research/**/logs
+  - research/**/review/verdict.yaml

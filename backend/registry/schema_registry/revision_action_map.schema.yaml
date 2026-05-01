@@ -1,0 +1,28 @@
+artifact: artifacts/revision_action_map.yaml
+version: "0.1"
+description: P3-local map from review issue to concrete revision action. Blocking issues without claim/evidence/location/actionable fix are not valid hard fails.
+top_level:
+  actions: list
+required_fields:
+  action:
+    - action_id
+    - issue_id
+    - claim_id
+    - evidence_id
+    - target_path
+    - target_location
+    - actionable_fix
+    - verification
+    - status
+allowed_values:
+  status:
+    - planned
+    - done
+    - blocked
+submission_hard_blocks:
+  status:
+    - planned
+    - blocked
+field_semantics:
+  actionable_fix: Concrete edit, evidence addition, or claim change required to close the issue.
+  verification: How the action will be checked after implementation.

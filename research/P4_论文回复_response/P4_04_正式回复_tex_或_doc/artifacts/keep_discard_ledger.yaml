@@ -1,0 +1,11 @@
+decisions:
+  - item_id: p4_04_tex_scaffold_established
+    item_type: response_scaffold
+    decision: keep
+    rationale: The provided TeX template gives the correct formal response structure and can be used as the node-local export target.
+    evidence_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/templates/review_response.tex
+  - item_id: p4_04_fabricated_reviewer_content
+    item_type: response_content
+    decision: discard
+    rationale: Official reviewer comments and verified manuscript changes are absent, so filling substantive responses would create unsupported commitments.
+    evidence_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/docs/manuscript.md

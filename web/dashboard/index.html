@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research Status Board</title>
+  <meta name="description" content="Hierarchy-first research monitoring dashboard" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <p class="eyebrow" data-i18n="brandEyebrow">Research OS</p>
+        <h1 data-i18n="brandTitle">Status Board</h1>
+        <p class="subtle" data-i18n="brandSubtitle">Hierarchy-first monitoring for folders, nodes, and bounded research work.</p>
+      </div>
+      <div class="topbar-controls">
+        <label class="control compact-control">
+          <span data-i18n="language">Language</span>
+          <select id="language-toggle">
+            <option value="zh">中文</option>
+            <option value="en">English</option>
+          </select>
+        </label>
+        <label class="control compact-control">
+          <span data-i18n="centerView">Center view</span>
+          <select id="center-view-toggle">
+            <option value="overview" data-i18n-option="overviewMode">Overview map</option>
+            <option value="board" data-i18n-option="boardMode">Research board</option>
+          </select>
+        </label>
+        <label class="control compact-control">
+          <span data-i18n="scopeFilter">Scope filter</span>
+          <select id="scope-filter">
+            <option value="all" data-i18n-option="filterAll">All scopes</option>
+            <option value="current-phase" data-i18n-option="filterCurrentPhase">Current phase</option>
+            <option value="focus-scope" data-i18n-option="filterFocusScope">Focused scope</option>
+          </select>
+        </label>
+        <label class="control search-control">
+          <span data-i18n="search">Search</span>
+          <input id="search-input" type="search" placeholder="P1_04 / 方法 / path" />
+        </label>
+        <label class="toggle-pill">
+          <input id="dependency-toggle" type="checkbox" />
+          <span data-i18n="showDependencies">Show dependencies</span>
+        </label>
+        <button id="refresh-button" class="ghost-button" type="button" data-i18n="refresh">Refresh</button>
+        <div id="heartbeat" class="heartbeat" aria-live="polite">Idle</div>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="panel sidebar-left">
+        <section class="section-block scheduler-block">
+          <div class="section-header">
+            <p class="section-label" data-i18n="scheduler">Scheduler</p>
+            <span id="scheduler-meta" class="section-meta">—</span>
+          </div>
+          <div id="scheduler-cards" class="scheduler-cards"></div>
+        </section>
+
+        <section class="section-block scope-block">
+          <div class="section-header">
+            <p class="section-label" data-i18n="scopeRail">Scope rail</p>
+            <span class="section-meta" data-i18n="phaseRange">P0 → P4</span>
+          </div>
+          <div id="scope-rail" class="scope-rail"></div>
+        </section>
+
+        <section class="section-block breadcrumb-block">
+          <div class="section-header">
+            <p class="section-label" data-i18n="focusScope">Focused scope</p>
+            <span class="section-meta" data-i18n="directChildrenOnly">Direct children only</span>
+          </div>
+          <div id="breadcrumb" class="breadcrumb"></div>
+          <div id="scope-children" class="scope-children"></div>
+        </section>
+
+        <section class="section-block queue-block">
+          <div class="section-header">
+            <p class="section-label" data-i18n="hotQueue">Hot queue</p>
+            <span class="section-meta" data-i18n="humanFlow">For human flow</span>
+          </div>
+          <div id="hot-queue" class="queue-list"></div>
+        </section>
+      </aside>
+
+      <section class="panel center-panel">
+        <div class="center-header">
+          <div>
+            <p class="section-label" data-i18n="centerPanel">Workspace</p>
+            <h2 id="center-title">Overview map</h2>
+          </div>
+          <div class="center-actions">
+            <button id="back-scope-button" class="ghost-button" type="button" data-i18n="backToParent">Back to parent</button>
+            <button id="focus-next-button" class="ghost-button" type="button" data-i18n="focusNextNode">Focus next node</button>
+          </div>
+        </div>
+
+        <div id="overview-view" class="center-view active">
+          <div id="graph-canvas" class="graph-canvas"></div>
+          <div id="graph-empty" class="graph-empty hidden" data-i18n="graphUnavailable">Hierarchy graph unavailable.</div>
+          <div id="graph-tooltip" class="graph-tooltip hidden"></div>
+        </div>
+
+        <div id="board-view" class="center-view board-view hidden">
+          <div id="board-lanes" class="board-lanes"></div>
+        </div>
+      </section>
+
+      <aside class="panel sidebar-right">
+        <section class="section-block inspector-block">
+          <div class="section-header">
+            <p class="section-label" data-i18n="nodeInspector">Node inspector</p>
+            <span id="inspector-meta" class="section-meta" data-i18n="selectNode">Select a node</span>
+          </div>
+          <div id="inspector-content" class="inspector-content">
+            <div class="empty-state">
+              <h3 data-i18n="selectScopeTitle">Select a scope or node</h3>
+              <p data-i18n="selectScopeBody">Use the left rail or the hierarchy map to inspect status, review gate, progress, heartbeat, files, and local relations.</p>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <script src="vendor/d3-7.9.0.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

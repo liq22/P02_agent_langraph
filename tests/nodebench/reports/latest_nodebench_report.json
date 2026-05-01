@@ -1,0 +1,129 @@
+{
+  "run_id": "20260427-152255",
+  "updated_at": "2026-04-27T15:22:55.477029+00:00",
+  "case_count": 12,
+  "passed_count": 3,
+  "matched_count": 12,
+  "results": [
+    {
+      "case": "acceptance_fail_missing_item",
+      "returncode": 1,
+      "passed": false,
+      "score": 0.0,
+      "blocking_validator": "acceptance_checklist",
+      "expected_passed": false,
+      "expected_blocking_validator": "acceptance_checklist",
+      "matched": true
+    },
+    {
+      "case": "citation_fail_missing_bib",
+      "returncode": 1,
+      "passed": false,
+      "score": 0.0,
+      "blocking_validator": "citation_integrity",
+      "expected_passed": false,
+      "expected_blocking_validator": "citation_integrity",
+      "matched": true
+    },
+    {
+      "case": "citation_fail_missing_citekey",
+      "returncode": 1,
+      "passed": false,
+      "score": 0.0,
+      "blocking_validator": "citation_integrity",
+      "expected_passed": false,
+      "expected_blocking_validator": "citation_integrity",
+      "matched": true
+    },
+    {
+      "case": "citation_fail_numeric_only",
+      "returncode": 1,
+      "passed": false,
+      "score": 0.0,
+      "blocking_validator": "citation_integrity",
+      "expected_passed": false,
+      "expected_blocking_validator": "citation_integrity",
+      "matched": true
+    },
+    {
+      "case": "claim_fail_missing_evidence",
+      "returncode": 1,
+      "passed": false,
+      "score": 0.0,
+      "blocking_validator": "claim_evidence_check",
+      "expected_passed": false,
+      "expected_blocking_validator": "claim_evidence_check",
+      "matched": true
+    },
+    {
+      "case": "edit_scope_fail_violation",
+      "returncode": 1,
+      "passed": false,
+      "score": 0.0,
+      "blocking_validator": "edit_scope_check",
+      "expected_passed": false,
+      "expected_blocking_validator": "edit_scope_check",
+      "matched": true
+    },
+    {
+      "case": "experiment_pass",
+      "returncode": 0,
+      "passed": true,
+      "score": 1.0,
+      "blocking_validator": null,
+      "expected_passed": true,
+      "expected_blocking_validator": null,
+      "matched": true
+    },
+    {
+      "case": "latex_fail_build",
+      "returncode": 1,
+      "passed": false,
+      "score": 0.0,
+      "blocking_validator": "latex_build",
+      "expected_passed": false,
+      "expected_blocking_validator": "latex_build",
+      "matched": true
+    },
+    {
+      "case": "manuscript_pass",
+      "returncode": 0,
+      "passed": true,
+      "score": 0.9714,
+      "blocking_validator": null,
+      "expected_passed": true,
+      "expected_blocking_validator": null,
+      "matched": true
+    },
+    {
+      "case": "proposal_pass",
+      "returncode": 0,
+      "passed": true,
+      "score": 1.0,
+      "blocking_validator": null,
+      "expected_passed": true,
+      "expected_blocking_validator": null,
+      "matched": true
+    },
+    {
+      "case": "response_fail_missing_evidence",
+      "returncode": 1,
+      "passed": false,
+      "score": 0.0,
+      "blocking_validator": "response_coverage_check",
+      "expected_passed": false,
+      "expected_blocking_validator": "response_coverage_check",
+      "matched": true
+    },
+    {
+      "case": "status_fail_terminal_no_human_gate",
+      "returncode": 1,
+      "passed": false,
+      "score": 0.0,
+      "blocking_validator": "node_status_check",
+      "expected_passed": false,
+      "expected_blocking_validator": "node_status_check",
+      "matched": true
+    }
+  ]
+}

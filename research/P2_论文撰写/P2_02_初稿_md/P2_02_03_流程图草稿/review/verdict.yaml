@@ -1,0 +1,21 @@
+review_id: EXTERNAL-AI-001
+review_complete: false
+reviewer_agent_id: <pending-distinct-agent>
+reviewer_skill: external_node_reviewer
+reviewed_node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿
+rubric_path: prompts/review_rubric.yaml
+rubric_version: nature_node_review_v1
+overall_score: null
+overall_verdict: revise
+hard_fail: false
+dimension_scores:
+  originality_novelty: null
+  scientific_importance: null
+  evidence_technical_soundness: null
+  reproducibility_transparency: null
+  broad_interest_story_clarity: null
+  review_robustness: null
+blocking_issues: []
+required_actions: []
+downstream_ready: false
+independence_confirmed: false

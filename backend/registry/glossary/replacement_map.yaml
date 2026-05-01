@@ -1,0 +1,25 @@
+version: 1
+
+replacement_map:
+  truth: authoritative_file
+  source-of-truth: authoritative_file
+  source_of_truth: authoritative_file
+  live_submission_truth_gate: final_submission_check
+  submission_truth_gate: final_submission_check
+  Anti-Cheating_Rules: blocking_conditions
+  cockpit: web_app
+  lane: workflow_mode
+  campaign: bounded_run
+  entry_surface: entry_file
+  projection_surface: generated_view
+  derived_surfaces: generated_views
+  bounded_control_round: one_limited_run
+  runtime_truth: actual_behavior_source
+  archetype_families: node_types
+  prompt_read_surface: read_order
+  runtime_entry_shim: local_entry
+  handoff_readiness: ready_for_next_node
+  source_access_level: allowed_source_scope
+  reviewer_independence: reviewer_separation
+  protected_paths: read_only_paths
+  mutable_paths: writable_paths

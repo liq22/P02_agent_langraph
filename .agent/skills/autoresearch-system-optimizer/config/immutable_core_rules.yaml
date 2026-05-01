@@ -1,0 +1,12 @@
+meta:
+  version: "1.0"
+  description: "Skill-local immutable anchors that must never be auto-applied by the optimizer itself."
+
+immutable_paths:
+  - ".agent/skills/autoresearch-system-optimizer/config/immutable_core_rules.yaml"
+  - ".agent/skills/autoresearch-system-optimizer/config/research_gate_rules.yaml"
+
+manual_ticket_triggers:
+  - touches_immutable_anchor
+  - crosses_research_lane
+  - missing_structured_score_inputs

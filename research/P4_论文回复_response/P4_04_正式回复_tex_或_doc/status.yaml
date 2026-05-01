@@ -1,0 +1,11 @@
+lifecycle:
+  stage: active
+progress_pct: 25
+review_gate:
+  ai_review_count: 0
+  human_review_count: 0
+  all_comments_responded: false
+can_enter_fix: false
+heartbeat_at: 2026-04-29
+last_actor: codex
+author_agent_id: codex-p4-04-template-scaffold

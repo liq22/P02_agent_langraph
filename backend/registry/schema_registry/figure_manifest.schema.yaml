@@ -1,0 +1,44 @@
+artifact: artifacts/figure_manifest.yaml
+version: "0.1"
+description: Node-local provenance and narrative necessity record for paper figures. Structure validity is not a proof that the figure is persuasive.
+top_level:
+  figures: list
+required_fields:
+  figure:
+    - figure_id
+    - source_kind
+    - source_path
+    - output_path
+    - claim_ref
+    - evidence_ref
+    - necessity
+    - first_callout_location
+    - status
+    - locked_by_node_status
+    - quality_checks
+allowed_values:
+  source_kind:
+    - tex
+    - python
+    - pdf
+  necessity:
+    - essential
+    - supporting
+    - supplemental
+  status:
+    - draft
+    - accepted
+    - locked
+required_quality_checks:
+  - vector_or_dpi_checked
+  - caption_self_contained
+  - colorblind_or_grayscale_checked
+  - source_permission_checked
+lock_policy:
+  locked_by_node_status: done
+  fix_is_lock: false
+field_semantics:
+  claim_ref: The claim this figure is necessary to understand or audit.
+  evidence_ref: The data, result, source, or local artifact behind the visual.
+  first_callout_location: Manuscript location where the reader first sees the figure callout.
+  necessity: Decorative figures are not valid manuscript-gate figures.

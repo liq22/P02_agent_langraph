@@ -1,0 +1,11 @@
+round_id: p3-round-001
+sessions:
+- role: author
+  agent_id: codex
+  thread_or_session_id: current-turn
+  input_scope: P3 review notes, reviewer lens matrix, P2_03 placeholder TeX, P1 result and figure artifacts
+  output_paths:
+  - artifacts/review_issue_register.yaml
+  - artifacts/critique_digest.yaml
+notes:
+- Issues are intentionally open because the manuscript and upstream evidence are incomplete.

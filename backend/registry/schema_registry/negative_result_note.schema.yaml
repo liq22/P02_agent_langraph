@@ -1,0 +1,9 @@
+artifact: artifacts/negative_result_note.md
+version: "0.1"
+description: Human-readable note preserving negative, failed, ambiguous, or inconclusive results and their effect on claims.
+required_content:
+  - negative_or_failure_discussion
+  - interpretation_or_limitation
+field_semantics:
+  negative_or_failure_discussion: The note must explicitly preserve negative or failed evidence instead of reframing it as positive support.
+  interpretation_or_limitation: The note must state how the result changes claim scope, limitations, or alternative explanations.

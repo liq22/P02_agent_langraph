@@ -1,0 +1,13 @@
+items:
+  - id: dataset_task
+    text: dataset 和 task 明确
+    keywords: ["dataset", "task"]
+  - id: baseline_metric
+    text: baseline 和 metric 明确
+    keywords: ["baseline", "metric"]
+  - id: artifacts
+    text: expected table 和 expected figure 明确
+    keywords: ["expected table", "expected figure"]
+  - id: failure_case
+    text: failure case 明确
+    keywords: ["failure case"]

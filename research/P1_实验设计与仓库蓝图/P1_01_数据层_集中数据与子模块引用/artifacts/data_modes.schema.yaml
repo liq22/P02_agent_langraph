@@ -1,0 +1,7 @@
+modes:
+  centralized_data:
+    description: 数据集中保存，本仓维护元数据与切分
+  submodule_ref_data:
+    description: 数据逻辑来自子模块，主仓只记录引用与边界
+  hybrid_data:
+    description: 部分集中、部分引用，允许混合

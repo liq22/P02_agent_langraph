@@ -1,0 +1,29 @@
+artifact: research/<target-node>/artifacts/intake/material_<timestamp>.yaml
+version: "0.1"
+description: Phase-aware research material intake contract for entering the workspace from P0, P1, P2, P3, P4, or an explicit target node.
+top_level:
+  entry_phase: string
+  target_node: string
+  material_summary: string
+  available_assets: string
+  desired_output: string
+  constraints: string
+  known_gaps: string
+required_fields:
+  intake:
+    - material_summary
+    - available_assets
+    - desired_output
+    - constraints
+    - known_gaps
+  routing:
+    - entry_phase or target_node
+field_semantics:
+  entry_phase: Optional phase hint, one of P0, P1, P2, P3, or P4.
+  target_node: "Optional explicit research:: node id or research/ path. If present, it takes priority over phase defaults."
+  material_summary: What the user already has or wants to inject into the workspace.
+  available_assets: Existing papers, code, data, ideas, experiment results, reviews, draft text, or response materials.
+  desired_output: The immediate output wanted from this material, such as problem framing, protocol, manuscript section, revision plan, or response draft.
+  constraints: Time, data, compute, venue, non-goals, unavailable actions, and explicit boundaries.
+  known_gaps: What is still unclear, missing, weak, unverified, or risky.
+validation_boundary: The schema validates intake shape and routing metadata only; it does not prove upstream phase completion, local acceptance readiness, novelty, feasibility, review sufficiency, or submission readiness.

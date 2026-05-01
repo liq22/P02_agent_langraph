@@ -1,0 +1,29 @@
+max_hours: 4
+child_scan_order:
+- P1_01_数据层_集中数据与子模块引用
+- P1_02_伪代码
+- P1_03_仓库蓝图
+- P1_04_核心想法轻量验证
+- P1_05_初步验证结果整理
+- P1_06_代码仓库_已有_重新初始化_子模块策略
+- P1_07_优化目标_任务_评测协议
+- P1_08_预期结果与表格
+- P1_09_结果图与草稿
+enabled_skills: []
+agent_read_exclude:
+- docs/HUMAN_ONLY.md
+review_requirement:
+  ai: 1
+  human: 0
+human_interaction:
+  mode: on_demand
+  triggers:
+  - missing_research_input
+  - unresolved_scientific_tradeoff
+  - legal_or_ethics_blocker
+  - reviewer_block_not_closed
+  - final_submission_approval
+freeze_when:
+- ai_review_count >= 1
+- all_comments_responded == true
+- all_children_ready == true

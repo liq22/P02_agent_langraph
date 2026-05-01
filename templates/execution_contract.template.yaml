@@ -1,0 +1,18 @@
+# Copy this template into one node-local `artifacts/execution_contract.yaml`.
+# Keep `contract_mode: review_only` until `repo_path`, `run_command`, and the metric parser
+# are backed by a real runnable repository and verified by a clean baseline.
+contract_mode: review_only
+repo_path: ../attached_repo
+editable_paths:
+  - train.py
+run_command: uv run train.py > logs/auto_experiment/latest_run.log 2>&1
+metric:
+  name: val_bpb
+  direction: lower_is_better
+  pattern: '^val_bpb:\s*([0-9.]+)$'
+  min_delta: 0.0
+budget:
+  max_rounds: 6
+  max_no_improve_rounds: 2
+  max_crashes: 2
+  max_minutes_per_run: 10

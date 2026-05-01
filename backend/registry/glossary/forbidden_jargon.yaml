@@ -1,0 +1,48 @@
+version: 1
+
+forbidden_terms:
+  - term: truth
+    replacement: source file / authoritative file
+    reason: Avoid mixed meanings across repo files, paper state, and checks.
+  - term: live submission truth gate
+    replacement: final submission check
+    reason: Use the concrete validation step.
+  - term: Anti-Cheating Rules
+    replacement: blocking conditions
+    reason: Use neutral failure language.
+  - term: cockpit
+    replacement: web app / agent UI
+    reason: Avoid UI nickname language.
+  - term: lane
+    replacement: workflow mode / execution mode
+    reason: Avoid overloading one workflow label.
+  - term: campaign
+    replacement: bounded run
+    reason: Avoid implying open-ended automation.
+  - term: entry surface
+    replacement: entry file / starting skill
+    reason: Name the file or skill that actually starts work.
+  - term: bounded control round
+    replacement: one limited run
+    reason: Use direct action language.
+  - term: runtime truth
+    replacement: actual behavior source
+    reason: Use the concrete source for behavior.
+  - term: archetype families
+    replacement: node types
+    reason: Use the operational category name.
+  - term: prompt_read_surface
+    replacement: read_order
+    reason: Keep node-local entries concrete.
+  - term: runtime entry shim
+    replacement: local_entry
+    reason: The file already names the concept.
+  - term: deeper delegate
+    replacement: next_worker
+    reason: Name the action target directly.
+  - term: source-of-truth layer
+    replacement: authoritative file
+    reason: Use file ownership language.
+  - term: smoothness
+    replacement: path_length_or_user_friction
+    reason: Subjective unless tied to a measurable check.

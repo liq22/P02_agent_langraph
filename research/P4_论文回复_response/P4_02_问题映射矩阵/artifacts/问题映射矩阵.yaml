@@ -1,0 +1,5 @@
+matrix:
+  - critique_id: cr001
+    response_item_id: rsp001
+    evidence_id: ev001
+    status: uncovered

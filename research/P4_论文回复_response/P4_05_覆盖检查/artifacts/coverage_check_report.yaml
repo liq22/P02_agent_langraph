@@ -1,0 +1,9 @@
+coverage:
+- critique_id: cr001
+  response_item_id: rsp001
+  claim_id: pending_claim_id
+  evidence_id: ev001
+  manuscript_location: pending_manuscript_location
+  actionable_fix: Map this critique to a concrete manuscript change and verified evidence.
+  severity: medium
+  coverage_status: uncovered

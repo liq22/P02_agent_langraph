@@ -1,0 +1,7 @@
+module_map:
+  preprocessing:
+    target: src/data/preprocess.py
+  model_core:
+    target: src/models/core.py
+  evaluator:
+    target: src/eval/metrics.py

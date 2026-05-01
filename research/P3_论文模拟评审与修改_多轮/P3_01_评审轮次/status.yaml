@@ -1,0 +1,15 @@
+lifecycle:
+  stage: active
+progress_pct: 40
+review_gate:
+  ai_review_count: 0
+  human_review_count: 0
+  all_comments_responded: false
+can_enter_fix: false
+round:
+  round_id: p3-round-001
+  artifact: artifacts/review_round_notes.md
+  decision: blocker_mapping_only
+heartbeat_at: 2026-04-20
+last_actor: codex
+author_agent_id: codex

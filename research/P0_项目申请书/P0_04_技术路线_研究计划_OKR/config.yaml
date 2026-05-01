@@ -1,0 +1,22 @@
+max_hours: 6
+source:
+- arxiv
+- scholar
+- pdf
+enabled_skills: []
+agent_read_exclude:
+- docs/HUMAN_ONLY.md
+review_requirement:
+  ai: 1
+  human: 0
+freeze_when:
+- ai_review_count >= 1
+- all_comments_responded == true
+human_interaction:
+  mode: on_demand
+  triggers:
+  - missing_research_input
+  - unresolved_scientific_tradeoff
+  - legal_or_ethics_blocker
+  - reviewer_block_not_closed
+  - final_submission_approval

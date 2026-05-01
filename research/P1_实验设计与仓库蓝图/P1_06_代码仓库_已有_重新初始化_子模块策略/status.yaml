@@ -1,0 +1,20 @@
+lifecycle:
+  stage: seed
+progress_pct: 0
+child_status:
+  P1_06_01_新仓库项目: seed
+  P1_06_02_现有仓库接入: seed
+  P1_06_03_子模块仓库引用: seed
+  P1_06_04_feature_branch_修改策略: seed
+rollup:
+  ready_children: 0
+  total_children: 4
+  all_children_ready: false
+review_gate:
+  ai_review_count: 0
+  human_review_count: 0
+  all_comments_responded: false
+can_enter_fix: false
+heartbeat_at: 2026-04-10
+last_actor: system
+author_agent_id: <pending-author-agent>

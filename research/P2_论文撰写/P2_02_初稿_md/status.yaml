@@ -1,0 +1,21 @@
+lifecycle:
+  stage: seed
+progress_pct: 0
+child_status:
+  P2_02_01_引言: seed
+  P2_02_02_preliminary: seed
+  P2_02_03_流程图草稿: seed
+  P2_02_04_方法: seed
+  P2_02_05_实验与讨论: seed
+rollup:
+  ready_children: 0
+  total_children: 5
+  all_children_ready: false
+review_gate:
+  ai_review_count: 0
+  human_review_count: 0
+  all_comments_responded: false
+can_enter_fix: false
+heartbeat_at: 2026-04-10
+last_actor: system
+author_agent_id: <pending-author-agent>
