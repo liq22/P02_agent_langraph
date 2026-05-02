@@ -1,0 +1,4 @@
+[submodule "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA"]
+	path = research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+	url = https://github.com/PHMbench/PHMGA.git
+	branch = journal_thesis
