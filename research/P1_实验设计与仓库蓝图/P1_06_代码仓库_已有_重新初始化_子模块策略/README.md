@@ -11,28 +11,24 @@
     - 智能体默认优先读取：README.md -> status.yaml -> index.md
     - 进入 `fix` 后，智能体不得修改 README.md 与 status.yaml
 
-    ## 子节点
-    - @P1_06_01_新仓库项目/
-- @P1_06_02_现有仓库接入/
-- @P1_06_03_子模块仓库引用/
-- @P1_06_04_feature_branch_修改策略/
+    ## 外部仓库引用
+    - PHMGA 子模块位于 @artifacts/PHMGA/，跟踪 `journal_thesis` 分支。
 
     ## 完成标准
-    - 子节点均已建立
+    - PHMGA 子模块已建立
     - 至少 1 份 AI review
     - 至少 1 份人类 review
     - 所有 comment 都已在 @review/response.yaml 中响应
     - 满足进入 `fix` 的条件
 
     ## TODO_AI
-    - [ ] 检查子节点是否齐全
-    - [ ] 检查边界是否冲突或重复
+    - [ ] 检查 PHMGA 子模块引用是否齐全
     - [ ] 完成一轮 AI review
     - [ ] 更新 @review/response.yaml
     - [ ] 检查是否满足进入 `fix` 的条件
 
     ## TODO_人类
-    - [ ] 审核子节点划分是否合理
+    - [ ] 审核 PHMGA 子模块接入是否合理
     - [ ] 审核 AI review 是否有效
     - [ ] 决定是否进入 `fix`
     - [ ] 如需重开节点，手动修改 stage

@@ -1,9 +1,5 @@
 max_hours: 4
-child_scan_order:
-- P1_06_01_新仓库项目
-- P1_06_02_现有仓库接入
-- P1_06_03_子模块仓库引用
-- P1_06_04_feature_branch_修改策略
+child_scan_order: []
 enabled_skills: []
 agent_read_exclude:
 - docs/HUMAN_ONLY.md
