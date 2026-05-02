@@ -52,22 +52,6 @@
       "path": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略",
       "status": "seed"
     },
-    "research::P1_实验设计与仓库蓝图::P1_06_代码仓库_已有_重新初始化_子模块策略::P1_06_01_新仓库项目": {
-      "path": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_01_新仓库项目",
-      "status": "seed"
-    },
-    "research::P1_实验设计与仓库蓝图::P1_06_代码仓库_已有_重新初始化_子模块策略::P1_06_02_现有仓库接入": {
-      "path": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_02_现有仓库接入",
-      "status": "seed"
-    },
-    "research::P1_实验设计与仓库蓝图::P1_06_代码仓库_已有_重新初始化_子模块策略::P1_06_03_子模块仓库引用": {
-      "path": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_03_子模块仓库引用",
-      "status": "seed"
-    },
-    "research::P1_实验设计与仓库蓝图::P1_06_代码仓库_已有_重新初始化_子模块策略::P1_06_04_feature_branch_修改策略": {
-      "path": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/P1_06_04_feature_branch_修改策略",
-      "status": "seed"
-    },
     "research::P1_实验设计与仓库蓝图::P1_07_优化目标_任务_评测协议": {
       "path": "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议",
       "status": "seed"
@@ -162,7 +146,7 @@
     },
     "research::P4_论文回复_response::P4_04_正式回复_tex_或_doc": {
       "path": "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc",
-      "status": "seed"
+      "status": "active"
     },
     "research::P4_论文回复_response::P4_05_覆盖检查": {
       "path": "research/P4_论文回复_response/P4_05_覆盖检查",
