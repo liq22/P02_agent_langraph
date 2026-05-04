@@ -1,14 +1,120 @@
-repo_blueprint:
-  repo_name: idea_validation_repo
-  entrypoints:
-    - scripts/run_train.py
-    - scripts/run_eval.py
-  modules:
-    - src/data
-    - src/models
-    - src/eval
+version: p1_03_repo_blueprint_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_03_仓库蓝图
+node_path: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图
+scope: Minimal PHMGA repository blueprint for reproducible formal-result generation.
+
+upstream_contracts:
+  - id: p1_01_data_boundary
+    rule: Vibench is read-only; PHMGA owns split/window, metrics, ledger, and paper table truth.
+  - id: p1_02_pseudocode_interface
+    rule: Formal runs must preserve BaselineSpec, MetricSchema, state transitions, artifact contract, and reject evidence policy.
+
+required_directories:
+  - path: configs/datasets
+    owner: protocol_builder
+    responsibility: Dataset read-bundle references, sample/metadata/H5 alignment policy, split/window policy.
+    required_now: true
+    truth_boundary: configuration input only
+  - path: configs/runs
+    owner: runner
+    responsibility: Dataset, graph path, provider/model, budget, seed/repeat, max_iterations.
+    required_now: true
+    truth_boundary: declared run input only
+  - path: configs/providers
+    owner: planner_bridge
+    responsibility: Free model identifiers, endpoint family, retry and schema policy.
+    required_now: true
+    truth_boundary: no credentials
+  - path: scripts
+    owner: operator
+    responsibility: Stable CLI entrypoints for preflight, run, validation, and ledger build.
+    required_now: true
+    truth_boundary: execution entry only
+  - path: src
+    owner: implementation
+    responsibility: Data boundary, protocol, planning bridge, DAG compiler, workflow, metrics, reporting.
+    required_now: true
+    truth_boundary: implementation modules only
+  - path: artifacts/runs
+    owner: workflow
+    responsibility: One immutable evidence bundle per experiment_id.
+    required_now: true
+    truth_boundary: artifact evidence
+  - path: artifacts/ledgers
+    owner: reporting
+    responsibility: Result ledger and paper table eligibility rows.
+    required_now: true
+    truth_boundary: table eligibility truth
+  - path: tests
+    owner: validation
+    responsibility: Boundary, protocol, metric parser, and artifact contract tests.
+    required_now: true
+    truth_boundary: validation only
+
+entrypoints:
+  - path: scripts/preflight_dataset.py
+    purpose: Verify dataset read bundle, metadata/H5 sample alignment, and declared split/window policy before formal run.
+    blocks_on_failure: true
+  - path: scripts/run_case.py
+    purpose: Execute one declared run config through planner, DAG compiler, workflow, metrics, and artifact export.
+    blocks_on_failure: true
+  - path: scripts/validate_artifacts.py
+    purpose: Parse one run bundle and enforce required artifact/metric schema.
+    blocks_on_failure: true
+  - path: scripts/build_ledger.py
+    purpose: Append keep/reject row with evidence refs to result ledger.
+    blocks_on_failure: true
+
+required_run_bundle:
+  - validated_dag.json
+  - compiled_dag_manifest.json
+  - feature_pipeline.json
+  - feature_list.json
+  - feature_separability_summary.json
+  - artifact_index.json
+  - metrics.json
+  - predictions.json
+  - importance.json
+  - workflow_state.json
+  - final_report.md
+
+deferred_directories:
+  - path: web
+    reason: Projection surface only; not needed for formal result generation.
+  - path: notebooks
+    reason: Demo surface risks duplicate truth; can be generated from artifacts later.
+  - path: paper_export
+    reason: P2/P3 writing concern, not P1 repo blueprint requirement.
+  - path: sweeps
+    reason: Multi-provider sweep should wait until single-run backend selection rules are locked.
+
+quality_gates:
+  module_minimality:
+    pass_condition: Every required module maps to the formal-result path and owns exactly one primary responsibility.
+    fail_policy: Defer or delete modules that do not shorten the result path.
+  reproducibility:
+    pass_condition: Dataset config, run config, provider config, seed/repeat, and artifact directory are declared before run.
+    fail_policy: Stop before formal execution.
+  artifact_contract:
+    pass_condition: Required run bundle files exist and parse.
+    fail_policy: Mark row reject and exclude from paper table.
+  ledger_truth:
+    pass_condition: Paper table eligibility is determined only by ledger keep/reject row.
+    fail_policy: Block positive claim.
+
+secrets_policy:
+  allowed_sources:
+    - .env
+    - process_environment
+  forbidden_locations:
     - configs
-  tests:
-    - smoke_data_load
-    - smoke_train_step
-    - smoke_eval_step
+    - artifacts
+    - docs
+    - review
+    - ledgers
+
+handoff_ready:
+  module_boundaries_defined: true
+  minimum_directory_plan_defined: true
+  result_generation_path_defined: true
+  review_required_before_node_close: true

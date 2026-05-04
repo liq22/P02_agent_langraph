@@ -1,11 +1,30 @@
 lifecycle:
-  stage: seed
-progress_pct: 0
+  stage: active
+progress_pct: 72
 review_gate:
   ai_review_count: 0
   human_review_count: 0
   all_comments_responded: false
+  external_ai_review_required: true
+  external_ai_review_complete: false
+  human_gate_required: true
 can_enter_fix: false
-heartbeat_at: 2026-04-10
-last_actor: system
-author_agent_id: <pending-author-agent>
+heartbeat_at: 2026-05-04
+last_actor: codex
+author_agent_id: codex-local
+local_outputs:
+  manuscript: docs/manuscript.md
+  repo_blueprint: artifacts/repo_blueprint.yaml
+  module_map: artifacts/module_map.yaml
+  claim_evidence_registry: artifacts/claim_evidence_registry.yaml
+  failure_register: artifacts/failure_register.yaml
+  negative_result_note: artifacts/negative_result_note.md
+  keep_discard_ledger: artifacts/keep_discard_ledger.yaml
+blocking_reasons:
+  - external AI review for P1_03 is not complete.
+  - human review for P1_03 is not complete.
+downstream_open_risks:
+  - selected_global_best_backend is not locked; Stage C/D positive claims remain blocked.
+  - RM101 Stage B rows remain reject-evidence bundles, not selection-eligible positive evidence.
+  - PHMGA/Vibench adapter sample-level metadata-H5 alignment preflight remains pending.
+  - Downstream Stage C main-result rows and Stage D ablation rows have not passed.

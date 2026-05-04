@@ -1,0 +1,42 @@
+version: p1_03_keep_discard_ledger_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_03_仓库蓝图
+
+decisions:
+  - decision_id: P1_03_KEEP_001
+    decision: keep
+    target: seven_module_formal_result_path
+    rationale: Covers data boundary, protocol, planner bridge, DAG compiler, workflow, metric parser, and ledger without adding duplicate truth.
+    evidence_refs:
+      - artifacts/module_map.yaml#modules
+      - docs/manuscript.md#2-必须模块
+  - decision_id: P1_03_KEEP_002
+    decision: keep
+    target: ledger_as_table_eligibility_truth
+    rationale: Prevents final_report, dashboard, graph, Canvas, or review files from becoming result truth.
+    evidence_refs:
+      - docs/manuscript.md#7-不变量
+      - artifacts/repo_blueprint.yaml#quality_gates
+  - decision_id: P1_03_KEEP_003
+    decision: keep
+    target: secret_free_config_policy
+    rationale: Provider keys must remain in .env or process environment and never enter configs or artifacts.
+    evidence_refs:
+      - artifacts/repo_blueprint.yaml#secrets_policy
+  - decision_id: P1_03_DEFER_001
+    decision: defer
+    target: web_dashboard
+    rationale: Projection surface only; not required for formal artifact-backed result path.
+    evidence_refs:
+      - artifacts/repo_blueprint.yaml#deferred_directories
+  - decision_id: P1_03_DEFER_002
+    decision: defer
+    target: notebook_gallery
+    rationale: Demo notebooks can duplicate result truth if created before ledger lock.
+    evidence_refs:
+      - artifacts/module_map.yaml#deferred_modules
+  - decision_id: P1_03_DISCARD_001
+    decision: discard
+    target: repo_global_experiment_brain_inside_p1_03
+    rationale: P1_03 is a node-local blueprint, not a second scheduler or global pipeline controller.
+    evidence_refs:
+      - docs/manuscript.md#1-节点范围

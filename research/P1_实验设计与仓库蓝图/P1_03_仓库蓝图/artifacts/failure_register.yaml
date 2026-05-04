@@ -1,0 +1,34 @@
+version: p1_03_failure_register_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_03_仓库蓝图
+
+failures:
+  - failure_id: P1_03_F01_ARCHITECTURE_CEREMONY
+    trigger: A new module, UI, worker, registry, or dashboard is added without shortening the dataset-to-ledger result path.
+    severity: medium
+    required_response: Defer or remove the module and keep the minimal seven-module path.
+  - failure_id: P1_03_F02_DUPLICATE_RESULT_TRUTH
+    trigger: Metric or paper table eligibility is defined outside metrics.json and result ledger.
+    severity: hard_block
+    required_response: Reject the claim and remap it to ledger/artifact evidence.
+  - failure_id: P1_03_F03_PREFLIGHT_SKIPPED
+    trigger: Formal Stage C/D run starts before sample-level metadata-H5 adapter preflight passes.
+    severity: hard_block
+    required_response: Stop execution and run dataset preflight first.
+  - failure_id: P1_03_F04_METRIC_SCHEMA_GAP
+    trigger: metrics.json lacks finite train/val/test accuracy or macro_f1 values.
+    severity: hard_block
+    required_response: Mark row reject and record missing keys in result_md or ledger notes.
+  - failure_id: P1_03_F05_REJECT_ROW_PROMOTED
+    trigger: Reject-evidence bundle is written as positive paper evidence.
+    severity: hard_block
+    required_response: Move the row to negative/limitation evidence and block table use.
+  - failure_id: P1_03_F06_SECRET_LEAK
+    trigger: OPENROUTER_API_KEY, BIGMODEL_API_KEY, or provider token appears in configs, artifacts, docs, review, or ledger files.
+    severity: hard_block
+    required_response: Remove leaked material, rotate if needed, and rerun secret scan excluding .env.
+
+open_external_blockers:
+  - selected_global_best_backend_not_locked
+  - rm101_stage_b_rows_not_selection_eligible
+  - phmga_vibench_adapter_alignment_preflight_pending
+  - stage_c_d_formal_rows_not_passed

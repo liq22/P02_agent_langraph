@@ -1,0 +1,44 @@
+version: p1_03_claim_evidence_registry_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_03_仓库蓝图
+
+claims:
+  - claim_id: P1_03_C01_MINIMAL_MODULE_SET
+    status: supported_by_design_artifact
+    statement: The formal-result repository path can be covered by seven required module responsibilities without adding UI or global orchestration modules.
+    evidence_refs:
+      - docs/manuscript.md#2-必须模块
+      - artifacts/repo_blueprint.yaml#required_directories
+      - artifacts/module_map.yaml#modules
+    limitations:
+      - This is an architecture/design claim, not an observed performance claim.
+  - claim_id: P1_03_C02_RESULT_PATH_DEFINED
+    status: supported_by_design_artifact
+    statement: The path from dataset config to result ledger is explicit enough for downstream implementation and review.
+    evidence_refs:
+      - docs/manuscript.md#5-生成正式结果的最小路径
+      - artifacts/repo_blueprint.yaml#entrypoints
+      - artifacts/module_map.yaml#edges
+    limitations:
+      - Actual Stage C/D execution remains blocked until adapter preflight and selected backend gates pass.
+  - claim_id: P1_03_C03_NO_DUPLICATE_RESULT_TRUTH
+    status: guarded_limitation
+    statement: The blueprint prevents graph, dashboard, Canvas, review, or narrative report files from becoming duplicate metric or table truth.
+    evidence_refs:
+      - docs/manuscript.md#7-不变量
+      - artifacts/repo_blueprint.yaml#quality_gates
+    limitations:
+      - Enforcement still depends on downstream validators and ledger discipline.
+  - claim_id: P1_03_C04_NO_NEW_EXPERIMENT_RESULT
+    status: negative_scope_guard
+    statement: P1_03 introduces no new positive experimental result and does not promote Stage B partial rows into paper claims.
+    evidence_refs:
+      - docs/manuscript.md#1-节点范围
+      - artifacts/negative_result_note.md
+    limitations:
+      - Existing RM101 reject evidence remains unresolved outside this node.
+
+forbidden_claims:
+  - claim_id: P1_03_FORBID_STAGE_C_READY
+    reason: selected_global_best_backend and Stage C/D formal rows are not locked.
+  - claim_id: P1_03_FORBID_RM101_POSITIVE
+    reason: RM101 Stage B rows remain reject-evidence bundles.

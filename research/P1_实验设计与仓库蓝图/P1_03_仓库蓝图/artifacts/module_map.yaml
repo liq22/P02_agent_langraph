@@ -1,7 +1,106 @@
-module_map:
-  preprocessing:
-    target: src/data/preprocess.py
-  model_core:
-    target: src/models/core.py
-  evaluator:
-    target: src/eval/metrics.py
+version: p1_03_module_map_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_03_仓库蓝图
+
+modules:
+  - module_id: data_read_boundary
+    path: src/data/readers.py
+    required_now: true
+    responsibility: Load read-only Vibench data bundle and expose sample/metadata/H5 references.
+    inputs:
+      - configs/datasets/*.yaml
+      - Vibench read bundle
+    outputs:
+      - DataReadBundle
+    forbidden_responsibilities:
+      - split/window truth
+      - metric truth
+      - paper table truth
+  - module_id: protocol_builder
+    path: src/protocol/dataset_protocol.py
+    required_now: true
+    responsibility: Build PHMGA-owned DatasetProtocol with split/window, seed, repeat, and graph path policy.
+    inputs:
+      - DataReadBundle
+      - configs/runs/*.yaml
+    outputs:
+      - DatasetProtocol
+  - module_id: planner_bridge
+    path: src/planning/llm_bridge.py
+    required_now: true
+    responsibility: Call free-model provider, normalize planner step plan, and record planner traces.
+    inputs:
+      - RunConfig
+      - OperatorRegistry
+    outputs:
+      - planner_normalization_trace.json
+      - normalized_step_plan
+  - module_id: dag_compiler
+    path: src/dag/compiler.py
+    required_now: true
+    responsibility: Compile normalized step plan into validated DAG and feature pipeline.
+    inputs:
+      - normalized_step_plan
+      - DatasetProtocol
+    outputs:
+      - validated_dag.json
+      - compiled_dag_manifest.json
+      - feature_pipeline.json
+  - module_id: runner
+    path: src/run/workflow.py
+    required_now: true
+    responsibility: Execute one run case, enforce state transitions, and export accept or reject bundle.
+    inputs:
+      - DatasetProtocol
+      - validated_dag.json
+      - RunConfig
+    outputs:
+      - artifacts/runs/<experiment_id>/
+      - workflow_state.json
+  - module_id: metrics_parser
+    path: src/eval/metrics.py
+    required_now: true
+    responsibility: Parse metrics.json and expose finite train/val/test accuracy and macro_f1 values.
+    inputs:
+      - metrics.json
+      - MetricSchema
+    outputs:
+      - parsed_metrics
+  - module_id: ledger_writer
+    path: src/reporting/ledger.py
+    required_now: true
+    responsibility: Write keep/reject row with artifact and claim/evidence references.
+    inputs:
+      - artifact_index.json
+      - parsed_metrics
+      - workflow_state.json
+      - feature_separability_summary.json
+    outputs:
+      - artifacts/ledgers/result_ledger.md
+
+edges:
+  - src: data_read_boundary
+    rel: feeds
+    dst: protocol_builder
+  - src: protocol_builder
+    rel: feeds
+    dst: planner_bridge
+  - src: planner_bridge
+    rel: feeds
+    dst: dag_compiler
+  - src: dag_compiler
+    rel: feeds
+    dst: runner
+  - src: runner
+    rel: feeds
+    dst: metrics_parser
+  - src: metrics_parser
+    rel: feeds
+    dst: ledger_writer
+
+deferred_modules:
+  - module_id: dashboard_projection
+    reason: Not required for artifact-backed formal-result path.
+  - module_id: notebook_gallery
+    reason: Must be generated from artifacts after ledger lock if needed.
+  - module_id: paper_exporter
+    reason: Writing/export concern belongs to later paper nodes.
