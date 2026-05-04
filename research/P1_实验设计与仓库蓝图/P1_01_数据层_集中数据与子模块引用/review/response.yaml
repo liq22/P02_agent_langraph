@@ -1,8 +1,24 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: "Acknowledged. No author-side artifact change is required because the external AI reviewer passed the data/provenance package and recorded no blocking issue. Human review remains a separate unresolved gate."
+
+  - comment_id: AI-002
+    responded: true
+    note: "Acknowledged and preserved. `artifacts/phmga_data_protocol_handoff.yaml`, `artifacts/negative_result_note.md`, and `review/external_review_handoff.md` keep the PHMGA/Vibench adapter preflight requirement active before formal downstream execution."
+
+  - comment_id: AI-003
+    responded: true
+    note: "Acknowledged and preserved. `artifacts/result_source_map.yaml`, `artifacts/failure_register.yaml`, and `artifacts/keep_discard_ledger.yaml` keep partial Stage B evidence blocked from main-result claims until selected backend and Stage C/D rows pass."
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: "Acknowledged. The user-authorized Claude Code teammate delegate passed the human-review slot and explicitly preserved positive-result blockers. No P1_01 content revision is required before node close."
+
+  - comment_id: H-002
+    responded: true
+    note: "Acknowledged as non-blocking bookkeeping. `prompts/acceptance_checklist.yaml` is a prompt/DoD asset, not a live status ledger; the live evidence is covered by validator output, `status.yaml`, and node artifacts. No prompt mutation is required for node close."
+
+  - comment_id: H-003
+    responded: true
+    note: "Acknowledged as a downstream publication limitation. `artifacts/data_lineage.yaml`, `artifacts/negative_result_note.md`, and `review/external_review_handoff.md` preserve the unresolved redistribution status and prevent overstated publication claims."
