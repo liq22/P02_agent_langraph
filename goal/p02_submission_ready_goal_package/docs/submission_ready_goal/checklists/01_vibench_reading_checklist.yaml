@@ -1,0 +1,10 @@
+checklist_id: vibench_reading_v1
+checks:
+  - {id: V0, item: PHM-Vibench data_factory component is reachable, status: pending}
+  - {id: V1, item: read-only boundary is documented, status: pending}
+  - {id: V2, item: metadata can be loaded through Vibench reading path, status: pending}
+  - {id: V3, item: RM_017_Ottawa19.h5 can be accessed, status: pending}
+  - {id: V4, item: RM_101_THU_GEARBOX.h5 can be accessed, status: pending}
+  - {id: V5, item: vibench_read_bundle.yaml is generated for each formal dataset, status: pending}
+  - {id: V6, item: Vibench task wrappers/samplers/trainers are not used as formal P02 result sources, status: pending}
+pass_if: [V0, V1, V2, V3, V4, V5, V6]

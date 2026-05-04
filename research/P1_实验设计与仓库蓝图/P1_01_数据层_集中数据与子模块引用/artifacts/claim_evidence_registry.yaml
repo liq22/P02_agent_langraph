@@ -1,0 +1,69 @@
+node_path: research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用
+research_anchor: data lineage, Vibench read boundary, and PHMGA submodule binding
+claims:
+  - claim_id: C-P02-DATA-001
+    claim_type: method
+    claim_text: P02 uses PHM-Vibench data_factory as the read-only data reading interface.
+    manuscript_location: docs/manuscript.md#2-当前事实源划分
+    evidence_refs:
+      - evidence_id: E-P02-DATA-001
+        evidence_type: code
+        source_ref: artifacts/vibench_data_factory_binding.yaml
+      - evidence_id: E-P02-DATA-AUDIT-001
+        evidence_type: code
+        source_ref: docs/submission_ready_goal/runtime_logs/data_audit/data_gate_status.json
+    support_status: supported
+    action: keep
+  - claim_id: C-P02-DATA-002
+    claim_type: method
+    claim_text: PHMGA owns all downstream protocol, split/window, DAG workflow, bridge, evaluation, ledger, and report after reading.
+    manuscript_location: docs/manuscript.md#2-当前事实源划分
+    evidence_refs:
+      - evidence_id: E-P02-DATA-002
+        evidence_type: code
+        source_ref: artifacts/phmga_data_protocol_handoff.yaml
+      - evidence_id: E-P02-BOUNDARY-001
+        evidence_type: code
+        source_ref: artifacts/data_reading_boundary.yaml
+    support_status: supported
+    action: keep
+  - claim_id: C-P02-SUBMODULE-001
+    claim_type: method
+    claim_text: PHMGA is the P02 implementation submodule on branch journal_thesis.
+    manuscript_location: docs/manuscript.md#4-phmga-子模块绑定
+    evidence_refs:
+      - evidence_id: E-P02-SUBMODULE-001
+        evidence_type: code
+        source_ref: artifacts/submodule_ref.yaml
+    support_status: supported
+    action: keep
+  - claim_id: C-P02-DATA-003
+    claim_type: method
+    claim_text: First-round formal data scope is metadata.xlsx, RM_017_Ottawa19.h5, and RM_101_THU_GEARBOX.h5 from external DATA_ROOT.
+    manuscript_location: docs/manuscript.md#3-数据资源包边界
+    evidence_refs:
+      - evidence_id: E-P02-DATA-003
+        evidence_type: code
+        source_ref: artifacts/data_lineage.yaml
+      - evidence_id: E-P02-DATA-MANIFEST-001
+        evidence_type: code
+        source_ref: docs/submission_ready_goal/runtime_logs/data_audit/data_manifest.yaml
+    support_status: supported
+    action: keep
+  - claim_id: C-P02-RESULT-001
+    claim_type: limitation
+    claim_text: PHMGA main-result claims remain blocked until the selected backend is locked and Stage C/D main or ablation rows pass with ledger and artifact traces.
+    manuscript_location: docs/manuscript.md#6-当前不允许声称的内容
+    evidence_refs:
+      - evidence_id: E-P02-RESULT-SOURCE-001
+        evidence_type: code
+        source_ref: artifacts/result_source_map.yaml
+      - evidence_id: E-P02-NEGATIVE-001
+        evidence_type: review_comment
+        source_ref: artifacts/negative_result_note.md
+    support_status: supported
+    action: document_limitation
+author_exit:
+  claim_evidence_ids_are_explicit_or_gap_is_reported: true
+  negative_or_failed_results_recorded: true
+  protected_paths_respected: true

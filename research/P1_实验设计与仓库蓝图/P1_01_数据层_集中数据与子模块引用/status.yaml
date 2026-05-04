@@ -1,11 +1,33 @@
 lifecycle:
-  stage: seed
-progress_pct: 0
+  stage: active
+progress_pct: 82
 review_gate:
-  ai_review_count: 0
+  ai_review_count: 1
   human_review_count: 0
   all_comments_responded: false
 can_enter_fix: false
-heartbeat_at: 2026-04-10
-last_actor: system
-author_agent_id: <pending-author-agent>
+heartbeat_at: 2026-05-04
+last_actor: codex
+author_agent_id: codex-local
+blocking_reasons:
+  - review/人类_001.md is still a placeholder review.
+  - human review is not complete, so README completion criteria and node close gate are not satisfied.
+  - selected_global_best_backend remains pending because RM101 Stage B rows are reject evidence.
+local_outputs:
+  data_lineage: artifacts/data_lineage.yaml
+  submodule_ref: artifacts/submodule_ref.yaml
+  claim_evidence_registry: artifacts/claim_evidence_registry.yaml
+  failure_register: artifacts/failure_register.yaml
+  negative_result_note: artifacts/negative_result_note.md
+  keep_discard_ledger: artifacts/keep_discard_ledger.yaml
+  external_review_handoff: review/external_review_handoff.md
+  independent_reviewer_prompt: review/independent_reviewer_prompt.md
+  human_reviewer_prompt: review/human_reviewer_prompt.md
+last_validation:
+  command: .venv/bin/python tools/submission_ready_goal/validate_p1_01_node_package.py --repo-root . --require-outputs --json
+  exit_code: 0
+  terminal_excerpt: '"passed": true'
+last_review_validation:
+  command: .venv/bin/python tools/submission_ready_goal/validate_p1_01_node_package.py --repo-root . --require-review --json
+  exit_code: 1
+  terminal_excerpt: human review file still contains placeholder marker; external AI review verdict passed with score 88

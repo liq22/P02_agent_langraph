@@ -1,0 +1,10 @@
+version: keep_discard_ledger_v1
+items:
+  - item_id: KD-001
+    item: proving lane results
+    decision: keep_as_engineering_qualification_only
+    reason: proving lane does not enter formal paper result ledger
+  - item_id: KD-002
+    item: pending formal rows
+    decision: discard_from_main_tables_until_passed
+    reason: pending rows are not paper evidence

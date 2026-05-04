@@ -1,0 +1,10 @@
+checklist_id: paper_evidence_v1
+checks:
+  - {id: P0, item: every contribution has claim_id, status: pending}
+  - {id: P1, item: every supported claim has evidence_id, status: pending}
+  - {id: P2, item: every table traces to PHMGA ledger and artifact_dir, status: pending}
+  - {id: P3, item: every figure traces to source artifact or diagram source, status: pending}
+  - {id: P4, item: every formal result traces to data_manifest and vibench_read_bundle, status: pending}
+  - {id: P5, item: PHMGA submodule commit recorded, status: pending}
+  - {id: P6, item: unsupported or unclear claims are kept out of final manuscript, status: pending}
+pass_if: [P0, P1, P2, P3, P4, P5, P6]

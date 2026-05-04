@@ -1,0 +1,18 @@
+version: p1_01_claim_evidence_registry_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+claims:
+  - claim_id: C-P02-DATA-001
+    claim: P02 uses PHM-Vibench data_factory as the read-only data reading interface.
+    evidence_id: E-P02-DATA-001
+    evidence_path: artifacts/vibench_data_factory_binding.yaml
+    status: planned_until_adapter_or_audit_exists
+  - claim_id: C-P02-DATA-002
+    claim: PHMGA owns all downstream protocol, split/window, DAG workflow, bridge, evaluation, ledger, and report after reading.
+    evidence_id: E-P02-DATA-002
+    evidence_path: artifacts/phmga_data_protocol_handoff.yaml
+    status: planned_until_protocol_audit_exists
+  - claim_id: C-P02-SUBMODULE-001
+    claim: PHMGA is the P02 implementation submodule on branch journal_thesis.
+    evidence_id: E-P02-SUBMODULE-001
+    evidence_path: artifacts/submodule_ref.yaml
+    status: supported_if_commit_recorded

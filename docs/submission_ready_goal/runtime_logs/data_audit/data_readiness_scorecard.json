@@ -1,0 +1,10 @@
+{
+  "scorecard_id": "data_readiness_runtime_audit_v2",
+  "missing_required_files": [],
+  "score": 100,
+  "passed": true,
+  "hard_fail": [],
+  "notes": [
+    "Install pandas/openpyxl/h5py for richer metadata and H5 audits if fields are null."
+  ]
+}

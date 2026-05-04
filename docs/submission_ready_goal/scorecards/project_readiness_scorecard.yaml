@@ -1,0 +1,20 @@
+scorecard_id: phmga_project_readiness_v1
+thresholds:
+  pass_min: 85
+  submission_min: 90
+  block_below: 70
+dimensions:
+  vibench_boundary: {weight: 15}
+  phmga_protocol_integrity: {weight: 15}
+  formal_experiment_completion: {weight: 25}
+  artifact_contract: {weight: 15}
+  result_ledger_consistency: {weight: 10}
+  main_table_traceability: {weight: 15}
+  tests_and_preflight: {weight: 5}
+hard_fail:
+  - phmga_dataset_protocol_bypassed
+  - vibench_dataloader_used_as_formal_result_source
+  - selected_global_best_backend_pending
+  - no_passed_runids_in_main_tables
+  - result_without_result_md
+  - result_without_artifact_dir

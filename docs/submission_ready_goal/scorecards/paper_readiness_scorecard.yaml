@@ -1,0 +1,20 @@
+scorecard_id: p02_paper_readiness_v1
+thresholds:
+  pass_min: 85
+  submission_min: 90
+  block_below: 70
+dimensions:
+  research_node_completion: {weight: 15}
+  claim_evidence_alignment: {weight: 25}
+  data_provenance_traceability: {weight: 15}
+  phmga_artifact_traceability: {weight: 20}
+  writing_quality: {weight: 10}
+  review_completion: {weight: 10}
+  final_submission_check: {weight: 5}
+hard_fail:
+  - claim_without_evidence
+  - table_without_artifact_trace
+  - figure_without_source
+  - pending_phmga_row_used_as_result
+  - submodule_commit_missing
+  - final_submission_check_not_passed

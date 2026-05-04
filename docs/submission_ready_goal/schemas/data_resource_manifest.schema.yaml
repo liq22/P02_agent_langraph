@@ -1,0 +1,18 @@
+version: data_resource_manifest_schema_v1
+required_fields:
+  - version
+  - data_root
+  - canonical_metadata
+  - formal_p02_datasets
+  - access
+  - provenance
+formal_dataset_required_fields:
+  - dataset_name
+  - h5_file
+  - role
+  - required
+  - checksum_sha256
+hard_fail_if_missing:
+  - metadata.xlsx
+  - RM_017_Ottawa19.h5
+  - RM_101_THU_GEARBOX.h5

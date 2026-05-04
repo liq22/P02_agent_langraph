@@ -1,0 +1,49 @@
+version: phmga_data_protocol_handoff_v1
+handoff_object: vibench_read_bundle.yaml
+data_root: /mnt/k/D01_vibench
+required_fields:
+  - dataset_name
+  - catalog
+  - metadata_file
+  - h5_file
+  - metadata_rows
+  - h5_keys
+  - sample_id_key
+  - tensor_layout_before_phmga
+  - tensor_layout_after_phmga
+  - read_status
+  - provenance
+formal_bundles:
+  - dataset_name: RM_017_Ottawa19
+    metadata_file: metadata.xlsx
+    h5_file: RM_017_Ottawa19.h5
+    metadata_rows: 49855
+    h5_key_count: 36
+    read_status: auditable
+  - dataset_name: RM_101_THU_GEARBOX
+    metadata_file: metadata.xlsx
+    h5_file: RM_101_THU_GEARBOX.h5
+    metadata_rows: 49855
+    h5_key_count: 240
+    read_status: auditable
+phmga_consumes:
+  - metadata_path_or_manifest_reference
+  - h5_path_or_cache_reference
+  - dataset_name
+  - sample_id_key
+  - source_h5
+phmga_generates:
+  - DatasetProtocol
+  - SplitManifest
+  - WindowSpec
+  - SignalRecord
+  - validated_dag_json
+  - compiled_dag_manifest
+  - feature_pipeline
+  - metrics
+  - final_report
+validation:
+  preflight_required: true
+  formal_runs_blocked_until_preflight: true
+  synthetic_fallback_allowed_for_smoke_only: true
+  synthetic_fallback_for_formal_results: false

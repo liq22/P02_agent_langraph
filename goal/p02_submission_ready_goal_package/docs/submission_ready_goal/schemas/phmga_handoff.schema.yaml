@@ -1,0 +1,33 @@
+version: phmga_handoff_schema_v1
+required_fields:
+  - dataset_name
+  - vibench_read_bundle
+  - phmga_dataset_protocol
+  - split_manifest
+  - window_spec
+  - selected_channels
+  - source_mode
+  - leakage_boundary
+  - artifact_paths
+phmga_owns:
+  - DatasetProtocol
+  - SplitManifest
+  - WindowSpec
+  - SignalRecord
+  - split_before_windowing
+  - signal_layout_normalization
+  - PHMState
+  - StateGraph
+  - validated_dag_json
+  - compile_dag_for_path
+  - graph_dependent_artifacts
+  - training
+  - evaluation
+  - report
+must_not_be_overridden_by_vibench:
+  - split_manifest
+  - window_spec
+  - training_sample_semantics
+  - evaluation_metrics
+  - result_ledger
+  - main_tables

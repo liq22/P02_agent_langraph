@@ -1,0 +1,50 @@
+handoff_version: claude_code_handoff_v2
+task_id: example_data_audit_review
+assistant: claude_code
+role: data-auditor
+mode: read_only
+status: pass
+non_authority_statement: "This handoff is advisory and does not claim submission-ready. Codex remains the gate owner."
+delegation:
+  requested_by: codex
+  source_prompt_file: docs/submission_ready_goal/codex_prompts/07_delegate_to_claude_code.md
+  requested_scope_summary: Review DATA_ROOT audit outputs for missing required formal files.
+  target_gate: data_ready
+scope:
+  allowed_files:
+    - docs/submission_ready_goal/runtime_logs/data_audit/
+  forbidden_files:
+    - backend/graph/**
+    - obsidian/**
+    - web/dashboard/**
+  inspected_files:
+    - docs/submission_ready_goal/runtime_logs/data_audit/data_gate_status.json
+  changed_files: []
+commands_run:
+  - command: none
+    exit_code: 0
+    evidence_file: docs/submission_ready_goal/runtime_logs/data_audit/data_gate_status.json
+    terminal_excerpt: Reviewed existing audit output only.
+findings:
+  supported:
+    - Required formal H5 paths are present in audit output.
+  gaps: []
+  risks: []
+  hard_fail_candidates: []
+evidence:
+  artifacts_produced: []
+  claim_evidence_ids: []
+  data_sources:
+    - docs/submission_ready_goal/runtime_logs/data_audit/data_manifest.yaml
+  phmga_sources: []
+validation:
+  local_checks_complete: true
+  local_check_commands: []
+  local_check_logs: []
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  summary: Data audit review found no additional blockers.
+  blockers: []
+  recommended_next_action: Codex should run validate_claude_handoff.py and then proceed to S2 if the data gate script also passed.
+  safe_to_merge: true

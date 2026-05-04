@@ -1,0 +1,10 @@
+checklist_id: phmga_handoff_v1
+checks:
+  - {id: H0, item: vibench_read_bundle is handed to PHMGA DatasetProtocol, status: pending}
+  - {id: H1, item: PHMGA owns train/val/test split, status: pending}
+  - {id: H2, item: PHMGA owns window slicing, status: pending}
+  - {id: H3, item: split-before-windowing is preserved, status: pending}
+  - {id: H4, item: signal layout is normalized for PHMGA, status: pending}
+  - {id: H5, item: PHMGA preflight passes for Ottawa, status: pending}
+  - {id: H6, item: PHMGA preflight passes for RM101, status: pending}
+pass_if: [H0, H1, H2, H3, H4, H5, H6]

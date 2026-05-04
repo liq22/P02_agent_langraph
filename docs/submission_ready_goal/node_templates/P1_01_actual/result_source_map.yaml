@@ -1,0 +1,44 @@
+
+version: result_source_map_v1
+formal_source_rules:
+  proving_lane:
+    enters_main_tables: false
+    use: engineering_qualification_only
+  simple_qualification:
+    enters_main_tables: false
+    use: runtime_closure_only
+  stage_b_backend_comparison:
+    enters_main_tables: table_3_only_if_selection_eligible
+    required_status:
+      - keep_accept
+      - artifact_contract_pass
+      - feature_separability_pass
+  stage_c_main_results:
+    enters_main_tables: table_1_only_if_passed
+    required_status:
+      - selected_backend_locked
+      - artifact_contract_pass
+      - result_md_exists
+      - artifact_dir_exists
+  stage_d_ablation:
+    enters_main_tables: table_2_only_if_passed
+    required_status:
+      - selected_backend_locked
+      - artifact_contract_pass
+      - result_md_exists
+      - artifact_dir_exists
+current_known_blocker:
+  phmga_main_tables_have_passed_rows: unknown_until_checked
+  policy_if_no_passed_rows: block_paper_result_claims
+trace_required_for_each_result:
+  - experiment_id
+  - preset_name
+  - dataset
+  - graph_path
+  - artifact_dir
+  - result_md
+  - ledger_row
+  - main_table_row
+  - phmga_commit
+  - data_manifest
+  - vibench_read_bundle

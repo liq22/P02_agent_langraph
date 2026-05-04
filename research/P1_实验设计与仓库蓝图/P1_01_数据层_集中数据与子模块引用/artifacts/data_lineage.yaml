@@ -1,0 +1,58 @@
+version: data_lineage_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+data_root:
+  path: /mnt/k/D01_vibench
+  status: audited
+  storage_policy: external_to_repo
+  large_files_committed_to_repo: false
+canonical_metadata:
+  file: metadata.xlsx
+  role: canonical_current_metadata
+  checksum_sha256: e4b3dcd02ac4bc4f3d7bffbed119db927c35db050bf2bbde279ce86b163cc722
+  rows: 49855
+metadata_lineage:
+  - file: metadata_25_10_30.xlsx
+    role: historical_metadata_version
+    exists: false
+    checksum_sha256: null
+  - file: metadata_25_11_13.xlsx
+    role: historical_metadata_version
+    exists: false
+    checksum_sha256: null
+formal_p02_data:
+  - dataset_name: RM_017_Ottawa19
+    h5_file: RM_017_Ottawa19.h5
+    role: ottawa_formal_run
+    required: true
+    checksum_sha256: a323c755ef18d581a1500952b0a1810f49c980abbb64dfe5b771b5956b07c536
+    h5_key_count: 36
+  - dataset_name: RM_101_THU_GEARBOX
+    h5_file: RM_101_THU_GEARBOX.h5
+    role: rm101_formal_run
+    required: true
+    checksum_sha256: 3b6a7b8ba47afa0214cff8529aa0a51289c46eb5897b6c2a15e2bddaee39b43e
+    h5_key_count: 240
+extension_data:
+  status: recorded_not_blocking_initial_submission
+  files:
+    - RM_001_CWRU.h5
+    - RM_002_XJTU.h5
+    - RM_003_FEMTO.h5
+    - RM_004_IMS.h5
+    - RM_008_UNSW.h5
+    - RM_010_SEU.h5
+    - RM_015_susu.h5
+    - RM_016_JNU.h5
+    - RM_018_THU24.h5
+    - RM_020_DIRG.h5
+    - RM_023_HIT23.h5
+    - RM_024_JUST.h5
+    - RM_027_PU.h5
+    - RM_031_HUST24.h5
+provenance:
+  provider: user_supplied
+  intake_date: 2026-05-03
+  license_or_access: Apache License 2.0 per DATA_ROOT README
+  redistribution_allowed: unknown_for_large_local_h5_pack
+  audit_status: pass
+  audit_outputs_dir: docs/submission_ready_goal/runtime_logs/data_audit

@@ -1,0 +1,26 @@
+{
+  "alignment_scope": "preview_and_auditability",
+  "note": "Full sample-level alignment should be run by PHMGA/Vibench adapter once DATA_ROOT is mounted.",
+  "metadata_rows": 49855,
+  "metadata_id_preview_available": true,
+  "h5_alignment_rows": [
+    {
+      "h5_file": "RM_017_Ottawa19.h5",
+      "exists": true,
+      "key_count": 36,
+      "preview_overlap_count": 0,
+      "preview_overlap_ids": [],
+      "status": "auditable"
+    },
+    {
+      "h5_file": "RM_101_THU_GEARBOX.h5",
+      "exists": true,
+      "key_count": 240,
+      "preview_overlap_count": 0,
+      "preview_overlap_ids": [],
+      "status": "auditable"
+    }
+  ],
+  "hard_fail": [],
+  "passed": true
+}

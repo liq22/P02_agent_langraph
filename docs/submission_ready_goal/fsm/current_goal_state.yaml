@@ -1,0 +1,46 @@
+
+version: current_goal_state_v4
+current_state: S1_P1_01_NODE_PACKAGE
+expected_next_node: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+selected_node_path: research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用
+phmga_submodule_path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+phmga_branch_expected: journal_thesis
+state_history:
+  - state: S0_REPO_FACT_SYNC
+    status: pass
+    completed_at: 2026-05-03
+    evidence:
+      - backend/graph/graph_status.json read and next_node matched expected P1_01
+      - .gitmodules read and PHMGA submodule path/branch recorded
+      - PHMGA commit 914bc5925d5230917a5de95d88784075fb2b041e recorded
+  - state: S1_P1_01_NODE_PACKAGE
+    status: partial_pass
+    completed_at: 2026-05-03
+    evidence:
+      - tools/submission_ready_goal/validate_p1_01_node_package.py --repo-root . --require-outputs --json exited 0
+      - docs/submission_ready_goal/runtime_logs/data_audit/data_gate_status.json passed true
+      - docs/submission_ready_goal/runtime_logs/llm_key_check.json loaded .env; OpenRouter credential/model check passed; BigModel credential accepted but model call rate-limited
+      - PHMGA OpenRouter Ottawa and RM101 preflight passed against /mnt/k/D01_vibench
+      - PHMGA BigModel Ottawa and RM101 preflight passed against /mnt/k/D01_vibench using BIGMODEL_API_KEY
+      - PHMGA provider preflight passed after unsetting OPENROUTER_API_KEY and BIGMODEL_API_KEY from the process environment, confirming keys are loaded from the repo .env without logging secret values
+      - PHMGA ottawa_ml_openrouter_glm_v2 formal rerun rejected because OpenRouter free upstream returned HTTP 429 before validated DAG/artifacts
+      - PHMGA ottawa_ml_openrouter_nemotron_v3_qualityfix1 used the repo .env OpenRouter credential with the free `nvidia/nemotron-3-super-120b-a12b:free` model and emitted a complete accept bundle: artifact contract pass, feature separability pass, test macro_f1 0.8774661249538376, and no compiled_for_rejection_evidence workflow exit
+      - PHMGA rm101_ml_openrouter_nemotron_v3_qualityfix1 used the repo .env OpenRouter credential with the free `nvidia/nemotron-3-super-120b-a12b:free` model and emitted a complete reject-evidence bundle: artifact contract pass, feature separability pass, test macro_f1 0.18337824193501234, and workflow_exit compiled_for_rejection_evidence=true because max_iterations ended with need_replan
+      - PHMGA ottawa_ml_bigmodel_glm47_v1 emitted a complete draft artifact bundle but was rejected because feature separability gate failed
+      - PHMGA ottawa_ml_bigmodel_glm47_v1_qualityfix2 emitted a complete accept bundle with artifact contract pass, feature separability pass, DAG quality finish_candidate, test macro_f1 0.7226535613558728, and no workflow halt
+      - PHMGA rm101_ml_bigmodel_glm47_v1 rejected because compiled ML feature matrix had zero columns before artifact export
+      - PHMGA rm101_ml_bigmodel_glm47_v1_qualityfix5 emitted only planner traces and was interrupted by BigModel HTTP 429 before a validated DAG/artifact bundle
+      - PHMGA rm101_ml_bigmodel_glm47_v1_qualityfix7 emitted a full reject-evidence bundle with artifact contract pass, feature separability pass, test macro_f1 0.18934628733653974, and workflow_exit compiled_for_rejection_evidence=true because max_iterations ended with need_patch
+      - tools/submission_ready_goal/validate_p1_01_node_package.py --repo-root . --require-review --json now fails on the real review gate because verdict is incomplete and AI/human review files still contain placeholders
+    blockers:
+      - independent external review verdict not yet pass
+last_validation:
+  command: .venv/bin/python tools/submission_ready_goal/validate_p1_01_node_package.py --repo-root . --require-outputs --json
+  exit_code: 0
+  terminal_excerpt: '"passed": true'
+blockers:
+  - p1_01_external_review_not_passed
+  - openrouter_glm_free_model_rate_limit_blocks_glm_v2_row
+  - phmga_rm101_openrouter_nemotron_qualityfix1_not_selection_eligible
+  - phmga_rm101_bigmodel_qualityfix7_not_selection_eligible
+  - phmga_formal_rows_not_passed

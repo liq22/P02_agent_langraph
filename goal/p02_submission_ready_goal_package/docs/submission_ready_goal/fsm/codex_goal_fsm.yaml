@@ -1,0 +1,58 @@
+
+version: p02_actual_goal_fsm_v4
+current_repo: liq22/P02_agent_langraph
+states:
+  - id: S0_REPO_FACT_SYNC
+    exit_checks:
+      - graph_status_read
+      - next_node_recorded
+      - gitmodules_read
+      - phmga_submodule_path_recorded
+  - id: S1_P1_01_NODE_PACKAGE
+    exit_checks:
+      - p1_01_docs_manuscript_exists
+      - p1_01_required_artifacts_exist
+      - external_review_verdict_pass
+      - validate_p1_01_node_package_pass
+      - graph_only_refresh_run
+  - id: S2_DATA_RESOURCE_AUDIT
+    exit_checks:
+      - data_manifest_exists
+      - checksums_exist
+      - rm017_and_rm101_verified
+      - metadata_h5_alignment_audited
+  - id: S3_VIBENCH_READ_BOUNDARY
+    exit_checks:
+      - vibench_read_bundle_schema_pass
+      - vibench_read_only_boundary_documented
+      - vibench_not_formal_result_source
+  - id: S4_PHMGA_HANDOFF_AND_PREFLIGHT
+    exit_checks:
+      - phmga_dataset_protocol_handoff_pass
+      - ottawa_preflight_pass
+      - rm101_preflight_pass
+      - phmga_commit_recorded
+  - id: S5_PHMGA_FORMAL_EXPERIMENTS
+    exit_checks:
+      - stage_b_eligible_rows_exist
+      - selected_global_best_backend_not_pending
+      - stage_c_main_rows_passed
+      - stage_d_minimum_ablation_rows_passed
+      - main_tables_nonempty_with_passed_rows
+  - id: S6_PAPER_EVIDENCE_LOCK
+    exit_checks:
+      - traceability_lock_pass
+      - no_positive_claim_without_evidence
+      - no_pending_row_used_in_paper_table
+  - id: S7_FINAL_SUBMISSION_VALIDATION
+    exit_checks:
+      - final_tex_complete
+      - reviews_complete
+      - validate_research_truth_submission_ready_pass
+hard_fail:
+  - next_node_mismatch_without_user_ack
+  - phmga_submodule_missing
+  - phmga_branch_not_journal_thesis
+  - p1_01_review_missing
+  - no_passed_rows_in_main_tables_used_as_positive_result
+  - final_submission_check_failed

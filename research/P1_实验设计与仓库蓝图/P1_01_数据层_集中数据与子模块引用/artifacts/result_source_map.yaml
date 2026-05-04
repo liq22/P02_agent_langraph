@@ -1,0 +1,71 @@
+version: result_source_map_v1
+formal_source_rules:
+  proving_lane:
+    enters_main_tables: false
+    use: engineering_qualification_only
+  simple_qualification:
+    enters_main_tables: false
+    use: runtime_closure_only
+  stage_b_backend_comparison:
+    enters_main_tables: table_3_only_if_selection_eligible
+    required_status:
+      - keep_accept
+      - artifact_contract_pass
+      - feature_separability_pass
+  stage_c_main_results:
+    enters_main_tables: table_1_only_if_passed
+    required_status:
+      - selected_backend_locked
+      - artifact_contract_pass
+      - result_md_exists
+      - artifact_dir_exists
+  stage_d_ablation:
+    enters_main_tables: table_2_only_if_passed
+    required_status:
+      - selected_backend_locked
+      - artifact_contract_pass
+      - result_md_exists
+      - artifact_dir_exists
+current_known_blocker:
+  selected_global_best_backend_locked: false
+  stage_b_backend_evidence_state: partial_ottawa_accept_rm101_reject
+  stage_c_main_rows_passed: false
+  stage_d_ablation_rows_passed: false
+  paper_result_claim_policy: block_main_result_claims_until_selected_backend_and_stage_c_or_d_rows_pass
+latest_stage_b_evidence:
+  - experiment_id: ottawa_ml_openrouter_nemotron_v3
+    status: accept
+    artifact_dir: artifacts/paper/ottawa_ml_openrouter_nemotron_v3_qualityfix1
+    result_md: doc/experiments/handoff/results/ottawa_ml_openrouter_nemotron_v3.md
+    test_macro_f1: 0.8774661249538376
+    selection_eligible_scope: ottawa_side_only
+  - experiment_id: ottawa_ml_bigmodel_glm47_v1
+    status: accept
+    artifact_dir: artifacts/paper/ottawa_ml_bigmodel_glm47_v1_qualityfix2
+    result_md: doc/experiments/handoff/results/ottawa_ml_bigmodel_glm47_v1.md
+    test_macro_f1: 0.7226535613558728
+    selection_eligible_scope: ottawa_side_only
+  - experiment_id: rm101_ml_openrouter_nemotron_v3
+    status: reject
+    artifact_dir: artifacts/paper/rm101_ml_openrouter_nemotron_v3_qualityfix1
+    result_md: doc/experiments/handoff/results/rm101_ml_openrouter_nemotron_v3.md
+    test_macro_f1: 0.18337824193501234
+    rejection_reason: max_iterations reached before finish with need_replan
+  - experiment_id: rm101_ml_bigmodel_glm47_v1
+    status: reject
+    artifact_dir: artifacts/paper/rm101_ml_bigmodel_glm47_v1_qualityfix7
+    result_md: doc/experiments/handoff/results/rm101_ml_bigmodel_glm47_v1.md
+    test_macro_f1: 0.18934628733653974
+    rejection_reason: max_iterations reached before finish with need_patch
+trace_required_for_each_result:
+  - experiment_id
+  - preset_name
+  - dataset
+  - graph_path
+  - artifact_dir
+  - result_md
+  - ledger_row
+  - main_table_row
+  - phmga_commit
+  - data_manifest
+  - vibench_read_bundle

@@ -1,0 +1,39 @@
+checklist_id: phmga_formal_run_v1
+stage_b:
+  required_rows:
+    - ottawa_ml_codex_v3
+    - ottawa_ml_openrouter_glm_v2
+    - ottawa_ml_bigmodel_glm47_v1
+    - rm101_ml_codex_v3
+    - rm101_ml_openrouter_glm_v2
+    - rm101_ml_bigmodel_glm47_v1
+  pass_condition:
+    - artifact_contract_pass
+    - feature_separability_pass
+    - keep_accept_or_reject_recorded
+    - result_md_exists
+    - artifact_dir_exists
+stage_c:
+  required_rows:
+    - ottawa_ml_main_v1
+    - ottawa_torch_main_v1
+    - rm101_ml_main_v1
+    - rm101_torch_main_v1
+  unlock_condition:
+    - selected_global_best_backend.selected_from_stage_b == true
+stage_d_minimum:
+  required_rows:
+    - ottawa_ml_intermediate_v1
+    - rm101_ml_intermediate_v1
+    - ottawa_torch_module_runtime_v1
+    - rm101_torch_module_runtime_v1
+main_tables:
+  checks:
+    - Table 1 has passed rows
+    - Table 2 has passed rows or justified minimum ablation
+    - Table 3 has backend comparison rows
+    - every row traces to ledger, result_md, artifact_dir
+hard_fail:
+  - selected_global_best_backend_pending
+  - no_passed_runids_in_main_tables
+  - pending_or_failed_row_used_in_main_table

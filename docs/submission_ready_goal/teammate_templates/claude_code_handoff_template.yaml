@@ -1,0 +1,54 @@
+handoff_version: claude_code_handoff_v2
+task_id: <fill>
+assistant: claude_code
+role: <data-auditor | phmga-artifact-auditor | paper-evidence-reviewer | handoff-reviewer | other>
+mode: <read_only | plan_first | edit_allowed>
+status: <pass | revise | block | incomplete>
+
+non_authority_statement: "This handoff is advisory and does not claim submission-ready. Codex remains the gate owner."
+
+delegation:
+  requested_by: codex
+  source_prompt_file: <docs/submission_ready_goal/codex_prompts/... or inline>
+  requested_scope_summary: <fill>
+  target_gate: <data_ready | project_ready | paper_ready | claude_handoff_only>
+
+scope:
+  allowed_files: []
+  forbidden_files:
+    - backend/graph/**
+    - obsidian/**
+    - web/dashboard/**
+  inspected_files: []
+  changed_files: []
+
+commands_run:
+  - command: <fill or none>
+    exit_code: <integer or null>
+    evidence_file: <path or null>
+    terminal_excerpt: <paste key success/failure line or null>
+
+findings:
+  supported: []
+  gaps: []
+  risks: []
+  hard_fail_candidates: []
+
+evidence:
+  artifacts_produced: []
+  claim_evidence_ids: []
+  data_sources: []
+  phmga_sources: []
+
+validation:
+  local_checks_complete: false
+  local_check_commands: []
+  local_check_logs: []
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+
+handoff_to_codex:
+  summary: <fill>
+  blockers: []
+  recommended_next_action: <one bounded next step>
+  safe_to_merge: false

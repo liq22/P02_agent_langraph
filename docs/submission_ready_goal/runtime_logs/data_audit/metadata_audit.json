@@ -1,0 +1,84 @@
+{
+  "canonical": {
+    "file": "/mnt/k/D01_vibench/metadata.xlsx",
+    "exists": true,
+    "rows": 49855,
+    "columns": [
+      "Id",
+      "Dataset_id",
+      "Name",
+      "Description",
+      "TYPE",
+      "File",
+      "Visiable",
+      "Label",
+      "Label_Description",
+      "Fault_level",
+      "RUL_label",
+      "RUL_label_description",
+      "Domain_id",
+      "Domain_description",
+      "Sample_rate",
+      "Sample_lenth",
+      "Channel",
+      "Fault_Diagnosis",
+      "Anomaly_Detection",
+      "Remaining_Life"
+    ],
+    "sample_id_columns": [
+      "Id"
+    ],
+    "dataset_columns": [
+      "Dataset_id",
+      "Name"
+    ],
+    "label_columns": [
+      "Label"
+    ],
+    "error": null,
+    "sample_ids_preview": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20"
+    ]
+  },
+  "lineage": {
+    "metadata_25_10_30.xlsx": {
+      "file": "/mnt/k/D01_vibench/metadata_25_10_30.xlsx",
+      "exists": false,
+      "rows": null,
+      "columns": [],
+      "sample_id_columns": [],
+      "dataset_columns": [],
+      "label_columns": [],
+      "error": null
+    },
+    "metadata_25_11_13.xlsx": {
+      "file": "/mnt/k/D01_vibench/metadata_25_11_13.xlsx",
+      "exists": false,
+      "rows": null,
+      "columns": [],
+      "sample_id_columns": [],
+      "dataset_columns": [],
+      "label_columns": [],
+      "error": null
+    }
+  }
+}

@@ -1,0 +1,32 @@
+version: dataset_registry_v1
+registry:
+  - key: ottawa
+    dataset_name: RM_017_Ottawa19
+    catalog: PHM-Vibench
+    metadata_file: metadata.xlsx
+    h5_file: RM_017_Ottawa19.h5
+    phmga_config: config/data/ottawa.yaml
+    formal_p02: true
+    expected_experiments:
+      - ottawa_ml_codex_v3
+      - ottawa_ml_openrouter_glm_v2
+      - ottawa_ml_bigmodel_glm47_v1
+      - ottawa_ml_main_v1
+      - ottawa_torch_main_v1
+      - ottawa_ml_intermediate_v1
+      - ottawa_torch_module_runtime_v1
+  - key: rm101
+    dataset_name: RM_101_THU_GEARBOX
+    catalog: PHM-Vibench
+    metadata_file: metadata.xlsx
+    h5_file: RM_101_THU_GEARBOX.h5
+    phmga_config: config/data/rm101.yaml
+    formal_p02: true
+    expected_experiments:
+      - rm101_ml_codex_v3
+      - rm101_ml_openrouter_glm_v2
+      - rm101_ml_bigmodel_glm47_v1
+      - rm101_ml_main_v1
+      - rm101_torch_main_v1
+      - rm101_ml_intermediate_v1
+      - rm101_torch_module_runtime_v1

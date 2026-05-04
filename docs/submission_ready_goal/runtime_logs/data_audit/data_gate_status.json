@@ -1,0 +1,16 @@
+{
+  "gate": "data_ready",
+  "passed": true,
+  "score": 100,
+  "hard_fail": [],
+  "blockers": [],
+  "outputs": {
+    "data_manifest_yaml": "/mnt/k/2_work/LQQL_OS/lqql_06_工作与项目/03_论文流水线/P02_agent_langraph/docs/submission_ready_goal/runtime_logs/data_audit/data_manifest.yaml",
+    "data_manifest_json": "/mnt/k/2_work/LQQL_OS/lqql_06_工作与项目/03_论文流水线/P02_agent_langraph/docs/submission_ready_goal/runtime_logs/data_audit/data_manifest.json",
+    "dataset_registry_yaml": "/mnt/k/2_work/LQQL_OS/lqql_06_工作与项目/03_论文流水线/P02_agent_langraph/docs/submission_ready_goal/runtime_logs/data_audit/dataset_registry.yaml",
+    "checksums": "/mnt/k/2_work/LQQL_OS/lqql_06_工作与项目/03_论文流水线/P02_agent_langraph/docs/submission_ready_goal/runtime_logs/data_audit/checksums.sha256",
+    "metadata_audit": "/mnt/k/2_work/LQQL_OS/lqql_06_工作与项目/03_论文流水线/P02_agent_langraph/docs/submission_ready_goal/runtime_logs/data_audit/metadata_audit.json",
+    "h5_audit": "/mnt/k/2_work/LQQL_OS/lqql_06_工作与项目/03_论文流水线/P02_agent_langraph/docs/submission_ready_goal/runtime_logs/data_audit/h5_audit.json",
+    "metadata_h5_alignment": "/mnt/k/2_work/LQQL_OS/lqql_06_工作与项目/03_论文流水线/P02_agent_langraph/docs/submission_ready_goal/runtime_logs/data_audit/metadata_h5_alignment.json"
+  }
+}

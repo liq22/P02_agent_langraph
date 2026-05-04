@@ -1,0 +1,20 @@
+version: claim_evidence_registry_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+claims:
+  - claim_id: C-P02-DATA-001
+    claim: P02 uses PHM-Vibench data_factory only for data reading and catalog access.
+    status: planned
+    evidence_ids:
+      - E-P02-DATA-001
+  - claim_id: C-P02-DATA-002
+    claim: PHMGA owns all downstream protocol, split/window, DAG workflow, bridge, evaluation, and reporting.
+    status: planned
+    evidence_ids:
+      - E-P02-DATA-002
+evidence:
+  - evidence_id: E-P02-DATA-001
+    type: guide
+    source_path: docs/submission_ready_goal/vibench_to_phmga_boundary.md
+  - evidence_id: E-P02-DATA-002
+    type: submodule_doc
+    source_path: <PHMGA>/README.md

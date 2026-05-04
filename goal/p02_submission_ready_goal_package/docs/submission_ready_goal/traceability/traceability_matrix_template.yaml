@@ -1,0 +1,29 @@
+traceability_version: p02_traceability_lock_v1
+submodule:
+  phmga_path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+  phmga_branch: journal_thesis
+  phmga_commit: <fill>
+data:
+  data_root: <fill>
+  data_manifest: <fill>
+  vibench_read_bundle: <fill>
+items:
+  - item_id: C-P02-001
+    item_type: claim
+    paper_section: Method
+    statement: <fill>
+    status: planned
+    evidence_id: <fill>
+    data_source:
+      data_manifest: <fill>
+      vibench_read_bundle: <fill>
+    phmga_source:
+      experiment_id: <fill or n/a>
+      artifact_dir: <fill or n/a>
+      result_md: <fill or n/a>
+      ledger_row: <fill or n/a>
+      main_table: <fill or n/a>
+    validation:
+      command: <fill>
+      log_path: <fill>
+    blockers: []

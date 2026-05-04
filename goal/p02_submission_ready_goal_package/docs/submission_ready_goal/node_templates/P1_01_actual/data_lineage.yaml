@@ -1,0 +1,39 @@
+
+version: data_lineage_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+data_root:
+  path: <DATA_ROOT>
+  status: pending_user_provided
+  storage_policy: external_to_repo
+  large_files_committed_to_repo: false
+canonical_metadata:
+  file: metadata.xlsx
+  role: canonical_current_metadata
+  checksum_sha256: <fill_after_audit>
+metadata_lineage:
+  - file: metadata_25_10_30.xlsx
+    role: historical_metadata_version
+    checksum_sha256: <fill_after_audit>
+  - file: metadata_25_11_13.xlsx
+    role: historical_metadata_version
+    checksum_sha256: <fill_after_audit>
+formal_p02_data:
+  - dataset_name: RM_017_Ottawa19
+    h5_file: RM_017_Ottawa19.h5
+    role: ottawa_formal_run
+    required: true
+    checksum_sha256: <fill_after_audit>
+  - dataset_name: RM_101_THU_GEARBOX
+    h5_file: RM_101_THU_GEARBOX.h5
+    role: rm101_formal_run
+    required: true
+    checksum_sha256: <fill_after_audit>
+extension_data:
+  status: recorded_not_blocking_initial_submission
+  files_pattern: RM_*.h5
+provenance:
+  provider: user_supplied
+  intake_date: <YYYY-MM-DD>
+  license_or_access: <fill>
+  redistribution_allowed: <true_false_unknown>
+  audit_status: pending

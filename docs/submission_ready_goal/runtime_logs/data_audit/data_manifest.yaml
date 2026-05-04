@@ -1,0 +1,43 @@
+version: data_manifest_v1
+data_root: /mnt/k/D01_vibench
+canonical_metadata: metadata.xlsx
+metadata_lineage:
+  -
+    file: metadata_25_10_30.xlsx
+    exists: false
+    checksum_sha256: null
+  -
+    file: metadata_25_11_13.xlsx
+    exists: false
+    checksum_sha256: null
+formal_p02_datasets:
+  -
+    dataset_name: RM_017_Ottawa19
+    h5_file: RM_017_Ottawa19.h5
+    required: true
+    checksum_sha256: a323c755ef18d581a1500952b0a1810f49c980abbb64dfe5b771b5956b07c536
+  -
+    dataset_name: RM_101_THU_GEARBOX
+    h5_file: RM_101_THU_GEARBOX.h5
+    required: true
+    checksum_sha256: 3b6a7b8ba47afa0214cff8529aa0a51289c46eb5897b6c2a15e2bddaee39b43e
+extension_datasets:
+  - RM_001_CWRU.h5
+  - RM_002_XJTU.h5
+  - RM_003_FEMTO.h5
+  - RM_004_IMS.h5
+  - RM_008_UNSW.h5
+  - RM_010_SEU.h5
+  - RM_015_susu.h5
+  - RM_016_JNU.h5
+  - RM_018_THU24.h5
+  - RM_020_DIRG.h5
+  - RM_023_HIT23.h5
+  - RM_024_JUST.h5
+  - RM_027_PU.h5
+  - RM_031_HUST24.h5
+checksums:
+  metadata.xlsx: e4b3dcd02ac4bc4f3d7bffbed119db927c35db050bf2bbde279ce86b163cc722
+  RM_017_Ottawa19.h5: a323c755ef18d581a1500952b0a1810f49c980abbb64dfe5b771b5956b07c536
+  RM_101_THU_GEARBOX.h5: 3b6a7b8ba47afa0214cff8529aa0a51289c46eb5897b6c2a15e2bddaee39b43e
+audit_status: pass

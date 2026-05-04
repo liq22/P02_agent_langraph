@@ -1,0 +1,18 @@
+scorecard_id: data_readiness_v1
+thresholds:
+  pass_min: 85
+  submission_min: 90
+  block_below: 70
+dimensions:
+  file_completeness: {weight: 20}
+  metadata_quality: {weight: 20}
+  h5_alignment: {weight: 20}
+  provenance_license: {weight: 15}
+  checksum_reproducibility: {weight: 15}
+  vibench_readability: {weight: 10}
+hard_fail:
+  - canonical_metadata_missing
+  - required_formal_h5_missing
+  - metadata_h5_alignment_failed
+  - data_access_unknown
+  - vibench_read_bundle_missing

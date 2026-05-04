@@ -1,0 +1,36 @@
+checklist_id: actual_p1_01_data_submodule_node_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+node_path: research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用
+
+required_outputs:
+  - docs/manuscript.md
+  - artifacts/data_lineage.yaml
+  - artifacts/submodule_ref.yaml
+  - artifacts/claim_evidence_registry.yaml
+  - artifacts/failure_register.yaml
+  - artifacts/negative_result_note.md
+  - artifacts/keep_discard_ledger.yaml
+
+recommended_outputs:
+  - artifacts/vibench_data_factory_binding.yaml
+  - artifacts/data_reading_boundary.yaml
+  - artifacts/phmga_data_protocol_handoff.yaml
+  - artifacts/result_source_map.yaml
+  - logs/codex_run_001.md
+
+required_questions:
+  - data source, version, license, and access are described
+  - data-code-submodule binding is described
+  - minimum provenance is described
+  - Vibench read-only boundary is described
+  - PHMGA downstream ownership is described
+  - pending/fail result rows are not written as positive evidence
+
+node_close_requires_review:
+  - review/AI_001.md
+  - review/verdict.yaml
+  - review/response.yaml
+  - review_complete == true
+  - overall_verdict == pass
+  - hard_fail == false
+  - independence_confirmed == true

@@ -1,0 +1,11 @@
+version: failure_register_v1
+failures: []
+open_blockers:
+  - blocker_id: B-P02-001
+    description: DATA_ROOT not yet audited.
+    severity: high
+    status: open
+  - blocker_id: B-P02-002
+    description: PHMGA formal main tables may still have no passed rows.
+    severity: high
+    status: open

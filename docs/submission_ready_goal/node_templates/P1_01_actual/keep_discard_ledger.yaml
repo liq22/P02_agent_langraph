@@ -1,0 +1,15 @@
+version: p1_01_keep_discard_ledger_v1
+keep:
+  - item: PHM-Vibench data_factory as read-only data interface
+    reason: provides shared metadata/H5/raw/cache access boundary
+  - item: PHMGA as downstream method and experiment truth
+    reason: owns DatasetProtocol, DAG workflow, bridge, evaluation, ledger, and tables
+  - item: P02_agent_langraph selected-node writing and review gates
+    reason: matches actual autoresearch workspace contract
+discard_or_defer:
+  - item: Vibench task wrapper/sampler/trainer as formal result truth
+    reason: would bypass PHMGA protocol and experiment ledger
+  - item: direct final paper writing before P1_01 closes
+    reason: violates graph-selected node order
+  - item: committing H5 data into repo
+    reason: large data should be referenced by manifest/checksum/provenance instead

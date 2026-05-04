@@ -1,0 +1,28 @@
+version: p1_01_failure_register_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+failures:
+  - failure_id: F-P02-DATA-001
+    condition: DATA_ROOT not provided or inaccessible
+    impact: data-ready gate blocked
+    mitigation: use /mnt/k/D01_vibench and run data audit
+    status: closed
+  - failure_id: F-P02-SUBMODULE-001
+    condition: PHMGA submodule commit not recorded
+    impact: paper evidence cannot cite PHMGA results
+    mitigation: record journal_thesis commit in artifacts/submodule_ref.yaml
+    status: closed
+  - failure_id: F-P02-RESULT-001
+    condition: selected_global_best_backend is not locked and Stage C/D main or ablation rows are not passed
+    impact: positive paper result claims blocked
+    mitigation: do not promote partial Stage B evidence; continue backend selection only after RM101 rows produce acceptable finish evidence
+    status: open
+  - failure_id: F-P02-RESULT-002
+    condition: RM101 Stage B free-model rows remain reject evidence
+    impact: backend selection and downstream main-table execution remain blocked
+    mitigation: revise RM101 feature/model plan or run another eligible free-model candidate before selecting a global backend
+    status: open
+  - failure_id: F-P02-REVIEW-001
+    condition: independent external reviewer verdict not yet passed after this authoring step
+    impact: node close and submission-ready claim blocked
+    mitigation: run a distinct external reviewer lane and require review/verdict.yaml pass
+    status: open

@@ -1,0 +1,33 @@
+checklist_id: claude_code_handoff_v2
+purpose: Validate a Claude Code subagent or teammate handoff before Codex merges or advances a gate.
+
+required:
+  - handoff_version == claude_code_handoff_v2
+  - assistant == claude_code
+  - non_authority_statement present
+  - delegation.requested_by == codex
+  - scope.inspected_files is non-empty
+  - scope.changed_files does not include backend/graph/**, obsidian/**, web/dashboard/**
+  - findings.gaps and findings.risks are present even if empty
+  - validation.requires_codex_validation == true
+  - handoff_to_codex.recommended_next_action is one bounded step
+  - handoff_to_codex.safe_to_merge is explicit boolean
+
+pass_if:
+  - validate_claude_handoff.py exits 0
+  - safe_to_merge == true
+  - blockers is empty
+  - status == pass
+
+revise_if:
+  - validator exits 0 but warnings exist
+  - safe_to_merge == false and blockers are fixable
+  - handoff recommends a bounded next action
+
+block_if:
+  - handoff claims submission-ready
+  - forbidden files changed
+  - pending/fail/no_evidence PHMGA row is promoted to paper result
+  - Vibench DataLoader/trainer/evaluator is used as formal P02 result truth
+  - inspected_files is empty
+  - result lacks recommended_next_action

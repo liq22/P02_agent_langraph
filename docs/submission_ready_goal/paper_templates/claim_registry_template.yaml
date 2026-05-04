@@ -1,0 +1,17 @@
+version: p02_claim_registry_v1
+claims:
+  - claim_id: C-P02-001
+    section: Method
+    claim: P02 separates data reading from graph-guided PHM reasoning.
+    status: planned
+    evidence_ids: []
+  - claim_id: C-P02-002
+    section: Method
+    claim: PHMGA compiles validated DAG JSON into graph-dependent artifacts.
+    status: planned
+    evidence_ids: []
+  - claim_id: C-P02-003
+    section: Experiment
+    claim: Formal results are admitted to main tables only after artifact contract and traceability checks pass.
+    status: planned
+    evidence_ids: []

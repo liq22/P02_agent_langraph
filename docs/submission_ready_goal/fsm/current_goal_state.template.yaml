@@ -1,0 +1,16 @@
+
+version: current_goal_state_v4
+current_state: S0_REPO_FACT_SYNC
+expected_next_node: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+selected_node_path: research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用
+phmga_submodule_path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+phmga_branch_expected: journal_thesis
+state_history: []
+last_validation:
+  command: null
+  exit_code: null
+  terminal_excerpt: null
+blockers:
+  - p1_01_not_closed
+  - data_root_not_audited
+  - phmga_formal_rows_not_passed

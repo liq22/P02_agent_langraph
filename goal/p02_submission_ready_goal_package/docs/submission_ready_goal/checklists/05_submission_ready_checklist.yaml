@@ -1,0 +1,30 @@
+checklist_id: p02_submission_ready_v1
+data_gate:
+  - data_manifest_complete
+  - vibench_read_bundle_complete
+  - phmga_handoff_complete
+project_gate:
+  - phmga_submodule_commit_recorded
+  - phmga_preflight_pass
+  - stage_b_selection_done
+  - stage_c_main_results_done
+  - stage_d_minimum_done
+  - main_tables_nonempty
+paper_gate:
+  - research_nodes_done
+  - claim_evidence_registry_complete
+  - figures_trace_to_artifacts
+  - tables_trace_to_main_tables
+  - final_tex_complete
+  - ai_review_complete
+  - human_review_complete
+  - final_submission_check_pass
+hard_fail:
+  - main_tables_have_no_passed_rows
+  - selected_global_best_backend_pending
+  - paper_table_uses_pending_row
+  - claim_lacks_evidence_id
+  - DATA_ROOT_not_recorded
+  - PHMGA_submodule_commit_not_recorded
+  - Vibench_boundary_unclear
+  - final_submission_check_failed

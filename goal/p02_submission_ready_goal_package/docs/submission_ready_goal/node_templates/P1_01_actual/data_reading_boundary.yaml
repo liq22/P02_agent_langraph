@@ -1,0 +1,34 @@
+
+version: data_reading_boundary_v1
+boundary_statement: >-
+  PHM-Vibench data_factory is used only to read and audit metadata/H5/raw/cache data. After the read-only bundle is produced, PHMGA owns every downstream protocol and result-generation step.
+vibench_owns:
+  - metadata_loading
+  - reader_selection
+  - h5_access
+  - cache_materialization
+  - metadata_h5_alignment_audit
+phmga_owns:
+  - canonical_metadata_schema
+  - train_val_test_split
+  - split_before_windowing
+  - window_slicing
+  - signal_layout_normalization
+  - dag_agent_workflow
+  - bridge_compilation
+  - ml_torch_paths
+  - metrics
+  - reports
+  - result_ledger
+  - main_tables
+paper_repo_owns:
+  - selected_node_manuscripts
+  - claim_evidence_registry
+  - reviews
+  - final_tex
+  - submission_ready_gate
+hard_fail_if:
+  - vibench_dataloader_used_for_formal_result
+  - vibench_sampler_defines_phmga_split
+  - phmga_dataset_protocol_bypassed
+  - data_root_provenance_missing

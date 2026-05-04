@@ -1,0 +1,15 @@
+version: submodule_inventory_v1
+submodules:
+  - name: PHMGA
+    path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+    url: https://github.com/PHMbench/PHMGA.git
+    branch: journal_thesis
+    commit: <fill_with_git_rev_parse>
+    role: P02 implementation and formal experiment evidence repository
+    required_for:
+      - DAG-agent workflow implementation
+      - formal experiment runs
+      - artifact bundles
+      - result ledger
+      - main tables
+      - paper evidence snapshot

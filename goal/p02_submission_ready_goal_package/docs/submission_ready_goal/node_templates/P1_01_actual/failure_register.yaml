@@ -1,0 +1,13 @@
+version: p1_01_failure_register_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+failures:
+  - failure_id: F-P02-DATA-001
+    condition: DATA_ROOT not provided or inaccessible
+    impact: data-ready gate blocked
+    mitigation: record expected data tree and wait for user-provided DATA_ROOT
+    status: open_until_data_root_exists
+  - failure_id: F-P02-SUBMODULE-001
+    condition: PHMGA submodule commit not recorded
+    impact: paper evidence cannot cite PHMGA results
+    mitigation: run git submodule status and record commit
+    status: open_until_commit_recorded

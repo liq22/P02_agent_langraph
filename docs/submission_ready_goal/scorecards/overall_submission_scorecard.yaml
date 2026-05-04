@@ -1,0 +1,13 @@
+scorecard_id: p02_overall_submission_ready_v1
+thresholds:
+  submission_ready_min: 90
+  block_below: 75
+components:
+  data_readiness: {weight: 30, scorecard: data_readiness_scorecard.yaml}
+  project_readiness: {weight: 35, scorecard: project_readiness_scorecard.yaml}
+  paper_readiness: {weight: 35, scorecard: paper_readiness_scorecard.yaml}
+hard_fail:
+  - data_gate_failed
+  - project_gate_failed
+  - paper_gate_failed
+  - final_submission_check_failed

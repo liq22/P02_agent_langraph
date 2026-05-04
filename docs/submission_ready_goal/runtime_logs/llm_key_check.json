@@ -1,0 +1,35 @@
+{
+  "version": "llm_key_check_v1",
+  "env_file": {
+    "path": ".env",
+    "loaded": 2,
+    "skipped_existing": 0
+  },
+  "checks": [
+    {
+      "provider": "openrouter",
+      "model": "z-ai/glm-4.5-air:free",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "credential_present": true,
+      "credential_valid": true,
+      "auth_status_code": 200,
+      "passed": true,
+      "status_code": 200,
+      "response_ok": true,
+      "error": null
+    },
+    {
+      "provider": "bigmodel",
+      "model": "glm-4.7-flash",
+      "api_key_env": "BIGMODEL_API_KEY",
+      "credential_present": true,
+      "credential_valid": true,
+      "auth_status_code": null,
+      "passed": false,
+      "status_code": 429,
+      "response_ok": false,
+      "error": "您的账户已达到速率限制，请您控制请求频率"
+    }
+  ],
+  "passed": false
+}

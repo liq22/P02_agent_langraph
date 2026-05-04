@@ -1,0 +1,45 @@
+version: vibench_data_factory_binding_v1
+purpose: bind P02 data reading to PHM-Vibench data_factory while preserving PHMGA downstream ownership
+reading_source:
+  repo: PHMbench/PHM-Vibench
+  component: src/data_factory
+  public_api:
+    - src/data_factory/__init__.py::build_data
+    - src/data_factory/__init__.py::resolve_data_factory_class
+  supported_factories:
+    - read_only
+    - default
+    - id
+phmga_project:
+  repo: PHMbench/PHMGA
+  branch: journal_thesis
+  role_after_reading:
+    - canonical metadata protocol
+    - split assignment
+    - window slicing
+    - DAG-agent workflow
+    - bridge compilation
+    - training/evaluation/report
+boundary:
+  vibench_owns:
+    - metadata_loading
+    - reader_selection
+    - raw_signal_access
+    - h5_cache_materialization
+  phmga_owns:
+    - DatasetProtocol
+    - SplitManifest
+    - WindowSpec
+    - SignalRecord
+    - PHMState_StateGraph
+    - validated_dag_json
+    - compile_dag_for_path
+    - graph_dependent_artifacts
+    - result_ledger
+    - main_tables
+  explicitly_not_imported_from_vibench:
+    - task_specific_dataset_wrappers_for_training
+    - samplers
+    - trainer
+    - evaluation_loop
+    - model_selection_logic

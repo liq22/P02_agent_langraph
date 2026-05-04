@@ -1,0 +1,37 @@
+
+version: current_repo_facts_v1
+paper_repo:
+  name: liq22/P02_agent_langraph
+  role: paper_autoresearch_workspace
+  graph_status_path: backend/graph/graph_status.json
+  current_phase_expected: P1
+  next_node_expected: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+  selected_node_path: research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用
+selected_node:
+  node_kind: leaf
+  node_mode: standard
+  node_profile: evidence_leaf
+  lifecycle_stage_expected: seed
+  required_first_outputs:
+    - docs/manuscript.md
+    - artifacts/data_lineage.yaml
+    - artifacts/submodule_ref.yaml
+    - artifacts/claim_evidence_registry.yaml
+    - artifacts/failure_register.yaml
+    - artifacts/negative_result_note.md
+    - artifacts/keep_discard_ledger.yaml
+phmga_submodule:
+  path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+  url: https://github.com/PHMbench/PHMGA.git
+  branch: journal_thesis
+  role: implementation_project_and_experiment_evidence_source
+phm_vibench:
+  role: data_factory_reading_layer_only
+  formal_minimum_datasets:
+    - RM_017_Ottawa19.h5
+    - RM_101_THU_GEARBOX.h5
+hard_blockers:
+  - no_passed_rows_in_phmga_main_tables
+  - missing_phmga_submodule_commit
+  - missing_data_root_manifest
+  - p1_01_node_without_external_review

@@ -1,0 +1,37 @@
+version: vibench_read_bundle_schema_v1
+required_fields:
+  - dataset_name
+  - catalog
+  - reader_backend
+  - factory_name
+  - data_root
+  - metadata_file
+  - h5_file
+  - metadata_rows
+  - h5_keys
+  - sample_id_key
+  - tensor_layout_before_phmga
+  - handoff_target
+  - read_status
+  - provenance
+allowed_reader_backend:
+  - vibench_data_factory
+allowed_factory_name:
+  - read_only
+  - default
+  - id
+boundary:
+  vibench_allowed:
+    - metadata_loading
+    - reader_selection
+    - h5_raw_signal_access
+    - cache_materialization
+    - metadata_h5_alignment_audit
+  vibench_forbidden_as_p02_truth:
+    - task_wrapper_training
+    - sampler_definition
+    - trainer_output
+    - evaluator_output
+    - formal_result_table_source
+handoff_target:
+  required: PHMGA DatasetProtocol

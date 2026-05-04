@@ -1,0 +1,19 @@
+checklist_id: data_package_intake_v1
+required_files:
+  - README.md
+  - metadata.xlsx
+  - RM_017_Ottawa19.h5
+  - RM_101_THU_GEARBOX.h5
+lineage_files:
+  - metadata_25_10_30.xlsx
+  - metadata_25_11_13.xlsx
+checks:
+  - {id: D0, item: DATA_ROOT exists, status: pending}
+  - {id: D1, item: canonical metadata.xlsx exists, status: pending}
+  - {id: D2, item: metadata lineage files are recorded, status: pending}
+  - {id: D3, item: required formal H5 files exist, status: pending}
+  - {id: D4, item: extension H5 files are listed but do not block submission, status: pending}
+  - {id: D5, item: sha256 checksums are computed for canonical metadata and formal H5 files, status: pending}
+  - {id: D6, item: metadata-H5 sample alignment can be audited, status: pending}
+  - {id: D7, item: access/license/provenance fields are recorded, status: pending}
+pass_if: [D0, D1, D3, D5, D6, D7]

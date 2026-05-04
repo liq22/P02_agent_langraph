@@ -1,0 +1,27 @@
+version: submission_gate_schema_v1
+data_ready:
+  canonical_metadata_exists: false
+  required_h5_exists: false
+  checksum_manifest_exists: false
+  metadata_h5_alignment_pass: false
+  vibench_read_bundle_exists: false
+project_ready:
+  phmga_submodule_commit_recorded: false
+  vibench_read_boundary_pass: false
+  phmga_preflight_pass: false
+  stage_b_selection_done: false
+  stage_c_main_results_done: false
+  stage_d_minimum_ablation_done: false
+  main_tables_nonempty: false
+  paper_snapshot_exists: false
+paper_ready:
+  all_required_nodes_done: false
+  claim_evidence_registry_complete: false
+  tables_trace_to_phmga: false
+  data_sources_trace_to_vibench: false
+  reviews_complete: false
+  final_tex_complete: false
+  final_submission_check_pass: false
+verdict:
+  submission_ready: false
+  blockers: []

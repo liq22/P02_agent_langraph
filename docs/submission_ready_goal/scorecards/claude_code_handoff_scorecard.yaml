@@ -1,0 +1,26 @@
+scorecard_id: claude_code_handoff_scorecard_v1
+thresholds:
+  pass_min: 85
+  block_below: 70
+dimensions:
+  scope_control:
+    weight: 20
+    description: Task stays inside allowed files and bounded objective.
+  evidence_quality:
+    weight: 25
+    description: Findings cite inspected files, commands, and artifacts.
+  handoff_completeness:
+    weight: 20
+    description: Handoff fields are complete and machine-checkable.
+  safety_against_false_completion:
+    weight: 20
+    description: Does not declare submission-ready or promote pending rows.
+  merge_readiness:
+    weight: 15
+    description: Output can be safely merged or converted into a bounded next action.
+hard_fail:
+  - changed_files_outside_scope
+  - final_submission_ready_claim_without_codex_gate
+  - missing_inspected_files
+  - pass_without_evidence
+  - unbounded_teammate_loop

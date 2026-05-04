@@ -1,0 +1,54 @@
+schema_version: claude_code_handoff_schema_v2
+required_fields:
+  - handoff_version
+  - task_id
+  - assistant
+  - role
+  - mode
+  - status
+  - non_authority_statement
+  - delegation
+  - scope
+  - commands_run
+  - findings
+  - evidence
+  - validation
+  - handoff_to_codex
+allowed:
+  assistant:
+    - claude_code
+  status:
+    - pass
+    - revise
+    - block
+    - incomplete
+  mode:
+    - read_only
+    - plan_first
+    - edit_allowed
+required_nested:
+  delegation:
+    - requested_by
+    - source_prompt_file
+    - target_gate
+  scope:
+    - allowed_files
+    - forbidden_files
+    - inspected_files
+    - changed_files
+  validation:
+    - requires_codex_validation
+    - expected_codex_validator
+  handoff_to_codex:
+    - summary
+    - blockers
+    - recommended_next_action
+    - safe_to_merge
+hard_fail:
+  - missing_non_authority_statement
+  - claims_submission_ready
+  - changed_generated_graph_file
+  - changed_canvas_or_dashboard
+  - safe_to_merge_true_with_blockers
+  - pass_without_inspected_files
+  - pass_without_validation_plan

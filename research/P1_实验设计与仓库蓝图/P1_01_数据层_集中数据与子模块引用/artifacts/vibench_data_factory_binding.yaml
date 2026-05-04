@@ -1,0 +1,34 @@
+version: p02_vibench_data_factory_binding_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+reading_system:
+  repo: PHMbench/PHM-Vibench
+  component: src/data_factory
+  role: read_only_data_catalog_and_signal_access
+  allowed_scope:
+    - metadata_loading
+    - reader_selection
+    - H5_raw_signal_access
+    - cache_materialization
+    - metadata_H5_alignment_audit
+  recommended_factory: read_only
+  fallback_factory_options:
+    - default
+    - id
+formal_p02_data_scope:
+  data_root: /mnt/k/D01_vibench
+  canonical_metadata: metadata.xlsx
+  metadata_lineage:
+    - metadata_25_10_30.xlsx
+    - metadata_25_11_13.xlsx
+  required_h5:
+    - RM_017_Ottawa19.h5
+    - RM_101_THU_GEARBOX.h5
+not_formal_truth:
+  - Vibench_task_dataset_wrapper
+  - Vibench_sampler
+  - Vibench_DataLoader_training_path
+  - Vibench_trainer_or_evaluator_output
+handoff_target: PHMGA DatasetProtocol
+audit_status: pass
+audit_outputs_dir: docs/submission_ready_goal/runtime_logs/data_audit
+status: ready_for_phmga_adapter_preflight

@@ -1,0 +1,27 @@
+
+version: submodule_ref_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+submodules:
+  - name: PHMGA
+    role: implementation_project_and_experiment_evidence_source
+    declared_in: .gitmodules
+    path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+    url: https://github.com/PHMbench/PHMGA.git
+    branch: journal_thesis
+    commit: <fill_with_git_submodule_status_or_rev_parse>
+    required_for:
+      - protocol_to_validated_dag_mainline
+      - compile_dag_for_path_bridge
+      - graph_dependent_artifacts
+      - formal_paper_runs
+      - result_ledger
+      - main_tables
+      - paper_phmga_snapshot
+status:
+  submodule_present: <true_false>
+  branch_verified: <true_false>
+  commit_recorded: <true_false>
+blocking_if:
+  - submodule_missing
+  - branch_not_journal_thesis
+  - commit_missing
