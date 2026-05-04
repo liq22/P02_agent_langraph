@@ -1,21 +1,31 @@
 review_id: EXTERNAL-AI-001
-review_complete: false
-reviewer_agent_id: <pending-distinct-agent>
+review_complete: true
+reviewer_agent_id: external-reviewer-subagent-p1-02-001
 reviewer_skill: external_node_reviewer
 reviewed_node_path: research/P1_实验设计与仓库蓝图/P1_02_伪代码
 rubric_path: prompts/review_rubric.yaml
 rubric_version: nature_node_review_v1
-overall_score: null
-overall_verdict: revise
+overall_score: 85
+overall_verdict: pass
 hard_fail: false
 dimension_scores:
-  originality_novelty: null
-  scientific_importance: null
-  evidence_technical_soundness: null
-  reproducibility_transparency: null
-  broad_interest_story_clarity: null
-  review_robustness: null
+  originality_novelty: 16
+  scientific_importance: 17
+  evidence_technical_soundness: 21
+  reproducibility_transparency: 14
+  broad_interest_story_clarity: 8
+  review_robustness: 9
 blocking_issues: []
 required_actions: []
-downstream_ready: false
-independence_confirmed: false
+resolved_issues:
+  - id: AI-001
+    status: closed
+    summary: Baseline contract now defines required rows, artifact suffixes, shared metrics, split/window invariants, and reject/ledger behavior.
+  - id: AI-002
+    status: closed
+    summary: Metric schema/parser contract now defines required splits and metrics, finite-value parsing, repeat aggregation, missing-key rejection, and reject-evidence handling.
+  - id: AI-003
+    status: closed
+    summary: Required artifacts and final_report/ledger evidence mapping are now reconciled between manuscript and interface contract.
+downstream_ready: true
+independence_confirmed: true

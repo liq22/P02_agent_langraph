@@ -1,8 +1,32 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    reviewer_agent_id: external-reviewer-subagent-p1-02-001
+    summary: Baseline contract is not explicit enough for review closure.
+    required_action: Add a baseline section or BaselineSpec interface defining required baseline rows, artifact names, comparison metrics, and ledger handling.
+    author_response: Added `BaselineSpec` to `artifacts/interface_contract.yaml` and a Baseline contract section to `docs/manuscript.md`, including required rows, artifact suffixes, shared metrics, split/window invariants, and reject/ledger behavior.
+    reviewer_recheck: closed
+
+  - comment_id: AI-002
+    responded: true
+    reviewer_agent_id: external-reviewer-subagent-p1-02-001
+    summary: Metric schema and parser obligations are under-specified.
+    required_action: Define the minimal metrics.json schema and parser acceptance criteria, including split identifiers, metric names, seed/repeat identifiers, aggregation policy, and reject behavior.
+    author_response: Added `MetricSchema` to `artifacts/interface_contract.yaml` and a Metric schema/parser section to `docs/manuscript.md`, covering train/val/test accuracy and macro_f1, finite-value parsing, repeat aggregation, missing-key rejection, and workflow_exit handling.
+    reviewer_recheck: closed
+
+  - comment_id: AI-003
+    responded: true
+    reviewer_agent_id: external-reviewer-subagent-p1-02-001
+    summary: Interface contract omits some manuscript outputs and evidence mapping details.
+    required_action: Reconcile manuscript and interface-contract artifact lists, then add final_report.md and ledger evidence-mapping invariants.
+    author_response: Reconciled `predictions.json` and `importance.json` into required artifacts and added evidence mapping invariants for final_report sections, artifact_index, metrics/workflow_state, result_md, and ledger table eligibility.
+    reviewer_recheck: closed
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    reviewer_agent_id: p1-02-human-reviewer
+    summary: User-authorized Claude Code teammate delegate reviewed the P1_02 package and recommended pass with no required fixes before node closure.
+    required_action: No P1_02-scope fixes required. Keep downstream positive result claims blocked until selected backend, RM101, adapter preflight, and Stage C/D evidence gates are complete.
+    author_response: Recorded the transparent teammate review in `review/人类_001.md` and `docs/submission_ready_goal/runtime_logs/claude_code/p1_02_human_review_handoff.yaml`; closing P1_02 as reviewed while preserving downstream blockers outside this node.
+    reviewer_recheck: closed

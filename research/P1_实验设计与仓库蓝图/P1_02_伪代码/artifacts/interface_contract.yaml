@@ -1,11 +1,225 @@
-inputs:
-  - dataset_object
-  - task_protocol
-outputs:
-  - metrics
-  - artifacts
-  - evidence
-replaceable_modules:
-  - preprocessing
-  - model_core
-  - evaluator
+version: p1_02_interface_contract_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_02_伪代码
+scope: PHMGA run-case pseudocode and implementation-facing interface
+author_agent_id: codex-local
+updated_at: 2026-05-04
+
+upstream_dependencies:
+  data_boundary_node: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+  required_upstream_artifacts:
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/data_lineage.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/data_reading_boundary.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/phmga_data_protocol_handoff.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/result_source_map.yaml
+
+interfaces:
+  DataReadBundle:
+    required_fields:
+      - dataset_name
+      - metadata_path
+      - h5_path
+      - sample_keys
+      - channel_count
+      - checksum_refs
+      - provenance_summary
+    owner: Vibench read-only boundary
+    invariant: must not define PHMGA split, metric, ledger, or paper table truth
+  DatasetProtocol:
+    required_fields:
+      - dataset_name
+      - split_strategy
+      - random_seed
+      - selected_channels
+      - window_size
+      - stride
+      - label_policy
+    owner: PHMGA
+    invariant: all downstream execution must consume this protocol rather than ad hoc data access
+  RunConfig:
+    required_fields:
+      - graph_path
+      - output_dir
+      - max_iterations
+      - min_depth
+      - max_depth
+      - llm.provider
+      - llm.model
+      - artifact_policy
+    owner: PHMGA
+    invariant: output_dir must be run-specific and relative to artifact root
+  OperatorRegistry:
+    required_fields:
+      - op_uid
+      - operator_category
+      - rank_class
+      - legal_paths
+      - shape_rule
+      - backend_availability
+    owner: PHMGA
+    invariant: planner output must be normalized through this registry before execution
+  ClaimPolicy:
+    required_fields:
+      - forbid_pending_rows_as_positive_evidence
+      - require_artifact_contract_for_tables
+      - require_selected_backend_for_stage_c_d
+    owner: paper evidence gate
+    invariant: reject or pending rows can be documented only as limitations or negative evidence
+  BaselineSpec:
+    required_rows:
+      - baseline_id: deterministic_feature_lr
+        artifact_suffix: _deterministic_feature_lr
+        purpose: no-LLM sanity baseline for deterministic feature plan plus logistic regression
+      - baseline_id: llm_planned_ml
+        artifact_suffix: run_preset_suffix
+        purpose: primary PHMGA ML path comparison row
+      - baseline_id: reject_evidence_max_iter
+        artifact_suffix: _reject_evidence_or_qualityfix
+        purpose: negative evidence for max-iteration non-finish rows
+    shared_metrics:
+      - accuracy
+      - macro_f1
+      - artifact_contract_pass
+      - feature_separability_decision
+      - workflow_exit
+    invariant: baseline and LLM rows must share dataset, split strategy, window policy, and metric parser before comparison
+  MetricSchema:
+    required_splits:
+      - train
+      - val
+      - test
+    required_metrics_per_split:
+      - accuracy
+      - macro_f1
+    optional_metadata:
+      - dataset_name
+      - graph_path
+      - split_seed
+      - repeat_id
+    parser_acceptance:
+      - all required splits exist
+      - all required metrics are finite numbers
+      - repeat aggregation reports mean, std, and n when repeats exist
+      - missing keys, nonnumeric values, NaN, or Inf force row rejection
+    invariant: metrics.json is metric truth; final_report.md cannot invent or override metric values
+
+state_machine:
+  initial: preflight_pending
+  terminal:
+    - artifact_bundle_exported
+    - reject_evidence_exported
+  transitions:
+    - from: preflight_pending
+      to: planning
+      condition: data and provider preflight pass
+    - from: preflight_pending
+      to: reject_evidence_exported
+      condition: preflight fails
+    - from: planning
+      to: validating_dag
+      condition: step_plan parsed and normalized
+    - from: validating_dag
+      to: executing_path
+      condition: dag schema, shape, and legal path checks pass
+    - from: validating_dag
+      to: planning
+      condition: dag validation fails and max_iterations not reached
+    - from: executing_path
+      to: reflecting
+      condition: artifact contract and quality evidence collected
+    - from: reflecting
+      to: artifact_bundle_exported
+      condition: reflection decision is finish and artifact contract passes
+    - from: reflecting
+      to: planning
+      condition: reflection decision is need_patch or need_replan and max_iterations not reached
+    - from: reflecting
+      to: reject_evidence_exported
+      condition: max_iterations reached before finish
+
+required_artifacts:
+  successful_or_reject_bundle:
+    - validated_dag.json
+    - compiled_dag_manifest.json
+    - feature_pipeline.json
+    - feature_list.json
+    - feature_separability_summary.json
+    - artifact_index.json
+    - metrics.json
+    - predictions.json
+    - importance.json
+    - final_report.md
+  traces:
+    - planner_normalization_trace.json
+    - workflow_state.json
+    - dag_quality_summary.json
+
+quality_gates:
+  artifact_contract:
+    pass_condition: required artifacts exist and parse
+    failure_policy: reject row; do not enter paper table
+  feature_separability:
+    pass_condition: non-empty non-constant features and stable top-k separation evidence
+    failure_policy: reject or replan depending on reflection decision
+  reflection:
+    pass_condition: finish decision without unresolved hard failure
+    failure_policy: patch, replan, or max-iteration reject bundle
+  paper_claim:
+    pass_condition: selected backend locked and Stage C/D rows pass with artifacts
+    failure_policy: document limitation only
+  baseline_comparison:
+    pass_condition: required baseline rows share dataset, split, window, and parser policy
+    failure_policy: block backend selection and document comparison gap
+  metric_parser:
+    pass_condition: metrics.json contains finite train/val/test accuracy and macro_f1 values
+    failure_policy: reject row and record missing or invalid keys in result_md
+
+evidence_mapping:
+  final_report_sections:
+    required_categories:
+      - supported
+      - unsupported
+      - unclear
+      - limitation
+    invariant: every report conclusion must map to artifact_index, metrics, workflow_state, or result_source ledger evidence
+  ledger_row:
+    required_refs:
+      - experiment_id
+      - artifact_dir
+      - result_md
+      - artifact_contract_pass
+      - feature_separability_pass
+      - keep
+    invariant: table eligibility is determined by ledger row and artifact gates, not by narrative report text
+
+failure_modes:
+  - id: provider_rate_limit_or_schema_error
+    required_response: record trace and use declared deterministic fallback only when available
+  - id: zero_feature_matrix
+    required_response: stop training path and export reject evidence
+  - id: weak_macro_f1_or_proxy_quality
+    required_response: patch or replan until max_iterations, then export reject evidence
+  - id: artifact_contract_missing
+    required_response: mark row reject and block paper table use
+  - id: metric_parser_missing_required_key
+    required_response: mark row reject and list missing key in result_md
+  - id: baseline_split_mismatch
+    required_response: block backend selection and rerun comparable baseline if needed
+  - id: metadata_h5_alignment_gap
+    required_response: block formal downstream execution until PHMGA/Vibench adapter preflight passes
+
+author_exit:
+  required_artifacts_exist: true
+  key_research_judgment_answered_or_gap_reported: true
+  citation_status_checked_when_external_sources_are_used: true
+
+review_status:
+  external_review_required: true
+  current_status: ai_and_human_review_passed
+  external_review_verdict: pass
+  human_review_verdict: pass
+  node_close_eligible: true
+  remaining_scope_blockers:
+    - selected_global_best_backend_not_locked
+    - rm101_stage_b_rows_not_selection_eligible
+    - phmga_vibench_adapter_alignment_preflight_pending
+    - stage_c_d_formal_rows_not_passed

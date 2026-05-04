@@ -1,11 +1,37 @@
 lifecycle:
-  stage: seed
-progress_pct: 0
+  stage: done
+progress_pct: 100
 review_gate:
-  ai_review_count: 0
-  human_review_count: 0
-  all_comments_responded: false
-can_enter_fix: false
-heartbeat_at: 2026-04-10
-last_actor: system
-author_agent_id: <pending-author-agent>
+  ai_review_count: 1
+  human_review_count: 1
+  all_comments_responded: true
+  external_ai_review_required: true
+  external_ai_review_complete: true
+  external_ai_review_verdict: pass
+  external_ai_review_score: 85
+  external_ai_review_hard_fail: false
+  external_ai_reviewer_id: external-reviewer-subagent-p1-02-001
+  human_gate_required: true
+  human_gate_state: pass
+  human_gate_passed: true
+  human_reviewer_id: p1-02-human-reviewer
+can_enter_fix: true
+heartbeat_at: 2026-05-04
+last_actor: codex
+author_agent_id: codex-local
+local_outputs:
+  manuscript: docs/manuscript.md
+  interface_contract: artifacts/interface_contract.yaml
+blocking_reasons: []
+downstream_open_risks:
+  - selected_global_best_backend is not locked; Stage C/D positive claims remain blocked.
+  - RM101 Stage B rows remain reject-evidence bundles, not selection-eligible positive evidence.
+  - PHMGA/Vibench adapter sample-level metadata-H5 alignment preflight remains pending.
+  - Downstream Stage C main-result rows and Stage D ablation rows have not passed.
+last_review_validation:
+  reviewer_agent_id: external-reviewer-subagent-p1-02-001
+  human_reviewer_id: p1-02-human-reviewer
+  overall_verdict: pass
+  overall_score: 85
+  hard_fail: false
+  terminal_excerpt: P1_02 external AI review and user-authorized Claude Code teammate human-review lane both passed; downstream submission-ready gates remain outside node scope.
