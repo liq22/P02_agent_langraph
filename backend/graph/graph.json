@@ -30,11 +30,11 @@
     },
     "research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用": {
       "path": "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用",
-      "status": "active"
+      "status": "done"
     },
     "research::P1_实验设计与仓库蓝图::P1_02_伪代码": {
       "path": "research/P1_实验设计与仓库蓝图/P1_02_伪代码",
-      "status": "seed"
+      "status": "done"
     },
     "research::P1_实验设计与仓库蓝图::P1_03_仓库蓝图": {
       "path": "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图",

@@ -83,6 +83,13 @@ skills:
     requires_execution_contract: false
     can_cross_nodes: false
     default_visibility: operator_only
+  - name: claude_code_teammate_review
+    role: helper
+    scope: node
+    requires_selected_node: true
+    requires_execution_contract: false
+    can_cross_nodes: false
+    default_visibility: operator_only
   - name: response_worker
     role: worker
     scope: node
