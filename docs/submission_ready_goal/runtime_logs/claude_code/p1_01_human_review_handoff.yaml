@@ -1,0 +1,100 @@
+handoff_version: claude_code_handoff_v2
+task_id: p1_01_human_review_2026_05_04
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P1_01 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P1_01 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+  node_path: research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用
+scope:
+  inspected_files:
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/README.md
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/status.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/docs/manuscript.md
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/prompts/review_rubric.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/prompts/acceptance_checklist.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/data_lineage.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/submodule_ref.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/vibench_data_factory_binding.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/data_reading_boundary.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/phmga_data_protocol_handoff.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/result_source_map.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/claim_evidence_registry.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/failure_register.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/negative_result_note.md
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/keep_discard_ledger.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/review/AI_001.md
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/review/verdict.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/review/external_review_handoff.md
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/review/human_reviewer_prompt.md
+  changed_files:
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_01_human_review_handoff.yaml
+  allowed_files:
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_01_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p1_01_human_review_handoff.yaml
+    exit_code: 0
+  - command: python tools/submission_ready_goal/validate_p1_01_node_package.py --repo-root . --require-review --json
+    exit_code: 0
+findings:
+  supported:
+    - claim: Data/source boundary is clear and inspectable across three tiers (Vibench read, PHMGA implementation, paper repo)
+      evidence: artifacts/data_reading_boundary.yaml, artifacts/vibench_data_factory_binding.yaml, artifacts/phmga_data_protocol_handoff.yaml
+    - claim: Vibench-PHMGA separation prevents duplicate truth sources
+      evidence: artifacts/data_reading_boundary.yaml hard_fail_if section, artifacts/vibench_data_factory_binding.yaml not_formal_truth list
+    - claim: Stage B results honestly represented including RM101 reject evidence
+      evidence: artifacts/result_source_map.yaml current_known_blocker, artifacts/failure_register.yaml F-P02-RESULT-001 and F-P02-RESULT-002 open
+    - claim: No positive result claims are overstated
+      evidence: docs/manuscript.md section 6 prohibitions, artifacts/claim_evidence_registry.yaml C-P02-RESULT-001 as limitation
+    - claim: Independent AI review is credible and responsive to rubric
+      evidence: review/AI_001.md score 88, review/verdict.yaml pass with independence_confirmed true
+  gaps:
+    - gap: Acceptance checklist statuses still show pending despite artifacts existing
+      severity: non_blocking
+      file: prompts/acceptance_checklist.yaml
+    - gap: H5 redistribution status unresolved
+      severity: non_blocking
+      file: artifacts/data_lineage.yaml redistribution_allowed field
+  risks:
+    - risk: Full sample-level metadata-H5 alignment not yet verified by PHMGA adapter
+      mitigation: preflight_required flag in artifacts/phmga_data_protocol_handoff.yaml
+    - risk: selected_global_best_backend remains pending due to RM101 reject evidence
+      mitigation: documented in failure register and negative result note
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 88
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - selected_global_best_backend remains pending
+    - RM101 Stage B reject evidence unresolved
+    - Stage C main-result rows not passed
+    - Stage D ablation rows not passed
+    - PHMGA adapter preflight incomplete
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+  node_package_validator: tools/submission_ready_goal/validate_p1_01_node_package.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: Codex to verify handoff, update status.yaml human_review_count, and process node toward fix/close
+  blockers: []
