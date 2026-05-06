@@ -1,0 +1,166 @@
+version: p2_02_05_claim_evidence_registry_v1
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_05_实验与讨论
+purpose: Bind experiments/discussion claims to result, limitation, table, and protocol evidence without upgrading formal-result claims.
+claims:
+  - claim_id: C_EXP_LIMITED_SYNTHETIC_SIGNAL
+    claim_type: result
+    claim_text: The P1_04/P1_05 offline synthetic Ottawa check shows a bounded supervisor_proving sanity-check signal over simple_fullchain.
+    support_status: weak
+    manuscript_location: docs/manuscript.md#limited-syntheticoffline-sanity-check
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_02_05_CLAIM_MAP
+        evidence_type: table
+        source_ref: artifacts/claim_map.yaml
+        role: local result-to-claim mapping and allowed wording boundary
+      - evidence_id: P1_05_RESULT_REGISTRY
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml
+        role: baseline and controlled synthetic/offline result records and metric deltas
+      - evidence_id: P1_04_RESULTS_TSV
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+        role: source ledger for baseline and controlled-attempt metric values
+      - evidence_id: P1_08_CLAIM_MAP
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/claim_map.yaml
+        role: downstream claim wording, support-status bridge, and forbidden upgrade list
+      - evidence_id: P1_04_RESOLVED_SPLITS
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving/resolved_splits.json
+        role: train/validation/test synthetic sample IDs and two-sample test split boundary
+      - evidence_id: P1_04_DATASET_MANIFEST
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving/resolved_dataset_manifest.json
+        role: synthetic catalog, sample metadata, source mode, and split-before-windowing boundary
+      - evidence_id: P2_02_05_DISCUSSION_EVIDENCE_MATURITY_CONTRACT
+        evidence_type: table
+        source_ref: artifacts/discussion_evidence_maturity_contract.yaml
+        role: explicit primary/secondary outcome hierarchy and synthetic split downgrade rule
+    boundary_label: preliminary_synthetic_offline_only
+    cannot_support_claims:
+      - formal performance improvement
+      - real-data generalization
+      - selected backend success
+      - RM101 resolution
+      - Stage C passed
+      - Stage D passed
+      - submission readiness
+
+  - claim_id: C_EXP_FORMAL_GATE_BLOCKED
+    claim_type: limitation
+    claim_text: Formal PHMGA/Vibench result rows remain blocked until provider, adapter, artifact, backend, Stage C, Stage D, repeat, ledger, and table mapping gates pass.
+    support_status: supported
+    manuscript_location: docs/manuscript.md#formal-eligibility-gate-and-blocked-rows
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P2_02_05_CLAIM_MAP
+        evidence_type: table
+        source_ref: artifacts/claim_map.yaml
+        role: local formal-gate blocked claim and forbidden wording
+      - evidence_id: P1_07_PROTOCOL_MAP
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+        role: formal evidence eligibility gate and provider/model policy
+      - evidence_id: P1_08_TABLE_PLAN
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+        role: formal eligibility gate table columns and stop conditions
+      - evidence_id: P1_06_SUBMODULE_REF
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+        role: PHMGA branch, commit, pull result, dirty-state, and pointer-update boundary
+      - evidence_id: P2_02_05_DISCUSSION_EVIDENCE_MATURITY_CONTRACT
+        evidence_type: table
+        source_ref: artifacts/discussion_evidence_maturity_contract.yaml
+        role: formal-gate blocked secondary outcome and claim-upgrade conditions
+    boundary_label: formal_gate_blocked
+    cannot_support_claims:
+      - selected backend is locked
+      - RM101 is resolved
+      - Stage C passed
+      - Stage D passed
+      - formal result row accepted
+
+  - claim_id: C_EXP_NEGATIVE_UNCLEAR_RETENTION
+    claim_type: limitation
+    claim_text: Unsupported, unclear, rejected, and blocked rows remain first-class evidence and stay in the denominator.
+    support_status: supported
+    manuscript_location: docs/manuscript.md#negative-unsupported-and-unclear-evidence
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P2_02_05_CLAIM_MAP
+        evidence_type: table
+        source_ref: artifacts/claim_map.yaml
+        role: local negative and unclear evidence mapping
+      - evidence_id: P1_05_HYPOTHESIS_STATUS
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+        role: supported_limited, unsupported, and unclear hypothesis states
+      - evidence_id: P1_08_FAILURE_REGISTER
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/failure_register.yaml
+        role: real-data, RM101, variance, and formal-gate limitations retained as accepted limitations
+      - evidence_id: P2_02_05_DISCUSSION_EVIDENCE_MATURITY_CONTRACT
+        evidence_type: table
+        source_ref: artifacts/discussion_evidence_maturity_contract.yaml
+        role: denominator-retention rule for unsupported, unclear, rejected, and blocked rows
+    boundary_label: limitation_and_reject_evidence_retained
+    cannot_support_claims:
+      - negative rows omitted
+      - unclear evidence rewritten as supported
+      - single-run synthetic result proves stable improvement
+
+  - claim_id: C_EXP_DISCUSSION_INTERPRETATION_LIMITS
+    claim_type: limitation
+    claim_text: The discussion separates the narrow finding, plausible interpretation, and evidence needed before claim upgrade.
+    support_status: supported
+    manuscript_location: docs/manuscript.md#discussion
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P2_02_05_CLAIM_MAP
+        evidence_type: table
+        source_ref: artifacts/claim_map.yaml
+        role: local interpretation and limitation boundary
+      - evidence_id: P2_02_OUTLINE_MAP
+        evidence_type: table
+        source_ref: ../artifacts/outline_map.yaml
+        role: experiments_and_discussion section duties and forbidden global wording
+      - evidence_id: COMPLETION_AUDIT_CURRENT
+        evidence_type: table
+        source_ref: docs/submission_ready_goal/completion_audit_current.md
+        role: current global blockers not solved by this node
+      - evidence_id: P2_02_05_DISCUSSION_EVIDENCE_MATURITY_CONTRACT
+        evidence_type: table
+        source_ref: artifacts/discussion_evidence_maturity_contract.yaml
+        role: manuscript outcome hierarchy and claim-upgrade stop rules
+    boundary_label: interpretation_not_formal_result
+    cannot_support_claims:
+      - proven mechanism
+      - stable improvement
+      - final paper result
+      - submission readiness
+
+negative_or_failed_result_handling:
+  result_rows_introduced_by_node: false
+  negative_evidence_deleted_or_hidden: false
+  unsupported_results_retained:
+    - real_data_generalization
+    - rm101_resolution
+  unclear_results_retained:
+    - variance_stability
+    - perfect_synthetic_accuracy_interpretation
+  blocked_results_retained:
+    - selected_backend_not_locked
+    - metadata_h5_alignment_pending
+    - stage_c_rows_incomplete
+    - stage_d_rows_incomplete
+    - phmga_dirty_worktree
+  boundary: This node reports one weak synthetic/offline sanity-check signal and keeps all formal, unsupported, unclear, rejected, and blocked rows visible.
+checks:
+  claim_evidence_ids_are_explicit_or_gap_is_reported: true
+  synthetic_test_split_size_explicit: true
+  negative_or_failed_results_recorded: true
+  protected_paths_respected: true
+  registry_schema_uses_allowed_enums: true
+  provider_secret_values_excluded: true

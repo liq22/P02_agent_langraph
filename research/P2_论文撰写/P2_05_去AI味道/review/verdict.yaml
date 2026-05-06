@@ -1,21 +1,91 @@
-review_id: EXTERNAL-AI-001
-review_complete: false
-reviewer_agent_id: <pending-distinct-agent>
+review_id: EXTERNAL-AI-003
+review_complete: true
+reviewer_agent_id: external_node_reviewer_codex_p2_05_ai_003_2026-05-05
 reviewer_skill: external_node_reviewer
 reviewed_node_path: research/P2_论文撰写/P2_05_去AI味道
 rubric_path: prompts/review_rubric.yaml
 rubric_version: nature_node_review_v1
-overall_score: null
-overall_verdict: revise
+author_agent_id_observed:
+  status_yaml_at_review_time: codex-local
+  claim_evidence_registry: codex-local
+independence_confirmed: true
+independence_basis: This reviewer thread is distinct from the authoring agent and from prior external reviews; independence is supported by a fresh read of the required node inputs and targeted upstream evidence.
+score_scale:
+  dimension_min: 0
+  dimension_max: 5
+  overall_min: 0
+  overall_max: 100
+overall_score: 92.9
+overall_verdict: pass
 hard_fail: false
+local_final_threshold:
+  threshold: 90
+  met: true
+  scope: local P2_05 academic-expression and claim-calibration threshold only
+  reason: The prior evidence-count drift and broad method-opening wording have been corrected in the checked upstream evidence while the package preserves no-upgrade boundaries and global blockers.
+global_submission_ready_claimed: false
 dimension_scores:
-  originality_novelty: null
-  scientific_importance: null
-  evidence_technical_soundness: null
-  reproducibility_transparency: null
-  broad_interest_story_clarity: null
-  review_robustness: null
+  originality_novelty: 4.5
+  scientific_importance: 4.6
+  evidence_technical_soundness: 4.7
+  reproducibility_transparency: 4.8
+  broad_interest_story_clarity: 4.7
+  review_robustness: 4.6
+dimension_score_details:
+  originality_novelty:
+    weighted_points: 90.0
+    rationale: The package turns expression review into a concrete claim-boundary mechanism with patch IDs, active TeX targets, no-upgrade constraints, and a local claim registry; it remains bounded process work rather than new empirical science.
+  scientific_importance:
+    weighted_points: 92.0
+    rationale: The node addresses the manuscript risk that fluent agent-assisted prose can hide disconnected claims, evidence, review gates, response coverage, and limitations.
+  evidence_technical_soundness:
+    weighted_points: 117.5
+    rationale: The claim registry, calibration packet, target map, current final-gate trace, and active TeX checks support the node's claims; the corrected below-threshold count is 26 and the broad method-opening phrase is removed from active checked TeX prose.
+  reproducibility_transparency:
+    weighted_points: 72.0
+    rationale: The rewrite packet and TeX target map record patch IDs, target files, anchors, application status, no-upgrade constraints, and final-gate blocker boundaries.
+  broad_interest_story_clarity:
+    weighted_points: 47.0
+    rationale: The revised wording replaces broad operating-system language with inspectable workflow mechanics that a non-specialist reader can follow.
+  review_robustness:
+    weighted_points: 46.0
+    rationale: Negative, uncertain, rejected, blocked, and unsupported evidence remain visible, and the node explicitly avoids claiming global submission readiness.
+weighted_score_formula: sum(dimension_score * dimension_weight) / 5
+reviewed_required_inputs:
+  - research/P2_论文撰写/P2_05_去AI味道/README.md
+  - research/P2_论文撰写/P2_05_去AI味道/status.yaml
+  - research/P2_论文撰写/P2_05_去AI味道/prompts/research_prompt.md
+  - research/P2_论文撰写/P2_05_去AI味道/prompts/acceptance_checklist.yaml
+  - research/P2_论文撰写/P2_05_去AI味道/prompts/review_rubric.yaml
+  - research/P2_论文撰写/P2_05_去AI味道/docs/manuscript.md
+  - research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+  - research/P2_论文撰写/P2_05_去AI味道/artifacts/claim_evidence_registry.yaml
+  - research/P2_论文撰写/P2_05_去AI味道/artifacts/tex_rewrite_target_map.yaml
+reviewed_upstream_evidence:
+  - research/P2_论文撰写/P2_04_形式检查/artifacts/current_final_gate_trace.yaml
+  - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+  - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+  - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+  - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
 blocking_issues: []
+non_blocking_weaknesses:
+  - id: AI-003-W01
+    issue: P2_05_R001 is traceable through both the abstract-level replacement and the method-opening narrowing; a later cleanup could make that dual placement more explicit in the packet text.
+    severity: minor
+    blocking: false
+    author_response_expectation: Optional cleanup only; active checked TeX prose no longer contains the broad operating-system wording and the no-upgrade constraint is preserved.
 required_actions: []
-downstream_ready: false
-independence_confirmed: false
+author_response_expectations:
+  - Preserve the no-upgrade ledger when applying any further wording changes.
+  - Keep negative, blocked, rejected, unsupported, and uncertain evidence visible in any downstream prose synchronization.
+downstream_ready: true
+review_outputs:
+  narrative: review/AI_003.md
+  structured_verdict: review/verdict.yaml
+review_summary: >
+  P2_05 passes the node rubric and now meets the local 90-point final-threshold
+  standard for this academic-expression and claim-calibration node. The updated
+  package maps rewrite entries to TeX targets, preserves the no-upgrade boundary,
+  retains negative and uncertain evidence, records the current 26 below-threshold
+  review-score blockers, narrows the active method opening to a documented
+  human-agent research workflow, and does not claim global submission readiness.

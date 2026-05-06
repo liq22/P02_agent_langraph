@@ -1,21 +1,111 @@
-review_id: EXTERNAL-AI-001
-review_complete: false
-reviewer_agent_id: <pending-distinct-agent>
-reviewer_skill: external_node_reviewer
-reviewed_node_path: research/P2_论文撰写/P2_04_形式检查
-rubric_path: prompts/review_rubric.yaml
-rubric_version: nature_node_review_v1
-overall_score: null
-overall_verdict: revise
+review_complete: true
+overall_verdict: pass
+overall_score: 90.9
 hard_fail: false
+downstream_ready: true
+final_submission_ready_claimed: false
+independence_confirmed: true
+reviewer_agent_id: codex_external_ai_002
+reviewer_role: external_node_reviewer
+reviewed_at: 2026-05-05T00:00:00+08:00
+
+review_scope:
+  node_path: research/P2_论文撰写/P2_04_形式检查
+  scope_statement: Reviewed only P2_04 required review inputs plus explicitly referenced upstream venue, citation, figure, and TeX evidence needed to verify the updated formal-check claims.
+  excluded_paths_confirmed:
+    - .env*
+    - docs/HUMAN_ONLY.md
+    - _reference/**
+    - credentials
+    - private_keys
+    - generated_canvas_files
+    - unrelated_reports
+    - vendor_assets
+    - PHMGA_source_files
+    - graph_projections_as_evidence
+    - Canvas_dashboard_files
+    - unrelated_node_files
+
+scoring_scale:
+  dimension_scores: 0_to_5
+  overall_score_formula: sum((dimension_score / 5) * dimension_weight)
+  threshold_for_local_final_submission_standard: 90
+
 dimension_scores:
-  originality_novelty: null
-  scientific_importance: null
-  evidence_technical_soundness: null
-  reproducibility_transparency: null
-  broad_interest_story_clarity: null
-  review_robustness: null
+  originality_novelty: 4.3
+  scientific_importance: 4.5
+  evidence_technical_soundness: 4.6
+  reproducibility_transparency: 4.7
+  broad_interest_story_clarity: 4.5
+  review_robustness: 4.8
+
+dimension_score_details:
+  originality_novelty:
+    weight: 20
+    weighted_contribution: 17.2
+    rationale: The package makes a bounded node-level contribution by turning final-gate state, venue constraints, citation criticality, and figure provenance into an inspectable formal-check artifact without inventing new science claims.
+  scientific_importance:
+    weight: 20
+    weighted_contribution: 18.0
+    rationale: The review target addresses a real submission-risk bottleneck by preventing unsupported manuscript upgrades and retaining formal blockers as blockers.
+  evidence_technical_soundness:
+    weight: 25
+    weighted_contribution: 23.0
+    rationale: The updated final validator fail classes, figure provenance, citation limits, venue constraints, and TeX skeleton claims are traceable to reviewed artifacts; the package does not claim global validator success.
+  reproducibility_transparency:
+    weight: 15
+    weighted_contribution: 14.1
+    rationale: Gate inputs, availability sections, figure source paths, claim/evidence references, current blocker classes, and non-upgrade boundaries are inspectable within the allowed review scope.
+  broad_interest_story_clarity:
+    weight: 10
+    weighted_contribution: 9.0
+    rationale: The package clearly separates pass-for-node-progression from blocked-for-final-submission and keeps the contribution understandable as evidence-governed formal checking.
+  review_robustness:
+    weight: 10
+    weighted_contribution: 9.6
+    rationale: The package anticipates overclaiming risks, stale blocker classes, advisory-to-hard escalation errors, and global submission-readiness confusion.
+
 blocking_issues: []
+
+non_blocking_issues:
+  - issue_id: AI002_NB001_GLOBAL_AUDIT_NOT_REVIEWED_UNDER_SCOPE
+    severity: minor
+    location: research/P2_论文撰写/P2_04_形式检查/artifacts/gate_report.md
+    description: The gate report names docs/submission_ready_goal/completion_audit_current.md as a gate input, but this external review did not open that unrelated global report under the requested read boundary.
+    actionable_fix: Future reviewers should treat artifacts/current_final_gate_trace.yaml, not this unreviewed global audit path, as the reviewed evidence for the updated validator fail-class accounting unless the audit report is explicitly authorized for that review.
+
 required_actions: []
-downstream_ready: false
-independence_confirmed: false
+
+evidence_checked:
+  node_local_required_inputs:
+    - research/P2_论文撰写/P2_04_形式检查/README.md
+    - research/P2_论文撰写/P2_04_形式检查/status.yaml
+    - research/P2_论文撰写/P2_04_形式检查/prompts/research_prompt.md
+    - research/P2_论文撰写/P2_04_形式检查/prompts/acceptance_checklist.yaml
+    - research/P2_论文撰写/P2_04_形式检查/prompts/review_rubric.yaml
+    - research/P2_论文撰写/P2_04_形式检查/docs/manuscript.md
+    - research/P2_论文撰写/P2_04_形式检查/artifacts/formal_check_report.md
+    - research/P2_论文撰写/P2_04_形式检查/artifacts/gate_report.md
+    - research/P2_论文撰写/P2_04_形式检查/artifacts/current_final_gate_trace.yaml
+    - research/P2_论文撰写/P2_04_形式检查/artifacts/citation_registry.yaml
+    - research/P2_论文撰写/P2_04_形式检查/artifacts/figure_manifest.yaml
+    - research/P2_论文撰写/P2_04_形式检查/artifacts/venue_requirements.yaml
+    - research/P2_论文撰写/P2_04_形式检查/review/response.yaml
+  explicitly_referenced_upstream_inputs:
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+    - research/P2_论文撰写/P2_03_定稿_tex/artifacts/citation_registry.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_manifest.yaml
+    - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+
+review_basis:
+  node_progression_decision_supported: true
+  final_submission_decision_supported: blocked
+  current_validator_fail_classes_confirmed_from_node_trace:
+    P1_checklist_pending: 109
+    review_scores_below_90: 27
+    P3_04_blocked_or_planned_actions: 6
+  stale_schema_or_failure_truth_blockers_not_in_current_trace: true
+  formal_evidence_goal_blockers_retained_without_upgrade: true
+  citation_hard_fail: false
+  figure_provenance_hard_fail: false
+  graph_canvas_dashboard_used_as_truth: false

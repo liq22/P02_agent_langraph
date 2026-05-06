@@ -1,0 +1,120 @@
+version: p2_02_02_positioning_matrix_v1
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_02_preliminary
+purpose: Define preliminary terminology and decide which background belongs in preliminary, related-work positioning, methods, or results.
+source_boundary:
+  primary_input: research/P2_论文撰写/P2_02_初稿_md/artifacts/outline_map.yaml
+  upstream_inputs_referenced_by_outline:
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+    - research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/contribution_claims.yaml
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+  creates_new_research_truth: false
+  external_citations_introduced: false
+  final_result_claims_introduced: false
+
+one_sentence_contribution_alignment:
+  upstream_claim_id: C_MAIN_BOUNDED_WORKFLOW_GOVERNANCE
+  preliminary_claim_id: C_TERMINOLOGY_AND_EVIDENCE_STATES
+  support_status: protocol_and_proposal_supported
+  boundary_label: terminology_only_not_final_empirical_result
+
+must_define_terms:
+  - term: evidence-governed human-agent research workflow
+    definition: Bounded node-local authoring, checking, review, response, and downgrade process that keeps claims inspectable before upgrade.
+    use_in_manuscript: umbrella term for the proposed workflow
+    not_to_be_used_as: autonomous scientific-discovery success claim
+  - term: node
+    definition: Smallest schedulable research unit with local manuscript text, prompts, review, status, and artifacts.
+    use_in_manuscript: lifecycle and governance unit
+    not_to_be_used_as: evidence that a scientific result is true
+  - term: author exit
+    definition: Local authoring pass has produced required artifacts and answered or reported the key node judgment.
+    use_in_manuscript: author-side readiness marker
+    not_to_be_used_as: node close or submission readiness
+  - term: node close
+    definition: Review verdict is complete and passing, hard failures are absent, independence is confirmed, and comments are responded.
+    use_in_manuscript: reviewed closure gate
+    not_to_be_used_as: final acceptance or final empirical success
+  - term: claim_id
+    definition: Stable identifier for a manuscript assertion or planned assertion.
+    use_in_manuscript: cross-phase claim identity
+    not_to_be_used_as: proof without evidence_id and protocol_id
+  - term: evidence_id
+    definition: Stable identifier for the artifact, ledger row, figure source, or verified citation record supporting or bounding a claim.
+    use_in_manuscript: evidence traceability
+    not_to_be_used_as: support-status upgrade without protocol gate
+  - term: protocol_id
+    definition: Stable identifier for the gate or rule that decides whether evidence is eligible for a claim strength.
+    use_in_manuscript: eligibility and downgrade logic
+    not_to_be_used_as: observed result
+  - term: support_status
+    definition: Current strength label for evidence supporting, limiting, rejecting, or blocking a claim.
+    use_in_manuscript: claim-evidence status vocabulary
+    not_to_be_used_as: decorative metadata
+  - term: boundary_label
+    definition: Explicit statement of what an evidence item must not be used to claim.
+    use_in_manuscript: overclaim prevention
+    not_to_be_used_as: optional prose caveat
+
+evidence_strength_labels:
+  - label: verified_citation_context
+    allowed_claim_use: prior-work positioning, reporting-policy context, or terminology support
+    forbidden_claim_use: final AutoResearch or PHMGA empirical performance
+  - label: protocol_supported
+    allowed_claim_use: planned method, gate, or table structure
+    forbidden_claim_use: completed result row
+  - label: supported_limited_proxy
+    allowed_claim_use: bounded synthetic/offline sanity-check illustration under explicit boundary
+    forbidden_claim_use: real-data generalization or selected backend success
+  - label: blocked_pending_gate
+    allowed_claim_use: visible pending condition in eligibility or blocker table
+    forbidden_claim_use: positive result
+  - label: rejected_evidence
+    allowed_claim_use: negative/reject row retained in evidence ledger
+    forbidden_claim_use: hidden denominator or success-only table
+  - label: unsupported
+    allowed_claim_use: explicit downgrade or gap report
+    forbidden_claim_use: manuscript claim stronger than evidence
+  - label: unclear
+    allowed_claim_use: uncertainty or reviewer-risk disclosure
+    forbidden_claim_use: decisive interpretation
+
+section_boundary_matrix:
+  - topic: prior agent systems and policy context
+    preliminary_role: name only when needed to motivate terminology
+    related_work_or_introduction_role: position representative systems and policy motivation with verified citations
+    methods_role: not the main location
+    results_role: not applicable
+  - topic: node lifecycle
+    preliminary_role: define author exit and node close
+    related_work_or_introduction_role: motivate why lifecycle matters
+    methods_role: operationalize gates and required files
+    results_role: report closure or blocker status only when row-level evidence exists
+  - topic: claim evidence protocol identifiers
+    preliminary_role: define claim_id, evidence_id, protocol_id, support_status, and boundary_label
+    related_work_or_introduction_role: preview why identifiers matter
+    methods_role: specify registry contract and validation process
+    results_role: use identifiers in tables and figure callouts
+  - topic: evidence strength and downgrade vocabulary
+    preliminary_role: define allowed and forbidden claim use
+    related_work_or_introduction_role: avoid unsupported novelty or final-result framing
+    methods_role: describe downgrade decision rules
+    results_role: separate supported, blocked, rejected, unsupported, and unclear rows
+  - topic: PHMGA/Vibench formal eligibility
+    preliminary_role: define as a gate concept only
+    related_work_or_introduction_role: mention as downstream evidence boundary
+    methods_role: specify dataset alignment, backend eligibility, artifact contract, repeat policy, and ablation requirements
+    results_role: report formal rows only after every gate passes
+
+reviewer_risk_reduction:
+  what: Reviewer can separate terminology, method, result, negative evidence, and final submission claims.
+  why: Ambiguous support labels are a common path to overclaiming in agent-assisted research artifacts.
+  so_what: Later sections must downgrade or block any claim that lacks claim_id, evidence_id, protocol_id, boundary_label, and review/response coverage.
+
+checks:
+  answers_required_definition_question: true
+  answers_preliminary_vs_related_work_vs_methods_question: true
+  no_new_contribution_claims: true
+  no_experiment_results_reported: true
+  no_venue_selection_argument: true
+  no_graph_canvas_dashboard_as_truth: true

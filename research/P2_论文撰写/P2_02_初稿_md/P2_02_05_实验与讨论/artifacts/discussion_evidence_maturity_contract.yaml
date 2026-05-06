@@ -1,0 +1,62 @@
+version: p2_02_05_discussion_evidence_maturity_contract_v1
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_05_实验与讨论
+generated_at: 2026-05-05
+purpose: Make the experiments/discussion outcome hierarchy, synthetic split boundary, and reviewer-facing downgrade rules explicit.
+reviewer_issues_addressed:
+  - review/AI_001.md:NBI-001
+  - review/人类_001.md:NBI-H001
+  - review/人类_001.md:NBI-H002
+outcome_hierarchy:
+  primary_outcome:
+    claim_id: C_EXP_DISCUSSION_INTERPRETATION_LIMITS
+    statement: The draft-stage result is an evidence-governance finding, not a PHMGA performance claim.
+    manuscript_location: docs/manuscript.md#evidence-maturity-order
+  secondary_supporting_outcomes:
+    - claim_id: C_EXP_LIMITED_SYNTHETIC_SIGNAL
+      role: bounded_positive_signal
+      statement: A two-sample synthetic/offline Ottawa test split shows supervisor_proving above simple_fullchain.
+      allowed_use: mechanism-candidate motivation only
+    - claim_id: C_EXP_FORMAL_GATE_BLOCKED
+      role: formal_result_stop_condition
+      statement: Formal PHMGA/Vibench rows stay blocked until provider, adapter, backend, repeat, Stage C, Stage D, ledger, and table gates pass.
+      allowed_use: limitation and upgrade path
+    - claim_id: C_EXP_NEGATIVE_UNCLEAR_RETENTION
+      role: denominator_integrity
+      statement: Unsupported, unclear, rejected, and blocked rows remain visible as evidence rows.
+      allowed_use: limitation and reviewer-attack response
+synthetic_split_boundary:
+  source_run_artifacts:
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple/resolved_splits.json
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving/resolved_splits.json
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple/resolved_dataset_manifest.json
+  train_sample_count: 4
+  val_sample_count: 2
+  test_sample_count: 2
+  test_sample_ids:
+    - ottawa_synth_007
+    - ottawa_synth_008
+  source_mode: synthetic
+  leakage_boundary: split_before_windowing
+  interpretation_rule: The perfect score is ceiling-sensitive because the test split contains two synthetic sample IDs before windowing.
+claim_upgrade_rules:
+  may_upgrade_after:
+    - accepted real-data formal rows
+    - selected backend decision
+    - repeated-run variance or confidence interval evidence
+    - RM101 accepted artifact-backed row
+    - Stage C main rows
+    - Stage D ablations
+  must_not_claim_now:
+    - formal performance improvement
+    - real-data generalization
+    - selected backend success
+    - RM101 resolution
+    - Stage C passed
+    - Stage D passed
+    - submission readiness
+checks:
+  primary_outcome_explicit: true
+  secondary_supporting_outcomes_explicit: true
+  synthetic_test_split_size_explicit: true
+  negative_unclear_blocked_rows_retained: true
+  no_formal_result_upgrade: true

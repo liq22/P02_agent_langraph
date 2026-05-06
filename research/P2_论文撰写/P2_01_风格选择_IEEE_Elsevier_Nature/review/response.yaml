@@ -1,8 +1,24 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      External AI reviewer passed P2_01 with score 85, hard_fail false, and
+      downstream_ready true. The source-check traceability advisory was
+      addressed by adding artifacts/source_check_ledger.yaml and linking it from
+      artifacts/venue_requirements.yaml. A second local binding artifact,
+      artifacts/venue_evidence_binding.yaml, now maps each downstream section
+      rule to concrete repository evidence and retained blockers. The
+      status/checklist stale-state advisory is outside this local traceability
+      patch and remains governed by the final-gate closure approval path.
+      Downstream drafting must preserve Elsevier primary, IEEE backup, Nature
+      stretch-only, and the contradiction/evidence-gap/forbidden-claim
+      boundaries.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      User-authorized Claude Code teammate delegate passed the P2_01
+      human-review slot with score 85 and a valid v2 handoff. The review
+      confirmed that venue/style rules are bounded drafting constraints, not a
+      second source of research truth. Remaining global blockers are outside
+      P2_01 scope and stay recorded in the goal audit/FSM.

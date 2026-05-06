@@ -1,0 +1,127 @@
+version: p2_02_01_citation_trace_v1
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_01_引言
+purpose: Node-local citation-to-claim trace for the introduction review gate.
+source_of_truth:
+  citation_registry: research/P0_项目申请书/P0_01_研究背景与调研/artifacts/citation_registry.yaml
+  registry_version: p0_01_citation_registry_v1
+review_scope:
+  manuscript: research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/docs/manuscript.md
+  citation_use: Prior-work positioning and reporting-governance context only.
+  not_used_for:
+    - final PHMGA performance
+    - selected backend success
+    - RM101 resolution
+    - Stage C or Stage D completion
+    - submission readiness
+status_summary:
+  all_citation_keys_used_in_intro_listed: true
+  all_entries_inherited_from_verified_registry: true
+  all_bibliographic_records_checked_in_registry: true
+  any_citation_used_as_final_result_evidence: false
+
+citations:
+  - citation_key: react2022
+    registry_claim_id: P0_01_G001_CLAIM_GROUNDED_AGENTIC_RESEARCH_OPERATIONS
+    source_ref: "Yao et al., ReAct: Synergizing Reasoning and Acting in Language Models, arXiv:2210.03629"
+    source_locator: https://arxiv.org/abs/2210.03629
+    support_status: verified
+    support_strength: representative_prior_work
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+    intro_supported_claim: ReAct is used as a representative example of language agents that interleave reasoning and tool/action use.
+    intro_claim_location: paragraph_1_sentence_2
+    claim_boundary: This citation supports prior-work clustering only; it does not support the manuscript's proposed workflow as a validated result.
+  - citation_key: reflexion2023
+    registry_claim_id: P0_01_G001_CLAIM_GROUNDED_AGENTIC_RESEARCH_OPERATIONS
+    source_ref: "Shinn et al., Reflexion: Language Agents with Verbal Reinforcement Learning, arXiv:2303.11366"
+    source_locator: https://arxiv.org/abs/2303.11366
+    support_status: verified
+    support_strength: representative_prior_work
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+    intro_supported_claim: Reflexion is used as a representative example of feedback-driven language-agent self-improvement.
+    intro_claim_location: paragraph_1_sentence_2
+    claim_boundary: This citation supports prior-work clustering only; it does not support the manuscript's proposed workflow as a validated result.
+  - citation_key: autogen2023
+    registry_claim_id: P0_01_G001_CLAIM_GROUNDED_AGENTIC_RESEARCH_OPERATIONS
+    source_ref: "Wu et al., AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation Framework, arXiv:2308.08155"
+    source_locator: https://arxiv.org/abs/2308.08155
+    support_status: verified
+    support_strength: representative_prior_work
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+    intro_supported_claim: AutoGen is used as a representative example of configurable conversational agents that can collaborate.
+    intro_claim_location: paragraph_1_sentence_2
+    claim_boundary: This citation supports prior-work clustering only; it does not support the manuscript's proposed workflow as a validated result.
+  - citation_key: mlagentbench2023
+    registry_claim_id: P0_01_G001_CLAIM_GROUNDED_AGENTIC_RESEARCH_OPERATIONS
+    source_ref: "Huang et al., MLAgentBench: Evaluating Language Agents on Machine Learning Experimentation, arXiv:2310.03302"
+    source_locator: https://arxiv.org/abs/2310.03302
+    support_status: verified
+    support_strength: nearest_prior_work
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+    intro_supported_claim: MLAgentBench is used as a nearest-prior-work example for evaluating language agents on machine-learning experimentation tasks.
+    intro_claim_location: paragraph_1_sentence_2
+    claim_boundary: This citation supports prior-work positioning only; it does not show that this manuscript's governance workflow has passed final PHMGA/Vibench evaluation.
+  - citation_key: aiscientist2024
+    registry_claim_id: P0_01_G001_CLAIM_GROUNDED_AGENTIC_RESEARCH_OPERATIONS
+    source_ref: "Lu et al., The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery, arXiv:2408.06292"
+    source_locator: https://arxiv.org/abs/2408.06292
+    support_status: verified
+    support_strength: nearest_prior_work
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+    intro_supported_claim: The AI Scientist is used as a nearest-prior-work example for automated scientific discovery spanning idea generation, experimentation, writing, and simulated review.
+    intro_claim_location: paragraph_1_sentence_2
+    claim_boundary: This citation supports prior-work positioning only; it does not show that this manuscript's governance workflow has passed final PHMGA/Vibench evaluation.
+  - citation_key: nature_reporting
+    registry_claim_id: P0_01_G001_CLAIM_GROUNDED_AGENTIC_RESEARCH_OPERATIONS
+    source_ref: Nature Portfolio reporting standards and availability policies
+    source_locator: https://www.nature.com/natcomputsci/natcomputsci/editorial-policies/reporting-standards
+    support_status: verified
+    support_strength: reporting_governance_context
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+    intro_supported_claim: Nature Portfolio reporting standards are used as governance context for transparent data, code, material, and protocol availability.
+    intro_claim_location: paragraph_2_sentence_4
+    claim_boundary: This citation supports reporting-governance motivation only; it is not used as evidence that this workflow satisfies a target venue's final submission requirements.
+  - citation_key: ieee_peer_review_policy
+    registry_claim_id: P0_01_G001_CLAIM_GROUNDED_AGENTIC_RESEARCH_OPERATIONS
+    source_ref: IEEE Author Center submission and peer-review policies
+    source_locator: https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/guidelines-and-policies/submission-and-peer-review-policies/
+    support_status: verified
+    support_strength: peer_review_governance_context
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+    intro_supported_claim: IEEE submission and peer-review policies are used as governance context for originality, disclosure, independent review, and AI-generated-content boundaries.
+    intro_claim_location: paragraph_2_sentence_4
+    claim_boundary: This citation supports peer-review-governance motivation only; it is not used as evidence that this workflow satisfies IEEE final acceptance or submission requirements.
+
+gap_claim_fit:
+  intro_gap_claim: The cited systems motivate tool use, multi-agent coordination, and automated scientific writing, but the introduction only claims that the current review package needs a node-local procedure tying claims to evidence, protocol gates, independent review, response coverage, and negative-result handling before phase transition.
+  support_basis:
+    - representative prior-work categories are verified in the inherited citation registry
+    - the stronger node-local operating-procedure gap is grounded in P0_01 literature_gap_map and P0_03 contribution_claims, not solely in citation titles
+  downgrade_rule: If any source entry cannot be inspected or remains unsupported in later bibliography work, remove or narrow the associated cluster sentence rather than upgrading the manuscript claim.

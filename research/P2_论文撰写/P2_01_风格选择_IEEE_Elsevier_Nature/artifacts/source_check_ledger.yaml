@@ -1,0 +1,102 @@
+version: p2_01_source_check_ledger_v1
+node_id: research::P2_论文撰写::P2_01_风格选择_IEEE_Elsevier_Nature
+generated_at: 2026-05-05
+purpose: Local ledger for official venue-style and disclosure sources used by P2_01.
+source_policy: These sources constrain manuscript format, disclosure, and availability statements; they do not support scientific claims.
+
+checks:
+  - source_id: ieee_structure
+    publisher: IEEE Author Center
+    title: Structure Your Article
+    url: https://journals.ieeeauthorcenter.ieee.org/create-your-ieee-journal-article/create-the-text-of-your-article/structure-your-article/
+    accessed_at: 2026-05-05
+    official_source: true
+    checked_items:
+      - title should be specific, concise, descriptive, and keyword-bearing
+      - abstract should be self-contained and concise
+      - methodology should make the work reproducible
+      - results may use figures for trends and tables for exact values
+      - discussion and conclusion should not inflate findings
+    used_in:
+      - artifacts/venue_requirements.yaml
+      - docs/manuscript.md
+    claim_boundary: format_and_structure_only
+  - source_id: ieee_submission_policy
+    publisher: IEEE Author Center
+    title: Submission and Peer Review Policies
+    url: https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/guidelines-and-policies/submission-and-peer-review-policies/
+    accessed_at: 2026-05-05
+    official_source: true
+    checked_items:
+      - originality and prior-publication policy
+      - AI-generated content disclosure boundary
+      - review confidentiality and independence context
+    used_in:
+      - artifacts/venue_requirements.yaml
+      - docs/manuscript.md
+    claim_boundary: disclosure_and_peer_review_policy_only
+  - source_id: elsevier_guide_for_authors
+    publisher: Elsevier
+    title: Guide for authors - Your Paper Your Way
+    url: https://www.elsevier.com/en-au/subject/next/guide-for-authors
+    accessed_at: 2026-05-05
+    official_source: true
+    checked_items:
+      - IMRAD-like structure with introduction, methods or experimental, results, discussion, and conclusions
+      - concise factual abstract
+      - enough experimental or methods detail for independent reproduction
+      - results should be clear and concise
+      - discussion should explain significance without repeating results
+    used_in:
+      - artifacts/venue_requirements.yaml
+      - docs/manuscript.md
+    claim_boundary: format_and_structure_only
+  - source_id: elsevier_graphical_abstract
+    publisher: Elsevier
+    title: Graphical abstract in Elsevier journals
+    url: https://www.elsevier.com/researcher/author/tools-and-resources/graphical-abstract
+    accessed_at: 2026-05-05
+    official_source: true
+    checked_items:
+      - graphical abstract should summarize take-home message in an original image
+      - visual should be clear and uncluttered
+      - generative AI or AI-assisted graphical production must follow Elsevier policy
+    used_in:
+      - artifacts/venue_requirements.yaml
+      - docs/manuscript.md
+    claim_boundary: graphical_abstract_format_only
+  - source_id: nature_formatting
+    publisher: Nature
+    title: Formatting guide
+    url: https://www.nature.com/nature/for-authors/formatting-guide
+    accessed_at: 2026-05-05
+    official_source: true
+    checked_items:
+      - write clearly for readers outside the immediate field
+      - title and summary should avoid unnecessary jargon
+      - methods, data availability, and code availability are distinct manuscript components
+      - display items should be compact, simple, and understandable
+    used_in:
+      - artifacts/venue_requirements.yaml
+      - docs/manuscript.md
+    claim_boundary: quality_lens_and_format_only
+  - source_id: nature_reporting
+    publisher: Nature Portfolio
+    title: Reporting standards and availability of data, materials, code and protocols
+    url: https://www.nature.com/natcomputsci/natcomputsci/editorial-policies/reporting-standards
+    accessed_at: 2026-05-05
+    official_source: true
+    checked_items:
+      - materials, data, code, and protocols must be available without undue qualifications where required
+      - restrictions must be disclosed
+      - reporting standards emphasize reproducibility and transparency
+    used_in:
+      - artifacts/venue_requirements.yaml
+      - docs/manuscript.md
+    claim_boundary: availability_and_reporting_policy_only
+
+ledger_checks:
+  all_sources_are_official_author_or_publisher_pages: true
+  no_source_used_as_scientific_performance_evidence: true
+  downstream_drafting_should_cite_local_ledger: true
+  final_submission_needs_current_policy_recheck: true

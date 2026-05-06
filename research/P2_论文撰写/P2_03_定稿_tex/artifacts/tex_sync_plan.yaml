@@ -1,0 +1,42 @@
+version: p2_03_tex_sync_plan_v1
+node_id: research::P2_论文撰写::P2_03_定稿_tex
+sync_mode: bounded_campaign_sync
+
+sync_items:
+  - md_node: research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言
+    source_state: source_manuscript_unfilled
+    tex_file: tex/sections/introduction.tex
+    sync_status: done_with_gap_disclosure
+    gap_policy: Generated a conservative introduction from closed P1 evidence boundaries rather than pretending the source manuscript was complete.
+  - md_node: research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary
+    source_state: source_manuscript_unfilled
+    tex_file: tex/sections/preliminary.tex
+    sync_status: done_with_gap_disclosure
+    gap_policy: Defined only terms needed by the current TeX draft and claim-evidence registry.
+  - md_node: research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法
+    source_state: substantive_source_available
+    tex_file: tex/sections/method.tex
+    sync_status: done
+    gap_policy: Synchronized content without external-citation expansion.
+  - md_node: research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论
+    source_state: source_manuscript_unfilled
+    tex_file: tex/sections/experiment.tex
+    sync_status: done_with_gap_disclosure
+    gap_policy: Reported only P1_04/P1_05/P1_09 preliminary synthetic/offline evidence and preserved missing formal-result blockers.
+  - md_node: research/P2_论文撰写/P2_05_去AI味道
+    source_state: expression_calibration_available
+    tex_file:
+      - tex/main.tex
+      - tex/sections/introduction.tex
+      - tex/sections/method.tex
+      - tex/sections/experiment.tex
+    sync_status: done_with_no_upgrade
+    gap_policy: Applied or confirmed P2_05 wording calibration entries without adding datasets, baselines, statistics, citations, figures, formal performance, RM101, selected-backend, Stage C/D, or final-readiness claims.
+
+validation_targets:
+  - tex/main.tex contains abstract, introduction, methods, results, discussion, data availability, and code availability.
+  - tex/main.tex contains a bibliography with explicit references for broader method and reporting claims.
+  - sync_map.yaml points to existing section files.
+  - section files contain no unfilled-source markers.
+  - tex/sections/experiment.tex contains a first callout to the P1_09 figure with caption, label, claim_ref, evidence_ref, and provenance.
+  - artifacts/p2_05_tex_sync_trace.yaml records expression-calibration target status and a successful post-sync lualatex run.

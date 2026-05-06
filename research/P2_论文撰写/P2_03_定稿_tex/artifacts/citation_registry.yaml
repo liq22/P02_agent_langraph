@@ -1,0 +1,46 @@
+version: p2_03_citation_registry_v1
+node_id: research::P2_论文撰写::P2_03_定稿_tex
+
+citations:
+  - citation_key: nature-reporting
+    claim_id: P2_03_C02_CLAIM_EVIDENCE_DISCIPLINE
+    claim_context: Reporting policies expect transparent evidence, reproducibility, and limitations.
+    source_ref: Nature Portfolio reporting standards
+    source_locator: https://www.nature.com/nature-portfolio/editorial-policies/reporting-standards
+    support_strength: format_and_reporting_context
+    claim_criticality: method_reference
+    support_status: minor_distortion
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+  - citation_key: ieee-policies
+    claim_id: P2_03_C02_CLAIM_EVIDENCE_DISCIPLINE
+    claim_context: Peer-review and publication policies motivate auditable evidence and transparent claims.
+    source_ref: IEEE Author Center submission and peer-review policies
+    source_locator: https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/guidelines-and-policies/submission-and-peer-review-policies/
+    support_strength: format_and_reporting_context
+    claim_criticality: method_reference
+    support_status: minor_distortion
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+  - citation_key: local-rubric
+    claim_id: P2_03_C01_NODE_UNIT_OF_ANALYSIS
+    claim_context: The repository local rubric defines node-level evidence and review expectations.
+    source_ref: test/NATURE_LEVEL_NODE_RUBRIC.md and node-local review_rubric.yaml files
+    source_locator: test/NATURE_LEVEL_NODE_RUBRIC.md
+    support_strength: local_method_record
+    claim_criticality: method_reference
+    support_status: verified
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true

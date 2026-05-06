@@ -1,0 +1,100 @@
+version: p2_02_03_figure_reader_contract_v1
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_03_流程图草稿
+generated_at: 2026-05-05
+author_agent_id: codex-local
+artifact_scope: local_reader_contract_for_workflow_schematic
+submission_ready_claim: false
+
+purpose: >-
+  Make Figure 1 reviewable as a paper-level workflow schematic by binding each
+  visual lane to a manuscript claim, evidence record, and no-overclaim boundary.
+  This is a node-local figure-readiness contract, not final journal artwork
+  production approval.
+
+figure:
+  figure_id: fig_workflow_evidence_path
+  output_path: figures/fig_workflow_evidence_path.svg
+  source_path: tools/render_fig_workflow_evidence_path.py
+  manifest_ref: artifacts/figure_manifest.yaml
+  plan_ref: artifacts/figure_plan.yaml
+  claim_registry_ref: artifacts/claim_evidence_registry.yaml
+  production_state: node_local_accepted_schematic_not_final_journal_artwork
+
+reader_path:
+  - visual_lane: upper_claim_upgrade_lane
+    reader_question: How does a draft claim become eligible for stronger manuscript language?
+    figure_elements:
+      - node authoring
+      - claim identity
+      - evidence gate
+      - independent review gate
+      - response closure
+    claim_ref: C_WORKFLOW_EVIDENCE_PATH
+    evidence_ref: P2_02_03_FIG_WORKFLOW_MANIFEST
+    boundary_label: mechanism_schematic_only
+    cannot_be_read_as:
+      - empirical_performance_result
+      - selected_backend_success
+      - submission_ready_claim
+  - visual_lane: lower_negative_evidence_lane
+    reader_question: Where do failed, rejected, unclear, or blocked rows remain visible?
+    figure_elements:
+      - rejected evidence
+      - unclear evidence
+      - blocked formal-result eligibility
+      - denominator visibility
+    claim_ref: C_WORKFLOW_EVIDENCE_PATH
+    evidence_ref: P2_02_03_FIG_WORKFLOW_MANIFEST
+    boundary_label: negative_evidence_retention_schematic
+    cannot_be_read_as:
+      - negative_rows_resolved
+      - rm101_resolved
+      - stage_c_or_stage_d_passed
+  - visual_lane: provenance_and_caption_lane
+    reader_question: How can a reviewer audit the figure without trusting a projection surface?
+    figure_elements:
+      - deterministic render script
+      - svg output
+      - manifest claim_ref
+      - manifest evidence_ref
+      - self-contained caption
+    claim_ref: C_FIGURE_PROVENANCE_REQUIRED
+    evidence_ref: P2_02_03_RENDER_SCRIPT
+    boundary_label: provenance_of_current_schematic_only
+    cannot_be_read_as:
+      - final_journal_artwork
+      - proof_of_empirical_improvement
+      - graph_canvas_dashboard_truth
+
+caption_contract:
+  caption_text_source: artifacts/figure_manifest.yaml
+  must_state:
+    - node_local_authoring_is_not_claim_upgrade
+    - claim_identity_evidence_eligibility_review_and_response_are_required
+    - negative_rejected_unclear_and_blocked_evidence_remains_visible
+    - schematic_does_not_report_empirical_performance
+  must_not_state:
+    - final_phmga_performance
+    - selected_backend_success
+    - rm101_resolution
+    - stage_c_or_stage_d_completion
+    - submission_readiness
+
+quality_review_checks:
+  paper_level_mechanism_not_software_architecture: true
+  core_steps_visible_without_scheduler_internal_details: true
+  negative_evidence_lane_visible: true
+  caption_self_contained: true
+  claim_ref_and_evidence_ref_present: true
+  deterministic_source_present: true
+  graph_canvas_dashboard_not_used_as_truth: true
+  provider_or_credential_details_absent: true
+  final_artwork_polish_deferred: true
+
+re_review_readiness:
+  addressed_prior_advisory: draft_status_clarified_as_node_local_accepted_schematic
+  expected_score_lift_basis:
+    - visual_reader_path_is_now_auditable
+    - production_boundary_is_explicit_not_ambiguous
+    - figure_can_be_reviewed_without_graph_or_dashboard_proxy
+    - negative_evidence_lane_is_tied_to_claim_boundary

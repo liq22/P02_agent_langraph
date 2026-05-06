@@ -1,0 +1,202 @@
+version: p2_02_outline_map_v1
+node_id: research::P2_论文撰写::P2_02_初稿_md
+generated_at: 2026-05-05
+author_agent_id: codex-local
+artifact_scope: draft_section_coordination_only
+parent_node_policy:
+  parent_does_not_hold_body_text: true
+  child_first_routing: true
+  no_new_research_truth: true
+  source_of_truth_boundary: >-
+    This map coordinates section responsibilities for P2_02 child drafts. It
+    references closed upstream artifacts and does not upgrade support status or
+    create new evidence.
+
+upstream_inputs:
+  - path: research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+    role: venue_style_claim_strength_and_summary_paragraph_constraints
+  - path: research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/contribution_claims.yaml
+    role: four_bounded_research_content_units_and_downgrade_rules
+  - path: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+    role: fixed_node_governance_and_formal_evidence_eligibility_protocols
+  - path: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+    role: result_table_order_and_negative_unclear_row_policy
+  - path: docs/submission_ready_goal/completion_audit_current.md
+    role: current_global_blockers_and_scheduler_state
+
+one_sentence_contribution:
+  claim_id: C_MAIN_BOUNDED_WORKFLOW_GOVERNANCE
+  text: An evidence-governed human-agent research workflow keeps node closure, cross-phase claim identity, independent review, negative evidence, and PHMGA formal-result eligibility inspectable before manuscript claims are upgraded.
+  support_status: protocol_and_proposal_supported
+  forbidden_upgrades:
+    - formal_performance_improvement
+    - real_data_generalization
+    - selected_backend_success
+    - rm101_resolved
+    - stage_c_stage_d_passed
+    - submission_ready_result
+
+section_order:
+  - section_id: introduction
+    node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言
+    objective: Establish problem importance, concrete gap, bounded contribution, and reviewer path.
+    must_cover:
+      - agent-assisted research can create plausible files while losing claim/evidence/review boundaries
+      - nearest prior-work clusters motivate but do not solve artifact-level claim governance
+      - current contribution is evidence governance, not final PHMGA performance
+      - downstream sections will audit method, protocol, tables, negative evidence, and limitations
+    must_not_cover:
+      - detailed algorithms
+      - formal Stage C or Stage D results
+      - selected backend success
+      - RM101 resolution
+      - full experiment tables
+    claim_ids:
+      - C_MAIN_BOUNDED_WORKFLOW_GOVERNANCE
+      - C_GAP_CLAIM_EVIDENCE_REVIEW_BOUNDARY
+      - C_LIMIT_FORMAL_EVIDENCE_PENDING
+    evidence_refs:
+      - P0_01_literature_gap_map
+      - P0_03_contribution_claims
+      - P2_01_venue_requirements
+      - completion_audit_current
+  - section_id: preliminary
+    node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary
+    objective: Define terms, node lifecycle, claim/evidence vocabulary, and evidence-strength labels.
+    must_cover:
+      - node-local artifact vocabulary
+      - claim_id evidence_id protocol_id support_status boundary_label
+      - author exit versus node close
+      - evidence strength and downgrade vocabulary
+    must_not_cover:
+      - new contribution claims
+      - experiment results
+      - venue selection argument
+    claim_ids:
+      - C_TERMINOLOGY_AND_EVIDENCE_STATES
+  - section_id: workflow_and_figure
+    node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿
+    objective: Present the workflow figure, evidence path, and figure/claim mapping.
+    must_cover:
+      - Figure 1 workflow/evidence path
+      - first callout and provenance
+      - claim_ref and evidence_ref for each accepted display item
+    must_not_cover:
+      - unproven performance claims
+      - decorative or provenance-free figure material
+    claim_ids:
+      - C_WORKFLOW_EVIDENCE_PATH
+      - C_FIGURE_PROVENANCE_REQUIRED
+    figure_plan:
+      - figure_id: fig_workflow_evidence_path
+        role: main_workflow_schematic
+        status: planned
+      - figure_id: fig_main_synthetic_signal
+        role: limited_synthetic_offline_sanity_check_only
+        status: draft_from_p1_09
+  - section_id: methods
+    node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法
+    objective: Explain the evidence-governed workflow, review gate, response closure, negative-result retention, and PHMGA/Vibench formal gate.
+    must_cover:
+      - node-local acceptance and lifecycle
+      - claim/evidence/protocol registry
+      - independent review and response coverage
+      - negative and reject evidence retention
+      - Vibench read boundary and PHMGA ownership
+      - provider policy and artifact contract boundaries
+    must_not_cover:
+      - result interpretation
+      - broad venue argument
+      - credentials or secret values
+    claim_ids:
+      - C_METHOD_NODE_GOVERNANCE
+      - C_METHOD_REVIEW_RESPONSE_GATE
+      - C_METHOD_FORMAL_EVIDENCE_ELIGIBILITY
+  - section_id: experiments_and_discussion
+    node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论
+    objective: Report evidence by maturity, keep blocked/rejected rows visible, and discuss limitations.
+    must_cover:
+      - workflow-governance table once row-level evidence exists
+      - limited synthetic/offline sanity-check row
+      - formal eligibility gate and blocked rows
+      - negative or unclear evidence ledger
+      - final-score, schema, adapter, selected-backend, Stage C/D, and dirty-submodule blockers
+    must_not_cover:
+      - success-only result summary
+      - hidden RM101 reject evidence
+      - formal performance improvement before gates pass
+    claim_ids:
+      - C_RESULT_LIMITED_SYNTHETIC_SIGNAL
+      - C_RESULT_FORMAL_GATE_PENDING
+      - C_LIMIT_NEGATIVE_EVIDENCE_VISIBLE
+
+figure_table_plan:
+  figures:
+    - figure_id: fig_workflow_evidence_path
+      target_section: workflow_and_figure
+      claim_refs:
+        - C_WORKFLOW_EVIDENCE_PATH
+      evidence_refs:
+        - P2_01_venue_requirements
+      status: planned
+    - figure_id: fig_main_synthetic_signal
+      target_section: experiments_and_discussion
+      claim_refs:
+        - C_RESULT_LIMITED_SYNTHETIC_SIGNAL
+      evidence_refs:
+        - P1_09_figure_manifest
+        - P1_08_claim_map_c1
+      status: draft_limited_use_only
+  tables:
+    - table_id: main_results
+      target_section: experiments_and_discussion
+      source_artifact: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+      status: planned_with_limited_existing_signal
+    - table_id: formal_eligibility_gate
+      target_section: experiments_and_discussion
+      source_artifact: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+      status: planned_blocker_table
+    - table_id: ablation_and_efficiency_results
+      target_section: experiments_and_discussion
+      source_artifact: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+      status: planned_no_positive_claim_until_rows_exist
+    - table_id: negative_unclear_result_ledger
+      target_section: experiments_and_discussion
+      source_artifact: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+      status: required_first_class_table
+
+cross_section_consistency:
+  terms_to_keep_stable:
+    - evidence-governed human-agent research workflow
+    - node closure
+    - author exit
+    - claim identity
+    - independent review
+    - response closure
+    - negative evidence retention
+    - formal evidence eligibility
+    - limited synthetic/offline sanity-check
+  forbidden_global_wording:
+    - acceptance-ready
+    - formal performance improvement
+    - real-data generalization
+    - selected backend success
+    - RM101 resolved
+    - Stage C passed
+    - Stage D passed
+  required_limitations_to_preserve:
+    - review scores below final submission threshold
+    - P1_03 P1_05 P2_02_04 claim registry schema blockers
+    - P1_05 missing failure/negative/keep-discard artifacts
+    - selected global backend not locked
+    - RM101 reject evidence unresolved
+    - PHMGA/Vibench metadata-H5 adapter preflight pending
+    - PHMGA dirty/untracked submodule entries
+    - Stage C and Stage D rows incomplete
+
+checks:
+  section_order_fixed: true
+  every_core_claim_has_section: true
+  every_figure_or_table_has_target_section: true
+  no_parent_body_text_authored: true
+  no_acceptance_ready_claim: true

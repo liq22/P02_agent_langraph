@@ -1,0 +1,40 @@
+version: p2_02_03_figure_manifest_v1
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_03_流程图草稿
+manifest_id: P2_02_03_FIG_WORKFLOW_MANIFEST
+figures:
+  - figure_id: fig_workflow_evidence_path
+    title: Evidence-governed workflow and claim/evidence path
+    source_kind: python
+    source_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/tools/render_fig_workflow_evidence_path.py
+    output_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/figures/fig_workflow_evidence_path.svg
+    claim_ref: C_WORKFLOW_EVIDENCE_PATH
+    evidence_ref: P2_02_03_FIG_WORKFLOW_MANIFEST
+    reader_contract_ref: artifacts/figure_reader_contract.yaml
+    upstream_evidence_refs:
+      - P2_02_outline_map_v1
+    necessity: essential
+    first_callout_location: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/docs/manuscript.md#workflow-figure-and-evidence-path paragraph 1
+    caption: "Figure 1. Evidence-governed workflow and claim/evidence path. A node-local authoring pass creates manuscript and artifact drafts, but claims are not upgraded until claim identity, evidence eligibility, independent review, and response closure are inspectable. The lower lane records negative, rejected, unclear, and blocked evidence so that failed rows remain visible instead of disappearing from the denominator. This schematic explains the workflow mechanism only; it does not report empirical performance."
+    status: accepted
+    locked_by_node_status: done
+    production_status: accepted_node_local_schematic_not_final_journal_artwork
+    boundary_label: schematic_only_not_empirical_result
+    cannot_support_claims:
+      - final PHMGA performance
+      - selected backend success
+      - RM101 resolution
+      - Stage C passed
+      - Stage D passed
+      - submission readiness
+    quality_checks:
+      vector_or_dpi_checked: true
+      vector_format: svg
+      caption_self_contained: true
+      colorblind_or_grayscale_checked: true
+      source_permission_checked: true
+      source_permission_basis: repository-authored deterministic SVG from node-local Python script
+      claim_mapping_checked: true
+      evidence_mapping_checked: true
+      first_callout_checked: true
+      decorative_only: false
+      graph_canvas_dashboard_as_truth: false

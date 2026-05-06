@@ -1,0 +1,124 @@
+version: p2_02_05_claim_map_v1
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_05_实验与讨论
+generated_at: 2026-05-05
+author_agent_id: codex-local
+purpose: Align result, limitation, and discussion claims before writing P2_02_05.
+evidence_order_policy:
+  primary_order: evidence_maturity_before_story
+  primary_outcome: evidence_governance_finding
+  secondary_supporting_outcomes:
+    - limited_synthetic_offline_signal
+    - formal_eligibility_gate_blockers
+    - negative_unsupported_unclear_rows
+  result_sequence:
+    - limited_synthetic_offline_signal
+    - formal_eligibility_gate_blockers
+    - negative_unsupported_unclear_rows
+    - interpretation_and_limitations
+  no_cherry_pick: true
+claims:
+  - claim_id: C_EXP_LIMITED_SYNTHETIC_SIGNAL
+    upstream_claim_id: P1_08_C001_LIMITED_SYNTHETIC_SIGNAL_SLOT
+    claim_type: result
+    support_status: weak
+    protocol_support_status: supported_limited
+    claim_text: The P1_04/P1_05 offline synthetic Ottawa check shows a bounded supervisor_proving sanity-check signal over simple_fullchain.
+    manuscript_location: docs/manuscript.md#limited-syntheticoffline-sanity-check
+    table_ref: main_results
+    evidence_refs:
+      - P1_05_C01_KEEP_LIMITED_SYNTHETIC_SIGNAL
+      - P1_05_R001_BASELINE_SIMPLE
+      - P1_05_R002_SUPERVISOR_PROVING_ATTEMPT
+      - P2_02_05_DISCUSSION_EVIDENCE_MATURITY_CONTRACT
+    metric_summary:
+      baseline_test_accuracy: 0.8333333333333334
+      attempt_test_accuracy: 1.0
+      delta_test_accuracy: 0.16666666666666663
+      baseline_test_macro_f1: 0.8285714285714285
+      attempt_test_macro_f1: 1.0
+      delta_test_macro_f1: 0.17142857142857149
+      train_sample_count: 4
+      val_sample_count: 2
+      test_sample_count: 2
+      test_sample_ids:
+        - ottawa_synth_007
+        - ottawa_synth_008
+      split_boundary: split_before_windowing
+    boundary_label: preliminary_synthetic_offline_only
+    allowed_wording: weak supported-limited synthetic/offline sanity-check signal
+    forbidden_wording:
+      - formal performance improvement
+      - real-data generalization
+      - selected backend success
+      - RM101 resolution
+      - Stage C passed
+      - Stage D passed
+      - submission-ready result
+
+  - claim_id: C_EXP_FORMAL_GATE_BLOCKED
+    upstream_claim_id: P1_08_C002_FORMAL_ELIGIBILITY_TABLE_GATE
+    claim_type: limitation
+    support_status: supported
+    claim_text: Formal PHMGA/Vibench result rows remain blocked until provider, adapter, artifact, backend, Stage C, Stage D, repeat, ledger, and table mapping gates pass.
+    manuscript_location: docs/manuscript.md#formal-eligibility-gate-and-blocked-rows
+    table_ref: formal_eligibility_gate
+    evidence_refs:
+      - P1_07_PROTO_002_FORMAL_EVIDENCE_ELIGIBILITY_GATE
+      - P1_08_F004_FORMAL_GATE_BLOCKERS_REMAIN
+      - P2_02_05_DISCUSSION_EVIDENCE_MATURITY_CONTRACT
+    boundary_label: formal_gate_blocked
+    allowed_wording: formal eligibility gate remains blocked or planned
+    forbidden_wording:
+      - Stage C success
+      - Stage D success
+      - selected backend locked
+      - formal result row accepted
+
+  - claim_id: C_EXP_NEGATIVE_UNCLEAR_RETENTION
+    upstream_claim_id: P1_08_C004_NEGATIVE_UNCLEAR_RETENTION
+    claim_type: limitation
+    support_status: supported
+    claim_text: Unsupported, unclear, rejected, and blocked rows remain first-class evidence and stay in the denominator.
+    manuscript_location: docs/manuscript.md#negative-unsupported-and-unclear-evidence
+    table_ref: negative_unclear_result_ledger
+    evidence_refs:
+      - P1_05_U001_REAL_DATA_GENERALIZATION
+      - P1_05_U002_RM101_RESOLUTION
+      - P1_05_Q001_VARIANCE_STABILITY
+      - P1_05_Q002_PERFECT_SYNTHETIC_ACCURACY_INTERPRETATION
+      - P2_02_05_DISCUSSION_EVIDENCE_MATURITY_CONTRACT
+    boundary_label: limitation_and_reject_evidence_retained
+    allowed_wording: negative and unclear evidence is retained in denominator rows
+    forbidden_wording:
+      - negative rows omitted
+      - unclear evidence rewritten as support
+
+  - claim_id: C_EXP_DISCUSSION_INTERPRETATION_LIMITS
+    upstream_claim_id: P1_08_C005_UNCERTAINTY_REPRODUCIBILITY_COLUMNS
+    claim_type: limitation
+    support_status: supported
+    claim_text: The discussion separates the narrow finding, plausible interpretation, and evidence needed before claim upgrade.
+    manuscript_location: docs/manuscript.md#discussion
+    table_ref:
+      - main_results
+      - formal_eligibility_gate
+      - negative_unclear_result_ledger
+    evidence_refs:
+      - P1_05_H001_SUPERVISOR_PROVING_SYNTHETIC_SIGNAL
+      - P1_05_H002_REAL_DATA_GENERALIZATION
+      - P1_05_H003_RM101_RESOLUTION
+      - P1_05_H004_VARIANCE_STABILITY
+      - P2_02_05_DISCUSSION_EVIDENCE_MATURITY_CONTRACT
+    boundary_label: interpretation_not_formal_result
+    allowed_wording: candidate path worth preserving for formal evaluation
+    forbidden_wording:
+      - proven mechanism
+      - stable improvement
+      - final paper result
+checks:
+  primary_secondary_outcomes_explicit: true
+  synthetic_test_split_size_explicit: true
+  supported_unsupported_unclear_separated: true
+  negative_or_failed_results_recorded: true
+  no_formal_result_upgrade: true
+  protected_paths_respected: true

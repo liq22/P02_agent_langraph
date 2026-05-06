@@ -13,46 +13,48 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: 目标 venue 的格式关键项是什么？
-  status: pending
+  status: done
 - item: 哪些 markdown 内容必须在导出时特化？
-  status: pending
+  status: done
 required_outputs:
 - path: tex 草稿或同步计划
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: 导出约束清单
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: docs/manuscript.md
+  status: done
   description: profile-required local artifact
 - path: artifacts/claim_evidence_registry.yaml
+  status: done
   description: profile-required local artifact
 quality_checks:
 - item: 围绕 IMRAD、methods 可复现、results 顺序、figure/table 自解释、venue format 组织内容
-  status: pending
+  status: done
 - item: 正文服务主张，不重复图表，不夸大结论
-  status: pending
+  status: done
 - item: 格式适配不改变 scientific content
-  status: pending
+  status: done
 - item: 标题/摘要/图表/availability statements 合规
-  status: pending
+  status: done
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: done
 handoff_ready_if:
 - item: 形成可导出的定稿骨架
-  status: pending
+  status: done
 - item: cross-ref/caption/section 层级清楚
-  status: pending
+  status: done
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: done
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -74,9 +76,9 @@ stop_if:
   status: pending
 review_notes:
 - slot: 1
-  note: <待填写>
+  note: Initial external review returned revise on missing figure/cross-reference, references, and gate metadata.
 - slot: 2
-  note: <待填写>
+  note: Re-review passed after adding a TeX figure callout, bibliography, citation registry, and response coverage.
 external_review_gate:
   required: true
   reviewer_role: external_node_reviewer
@@ -102,17 +104,17 @@ external_review_gate:
   - artifacts/claim_evidence_registry.yaml
 author_exit:
 - item: 'claim_evidence_ids_are_explicit_or_gap_is_reported: true'
-  status: pending
+  status: done
 - item: 'negative_or_failed_results_recorded: true'
-  status: pending
+  status: done
 - item: 'protected_paths_respected: true'
-  status: pending
+  status: done
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: done

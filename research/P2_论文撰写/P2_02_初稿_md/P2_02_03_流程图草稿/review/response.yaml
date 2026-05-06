@@ -1,8 +1,33 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      External AI reviewer passed P2_02_03 with score 86, hard_fail false,
+      downstream_ready true, and no required actions. The machine-readable
+      verdict dimension_scores were normalized to the rubric-weighted
+      20/20/25/15/10/10 scale while preserving the review conclusion and
+      rationales. A later local figure-readiness patch added
+      `artifacts/figure_reader_contract.yaml`, linked it from the figure plan,
+      manifest, registry, and manuscript, and clarified that the SVG is a
+      node-local accepted schematic while final journal artwork polish remains
+      deferred.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      User-authorized Claude Code teammate delegate passed the P2_02_03
+      human-review slot with a valid v2 handoff. The review confirmed the
+      workflow figure reflects the core evidence path, the caption is
+      self-contained, the manifest and claim-evidence registry align, and all
+      forbidden performance/submission claims remain blocked. Figure production
+      polish remains a non-node final-layout task.
+
+  - comment_id: VAL-001
+    responded: true
+    note: >-
+      Post-review submission validator schema normalization only: the
+      claim-evidence registry now uses allowed claim_type/support_status
+      enums and explicit evidence_type/source_ref fields, and the figure
+      manifest records the node-local schematic as accepted with
+      locked_by_node_status done. This did not change the manuscript text,
+      rendered SVG, caption, or reviewer conclusions.

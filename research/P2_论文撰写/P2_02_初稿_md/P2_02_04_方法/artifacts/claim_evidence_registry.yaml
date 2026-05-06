@@ -1,50 +1,149 @@
-node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法
-research_anchor: AutoResearch as a human-agent research operating system
+version: p2_02_04_claim_evidence_registry_v2
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_04_方法
+purpose: Bind P2_02_04 Methods claims to node-local and upstream protocol evidence without upgrading formal-result claims.
 claims:
-  - claim_id: p2_methods_unit_of_analysis
-    claim: The research node is the unit of analysis for evaluating AutoResearch.
-    evidence_id: p2_node_contract_record
-    evidence:
-      - docs/manuscript.md:Methods Scope
-      - docs/manuscript.md:研究设计与实现的关键决定是什么？
-      - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/experiment_rigor_plan.yaml
-    citation_status: local_protocol_and_method_record
-    boundary: This defines the study object; it does not establish outcome improvement.
-  - claim_id: p2_methods_intervention_definition
-    claim: The AutoResearch intervention consists of node-local framing, claim/evidence/protocol registry, protocol gates, independent review, and response coverage.
-    evidence_id: p2_intervention_record
-    evidence:
-      - docs/manuscript.md:Study Design
-      - docs/manuscript.md:Procedure
-      - research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/contribution_claims.yaml
-    citation_status: local_protocol_and_method_record
-    boundary: The intervention definition is necessary for comparison but not a result.
-  - claim_id: p2_methods_primary_metric
-    claim: Claim_evidence_validity_rate is the primary outcome for research-process auditability.
-    evidence_id: p2_metric_contract
-    evidence:
-      - docs/manuscript.md:Study Design
-      - docs/manuscript.md:Statistics, Data-Code, and Protocol Statements
-      - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/experiment_rigor_plan.yaml
-    citation_status: local_protocol_and_method_record
-    boundary: The metric must still be tested against baselines, repeats, and uncertainty.
-  - claim_id: p2_methods_reproducibility
-    claim: Reproducibility requires node paths, prompts, checklists, rubrics, budgets, reviewer assignments, commands or manual ledgers, and artifact schemas.
-    evidence_id: p2_reproduction_record
-    evidence:
-      - docs/manuscript.md:别人需要哪些细节才能理解与复现？
-      - docs/manuscript.md:Statistics, Data-Code, and Protocol Statements
-    citation_status: local_protocol_and_method_record
-    boundary: This supports procedural reproducibility, not acceptance by a venue.
-  - claim_id: p2_methods_negative_results
-    claim: Negative results and failed gates must remain visible in result ledgers and claim registries.
-    evidence_id: p2_failure_policy
-    evidence:
-      - docs/manuscript.md:Limitations and Negative Results
-      - logs/claim_evidence_map.md
-    citation_status: local_protocol_and_method_record
-    boundary: Human reviewers still decide final phase transition.
-author_exit:
+  - claim_id: C_METHOD_NODE_GOVERNANCE
+    claim_type: method
+    claim_text: The method uses a research node as the unit of analysis and separates author exit from node close.
+    support_status: supported
+    manuscript_location: docs/manuscript.md#scope-and-unit-of-analysis
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_02_04_METHOD_CONTRACT
+        evidence_type: table
+        source_ref: artifacts/method_contract.yaml
+        role: node lifecycle, author-exit, node-close, registry, and reproducibility contract
+      - evidence_id: P2_02_04_METHOD_REVIEWER_TRACE
+        evidence_type: table
+        source_ref: artifacts/method_reviewer_trace.yaml
+        role: reviewer-facing trace for variables, baselines, metrics, gates, statistics requirements, and retained blockers
+      - evidence_id: P2_02_OUTLINE_MAP
+        evidence_type: table
+        source_ref: ../artifacts/outline_map.yaml
+        role: methods section responsibilities and claim IDs
+      - evidence_id: P2_02_04_ACCEPTANCE_CHECKLIST
+        evidence_type: table
+        source_ref: prompts/acceptance_checklist.yaml
+        role: node-local done-state and review-gate requirements
+    boundary_label: method_definition_not_result
+    cannot_support_claims:
+      - final PHMGA performance
+      - selected backend success
+      - Stage C passed
+      - Stage D passed
+      - submission readiness
+
+  - claim_id: C_METHOD_REVIEW_RESPONSE_GATE
+    claim_type: method
+    claim_text: Independent review and response coverage are required before node-local claims can be treated as closed.
+    support_status: supported
+    manuscript_location: docs/manuscript.md#review-and-response-closure
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_02_04_METHOD_CONTRACT
+        evidence_type: table
+        source_ref: artifacts/method_contract.yaml
+        role: review gate and response closure contract
+      - evidence_id: P2_02_04_REVIEW_RUBRIC
+        evidence_type: table
+        source_ref: prompts/review_rubric.yaml
+        role: independent reviewer criteria and hard-fail checks
+      - evidence_id: P2_02_03_CLAUDE_HANDOFF
+        evidence_type: review_comment
+        source_ref: docs/submission_ready_goal/runtime_logs/claude_code/p2_02_03_human_review_handoff.yaml
+        role: nearest closed-node example of user-authorized teammate review handoff
+    boundary_label: review_process_method_not_biological_human_claim
+    cannot_support_claims:
+      - biological human review was performed by Claude Code
+      - final submission threshold passed
+      - reviewer pass proves scientific acceptance
+
+  - claim_id: C_METHOD_FORMAL_EVIDENCE_ELIGIBILITY
+    claim_type: method
+    claim_text: PHMGA/Vibench formal-result claims are blocked until provider policy, data alignment, artifact contract, backend selection, Stage C rows, Stage D ablations, repeats, ledger, and table mapping pass.
+    support_status: supported
+    manuscript_location: docs/manuscript.md#phmga-vibench-and-provider-boundary
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_02_04_METHOD_CONTRACT
+        evidence_type: table
+        source_ref: artifacts/method_contract.yaml
+        role: formal evidence gate summary and provider boundary
+      - evidence_id: P1_07_PROTOCOL_MAP
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+        role: P1_07_PROTO_002 formal evidence eligibility gate
+      - evidence_id: P1_06_SUBMODULE_REF
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+        role: PHMGA branch, commit, pull result, and dirty-state boundary
+      - evidence_id: COMPLETION_AUDIT_CURRENT
+        evidence_type: table
+        source_ref: docs/submission_ready_goal/completion_audit_current.md
+        role: current global blockers and scheduler state
+    boundary_label: formal_gate_definition_only
+    cannot_support_claims:
+      - selected backend is locked
+      - RM101 is resolved
+      - Stage C passed
+      - Stage D passed
+      - formal performance improvement exists
+
+  - claim_id: C_METHOD_NEGATIVE_EVIDENCE_RETENTION
+    claim_type: method
+    claim_text: Negative, rejected, unclear, rate-limited, low-power, and blocked rows remain visible in the denominator and cannot be rewritten into positive evidence.
+    support_status: supported
+    manuscript_location: docs/manuscript.md#negative-evidence-and-result-denominators
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_02_04_METHOD_CONTRACT
+        evidence_type: table
+        source_ref: artifacts/method_contract.yaml
+        role: negative-evidence policy and forbidden upgrades
+      - evidence_id: P1_08_TABLE_PLAN
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+        role: table denominator policy and negative/unclear result ledger requirements
+    boundary_label: denominator_policy_not_result_claim
+    cannot_support_claims:
+      - negative evidence is resolved
+      - formal result rows passed
+      - limited synthetic signal proves real-data generalization
+
+  - claim_id: C_METHOD_REPRODUCIBILITY_RECORD
+    claim_type: method
+    claim_text: Reproducibility requires node paths, prompts, checklists, rubrics, artifacts, review verdicts, response records, budgets, commands or ledgers, and protocol identifiers.
+    support_status: supported
+    manuscript_location: docs/manuscript.md#node-lifecycle-and-local-contract
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_02_04_METHOD_CONTRACT
+        evidence_type: table
+        source_ref: artifacts/method_contract.yaml
+        role: minimum node record and projection-not-truth policy
+      - evidence_id: P2_01_VENUE_REQUIREMENTS
+        evidence_type: table
+        source_ref: research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+        role: selected Methods style, reproducibility, data/code/protocol availability, and disclosure requirements
+      - evidence_id: P1_07_PROTOCOL_MAP
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+        role: repeat, budget, metrics, and statistical reporting contract
+    boundary_label: reproducibility_record_requirement_not_completed_formal_artifact
+    cannot_support_claims:
+      - frozen final data-code package exists
+      - final formal result ledger is complete
+      - submission package is ready
+
+negative_or_failed_result_handling:
+  result_rows_introduced_by_node: false
+  negative_evidence_deleted_or_hidden: false
+  negative_evidence_policy_source: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+  boundary: This node writes method and eligibility rules only; result rows remain downstream and must preserve blocked, rejected, unclear, low-power, and negative evidence.
+
+checks:
   claim_evidence_ids_are_explicit_or_gap_is_reported: true
   negative_or_failed_results_recorded: true
   protected_paths_respected: true
+  registry_schema_uses_allowed_enums: true
+  provider_secret_values_excluded: true

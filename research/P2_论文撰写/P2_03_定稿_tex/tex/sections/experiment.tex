@@ -1,0 +1,19 @@
+The current result content is limited to a preliminary synthetic/offline signal carried forward from the P1\_04 and P1\_05 evidence chain and visualized in P1\_09. Figure~\ref{fig:p1-synthetic-signal} is the first TeX callout for this signal. The source ledger contains one baseline row, simple\_fullchain on Ottawa synthetic data with offline stub mode, and one controlled attempt row, supervisor\_proving under the same synthetic/offline boundary. The controlled attempt is higher on the recorded accuracy and macro-F1 values, but this is a single-run signal rather than a formal result.
+
+\begin{figure}[t]
+\centering
+\begin{tabular}{lcc}
+\toprule
+Workflow row & Test accuracy & Test macro-F1 \\
+\midrule
+simple\_fullchain baseline & 0.8333 & 0.8286 \\
+supervisor\_proving attempt & 1.0000 & 1.0000 \\
+\bottomrule
+\end{tabular}
+\caption{Preliminary synthetic/offline signal carried into the TeX draft. claim\_ref: c1. evidence\_ref: P1\_09\_E004\_FIGURE\_DATA\_TSV. Source/provenance: P1\_04 auto-experiment ledger, P1\_05 result registry, and P1\_09 figure manifest. The figure reports no variance, no real-data row, no RM101 resolution, and no selected-backend decision.}
+\label{fig:p1-synthetic-signal}
+\end{figure}
+
+The P1\_09 figure package maps this signal to upstream claim c1 only as a supported limited proxy. It also records the missing evidence: no accepted real-data formal row, no repeated-run variance, no RM101 resolution, no selected-backend lock, and ambiguity around the perfect synthetic score. The TeX draft therefore reports the signal as a candidate reason to continue the mechanism path, not as proof of general performance improvement.
+
+The discussion reports both the bounded synthetic/offline signal and the retained unsupported or uncertain evidence; unsupported rows are not rewritten as support. This is central to the AutoResearch argument. A submission-quality empirical claim will require accepted Stage C main-result rows, Stage D ablation rows, adapter preflight closure, and review scores that meet the final submission threshold.

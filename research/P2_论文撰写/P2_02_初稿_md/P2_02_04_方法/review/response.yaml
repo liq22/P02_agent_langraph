@@ -1,8 +1,24 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      External AI reviewer passed P2_02_04 with score 86, hard_fail false,
+      downstream_ready true, and no blocking issues. Non-blocking metadata
+      comments are handled by the node-close updates to status/checklist and by
+      the validator check confirming the P2_02_04 registry schema blocker no
+      longer appears. A later local method-trace patch added
+      `artifacts/method_reviewer_trace.yaml` and linked it from the manuscript,
+      method contract, and claim/evidence registry so reviewers can inspect the
+      unit of analysis, intervention, baselines, metrics, eligibility gates,
+      statistics requirements, and retained blockers without treating method
+      prose as result evidence.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      User-authorized Claude Code teammate delegate passed the P2_02_04
+      human-review slot with a valid v2 handoff. The review confirmed the
+      Methods prose defines the node unit, intervention, baselines, lifecycle
+      split, registry semantics, review-response gate, negative evidence
+      retention, PHMGA/Vibench/provider boundaries, and local evidence boundary
+      without upgrading formal-result or submission-ready claims.

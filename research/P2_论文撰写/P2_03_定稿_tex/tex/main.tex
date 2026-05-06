@@ -1,4 +1,54 @@
-\documentclass{article}
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{longtable}
+
+\title{AutoResearch: Claim-Grounded Human--Agent Research Operations}
+\author{Draft synchronized from node-local manuscripts}
+\date{2026-05-05}
+
 \begin{document}
-% 待补充
+\maketitle
+
+\begin{abstract}
+This draft evaluates AutoResearch at the level of schedulable research nodes, where each node carries local prompts, artifacts, review status, and closure conditions. The current TeX draft synchronizes the available node-local manuscripts into an exportable structure and preserves the evidence boundary: the only positive quantitative signal currently carried into the draft is a preliminary synthetic/offline single-run figure package, not a formal real-data result. The draft's process claim is that manuscript statements should remain traceable to evidence artifacts, review gates, response coverage, and limitation records before stronger claims are allowed.
+\end{abstract}
+
+\section{Introduction}
+\input{sections/introduction}
+
+\section{Preliminaries}
+\input{sections/preliminary}
+
+\section{Methods}
+\input{sections/method}
+
+\section{Results}
+\input{sections/experiment}
+
+\section{Discussion}
+The synchronized draft separates process claims from performance claims. It can argue that node-local contracts, evidence registries, and independent review gates make the research process inspectable. It cannot yet argue that AutoResearch improves real-data model performance, resolves RM101 evidence, locks a selected backend, or passes formal Stage C/D evaluation. Those limitations remain explicit so that negative and uncertain evidence stays part of the manuscript record rather than being converted into stronger claims.
+
+\section*{Data availability}
+The data for this draft are repository-local research artifacts, node prompts, checklists, review verdicts, response files, result ledgers, figure data files, and TeX synchronization maps. The current draft references the P1\_04 synthetic/offline result ledger and the P1\_09 figure package as local evidence artifacts. No external private data are redistributed by this TeX node.
+
+\section*{Code availability}
+The code relevant to this TeX synchronization node is the repository validation and export metadata, including the P2\_03 section and sync maps, the P1\_09 deterministic figure renderer, and the submission validation script. Graph, Canvas, web dashboard, and other projections are not treated as sources of research truth.
+
+\begin{thebibliography}{9}
+
+\bibitem{nature-reporting}
+Nature Portfolio. Reporting standards. \url{https://www.nature.com/nature-portfolio/editorial-policies/reporting-standards}.
+
+\bibitem{ieee-policies}
+IEEE Author Center. Submission and peer-review policies. \url{https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/guidelines-and-policies/submission-and-peer-review-policies/}.
+
+\bibitem{local-rubric}
+Local repository evidence gate. \texttt{test/NATURE\_LEVEL\_NODE\_RUBRIC.md} and node-local review rubrics.
+
+\end{thebibliography}
+
 \end{document}

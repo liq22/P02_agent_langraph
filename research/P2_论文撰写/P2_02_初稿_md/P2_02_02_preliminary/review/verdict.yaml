@@ -1,21 +1,60 @@
-review_id: EXTERNAL-AI-001
-review_complete: false
-reviewer_agent_id: <pending-distinct-agent>
+review_id: EXTERNAL-AI-002
+review_complete: true
+reviewer_agent_id: external_reviewer_codex_p2_02_02_final_threshold_2026-05-05
 reviewer_skill: external_node_reviewer
 reviewed_node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary
 rubric_path: prompts/review_rubric.yaml
 rubric_version: nature_node_review_v1
-overall_score: null
-overall_verdict: revise
+overall_score: 92
+overall_verdict: pass
 hard_fail: false
 dimension_scores:
-  originality_novelty: null
-  scientific_importance: null
-  evidence_technical_soundness: null
-  reproducibility_transparency: null
-  broad_interest_story_clarity: null
-  review_robustness: null
+  originality_novelty: 18
+  scientific_importance: 18
+  evidence_technical_soundness: 23
+  reproducibility_transparency: 14
+  broad_interest_story_clarity: 9
+  review_robustness: 10
+dimension_rationales:
+  originality_novelty: The section now frames preliminary terminology as a downstream audit contract, not only glossary language, while avoiding unsupported novelty upgrades.
+  scientific_importance: It addresses the manuscript-level bottleneck of preserving claim, evidence, protocol, boundary, and review-response identity across agent-assisted research drafting.
+  evidence_technical_soundness: The manuscript, positioning matrix, and term contract align; claims remain limited to terminology, section-boundary, and reviewer-risk reduction rather than empirical success.
+  reproducibility_transparency: The five-question reader check and term contract make later claim upgrades inspectable through required identifiers and response references.
+  broad_interest_story_clarity: A non-specialist reader can see why each later claim, figure, table row, and response item must answer the same five questions.
+  review_robustness: The package directly anticipates overclaiming, premature node closure, hidden negative evidence, projection-as-truth failures, and unresolved global blockers.
 blocking_issues: []
 required_actions: []
-downstream_ready: false
-independence_confirmed: false
+non_blocking_notes:
+  - Global blockers remain outside this node and are preserved as boundaries; this verdict does not claim whole-paper submission readiness.
+  - Later sections must continue carrying claim_id, evidence_id, protocol_id, boundary_label, and review_or_response_ref before upgrading claims.
+acceptance_gate:
+  necessary_definitions_answered: true
+  section_boundaries_clear: true
+  background_minimal: true
+  no_forbidden_claims_detected: true
+  positioning_matrix_auditable: true
+  preliminary_term_contract_auditable: true
+  five_question_reader_check_present: true
+  local_acceptance_met_for_external_review: true
+  final_submission_threshold_node_local_score_met: true
+downstream_ready: true
+independence_confirmed: true
+reviewed_inputs:
+  - README.md
+  - status.yaml
+  - prompts/research_prompt.md
+  - prompts/acceptance_checklist.yaml
+  - prompts/review_rubric.yaml
+  - ../artifacts/outline_map.yaml
+  - artifacts/positioning_matrix.yaml
+  - artifacts/preliminary_term_contract.yaml
+  - docs/manuscript.md
+  - review/AI_001.md
+  - review/response.yaml
+  - review/verdict.yaml
+  - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_evidence_binding.yaml
+scope_limits_observed:
+  read_only_allowed_files: true
+  wrote_only_allowed_review_files: true
+  no_unrelated_node_evidence_used: true
+  no_graph_canvas_dashboard_or_reference_evidence_used: true

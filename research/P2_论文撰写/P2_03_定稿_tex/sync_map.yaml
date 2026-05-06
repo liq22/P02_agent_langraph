@@ -2,13 +2,17 @@ sync_mode: bounded_campaign_sync
 sync_items:
   - md_node: ../P2_02_初稿_md/P2_02_01_引言
     tex_file: tex/sections/introduction.tex
-    status: pending
+    status: done
+    note: Source manuscript was unfilled; synchronized as conservative introduction with evidence-boundary disclosure.
   - md_node: ../P2_02_初稿_md/P2_02_02_preliminary
     tex_file: tex/sections/preliminary.tex
-    status: pending
+    status: done
+    note: Source manuscript was unfilled; synchronized as definition and boundary section.
   - md_node: ../P2_02_初稿_md/P2_02_04_方法
     tex_file: tex/sections/method.tex
-    status: pending
+    status: done
+    note: Synchronized from substantive Methods source.
   - md_node: ../P2_02_初稿_md/P2_02_05_实验与讨论
     tex_file: tex/sections/experiment.tex
-    status: pending
+    status: done
+    note: Source manuscript was unfilled; synchronized as bounded preliminary result and limitation section.

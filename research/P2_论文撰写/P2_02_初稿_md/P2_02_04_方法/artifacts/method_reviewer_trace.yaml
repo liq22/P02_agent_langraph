@@ -1,0 +1,136 @@
+version: p2_02_04_method_reviewer_trace_v1
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_04_方法
+generated_at: 2026-05-05
+author_agent_id: codex-local
+artifact_scope: local_reviewer_trace_for_methods_variables_gates_and_boundaries
+submission_ready_claim: false
+
+purpose: >-
+  Provide a compact reviewer trace that maps the Methods prose to variables,
+  baselines, metrics, eligibility gates, statistics requirements, and retained
+  blockers. This makes the method auditable without using result rows or global
+  projections as evidence.
+
+trace_inputs:
+  - path: artifacts/method_contract.yaml
+    role: method variables, lifecycle, registry, comparison protocol, metrics, and formal gate
+  - path: artifacts/claim_evidence_registry.yaml
+    role: claim-to-evidence and boundary mapping
+  - path: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+    role: fixed-node governance comparison and formal evidence eligibility protocol
+  - path: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+    role: result denominator and negative/unclear row policy
+  - path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+    role: PHMGA branch, commit, pull state, and dirty-state boundary
+  - path: docs/submission_ready_goal/completion_audit_current.md
+    role: current global blockers and non-readiness state
+
+method_variables:
+  unit_of_analysis:
+    value: research_node
+    manuscript_section: Scope and Unit of Analysis
+    evidence_ref: P2_02_04_METHOD_CONTRACT
+    reviewer_check: node is evaluated by path-backed local evidence, not by graph or UI projection.
+  intervention:
+    value: full_evidence_governed_human_agent_research_workflow
+    manuscript_section: Scope and Unit of Analysis
+    evidence_ref: P2_02_04_METHOD_CONTRACT
+    reviewer_check: intervention includes claim/evidence/protocol IDs, negative evidence, review, and response closure.
+  baselines:
+    values:
+      - manual_checklist_workflow
+      - prompt_only_agent_workflow
+      - agent_without_independent_gate
+    manuscript_section: Scope and Unit of Analysis
+    evidence_ref: P1_07_PROTOCOL_MAP
+    reviewer_check: baselines share fixed node set, prompts, rubrics, budgets, artifact audit rule, and metric definition.
+  primary_metric:
+    value: claim_evidence_validity_rate
+    manuscript_section: Metrics and Statistics Plan
+    evidence_ref: P2_02_04_METHOD_CONTRACT
+    reviewer_check: numerator and denominator are explicit and exclude unsupported claim upgrades.
+  secondary_metrics:
+    values:
+      - unsupported_claim_count
+      - independent_review_pass_rate
+      - response_coverage_rate
+      - hard_fail_closure_rate
+      - negative_result_retention_rate
+      - reproducibility_rerun_agreement
+    manuscript_section: Metrics and Statistics Plan
+    evidence_ref: P2_02_04_METHOD_CONTRACT
+    reviewer_check: metrics map to node-local review, response, negative evidence, and reproducibility records.
+
+eligibility_gates:
+  - gate_id: author_exit_gate
+    required_evidence:
+      - local_manuscript_section
+      - required_artifacts
+      - explicit_claim_ids
+      - explicit_evidence_ids
+      - support_status_and_boundary_labels
+    claim_boundary: author_exit_is_not_node_close
+  - gate_id: node_close_gate
+    required_evidence:
+      - completed_independent_verdict
+      - hard_fail_false
+      - reviewer_independence_confirmed
+      - all_comments_responded
+    claim_boundary: node_close_is_not_final_submission_acceptance
+  - gate_id: formal_evidence_gate
+    required_evidence:
+      - provider_policy_pass
+      - metadata_h5_alignment_pass
+      - artifact_contract_pass
+      - selected_backend_locked
+      - stage_c_rows_passed
+      - stage_d_rows_passed
+      - repeat_count_met
+      - result_ledger_and_table_mapping_present
+    claim_boundary: method_defines_gate_but_does_not_claim_passed_formal_results
+
+statistics_and_reporting_requirements:
+  comparative_claim_minimum:
+    - numerator
+    - denominator
+    - point_estimate
+    - interval_method_or_bootstrap_interval
+    - repeat_count
+    - missing_data_policy
+    - failure_distribution
+    - negative_result_handling
+  low_power_policy: rows below protocol repeat budget are labeled low_power_pilot_or_blocker
+  forbidden_without_gate:
+    - improvement_language
+    - real_data_generalization
+    - selected_backend_success
+    - submission_ready_result
+
+retained_blockers:
+  - blocker_id: selected_backend_not_locked
+    retained_as: formal_evidence_gate_blocker
+    not_resolved_by_methods_node: true
+  - blocker_id: rm101_status_not_resolved
+    retained_as: negative_or_reject_evidence_requirement
+    not_resolved_by_methods_node: true
+  - blocker_id: stage_c_or_stage_d_rows_missing
+    retained_as: formal_row_requirement
+    not_resolved_by_methods_node: true
+  - blocker_id: final_review_score_gate_not_globally_passed
+    retained_as: final_submission_gate_blocker
+    not_resolved_by_methods_node: true
+  - blocker_id: p1_checklist_and_p3_action_statuses_pending
+    retained_as: validator_status_blocker
+    not_resolved_by_methods_node: true
+
+reviewer_risk_reduction:
+  schema_audit_ambiguity_addressed: >-
+    This trace does not assert global validator pass. It binds the Methods
+    node's local registry and contract to reviewable fields and keeps historical
+    or global validator findings outside the local method claim unless the
+    current validator confirms them.
+  method_not_result: true
+  projections_not_truth: true
+  secrets_not_artifacts: true
+  negative_evidence_denominator_visible: true
+  final_submission_ready_claim: false

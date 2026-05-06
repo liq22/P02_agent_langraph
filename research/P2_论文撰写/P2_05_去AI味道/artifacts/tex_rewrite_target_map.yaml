@@ -1,0 +1,88 @@
+version: p2_05_tex_rewrite_target_map_v1
+node_id: research::P2_论文撰写::P2_05_去AI味道
+generated_at: 2026-05-05
+purpose: Bind each P2_05 rewrite packet entry to a concrete TeX target, current application status, and no-upgrade constraint.
+source_packet: research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+target_tex_root: research/P2_论文撰写/P2_03_定稿_tex/tex
+entries:
+  - patch_id: P2_05_R001
+    target_file: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+    target_line: 1
+    target_anchor: method_opening_workflow_sentence
+    current_status: applied
+    application_scope: broad operating-system wording narrowed in the method opening; abstract process framing is already present
+    no_upgrade_constraint: process-node framing only; no empirical performance claim
+  - patch_id: P2_05_R002
+    target_file: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    target_line: 17
+    target_anchor: abstract_process_claim_sentence
+    current_status: applied
+    application_scope: TeX sentence replacement already present
+    no_upgrade_constraint: process traceability claim only
+  - patch_id: P2_05_R003
+    target_file: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+    target_line: 1
+    target_anchor: introduction_problem_sentence
+    current_status: no_edit_needed
+    application_scope: original sentence retained as sufficiently specific
+    no_upgrade_constraint: bottleneck framing only
+  - patch_id: P2_05_R004
+    target_file: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+    target_line: 3
+    target_anchor: introduction_contribution_sentence
+    current_status: applied
+    application_scope: TeX sentence replacement applied in this pass
+    no_upgrade_constraint: process contribution only; final real-data performance remains unsupported
+  - patch_id: P2_05_R005
+    target_file: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+    target_line: 5
+    target_anchor: introduction_tex_sync_scope_sentence
+    current_status: applied
+    application_scope: TeX sentence replacement applied in this pass
+    no_upgrade_constraint: carries only upstream-accepted evidence
+  - patch_id: P2_05_R006
+    target_file: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+    target_line: 3
+    target_anchor: method_intervention_sentence
+    current_status: applied
+    application_scope: TeX sentence replacement applied in this pass
+    no_upgrade_constraint: evaluates documented node package, not a model-alone result
+  - patch_id: P2_05_R007
+    target_file: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+    target_line: 9
+    target_anchor: method_protocol_lock_sentence
+    current_status: no_edit_needed
+    application_scope: original sentence retained as sufficiently precise
+    no_upgrade_constraint: pre-result protocol lock only
+  - patch_id: P2_05_R008
+    target_file: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    target_line: 19
+    target_anchor: experiment_discussion_boundary_sentence
+    current_status: applied
+    application_scope: TeX sentence replacement already present
+    no_upgrade_constraint: unsupported rows are not rewritten as support
+  - patch_id: P2_05_R009
+    target_file: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    target_line: 33
+    target_anchor: discussion_limitation_boundary_sentence
+    current_status: applied
+    application_scope: TeX sentence replacement already present
+    no_upgrade_constraint: negative and uncertain evidence remain in manuscript record
+current_final_gate_boundary:
+  validator_fail_classes:
+    P1_checklist_pending: 109
+    review_scores_below_90_after_P2_04: 26
+    P3_04_blocked_or_planned_actions: 6
+  formal_evidence_goal_blockers_retained:
+    - selected_backend_not_locked
+    - RM101_reject_evidence_unresolved
+    - metadata_H5_adapter_preflight_pending
+    - Stage_C_main_rows_incomplete
+    - Stage_D_ablation_rows_incomplete
+    - PHMGA_dirty_worktree_boundary
+checks:
+  exact_tex_targets_present: true
+  high_risk_replacements_applied: true
+  no_edit_entries_explicit: true
+  no_scientific_claim_upgrade: true
+  final_submission_ready_claimed: false

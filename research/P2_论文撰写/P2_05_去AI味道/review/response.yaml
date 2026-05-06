@@ -1,8 +1,39 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      External AI reviewer passed P2_05 with score 84, hard_fail false,
+      downstream_ready true, and no blocking issues. AI-001-W01 is resolved by
+      this node-close metadata update. AI-001-W02 was addressed by narrowing the
+      directory-level TeX evidence reference to concrete TeX files and replacing
+      coarse final-readiness refs with the reviewed current-gate trace where
+      possible. AI-001-W03 is addressed by
+      artifacts/tex_rewrite_target_map.yaml, which records target file, line,
+      anchor, application status, and no-upgrade constraint for every P2_05_R
+      patch entry. The high- and medium-risk TeX replacements are now applied or
+      marked no-edit-needed, and the no-upgrade ledger plus
+      negative/uncertain-evidence boundary remain unchanged.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      User-authorized Claude Code teammate delegate passed the P2_05
+      human-review slot with a valid v2 handoff. The review confirmed concrete
+      template-like sentence identification, more specific replacements without
+      scientific claim upgrade, visible negative/unsupported/uncertain evidence,
+      target TeX locations, schema-shaped claim-evidence registry, and no final
+      submission-readiness claim. Remaining blockers are non-node global
+      blockers.
+
+  - comment_id: AI-002
+    responded: true
+    note: >-
+      Distinct reviewer external_node_reviewer_codex_p2_05_ai_002 passed P2_05
+      with score 88.0 but withheld final-threshold scoring because the local
+      blocker count said 26 while the cited P2_04 gate trace still said 27, and
+      the method opening still used broad human-agent research operating-system
+      wording. Both issues are now addressed: P2_04
+      artifacts/current_final_gate_trace.yaml records 26 below-threshold review
+      scores after the P2_04 re-review, and the P2_03 method opening now says
+      documented human-agent research workflow rather than research operating
+      system. The no-upgrade ledger remains unchanged.

@@ -1,0 +1,114 @@
+version: p2_02_04_method_contract_v1
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_04_方法
+purpose: Bind the Methods prose to protocol, registry, review, negative-evidence, and formal-evidence eligibility rules.
+generated_at: 2026-05-05
+author_agent_id: codex-local
+reviewer_trace: artifacts/method_reviewer_trace.yaml
+method_scope:
+  unit_of_analysis: research_node
+  intervention: evidence_governed_human_agent_research_workflow
+  not_in_scope:
+    - domain_model_training_recipe
+    - dashboard_or_canvas_method
+    - final_phmga_performance_claim
+    - selected_backend_success_claim
+    - submission_readiness_claim
+node_lifecycle:
+  author_exit_requires:
+    - local_manuscript_section
+    - required_artifacts
+    - explicit_claim_ids
+    - explicit_evidence_ids
+    - support_status_and_boundary_labels
+  node_close_requires:
+    - completed_independent_verdict
+    - hard_fail_false
+    - reviewer_independence_confirmed
+    - all_comments_responded
+registry_contract:
+  required_claim_fields:
+    - claim_id
+    - claim_type
+    - claim_text
+    - support_status
+    - manuscript_location
+    - action
+    - evidence_refs
+  required_evidence_ref_fields:
+    - evidence_id
+    - evidence_type
+    - source_ref
+  downgrade_rule: Unsupported, contradicted, or unreviewed central claims are revised, downgraded, or blocked rather than upgraded in prose.
+comparison_protocol:
+  source_protocol: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+  fixed_node_governance_protocol: P1_07_PROTO_001_FIXED_NODE_GOVERNANCE_COMPARISON
+  formal_evidence_protocol: P1_07_PROTO_002_FORMAL_EVIDENCE_ELIGIBILITY_GATE
+  baselines:
+    - manual_checklist_workflow
+    - prompt_only_agent_workflow
+    - agent_without_independent_gate
+primary_metric:
+  metric_id: P1_07_M001_CLAIM_EVIDENCE_VALIDITY_RATE
+  name: claim_evidence_validity_rate
+  numerator: eligible central claims with claim_id, evidence_id, artifact_path, support_status, boundary_label, review_action, and response_status
+  denominator: all eligible proposal, manuscript, review, and response central claims in the fixed node set
+secondary_metrics:
+  - unsupported_claim_count
+  - independent_reviewer_pass_rate
+  - response_coverage_rate
+  - hard_fail_closure_rate
+  - negative_result_retention_rate
+  - reproducibility_rerun_agreement
+formal_evidence_gate:
+  vibench_role: read_catalog_and_read_bundle_only
+  phmga_role: protocol_split_windowing_dag_evaluation_ledger_tables
+  phmga_reference:
+    source_artifact: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+    branch: journal_thesis
+    commit: 914bc5925d5230917a5de95d88784075fb2b041e
+    dirty_state_boundary: parent_pointer_update_blocked_until_dirty_work_is_protected_or_resolved
+  provider_policy:
+    openrouter: free_models_only
+    bigmodel: GLM-4.7-flash_free_only
+    credentials_recording_policy: do_not_record_secret_values_in_research_artifacts
+  formal_row_blockers:
+    - provider_model_policy_violation
+    - metadata_h5_alignment_missing_or_failed
+    - artifact_contract_failed
+    - selected_backend_not_locked
+    - stage_c_or_stage_d_rows_missing
+    - repeat_count_below_protocol
+    - result_ledger_or_table_mapping_missing
+negative_evidence_policy:
+  denominator_retention: blocked_rejected_unclear_rate_limited_and_low_power_rows_stay_visible
+  source_artifact: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+  forbidden_upgrades:
+    - formal_performance_improvement
+    - real_data_generalization
+    - selected_backend_success
+    - rm101_resolved
+    - stage_c_passed
+    - stage_d_passed
+    - submission_ready_result
+reproducibility_record:
+  minimum_node_record:
+    - README.md
+    - status.yaml
+    - prompts/research_prompt.md
+    - prompts/acceptance_checklist.yaml
+    - prompts/review_rubric.yaml
+    - docs/manuscript.md
+    - artifacts/claim_evidence_registry.yaml
+    - review/verdict.yaml
+    - review/response.yaml
+  projections_not_truth:
+    - backend/graph/graph.json
+    - obsidian_canvas
+    - web_dashboard
+    - cockpit_ui
+checks:
+  method_claims_only: true
+  result_interpretation_deferred: true
+  negative_evidence_retained: true
+  provider_secret_values_excluded: true
+  protected_paths_respected: true

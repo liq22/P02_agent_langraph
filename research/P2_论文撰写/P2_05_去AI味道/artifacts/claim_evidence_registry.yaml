@@ -1,0 +1,97 @@
+version: p2_05_claim_evidence_registry_v1
+node_id: research::P2_论文撰写::P2_05_去AI味道
+generated_at: 2026-05-05
+author_agent_id: codex-local
+purpose: Track claim/evidence boundaries for the P2_05 academic-expression and claim-calibration pass.
+
+claims:
+  - claim_id: P2_05_C01_STYLE_PASS_SCOPE
+    claim_type: method
+    claim_text: P2_05 performs a bounded prose and claim-calibration pass that records and applies TeX-targeted wording changes without changing scientific evidence boundaries.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_05_去AI味道/docs/manuscript.md#scope
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_05_E001_LOCAL_RESEARCH_PROMPT
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_05_去AI味道/prompts/research_prompt.md
+      - evidence_id: P2_05_E002_LOCAL_SKILL
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_05_去AI味道/skills/SKILL.md
+      - evidence_id: P2_05_E003_DEAI_SKILL
+        evidence_type: code
+        source_ref: .agent/skills/deai_cn_skill/SKILL.md
+
+  - claim_id: P2_05_C02_NO_SCIENTIFIC_CLAIM_UPGRADE
+    claim_type: limitation
+    claim_text: "The style pass preserves the existing claim boundary: the current manuscript supports process/documentation claims and a preliminary synthetic/offline signal, not formal real-data performance or submission readiness."
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_05_去AI味道/docs/manuscript.md#claim-and-evidence-boundary
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P2_05_E004_P2_03_REGISTRY
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/artifacts/claim_evidence_registry.yaml
+      - evidence_id: P2_05_E005_P2_02_05_CLAIM_MAP
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/artifacts/claim_map.yaml
+      - evidence_id: P2_05_E006_P2_04_FORMAL_CHECK
+        evidence_type: review_comment
+        source_ref: research/P2_论文撰写/P2_04_形式检查/artifacts/formal_check_report.md
+
+  - claim_id: P2_05_C03_PATCH_PACKET_CREATED
+    claim_type: method
+    claim_text: The node identifies high-risk template-like manuscript phrases and provides minimal patch-ready replacements while preserving terminology and evidence boundaries.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md#patch-entries
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_05_E007_CALIBRATION_PACKET
+        evidence_type: revision_diff
+        source_ref: research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+      - evidence_id: P2_05_E017_TEX_REWRITE_TARGET_MAP
+        evidence_type: revision_diff
+        source_ref: research/P2_论文撰写/P2_05_去AI味道/artifacts/tex_rewrite_target_map.yaml
+      - evidence_id: P2_05_E008_P2_03_TEX_MAIN
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+      - evidence_id: P2_05_E009_P2_03_TEX_INTRODUCTION
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+      - evidence_id: P2_05_E015_P2_03_TEX_METHOD
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+      - evidence_id: P2_05_E016_P2_03_TEX_EXPERIMENT
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+
+  - claim_id: P2_05_C04_NEGATIVE_EVIDENCE_RETAINED
+    claim_type: limitation
+    claim_text: The pass retains negative, unsupported, uncertain, rejected, and blocked evidence as visible manuscript constraints rather than rewriting those records into support.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_05_去AI味道/docs/manuscript.md#claim-and-evidence-boundary
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P2_05_E010_P2_02_05_NEGATIVE_CLAIM
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/artifacts/claim_map.yaml
+      - evidence_id: P2_05_E011_P2_04_BLOCKERS
+        evidence_type: review_comment
+        source_ref: research/P2_论文撰写/P2_04_形式检查/artifacts/formal_check_report.md
+      - evidence_id: P2_05_E018_CURRENT_GATE_TRACE
+        evidence_type: review_comment
+        source_ref: research/P2_论文撰写/P2_04_形式检查/artifacts/current_final_gate_trace.yaml
+
+  - claim_id: P2_05_C05_FINAL_SUBMISSION_STILL_BLOCKED
+    claim_type: limitation
+    claim_text: P2_05 author exit does not establish final submission readiness because P1 checklist, review-score, P3_04 action-status, PHMGA/Vibench, selected-backend, RM101, Stage C/D, and PHMGA dirty-state blockers remain.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_05_去AI味道/docs/manuscript.md#author-exit
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P2_05_E013_GOAL_FSM
+        evidence_type: code
+        source_ref: docs/submission_ready_goal/fsm/current_goal_state.yaml
+      - evidence_id: P2_05_E014_CURRENT_GATE_TRACE
+        evidence_type: review_comment
+        source_ref: research/P2_论文撰写/P2_04_形式检查/artifacts/current_final_gate_trace.yaml

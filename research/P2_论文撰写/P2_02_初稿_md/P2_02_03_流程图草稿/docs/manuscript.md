@@ -1,13 +1,13 @@
-# manuscript
+# Workflow Figure and Evidence Path
 
-这里放正文、长文、草稿或本节点的主要内容。
-README.md 不重复承载正文。
+Figure 1 is the manuscript's main workflow schematic. It is designed for a skim reader who needs to understand the mechanism of the proposed evidence-governed human-agent research workflow before reading the methods section. The figure shows the claim/evidence path as a sequence of bounded gates: node authoring creates local manuscript and artifact drafts; claim identity assigns `claim_id`, `evidence_id`, and `protocol_id`; an evidence gate records `support_status`, `boundary_label`, and eligibility rules; an independent review gate checks hard failures and comments; response closure either fixes, downgrades, or closes the node. A lower lane keeps rejected, failed, and unclear evidence visible and separates formal-result eligibility from manuscript claim upgrade.
 
-## 目标
-待补充。
+The figure intentionally omits implementation details that belong in the methods section. It does not show provider calls, scheduler internals, repository plumbing, Canvas projections, dashboard views, or PHMGA source code. Those details can help execute the workflow, but they would make the figure look like a software architecture diagram rather than a paper-level mechanism. The figure also avoids success-only framing: negative evidence, rejected rows, and blocked formal-result gates are part of the diagram because the central claim is not that the workflow always succeeds, but that claim upgrades remain inspectable before they happen.
 
-## 当前结论
-待补充。
+The node-local schematic is `figures/fig_workflow_evidence_path.svg`, rendered by `tools/render_fig_workflow_evidence_path.py`. Its role is essential rather than decorative because it connects the manuscript's one-sentence contribution to the later methods and result-table sections. The figure's claim reference is `C_WORKFLOW_EVIDENCE_PATH`, and its local evidence reference is `P2_02_03_FIG_WORKFLOW_MANIFEST`, backed by `../artifacts/outline_map.yaml`. The reader contract in `artifacts/figure_reader_contract.yaml` maps the upper claim-upgrade lane, lower negative-evidence lane, and provenance/caption lane to their claim references, evidence references, and forbidden readings. The figure is a node-local accepted schematic, not final journal artwork and not empirical evidence. It cannot be used to claim formal PHMGA performance, selected-backend success, RM101 resolution, Stage C or Stage D passage, or submission readiness.
 
-## 下一步
-- [ ] 待补充
+Caption draft: Figure 1. Evidence-governed workflow and claim/evidence path. A node-local authoring pass creates manuscript and artifact drafts, but claims are not upgraded until claim identity, evidence eligibility, independent review, and response closure are inspectable. The lower lane records negative, rejected, unclear, and blocked evidence so that failed rows remain visible instead of disappearing from the denominator. This schematic explains the workflow mechanism only; it does not report empirical performance.
+
+## Local Evidence Boundary
+
+This figure package is supported by `../artifacts/outline_map.yaml`, this node's `artifacts/figure_plan.yaml`, `artifacts/figure_manifest.yaml`, `artifacts/figure_reader_contract.yaml`, and `artifacts/claim_evidence_registry.yaml`. It introduces no external citations, no new experiment evidence, and no formal result row. Graph files, Canvas projections, dashboards, wrapper files, provider logs, PHMGA execution logs, and synthetic/offline sanity-check results are not used here as proof of final scientific results.

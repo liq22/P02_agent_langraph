@@ -1,8 +1,22 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      Closed after re-review. Added node-local `artifacts/citation_trace.yaml`,
+      included it in the acceptance checklist and human-review packet, mapped
+      every introduction citation key to supported claim/boundary, and compressed
+      the final blocker paragraph. A later local clarity patch added
+      `artifacts/introduction_reader_path.yaml` and further compressed the final
+      no-overclaim paragraph so the introduction preserves the same boundary
+      without reading like an internal blocker ledger. External re-review score
+      86, verdict pass, hard_fail false; final-threshold re-review remains
+      required before changing the score.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      User-authorized Claude Code teammate delegate passed the P2_02_01
+      human-review slot with a valid v2 handoff. The review confirmed problem
+      importance, specific cited gap, outline-aligned contribution preview,
+      no final-result overclaiming, and clear problem-to-gap-to-contribution
+      flow. Non-node blockers remain outside this introduction node.

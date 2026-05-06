@@ -1,0 +1,59 @@
+version: p2_02_03_figure_plan_v1
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_03_流程图草稿
+purpose: Plan the workflow figure and caption for the P2 draft without creating performance evidence.
+source_boundary:
+  primary_input: research/P2_论文撰写/P2_02_初稿_md/artifacts/outline_map.yaml
+  source_of_truth_boundary: figure_package_only_no_new_research_truth
+  creates_new_experiment_evidence: false
+  external_citations_introduced: false
+  graph_canvas_dashboard_used_as_truth: false
+
+figures:
+  - figure_id: fig_workflow_evidence_path
+    role: main_workflow_schematic
+    target_section: workflow_and_figure
+    necessity: essential
+    source_kind: python
+    source_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/tools/render_fig_workflow_evidence_path.py
+    output_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/figures/fig_workflow_evidence_path.svg
+    claim_ref: C_WORKFLOW_EVIDENCE_PATH
+    evidence_ref: P2_02_03_FIG_WORKFLOW_MANIFEST
+    reader_contract_ref: artifacts/figure_reader_contract.yaml
+    upstream_evidence_refs:
+      - P2_02_outline_map_v1
+    first_callout_location: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/docs/manuscript.md#workflow-figure-and-evidence-path paragraph 1
+    caption_status: self_contained_checked
+    status: node_local_accepted_schematic_not_final_journal_artwork
+    production_boundary: final_journal_artwork_polish_deferred
+    must_show:
+      - node authoring
+      - claim identity
+      - evidence gate
+      - independent review gate
+      - response closure
+      - negative evidence lane
+      - formal result eligibility boundary
+    must_not_show:
+      - provider credentials
+      - PHMGA source internals
+      - graph or Canvas projection as truth
+      - final performance improvement
+      - selected backend success
+      - RM101 resolution
+      - Stage C or Stage D passage
+      - submission readiness
+
+caption_obligations:
+  self_contained: true
+  states_schematic_not_result: true
+  identifies_negative_evidence_lane: true
+  avoids_performance_claims: true
+
+checks:
+  reflects_core_steps_not_all_implementation_details: true
+  caption_self_explaining: true
+  figure_not_decorative: true
+  claim_ref_present: true
+  evidence_ref_present: true
+  first_callout_present: true
+  provenance_present: true

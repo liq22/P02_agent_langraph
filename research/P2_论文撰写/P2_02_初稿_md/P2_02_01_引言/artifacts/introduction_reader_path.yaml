@@ -1,0 +1,94 @@
+version: p2_02_01_introduction_reader_path_v1
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_01_引言
+generated_at: 2026-05-05
+author_agent_id: codex-local
+artifact_scope: local_story_clarity_and_claim_boundary_for_introduction
+submission_ready_claim: false
+
+purpose: >-
+  Provide a reviewer-facing map of the introduction's problem-gap-contribution-
+  boundary arc so later polishing can improve readability without weakening
+  evidence limits.
+
+source_inputs:
+  - path: research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/artifacts/citation_trace.yaml
+    role: citation_key_to_claim_boundary
+  - path: research/P2_论文撰写/P2_02_初稿_md/artifacts/outline_map.yaml
+    role: section_and_contribution_alignment
+  - path: research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_evidence_binding.yaml
+    role: style_profile_to_repository_evidence_boundary
+  - path: research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/contribution_claims.yaml
+    role: bounded_contribution_units_and_forbidden_upgrades
+
+paragraph_path:
+  - paragraph_id: intro_p1
+    reader_role: motivation
+    main_move: agentic_research_can_create_plausible_artifacts_while_truth_drift_remains_hidden
+    must_preserve:
+      - claim_evidence_protocol_review_response_negative_result_drift
+      - problem_is_research_truth_auditability_not_generic_agent_error
+    claim_boundary:
+      - prior_work_is_motivation_not_baseline_result
+  - paragraph_id: intro_p2
+    reader_role: prior_work_boundary
+    main_move: representative_agent_and_reporting_systems_motivate_but_do_not_close_the_node_local_operating_gap
+    must_preserve:
+      - role_composition_is_not_evidence_boundary
+      - paper_like_artifact_is_not_support_status
+    claim_boundary:
+      - venue_policy_sources_are_governance_context_only
+  - paragraph_id: intro_p3
+    reader_role: specific_gap_and_measurable_question
+    main_move: define_node_local_operating_procedure_gap_and_fixed_budget_comparison_question
+    must_preserve:
+      - gap_is_not_broad_agents_for_science
+      - comparison_is_protocol_goal_not_completed_result
+    claim_boundary:
+      - no_final_performance_or_submission_ready_claim
+  - paragraph_id: intro_p4
+    reader_role: contribution_preview
+    main_move: state_four_bounded_contribution_units
+    must_preserve:
+      - node_level_evidence_governance
+      - cross_phase_claim_evidence_protocol_chain
+      - independent_review_and_negative_result_gate
+      - formal_evidence_eligibility_gate
+    claim_boundary:
+      - eligibility_gate_is_not_formal_result_success
+  - paragraph_id: intro_p5
+    reader_role: manuscript_roadmap
+    main_move: align_remaining_sections_to_p2_01_specialist_engineering_style
+    must_preserve:
+      - evidence_by_maturity_order
+      - negative_or_unclear_evidence_remains_table_visible
+    claim_boundary:
+      - synthetic_offline_row_is_limited_sanity_check
+  - paragraph_id: intro_p6
+    reader_role: no_overclaim_boundary
+    main_move: compress_unresolved_conditions_into_formal_evidence_and_reproducibility_gates
+    must_preserve:
+      - no_submission_readiness
+      - no_final_phmga_performance
+      - no_selected_backend_success
+      - no_rm101_resolution
+      - no_stage_c_or_stage_d_completion
+    claim_boundary:
+      - auditable_governance_claim_allowed
+      - completed_empirical_result_claim_blocked_until_ledger_supports_upgrade
+
+reviewer_checks:
+  problem_importance_visible_in_first_two_paragraphs: true
+  operational_gap_stated_before_contribution: true
+  contribution_units_match_outline: true
+  citation_boundaries_delegated_to_citation_trace: true
+  final_blocker_paragraph_compressed: true
+  dense_internal_blocker_list_removed_from_intro_body: true
+  no_graph_canvas_dashboard_or_wrapper_as_evidence: true
+  no_phmga_log_as_final_result_evidence: true
+
+re_review_readiness:
+  addressed_prior_nonblocking_issue: final_limitation_paragraph_density
+  recommended_reviewer_focus:
+    - story_clarity_after_compression
+    - preservation_of_no_overclaim_boundary
+    - alignment_with_p2_01_venue_evidence_binding

@@ -1,11 +1,11 @@
 lifecycle:
-  stage: seed
-progress_pct: 0
+  stage: done
+progress_pct: 100
 review_gate:
-  ai_review_count: 0
+  ai_review_count: 2
   human_review_count: 0
-  all_comments_responded: false
-can_enter_fix: false
-heartbeat_at: 2026-04-10
-last_actor: system
-author_agent_id: <pending-author-agent>
+  all_comments_responded: true
+can_enter_fix: true
+heartbeat_at: 2026-05-05
+last_actor: codex-local
+author_agent_id: codex-local

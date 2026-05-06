@@ -1,0 +1,75 @@
+version: p2_03_p2_05_tex_sync_trace_v1
+node_id: research::P2_论文撰写::P2_03_定稿_tex
+generated_at: 2026-05-05
+purpose: Record the TeX export state after the P2_05 academic-expression and claim-calibration pass.
+source_node: research/P2_论文撰写/P2_05_去AI味道
+source_artifacts:
+  - research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+  - research/P2_论文撰写/P2_05_去AI味道/artifacts/tex_rewrite_target_map.yaml
+  - research/P2_论文撰写/P2_05_去AI味道/review/AI_003.md
+applied_tex_changes:
+  - patch_id: P2_05_R004
+    tex_file: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+    target_anchor: introduction_contribution_sentence
+    status: applied
+    effect: Replaced promotional transformation wording with a narrower process contribution statement.
+  - patch_id: P2_05_R005
+    tex_file: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+    target_anchor: introduction_tex_sync_scope_sentence
+    status: applied
+    effect: Replaced attitude wording with an upstream-accepted-evidence scope statement.
+  - patch_id: P2_05_R006
+    tex_file: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+    target_anchor: method_intervention_sentence
+    status: applied
+    effect: Defined the intervention as a documented node package rather than a label or model-alone result.
+  - patch_id: P2_05_R001
+    tex_file: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+    target_anchor: method_opening_workflow_sentence
+    status: applied
+    effect: Narrowed broad operating-system wording to documented human-agent research workflow.
+already_present_or_no_edit_needed:
+  - patch_id: P2_05_R002
+    tex_file: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    status: already_present
+  - patch_id: P2_05_R003
+    tex_file: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+    status: no_edit_needed
+  - patch_id: P2_05_R007
+    tex_file: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+    status: no_edit_needed
+  - patch_id: P2_05_R008
+    tex_file: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    status: already_present
+  - patch_id: P2_05_R009
+    tex_file: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    status: already_present
+compile_verification:
+  command: lualatex -interaction=nonstopmode -halt-on-error main.tex
+  cwd: research/P2_论文撰写/P2_03_定稿_tex/tex
+  exit_code: 0
+  output_pdf: research/P2_论文撰写/P2_03_定稿_tex/tex/main.pdf
+  pages: 4
+  nonfatal_warnings:
+    - luaotfload-main not found; TeX reverted to OT1 layer
+    - URL underfull hbox warnings in bibliography
+no_upgrade_checks:
+  new_dataset_added: false
+  new_baseline_added: false
+  new_statistical_claim_added: false
+  new_citation_claim_added: false
+  new_figure_claim_added: false
+  formal_performance_claim_added: false
+  rm101_resolution_claim_added: false
+  selected_backend_success_claim_added: false
+  stage_c_or_d_success_claim_added: false
+  final_submission_ready_claimed: false
+current_final_gate_boundary:
+  P1_checklist_pending: 109
+  review_scores_below_90_after_P2_05: 25
+  P3_04_blocked_or_planned_actions: 6
+checks:
+  tex_targets_exist: true
+  p2_05_high_risk_replacements_accounted: true
+  lualatex_passed_after_expression_sync: true
+  evidence_boundary_preserved: true

@@ -1,0 +1,315 @@
+version: p2_01_venue_requirements_v1
+node_id: research::P2_论文撰写::P2_01_风格选择_IEEE_Elsevier_Nature
+generated_at: 2026-05-05
+author_agent_id: codex-local
+artifact_scope: venue_and_style_selection_only
+acceptance_ready_claim: false
+local_venue_evidence_binding: artifacts/venue_evidence_binding.yaml
+selected_profiles:
+  - elsevier_specialist_engineering_imrad
+  - ieee_transactions_technical
+active_gate_stage: review
+venue_fit_decision: venue_gate_passed
+submission_blockers: []
+
+source_status:
+  citation_status_checked_when_external_sources_are_used: true
+  checked_at: 2026-05-05
+  source_policy: official_author_guidance_only_for_format_and_disclosure
+  local_source_check_ledger: artifacts/source_check_ledger.yaml
+  local_venue_evidence_binding: artifacts/venue_evidence_binding.yaml
+  sources:
+    - source_id: ieee_structure
+      publisher: IEEE Author Center
+      url: https://journals.ieeeauthorcenter.ieee.org/create-your-ieee-journal-article/create-the-text-of-your-article/structure-your-article/
+      used_for:
+        - specific_concise_descriptive_title
+        - single_paragraph_self_contained_abstract
+        - methodology_reproducibility
+        - results_figures_tables_discussion_conclusion_boundaries
+    - source_id: ieee_submission_policy
+      publisher: IEEE Author Center
+      url: https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/guidelines-and-policies/submission-and-peer-review-policies/
+      used_for:
+        - originality_and_prior_publication_boundary
+        - ai_generated_content_disclosure_boundary
+        - peer_review_confidentiality_and_independence_context
+    - source_id: elsevier_guide_for_authors
+      publisher: Elsevier
+      url: https://www.elsevier.com/en-au/subject/next/guide-for-authors
+      used_for:
+        - imrad_like_article_structure
+        - concise_factual_abstract
+        - reproducible_experimental_or_methods_detail
+        - clear_results_and_non_repetitive_discussion
+        - keywords_and_graphical_abstract_option
+    - source_id: elsevier_graphical_abstract
+      publisher: Elsevier
+      url: https://www.elsevier.com/researcher/author/tools-and-resources/graphical-abstract
+      used_for:
+        - graphical_abstract_as_take_home_message
+        - original_image_requirement
+        - visual_clarity_and_ai_policy_boundary
+    - source_id: nature_formatting
+      publisher: Nature
+      url: https://www.nature.com/nature/for-authors/formatting-guide
+      used_for:
+        - broad_readership_language
+        - title_and_summary_paragraph_constraints
+        - methods_data_code_availability_sequence
+        - compact_display_item_and_legend_constraints
+    - source_id: nature_reporting
+      publisher: Nature Portfolio
+      url: https://www.nature.com/natcomputsci/natcomputsci/editorial-policies/reporting-standards
+      used_for:
+        - data_code_materials_protocol_availability
+        - reproducibility_and_restriction_disclosure_boundary
+
+project_truth_inputs:
+  - path: research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/contribution_claims.yaml
+    role: bounded_research_content_units_and_downgrade_rules
+  - path: research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/artifacts/constraint_risk_map.yaml
+    role: resource_risk_provider_data_phmga_review_schema_boundaries
+  - path: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+    role: fixed_node_governance_and_phmga_formal_evidence_protocols
+  - path: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+    role: table_order_result_boundary_negative_unclear_rows
+  - path: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/claim_map.yaml
+    role: allowed_and_forbidden_claim_wording
+  - path: docs/submission_ready_goal/completion_audit_current.md
+    role: global_blocker_and_scheduler_state_summary
+
+one_sentence_contribution:
+  text: An evidence-governed human-agent research workflow keeps node closure, cross-phase claim identity, independent review, negative evidence, and PHMGA formal-result eligibility inspectable before manuscript claims are upgraded.
+  support_status: protocol_and_proposal_supported
+  forbidden_upgrade_without_future_evidence:
+    - proven_performance_improvement
+    - real_data_generalization
+    - selected_backend_success
+    - rm101_resolution
+    - stage_c_or_stage_d_success
+    - submission_ready_result
+
+style_profile_details:
+  - profile_id: elsevier_specialist_engineering_imrad
+    role: primary_working_profile
+    target_granularity: full_specialist_engineering_article
+    fit_score: high_current_fit
+    fit_rationale: >-
+      The current package needs methods detail, reproducibility boundaries,
+      table-ledger evidence, negative-result retention, and a factual
+      results/discussion split. This is better served by a specialist
+      engineering IMRAD article than by a compressed broad-interest format.
+    title_rule: Specific, technical, and claim-bounded; avoid implying final PHMGA performance.
+    abstract_rule: Factual purpose-method-result-boundary paragraph; mention blockers when formal rows remain incomplete.
+    figure_rule: Use provenance-backed workflow schematic and table-linked result displays; graphical abstract is optional and must be original and claim-bounded.
+    methods_rule: Central section; include node-local governance, reviewer gate, PHMGA/Vibench boundary, provider policy, artifact contract, and reproducibility path.
+    results_rule: Order by evidence maturity and include blocker/reject rows in denominators.
+    data_code_rule: Include data/code/protocol availability statements and PHMGA submodule/result-ledger traceability once formal rows exist.
+  - profile_id: ieee_transactions_technical
+    role: backup_profile
+    target_granularity: concise_technical_transaction_article
+    fit_score: medium_high_after_compression
+    fit_rationale: >-
+      IEEE style fits a technical contribution with reproducible methodology,
+      explicit results, and careful discussion. It is a backup because the
+      current evidence package is lengthy and must be compressed without hiding
+      blockers.
+    title_rule: Specific, concise, descriptive, and keyword-bearing; avoid "new" or "novel".
+    abstract_rule: Single self-contained paragraph, no references, no equations, around 250 words where applicable.
+    figure_rule: Use tables when exact values matter and figures when trends or workflows matter.
+    methods_rule: Straightforward reproducibility narrative with enough detail for independent researchers.
+    results_rule: Exact values in tables, trends in figures, and no inflated conclusion.
+    disclosure_rule: AI-generated content and author-assisted workflow use must be disclosed according to IEEE policy.
+  - profile_id: nature_broad_interest
+    role: nonselected_stretch_quality_lens
+    target_granularity: broad_science_article
+    fit_score: low_current_fit_future_stretch
+    fit_rationale: >-
+      Nature-style constraints are useful for clarity, figures, and
+      availability statements, but the current evidence does not yet support a
+      broad breakthrough narrative. Selecting this profile now would encourage
+      overclaiming.
+    title_rule: Very short, broadly intelligible, minimal acronyms, no unsupported performance language.
+    abstract_or_summary_rule: Plain-language summary paragraph must state background, rationale, and main conclusion without specialist jargon.
+    figure_rule: Few compact display items, simple legends, error bars/statistics defined, readable outside the subfield.
+    methods_rule: Concise but complete Methods with data and code availability statements.
+    rejection_reason_now: Formal Stage C/D evidence, selected backend, RM101 treatment, and final review-score threshold are not yet complete.
+
+venue_fit_comparison:
+  title_requirements:
+    ieee: concise_specific_descriptive_keyword_bearing_no_new_or_novel
+    elsevier: factual_searchable_specialist_title_no_acceptance_ready_overclaim
+    nature: short_broadly_intelligible_minimal_acronyms_high_general_readability
+    selected_rule: Use an Elsevier/IEEE-compatible technical title until formal results mature.
+  abstract_requirements:
+    ieee: single_self_contained_paragraph_roughly_250_words_no_refs_or_equations
+    elsevier: concise_factual_purpose_principal_results_major_conclusions_standalone
+    nature: broad_summary_first_paragraph_accessible_to_scientists_outside_subfield
+    selected_rule: Draft as factual IMRAD abstract and include evidence-boundary sentence.
+  figure_requirements:
+    ieee: use_figures_for_trends_or_workflow_and_tables_for_exact_values
+    elsevier: self_explanatory_figures_tables_plus_optional_graphical_abstract
+    nature: few_simple_display_items_readable_beyond_subfield_with_error_bars_defined
+    selected_rule: Figure 1 should be workflow/evidence-path schematic; formal result figures wait for passed rows.
+  methods_requirements:
+    ieee: straightforward_reproducibility_description
+    elsevier: enough_detail_for_independent_researcher_to_reproduce
+    nature: concise_complete_methods_plus_data_code_protocol_availability
+    selected_rule: Methods carry the main contribution and must expose protocol, review, response, negative evidence, and PHMGA gates.
+  results_discussion_requirements:
+    ieee: results_with_figures_tables_and_non_inflated_discussion_conclusion
+    elsevier: clear_concise_results_discussion_explains_significance_without_repeating
+    nature: main_text_tight_display_items_and_methods_support_interdisciplinary_claim
+    selected_rule: Results are ordered by evidence maturity and blocked/reject evidence stays visible.
+  disclosure_requirements:
+    ieee: disclose_ai_generated_content_when_used_beyond_basic_editing
+    elsevier: disclose_ai_tools_for_manuscript_preparation_and_describe_research_process_use_when_relevant
+    nature: disclose_data_code_protocol_availability_and_restrictions
+    selected_rule: Keep Claude/Codex teammate review transparent as user-authorized agent review, not biological human review.
+
+recommendation:
+  selected_profile_id: elsevier_specialist_engineering_imrad
+  backup_profile_id: ieee_transactions_technical
+  stretch_or_rejected_profile_id: nature_broad_interest
+  current_work_more_suited_to: specialist_engineering_method_protocol_and_evidence_governance_article
+  current_work_not_suited_to: nature_style_broad_breakthrough_or_final_phmga_performance_story
+  reason: >-
+    The strongest current contribution is inspectable evidence governance and
+    reproducibility design. The strongest formal result claims remain gated or
+    blocked, so the manuscript needs a style that can present method, protocol,
+    evidence ledger, negative rows, and limitations without forcing a broad
+    breakthrough narrative.
+
+contradiction_list:
+  - contradiction_id: C001_STRONG_STORY_VS_FORMAL_EVIDENCE
+    issue: Strong venue prose could imply formal PHMGA success.
+    current_truth: Selected backend, metadata-H5 alignment, Stage C rows, and Stage D ablations remain incomplete.
+    writing_action: Keep formal rows as eligibility-gate, blocker, reject-evidence, or future-required rows.
+  - contradiction_id: C002_SYNTHETIC_SIGNAL_VS_REAL_DATA_CLAIM
+    issue: The P1_04/P1_05 synthetic/offline signal can be overpromoted.
+    current_truth: P1_08 c1 permits only limited synthetic/offline sanity-check wording.
+    writing_action: Put synthetic signal in a bounded row with weak or supported_limited status.
+  - contradiction_id: C003_RM101_ABSENCE_VS_NEGATIVE_EVIDENCE
+    issue: RM101 may look omitted if only positive Ottawa rows are shown.
+    current_truth: RM101 Stage B rows include reject evidence and low macro-F1 traces.
+    writing_action: Preserve RM101 as reject evidence or limitation until eligible reruns pass.
+  - contradiction_id: C004_NODE_PASS_VS_FINAL_SUBMISSION_THRESHOLD
+    issue: Node-local pass could be mistaken for final submission quality.
+    current_truth: Multiple nodes have passing verdicts but scores below 90.
+    writing_action: Use reviewer gates as process evidence only; retain final-score blocker.
+  - contradiction_id: C005_REPRODUCIBILITY_VS_DIRTY_SUBMODULE
+    issue: PHMGA is the implementation truth but has dirty/untracked entries.
+    current_truth: Parent pointer should not be updated until dirty work is protected.
+    writing_action: Describe reproducibility path and current submodule boundary, not final frozen artifact.
+  - contradiction_id: C006_POLICY_DISCLOSURE_VS_AGENTIC_AUTHORING
+    issue: AI/agent involvement could be hidden or mislabeled.
+    current_truth: Claude Code teammates are user-authorized review agents, not biological human reviewers.
+    writing_action: Add transparent AI/agent contribution and review-handoff disclosure language.
+  - contradiction_id: C007_GRAPH_VIEW_VS_RESEARCH_TRUTH
+    issue: Graph, Canvas, dashboard, or wrapper files may be treated as evidence.
+    current_truth: Those files are projection or operation surfaces only.
+    writing_action: Cite node-local artifacts, PHMGA result artifacts, and reviewer verdicts only.
+
+evidence_gaps:
+  - gap_id: G001_SELECTED_BACKEND_NOT_LOCKED
+    required_for_upgrade: selected_global_best_backend_locked
+    affects_claims:
+      - formal_phmga_result_claims
+      - backend_comparison_claims
+  - gap_id: G002_METADATA_H5_ALIGNMENT_PENDING
+    required_for_upgrade: sample_level_vibench_phmga_adapter_alignment_pass
+    affects_claims:
+      - real_data_formal_eligibility
+      - reproducibility
+  - gap_id: G003_STAGE_C_MAIN_ROWS_MISSING
+    required_for_upgrade: passed_stage_c_rows_with_result_md_artifact_dir_ledger_rows
+    affects_claims:
+      - main_result_performance
+  - gap_id: G004_STAGE_D_ABLATIONS_MISSING
+    required_for_upgrade: passed_stage_d_rows_with_repeat_count_and_uncertainty
+    affects_claims:
+      - ablation_or_efficiency_mechanism
+  - gap_id: G005_REVIEW_SCORE_THRESHOLD_NOT_MET
+    required_for_upgrade: all_final_submission_relevant_reviews_score_at_least_90_or_blocker_resolved
+    affects_claims:
+      - submission_readiness
+      - review_robustness
+  - gap_id: G006_GLOBAL_REGISTRY_SCHEMA_ERRORS
+    required_for_upgrade: scripts_validate_research_truth_require_submission_passes
+    affects_claims:
+      - claim_evidence_governance
+  - gap_id: G007_P1_05_FAILURE_TRUTH_ARTIFACTS
+    required_for_upgrade: failure_register_negative_result_note_keep_discard_ledger_exist_for_p1_05
+    affects_claims:
+      - negative_result_retention
+
+scope_fit:
+  current_status: fit_for_style_selection_and_downstream_drafting
+  selected_narrative_granularity: method_protocol_evidence_governance_with_limited_results
+  not_selected_narrative_granularity: broad_science_breakthrough_or_final_phmga_performance_story
+  allowed_claim_strength:
+    - governance_design
+    - protocol_ready
+    - limited_synthetic_offline_sanity_check
+    - blocker_or_reject_evidence_retained
+  forbidden_claim_strength:
+    - acceptance_ready
+    - formal_performance_improvement
+    - real_data_generalization
+    - selected_backend
+    - rm101_resolved
+    - stage_c_stage_d_passed
+
+summary_paragraph_requirements:
+  introduction_final_paragraph:
+    must_include:
+      - one_sentence_contribution
+      - four_bounded_contribution_units
+      - evidence_boundary
+      - reviewer_path_preview
+    must_not_include:
+      - formal_phmga_success_claim
+      - nature_style_breakthrough_claim
+  abstract:
+    must_include:
+      - problem_failure_mode
+      - method_or_protocol
+      - current_evidence_level
+      - limitation_or_blocker_sentence
+    must_not_include:
+      - unverified_citation
+      - unsupported_metric_improvement
+  methods_opening:
+    must_include:
+      - node_local_acceptance
+      - claim_evidence_protocol_ids
+      - independent_review_and_response
+      - negative_evidence_retention
+      - phmga_vibench_boundary
+  results_opening:
+    must_include:
+      - evidence_maturity_order
+      - denominator_policy
+      - support_status_vocabularies
+      - source_artifact_paths
+  discussion_limitations:
+    must_include:
+      - synthetic_offline_boundary
+      - formal_gate_blockers
+      - rm101_reject_evidence
+      - final_score_and_schema_blockers
+      - dirty_submodule_boundary
+
+handoff_ready_checks:
+  compared_at_least_two_styles: true
+  compared_styles:
+    - ieee_transactions_technical
+    - elsevier_specialist_engineering_imrad
+    - nature_broad_interest
+  clear_recommendation_and_backup: true
+  contradiction_list_present: true
+  evidence_gaps_present: true
+  scope_fit_judgment_present: true
+  summary_paragraph_requirements_present: true
+  no_submission_ready_claim: true

@@ -1,0 +1,102 @@
+version: p2_02_02_preliminary_term_contract_v1
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_02_preliminary
+generated_at: 2026-05-05
+author_agent_id: codex-local
+artifact_scope: local_term_to_downstream_reader_check_contract
+submission_ready_claim: false
+
+purpose: >-
+  Convert preliminary definitions into a reviewer-facing contract for later
+  manuscript sections, so the section is not merely a glossary but a checkable
+  claim-evidence protocol for drafting and review.
+
+source_inputs:
+  - path: research/P2_论文撰写/P2_02_初稿_md/artifacts/outline_map.yaml
+    role: section_order_and_bounded_contribution_alignment
+  - path: research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/artifacts/positioning_matrix.yaml
+    role: term_set_section_boundaries_and_forbidden_uses
+  - path: research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_evidence_binding.yaml
+    role: downstream_section_style_to_evidence_binding
+  - path: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+    role: later_table_row_evidence_fields
+
+downstream_reader_check:
+  universal_questions:
+    - question_id: q1_claim
+      text: What exactly is being claimed?
+      required_identifier: claim_id
+    - question_id: q2_evidence
+      text: What artifact, ledger row, citation trace, figure source, or table row supports or limits it?
+      required_identifier: evidence_id
+    - question_id: q3_protocol
+      text: Which gate made that evidence eligible for the stated claim strength?
+      required_identifier: protocol_id
+    - question_id: q4_boundary
+      text: What must this evidence not be used to claim?
+      required_identifier: boundary_label
+    - question_id: q5_review_response
+      text: Which review or response record closed the objection, or which blocker remains open?
+      required_identifier: review_or_response_ref
+
+term_contract:
+  - term: evidence-governed human-agent research workflow
+    downstream_use: umbrella phrase for the audited process
+    required_check: must name node-local evidence and review/response closure before claim upgrade
+    forbidden_upgrade: autonomous_discovery_or_final_scientific_success
+  - term: node
+    downstream_use: schedulable unit for authoring, artifacts, review, and status
+    required_check: must distinguish local node closure from whole-paper submission readiness
+    forbidden_upgrade: node_done_as_empirical_truth
+  - term: author exit
+    downstream_use: author-side artifact readiness or recorded gap
+    required_check: must be followed by independent review before node close language
+    forbidden_upgrade: author_exit_as_reviewed_closure
+  - term: node close
+    downstream_use: reviewed local closure with response coverage
+    required_check: must preserve hard_fail, independence, verdict, and response state
+    forbidden_upgrade: final_acceptance_or_final_result_success
+  - term: claim_id
+    downstream_use: stable name for a manuscript assertion
+    required_check: must pair with evidence_id, protocol_id, and boundary_label in tables or registries
+    forbidden_upgrade: claim_identifier_as_evidence
+  - term: evidence_id
+    downstream_use: stable name for supporting or limiting artifact
+    required_check: must identify whether evidence is citation, protocol, proxy, formal row, rejection, or gap
+    forbidden_upgrade: evidence_presence_as_support_status_upgrade
+  - term: protocol_id
+    downstream_use: eligibility and downgrade rule
+    required_check: must state which condition passed, failed, or remains pending
+    forbidden_upgrade: planned_protocol_as_observed_result
+  - term: support_status
+    downstream_use: current strength label in result tables, figure callouts, and response maps
+    required_check: must be one of supported, supported_limited, blocked, rejected, unsupported, or unclear as locally defined
+    forbidden_upgrade: decorative_status_without_downgrade_effect
+  - term: boundary_label
+    downstream_use: explicit no-overclaim guard
+    required_check: must travel with figures, tables, and formal-row summaries
+    forbidden_upgrade: optional_limitation_that_can_be_dropped_for_story_flow
+
+section_application:
+  introduction:
+    expected_use: motivates why the universal questions matter
+    must_not_do: answer universal questions with final-result claims
+  methods:
+    expected_use: specifies how the universal questions are enforced by artifacts and validators
+    must_not_do: treat protocol design as passed experiment evidence
+  results:
+    expected_use: reports rows only at the support_status allowed by evidence and protocol state
+    must_not_do: hide rejected, unsupported, or unclear rows from denominators
+  response_package:
+    expected_use: maps reviewer objections back to claim_id, evidence_id, protocol_id, and boundary_label
+    must_not_do: mark retained limitations as resolved formal evidence
+
+reviewer_risk_reduction:
+  prior_nonblocking_note_addressed: repeated_one_sentence_contribution_replaced_with_reader_check
+  term_section_now_operational: true
+  still_not_claimed:
+    - submission_readiness
+    - final_phmga_performance
+    - selected_backend_success
+    - rm101_resolution
+    - stage_c_or_stage_d_completion
+    - formal_provider_row_acceptance

@@ -1,81 +1,53 @@
-# Methods Template：AutoResearch 系统研究
+# Methods
 
-## Methods Scope
+## Scope and Unit of Analysis
 
-This Methods node specifies how to study AutoResearch as a human-agent research operating system. The method is not a domain-model training recipe and not a description of a local dashboard. It defines the study design, task set, comparison conditions, artifacts, statistics, data-code statements, protocol statements, and phase-gate policy needed for a reviewer to reproduce the research-process evaluation [1][2].
+This study evaluates AutoResearch as an evidence-governed human-agent research workflow rather than as a single model, dashboard, or repository utility. The unit of analysis is a research node. A node is eligible for evaluation only when it has a path-backed identity, a local research prompt, an acceptance checklist, an edit-scope contract, expected outputs, claim/evidence artifacts, and an independent review or human-gate record. This choice keeps the method tied to inspectable research state: fluent text is not sufficient evidence unless the claim, artifact path, boundary, and review response can be reconstructed.
 
-## 研究设计与实现的关键决定是什么？
+The intervention is the full AutoResearch contract. Each node starts from node-local framing, records its manuscript or protocol contribution, binds claims to evidence and protocol identifiers, preserves negative or blocked evidence, passes through independent review, and closes reviewer comments in a response record before downstream claims are upgraded. The comparison conditions defined by the protocol are a manual checklist workflow, a prompt-only agent workflow, and an agent workflow without the independent gate. These baselines receive the same fixed node set, source prompts, acceptance checklists, review rubrics, budgets, artifact audit rule, and primary metric definition.
 
-Key decision 1: the unit of analysis is a research node. A node is eligible only if it has a node path, research prompt, acceptance checklist, allowed edit scope, expected outputs, evidence artifacts, and a reviewer or human gate. This prevents the study from scoring generic prose without a verifiable research state [3].
+For review, the method variables are summarized in `artifacts/method_reviewer_trace.yaml`. That trace maps the unit of analysis, intervention, baselines, primary metric, secondary metrics, eligibility gates, statistics requirements, and retained blockers to the local method contract, claim/evidence registry, upstream protocol map, table plan, submodule reference, and completion audit. It is a reviewer aid for checking the Methods logic, not a substitute for the protocol or a claim that formal rows have passed.
 
-Key decision 2: the intervention is the AutoResearch contract, not the language model alone. The intervention includes node-local problem framing, claim/evidence/protocol registry, pre-execution protocol gates, independent review, and response coverage. The comparison conditions are manual checklist workflow, prompt-only agent workflow, and agent workflow without independent gate [3].
+## Node Lifecycle and Local Contract
 
-Key decision 3: author exit and node close are separated. Author exit means the local artifacts are present and internally coherent; node close requires reviewer verdict or human gate evidence. This distinction is a method variable, because premature phase transition is one of the risks under study [3].
+The lifecycle separates author exit from node close. Author exit means the local manuscript section and required artifacts are present, internally coherent, and bounded by explicit claim and evidence identifiers. Node close requires the review gate: a completed verdict, no hard fail, confirmed reviewer independence, and response coverage for all comments. This separation is a method variable because premature phase transition is one of the failure modes under study.
 
-## Study Design
+For a replicating researcher, the minimum node record is the node path, `README.md`, `status.yaml`, `prompts/research_prompt.md`, `prompts/acceptance_checklist.yaml`, `prompts/review_rubric.yaml`, `docs/manuscript.md`, node-local `artifacts/*.yaml` or `artifacts/*.md`, review verdicts, response records, and any script or manual ledger used to compute metrics. Graph files, Canvas views, dashboards, generated wrapper skills, and cockpit pages are treated as projections or operation surfaces. They may help operate the workflow, but they are not evidence sources for manuscript claims.
 
-The study uses a fixed-node-set controlled comparison. The node set should cover at least P0 problem formulation, P1 protocol design, P2 methods/claim registry, P3 review, and P4 response coverage. Each condition receives the same source prompt, same acceptance checklist, same review rubric, same time or token budget, same artifact audit procedure, and same output contract.
+## Claim, Evidence, and Protocol Registry
 
-The primary outcome is claim_evidence_validity_rate: the proportion of eligible claims that have claim_id, evidence_id, artifact path, citation status, boundary, and reviewer or human-gate status. Secondary outcomes are protocol_completeness, independent_reviewer_pass_rate, reproducibility_rerun_agreement, unsupported_claim_count, hard_fail_closure_rate, human_gate_escalation_rate, and time_to_author_exit.
+Every central method claim is assigned a stable `claim_id` and linked to concrete evidence through `evidence_id`, `evidence_type`, `source_ref`, `support_status`, `boundary_label`, and an action. A claim may be kept only when the registry points to a local artifact, protocol map, figure manifest, review comment, or revision record that a reviewer can inspect. Claims with missing evidence, contradicted support, hidden boundaries, or unresolved reviewer actions are downgraded, revised, or blocked instead of being polished into manuscript prose.
 
-## Procedure
+Protocol identifiers connect the manuscript method to the preregistered evaluation design. The fixed-node governance comparison measures claim-evidence validity, independent-review pass rate, response coverage, hard-fail closure, and negative-result retention under matched budgets. The formal evidence eligibility gate controls PHMGA/Vibench result claims and blocks any performance upgrade until provider policy, data alignment, artifact contract, selected backend, Stage C rows, Stage D ablations, result ledger, and table mapping pass.
 
-Step 1: select and freeze the node set, prompts, checklists, rubrics, budget, reviewer assignment rule, and artifact paths. The frozen protocol is recorded in P1 `artifacts/experiment_rigor_plan.yaml`.
+## Review and Response Closure
 
-Step 2: run each condition on the same node set. Manual checklist workflow records human actions and elapsed time. Prompt-only agent workflow records prompt, output, budget, and artifacts. AutoResearch records node-local artifacts, claim/evidence/protocol links, gate outcomes, and reviewer/human decisions.
+Independent review is part of the method, not a post-hoc editing step. The review gate checks whether the node's claims are supported, whether negative or failed evidence remains visible, whether Graph or UI projections are being treated as research truth, and whether the response record closes each actionable comment. Claude Code teammate reviews are recorded as user-authorized review-agent handoffs, not as biological human reviews. Their handoff files must state the agent identity, scope, changed files, verdict, and any residual concerns.
 
-Step 3: audit every eligible claim. A claim is valid for the primary metric only if it links to evidence, has a boundary, carries citation status when external sources are used, and has a reviewer or human-gate status.
+Reviewer comments are mapped to `comment_id`, evidence or manuscript location, response status, and closure evidence. A node can proceed only when the response file shows that all AI and human-review lane comments have been answered. If a reviewer identifies a hard fail, the node remains blocked until the claim is fixed, downgraded, or explicitly carried as a limitation with visible evidence.
 
-Step 4: compute primary and secondary metrics. Report point estimate, confidence interval or bootstrap interval, repeat count, failure distribution, and negative result. If repeat budget is too low, the limitation is reported and result-level claims are blocked.
+## Negative Evidence and Result Denominators
 
-Step 5: perform external review. Fatal and major concerns are mapped to claim_id, evidence_id, manuscript location, actionable fix, response status, and closure evidence.
+Negative, rejected, unclear, rate-limited, and blocked rows are retained in the result denominator. The table plan requires these rows to remain visible with source artifacts, affected claims, support status, boundary labels, retained locations, and downgrade actions. A favorable synthetic or offline row cannot replace a preregistered formal row, and a missing RM101, Stage C, Stage D, or selected-backend record is reported as blocker, reject evidence, or limitation rather than being omitted from the denominator.
 
-## 别人需要哪些细节才能理解与复现？
+This policy applies to manuscript wording as well as tables. Limited synthetic/offline sanity checks may support planning or sanity-check language, but they cannot support formal performance improvement, real-data generalization, RM101 resolution, selected-backend success, Stage C success, Stage D success, or submission-readiness claims.
 
-A reproducing researcher needs the repository version, node paths, fixed node set, prompts, acceptance checklists, review rubrics, allowed edit scope, budgets, random seeds or reviewer assignments, exact run commands or manual operation ledger, model/provider metadata if agents are used, artifact collection rule, evaluator versions, and result ledger schema.
+## PHMGA, Vibench, and Provider Boundary
 
-For each node, the minimum reproducibility record is: `docs/manuscript.md`, relevant `artifacts/*.yaml` or `artifacts/*.md`, `logs/claim_evidence_map.md`, reviewer verdict when available, and any script or manual form used to compute metrics. For each claim, the record must preserve claim_id, evidence_id, evidence location, boundary, citation status, and reviewer action.
+Vibench is used as a read boundary: it supplies catalog and read-bundle context only. PHMGA owns the protocol split, windowing, DAG evaluation, result ledger, and table-producing implementation path. The current PHMGA submodule boundary is explicit: the `journal_thesis` branch and recorded commit are the implementation reference, while dirty or untracked local entries prevent any future parent pointer update until they are protected or explicitly resolved.
 
-Methods 足以支持解释和 replication only when these records let another reviewer reconstruct the study design, metric computation, artifact path, and phase-gate decision without changing the research question [1][2][3].
+Formal PHMGA rows must satisfy the eligibility gate before entering the manuscript as result evidence. The provider policy is part of this gate: OpenRouter calls are restricted to free models, and BigModel calls are restricted to the free GLM-4.7-flash lane. Provider credentials are not research artifacts and are not recorded in manuscript, registry, review, or log outputs. A formal row that violates provider policy, lacks metadata-H5 alignment, fails the artifact contract, lacks selected-backend lock, lacks repeat units, or lacks result-ledger and table mapping evidence is non-selection-eligible.
 
-## 哪些细节该放 Methods，哪些放 Appendix/Protocol？
+## Metrics and Statistics Plan
 
-Methods should contain the study design, unit of analysis, intervention and baseline definitions, task families, primary and secondary metrics, inclusion/exclusion rules, statistics plan, data-code/protocol availability statements, review gate policy, and limitation boundary.
+The primary outcome for the workflow-governance comparison is `claim_evidence_validity_rate`: the proportion of eligible central claims that have claim identity, evidence identity, artifact path, support status, boundary, reviewer action, and response status. Secondary outcomes include unsupported claim count, independent-review pass rate, response coverage rate, hard-fail closure rate, negative-result retention rate, reproducibility rerun agreement, and time or budget to author exit.
 
-Appendix/protocol should contain long node lists, raw reviewer forms, full run commands, model/provider metadata, budget logs, result ledgers, bootstrap scripts, full failure taxonomy, and complete response coverage matrix. Keeping these details outside the main Methods avoids hiding key logic in prose while preserving full reproducibility [1][2].
+For comparative claims, each workflow condition requires the repeat count defined in the protocol before improvement language is allowed. The report must include numerator, denominator, point estimate, interval method or bootstrap interval, repeat count, missing-data policy, failure distribution, and negative-result handling. If the repeat budget is below protocol, the row is labeled as a low-power pilot or blocker and cannot support a strong result claim.
 
-## Statistics, Data-Code, and Protocol Statements
+## Methods Versus Appendix and Protocol
 
-Statistics statement: report the numerator and denominator for claim_evidence_validity_rate, repeat count, interval method, missing-data policy, and negative result handling. For small repeat counts, report descriptive statistics and label the study as low-power.
+The main Methods section contains the unit of analysis, intervention and baseline definitions, node lifecycle, registry semantics, review-response gate, negative-evidence policy, PHMGA/Vibench boundary, provider boundary, primary and secondary metrics, and statistics plan. Appendix or protocol material should hold long node lists, raw reviewer forms, exact run commands, model/provider metadata, budget logs, result ledgers, bootstrap scripts, failure taxonomies, and full response matrices. This split keeps the manuscript readable while preserving enough protocol detail for a reviewer to reconstruct the study.
 
-Data statement: the data are node-local research artifacts, prompts, checklists, reviewer verdicts, response matrices, and result ledgers. External literature or policy documents used for claims must retain URL or citation status.
+## Local Evidence Boundary
 
-Code statement: metric computation, registry parsing, and validation commands must be versioned with the repository. Graph, Canvas, and dashboards are projections or operation surfaces; they are not sources of research truth.
-
-Protocol statement: the protocol is fixed before result interpretation. A run cannot promote unsupported claims by rewriting the outcome after seeing reviewer comments or metrics.
-
-## IMRAD Role, Results Order, Figure/Table Logic, and Venue Format
-
-IMRAD role: this node supplies Methods. It describes how evidence is generated and audited; it does not report final performance or claim acceptance.
-
-Results order: report task coverage, claim-evidence validity, baseline comparison, uncertainty, failure cases, reviewer findings, and limitations before narrative interpretation.
-
-Figure/table logic: a main table should list condition, node family, primary metric, interval, unsupported claims, reviewer verdict, and phase-gate result. A figure should show the path from research claim to protocol, evidence, reviewer objection, response action, and human gate.
-
-Venue format: Nature-style versions should emphasize field significance, reproducible reporting, data/code availability, and limitations [1][2]. IEEE/TPAMI-style versions should emphasize method definition, algorithmic procedure, experimental protocol, fair baselines, statistics, and reviewer-reproducible artifacts [2].
-
-## Limitations and Negative Results
-
-The method cannot by itself establish paper acceptance, scientific creativity, or downstream venue success [3]. It can evaluate process-level auditability, traceability, reproducibility, and phase-transition discipline. Negative or failed results must remain in the result ledger and claim registry; they cannot be rewritten into positive evidence. Missing reviewer independence, missing baseline records, missing uncertainty, or hidden negative results block result-level claims [3].
-
-## Author Exit
-
-claim_evidence_ids_are_explicit_or_gap_is_reported: true。negative_or_failed_results_recorded: true。protected_paths_respected: true。方法逻辑完整，关键变量、设置和实现假设可追踪；正文服务主张，不重复图表，不夸大结论。
-
-## References
-
-[1] Nature Portfolio, Reporting standards: https://www.nature.com/ncomms/editorial-policies/reporting-standards
-
-[2] IEEE Author Center, Submission and peer-review policies: https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/guidelines-and-policies/submission-and-peer-review-policies/
-
-[3] Local evidence gate: `test/NATURE_LEVEL_NODE_RUBRIC.md`, P1 `artifacts/experiment_rigor_plan.yaml`, and this node `artifacts/claim_evidence_registry.yaml`.
+This node describes the method and eligibility gates; it does not report final PHMGA performance, selected backend success, RM101 resolution, Stage C completion, Stage D completion, or final submission readiness. Its claims are method/protocol claims supported by the local method contract, method reviewer trace, outline map, protocol map, table plan, submodule reference, and current completion audit. Result interpretation belongs to the experiments and discussion node after the required rows pass their gates.

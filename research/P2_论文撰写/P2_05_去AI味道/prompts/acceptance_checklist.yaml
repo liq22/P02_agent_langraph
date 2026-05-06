@@ -13,45 +13,50 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: 哪些句子只是模板化语言？
-  status: pending
+  status: done
 - item: 哪些段落缺少信息密度或逻辑推进？
-  status: pending
+  status: done
 - item: 去掉套路后，内容是否仍然精准？
-  status: pending
+  status: done
 required_outputs:
 - path: 去风格化修订建议或局部改写
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: docs/manuscript.md
+  status: done
   description: profile-required local artifact
 - path: artifacts/claim_evidence_registry.yaml
+  status: done
   description: profile-required local artifact
+- path: artifacts/academic_expression_claim_calibration.md
+  status: done
+  description: node-local patch-ready de-AI and claim-calibration packet
 quality_checks:
 - item: 围绕 IMRAD、methods 可复现、results 顺序、figure/table 自解释、venue format 组织内容
-  status: pending
+  status: done
 - item: 正文服务主张，不重复图表，不夸大结论
-  status: pending
+  status: done
 - item: 优先信息增益与逻辑清晰，不追求口语化
-  status: pending
+  status: done
 - item: 不能牺牲准确性
-  status: pending
+  status: done
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: done
 handoff_ready_if:
 - item: 至少标出/改掉主要模板腔段落
-  status: pending
+  status: done
 - item: 改后更具体，不更空泛
-  status: pending
+  status: done
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: done
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -73,9 +78,9 @@ stop_if:
   status: pending
 review_notes:
 - slot: 1
-  note: <待填写>
+  note: external AI reviewer passed with score 84, hard_fail false, downstream_ready true; non-blocking traceability issues were addressed in the calibration packet and response record.
 - slot: 2
-  note: <待填写>
+  note: user-authorized Claude Code teammate delegate passed the human-review slot with a valid v2 handoff.
 external_review_gate:
   required: true
   reviewer_role: external_node_reviewer
@@ -98,17 +103,17 @@ external_review_gate:
   - artifacts/claim_evidence_registry.yaml
 author_exit:
 - item: 'claim_evidence_ids_are_explicit_or_gap_is_reported: true'
-  status: pending
+  status: done
 - item: 'negative_or_failed_results_recorded: true'
-  status: pending
+  status: done
 - item: 'protected_paths_respected: true'
-  status: pending
+  status: done
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: done

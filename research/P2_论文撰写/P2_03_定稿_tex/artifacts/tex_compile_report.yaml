@@ -1,0 +1,19 @@
+version: p2_03_tex_compile_report_v1
+node_id: research::P2_论文撰写::P2_03_定稿_tex
+generated_at: 2026-05-05
+
+command:
+  cwd: research/P2_论文撰写/P2_03_定稿_tex/tex
+  argv: lualatex -interaction=nonstopmode -halt-on-error main.tex
+  exit_code: 0
+  runs: 2
+
+outputs:
+  pdf: research/P2_论文撰写/P2_03_定稿_tex/tex/main.pdf
+  tex_root: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+
+notes:
+  - main.pdf was generated successfully as a four-page draft export after adding figure cross-reference and bibliography.
+  - The second run resolved citation and figure-reference warnings from the first run.
+  - A later P2_05 expression-calibration sync also compiled successfully with exit_code 0; see artifacts/p2_05_tex_sync_trace.yaml.
+  - The export remains evidence-limited and does not establish final submission readiness.

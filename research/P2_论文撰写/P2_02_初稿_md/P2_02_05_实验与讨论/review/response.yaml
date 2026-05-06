@@ -1,8 +1,29 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      External AI reviewer passed P2_02_05 with score 87, hard_fail false,
+      downstream_ready true, and no blocking issues. NBI-001 is now addressed
+      in docs/manuscript.md by naming the secondary supporting outcomes:
+      bounded synthetic/offline signal, blocked formal-eligibility gate, and
+      retained negative/unclear evidence ledger. The local claim_map and
+      claim_evidence_registry preserve claim IDs rather than inlining them into
+      the prose.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      User-authorized Claude Code teammate delegate passed the P2_02_05
+      human-review slot with a valid v2 handoff. The review confirmed evidence
+      maturity ordering, exact metric alignment with the P1_04 TSV and P1_05
+      result registry, weak/supported-limited treatment of the single positive
+      synthetic/offline signal, negative/unsupported/unclear evidence retention,
+      and honest PHMGA/Vibench/provider/selected-backend/RM101/Stage C/D
+      boundaries. NBI-H001 and NBI-H002 are now addressed by the explicit
+      secondary-outcome sentence in docs/manuscript.md and by recording the
+      four-train, two-validation, two-test synthetic split boundary in
+      docs/manuscript.md, artifacts/claim_map.yaml,
+      artifacts/claim_evidence_registry.yaml, and
+      artifacts/discussion_evidence_maturity_contract.yaml. Final prose
+      smoothing remains an integration concern and does not change the node's
+      claim boundary.

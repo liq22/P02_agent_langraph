@@ -1,13 +1,39 @@
-# manuscript
+# P2_01 Venue And Style Selection
 
-这里放正文、长文、草稿或本节点的主要内容。
-README.md 不重复承载正文。
+## Current Decision
 
-## 目标
-待补充。
+The current manuscript should be written first in a specialist engineering IMRAD style, with an Elsevier-style engineering journal profile as the primary working profile and an IEEE Transactions-style technical profile as the backup. This is a writing-profile decision, not an acceptance-readiness decision. The present evidence package is strongest when framed as a reproducible research-workflow and evidence-governance method with explicit protocol gates, table ledgers, reviewer-response closure, and negative-result retention. It is not yet strong enough for a Nature-style broad scientific breakthrough narrative because the formal PHMGA/Vibench evidence chain still lacks selected-backend lock, sample-level metadata-H5 adapter alignment, Stage C main rows, Stage D ablations, and final review scores above the submission threshold.
 
-## 当前结论
-待补充。
+The one-sentence contribution should remain bounded: this paper proposes and audits an evidence-governed human-agent research workflow in which node closure, claim identity, independent review, negative evidence, and PHMGA formal-result eligibility are kept as inspectable artifacts before manuscript claims are upgraded. That sentence fits a specialist engineering readership because it foregrounds process validity, reproducibility, and artifact traceability. It does not yet fit a Nature-style general-audience result claim because the strongest formal empirical claims are still downstream blockers rather than completed evidence.
 
-## 下一步
-- [ ] 待补充
+## Venue-Fit Comparison
+
+The IEEE profile favors a concise technical article: a specific and descriptive title, a single self-contained abstract, explicit keywords, a reproducible methodology section, results with tables or figures where exact values matter, and a discussion/conclusion that does not inflate the findings. This profile is a credible backup because the current project can be described as an engineering system and protocol. Its main risk is compression: the paper would need a tight contribution statement, short abstract, and careful separation between the workflow-governance claim and the still-blocked PHMGA formal-result claim.
+
+The Elsevier specialist engineering profile is the best current working profile. It supports conventional Introduction, Experimental or Methods, Results, Discussion, and Conclusions sections; it asks for reproducible methodological detail, concise factual abstracts, highlights or graphical abstracts depending on journal, and figures/tables that can stand with their captions. This matches the current package because the manuscript needs room for a protocol table, an evidence-eligibility gate, negative or unclear result rows, data/code availability statements, and a graphical or schematic overview only after provenance is locked. The style can keep the paper honest while still making the engineering contribution legible.
+
+The Nature profile is useful as a quality lens but should not be the selected target now. Nature-style articles require broad accessibility, short high-signal display items, clear summary paragraphs, strong data/code/protocol availability, compact figures readable outside the subfield, and methods sufficient for replication. Those are good constraints for strengthening the manuscript, but the current evidence is not yet broad or complete enough to support that venue style without overstating the work. Nature should remain a future stretch profile only if Stage C/D formal rows, selected-backend evidence, RM101 evidence treatment, and high-scoring independent review all mature.
+
+## Writing Rules For Downstream P2 Nodes
+
+The venue decision is now bound to a local traceability artifact, `artifacts/venue_evidence_binding.yaml`. Downstream P2 drafting should use that file as the handoff contract between writing style and repository truth: title, abstract, methods, results, and discussion constraints are each mapped to concrete node-local evidence paths and retained blockers. This prevents the Elsevier/IEEE style profile from becoming a proxy for scientific evidence or submission readiness. Venue-policy sources remain format, disclosure, availability, and style constraints only; scientific support must still come from node-local evidence artifacts, PHMGA ledger rows, and independent review verdicts.
+
+The introduction should open with the concrete failure mode: agent-assisted research can produce plausible files and prose while breaking claim identity, evidence boundaries, review-response closure, or negative-result visibility. The literature review should use representative prior-work clusters only to position this gap; it should not imply that prior systems were evaluated under this repository's protocol. The final paragraph of the introduction should state the bounded contribution and preview the audit path, not a final performance result.
+
+The methods section should be the center of gravity. It should explain node-local acceptance, claim/evidence/protocol identifiers, distinct review, response closure, negative evidence retention, and the PHMGA/Vibench formal-evidence gate. PHM-Vibench must remain the read/catalog boundary and PHMGA must own protocol construction, split/windowing, DAG evaluation, artifact export, and ledger rows. Any provider-backed row must disclose free-model policy, credential hygiene, rate-limit/reject evidence, and artifact-contract status without exposing secrets.
+
+The results section must be ordered by evidence maturity. First, report the workflow-governance table only where claim IDs, evidence IDs, reviewer states, denominators, and uncertainty fields exist. Second, report the synthetic/offline signal only as a limited sanity-check row. Third, present formal PHMGA/Vibench rows as eligibility-gate, blocked, rejected, or future-required entries until every formal gate passes. Fourth, keep negative, unclear, and rejected rows visible in denominators rather than moving them to prose-only limitations.
+
+Figures and tables must be self-explanatory and provenance-backed. Figure 1 should be a workflow/evidence-path schematic only if it has claim and evidence references. The existing synthetic signal figure can support only the limited P1_08 c1 wording. Main tables should not contain success-only summaries; they need row-level support status, boundary label, source artifact, repeat count, uncertainty or confidence interval, and failure or limitation references. A graphical abstract may be prepared for the Elsevier profile later, but it must not be generated from unsupported or unverified claims.
+
+## Contradictions And Evidence Gaps
+
+The major contradiction is between a strong venue story and the current formal-evidence state. The manuscript wants to sound like a finished workflow-and-PHMGA paper, but the current truth is still mixed: protocol and governance artifacts are strong, preliminary synthetic/offline evidence is weak, RM101 has reject evidence, the selected global backend is not locked, and Stage C/D formal rows remain incomplete. Therefore the selected style must make blockers visible instead of hiding them behind a clean narrative.
+
+The second contradiction is review quality. Node-local review gates passed, including independent AI and user-authorized Claude Code teammate lanes, but several nodes remain below the final submission threshold of 90. The manuscript can use those reviews as process evidence only after score-threshold blockers are repaired or explicitly retained as limitations. A node pass is not a final submission pass.
+
+The third contradiction is reproducibility versus submodule state. PHMGA is the correct implementation locus, but the submodule still has dirty or untracked entries and the formal adapter alignment is not locked. Until those are resolved, methods should describe the required reproducibility path and the current preflight boundary, not claim complete reproducibility of final PHMGA results.
+
+## Source Status
+
+Venue-policy facts used here were checked against current official pages on 2026-05-05 and recorded in `artifacts/source_check_ledger.yaml`: IEEE Author Center article-structure and submission-policy pages, Elsevier guide-for-authors and graphical-abstract guidance, and Nature/Nature Portfolio formatting and reporting-standard pages. These sources support writing-profile constraints only. They do not support scientific claims about AutoResearch, PHMGA, Vibench, datasets, model performance, or reviewer outcomes.

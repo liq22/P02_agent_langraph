@@ -1,0 +1,79 @@
+version: p2_02_03_claim_evidence_registry_v1
+node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_03_流程图草稿
+purpose: Bind the workflow figure and caption claims to node-local evidence and boundaries.
+claims:
+  - claim_id: C_WORKFLOW_EVIDENCE_PATH
+    claim_type: method
+    claim_text: The workflow figure makes the path from node authoring to claim identity, evidence eligibility, independent review, response closure, negative evidence retention, and bounded manuscript upgrade inspectable.
+    support_status: supported
+    manuscript_location: docs/manuscript.md#workflow-figure-and-evidence-path
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_02_03_FIG_WORKFLOW_SVG
+        evidence_type: figure
+        source_ref: figures/fig_workflow_evidence_path.svg
+        path: figures/fig_workflow_evidence_path.svg
+        role: rendered workflow schematic used by the manuscript callout and caption
+      - evidence_id: P2_02_03_FIG_WORKFLOW_MANIFEST
+        evidence_type: table
+        source_ref: artifacts/figure_manifest.yaml
+        path: artifacts/figure_manifest.yaml
+        role: figure provenance, claim mapping, evidence mapping, first callout, caption, and boundary record
+      - evidence_id: P2_02_03_FIGURE_PLAN
+        evidence_type: table
+        source_ref: artifacts/figure_plan.yaml
+        path: artifacts/figure_plan.yaml
+        role: figure objective, allowed/forbidden content, and caption obligations
+      - evidence_id: P2_02_03_FIGURE_READER_CONTRACT
+        evidence_type: table
+        source_ref: artifacts/figure_reader_contract.yaml
+        path: artifacts/figure_reader_contract.yaml
+        role: visual lane, caption, reader question, claim/evidence reference, and no-overclaim boundary contract
+      - evidence_id: P2_02_OUTLINE_MAP
+        evidence_type: table
+        source_ref: ../artifacts/outline_map.yaml
+        path: ../artifacts/outline_map.yaml
+        role: upstream workflow_and_figure section responsibility and claim id source
+    boundary_label: schematic_only_not_empirical_result
+    cannot_support_claims:
+      - final PHMGA performance
+      - selected backend success
+      - RM101 resolution
+      - Stage C passed
+      - Stage D passed
+      - submission readiness
+  - claim_id: C_FIGURE_PROVENANCE_REQUIRED
+    claim_type: method
+    claim_text: Every accepted figure in this node has source, output, claim_ref, evidence_ref, first callout, caption obligation, and boundary metadata.
+    support_status: supported
+    manuscript_location: docs/manuscript.md#local-evidence-boundary
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_02_03_FIG_WORKFLOW_MANIFEST
+        evidence_type: table
+        source_ref: artifacts/figure_manifest.yaml
+        path: artifacts/figure_manifest.yaml
+        role: manifest records required provenance fields for fig_workflow_evidence_path
+      - evidence_id: P2_02_03_RENDER_SCRIPT
+        evidence_type: code
+        source_ref: tools/render_fig_workflow_evidence_path.py
+        path: tools/render_fig_workflow_evidence_path.py
+        role: deterministic source used to render the SVG draft
+    boundary_label: provenance_of_current_draft_only
+    cannot_support_claims:
+      - figure is final journal artwork
+      - figure proves empirical improvement
+      - figure package proves submission readiness
+
+negative_or_failed_result_handling:
+  result_rows_introduced_by_node: false
+  negative_evidence_deleted_or_hidden: false
+  figure_shows_negative_evidence_lane: true
+  boundary: This node creates a schematic and manifest only; it records negative-evidence retention as a workflow component but does not reinterpret any failed experiment as a positive result.
+
+checks:
+  claim_evidence_ids_are_explicit: true
+  evidence_registry_matches_manuscript: true
+  figure_manifest_matches_registry: true
+  negative_or_failed_results_recorded: true
+  protected_paths_respected: true

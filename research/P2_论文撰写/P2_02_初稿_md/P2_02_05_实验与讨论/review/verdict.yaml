@@ -1,21 +1,160 @@
-review_id: EXTERNAL-AI-001
-review_complete: false
-reviewer_agent_id: <pending-distinct-agent>
+review_id: EXTERNAL-AI-002
+review_complete: true
+overall_verdict: pass
+overall_score: 91.0
+score_scale: 0_to_5_dimension_scores_weighted_to_100
+hard_fail: false
+downstream_ready: true
+independence_confirmed: true
+reviewer_agent_id: codex-external-ai-002
+reviewer_role: external_node_reviewer
 reviewer_skill: external_node_reviewer
-reviewed_node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论
 rubric_path: prompts/review_rubric.yaml
 rubric_version: nature_node_review_v1
-overall_score: null
-overall_verdict: revise
-hard_fail: false
+reviewed_at: 2026-05-05
+
+review_scope:
+  node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论
+  scope_statement: >-
+    Reviewed only this node's required review inputs and explicitly referenced
+    upstream evidence needed to verify updated metrics, split boundaries,
+    formal-gate blockers, and negative/unclear evidence retention.
+  protected_paths_not_read:
+    - .env*
+    - docs/HUMAN_ONLY.md
+    - _reference/**
+    - credentials
+    - private_keys
+    - generated_canvas_files
+    - reports
+    - vendor_assets
+    - PHMGA_source_files
+    - Canvas_or_dashboard_files
+    - unrelated_node_files
+
 dimension_scores:
-  originality_novelty: null
-  scientific_importance: null
-  evidence_technical_soundness: null
-  reproducibility_transparency: null
-  broad_interest_story_clarity: null
-  review_robustness: null
+  originality_novelty: 4.5
+  scientific_importance: 4.5
+  evidence_technical_soundness: 4.5
+  reproducibility_transparency: 4.7
+  broad_interest_story_clarity: 4.4
+  review_robustness: 4.8
+
+dimension_score_details:
+  originality_novelty:
+    weight: 20
+    weighted_points: 18.0
+    rationale: >-
+      The contribution is not a new PHMGA performance result, but the
+      evidence-governance framing is coherent, traceable, and not merely
+      repackaged as a success narrative.
+  scientific_importance:
+    weight: 20
+    weighted_points: 18.0
+    rationale: >-
+      The section addresses a real research-workflow bottleneck: preventing
+      weak or blocked evidence from becoming manuscript claims.
+  evidence_technical_soundness:
+    weight: 25
+    weighted_points: 22.5
+    rationale: >-
+      Metrics, deltas, split counts, formal-gate blockers, and negative/unclear
+      rows match the checked upstream artifacts. The remaining limitation is
+      the intentionally weak formal evidence base, which the node does not
+      overclaim.
+  reproducibility_transparency:
+    weight: 15
+    weighted_points: 14.1
+    rationale: >-
+      Source ledgers, metrics, split artifacts, claim maps, eligibility gates,
+      and downgrade rules are explicit and inspectable.
+  broad_interest_story_clarity:
+    weight: 10
+    weighted_points: 8.8
+    rationale: >-
+      The evidence-maturity order is clear and readable, though the prose still
+      reads more like a governance report than polished final manuscript prose.
+  review_robustness:
+    weight: 10
+    weighted_points: 9.6
+    rationale: >-
+      The node anticipates the major reviewer attacks: single-run synthetic
+      ceiling effects, missing real-data rows, RM101 non-resolution, selected
+      backend absence, Stage C/D incompleteness, and PHMGA dirty-state limits.
+
+score_calculation:
+  formula: sum(score / 5 * weight)
+  weighted_points:
+    originality_novelty: 18.0
+    scientific_importance: 18.0
+    evidence_technical_soundness: 22.5
+    reproducibility_transparency: 14.1
+    broad_interest_story_clarity: 8.8
+    review_robustness: 9.6
+  total: 91.0
+
 blocking_issues: []
-required_actions: []
-downstream_ready: false
-independence_confirmed: false
+non_blocking_issues: []
+residual_global_blockers_not_resolved_by_this_node:
+  - formal_PHMGA_Vibench_evidence_not_eligible
+  - selected_backend_not_locked
+  - RM101_reject_evidence_unresolved
+  - Stage_C_rows_incomplete
+  - Stage_D_ablations_incomplete
+  - metadata_H5_adapter_preflight_pending
+  - PHMGA_dirty_worktree_boundary
+  - global_registry_and_failure_artifact_blockers
+  - final_submission_threshold_gaps_outside_this_node
+  - P3_P4_response_package_gaps
+
+hard_fail_checks:
+  unsupported_central_claim: false
+  material_citation_missing_unverified_or_mismatched: false
+  figure_lacks_provenance_claim_or_evidence_mapping: false
+  missing_reproducibility_path: false
+  hidden_negative_result_or_omitted_limitation: false
+  graph_canvas_or_dashboard_treated_as_research_truth: false
+  unbounded_autonomous_loop_or_undeclared_handoff: false
+  reviewer_critical_concern_unmapped: false
+
+evidence_checked:
+  required_node_inputs:
+    - README.md
+    - status.yaml
+    - prompts/research_prompt.md
+    - prompts/acceptance_checklist.yaml
+    - prompts/review_rubric.yaml
+    - ../artifacts/outline_map.yaml
+    - docs/manuscript.md
+    - artifacts/claim_map.yaml
+    - artifacts/claim_evidence_registry.yaml
+    - artifacts/discussion_evidence_maturity_contract.yaml
+    - review/response.yaml
+    - review/AI_001.md
+    - review/人类_001.md
+  upstream_source_refs_checked:
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/claim_evidence_registry.yaml
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple/metrics.json
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving/metrics.json
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple/resolved_splits.json
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving/resolved_splits.json
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple/resolved_dataset_manifest.json
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving/resolved_dataset_manifest.json
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/failure_register.yaml
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+  checks:
+    primary_secondary_outcomes_clear: true
+    synthetic_test_split_size_explicit: true
+    metrics_match_upstream_ledgers: true
+    result_order_logical: true
+    supported_unsupported_unclear_results_separated: true
+    hidden_negative_evidence_found: false
+    overclaiming_from_single_synthetic_offline_row_found: false
+    formal_gate_blockers_retained: true
+    graph_canvas_dashboard_treated_as_truth: false
+    global_submission_ready_claimed: false

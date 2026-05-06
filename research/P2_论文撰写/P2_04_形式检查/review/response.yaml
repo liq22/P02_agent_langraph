@@ -1,8 +1,35 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      External AI reviewer passed P2_04 with score 87, hard_fail false,
+      downstream_ready true, and no blocking issues in the formal-check package.
+      The non-blocking lifecycle metadata note is resolved by this node-close
+      update. The older schema/failure-truth blockers are no longer present in
+      the latest final-validator output, and
+      artifacts/current_final_gate_trace.yaml now records the current three
+      validator fail classes plus retained formal-evidence goal blockers.
+      Final-submission hard blocks remain intentionally recorded in
+      artifacts/formal_check_report.md and are not converted into passed
+      evidence.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      User-authorized Claude Code teammate delegate passed the P2_04 human-review
+      slot with a valid v2 handoff. The review confirmed title/abstract/article
+      skeleton, figure provenance, citation criticality, availability statements,
+      venue requirements, hard-block chains, no science rewriting, no submission
+      readiness claim, and separation of advisory issues from hard blocks.
+      The human-review packet's older global-blocker list is superseded for
+      current final-gate accounting by artifacts/current_final_gate_trace.yaml.
+
+  - comment_id: AI-002
+    responded: true
+    note: >-
+      Distinct final-threshold reviewer codex_external_ai_002 passed P2_04 with
+      score 90.9, hard_fail false, and no blocking issues. The reviewer noted
+      that docs/submission_ready_goal/completion_audit_current.md was named as a
+      gate input but not opened under that review scope; for reviewer-facing
+      accounting, artifacts/current_final_gate_trace.yaml is treated as the
+      reviewed evidence for current final-validator fail classes.

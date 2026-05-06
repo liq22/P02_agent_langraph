@@ -1,0 +1,74 @@
+version: p2_03_claim_evidence_registry_v1
+node_id: research::P2_论文撰写::P2_03_定稿_tex
+
+claims:
+  - claim_id: P2_03_C01_NODE_UNIT_OF_ANALYSIS
+    claim_type: method
+    claim_text: AutoResearch evaluates research nodes as the unit of analysis for claim-grounded manuscript production.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_03_E001_METHOD_SOURCE
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/docs/manuscript.md
+      - evidence_id: P2_03_E002_TEX_METHOD_SECTION
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+  - claim_id: P2_03_C02_CLAIM_EVIDENCE_DISCIPLINE
+    claim_type: method
+    claim_text: The TeX draft preserves claim-evidence boundaries through synchronized section files, a local export constraint list, and a node-local claim registry.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_03_E003_EXPORT_CONSTRAINTS
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/artifacts/export_constraints.yaml
+      - evidence_id: P2_03_E004_SYNC_PLAN
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/artifacts/tex_sync_plan.yaml
+      - evidence_id: P2_03_E005_SYNC_MAP
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/sync_map.yaml
+      - evidence_id: P2_03_E011_CITATION_REGISTRY
+        evidence_type: citation
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/artifacts/citation_registry.yaml
+      - evidence_id: P2_03_E013_P2_05_TEX_SYNC_TRACE
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/artifacts/p2_05_tex_sync_trace.yaml
+  - claim_id: P2_03_C03_PRELIMINARY_SYNTHETIC_SIGNAL_ONLY
+    claim_type: limitation
+    claim_text: The current results section can only discuss the P1_04/P1_05/P1_09 preliminary synthetic/offline single-run signal, not formal real-data performance.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P2_03_E006_P1_09_FIGURE_PACKAGE
+        evidence_type: figure
+        source_ref: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_manifest.yaml
+      - evidence_id: P2_03_E007_P1_09_LIMITATIONS
+        evidence_type: review_comment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/negative_result_note.md
+      - evidence_id: P2_03_E008_P1_05_RESULT_REGISTRY
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml
+      - evidence_id: P2_03_E012_TEX_FIGURE_CALLOUT
+        evidence_type: figure
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+  - claim_id: P2_03_C04_FINAL_SUBMISSION_NOT_ESTABLISHED
+    claim_type: limitation
+    claim_text: The current TeX synchronization does not establish final submission readiness.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P2_03_E009_COMPLETION_AUDIT
+        evidence_type: review_comment
+        source_ref: docs/submission_ready_goal/completion_audit_current.md
+      - evidence_id: P2_03_E010_GOAL_FSM
+        evidence_type: code
+        source_ref: docs/submission_ready_goal/fsm/current_goal_state.yaml
+      - evidence_id: P2_03_E014_CURRENT_GATE_TRACE
+        evidence_type: review_comment
+        source_ref: research/P2_论文撰写/P2_04_形式检查/artifacts/current_final_gate_trace.yaml

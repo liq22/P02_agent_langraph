@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+<title id="title">Evidence-governed workflow and claim evidence path</title>
+<desc id="desc">Workflow schematic showing node authoring, claim registry, evidence gate, independent review, response closure, and bounded manuscript upgrade with a visible negative evidence lane.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+    <path d="M0,0 L0,6 L9,3 z" fill="#111111"/>
+  </marker>
+</defs>
+<rect x="0" y="0" width="1280" height="720" fill="#ffffff"/>
+<text x="64" y="54" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#111111">Figure 1. Evidence-governed workflow and claim/evidence path</text>
+<text x="64" y="82" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#111111">The figure is a schematic provenance map, not evidence of empirical performance.</text>
+
+<rect x="70" y="130" width="180" height="125" rx="6" ry="6" fill="#E8EEF7" stroke="#222222" stroke-width="1.4"/>
+<text x="88" y="160" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#111111">1. Node authoring</text>
+<text x="88" y="188" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">local manuscript</text>
+<text x="88" y="210" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">prompt assets</text>
+<text x="88" y="232" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">artifact draft</text>
+<rect x="300" y="130" width="180" height="125" rx="6" ry="6" fill="#E7F2EC" stroke="#222222" stroke-width="1.4"/>
+<text x="318" y="160" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#111111">2. Claim identity</text>
+<text x="318" y="188" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">claim_id</text>
+<text x="318" y="210" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">evidence_id</text>
+<text x="318" y="232" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">protocol_id</text>
+<rect x="530" y="130" width="180" height="125" rx="6" ry="6" fill="#FFF1D6" stroke="#222222" stroke-width="1.4"/>
+<text x="548" y="160" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#111111">3. Evidence gate</text>
+<text x="548" y="188" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">support_status</text>
+<text x="548" y="210" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">boundary_label</text>
+<text x="548" y="232" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">eligibility rule</text>
+<rect x="760" y="130" width="180" height="125" rx="6" ry="6" fill="#F3E8F5" stroke="#222222" stroke-width="1.4"/>
+<text x="778" y="160" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#111111">4. Review gate</text>
+<text x="778" y="188" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">independent verdict</text>
+<text x="778" y="210" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">hard-fail check</text>
+<text x="778" y="232" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">score + comments</text>
+<rect x="990" y="130" width="180" height="125" rx="6" ry="6" fill="#EAF4F4" stroke="#222222" stroke-width="1.4"/>
+<text x="1008" y="160" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#111111">5. Response close</text>
+<text x="1008" y="188" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">comment response</text>
+<text x="1008" y="210" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">downgrade or fix</text>
+<text x="1008" y="232" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">node close</text>
+
+<line x1="250" y1="192" x2="300" y2="192" stroke="#111111" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="227" y="183" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#111111">ids</text>
+<line x1="480" y1="192" x2="530" y2="192" stroke="#111111" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="457" y="183" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#111111">gate</text>
+<line x1="710" y1="192" x2="760" y2="192" stroke="#111111" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="687" y="183" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#111111">review</text>
+<line x1="940" y1="192" x2="990" y2="192" stroke="#111111" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="917" y="183" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#111111">respond</text>
+
+<rect x="185" y="350" width="215" height="120" rx="6" ry="6" fill="#F8E1DF" stroke="#222222" stroke-width="1.4"/>
+<text x="203" y="380" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#111111">Negative evidence lane</text>
+<text x="203" y="408" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">failed, rejected, unclear</text>
+<text x="203" y="430" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">kept as first-class rows</text>
+<text x="203" y="452" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">never hidden as denominator</text>
+<rect x="520" y="350" width="240" height="120" rx="6" ry="6" fill="#EAE7D6" stroke="#222222" stroke-width="1.4"/>
+<text x="538" y="380" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#111111">Formal result eligibility</text>
+<text x="538" y="408" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">data alignment</text>
+<text x="538" y="430" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">artifact contract</text>
+<text x="538" y="452" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">repeat + ablation gates</text>
+<rect x="885" y="350" width="250" height="120" rx="6" ry="6" fill="#E2ECF0" stroke="#222222" stroke-width="1.4"/>
+<text x="903" y="380" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#111111">Manuscript upgrade</text>
+<text x="903" y="408" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">only bounded claims upgrade</text>
+<text x="903" y="430" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">blocked claims stay visible</text>
+<text x="903" y="452" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="400" fill="#111111">no graph/projection truth</text>
+
+<line x1="620" y1="255" x2="620" y2="350" stroke="#111111" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="572" y="246" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#111111">eligibility</text>
+<line x1="300" y1="255" x2="300" y2="350" stroke="#111111" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="252" y="246" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#111111">retain</text>
+<line x1="760" y1="410" x2="885" y2="410" stroke="#111111" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="774" y="401" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#111111">upgrade only after gate</text>
+<line x1="990" y1="255" x2="1005" y2="350" stroke="#111111" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="949" y="246" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#111111">closed response</text>
+
+<line x1="70" y1="300" x2="1170" y2="300" stroke="#666666" stroke-dasharray="6 7" stroke-width="1.2"/>
+<text x="78" y="322" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#111111">Top lane: node closure. Bottom lane: evidence preservation and formal-result eligibility.</text>
+
+<text x="70" y="575" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#111111">claim_ref: C_WORKFLOW_EVIDENCE_PATH</text>
+<text x="70" y="602" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#111111">evidence_ref: P2_02_03_FIG_WORKFLOW_MANIFEST + P2_02_outline_map_v1</text>
+<text x="70" y="629" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#111111">boundary: schematic only; no performance, backend, RM101, Stage C/D, or submission-ready claim.</text>
+<text x="70" y="656" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#111111">first callout: P2_02_03 docs/manuscript.md, paragraph 1.</text>
+</svg>

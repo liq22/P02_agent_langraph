@@ -1,0 +1,38 @@
+version: p2_03_export_constraints_v1
+node_id: research::P2_论文撰写::P2_03_定稿_tex
+node_path: research/P2_论文撰写/P2_03_定稿_tex
+generated_at: 2026-05-05
+
+venue_format_key_items:
+  selected_profile: nature_article_draft_boundary
+  required_main_sections:
+    - abstract
+    - introduction
+    - preliminaries
+    - methods
+    - results
+    - discussion
+    - data availability
+    - code availability
+  export_rules:
+    - Preserve scientific claim boundaries from node-local registries.
+    - Do not change evidence strength during Markdown-to-TeX synchronization.
+    - Keep data availability and code availability visible in the TeX root.
+    - Use section files only as synchronized export targets, not new truth sources.
+    - Do not cite graph, Canvas, or dashboard projections as research truth.
+    - Material method and motivation claims must use an explicit citation or a local evidence-gate reference.
+    - The P1_09 result signal must be embedded with caption, label, claim_ref, evidence_ref, and provenance if it is mentioned in Results.
+
+markdown_specialization:
+  introduction: Convert unfilled upstream introduction into a conservative contribution-and-boundary section.
+  preliminary: Define node, claim-evidence registry, figure manifest, and evidence boundary terms.
+  methods: Synchronize the substantive P2_02_04 method source into complete academic paragraphs.
+  results: Convert preliminary synthetic/offline evidence into a bounded result-and-limitation section.
+  references: Use the local citation registry and TeX bibliography for reporting-policy and local-rubric references.
+
+blocked_or_deferred_for_submission:
+  - Formal real-data result claims remain blocked.
+  - RM101 resolution remains blocked.
+  - selected_global_best_backend remains unlocked.
+  - Stage C/D accepted rows remain unavailable.
+  - P1_09 review score remains below the final submission threshold of 90.

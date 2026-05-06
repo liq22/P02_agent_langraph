@@ -1,0 +1,46 @@
+version: p2_04_citation_registry_v1
+node_id: research::P2_论文撰写::P2_04_形式检查
+purpose: Node-local projection of citation-criticality checks used by the formal check.
+citations:
+  - citation_key: nature-reporting
+    claim_id: P2_04_CITATION_FORMAT_REPORTING_CONTEXT
+    claim_context: Nature reporting guidance is used only as reporting-format and reproducibility context.
+    source_ref: Nature Portfolio reporting standards
+    source_locator: https://www.nature.com/nature-portfolio/editorial-policies/reporting-standards
+    support_strength: format_and_reporting_context
+    claim_criticality: format_supporting
+    support_status: minor_distortion
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+  - citation_key: ieee-policies
+    claim_id: P2_04_CITATION_PEER_REVIEW_CONTEXT
+    claim_context: IEEE policy guidance is used only for peer-review, disclosure, and submission-policy context.
+    source_ref: IEEE Author Center submission and peer-review policies
+    source_locator: https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/guidelines-and-policies/submission-and-peer-review-policies/
+    support_strength: format_and_reporting_context
+    claim_criticality: format_supporting
+    support_status: minor_distortion
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+  - citation_key: local-rubric
+    claim_id: P2_04_CITATION_LOCAL_METHOD_RECORD
+    claim_context: The local rubric supports node-level evidence and review expectations as a repository method record.
+    source_ref: test/NATURE_LEVEL_NODE_RUBRIC.md and node-local review_rubric.yaml files
+    source_locator: test/NATURE_LEVEL_NODE_RUBRIC.md
+    support_strength: local_method_record
+    claim_criticality: method_reference
+    support_status: verified
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true

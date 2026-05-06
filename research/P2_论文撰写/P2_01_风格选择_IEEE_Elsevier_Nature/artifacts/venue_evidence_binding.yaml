@@ -1,0 +1,103 @@
+version: p2_01_venue_evidence_binding_v1
+node_id: research::P2_论文撰写::P2_01_风格选择_IEEE_Elsevier_Nature
+generated_at: 2026-05-05
+author_agent_id: codex-local
+artifact_scope: local_traceability_for_venue_style_to_repository_evidence
+submission_ready_claim: false
+
+purpose: >-
+  Bind the selected writing profile to concrete repository evidence and retained
+  blockers so downstream P2 drafting cannot convert venue style guidance into
+  unsupported scientific or submission-readiness claims.
+
+source_boundary:
+  venue_policy_ledger: artifacts/source_check_ledger.yaml
+  policy_use: format_disclosure_availability_and_style_constraints_only
+  scientific_claim_use: prohibited
+  current_policy_recheck_required_before_external_submission: true
+
+selected_profile_binding:
+  profile_id: elsevier_specialist_engineering_imrad
+  role: primary_working_profile
+  why_this_profile_matches_current_truth:
+    - needs_room_for_methods_protocol_evidence_governance_and_limitations
+    - supports_results_discussion_split_without_hiding_reject_or_unclear_rows
+    - can carry data_code_protocol_availability_statements_after evidence lock
+  why_not_broader_profile_now:
+    - selected_backend_not_locked
+    - sample_level_metadata_h5_alignment_not_locked
+    - stage_c_main_rows_not_passed
+    - stage_d_ablation_rows_not_passed
+    - final_review_score_gate_not_passed
+    - final_submission_validator_not_passed
+
+downstream_section_bindings:
+  - section: title
+    allowed_style_rule: factual_searchable_specialist_title
+    repository_evidence:
+      - research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/contribution_claims.yaml
+      - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+    required_boundary:
+      - no_final_phmga_performance_claim
+      - no_acceptance_readiness_claim
+      - avoid_new_or_novel_as_unqualified_adjective
+    downstream_check: P2_02 and P2_03 title/abstract sync must preserve claim-bounded title language.
+  - section: abstract
+    allowed_style_rule: factual_problem_method_current_evidence_boundary
+    repository_evidence:
+      - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+      - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+      - docs/submission_ready_goal/completion_audit_current.md
+    required_boundary:
+      - synthetic_offline_result_is_limited_sanity_check_only
+      - formal_provider_rows_are_not_promoted_until_accepted_in_ledger
+      - final_gate_failures_are_not_hidden
+    downstream_check: Abstract must include one limitation sentence while final formal-result blockers remain.
+  - section: methods
+    allowed_style_rule: method_protocol_and_reproducibility_center_of_gravity
+    repository_evidence:
+      - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+      - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+      - docs/submission_ready_goal/formal_provider_run_approval_packet_current.md
+    required_boundary:
+      - phm_vibench_is_read_catalog_boundary
+      - phmga_owns_protocol_construction_split_windowing_dag_evaluation_and_artifacts
+      - provider_model_policy_and_secret_hygiene_are_disclosed_without_key_values
+    downstream_check: Methods must point to node-local artifacts and PHMGA ledger paths, not graph or dashboard projections.
+  - section: results
+    allowed_style_rule: order_by_evidence_maturity
+    repository_evidence:
+      - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+      - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/claim_map.yaml
+      - research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+    required_boundary:
+      - no_success_only_summary
+      - rejected_or_unclear_rows_remain_in_denominators
+      - rm101_reject_or_limitation_state_remains_visible_until_resolved
+    downstream_check: Results tables must carry support_status, boundary_label, source_artifact, repeat_count, uncertainty, and limitation refs where available.
+  - section: discussion_and_limitations
+    allowed_style_rule: significance_without_repeating_or_inflating_results
+    repository_evidence:
+      - docs/submission_ready_goal/blocker_resolution_plan_current.md
+      - docs/submission_ready_goal/p3_p4_action_reconciliation_current.md
+      - docs/submission_ready_goal/review_score_remediation_matrix_current.md
+    required_boundary:
+      - node_pass_is_not_final_submission_pass
+      - retained_p3_p4_limitations_are_not_resolved_evidence
+      - review_score_below_90_requires_re_review_after_evidence_changes
+    downstream_check: Discussion must separate current contribution from required future evidence and re-review.
+
+re_review_readiness:
+  local_traceability_issue_addressed: true
+  addressed_review_comments:
+    - AI_001:source_check_traceability
+    - AI_001:venue_to_evidence_binding
+  not_addressed_by_this_artifact:
+    - p1_checklist_status_gate
+    - p3_04_action_status_gate
+    - formal_provider_rows
+    - review_score_updates
+  recommended_reviewer_focus:
+    - source ledger is now locally linked and bounded to format/disclosure use
+    - venue profile is now explicitly bound to repository evidence and blockers
+    - no venue rule is used as scientific performance evidence

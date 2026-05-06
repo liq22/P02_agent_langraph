@@ -1,8 +1,21 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      External AI reviewer passed P2_02_02 with score 86, hard_fail false,
+      downstream_ready true, and no required actions. The machine-readable
+      verdict was normalized so dimension_scores are numeric while preserving
+      reviewer rationales in dimension_rationales. A later local polish patch
+      added `artifacts/preliminary_term_contract.yaml` and replaced the
+      repeated one-sentence contribution with a five-question reader check that
+      maps preliminary terms to downstream claim/evidence/protocol/boundary and
+      review-response use.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      User-authorized Claude Code teammate delegate passed the P2_02_02
+      human-review slot with a valid v2 handoff. The review confirmed the
+      preliminary terminology is minimal, section boundaries are auditable,
+      forbidden result/submission claims are absent, and remaining notes are
+      nonblocking whole-manuscript polish or metadata closure.

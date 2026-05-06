@@ -1,0 +1,37 @@
+version: p2_04_venue_requirements_projection_v1
+node_id: research::P2_论文撰写::P2_04_形式检查
+purpose: Node-local formal-check projection of the selected P2_01 venue and style constraints.
+selected_profiles:
+  - elsevier_specialist_engineering_imrad
+  - ieee_transactions_technical
+active_gate_stage: review
+venue_fit_decision: venue_gate_passed
+submission_blockers: []
+contradiction_list:
+  - contradiction_id: P2_04_C001_STRONG_STORY_VS_FORMAL_EVIDENCE
+    issue: Strong venue prose could imply formal PHMGA success.
+    current_truth: Selected backend, metadata-H5 alignment, Stage C rows, and Stage D ablations remain incomplete.
+    writing_action: Keep formal rows as eligibility-gate, blocker, reject-evidence, or future-required rows.
+  - contradiction_id: P2_04_C002_SYNTHETIC_SIGNAL_VS_REAL_DATA_CLAIM
+    issue: The synthetic/offline signal can be overpromoted.
+    current_truth: The signal is weak and supported-limited only.
+    writing_action: Keep the row in a bounded sanity-check slot.
+evidence_gaps:
+  - gap_id: P2_04_G001_FINAL_REVIEW_SCORE
+    required_for_upgrade: final-review-relevant nodes reach or resolve the 90-point submission threshold.
+  - gap_id: P2_04_G002_FORMAL_ROWS
+    required_for_upgrade: selected backend, adapter preflight, Stage C, Stage D, ledger, and table mapping pass.
+  - gap_id: P2_04_G003_FAILURE_TRUTH
+    required_for_upgrade: P1_05 failure/negative/keep-discard artifacts exist and validate.
+scope_fit:
+  current_status: fit_for_formal_check_node_progression_not_submission_ready
+  selected_narrative_granularity: method_protocol_evidence_governance_with_limited_results
+  forbidden_claim_strength:
+    - acceptance_ready
+    - formal_performance_improvement
+    - real_data_generalization
+    - selected_backend
+    - rm101_resolved
+    - stage_c_stage_d_passed
+summary_paragraph_requirements:
+  not_applicable_for_selected_profile: true

@@ -1,8 +1,36 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    status: closed
+    note: Added a first TeX callout, figure environment, caption, label, claim_ref, evidence_ref, and provenance for the P1_09 synthetic/offline signal in tex/sections/experiment.tex.
+
+  - comment_id: AI-002
+    responded: true
+    status: closed
+    note: Added citation commands, bibliography, and artifacts/citation_registry.yaml for reporting-policy and local-rubric references.
+
+  - comment_id: AI-003
+    responded: true
+    status: closed
+    note: The TeX draft repeatedly blocks real-data generalization, RM101 resolution, selected-backend readiness, Stage C/D formal claims, and final submission readiness.
+
+  - comment_id: AI-004
+    responded: true
+    status: closed
+    note: Status metadata and acceptance checklist are finalized after re-review pass.
+
+  - comment_id: P2-05-SYNC
+    responded: true
+    status: closed
+    note: >-
+      After P2_05 final-threshold expression calibration, the TeX export now
+      records applied/no-edit-needed wording targets in
+      artifacts/p2_05_tex_sync_trace.yaml, links that trace from
+      artifacts/tex_sync_plan.yaml and artifacts/claim_evidence_registry.yaml,
+      and recompiles successfully with lualatex exit_code 0 while preserving all
+      no-upgrade boundaries.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    status: not_required_for_this_node
+    note: README marks human review as needed only on demand; no separate human review was required for this P2_03 external-review gate.

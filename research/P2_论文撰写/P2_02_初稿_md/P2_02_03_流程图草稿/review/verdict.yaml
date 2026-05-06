@@ -1,21 +1,35 @@
-review_id: EXTERNAL-AI-001
-review_complete: false
-reviewer_agent_id: <pending-distinct-agent>
+review_id: EXTERNAL-AI-002
+review_complete: true
+reviewer_agent_id: external_reviewer_codex_p2_02_03_final_threshold_2026-05-05
 reviewer_skill: external_node_reviewer
 reviewed_node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿
 rubric_path: prompts/review_rubric.yaml
 rubric_version: nature_node_review_v1
-overall_score: null
-overall_verdict: revise
+review_date: 2026-05-05
+review_scope: node-local final-threshold re-review after figure-readiness patch
+overall_score: 92
+overall_verdict: pass
 hard_fail: false
 dimension_scores:
-  originality_novelty: null
-  scientific_importance: null
-  evidence_technical_soundness: null
-  reproducibility_transparency: null
-  broad_interest_story_clarity: null
-  review_robustness: null
+  originality_novelty: 18
+  scientific_importance: 18
+  evidence_technical_soundness: 23
+  reproducibility_transparency: 15
+  broad_interest_story_clarity: 9
+  review_robustness: 9
+dimension_rationales:
+  originality_novelty: The package presents an evidence-governed claim-upgrade path as a bounded paper-level mechanism, while avoiding any unsupported claim of new empirical algorithmic performance.
+  scientific_importance: The node addresses claim/evidence/review boundary control and negative-evidence retention, a meaningful bottleneck for agent-assisted research manuscripts.
+  evidence_technical_soundness: The central schematic claims are supported by the manuscript, figure plan, manifest, reader contract, claim/evidence registry, render script, SVG, and parent outline map, with explicit no-overclaim boundaries.
+  reproducibility_transparency: The accepted node-local schematic has deterministic Python provenance, explicit output path, source kind, claim/evidence refs, reader contract, first callout, caption, quality checks, and production boundary.
+  broad_interest_story_clarity: The figure and caption make the workflow and evidence path understandable to non-specialists through visible upper/lower lanes and a self-contained caption.
+  review_robustness: The package anticipates reviewer misreadings by forbidding performance, backend, RM101, Stage C/D, final-artwork, and submission-readiness interpretations while preserving negative-evidence visibility.
 blocking_issues: []
 required_actions: []
-downstream_ready: false
-independence_confirmed: false
+advisory_notes:
+  - Global blockers remain outside this node; the local package does not claim to resolve PHMGA performance, selected backend, RM101, Stage C/D, or full submission readiness.
+  - The SVG is accepted as a node-local schematic only; final journal artwork/layout polish remains deferred.
+downstream_ready: true
+independence_confirmed: true
+final_threshold_decision: node_local_score_meets_or_exceeds_90
+normalization_note: Dimension scores are recorded on the rubric-weighted 20/20/25/15/10/10 scale for an overall_score of 92.

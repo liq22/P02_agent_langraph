@@ -13,53 +13,57 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: 标题、摘要、图表、references、units、availability statements 是否合规？
-  status: pending
+  status: done
 - item: 是否存在明显结构/格式缺失？
-  status: pending
+  status: done
 required_outputs:
 - path: artifacts/formal_check_report.md
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: artifacts/gate_report.md
+  status: done
   description: profile-required local artifact
 - path: artifacts/citation_registry.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/figure_manifest.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/venue_requirements.yaml
+  status: done
   description: profile-required local artifact
 quality_checks:
 - item: 围绕 IMRAD、methods 可复现、results 顺序、figure/table 自解释、venue format 组织内容
-  status: pending
+  status: done
 - item: 正文服务主张，不重复图表，不夸大结论
-  status: pending
+  status: done
 - item: 只报告高置信结构/格式问题
-  status: pending
+  status: done
 - item: 不在此节点重写科学内容
-  status: pending
+  status: done
 - item: 检查 citation criticality、core-claim block、figure provenance/first_callout_location
     与 venue_requirements.yaml
-  status: pending
+  status: done
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: done
 - item: hard-gate block 必须绑定 claim_id/evidence_id/location/actionable_fix；否则只能作为 advisory
     critique。
-  status: pending
+  status: done
 handoff_ready_if:
 - item: 形成一版 formal check 报告
-  status: pending
+  status: done
 - item: 问题按严重性排序
-  status: pending
+  status: done
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: done
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -81,9 +85,9 @@ stop_if:
   status: pending
 review_notes:
 - slot: 1
-  note: <待填写>
+  note: external AI reviewer passed with score 87, hard_fail false, downstream_ready true.
 - slot: 2
-  note: <待填写>
+  note: user-authorized Claude Code teammate delegate passed the human-review slot with a valid v2 handoff.
 external_review_gate:
   required: true
   reviewer_role: external_node_reviewer
@@ -112,15 +116,15 @@ external_review_gate:
   - artifacts/venue_requirements.yaml
 author_exit:
 - item: 'gate_inputs_verified: true'
-  status: pending
+  status: done
 - item: 'blocking_gaps_are_explicit: true'
-  status: pending
+  status: done
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: done

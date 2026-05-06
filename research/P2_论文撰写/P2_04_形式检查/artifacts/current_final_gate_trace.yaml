@@ -1,0 +1,48 @@
+version: p2_04_current_final_gate_trace_v1
+node_id: research::P2_论文撰写::P2_04_形式检查
+generated_at: 2026-05-05
+purpose: Bind the P2_04 formal check to the current final validator output after P2_02_05 final-threshold re-review.
+latest_validator_command: python3 scripts/validate_research_truth.py --require-submission
+latest_validator_result: fail
+current_validator_fail_classes:
+  - class_id: P2_04_FG001_P1_CHECKLIST_PENDING
+    count: 109
+    affected_scope: P1_01_through_P1_05_acceptance_checklists
+    formal_check_role: final_submission_blocker
+    status: retained
+  - class_id: P2_04_FG002_REVIEW_SCORE_THRESHOLD
+    count: 26
+    affected_scope: leaf_review_verdicts_below_90
+    formal_check_role: final_submission_blocker
+    status: retained
+  - class_id: P2_04_FG003_P3_04_ACTION_STATUS
+    count: 6
+    affected_scope: P3_04_revision_actions_blocked_or_planned
+    formal_check_role: final_submission_blocker
+    status: retained
+resolved_or_not_in_latest_validator:
+  - parent_phase_metadata_marker_failures
+  - review_marker_failures
+  - P1_03_P1_05_claim_evidence_schema_failures
+  - P1_04_execution_contract_gaps
+  - P1_05_failure_truth_artifact_gaps
+  - P2_02_04_schema_or_score_blockers
+  - P2_02_05_score_blocker
+goal_level_blockers_retained_outside_current_validator_classes:
+  - selected_backend_not_locked
+  - RM101_reject_evidence_unresolved
+  - metadata_H5_adapter_preflight_pending
+  - Stage_C_main_rows_incomplete
+  - Stage_D_ablation_rows_incomplete
+  - PHMGA_dirty_worktree_boundary
+formal_check_boundaries:
+  does_not_read_env: true
+  does_not_run_provider_calls: true
+  does_not_claim_submission_ready: true
+  does_not_rewrite_science: true
+  treats_advisory_items_as_nonblocking_without_claim_evidence_action_chain: true
+checks:
+  current_fail_classes_explicit: true
+  stale_schema_and_failure_truth_blockers_removed_from_current_gate: true
+  formal_evidence_goal_blockers_retained_without_upgrade: true
+  final_submission_ready_claimed: false
