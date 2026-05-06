@@ -1,0 +1,113 @@
+version: p0_02_baseline_budget_protocol_v1
+generated_at: 2026-05-05
+purpose: >-
+  Convert the equal-baseline budget requirement into an inspectable comparison
+  protocol for SQ1 and H1.
+
+comparison_name: fixed_node_equal_budget_claim_governance_comparison
+
+experimental_unit:
+  unit: research_node_sequence
+  fixed_node_set:
+    - P0_01_研究背景与调研
+    - P0_02_研究挑战与科学问题_工程问题
+    - P0_03_研究内容与创新点
+    - P0_04_技术路线_研究计划_OKR
+    - P0_05_项目约束_资源预算_风险边界
+    - P1_01_through_P1_09_design_and_evidence_nodes
+    - P2_manuscript_nodes
+    - P3_review_revision_nodes
+    - P4_response_package_nodes
+  exclusion_rule: >-
+    Do not add or remove nodes per condition. If a condition cannot complete a
+    node, record the blocker and keep the missing output as not_evaluable.
+
+conditions:
+  - condition_id: manual_checklist
+    description: Human-authored node artifacts guided only by static checklists.
+    allowed_tools:
+      - local_file_editor
+      - local_validator_commands
+      - no_llm_agent_or_external_provider
+  - condition_id: prompt_only_agent
+    description: A single agent writes artifacts from prompts without enforced independent gates.
+    allowed_tools:
+      - local_file_editor
+      - local_validator_commands
+      - one_writer_agent
+    disallowed_features:
+      - node_local_independent_review_gate
+      - response_coverage_required_before_phase_transition
+      - negative_result_ledger_required_before_phase_transition
+  - condition_id: ungated_multi_agent_workflow
+    description: Multiple agents may draft or critique, but phase transition does not require the claim/evidence/review/response gate.
+    allowed_tools:
+      - local_file_editor
+      - local_validator_commands
+      - multiple_agents
+    disallowed_features:
+      - mandatory_independent_verdict_before_phase_transition
+      - mandatory_response_coverage_before_phase_transition
+  - condition_id: autoresearch_gated_workflow
+    description: Node-local claim/evidence/protocol/review/response/negative-evidence gates are mandatory before phase transition.
+    allowed_tools:
+      - local_file_editor
+      - local_validator_commands
+      - writer_agent
+      - distinct_reviewer_agent
+      - user_authorized_teammate_review_slot_when_required
+
+budget_controls:
+  node_set: identical across conditions
+  max_wall_clock_per_node_minutes: 60
+  max_agent_turns_per_node: 8
+  max_external_provider_calls_per_node: 0
+  provider_exception_policy: >-
+    Formal provider rows require separate explicit approval and must be held
+    constant across conditions if used. Until approved, provider-dependent
+    evidence remains blocked for all conditions.
+  allowed_data_scope: node-local artifacts and explicitly allowed public docs
+  forbidden_reads:
+    - .env*
+    - docs/HUMAN_ONLY.md
+    - _reference/**
+    - credentials_or_private_keys
+
+review_rubric:
+  rubric_id: p0_02_claim_governance_rubric
+  required_metrics:
+    - claim_evidence_validity_rate
+    - unsupported_claim_count
+    - independent_reviewer_pass_rate
+    - response_coverage_rate
+    - hard_fail_closure_rate
+    - negative_result_retention_rate
+    - reproducibility_rerun_agreement
+  primary_metric: claim_evidence_validity_rate
+  tie_breakers:
+    - lower_unsupported_claim_count
+    - higher_negative_result_retention_rate
+    - fewer_final_validator_blockers
+
+outputs_per_condition:
+  - artifacts_snapshot_manifest.yaml
+  - claim_rating_table.tsv
+  - unsupported_claim_register.yaml
+  - review_pass_fail_table.tsv
+  - response_coverage_table.tsv
+  - negative_result_retention_table.tsv
+  - final_validator_output.txt
+
+decision_rules:
+  h1_supported_if: >-
+    autoresearch_gated_workflow has higher claim_evidence_validity_rate than
+    all baselines, unsupported_claim_count is lower or equal to every baseline,
+    and not_evaluable_count is zero for central claims.
+  h1_not_supported_if: >-
+    any baseline matches or exceeds AutoResearch on claim_evidence_validity_rate
+    without a higher unsupported_claim_count, or AutoResearch has any
+    not_evaluable central claim.
+  no_cherry_pick_rule: >-
+    Report all node failures, blocked items, and negative evidence for every
+    condition. Do not omit failed conditions from the denominator.
+

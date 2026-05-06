@@ -1,8 +1,28 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: "External AI reviewer passed P0_05 with score 86, no hard fail, downstream_ready true, and no blocking issues. Non-blocking carry-forward actions are retained as final-submission blockers: below-90 thresholds, registry schema repair, RM101 reject evidence, PHMGA/Vibench adapter alignment, selected backend, Stage C/D rows, and final validator."
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: "User-authorized Claude Code teammate human-review-slot review passed P0_05 with score 86-equivalent, confirmed all required review questions, and retained non-node submission-ready blockers. Residual template comment was normalized by Codex without changing the review verdict."
+
+  - comment_id: AI-002
+    responded: true
+    note: "Distinct final-threshold reviewer assigned overall_score 88, hard_fail false, downstream_ready true, and final_threshold_met false. The reviewer found the resource/risk boundary substantively strong but not final-threshold ready because current_final_gate_blocker_contract.md still reports 33 below-90 leaf scores while the latest public audit/remediation matrix reports 24 and P2 score blockers cleared. This stale blocker count does not create a false submission-ready claim, but it must be refreshed before any future 90+ final-threshold verdict."
+
+  - comment_id: AI-002-update
+    responded: true
+    note: "After the blocker contract was updated to 24 below-90 scores with P2 above threshold, the distinct reviewer revised the current verdict to overall_score 89, hard_fail false, downstream_ready true, and final_threshold_met false. The direct contract drift is resolved, but gate_report.md, docs/manuscript.md, and constraint_risk_map.yaml still carry the obsolete 33-score count, so the node package remains below the 90 final threshold until those P0_05 facts are synchronized and re-reviewed."
+
+  - comment_id: AI-002-update-2
+    responded: true
+    note: "The remaining P0_05 final-gate fact drift was synchronized in artifacts/gate_report.md, docs/manuscript.md, and artifacts/constraint_risk_map.yaml. At that step, the node-local non-review files stated 24 below-90 leaf scores, noted that P2 score blockers were cleared, and retained the 109 P1 checklist plus 6 P3 action blockers. Historical review files still mention the old 33-score issue only as AI_002 review history; after AI_003 and the follow-up validator run, the current non-review files were advanced to 23 below-90 scores."
+
+  - comment_id: AI-003
+    responded: true
+    note: "Distinct final-threshold re-review confirmed that AI_002's final-gate fact-drift blocker was resolved in the P0_05 non-review evidence and assigned overall_score 91, hard_fail false, downstream_ready true, and final_threshold_met true for this node-local resource/risk boundary only. After the follow-up final validator run removed P0_05 from the score-failure list, docs/manuscript.md, artifacts/current_final_gate_blocker_contract.md, artifacts/gate_report.md, and artifacts/constraint_risk_map.yaml now consistently use 109 P1 checklist gaps, 23 below-90 scores with P2 and P0_05 score blockers cleared, and 6 P3_04 blocked/planned actions. global_submission_ready remains false until the retained P1/P3/P0/P1/P3/P4 global blockers and final validator are closed."
+
+  - comment_id: AI-003-post-validator
+    responded: true
+    note: "After the AI_003 verdict set P0_05 to overall_score 91, a fresh final validator run no longer listed P0_05 as a below-90 score blocker. The current P0_05 non-review gate facts were therefore advanced from 24 to 23 remaining below-90 scores while retaining the 109 P1 checklist and 6 P3_04 action-status blockers."

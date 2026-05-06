@@ -1,0 +1,212 @@
+version: p0_04_okr_map_v1
+node_id: research::P0_项目申请书::P0_04_技术路线_研究计划_OKR
+generated_at: 2026-05-05
+
+route_summary: >-
+  Convert P0_01-P0_03 proposal-stage problem and contribution boundaries into
+  a staged evidence-governed research route whose objectives, metrics, stop
+  conditions, and fallback branches are inspectable before P1/P2/P3/P4 work is
+  promoted into manuscript claims.
+
+route_readiness_contract: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/route_readiness_contract.yaml
+
+stages:
+  - stage_id: S0_PROBLEM_CONTRIBUTION_LOCK
+    phase_scope:
+      - P0_01
+      - P0_02
+      - P0_03
+    purpose: Lock falsifiable gap, science/engineering split, and bounded contribution claims.
+    inputs:
+      - research/P0_项目申请书/P0_01_研究背景与调研/artifacts/literature_gap_map.yaml
+      - research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/problem_hypothesis.yaml
+      - research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/contribution_claims.yaml
+    endpoints:
+      - every contribution has claim_id, prior-work boundary, required evidence, and downgrade rule
+      - implementation details are excluded from contribution claims
+    observable_metrics:
+      - contribution_units_with_downgrade_rule
+      - contribution_units_with_required_evidence
+      - vague_novelty_phrase_count
+    stop_conditions:
+      - contribution wording relies on first/better/automatic without evidence
+      - implementation details are promoted to contribution claims
+    fallback: Return to P0_03 for novelty-boundary narrowing.
+  - stage_id: S1_PROTOCOL_AND_DATA_ELIGIBILITY
+    phase_scope:
+      - P1_01
+      - P1_04
+      - P1_06
+      - P1_07
+      - P1_08
+    purpose: Bind hypotheses to baselines, budgets, metrics, provider policy, dataset adapter preflight, and artifact contract.
+    inputs:
+      - fixed_node_set
+      - manual_checklist_baseline
+      - prompt_only_agent_baseline
+      - ungated_multi_agent_baseline
+      - PHMGA/Vibench provider and adapter records
+    endpoints:
+      - provider_model_policy_pass
+      - metadata_h5_alignment_pass
+      - artifact_contract_pass
+      - primary_and_secondary_metrics_locked
+    observable_metrics:
+      - protocol_map_completeness
+      - baseline_budget_contract_complete
+      - adapter_alignment_status
+      - artifact_contract_status
+    stop_conditions:
+      - metadata-H5 alignment fails
+      - provider/model policy violates free-model boundary
+      - artifact contract fails
+      - RM101 positive evidence is not selection-eligible
+    fallback: Preserve blocker or reject-evidence bundle; downgrade result claim to limitation.
+  - stage_id: S2_EVIDENCE_PRODUCTION_AND_BOUNDARY_PRESERVATION
+    phase_scope:
+      - P1_04
+      - P1_05
+      - P1_09
+    purpose: Produce evidence rows and preserve boundary labels before manuscript claims are strengthened.
+    endpoints:
+      - claim_evidence_validity_rate available
+      - unsupported_claim_count available
+      - response_coverage_rate available
+      - negative_result_retention_rate available
+      - Stage C/D formal rows available when eligible
+    observable_metrics:
+      - claim_evidence_validity_rate
+      - unsupported_claim_count
+      - independent_reviewer_pass_rate
+      - response_coverage_rate
+      - negative_result_retention_rate
+      - stage_c_main_result_pass
+      - stage_d_ablation_pass
+    stop_conditions:
+      - synthetic/offline check is promoted as main result
+      - negative or reject evidence is hidden
+      - rate-limit interruption is omitted from ledger
+    fallback: Keep evidence as preliminary, limitation, blocker, or reject evidence.
+  - stage_id: S3_MANUSCRIPT_INTEGRATION
+    phase_scope:
+      - P2_01
+      - P2_02
+      - P2_03
+      - P2_04
+      - P2_05
+    purpose: Integrate only registry-backed claims into manuscript and TeX surfaces.
+    endpoints:
+      - manuscript claims map to claim_id/evidence_id
+      - figures and tables have provenance
+      - citations have support status
+      - export constraints and compile report are recorded
+    observable_metrics:
+      - claim_registry_coverage_rate
+      - figure_claim_mapping_rate
+      - citation_support_status_distribution
+      - unsupported_claim_count
+    stop_conditions:
+      - manuscript claim exceeds evidence registry
+      - figure lacks provenance
+      - graph/Canvas/dashboard projection is treated as research truth
+    fallback: Revise or downgrade manuscript claim before export.
+  - stage_id: S4_INDEPENDENT_REVIEW_RESPONSE_CLOSURE
+    phase_scope:
+      - P3_01
+      - P3_02
+      - P3_03
+      - P3_04
+      - P4_01
+      - P4_02
+      - P4_03
+      - P4_04
+      - P4_05
+      - P4_06
+      - P4_07
+    purpose: Close review attacks with evidence-linked response and revision records.
+    endpoints:
+      - review issues map to claim_id/evidence_id/location/actionable_fix
+      - response coverage is complete
+      - hard_fail closure is documented
+      - final submission validator passes
+    observable_metrics:
+      - response_coverage_rate
+      - hard_fail_closure_rate
+      - reviewer_pass_rate
+      - final_submission_validator_status
+    stop_conditions:
+      - hard fail lacks action map
+      - response is advisory prose without evidence
+      - final validator reports blockers
+    fallback: Reopen target node or downgrade submission claim.
+
+objectives:
+  - objective_id: O1_FALSIFIABLE_CONTRIBUTIONS
+    statement: Keep contribution claims bounded, falsifiable, and tied to evidence requirements.
+    key_results:
+      - kr_id: O1_KR1
+        metric: contribution_units_with_required_evidence
+        target: 4 of 4
+        current_status: satisfied_for_p0_04_route
+      - kr_id: O1_KR2
+        metric: vague_novelty_phrase_count
+        target: 0 in node package
+        current_status: satisfied_for_p0_04_route
+      - kr_id: O1_KR3
+        metric: downstream_evidence_before_strong_claim
+        target: required for every contribution
+        current_status: proposal_stage_only
+  - objective_id: O2_FORMAL_EVIDENCE_ELIGIBILITY
+    statement: Ensure result claims require provider, dataset, artifact, and formal-row eligibility.
+    key_results:
+      - kr_id: O2_KR1
+        metric: provider_model_policy_pass
+        target: OpenRouter free model and BigModel GLM-4.7-flash free boundary respected
+        current_status: partially_verified_from_prior_logs
+      - kr_id: O2_KR2
+        metric: metadata_h5_alignment_pass
+        target: true before formal claim
+        current_status: pending_downstream_preflight
+      - kr_id: O2_KR3
+        metric: selected_global_best_backend_locked
+        target: true before final result claim
+        current_status: not_locked
+  - objective_id: O3_AUDITABLE_MANUSCRIPT_CLAIMS
+    statement: Require manuscript, figure, citation, and response claims to map to evidence identities.
+    key_results:
+      - kr_id: O3_KR1
+        metric: claim_registry_coverage_rate
+        target: 100 percent for central claims before submission
+        current_status: pending_later_phases
+      - kr_id: O3_KR2
+        metric: unsupported_claim_count
+        target: 0 unresolved central unsupported claims before submission
+        current_status: pending_later_phases
+      - kr_id: O3_KR3
+        metric: final_submission_validator_status
+        target: pass
+        current_status: fail
+  - objective_id: O4_REVIEW_ATTACK_CLOSURE
+    statement: Keep review objections, hard fails, negative evidence, and responses explicitly closed or blocked.
+    key_results:
+      - kr_id: O4_KR1
+        metric: response_coverage_rate
+        target: 100 percent for required review issues
+        current_status: pending_P3_P4
+      - kr_id: O4_KR2
+        metric: hard_fail_closure_rate
+        target: 100 percent or explicit blocker
+        current_status: pending_P3_P4
+      - kr_id: O4_KR3
+        metric: negative_result_retention_rate
+        target: 100 percent retained or explicitly discarded with rationale
+        current_status: active_guardrail
+
+author_exit:
+  main_route_present: true
+  risk_branch_present: true
+  milestones_and_metrics_present: true
+  stop_conditions_present: true
+  p0_scope_preserved: true
+  route_readiness_contract_present: true
+  downstream_evidence_not_overclaimed: true

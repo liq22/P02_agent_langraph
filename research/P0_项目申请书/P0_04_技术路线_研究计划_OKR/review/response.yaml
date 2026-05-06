@@ -1,8 +1,20 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    status: closed
+    note: External AI reviewer passed P0_04 with score 86; non-blocking strengthening notes are retained for final submission on explicit H1/H2/H3 stage mapping, budget/resource table, provider/model verification status, and keeping downstream formal gates blocking readiness.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    status: closed
+    note: User-authorized Claude Code teammate review passed and confirmed the route links hypotheses, downstream experiments, metrics, stop conditions, fallback branches, claim/evidence IDs, negative/reject evidence preservation, and proposal-stage boundaries.
+
+  - comment_id: AI-002
+    responded: true
+    status: closed_pending_re_review
+    note: Added artifacts/route_readiness_contract.yaml and updated manuscript/OKR/claim/risk/stage artifacts to separate P0_04 node-specific route readiness from downstream formal-evidence execution. The response assigns adapter preflight, selected backend lock, Stage C/D rows, P3/P4 response closure, provider/model evidence, and final validator pass to downstream owners as blockers, and states that P0_04 may only claim auditable route/OKR readiness, not global submission readiness.
+
+  - comment_id: AI-003
+    responded: true
+    status: closed
+    note: Distinct final-threshold reviewer passed P0_04 at 92 for node-specific technical-route / research-plan / OKR readiness. The verdict confirms artifacts/route_readiness_contract.yaml separates P0_04 route readiness from downstream formal-evidence execution, sets final_submission_threshold_met true only for the P0_04 node threshold, keeps downstream_ready scoped to P0_04 handoff, and preserves global_submission_ready false.

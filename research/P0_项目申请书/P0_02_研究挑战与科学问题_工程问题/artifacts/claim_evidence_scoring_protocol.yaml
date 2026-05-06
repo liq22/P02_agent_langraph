@@ -1,0 +1,95 @@
+version: p0_02_claim_evidence_scoring_protocol_v1
+generated_at: 2026-05-05
+purpose: >-
+  Lock the operational scoring protocol for claim_evidence_validity_rate so
+  P0_02 scientific questions are inspectable rather than just named.
+
+metric_id: claim_evidence_validity_rate
+unit_of_analysis: central_manuscript_claim
+scope:
+  included_claims:
+    - claims marked central or main in node-local claim/evidence registries
+    - figure or table claims that support a central manuscript conclusion
+    - response-letter claims that assert an issue is resolved
+  excluded_claims:
+    - purely navigational prose
+    - section summaries that introduce no support relation
+    - explicitly marked future-work statements
+
+review_panel:
+  reviewer_count: 3
+  reviewer_roles:
+    - method_reproducibility_reviewer
+    - empirical_statistics_reviewer
+    - venue_claim_clarity_reviewer
+  independence_rule: >-
+    Reviewers must be distinct from the writer/editor of the evaluated node.
+    A reviewer may inspect allowed node-local artifacts and public policy or
+    citation context, but must not read credentials or human-only notes.
+
+claim_rating_scale:
+  - rating: fully_supported
+    score_value: 1.0
+    definition: >-
+      The claim has a stable claim_id, evidence_id, source boundary, support
+      status, and no unresolved reviewer objection that changes the claim.
+  - rating: partially_supported
+    score_value: 0.5
+    definition: >-
+      The claim has relevant evidence but either the support is weaker than
+      the wording, the boundary is incomplete, or a non-fatal reviewer objection
+      remains open.
+  - rating: unsupported
+    score_value: 0.0
+    definition: >-
+      The claim lacks an evidence_id, contradicts its support status, depends
+      on failed/blocked evidence, or promotes generated prose, logs, projections,
+      or synthetic-only evidence beyond the recorded boundary.
+  - rating: not_evaluable
+    score_value: null
+    definition: >-
+      The claim cannot be judged because the required artifact is missing or
+      unreadable. This is counted separately and treated as a blocker, not as
+      a positive score.
+
+calculation:
+  numerator: sum of non-null reviewer score_values over evaluable central claims
+  denominator: count of non-null reviewer claim ratings
+  formula: numerator / denominator
+  not_evaluable_policy: >-
+    Report not_evaluable_count and block final-threshold claims if any central
+    claim is not evaluable. Do not drop not-evaluable claims silently.
+  unsupported_claim_count: count of claims with median rating unsupported
+  partial_support_count: count of claims with median rating partially_supported
+
+adjudication:
+  aggregation: median reviewer rating per claim
+  disagreement_flag: >-
+    Flag a claim when reviewer ratings span fully_supported to unsupported,
+    or when at least two reviewers disagree on whether the evidence boundary
+    permits the manuscript wording.
+  adjudicator_role: codex_final_gate_owner
+  adjudication_rule: >-
+    The adjudicator may downgrade claim wording or mark the claim as retained
+    blocker. The adjudicator must not raise a claim above the median reviewer
+    support level without a new distinct review.
+
+pass_fail_interpretation:
+  final_submission_candidate: >-
+    claim_evidence_validity_rate >= 0.90, unsupported_claim_count == 0,
+    not_evaluable_count == 0, and all disagreement_flags either resolved by
+    downgraded wording or preserved as blockers.
+  scientific_hypothesis_support: >-
+    H1 is supported only if AutoResearch exceeds every baseline on the locked
+    node set under this metric and does not increase unsupported_claim_count.
+  falsification: >-
+    H1 is contradicted if any simpler baseline matches or exceeds AutoResearch
+    on claim_evidence_validity_rate with unsupported_claim_count no worse.
+
+audit_outputs:
+  - claim_rating_table.tsv
+  - reviewer_rationale.md
+  - adjudication_log.yaml
+  - unsupported_claim_register.yaml
+  - disagreement_flags.yaml
+

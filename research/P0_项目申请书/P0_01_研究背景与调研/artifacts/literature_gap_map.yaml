@@ -1,0 +1,70 @@
+version: p0_01_literature_gap_map_v1
+node_id: research::P0_项目申请书::P0_01_研究背景与调研
+
+gaps:
+  - gap_id: P0_01_G001_CLAIM_GROUNDED_AGENTIC_RESEARCH_OPERATIONS
+    gap_statement: Current agentic research, automated-science, software-agent, and experiment-provenance systems demonstrate tool use, multi-agent coordination, automated scientific writing, repository task solving, or artifact lineage, but do not show a node-local operating procedure that binds each manuscript claim to evidence, protocol gates, independent review, response coverage, and explicit negative-result handling before phase transition.
+    novelty_boundary: This gap is specific to research-truth governance across claim, evidence, protocol, review, response, and phase transition records; it is not a claim that agents cannot act, coordinate, run experiments, or draft papers.
+    falsifiable_question: Under the same fixed node set and budget, does an AutoResearch workflow produce a higher claim-evidence validity rate and fewer unsupported claims than manual checklist, prompt-only agent, or ungated multi-agent workflows?
+    action: keep
+    evidence_status: supported
+    nearest_prior_work:
+      - cluster_id: tool_using_language_agents
+        citation_refs:
+          - react2022
+          - reflexion2023
+        unresolved_boundary: Agent trajectories and feedback loops do not themselves close manuscript claim-evidence-review response chains.
+      - cluster_id: multi_agent_frameworks
+        citation_refs:
+          - autogen2023
+        unresolved_boundary: Conversable agent composition does not by itself define scientific evidence status or phase-gate closure.
+      - cluster_id: ml_experimentation_and_ai_scientist
+        citation_refs:
+          - mlagentbench2023
+          - aiscientist2024
+          - agentlaboratory2025
+        unresolved_boundary: Experiment automation and generated papers still need durable claim/protocol/review ledgers before claims are accepted.
+      - cluster_id: software_agents
+        citation_refs:
+          - sweagent2024
+        unresolved_boundary: Repository issue-solving agents demonstrate executable software work, not manuscript claim-evidence-review-response governance.
+      - cluster_id: experiment_management_and_provenance
+        citation_refs:
+          - mlflow_tracking_docs
+          - wandb_artifacts_docs
+        unresolved_boundary: Run, metric, dataset, model, and artifact lineage does not decide claim support status, independent review closure, response coverage, or negative-evidence promotion rules.
+      - cluster_id: reporting_and_review_governance
+        citation_refs:
+          - nature_reporting
+          - ieee_peer_review_policy
+        unresolved_boundary: Reporting and peer-review policies set the bar but do not provide a node-local agent workflow.
+    citation_refs:
+      - react2022
+      - reflexion2023
+      - autogen2023
+      - mlagentbench2023
+      - aiscientist2024
+      - agentlaboratory2025
+      - sweagent2024
+      - mlflow_tracking_docs
+      - wandb_artifacts_docs
+      - nature_reporting
+      - ieee_peer_review_policy
+    reviewer_objection_path:
+      - The idea may look incremental if it is framed as another multi-agent system rather than an evidence-governance workflow.
+      - The gap may be too broad unless measured by concrete traceability and unsupported-claim metrics.
+      - Policy citations support the need for transparency but do not prove the AutoResearch mechanism works.
+    minimum_evidence_before_strong_claim:
+      - claim_evidence_validity_rate comparison
+      - unsupported_claim_count comparison
+      - independent_reviewer_pass_rate
+      - response_coverage_rate
+      - reproducibility_rerun_agreement
+      - negative_result ledger
+    proposal_stage_boundary: P0_01 supports problem formulation only; downstream experiments must validate any mechanism or performance claim.
+
+author_exit:
+  gap_is_one_sentence: true
+  nearest_prior_work_clusters: 6
+  citation_status_checked_when_external_sources_are_used: true
+  p0_scope_preserved: true

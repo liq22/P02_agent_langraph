@@ -1,0 +1,178 @@
+version: p0_02_problem_hypothesis_v1
+node_id: research::P0_项目申请书::P0_02_研究挑战与科学问题_工程问题
+generated_at: 2026-05-05
+
+upstream_evidence:
+  - path: research/P0_项目申请书/P0_01_研究背景与调研/artifacts/literature_gap_map.yaml
+    role: closed_background_gap
+  - path: research/P0_项目申请书/P0_01_研究背景与调研/artifacts/citation_registry.yaml
+    role: verified_prior_work_and_policy_citations
+
+problem_statement: >-
+  AutoResearch must test whether node-local claim/evidence/protocol/review
+  governance reduces unsupported research claims and improves review-response
+  closure, rather than merely demonstrating that agents can coordinate or write
+  research prose.
+
+problem_layers:
+  scientific_questions:
+    - question_id: SQ1_CLAIM_GOVERNANCE_EFFECTIVENESS
+      question: >-
+        Under the same fixed node set and budget, does AutoResearch improve
+        claim-evidence validity and reduce unsupported claims relative to manual
+        checklist, prompt-only agent, and ungated multi-agent workflow baselines?
+      testable: true
+      evaluable_metrics:
+        - claim_evidence_validity_rate
+        - unsupported_claim_count
+        - independent_reviewer_pass_rate
+      falsification_path: >-
+        SQ1 is contradicted if a simpler baseline matches or exceeds
+        AutoResearch on claim validity without increasing unsupported claims
+        under the same node set, budget, and rubric.
+    - question_id: SQ2_REVIEW_RESPONSE_CLOSURE
+      question: >-
+        Do independent review gates, response coverage, and negative-result
+        ledgers improve hard-fail closure while preserving rather than hiding
+        negative evidence?
+      testable: true
+      evaluable_metrics:
+        - response_coverage_rate
+        - hard_fail_closure_rate
+        - negative_result_retention_rate
+      falsification_path: >-
+        SQ2 is contradicted if review response is only formal bookkeeping, hard
+        fails recur after closure, or negative/reject evidence disappears from
+        downstream ledgers.
+    - question_id: SQ3_EVIDENCE_BOUNDARY_PRESERVATION
+      question: >-
+        Can the workflow maintain explicit boundaries between proposal-stage
+        framing, synthetic/offline sanity checks, reject evidence, main results,
+        ablations, and final submission proof?
+      testable: true
+      evaluable_metrics:
+        - boundary_violation_count
+        - final_validator_blocker_count
+        - claim_registry_support_status_distribution
+      falsification_path: >-
+        SQ3 is contradicted if graph projections, generated prose, successful
+        logs, or synthetic-only runs are promoted as final research truth.
+  engineering_questions:
+    - question_id: EQ1_NODE_LOCAL_TRACEABILITY
+      question: >-
+        Can each leaf node keep inspectable manuscript, artifact, review,
+        response, and status records while the scheduler remains a minimal
+        derived projection?
+      completion_evidence:
+        - docs/manuscript.md
+        - artifacts/*.yaml
+        - review/verdict.yaml
+        - review/response.yaml
+        - backend/graph/graph_status.json
+      failure_mode: Graph, Canvas, dashboard, or generated reports become a second source of truth.
+    - question_id: EQ2_PROVIDER_DATASET_PROVENANCE
+      question: >-
+        Can provider/model restrictions, API-key loading, Vibench dataset
+        boundaries, PHMGA artifact contracts, and metadata-H5 alignment be
+        recorded without exposing secrets?
+      completion_evidence:
+        - provider/model policy records
+        - adapter preflight logs
+        - artifact contract reports
+        - secret-fragment scan excluding .env
+      failure_mode: Missing sample-level alignment, secret leakage, or unsupported paid/incorrect model usage.
+    - question_id: EQ3_FAILURE_PRESERVING_PROGRESSION
+      question: >-
+        Can reject-evidence bundles, rate-limit failures, low review scores, and
+        unresolved preflight blockers remain visible after node progression?
+      completion_evidence:
+        - failure_register.yaml
+        - keep_discard_ledger.yaml
+        - negative_result_note.md
+        - current_goal_state.yaml blockers
+      failure_mode: Node closure erases or rephrases blockers as positive evidence.
+
+hypotheses:
+  - hypothesis_id: H1_CLAIM_VALIDITY
+    linked_questions:
+      - SQ1_CLAIM_GOVERNANCE_EFFECTIVENESS
+    hypothesis: >-
+      A gated AutoResearch workflow will produce a higher claim-evidence
+      validity rate and fewer unsupported claims than prompt-only or ungated
+      multi-agent workflows under the same node set and budget.
+    minimum_baselines:
+      - manual_checklist
+      - prompt_only_agent
+      - ungated_multi_agent_workflow
+    required_metrics:
+      - claim_evidence_validity_rate
+      - unsupported_claim_count
+      - independent_reviewer_pass_rate
+    metric_protocol:
+      path: artifacts/claim_evidence_scoring_protocol.yaml
+      locked: true
+      reviewer_count: 3
+      partial_support_handling: partially_supported_claims_score_0_5
+      disagreement_rule: flag_fully_supported_to_unsupported_span_or_boundary_disagreement
+      adjudication_rule: downgrade_or_retain_blocker_without_raising_above_median_without_new_review
+    baseline_budget_protocol:
+      path: artifacts/baseline_budget_protocol.yaml
+      locked: true
+      fixed_conditions:
+        - manual_checklist
+        - prompt_only_agent
+        - ungated_multi_agent_workflow
+        - autoresearch_gated_workflow
+      no_cherry_pick_rule: failed_or_blocked_nodes_remain_in_denominator
+    falsifiable: true
+    current_status: proposal_stage_only
+  - hypothesis_id: H2_REVIEW_RESPONSE_CLOSURE
+    linked_questions:
+      - SQ2_REVIEW_RESPONSE_CLOSURE
+      - SQ3_EVIDENCE_BOUNDARY_PRESERVATION
+    hypothesis: >-
+      Independent review plus explicit response coverage will close more hard
+      fails without hiding negative or reject evidence.
+    required_metrics:
+      - response_coverage_rate
+      - hard_fail_closure_rate
+      - negative_result_retention_rate
+    falsifiable: true
+    current_status: proposal_stage_only
+  - hypothesis_id: H3_FORMAL_EVIDENCE_ELIGIBILITY
+    linked_questions:
+      - EQ2_PROVIDER_DATASET_PROVENANCE
+      - EQ3_FAILURE_PRESERVING_PROGRESSION
+    hypothesis: >-
+      Once provider policy, Vibench adapter alignment, and PHMGA artifact
+      contracts are locked, Stage C/D formal rows can produce
+      selection-eligible evidence; otherwise the workflow must preserve the
+      run as blocker or reject evidence.
+    required_metrics:
+      - artifact_contract_pass
+      - metadata_h5_alignment_pass
+      - stage_c_main_result_pass
+      - stage_d_ablation_pass
+      - selected_global_best_backend_locked
+    falsifiable: true
+    current_status: blocked_by_downstream_preflight
+
+non_falsifiable_or_overbroad_phrases_blocked:
+  - "AutoResearch has proven reliability"
+  - "multi-agent systems lack scientific ability"
+  - "engineering closure is itself the scientific contribution"
+  - "successful generated prose is research truth"
+
+proposal_stage_boundary: >-
+  P0_02 defines testable scientific and engineering problems. It does not
+  validate the mechanism, prove performance, or establish final submission
+  readiness.
+
+author_exit:
+  scientific_question_present: true
+  engineering_question_present: true
+  every_question_has_metric_or_completion_evidence: true
+  falsification_paths_present: true
+  citation_status_checked_when_external_sources_are_used: true
+  claim_evidence_scoring_protocol_locked: true
+  baseline_budget_protocol_locked: true

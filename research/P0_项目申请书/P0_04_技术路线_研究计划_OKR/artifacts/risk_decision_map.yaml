@@ -1,0 +1,86 @@
+version: p0_04_risk_decision_map_v1
+node_id: research::P0_项目申请书::P0_04_技术路线_研究计划_OKR
+generated_at: 2026-05-05
+
+risk_policy: >-
+  Risk branches are route-control evidence. They preserve blockers, reject
+  evidence, negative results, and low review scores rather than rewriting them
+  into positive claims.
+
+risks:
+  - risk_id: P0_04_R001_FORMAL_EVIDENCE_NOT_ELIGIBLE
+    affected_claim_ids:
+      - P0_04_C002_FORMAL_RESULTS_REQUIRE_ELIGIBILITY_GATE
+    trigger: Provider/model policy, metadata-H5 alignment, artifact contract, Stage C/D formal rows, or backend lock fails.
+    severity: high
+    decision: block_result_level_claim
+    fallback_route: Preserve blocker or reject-evidence bundle; downgrade wording to limitation or protocol-stage claim.
+    observable_signal:
+      - provider_model_policy_pass is false
+      - metadata_h5_alignment_pass is false or pending
+      - artifact_contract_pass is false
+      - stage_c_main_result_pass is false
+      - stage_d_ablation_pass is false
+      - selected_global_best_backend_locked is false
+    next_action: Complete downstream preflight/formal rows before any main-result claim.
+    status: active_blocker
+  - risk_id: P0_04_R002_GOVERNANCE_CONTRIBUTION_COLLAPSES_TO_GENERIC_ORCHESTRATION
+    affected_claim_ids:
+      - P0_04_C001_ROUTE_LINKS_HYPOTHESIS_EXPERIMENT_METRICS_STOP
+    trigger: Reviewer sees RC1-RC4 as generic multi-agent orchestration or engineering bookkeeping.
+    severity: medium
+    decision: revise_novelty_boundary
+    fallback_route: Return to P0_03; add reviewer-attack/falsification sentence and tighten contribution wording.
+    observable_signal:
+      - reviewer comment says novelty is vague
+      - contribution unit lacks baseline or metric
+      - implementation detail is presented as scientific contribution
+    next_action: Keep contribution claims bounded to evidence governance mechanisms.
+    status: guarded
+  - risk_id: P0_04_R003_CLAIM_REGISTRY_DIVERGES_FROM_MANUSCRIPT
+    affected_claim_ids:
+      - P0_04_C003_REVIEW_RESPONSE_AND_NEGATIVE_EVIDENCE_REMAIN_GATES
+    trigger: Manuscript, figure, table, review response, or revision evidence claim lacks claim_id/evidence_id or exceeds support status.
+    severity: high
+    decision: block_handoff_until_registry_repaired
+    fallback_route: Repair registry or downgrade manuscript claim before export/review.
+    observable_signal:
+      - claim_registry_coverage_rate below 100 percent for central claims
+      - unsupported_claim_count greater than 0 for central claims
+      - figure or table lacks provenance
+    next_action: Reconcile claim_evidence_registry with manuscript, figure, citation, and response artifacts.
+    status: guarded
+  - risk_id: P0_04_R004_REVIEW_SCORE_BELOW_FINAL_THRESHOLD
+    affected_claim_ids:
+      - P0_04_C004_ROUTE_IS_PROPOSAL_STAGE_ONLY
+    trigger: Node-level review passes downstream threshold but remains below final submission threshold of 90.
+    severity: medium
+    decision: record_submission_blocker
+    fallback_route: Preserve node progression but keep final submission blocker until targeted strengthening and re-review.
+    observable_signal:
+      - overall_score below 90
+      - final validator reports overall_score is below 90
+    next_action: Use route_readiness_contract.yaml to separate P0_04 node-specific route readiness from downstream formal-evidence execution, then request distinct final-threshold re-review.
+    status: remediation_added_pending_re_review
+  - risk_id: P0_04_R005_NEGATIVE_OR_REJECT_EVIDENCE_HIDDEN
+    affected_claim_ids:
+      - P0_04_C003_REVIEW_RESPONSE_AND_NEGATIVE_EVIDENCE_REMAIN_GATES
+      - P0_04_C004_ROUTE_IS_PROPOSAL_STAGE_ONLY
+    trigger: RM101 reject evidence, rate-limit interruption, low score, failed preflight, or negative result is omitted from ledger/audit.
+    severity: high
+    decision: block_submission_ready_claim
+    fallback_route: Restore failure register, keep/discard ledger, negative-result note, or FSM blocker.
+    observable_signal:
+      - reject-evidence bundle missing from audit
+      - rate-limit failure omitted
+      - low review score omitted
+      - adapter blocker omitted
+    next_action: Reinsert negative or reject evidence before any submission-ready claim.
+    status: active_guardrail
+
+author_exit:
+  main_route_has_fallbacks: true
+  negative_or_failed_results_recorded: true
+  protected_paths_respected: true
+  no_submission_ready_claim: true
+  route_readiness_contract_present: true

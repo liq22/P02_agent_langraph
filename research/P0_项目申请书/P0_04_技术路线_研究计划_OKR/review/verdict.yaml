@@ -1,21 +1,33 @@
-review_id: EXTERNAL-AI-001
-review_complete: false
-reviewer_agent_id: <pending-distinct-agent>
-reviewer_skill: external_node_reviewer
+review_id: EXTERNAL-AI-003
+review_complete: true
+reviewer_agent_id: codex_distinct_final_threshold_p0_04_ai_003_2026-05-05
+reviewer_skill: distinct_final_threshold_reviewer
 reviewed_node_path: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR
 rubric_path: prompts/review_rubric.yaml
 rubric_version: nature_node_review_v1
-overall_score: null
-overall_verdict: revise
+threshold_context: p0_04_node_specific_final_threshold_90
+overall_score: 92
+overall_verdict: pass
+final_threshold_verdict: pass_node_final_threshold
 hard_fail: false
 dimension_scores:
-  originality_novelty: null
-  scientific_importance: null
-  evidence_technical_soundness: null
-  reproducibility_transparency: null
-  broad_interest_story_clarity: null
-  review_robustness: null
+  originality_novelty: 19
+  scientific_importance: 18
+  evidence_technical_soundness: 23
+  reproducibility_transparency: 14
+  broad_interest_story_clarity: 9
+  review_robustness: 9
 blocking_issues: []
 required_actions: []
-downstream_ready: false
-independence_confirmed: false
+non_blocking_strengthening_notes:
+  - P0_04 now separates node-specific route readiness from downstream formal-evidence execution in artifacts/route_readiness_contract.yaml.
+  - Do not reuse okr_map.yaml provider/model partial-prior-log wording as completed provider/model compliance in later phases.
+  - Global submission readiness remains blocked until downstream formal evidence, P3/P4 closure, selected backend lock, and final validator pass are actually complete.
+downstream_ready: true
+downstream_ready_scope: P0_04 node handoff only
+final_submission_threshold_met: true
+meets_final_threshold_90: true
+global_submission_ready: false
+final_submission_ready: false
+independence_confirmed: true
+review_artifact: review/AI_003.md

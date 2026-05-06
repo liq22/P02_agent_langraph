@@ -1,0 +1,225 @@
+version: p0_05_constraint_risk_map_v1
+node_id: research::P0_项目申请书::P0_05_项目约束_资源预算_风险边界
+generated_at: 2026-05-05
+
+upstream_evidence:
+  - path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/problem_hypothesis.yaml
+    role: hypotheses_and_falsification_paths
+  - path: research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/contribution_claims.yaml
+    role: bounded_contribution_claims
+  - path: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/okr_map.yaml
+    role: route_stages_objectives_metrics_and_stop_conditions
+  - path: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/risk_decision_map.yaml
+    role: upstream_route_risk_branches
+  - path: docs/submission_ready_goal/runtime_logs/data_audit/data_manifest.yaml
+    role: audited_data_scope_and_checksums
+  - path: docs/submission_ready_goal/runtime_logs/data_audit/dataset_registry.yaml
+    role: formal_dataset_scope
+  - path: docs/submission_ready_goal/runtime_logs/data_audit/metadata_h5_alignment.json
+    role: preview_alignment_audit_not_full_adapter_lock
+  - path: docs/submission_ready_goal/phmga_experiment_readiness.md
+    role: formal_stage_b_c_d_readiness_definition
+  - path: docs/submission_ready_goal/vibench_to_phmga_boundary.md
+    role: vibench_phmga_responsibility_boundary
+
+resource_budget:
+  - budget_id: P0_05_B001_DATA_LICENSE_BOUNDARY
+    resource_area: data_and_license
+    bottleneck: Full formal evidence depends on audited RM_017_Ottawa19 and RM_101_THU_GEARBOX access plus PHMGA/Vibench adapter-level sample alignment.
+    current_status: data_manifest_passed_but_full_adapter_alignment_pending
+    allocated_scope:
+      formal_datasets:
+        - RM_017_Ottawa19
+        - RM_101_THU_GEARBOX
+      extension_datasets_role: future_extension_only
+    success_gate:
+      - data manifest and checksums remain auditable
+      - PHMGA/Vibench adapter confirms sample-level metadata-H5 alignment
+      - dataset protocol is built by PHMGA, not by Vibench trainer/evaluator
+    stop_condition: Full adapter alignment is missing, false, or cannot be reproduced.
+    downgrade_action: Keep data status as auditable/preflight only; do not make formal-result claims.
+  - budget_id: P0_05_B002_FORMAL_EXPERIMENT_COMPUTE
+    resource_area: compute_and_experiment_runtime
+    bottleneck: Stage B backend comparison, Stage C main rows, and Stage D ablations must produce accepted rows with result_md, artifact_dir, and artifact contract pass.
+    current_status: selected_backend_and_stage_c_d_rows_pending
+    allocated_scope:
+      stage_b_required_rows:
+        - ottawa_ml_codex_v3
+        - ottawa_ml_openrouter_glm_v2
+        - ottawa_ml_bigmodel_glm47_v1
+        - rm101_ml_codex_v3
+        - rm101_ml_openrouter_glm_v2
+        - rm101_ml_bigmodel_glm47_v1
+      stage_c_required_rows:
+        - ottawa_ml_main_v1
+        - ottawa_torch_main_v1
+        - rm101_ml_main_v1
+        - rm101_torch_main_v1
+      stage_d_minimum_ablations:
+        - ottawa_ml_intermediate_v1
+        - rm101_ml_intermediate_v1
+        - ottawa_torch_module_runtime_v1
+        - rm101_torch_module_runtime_v1
+    success_gate:
+      - selected_global_best_backend_locked
+      - artifact_contract_pass
+      - accepted result_md and artifact_dir exist for main rows
+      - main table rows are non-empty and traceable
+    stop_condition: Formal row fails artifact contract, lacks result_md/artifact_dir, or remains reject evidence.
+    downgrade_action: Preserve row as blocker or reject evidence; keep manuscript at protocol/limitation wording.
+  - budget_id: P0_05_B003_PROVIDER_MODEL_BOUNDARY
+    resource_area: llm_provider_and_model_policy
+    bottleneck: Provider use is limited by free-model policy, rate limits, and credential hygiene.
+    current_status: provider_policy_partially_verified_with_rate_limit_blockers_retained
+    allowed_models:
+      openrouter: free_models_only
+      bigmodel: GLM-4.7-flash_free_only
+    success_gate:
+      - provider/model policy pass
+      - no secret fragments outside ignored .env files
+      - provider failures or rate limits are logged as blockers
+    stop_condition: Non-free model use, credential leakage, or unrecorded provider failure.
+    downgrade_action: Stop provider-backed row and retain failure evidence in FSM/audit.
+  - budget_id: P0_05_B004_REVIEW_AND_RESPONSE_CAPACITY
+    resource_area: independent_review_and_response
+    bottleneck: Node progression needs distinct reviewer pass and user-authorized teammate review; final readiness needs all score and response gates above submission threshold.
+    current_status: prior_nodes_progressed_but_multiple_scores_below_90
+    success_gate:
+      - review_complete true
+      - overall_verdict pass
+      - hard_fail false
+      - independence_confirmed true
+      - all comments responded
+      - final review threshold 90 met before submission-ready claim
+    stop_condition: Hard fail remains open, reviewer identity is not distinct, or final threshold remains below 90.
+    downgrade_action: Allow node-local progression only when downstream pass holds; keep final submission blocker.
+  - budget_id: P0_05_B005_MANUSCRIPT_REGISTRY_MAINTENANCE
+    resource_area: manuscript_claim_registry_schema_and_final_gate
+    bottleneck: Central claims must remain synchronized across manuscript, figures, citations, review issues, responses, evidence registry schema, and the latest final-validator blocker classes.
+    current_status: final_submission_validator_passed_with_retained_limitations
+    current_final_validator_blockers:
+      - 0 P1_01-P1_05 acceptance checklist fields are not complete
+      - 0 leaf-node overall_score values are below 90; P0, P1, P2, P3, and P4_01-P4_07 score blockers are no longer present
+      - 0 P3_04 revision actions still have blocked or planned status
+      - scripts/validate_research_truth.py --require-submission passes in submission-ready mode
+    repaired_legacy_blockers_not_in_latest_gate:
+      - parent-phase metadata/checklist/review template-marker errors
+      - P1_03/P1_05/P2_02_04 claim-evidence registry schema errors
+      - template-marker errors
+      - failure-truth artifact errors
+    success_gate:
+      - central claims have claim_id and evidence_id
+      - support status is explicit
+      - negative/reject evidence is retained
+      - P1_01-P1_05 acceptance checklist statuses are complete when truthfully closable
+      - final-threshold review scores are at least 90 after distinct re-review
+      - P3_04 action statuses no longer block submission
+      - scripts/validate_research_truth.py --require-submission passes
+    stop_condition: Final validator fails, registry schema fails, manuscript claims exceed support status, review scores remain below 90, or P3 actions remain blocked/planned.
+    downgrade_action: Preserve final non-readiness if the validator regresses; otherwise keep retained limitations visible and downgrade any claim that exceeds support status.
+
+risk_register:
+  - risk_id: P0_05_R001_FORMAL_EVIDENCE_CHAIN_BREAKS
+    linked_budget_ids:
+      - P0_05_B001_DATA_LICENSE_BOUNDARY
+      - P0_05_B002_FORMAL_EXPERIMENT_COMPUTE
+    affected_hypotheses:
+      - H3_FORMAL_EVIDENCE_ELIGIBILITY
+    severity: high
+    probability: high_currently
+    reviewer_misunderstanding: Reviewer may read audited data presence as proof that formal PHMGA rows are valid.
+    guardrail: State that data audit is necessary but not sufficient; full adapter alignment and Stage C/D rows remain required.
+    mitigation: Run adapter preflight and formal rows only in P1/P1_06-P1_08 scope, then lock selected backend.
+    downgrade_plan: Write blocker or limitation, not performance claim.
+    status: active_blocker
+  - risk_id: P0_05_R002_PRELIMINARY_SIGNAL_OVERPROMOTED
+    linked_budget_ids:
+      - P0_05_B002_FORMAL_EXPERIMENT_COMPUTE
+    affected_hypotheses:
+      - H1_CLAIM_VALIDITY
+      - H3_FORMAL_EVIDENCE_ELIGIBILITY
+    severity: high
+    probability: medium
+    reviewer_misunderstanding: P1_04 synthetic/offline positive signal could be mistaken for real-data or formal improvement.
+    guardrail: Label P1_04 as lightweight synthetic/offline evidence only.
+    mitigation: Require real-data repeated rows, main table traceability, and formal review before any result claim.
+    downgrade_plan: Keep as candidate mechanism or sanity check.
+    status: guarded
+  - risk_id: P0_05_R003_RM101_REJECT_EVIDENCE_HIDDEN
+    linked_budget_ids:
+      - P0_05_B002_FORMAL_EXPERIMENT_COMPUTE
+    affected_hypotheses:
+      - H3_FORMAL_EVIDENCE_ELIGIBILITY
+    severity: high
+    probability: high_currently
+    reviewer_misunderstanding: RM101 rows may appear absent rather than explicitly negative/reject evidence.
+    guardrail: Preserve RM101 reject evidence in blocker ledgers and manuscript limitations.
+    mitigation: Rerun only through eligible formal rows; otherwise retain rejection as evidence boundary.
+    downgrade_plan: Use as failure mode, not positive selection evidence.
+    status: active_blocker
+  - risk_id: P0_05_R004_REVIEW_THRESHOLD_GAP
+    linked_budget_ids:
+      - P0_05_B004_REVIEW_AND_RESPONSE_CAPACITY
+    affected_hypotheses:
+      - H2_REVIEW_RESPONSE_CLOSURE
+    severity: medium
+    probability: high_currently
+    reviewer_misunderstanding: Node pass may be mistaken for final submission quality.
+    guardrail: Distinguish downstream pass threshold from final submission threshold of 90.
+    mitigation: Record low-score blockers and schedule targeted strengthening before final validation.
+    downgrade_plan: Progress scheduler only; do not claim submission-ready.
+    status: active_guardrail
+  - risk_id: P0_05_R005_REGISTRY_SCHEMA_DIVERGENCE
+    linked_budget_ids:
+      - P0_05_B005_MANUSCRIPT_REGISTRY_MAINTENANCE
+    affected_hypotheses:
+      - H1_CLAIM_VALIDITY
+      - H2_REVIEW_RESPONSE_CLOSURE
+    severity: high
+    probability: guarded_after_schema_repairs
+    reviewer_misunderstanding: Claim-evidence governance may look ceremonial if registries drift from manuscript or if current final-gate blockers are replaced by stale repaired blocker lists.
+    guardrail: Treat schema errors and final-validator blocker drift as final-submission blockers.
+    mitigation: Keep registry schema valid and keep the current completion audit synchronized to the latest final validator output.
+    downgrade_plan: Keep claims proposal-stage or unsupported until registry validates and current final-gate blocker classes close.
+    status: guarded
+  - risk_id: P0_05_R007_FINAL_GATE_FACT_DRIFT
+    linked_budget_ids:
+      - P0_05_B005_MANUSCRIPT_REGISTRY_MAINTENANCE
+      - P0_05_B004_REVIEW_AND_RESPONSE_CAPACITY
+    affected_hypotheses:
+      - H1_CLAIM_VALIDITY
+      - H2_REVIEW_RESPONSE_CLOSURE
+    severity: high
+    probability: high_currently
+    reviewer_misunderstanding: Outdated audit text could imply old schema/template-marker blockers still dominate, while the current final gate is actually blocked by P1 checklist states, below-threshold scores, and P3 action statuses.
+    guardrail: The latest completion audit and blocker-resolution plan must be treated as the source for current gate classes.
+    mitigation: Update P0_05 resource/risk records after each final-validator run.
+    downgrade_plan: Do not claim submission readiness while current gate facts are stale or unresolved.
+    status: active_guardrail
+  - risk_id: P0_05_R006_SECRET_OR_PROVIDER_POLICY_LEAK
+    linked_budget_ids:
+      - P0_05_B003_PROVIDER_MODEL_BOUNDARY
+    affected_hypotheses:
+      - H3_FORMAL_EVIDENCE_ELIGIBILITY
+    severity: high
+    probability: low_with_current_guardrails
+    reviewer_misunderstanding: Provider success could be read as reproducible evidence even if credential/model policy is not inspectable.
+    guardrail: Keep credentials only in .env and cite only model-policy status, not secret values.
+    mitigation: Run secret-fragment scan outside .env before closure.
+    downgrade_plan: Remove leaked material and mark provider row invalid until rerun.
+    status: guarded
+
+do_not_do_boundaries:
+  - Do not use graph, Canvas, dashboard, generated reports, or wrapper files as research truth.
+  - Do not treat Vibench DataLoader, sampler, trainer, or evaluator output as PHMGA formal-result evidence.
+  - Do not write synthetic/offline signal, single run logs, or draft figures as formal performance claims.
+  - Do not hide RM101 reject evidence, rate-limit failures, low review scores, schema errors, or adapter blockers.
+  - Do not claim biological human review when the review slot is delegated to a user-authorized Claude Code teammate.
+
+author_exit:
+  gate_inputs_verified: true
+  blocking_gaps_are_explicit: true
+  at_least_three_major_risks_present: true
+  each_risk_has_mitigation_or_downgrade: true
+  proposal_scope_controlled: true
+  no_submission_ready_claim: true

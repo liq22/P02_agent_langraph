@@ -1,57 +1,163 @@
-node_path: research/P0_项目申请书/P0_03_研究内容与创新点
-claim_policy: Candidate contributions must remain bounded until P1/P2/P3/P4 evidence and independent review are available.
-claims:
-  - claim_id: p0_claim_node_contract
-    candidate_claim: Treating a research node as an auditable scientific work unit may make unsupported completion states visible.
-    problem_addressed: produced files can be mistaken for completed research judgment
-    nearest_prior_boundary: generic agent workflows can execute tasks but do not necessarily bind outputs to evidence, failure conditions, and phase gates
-    evidence_status: template_required
-    required_evidence:
-      - NodeBench comparison against prompt-only workflow
-      - validator failure distribution
-      - independent reviewer verdict
-    current_evidence:
-      - test/NATURE_LEVEL_NODE_RUBRIC.md
-      - prompts/acceptance_checklist.yaml
-    limitation: Current local artifacts define the evaluation path but do not establish empirical quality gain.
-  - claim_id: p0_claim_cross_phase_traceability
-    candidate_claim: A shared claim/evidence/protocol registry may reduce untraceable claims across proposal, experiment, manuscript, review, and response phases.
-    problem_addressed: phase-local documents can be individually coherent while the evidence chain remains broken
-    nearest_prior_boundary: writing and experiment tools can track local artifacts but may not preserve one claim identity across P0-P4
-    evidence_status: template_required
-    required_evidence:
-      - claim registry coverage rate
-      - unsupported claim count before and after registry enforcement
-      - reviewer audit of claim-to-evidence links
-    current_evidence:
-      - artifacts/literature_gap_map.yaml
-    limitation: Registry completeness is not the same as scientific truth.
-  - claim_id: p0_claim_preregistered_protocol_gate
-    candidate_claim: Pre-execution protocol gates may reduce post-hoc metric selection and unsupported result narration.
-    problem_addressed: metrics and baselines can be chosen after seeing results
-    nearest_prior_boundary: experiment logs can record outcomes but may not block unsupported claims before writing
-    evidence_status: template_required
-    required_evidence:
-      - preregistered primary and secondary outcomes
-      - baseline/control definitions
-      - repeat and uncertainty records
-      - negative result interpretation
-    current_evidence:
-      - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/experiment_rigor_plan.yaml
-    limitation: Without real experiment execution, this remains a protocol-level claim.
-  - claim_id: p0_claim_independent_phase_gate
-    candidate_claim: Separating author exit from node close may reduce premature phase transition in automated research workflows.
-    problem_addressed: a single authoring agent can close its own work without external challenge
-    nearest_prior_boundary: self-review prompts provide critique but not independent transition authority
-    evidence_status: template_required
-    required_evidence:
-      - review/verdict.yaml from a distinct reviewer
-      - human gate records
-      - unresolved hard-fail tracking
-    current_evidence:
-      - prompts/review_rubric.yaml
-    limitation: Gate policy alone does not guarantee reviewer quality.
+version: p0_03_contribution_claims_v1
+node_id: research::P0_项目申请书::P0_03_研究内容与创新点
+generated_at: 2026-05-05
+claim_policy: >-
+  Candidate contributions remain proposal-stage until P1/P2/P3/P4 evidence,
+  formal PHMGA/Vibench eligibility checks, and independent review support the
+  stronger wording.
+
+upstream_evidence:
+  - path: research/P0_项目申请书/P0_01_研究背景与调研/artifacts/literature_gap_map.yaml
+    role: background_gap_and_nearest_prior_work
+  - path: research/P0_项目申请书/P0_01_研究背景与调研/artifacts/final_submission_sota_sweep.md
+    role: final_submission_sota_boundary_and_seven_part_falsification_test
+  - path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/problem_hypothesis.yaml
+    role: scientific_and_engineering_problem_split
+  - path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/citation_registry.yaml
+    role: verified_prior_work_and_policy_context
+  - path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/claim_evidence_scoring_protocol.yaml
+    role: locked_claim_evidence_metric_and_audit_protocol
+  - path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/baseline_budget_protocol.yaml
+    role: locked_fixed_node_equal_budget_baseline_protocol
+  - path: research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/evidence_readiness_contract.yaml
+    role: p0_03_final_threshold_evidence_readiness_contract
+
+research_content_units:
+  - content_id: RC1_NODE_EVIDENCE_GOVERNANCE_CONTRACT
+    content_summary: Node-level evidence governance contract.
+    problem_addressed: Research node completion can be mistaken for completed research judgment when files exist but claim/evidence/review state is not auditable.
+    linked_questions:
+      - SQ1_CLAIM_GOVERNANCE_EFFECTIVENESS
+      - EQ1_NODE_LOCAL_TRACEABILITY
+    nearest_prior_boundary:
+      citation_refs:
+        - react2022
+        - reflexion2023
+      boundary: Tool-using or feedback-driven trajectories do not themselves define manuscript claim evidence, response closure, or phase-gate truth.
+    candidate_innovation: Treat a research node as a fail-able and reviewable work unit whose close condition depends on explicit claim/evidence/review/response state.
+    implementation_details_not_claims:
+      - YAML field names
+      - graph projections
+      - local wrapper files
+    required_evidence_before_strong_claim:
+      - fixed-node comparison protocol
+      - claim_evidence_validity_rate
+      - unsupported_claim_count
+      - independent_reviewer_pass_rate
+      - hard_fail_closure_rate
+    current_support_status: proposal_stage_candidate
+    p0_03_final_threshold_status: content_boundary_ready
+    locked_protocol_sources:
+      - research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/claim_evidence_scoring_protocol.yaml
+      - research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/baseline_budget_protocol.yaml
+    downgrade_rule: Without controlled baseline comparison, describe RC1 as a governance design, not as proven quality improvement.
+  - content_id: RC2_CROSS_PHASE_CLAIM_EVIDENCE_PROTOCOL_CHAIN
+    content_summary: Cross-phase claim-evidence-protocol chain.
+    problem_addressed: Proposal aims, experimental protocols, manuscript claims, reviewer critiques, and response actions can be locally coherent while claim identity is broken across phases.
+    linked_questions:
+      - SQ1_CLAIM_GOVERNANCE_EFFECTIVENESS
+      - SQ3_EVIDENCE_BOUNDARY_PRESERVATION
+    nearest_prior_boundary:
+      citation_refs:
+        - autogen2023
+        - aiscientist2024
+      boundary: Multi-agent orchestration and generated scientific papers still require durable claim/protocol/review ledgers before claims are accepted.
+    candidate_innovation: Keep a shared claim identity across P0-P4 so each manuscript claim can be traced to protocol, evidence, review issue, response, or explicit evidence gap.
+    implementation_details_not_claims:
+      - citation formatting
+      - UI display
+      - single manifest completeness
+    required_evidence_before_strong_claim:
+      - claim_registry_coverage_rate
+      - protocol_map_completeness
+      - unsupported_claim_audit
+      - response_coverage_audit
+      - reviewer_hard_fail_closure_records
+    current_support_status: proposal_stage_candidate
+    p0_03_final_threshold_status: content_boundary_ready
+    locked_protocol_sources:
+      - research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/claim_evidence_scoring_protocol.yaml
+      - research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/baseline_budget_protocol.yaml
+    downgrade_rule: Without reviewer-confirmed coverage, describe RC2 as a traceability scaffold, not as scientific truth.
+  - content_id: RC3_INDEPENDENT_REVIEW_AND_NEGATIVE_RESULT_GATE
+    content_summary: Independent review and negative-result preservation gate.
+    problem_addressed: A single authoring thread can prematurely close a node and smooth over reject evidence, low scores, or unresolved blockers.
+    linked_questions:
+      - SQ2_REVIEW_RESPONSE_CLOSURE
+      - SQ3_EVIDENCE_BOUNDARY_PRESERVATION
+      - EQ3_FAILURE_PRESERVING_PROGRESSION
+    nearest_prior_boundary:
+      citation_refs:
+        - autogen2023
+        - ieee_peer_review_policy
+      boundary: Conversable agents and review policies motivate critique and disclosure but do not automatically make independent gate closure a phase-transition condition.
+    candidate_innovation: Separate author exit from node close and require reviewer verdict, human-review lane, response coverage, and negative-result retention for phase transition.
+    implementation_details_not_claims:
+      - number of review files
+      - presence of a handoff log
+      - reviewer prose volume
+    required_evidence_before_strong_claim:
+      - distinct_reviewer_verdicts
+      - response_coverage_rate
+      - negative_result_retention_rate
+      - hard_fail_reopen_or_closure_records
+    current_support_status: proposal_stage_candidate
+    p0_03_final_threshold_status: content_boundary_ready
+    locked_protocol_sources:
+      - research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/claim_evidence_scoring_protocol.yaml
+      - research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/baseline_budget_protocol.yaml
+    downgrade_rule: Without independent gate evidence, mark a node as author-exit only.
+  - content_id: RC4_FORMAL_EVIDENCE_ELIGIBILITY_GATE
+    content_summary: Provider/dataset provenance and formal-evidence eligibility gate.
+    problem_addressed: Successful execution logs or synthetic/offline sanity checks can be overpromoted into main-result claims.
+    linked_questions:
+      - EQ2_PROVIDER_DATASET_PROVENANCE
+      - H3_FORMAL_EVIDENCE_ELIGIBILITY
+    nearest_prior_boundary:
+      citation_refs:
+        - mlagentbench2023
+        - nature_reporting
+      boundary: ML experimentation agents and reporting standards motivate reproducible evaluation, but a run still needs provider, data, artifact, and formal-row eligibility before it supports a main claim.
+    candidate_innovation: Treat provider policy, API-key boundary, Vibench adapter alignment, artifact contract, Stage C/D formal rows, and selected backend lock as eligibility gates for result claims.
+    implementation_details_not_claims:
+      - one successful local run
+      - synthetic/offline figure
+      - graph next_node state
+    required_evidence_before_strong_claim:
+      - provider_model_policy_pass
+      - secret_fragment_scan_clean
+      - metadata_h5_alignment_pass
+      - artifact_contract_pass
+      - stage_c_main_result_pass
+      - stage_d_ablation_pass
+      - selected_global_best_backend_locked
+    current_support_status: blocked_by_downstream_preflight
+    p0_03_final_threshold_status: contribution_boundary_ready_but_empirically_blocked
+    locked_protocol_sources:
+      - research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/evidence_readiness_contract.yaml
+    downgrade_rule: If eligibility gates are not all passed, report blocker or reject evidence instead of main-result support.
+
+innovation_boundaries:
+  contribution_claims:
+    - node-level evidence governance contract
+    - cross-phase claim identity and evidence boundary
+    - independent gate with negative-result retention
+    - formal evidence eligibility gate
+  implementation_details_excluded:
+    - YAML field names
+    - individual scripts
+    - graph.json or graph_status.json
+    - Canvas and dashboard projections
+    - Claude/Codex wrapper files
+    - single successful logs
+    - synthetic/offline sanity checks
+
 author_exit:
   required_artifacts_exist: true
   key_research_judgment_answered_or_gap_reported: true
   citation_status_checked_when_external_sources_are_used: true
+  at_least_two_research_content_units_present: true
+  innovation_claims_have_boundaries: true
+  p0_01_sota_boundary_integrated: true
+  p0_02_metric_and_baseline_protocols_integrated: true
+  downstream_evidence_rows_owned_without_overclaim: true

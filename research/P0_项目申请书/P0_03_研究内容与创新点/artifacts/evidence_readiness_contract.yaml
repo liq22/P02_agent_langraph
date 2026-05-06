@@ -1,0 +1,130 @@
+version: p0_03_evidence_readiness_contract_v1
+node_id: research::P0_项目申请书::P0_03_研究内容与创新点
+generated_at: 2026-05-05
+purpose: >-
+  Define what can be judged at P0_03 final threshold without pretending that
+  downstream comparative experiments, formal rows, or live citation checks have
+  already been completed.
+
+node_specific_pass_question: >-
+  Has P0_03 converted the P0_01 background gap and P0_02 scientific/engineering
+  questions into bounded, attackable, non-overclaiming research content and
+  contribution claims with locked evidence requirements and downgrade rules?
+
+upstream_locks:
+  - source_path: research/P0_项目申请书/P0_01_研究背景与调研/artifacts/final_submission_sota_sweep.md
+    locked_item: nearest_prior_work_boundary
+    usable_for_p0_03: >-
+      Defines the nearest prior categories that would weaken novelty: tool
+      agents, feedback agents, multi-agent orchestration, ML experiment agents,
+      automated scientist systems, software agents, experiment tracking, artifact
+      provenance, and publication governance.
+  - source_path: research/P0_项目申请书/P0_01_研究背景与调研/artifacts/final_submission_sota_sweep.md
+    locked_item: seven_part_novelty_falsification_test
+    usable_for_p0_03: >-
+      Supplies the attack test for whether a prior system already has stable
+      claim IDs, evidence support status, protocol gates, independent review,
+      response coverage, retained failed evidence, and phase-transition rules.
+  - source_path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/claim_evidence_scoring_protocol.yaml
+    locked_item: claim_evidence_validity_rate_protocol
+    usable_for_p0_03: >-
+      Locks the unit of analysis, reviewer count, partial-support scoring,
+      not-evaluable handling, disagreement flag, adjudication rule, and pass/fail
+      interpretation for later claim-evidence audits.
+  - source_path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/baseline_budget_protocol.yaml
+    locked_item: fixed_node_equal_budget_comparison
+    usable_for_p0_03: >-
+      Locks the fixed node set, manual checklist baseline, prompt-only agent
+      baseline, ungated multi-agent baseline, AutoResearch gated workflow
+      condition, budget controls, provider exception policy, and no-cherry-pick
+      rule.
+
+p0_03_claim_strength_rule: >-
+  P0_03 may claim that the research content and innovation boundaries are ready
+  for downstream testing. It must not claim that AutoResearch has already
+  improved research quality, claim validity, response closure, reproducibility,
+  or PHMGA/Vibench performance.
+
+content_unit_readiness:
+  - content_id: RC1_NODE_EVIDENCE_GOVERNANCE_CONTRACT
+    p0_03_status: content_boundary_ready
+    reason: >-
+      The contribution is bounded to node-close governance, excludes file
+      presence and author exit as scientific proof, and is paired with locked
+      downstream metrics: claim_evidence_validity_rate, unsupported_claim_count,
+      independent_reviewer_pass_rate, and hard_fail_closure_rate.
+    downstream_evidence_owner: P1/P2/P3/P4 comparative and audit nodes
+    downgrade_if_missing: governance_design_only
+  - content_id: RC2_CROSS_PHASE_CLAIM_EVIDENCE_PROTOCOL_CHAIN
+    p0_03_status: content_boundary_ready
+    reason: >-
+      The contribution is bounded to durable claim identity across proposal,
+      protocol, manuscript, review, and response phases, with required coverage
+      audits and reviewer-confirmed support status locked as downstream tests.
+    downstream_evidence_owner: P1/P2/P3/P4 claim, protocol, review, and response nodes
+    downgrade_if_missing: traceability_scaffold_only
+  - content_id: RC3_INDEPENDENT_REVIEW_AND_NEGATIVE_RESULT_GATE
+    p0_03_status: content_boundary_ready
+    reason: >-
+      The contribution is bounded to phase-transition control by distinct
+      review, response coverage, failure registers, and retained negative
+      evidence, not to review-file count or reviewer prose volume.
+    downstream_evidence_owner: P3/P4 review-response and revision-evidence nodes
+    downgrade_if_missing: author_exit_only
+  - content_id: RC4_FORMAL_EVIDENCE_ELIGIBILITY_GATE
+    p0_03_status: contribution_boundary_ready_but_empirically_blocked
+    reason: >-
+      The contribution is explicitly an eligibility gate for result evidence,
+      not a PHMGA/Vibench algorithmic contribution. Until provider policy,
+      adapter alignment, artifact contract, Stage C/D rows, and selected backend
+      lock pass, it can only support blocker or reject-evidence wording.
+    downstream_evidence_owner: P1/P2 formal evidence and artifact-contract nodes
+    downgrade_if_missing: blocker_or_reject_evidence_only
+
+downstream_evidence_rows:
+  - evidence_row_id: fixed_node_baseline_comparison
+    locked_by: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/baseline_budget_protocol.yaml
+    required_before_strong_claim: true
+    current_status: protocol_locked_not_executed
+  - evidence_row_id: claim_evidence_validity_audit
+    locked_by: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/claim_evidence_scoring_protocol.yaml
+    required_before_strong_claim: true
+    current_status: protocol_locked_not_executed
+  - evidence_row_id: unsupported_claim_audit
+    locked_by: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/claim_evidence_scoring_protocol.yaml
+    required_before_strong_claim: true
+    current_status: protocol_locked_not_executed
+  - evidence_row_id: response_coverage_audit
+    locked_by: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/claim_evidence_scoring_protocol.yaml
+    required_before_strong_claim: true
+    current_status: protocol_locked_not_executed
+  - evidence_row_id: negative_result_retention_audit
+    locked_by: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/baseline_budget_protocol.yaml
+    required_before_strong_claim: true
+    current_status: protocol_locked_not_executed
+  - evidence_row_id: phmga_vibench_formal_rows
+    locked_by: P1/P2 provider, dataset, and artifact-contract nodes
+    required_before_strong_claim: true
+    current_status: blocked_until_separate_provider_approval_and_preflight
+  - evidence_row_id: citation_live_verification
+    locked_by: P0/P2 final citation verification pass
+    required_before_strong_claim: true
+    current_status: retained_final_packaging_check
+
+reviewer_acceptance_criteria:
+  - P0_03 may pass final threshold if every contribution has a specific
+    prior-work boundary, attack path, required downstream evidence row, and
+    downgrade rule.
+  - P0_03 must remain below final threshold if it presents downstream empirical
+    evidence as complete or promotes implementation artifacts as scientific
+    contributions.
+  - P0_03 must not be penalized for missing Stage C/D rows or provider runs
+    when it preserves them as downstream blockers rather than using them as
+    support.
+
+author_exit:
+  p0_01_sota_boundary_reused: true
+  p0_02_metric_protocol_reused: true
+  p0_02_baseline_budget_protocol_reused: true
+  every_content_unit_has_downstream_evidence_owner: true
+  downstream_evidence_not_overclaimed: true

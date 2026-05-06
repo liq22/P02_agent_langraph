@@ -13,55 +13,58 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: 研究将按什么阶段推进？
-  status: pending
+  status: done
 - item: 阶段成功的可观测指标是什么？
-  status: pending
+  status: done
 - item: 若某一步失败，是否存在降级路线？
-  status: pending
+  status: done
 required_outputs:
 - path: 技术路线草图
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: 阶段性计划与 OKR 草案
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: 风险分支说明
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: docs/manuscript.md
+  status: done
   description: profile-required local artifact
 - path: artifacts/claim_evidence_registry.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/risk_decision_map.yaml
+  status: done
   description: profile-required local artifact
 quality_checks:
 - item: 围绕 significance、gap、hypothesis/aims、expected outcomes、impact、feasibility 组织内容
-  status: pending
+  status: done
 - item: 避免空泛承诺，优先 reviewer 可快速判断的清晰目标
-  status: pending
+  status: done
 - item: 每个 aim/阶段都应有 clear endpoint
-  status: pending
+  status: done
 - item: 路线与资源/时间相匹配
-  status: pending
+  status: done
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: done
 handoff_ready_if:
 - item: 至少形成 1 条主路线与 1 条风险分支
-  status: pending
+  status: done
 - item: 里程碑与评价点明确
-  status: pending
+  status: done
 - item: 没有明显超出时间/资源边界的路线
-  status: pending
+  status: done
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: done
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -83,9 +86,9 @@ stop_if:
   status: pending
 review_notes:
 - slot: 1
-  note: <待填写>
+  note: External AI reviewer passed P0_04 with score 86 and retained final-submission strengthening notes on explicit H1/H2/H3 stage mapping, budget/resource table, provider/model verification status, and downstream formal gates.
 - slot: 2
-  note: <待填写>
+  note: User-authorized Claude Code teammate review passed the human-review slot and confirmed route/OKR/risk/claim-evidence consistency.
 external_review_gate:
   required: true
   reviewer_role: external_node_reviewer
@@ -111,17 +114,17 @@ external_review_gate:
   - artifacts/risk_decision_map.yaml
 author_exit:
 - item: 'claim_evidence_ids_are_explicit_or_gap_is_reported: true'
-  status: pending
+  status: done
 - item: 'negative_or_failed_results_recorded: true'
-  status: pending
+  status: done
 - item: 'protected_paths_respected: true'
-  status: pending
+  status: done
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: done

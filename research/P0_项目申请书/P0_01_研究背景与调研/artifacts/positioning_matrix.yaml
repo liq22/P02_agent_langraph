@@ -1,0 +1,96 @@
+version: p0_01_positioning_matrix_v1
+node_id: research::P0_项目申请书::P0_01_研究背景与调研
+generated_at: 2026-05-05
+
+problem_statement: Human-agent research workflows need a way to keep claims, evidence, protocols, reviewer objections, responses, and phase transitions inspectable rather than treating generated prose or successful agent traces as research truth.
+
+work_clusters:
+  - cluster_id: tool_using_language_agents
+    representative_work:
+      - citation_key: react2022
+        title: "ReAct: Synergizing Reasoning and Acting in Language Models"
+      - citation_key: reflexion2023
+        title: "Reflexion: Language Agents with Verbal Reinforcement Learning"
+    what_they_solve:
+      - Interleave reasoning with external actions.
+      - Use feedback or memory-like traces to improve task behavior.
+    what_remains_open:
+      - Successful task trajectories do not define manuscript-level claim evidence, citation status, review response, or phase-gate truth.
+    positioning_boundary: AutoResearch can build on tool-using agent behavior but must evaluate research auditability rather than task success alone.
+  - cluster_id: multi_agent_frameworks
+    representative_work:
+      - citation_key: autogen2023
+        title: "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation Framework"
+    what_they_solve:
+      - Compose configurable agents, tools, conversation patterns, and human participation.
+    what_remains_open:
+      - Agent orchestration frameworks do not automatically enforce claim-evidence registries, independent reviewer gates, or negative-result preservation.
+    positioning_boundary: AutoResearch is not another generic multi-agent framework; it is a research-operation contract around evidence and review.
+  - cluster_id: ml_experimentation_and_ai_scientist
+    representative_work:
+      - citation_key: mlagentbench2023
+        title: "MLAgentBench: Evaluating Language Agents on Machine Learning Experimentation"
+      - citation_key: aiscientist2024
+        title: "The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery"
+      - citation_key: agentlaboratory2025
+        title: "Agent Laboratory: Using LLM Agents as Research Assistants"
+    what_they_solve:
+      - Bring agents into experiment design, code execution, result analysis, paper/report drafting, feedback, or simulated review.
+    what_remains_open:
+      - Generated experiments and papers still need durable evidence boundaries, independent review closure, and response coverage before claims are accepted.
+    positioning_boundary: AutoResearch targets the governance layer between agent output and accepted research claim.
+  - cluster_id: software_agents
+    representative_work:
+      - citation_key: sweagent2024
+        title: "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering"
+    what_they_solve:
+      - Use agent-computer interfaces for repository-level software issue solving and executable code changes.
+    what_remains_open:
+      - Passing software tasks does not establish manuscript claim support status, review-response coverage, or publication-stage evidence boundaries.
+    positioning_boundary: AutoResearch can use software-agent execution patterns, but its claim is research-truth governance rather than repository patch success.
+  - cluster_id: experiment_management_and_provenance
+    representative_work:
+      - citation_key: mlflow_tracking_docs
+        title: MLflow Tracking
+      - citation_key: wandb_artifacts_docs
+        title: Weights & Biases Artifacts
+    what_they_solve:
+      - Track runs, parameters, metrics, datasets, models, artifacts, versions, and lineage.
+    what_remains_open:
+      - Experiment provenance tools do not themselves adjudicate manuscript claim validity, independent reviewer objections, response coverage, or failed-evidence promotion.
+    positioning_boundary: AutoResearch should treat provenance tools as necessary evidence substrate, not as sufficient research-claim governance.
+  - cluster_id: reporting_and_review_governance
+    representative_work:
+      - citation_key: nature_reporting
+        title: Nature Portfolio reporting standards and availability policies
+      - citation_key: ieee_peer_review_policy
+        title: IEEE submission and peer-review policies
+    what_they_solve:
+      - Define expectations for reproducibility, originality, disclosure, peer review, and availability statements.
+    what_remains_open:
+      - They are policies, not an executable human-agent workflow for maintaining claim/protocol/review truth during research production.
+    positioning_boundary: AutoResearch should operationalize these governance expectations in node-local artifacts without claiming policy compliance as scientific novelty.
+
+core_gap:
+  gap_id: P0_01_G001_CLAIM_GROUNDED_AGENTIC_RESEARCH_OPERATIONS
+  statement: Current agentic research, automated-science, software-agent, and experiment-provenance systems demonstrate tool use, multi-agent coordination, automated scientific writing, repository task solving, or artifact lineage, but do not show a node-local operating procedure that binds each manuscript claim to evidence, protocol gates, independent review, response coverage, and explicit negative-result handling before phase transition.
+  novelty_boundary: The novelty must be measured against generic tool-using agents, multi-agent frameworks, ML experiment agents, automated-scientist systems, repository agents, and experiment provenance tools.
+  falsification_path: The gap is contradicted if a nearest prior system already provides claim-to-evidence-to-review-to-response traceability across multi-node research work, or if simpler prompt-only workflows match AutoResearch on claim-evidence validity and unsupported-claim reduction.
+  minimum_downstream_evidence:
+    - fixed node set
+    - manual checklist baseline
+    - prompt-only agent baseline
+    - multi-agent-without-independent-gate baseline
+    - AutoResearch with node-local claim/evidence/protocol/review gates
+    - claim_evidence_validity_rate
+    - unsupported_claim_count
+    - reviewer_pass_rate
+    - hard_fail_closure_rate
+  proposal_stage_boundary: P0_01 justifies a falsifiable research question and comparison design; it does not validate the downstream AutoResearch mechanism.
+
+author_exit:
+  docs_manuscript_has_background: true
+  current_field_main_problem_answered: true
+  at_least_one_core_gap_and_four_work_clusters_present: true
+  p0_scope_preserved: true
+  citation_status_checked_when_external_sources_are_used: true

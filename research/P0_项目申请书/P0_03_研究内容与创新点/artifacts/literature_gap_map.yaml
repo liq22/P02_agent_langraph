@@ -1,68 +1,98 @@
-node_path: research/P0_项目申请书/P0_03_研究内容与创新点
-research_anchor: AutoResearch as a human-agent research operating system
-standard:
-  target_level:
-    - Nature-level field significance and reproducibility
-    - IEEE/TPAMI-level methodological clarity and peer-review traceability
-  sources:
-    - id: ref_nature_editorial
-      url: https://www.nature.com/nature/for-authors/editorial-criteria-and-processes
-    - id: ref_nature_reporting
-      url: https://www.nature.com/ncomms/editorial-policies/reporting-standards
-    - id: ref_ieee_peer_review
-      url: https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/guidelines-and-policies/submission-and-peer-review-policies/
-gap_map:
-  - gap_id: gap_node_as_scientific_work_unit
-    nearest_prior_work_family: generic agent workflows and task orchestration systems
-    known_solution: agents can draft, revise, route, and execute bounded tasks
-    unresolved_gap: research completion is often represented by produced text or files rather than auditable research judgment
-    falsifiable_question: Does node-level contract enforcement expose unsupported claims and blocked transitions more reliably than a prompt-only workflow?
-    proposed_content_unit: node-level research contract
-    innovation_boundary: the advance is the auditable work-unit definition, not any specific harness field or dashboard
-    evidence_needed:
-      - NodeBench pass and failure distribution
-      - independent reviewer verdicts
-      - human gate transition records
-    downgrade_rule: Without controlled comparison, describe this as a governance design rather than quality improvement.
-  - gap_id: gap_cross_phase_claim_evidence_protocol
-    nearest_prior_work_family: automated writing tools, literature-review tools, and experiment trackers
-    known_solution: tools can generate manuscript sections, store experiment logs, or track citations
-    unresolved_gap: proposal aims, experimental protocols, manuscript claims, reviewer critiques, and response actions are not always linked by shared evidence IDs
-    falsifiable_question: Does a shared claim/evidence/protocol registry reduce untraceable manuscript claims across P0-P4?
-    proposed_content_unit: cross-phase claim-evidence-protocol chain
-    innovation_boundary: the advance is cross-phase traceability, not citation formatting alone
-    evidence_needed:
-      - claim registry coverage
-      - protocol map completeness
-      - response coverage matrix
-      - reviewer hard-fail closure records
-    downgrade_rule: Without reviewer confirmation, describe registry coverage as a process measure only.
-  - gap_id: gap_preregistered_experiment_contract
-    nearest_prior_work_family: experiment notebooks, MLOps ledgers, and post-hoc result tables
-    known_solution: metrics, baselines, and results can be recorded after execution
-    unresolved_gap: metrics, baselines, repeats, uncertainty, failure interpretation, and artifact paths are not always fixed before claim writing
-    falsifiable_question: Does preregistering protocol gates prevent unsupported or cherry-picked result claims?
-    proposed_content_unit: pre-execution evaluation protocol
-    innovation_boundary: the advance is reviewer-facing protocol discipline, not automatic result generation
-    evidence_needed:
-      - primary and secondary metric definitions
-      - baseline commands or manual-control protocol
-      - repeat and uncertainty plan
-      - negative result ledger
-    downgrade_rule: Missing baseline, repeat, or uncertainty blocks result-level claims.
-  - gap_id: gap_independent_gate_for_phase_transition
-    nearest_prior_work_family: single-agent autonomous research loops and self-review prompts
-    known_solution: one agent can critique and revise its own outputs
-    unresolved_gap: author exit and node closure are often conflated when no independent gate exists
-    falsifiable_question: Does an independent reviewer or human gate catch issues that an authoring thread would otherwise mark as complete?
-    proposed_content_unit: external review and human gate policy
-    innovation_boundary: the advance is controlled phase transition, not more critique text
-    evidence_needed:
-      - review/verdict.yaml
-      - response tracking records
-      - author-exit versus node-close logs
-    downgrade_rule: Without independent gate evidence, mark the node as author-exit only.
+version: p0_03_literature_gap_map_v1
+node_id: research::P0_项目申请书::P0_03_研究内容与创新点
+generated_at: 2026-05-05
+
+gaps:
+  - gap_id: P0_03_G001_CONTRIBUTION_BOUNDARIES_FOR_EVIDENCE_GOVERNANCE
+    gap_statement: >-
+      The cited representative agentic research systems and governance policies
+      motivate tool use, agent coordination, ML experimentation, automated
+      scientific writing, reproducibility, and peer review, but they do not by
+      themselves define bounded contribution claims for a node-local evidence
+      governance mechanism across claim, protocol, review, response, failure,
+      and formal-result eligibility gates.
+    novelty_boundary: >-
+      The novelty boundary is four candidate contribution mechanisms:
+      node-level evidence governance, cross-phase claim identity, independent
+      gate with negative-result retention, and formal evidence eligibility. It
+      excludes YAML field names, graph projections, UI surfaces, wrapper files,
+      synthetic/offline runs, and generated prose.
+    falsifiable_question: >-
+      Under the same fixed node set, budget, baselines, and reviewer rubric, do
+      the four bounded contribution mechanisms reduce unsupported claims,
+      improve claim traceability, increase response closure, preserve negative
+      evidence, and prevent ineligible runs from becoming main-result claims?
+    evidence_status: supported
+    action: keep
+    nearest_prior_work:
+      - cluster_id: tool_using_language_agents
+        citation_refs:
+          - react2022
+          - reflexion2023
+        solved_boundary: Tool-using and feedback-driven trajectories.
+        unresolved_boundary: Trajectory success does not define contribution-level claim/evidence/review closure.
+      - cluster_id: multi_agent_frameworks
+        citation_refs:
+          - autogen2023
+        solved_boundary: Configurable multi-agent conversation and human participation.
+        unresolved_boundary: Agent composition does not by itself provide bounded novelty claims or phase-transition evidence gates.
+      - cluster_id: ml_experimentation_and_ai_scientist
+        citation_refs:
+          - mlagentbench2023
+          - aiscientist2024
+        solved_boundary: ML experimentation agent evaluation and automated scientific discovery workflows.
+        unresolved_boundary: Experiments and generated papers still need claim identity, negative-result retention, and eligibility boundaries before supporting contributions.
+      - cluster_id: reporting_and_review_governance
+        citation_refs:
+          - nature_reporting
+          - ieee_peer_review_policy
+        solved_boundary: Expectations for reproducibility, disclosure, originality, and peer review.
+        unresolved_boundary: Policies motivate requirements but are not the proposed node-local operating mechanism.
+    citation_refs:
+      - react2022
+      - reflexion2023
+      - autogen2023
+      - mlagentbench2023
+      - aiscientist2024
+      - nature_reporting
+      - ieee_peer_review_policy
+    proposed_content_units:
+      - RC1_NODE_EVIDENCE_GOVERNANCE_CONTRACT
+      - RC2_CROSS_PHASE_CLAIM_EVIDENCE_PROTOCOL_CHAIN
+      - RC3_INDEPENDENT_REVIEW_AND_NEGATIVE_RESULT_GATE
+      - RC4_FORMAL_EVIDENCE_ELIGIBILITY_GATE
+    reviewer_objection_path:
+      - The work may look like a renamed multi-agent framework unless contribution claims remain bounded to evidence governance mechanisms.
+      - The work may look like engineering bookkeeping unless each contribution is tested against baselines and reviewer audits.
+      - The work may overclaim if implementation details, graph projections, or synthetic/offline runs are presented as scientific contribution.
+    minimum_evidence_before_strong_claim:
+      - fixed-node comparison protocol
+      - manual checklist baseline
+      - prompt-only agent baseline
+      - ungated multi-agent baseline
+      - claim-evidence validity audit
+      - unsupported-claim count audit
+      - claim registry coverage audit
+      - response coverage audit
+      - negative-result retention audit
+      - PHMGA/Vibench adapter alignment preflight
+      - Stage C/D formal evidence rows
+      - selected_global_best_backend lock
+    p0_03_final_threshold_readiness:
+      status: ready_for_downstream_test_without_empirical_overclaim
+      readiness_contract: research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/evidence_readiness_contract.yaml
+      upstream_sota_boundary: research/P0_项目申请书/P0_01_研究背景与调研/artifacts/final_submission_sota_sweep.md
+      upstream_metric_protocol: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/claim_evidence_scoring_protocol.yaml
+      upstream_baseline_protocol: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/baseline_budget_protocol.yaml
+      node_specific_claim: >-
+        P0_03 is ready when contribution boundaries, attack paths, required
+        evidence rows, and downgrade rules are locked; empirical superiority
+        remains downstream.
+
 author_exit:
-  required_artifacts_exist: true
-  key_research_judgment_answered_or_gap_reported: true
+  research_content_units_present: 4
+  innovation_boundaries_present: true
+  implementation_details_excluded_from_claims: true
   citation_status_checked_when_external_sources_are_used: true
+  p0_scope_preserved: true
+  evidence_readiness_contract_present: true

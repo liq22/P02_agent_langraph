@@ -1,0 +1,120 @@
+version: p0_04_route_readiness_contract_v1
+node_id: research::P0_项目申请书::P0_04_技术路线_研究计划_OKR
+generated_at: 2026-05-05
+purpose: >-
+  Define the final-threshold standard for P0_04 as a technical-route and OKR
+  node. The node can pass when the route, evidence owners, stop rules, fallback
+  branches, and no-overclaim boundaries are locked, even though downstream
+  formal evidence remains unresolved.
+
+node_specific_pass_question: >-
+  Has P0_04 converted the P0_01-P0_03 problem, hypothesis, contribution, and
+  evidence-readiness boundaries into an executable route with concrete
+  stage owners, metrics, stop conditions, fallback branches, and downstream
+  evidence gates?
+
+upstream_locks:
+  - source_path: research/P0_项目申请书/P0_01_研究背景与调研/artifacts/final_submission_sota_sweep.md
+    role: nearest_prior_boundary_for_agentic_research_and_provenance_systems
+  - source_path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/problem_hypothesis.yaml
+    role: locked_H1_H2_H3_and_SQ_EQ_problem_map
+  - source_path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/claim_evidence_scoring_protocol.yaml
+    role: locked_claim_evidence_metric_and_review_protocol
+  - source_path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/baseline_budget_protocol.yaml
+    role: locked_fixed_node_equal_budget_baseline_protocol
+  - source_path: research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/evidence_readiness_contract.yaml
+    role: locked_contribution_boundary_and_downstream_evidence_rows
+
+route_stage_contract:
+  - stage_id: S0_PROBLEM_CONTRIBUTION_LOCK
+    p0_04_owner: P0_04 route map
+    downstream_owner: P0_01/P0_02/P0_03 already locked for P0 handoff
+    pass_condition_for_p0_04: >-
+      Every contribution used by the route has a prior-work boundary, attack
+      path, required evidence row, and downgrade rule.
+    stop_or_fallback: Return to P0_03 if a route step depends on generic
+      first/better/automatic novelty wording.
+    current_status: route_ready
+  - stage_id: S1_PROTOCOL_AND_DATA_ELIGIBILITY
+    p0_04_owner: route eligibility map and stop rules
+    downstream_owner: P1 protocol, data, provider, adapter, and artifact-contract nodes
+    pass_condition_for_p0_04: >-
+      The route identifies manual, prompt-only, ungated multi-agent, and gated
+      AutoResearch conditions; fixed node/budget controls; provider/model
+      allowance; adapter preflight; and artifact-contract gates.
+    stop_or_fallback: If provider policy, sample alignment, artifact contract,
+      or selected backend is incomplete, preserve blocker/reject evidence and
+      block result-level claims.
+    current_status: route_ready_downstream_evidence_pending
+  - stage_id: S2_EVIDENCE_PRODUCTION_AND_BOUNDARY_PRESERVATION
+    p0_04_owner: metric and evidence-row route definition
+    downstream_owner: P1/P2 formal evidence and result-synthesis nodes
+    pass_condition_for_p0_04: >-
+      The route specifies claim_evidence_validity_rate, unsupported_claim_count,
+      response_coverage_rate, negative_result_retention_rate, artifact contract,
+      Stage C rows, and Stage D rows as required evidence before strong claims.
+    stop_or_fallback: Synthetic/offline, rate-limited, failed, unclear, or
+      reject evidence remains preliminary, blocker, limitation, or reject
+      evidence.
+    current_status: route_ready_downstream_evidence_pending
+  - stage_id: S3_MANUSCRIPT_INTEGRATION
+    p0_04_owner: manuscript admission rule
+    downstream_owner: P2 manuscript, figure, table, citation, export, and TeX nodes
+    pass_condition_for_p0_04: >-
+      The route admits only registry-backed claims into manuscript surfaces and
+      requires figure/table/citation provenance plus compile/export constraints.
+    stop_or_fallback: Downgrade or remove claims that exceed registry support.
+    current_status: route_ready_downstream_evidence_pending
+  - stage_id: S4_INDEPENDENT_REVIEW_RESPONSE_CLOSURE
+    p0_04_owner: review-response closure rule
+    downstream_owner: P3/P4 review, issue, response, coverage, revision-evidence,
+      and package nodes
+    pass_condition_for_p0_04: >-
+      The route requires reviewer attacks to map to claim/evidence/location/action
+      records and blocks final readiness until response coverage, hard-fail
+      closure, retained negative evidence, P3 action status, and final validator
+      pass are complete.
+    stop_or_fallback: Reopen the target node, preserve blocker status, or
+      downgrade the submission claim.
+    current_status: route_ready_downstream_evidence_pending
+
+node_vs_global_readiness:
+  p0_04_may_claim:
+    - route stages are executable and auditable
+    - evidence owners and stop conditions are locked
+    - unresolved formal-readiness gates are assigned to downstream nodes
+    - no final result or submission-ready claim is made
+  p0_04_must_not_claim:
+    - provider/model compliance is already proven by this node
+    - metadata-H5 alignment is already fully passed by this node
+    - selected_global_best_backend is locked
+    - Stage C/D formal rows are accepted
+    - P3/P4 response closure is complete
+    - final submission validator passes
+
+reviewer_acceptance_criteria:
+  - P0_04 may pass the node-specific final threshold if each route stage has a
+    downstream owner, metric or evidence row, stop condition, fallback branch,
+    and no-overclaim boundary.
+  - P0_04 should fail the node-specific final threshold if it treats route
+    existence, graph progression, provider availability, synthetic/offline logs,
+    or generated prose as final evidence.
+  - P0_04 should not be penalized for missing downstream formal rows or final
+    validator closure when those are explicitly preserved as blockers and not
+    used as support for a result claim.
+
+global_submission_status:
+  global_submission_ready: false
+  remaining_global_blocker_classes:
+    - P1_01-P1_05 checklist fields remain incomplete
+    - below-90 score nodes remain outside P0 after P0_04 is re-reviewed
+    - P3_04 action statuses remain blocked or planned
+    - provider/data/artifact formal evidence and selected backend remain pending
+    - final validator does not pass
+
+author_exit:
+  route_stages_have_owners: true
+  route_stages_have_stop_conditions: true
+  route_stages_have_fallbacks: true
+  downstream_evidence_not_overclaimed: true
+  global_submission_ready_false: true

@@ -1,0 +1,87 @@
+version: p0_04_claim_evidence_registry_v1
+node_id: research::P0_项目申请书::P0_04_技术路线_研究计划_OKR
+generated_at: 2026-05-05
+
+claims:
+  - claim_id: P0_04_C001_ROUTE_LINKS_HYPOTHESIS_EXPERIMENT_METRICS_STOP
+    claim_type: method
+    claim_text: >-
+      The P0_04 technical route links hypotheses, downstream experiments,
+      measurable metrics, stop conditions, and fallback branches before any
+      result-level claim can be promoted.
+    manuscript_location: docs/manuscript.md#技术路线草图
+    support_status: supported
+    action: keep
+    evidence_refs:
+      - evidence_id: P0_04_E001_OKR_MAP
+        evidence_type: code
+        source_ref: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/okr_map.yaml
+      - evidence_id: P0_02_E001_PROBLEM_HYPOTHESIS
+        evidence_type: code
+        source_ref: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/problem_hypothesis.yaml
+      - evidence_id: P0_03_E001_CONTRIBUTION_CLAIMS
+        evidence_type: code
+        source_ref: research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/contribution_claims.yaml
+      - evidence_id: P0_04_E004_ROUTE_READINESS_CONTRACT
+        evidence_type: code
+        source_ref: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/route_readiness_contract.yaml
+  - claim_id: P0_04_C002_FORMAL_RESULTS_REQUIRE_ELIGIBILITY_GATE
+    claim_type: method
+    claim_text: >-
+      Formal result claims require provider/model policy, Vibench adapter
+      alignment, artifact contract, Stage C/D rows, and selected backend lock;
+      run success alone is not sufficient evidence.
+    manuscript_location: docs/manuscript.md#风险分支说明
+    support_status: supported
+    action: keep
+    evidence_refs:
+      - evidence_id: P0_04_E002_RISK_DECISION_MAP
+        evidence_type: code
+        source_ref: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/risk_decision_map.yaml
+      - evidence_id: P0_04_E004_ROUTE_READINESS_CONTRACT
+        evidence_type: code
+        source_ref: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/route_readiness_contract.yaml
+      - evidence_id: P0_03_E001_CONTRIBUTION_CLAIMS
+        evidence_type: code
+        source_ref: research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/contribution_claims.yaml
+  - claim_id: P0_04_C003_REVIEW_RESPONSE_AND_NEGATIVE_EVIDENCE_REMAIN_GATES
+    claim_type: method
+    claim_text: >-
+      Independent review, response coverage, hard-fail closure, and
+      negative-result retention remain phase-transition gates rather than
+      optional documentation.
+    manuscript_location: docs/manuscript.md#阶段性计划与 OKR
+    support_status: supported
+    action: keep
+    evidence_refs:
+      - evidence_id: P0_04_E001_OKR_MAP
+        evidence_type: code
+        source_ref: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/okr_map.yaml
+      - evidence_id: P0_03_E001_CONTRIBUTION_CLAIMS
+        evidence_type: code
+        source_ref: research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/contribution_claims.yaml
+  - claim_id: P0_04_C004_ROUTE_IS_PROPOSAL_STAGE_ONLY
+    claim_type: limitation
+    claim_text: >-
+      P0_04 establishes an auditable route and OKR map but does not prove that
+      AutoResearch improves claim quality or that formal PHMGA/Vibench evidence
+      is submission-ready.
+    manuscript_location: docs/manuscript.md#当前结论
+    support_status: supported
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P0_04_E003_MANUSCRIPT_BOUNDARY
+        evidence_type: code
+        source_ref: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/docs/manuscript.md
+      - evidence_id: P0_04_E002_RISK_DECISION_MAP
+        evidence_type: code
+        source_ref: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/risk_decision_map.yaml
+      - evidence_id: P0_04_E004_ROUTE_READINESS_CONTRACT
+        evidence_type: code
+        source_ref: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/route_readiness_contract.yaml
+
+author_exit:
+  claim_evidence_ids_are_explicit_or_gap_is_reported: true
+  negative_or_failed_results_recorded: true
+  protected_paths_respected: true
+  route_readiness_contract_linked: true

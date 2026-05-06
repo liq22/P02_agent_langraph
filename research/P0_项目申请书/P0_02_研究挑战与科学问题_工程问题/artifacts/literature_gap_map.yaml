@@ -1,0 +1,95 @@
+version: p0_02_literature_gap_map_v1
+node_id: research::P0_项目申请书::P0_02_研究挑战与科学问题_工程问题
+generated_at: 2026-05-05
+
+gaps:
+  - gap_id: P0_02_G001_TESTABLE_CLAIM_GOVERNANCE_PROBLEM
+    gap_statement: >-
+      The cited representative agentic research systems and reporting policies
+      motivate tool use, agent coordination, automated experimentation, paper
+      writing, and publication governance, but they do not by themselves define
+      a testable split between the scientific question of claim-governance
+      effectiveness and the engineering question of node-local traceability.
+    novelty_boundary: >-
+      The proposed novelty is not a new generic agent framework or a claim that
+      agents can write papers. The boundary is a measurable research-operation
+      problem: whether explicit node-local claim/evidence/protocol/review gates
+      improve claim validity and preserve negative evidence under fixed
+      comparisons.
+    falsifiable_question: >-
+      Under the same fixed node set, budget, and reviewer rubric, does a gated
+      AutoResearch workflow produce higher claim-evidence validity, fewer
+      unsupported claims, higher response coverage, and better negative-result
+      retention than manual checklist, prompt-only agent, or ungated
+      multi-agent baselines?
+    evidence_status: supported
+    action: keep
+    nearest_prior_work:
+      - cluster_id: tool_using_language_agents
+        citation_refs:
+          - react2022
+          - reflexion2023
+        solved_boundary: Tool-using and feedback-driven agent trajectories.
+        unresolved_boundary: Manuscript claim evidence, review response, and phase-gate truth are not closed by trajectory success alone.
+      - cluster_id: multi_agent_frameworks
+        citation_refs:
+          - autogen2023
+        solved_boundary: Conversable and configurable multi-agent application infrastructure.
+        unresolved_boundary: Agent composition does not enforce claim registries, independent reviewer gates, or negative-result preservation.
+      - cluster_id: ml_experimentation_and_ai_scientist
+        citation_refs:
+          - mlagentbench2023
+          - aiscientist2024
+        solved_boundary: Agent evaluation on ML experimentation and automated scientific discovery workflows.
+        unresolved_boundary: Generated experiments and papers still require explicit evidence boundaries before claims are accepted.
+      - cluster_id: reporting_and_review_governance
+        citation_refs:
+          - nature_reporting
+          - ieee_peer_review_policy
+        solved_boundary: Publication expectations for reproducibility, disclosure, originality, and peer review.
+        unresolved_boundary: Policies set standards but are not a node-local human-agent operating procedure.
+    citation_refs:
+      - react2022
+      - reflexion2023
+      - autogen2023
+      - mlagentbench2023
+      - aiscientist2024
+      - nature_reporting
+      - ieee_peer_review_policy
+    scientific_problem:
+      question_id: SQ1_CLAIM_GOVERNANCE_EFFECTIVENESS
+      measurable_outcomes:
+        - claim_evidence_validity_rate
+        - unsupported_claim_count
+        - independent_reviewer_pass_rate
+        - response_coverage_rate
+        - negative_result_retention_rate
+    engineering_problem:
+      question_id: EQ1_NODE_LOCAL_TRACEABILITY
+      completion_evidence:
+        - node-local manuscript/artifact/review/response/status files
+        - PHMGA/Vibench provider and data provenance records
+        - derived graph refresh without adding graph truth fields
+        - final validator blocker preservation
+    reviewer_objection_path:
+      - The project may look like engineering bookkeeping unless SQ1/SQ2 are evaluated against explicit baselines and metrics.
+      - The gap may look incremental unless AutoResearch is framed as evidence governance rather than generic multi-agent orchestration.
+      - Engineering success may be overpromoted unless proposal-stage, synthetic/offline, reject-evidence, and formal-result boundaries remain explicit.
+    minimum_evidence_before_strong_claim:
+      - fixed-node comparison protocol
+      - manual checklist baseline
+      - prompt-only agent baseline
+      - ungated multi-agent baseline
+      - claim-evidence validity audit
+      - unsupported-claim count audit
+      - response coverage audit
+      - negative-result ledger
+      - PHMGA/Vibench adapter alignment preflight
+      - Stage C/D formal evidence rows
+
+author_exit:
+  science_engineering_split_present: true
+  every_problem_has_metric_or_completion_evidence: true
+  non_falsifiable_claims_blocked: true
+  citation_status_checked_when_external_sources_are_used: true
+  p0_scope_preserved: true

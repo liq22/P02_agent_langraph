@@ -1,8 +1,20 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    status: closed
+    note: External AI reviewer passed P0_02 with score 86; non-blocking strengthening notes were retained for final submission scoring protocol, baseline budget contract, PHMGA/Vibench evidence eligibility separation, and policy-citation boundaries.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    status: closed
+    note: User-authorized Claude Code teammate review passed and confirmed science/engineering separation, named metrics and falsification paths, engineering completion evidence, citation auditability, and proposal-stage boundary control.
+
+  - comment_id: AI-002
+    responded: true
+    status: closed
+    note: Distinct final-threshold re-review scored P0_02 at 88 and requested an operational claim-evidence scoring protocol plus equal-baseline budget contract. Added artifacts/claim_evidence_scoring_protocol.yaml and artifacts/baseline_budget_protocol.yaml, updated docs/manuscript.md and artifacts/problem_hypothesis.yaml, and preserved that H1-H3 remain proposal-stage until downstream comparisons and formal evidence are actually run.
+
+  - comment_id: AI-003
+    responded: true
+    status: closed
+    note: AI_003 distinct final-threshold re-review found the AI_002 metric-protocol and equal-baseline budget blockers resolved for P0_02 scope. P0_02 now passes final-threshold as a problem-definition node with overall_score 91, while explicitly not claiming global submission readiness; downstream comparison execution, provider/formal evidence, P1/P3/P4, and final-validator blockers remain.

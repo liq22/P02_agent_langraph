@@ -1,0 +1,139 @@
+version: p0_02_citation_registry_v1
+node_id: research::P0_项目申请书::P0_02_研究挑战与科学问题_工程问题
+generated_at: 2026-05-05
+source_registry: research/P0_项目申请书/P0_01_研究背景与调研/artifacts/citation_registry.yaml
+
+citations:
+  - citation_key: react2022
+    claim_id: P0_02_G001_TESTABLE_CLAIM_GOVERNANCE_PROBLEM
+    claim_context: ReAct supports the tool-using language-agent prior-work cluster, not the downstream AutoResearch effectiveness claim.
+    source_ref: "Yao et al., ReAct: Synergizing Reasoning and Acting in Language Models, arXiv:2210.03629"
+    source_locator: https://arxiv.org/abs/2210.03629
+    support_strength: representative_prior_work_cluster
+    claim_criticality: comparison_baseline
+    support_status: verified
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+    bibliographic_record:
+      title: "ReAct: Synergizing Reasoning and Acting in Language Models"
+      authors: Shunyu Yao et al.
+      year: 2022
+      venue: arXiv preprint
+  - citation_key: reflexion2023
+    claim_id: P0_02_G001_TESTABLE_CLAIM_GOVERNANCE_PROBLEM
+    claim_context: Reflexion supports the feedback and self-improvement prior-work cluster, not the downstream AutoResearch effectiveness claim.
+    source_ref: "Shinn et al., Reflexion: Language Agents with Verbal Reinforcement Learning, arXiv:2303.11366"
+    source_locator: https://arxiv.org/abs/2303.11366
+    support_strength: representative_prior_work_cluster
+    claim_criticality: comparison_baseline
+    support_status: verified
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+    bibliographic_record:
+      title: "Reflexion: Language Agents with Verbal Reinforcement Learning"
+      authors: Noah Shinn et al.
+      year: 2023
+      venue: arXiv preprint
+  - citation_key: autogen2023
+    claim_id: P0_02_G001_TESTABLE_CLAIM_GOVERNANCE_PROBLEM
+    claim_context: AutoGen supports the multi-agent framework prior-work cluster and the need to distinguish orchestration from evidence governance.
+    source_ref: "Wu et al., AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation Framework, arXiv:2308.08155"
+    source_locator: https://arxiv.org/abs/2308.08155
+    support_strength: representative_prior_work_cluster
+    claim_criticality: comparison_baseline
+    support_status: verified
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+    bibliographic_record:
+      title: "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation Framework"
+      authors: Qingyun Wu et al.
+      year: 2023
+      venue: arXiv preprint / COLM 2024 record
+  - citation_key: mlagentbench2023
+    claim_id: P0_02_G001_TESTABLE_CLAIM_GOVERNANCE_PROBLEM
+    claim_context: MLAgentBench supports the ML experimentation agent prior-work cluster and comparison against task/experiment automation.
+    source_ref: "Huang et al., MLAgentBench: Evaluating Language Agents on Machine Learning Experimentation, arXiv:2310.03302"
+    source_locator: https://arxiv.org/abs/2310.03302
+    support_strength: nearest_prior_work_cluster
+    claim_criticality: comparison_baseline
+    support_status: verified
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+    bibliographic_record:
+      title: "MLAgentBench: Evaluating Language Agents on Machine Learning Experimentation"
+      authors: Qian Huang et al.
+      year: 2023
+      venue: arXiv preprint
+  - citation_key: aiscientist2024
+    claim_id: P0_02_G001_TESTABLE_CLAIM_GOVERNANCE_PROBLEM
+    claim_context: The AI Scientist supports the automated scientific discovery prior-work cluster and the boundary between generated papers and accepted evidence.
+    source_ref: "Lu et al., The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery, arXiv:2408.06292"
+    source_locator: https://arxiv.org/abs/2408.06292
+    support_strength: nearest_prior_work_cluster
+    claim_criticality: comparison_baseline
+    support_status: verified
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+    bibliographic_record:
+      title: "The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery"
+      authors: Chris Lu et al.
+      year: 2024
+      venue: arXiv preprint
+  - citation_key: nature_reporting
+    claim_id: P0_02_G001_TESTABLE_CLAIM_GOVERNANCE_PROBLEM
+    claim_context: Nature Portfolio reporting standards support the engineering requirement for inspectable data, code, material, and protocol boundaries.
+    source_ref: Nature Portfolio reporting standards and availability policies
+    source_locator: https://www.nature.com/natcomputsci/natcomputsci/editorial-policies/reporting-standards
+    support_strength: reporting_governance_context
+    claim_criticality: method_reference
+    support_status: verified
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+    bibliographic_record:
+      title: Reporting standards and availability of data, materials, code and protocols
+      authors: Nature Portfolio
+      year: 2026
+      venue: Nature Portfolio policy page
+  - citation_key: ieee_peer_review_policy
+    claim_id: P0_02_G001_TESTABLE_CLAIM_GOVERNANCE_PROBLEM
+    claim_context: IEEE submission and peer-review policies support the need to keep originality, disclosure, review, and AI-generated content boundaries explicit.
+    source_ref: IEEE Author Center submission and peer-review policies
+    source_locator: https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/guidelines-and-policies/submission-and-peer-review-policies/
+    support_strength: peer_review_governance_context
+    claim_criticality: method_reference
+    support_status: verified
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+    bibliographic_record:
+      title: Submission and Peer Review Policies
+      authors: IEEE Author Center
+      year: 2026
+      venue: IEEE Author Center policy page

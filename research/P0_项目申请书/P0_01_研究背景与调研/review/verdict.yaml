@@ -1,21 +1,27 @@
-review_id: EXTERNAL-AI-001
-review_complete: false
-reviewer_agent_id: <pending-distinct-agent>
-reviewer_skill: external_node_reviewer
+review_id: EXTERNAL-AI-003
+review_complete: true
+reviewer_agent_id: distinct_final_threshold_reviewer_codex_p0_01_ai_003_2026-05-05
+reviewer_skill: distinct_final_threshold_reviewer
 reviewed_node_path: research/P0_项目申请书/P0_01_研究背景与调研
 rubric_path: prompts/review_rubric.yaml
 rubric_version: nature_node_review_v1
-overall_score: null
-overall_verdict: revise
+review_threshold: final_submission_90
+overall_score: 91
+overall_verdict: pass
+final_threshold_verdict: pass_node_final_threshold
 hard_fail: false
 dimension_scores:
-  originality_novelty: null
-  scientific_importance: null
-  evidence_technical_soundness: null
-  reproducibility_transparency: null
-  broad_interest_story_clarity: null
-  review_robustness: null
+  originality_novelty: 18
+  scientific_importance: 18
+  evidence_technical_soundness: 21
+  reproducibility_transparency: 15
+  broad_interest_story_clarity: 9
+  review_robustness: 10
 blocking_issues: []
-required_actions: []
+required_actions:
+  - Preserve the proposal-stage boundary until downstream comparisons validate claim-evidence validity, unsupported-claim reduction, review pass rate, hard-fail closure, response coverage, and reproducibility agreement.
+  - Do not treat this node-level pass as global final-submission readiness; downstream metrics, provider/backend readiness, P1/P3/P4 outcomes, and final-validator gates remain open.
 downstream_ready: false
-independence_confirmed: false
+reaches_final_threshold_90: true
+global_submission_ready: false
+independence_confirmed: true

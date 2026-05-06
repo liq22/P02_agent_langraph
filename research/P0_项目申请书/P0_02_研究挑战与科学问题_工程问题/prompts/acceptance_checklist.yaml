@@ -13,50 +13,52 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: 哪些问题属于机制/理论层，哪些属于系统/实现层？
-  status: pending
+  status: done
 - item: 问题是否可测试、可评价、可完成？
-  status: pending
+  status: done
 - item: 是否存在无法证伪或无法量化的表述？
-  status: pending
+  status: done
 required_outputs:
 - path: docs/manuscript.md 中的问题定义草稿
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: 科学问题/工程问题映射
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: docs/manuscript.md
+  status: done
   description: profile-required local artifact
 - path: artifacts/literature_gap_map.yaml
+  status: done
   description: profile-required local artifact
 quality_checks:
 - item: 围绕 significance、gap、hypothesis/aims、expected outcomes、impact、feasibility 组织内容
-  status: pending
+  status: done
 - item: 避免空泛承诺，优先 reviewer 可快速判断的清晰目标
-  status: pending
+  status: done
 - item: 问题必须可评估、可证据支撑、边界清晰
-  status: pending
+  status: done
 - item: 避免把 solution 直接写成 problem
-  status: pending
+  status: done
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: done
 handoff_ready_if:
 - item: 至少形成 1 个科学问题和 1 个工程问题
-  status: pending
+  status: done
 - item: 每个问题都能对应后续内容/路线/评价
-  status: pending
+  status: done
 - item: 不存在显著不可评估表述
-  status: pending
+  status: done
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: done
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -78,9 +80,9 @@ stop_if:
   status: pending
 review_notes:
 - slot: 1
-  note: <待填写>
+  note: External AI reviewer passed P0_02 with score 86 and retained only final-submission strengthening notes.
 - slot: 2
-  note: <待填写>
+  note: User-authorized Claude Code teammate review passed the human-review slot and confirmed science/engineering separation and proposal-stage boundaries.
 external_review_gate:
   required: true
   reviewer_role: external_node_reviewer
@@ -104,17 +106,17 @@ external_review_gate:
   - artifacts/literature_gap_map.yaml
 author_exit:
 - item: 'required_artifacts_exist: true'
-  status: pending
+  status: done
 - item: 'key_research_judgment_answered_or_gap_reported: true'
-  status: pending
+  status: done
 - item: 'citation_status_checked_when_external_sources_are_used: true'
-  status: pending
+  status: done
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: done

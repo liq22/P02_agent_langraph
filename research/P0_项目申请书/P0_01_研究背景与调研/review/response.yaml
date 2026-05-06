@@ -1,8 +1,40 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    status: closed
+    note: Main problem is stated in docs/manuscript.md and positioning_matrix.yaml as claim/evidence/protocol/review/response traceability for human-agent research workflows.
+
+  - comment_id: AI-002
+    responded: true
+    status: closed
+    note: Four work clusters are recorded in positioning_matrix.yaml and literature_gap_map.yaml.
+
+  - comment_id: AI-003
+    responded: true
+    status: closed
+    note: Gap wording was narrowed to the cited representative systems, and proposal-stage boundary was added in manuscript and gap artifacts.
+
+  - comment_id: AI-004
+    responded: true
+    status: closed
+    note: citation_registry.yaml now includes bibliographic records in addition to source locators and support status.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    status: closed
+    note: User-authorized Claude Code teammate review passed and confirmed the P0_01 problem, prior-work clusters, falsifiable gap, citation auditability, and proposal-stage boundary are node-level sufficient.
+
+  - comment_id: AI-002-001
+    responded: true
+    status: closed
+    note: Added artifacts/final_submission_sota_sweep.md and updated manuscript, citation_registry.yaml, literature_gap_map.yaml, positioning_matrix.yaml, and novelty_boundary_refinement.md. The new sweep covers research-agent, automated-science, software-agent, experiment-management, provenance, and review-governance systems while preserving the proposal-stage boundary.
+
+  - comment_id: AI-002-002
+    responded: true
+    status: closed
+    note: The updated novelty boundary states that AutoResearch is not novel for agents, multi-agent orchestration, experiment automation, report drafting, repository patches, artifact lineage, or policy compliance. The remaining candidate gap is the node-local claim/evidence/protocol/review/response/negative-evidence phase-transition contract; downstream comparison metrics remain required before mechanism claims.
+
+  - comment_id: AI-003-001
+    responded: true
+    status: closed
+    note: AI_003 independently re-reviewed the required P0_01 files and judged that AI_002's fuller SOTA sweep and stronger novelty-evidence blockers are closed for this background/gap node. The node reaches the 90 final-threshold standard at score 91, while downstream comparison evidence, provider/backend readiness, P1/P3/P4 outcomes, and final-validator gates remain open.

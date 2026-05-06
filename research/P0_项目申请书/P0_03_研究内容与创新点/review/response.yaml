@@ -1,8 +1,20 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    status: closed
+    note: External AI reviewer passed P0_03 with score 86; non-blocking strengthening notes are retained for final submission narrative on reviewer-attack sentences, RC4 evidence-eligibility framing, policy-page re-checks, and RC1/RC2 distinction.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    status: closed
+    note: User-authorized Claude Code teammate review passed and confirmed four distinguishable research content units, concrete prior-work innovation boundaries, contribution/implementation separation, citation auditability, proposal-stage boundaries, and non-node blockers.
+
+  - comment_id: AI-002
+    responded: true
+    status: closed
+    note: Added artifacts/evidence_readiness_contract.yaml and updated manuscript/contribution/gap artifacts to bind P0_03 to P0_01 final SOTA boundaries and P0_02 locked claim-evidence plus baseline-budget protocols. The response keeps all fixed-node baseline comparisons, audits, PHMGA/Vibench formal rows, selected-backend lock, and live citation verification as downstream evidence rows, so P0_03 can be judged only on contribution-boundary readiness without empirical overclaim.
+
+  - comment_id: AI-003
+    responded: true
+    status: closed
+    note: Distinct final-threshold review passed P0_03 at 92/100 for node-specific research-content and innovation-boundary readiness. The pass is limited to P0_03 handoff: downstream comparative audits, formal PHMGA/Vibench rows, selected-backend lock, and live citation verification remain blockers for global submission readiness.
