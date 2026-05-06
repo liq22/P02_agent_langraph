@@ -13,62 +13,66 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: 哪些批评是同一根因的不同表述？
-  status: pending
+  status: done
 - item: 哪些问题最先修？
-  status: pending
+  status: done
 - item: review_issue_register 是否保留 source_comment_ids、severity、affected claim、evidence
     gap、location 与 next action？
-  status: pending
+  status: done
 required_outputs:
 - path: critique digest
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: 问题聚类结果
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: artifacts/claim_evidence_registry.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/failure_register.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/negative_result_note.md
+  status: done
   description: profile-required local artifact
 - path: artifacts/keep_discard_ledger.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/critique_digest.yaml
-  status: pending
+  status: done
   description: 压缩后的 critique digest
 - path: artifacts/review_issue_register.yaml
-  status: pending
+  status: done
   description: 原子化 review issue register
 - path: logs/session_manifest.yaml
-  status: pending
+  status: done
   description: 记录 critique 聚合与外部评审会话
 quality_checks:
 - item: 围绕 reviewer 视角、blocking issues、comment clustering、revision actionability 组织内容
-  status: pending
+  status: done
 - item: 批评要具体、可执行、可验证
-  status: pending
+  status: done
 - item: 聚类后仍保留原 comment 可追溯性
-  status: pending
+  status: done
 - item: review_issue_register 按 checklist dimension 聚合，同时保留少数强反对意见和矛盾反馈。
-  status: pending
+  status: done
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: done
 handoff_ready_if:
 - item: 至少形成 blocking / non-blocking / cosmetic 三类聚合
-  status: pending
+  status: done
 - item: 每个 blocking issue 都能路由到 P3_04 修订动作或显式 blocker
-  status: pending
+  status: done
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: done
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -92,9 +96,9 @@ stop_if:
   status: pending
 review_notes:
 - slot: 1
-  note: <待填写>
+  note: AI_001 passed P3_03 node-local review with score 86 and no hard fails.
 - slot: 2
-  note: <待填写>
+  note: H_001 Claude Code teammate review passed and handoff validation succeeded.
 external_review_gate:
   required: true
   reviewer_role: external_node_reviewer
@@ -125,17 +129,17 @@ external_review_gate:
   - logs/session_manifest.yaml
 author_exit:
 - item: 'claim_evidence_ids_are_explicit_or_gap_is_reported: true'
-  status: pending
+  status: done
 - item: 'negative_or_failed_results_recorded: true'
-  status: pending
+  status: done
 - item: 'protected_paths_respected: true'
-  status: pending
+  status: done
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: done

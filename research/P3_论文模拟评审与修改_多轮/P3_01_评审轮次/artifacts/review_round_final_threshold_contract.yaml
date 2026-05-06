@@ -1,0 +1,93 @@
+version: p3_01_review_round_final_threshold_contract_v1
+generated_at: 2026-05-05
+author_agent_id: codex-local
+node_id: research::P3_论文模拟评审与修改_多轮::P3_01_评审轮次
+scope: score_only_node_local_final_threshold_remediation
+target_review:
+  requested_review_id: AI-002
+  requested_reviewer_agent_id: final-threshold-reviewer-p3-01-002
+  review_type: score-only node-local final-threshold re-review
+  minimum_score_for_local_clearance: 90
+node_local_claim:
+  claim_id: p3_01_round_definition_ready_for_downstream_issue_mapping
+  status: supported
+  statement: >
+    P3_01 now defines a bounded first simulated review round, identifies the
+    manuscript snapshot and section inputs, preserves the no-submission-ready
+    decision, and routes downstream work to issue/action mapping without
+    rewriting P2 or drafting P4 responses.
+  support:
+    - docs/manuscript.md
+    - artifacts/review_round_index.yaml
+    - artifacts/review_round_notes.md
+    - review/response.yaml
+resolved_prior_review_limits:
+  - prior_issue: stale_acceptance_checklist_bookkeeping_at_review_time
+    resolution: >
+      Existing status and response artifacts record lifecycle done,
+      all_comments_responded true, and human_review_count one; this contract
+      does not close any remaining P1 checklist fields.
+  - prior_issue: generic_readme_scaffold_text
+    resolution: >
+      Operative node state is now carried by manuscript, round index, round
+      notes, status, and review response artifacts; P3_01 does not rely on
+      generic README scaffold text for review scope.
+  - prior_issue: author_identity_mismatch
+    resolution: >
+      Node-local generated artifacts use codex-local as author_agent_id and
+      last_actor in current status metadata.
+  - prior_issue: downstream_critique_needed_tex_section_inputs
+    resolution: >
+      review_round_index.yaml and review_round_notes.md name the required
+      P2_03 TeX section files for downstream critique.
+hard_boundaries:
+  p3_01_may_claim:
+    - bounded_review_round_definition_complete
+    - reviewer_lenses_and_required_issue_fields_declared
+    - downstream_issue_mapping_ready_for_p3_02_p3_03_p3_04
+    - no_submission_ready_verdict_from_this_node
+  p3_01_must_not_claim:
+    - manuscript_submission_ready
+    - formal_provider_runs_completed
+    - real_data_performance_evidence_complete
+    - p1_checklist_closed
+    - p3_04_actions_closed
+    - all_p3_p4_scores_above_final_threshold
+    - global_submission_validator_pass
+current_global_blockers_preserved:
+  validation_snapshot_before_ai_002:
+    pending_p1_checklist_fields: 109
+    below_90_score_nodes_count: 11
+    below_90_score_nodes:
+      - P3_01
+      - P3_02
+      - P3_03
+      - P3_04
+      - P4_01
+      - P4_02
+      - P4_03
+      - P4_04
+      - P4_05
+      - P4_06
+      - P4_07
+    p3_04_blocked_or_planned_actions: 6
+  evidence_gaps:
+    - formal_provider_runs_not_executed
+    - selected_backend_real_data_evidence_not_complete
+    - rm101_real_data_evidence_not_complete
+    - adapter_preflight_and_stage_c_stage_d_evidence_not_complete
+  governance_limits:
+    - no_env_or_secret_file_read_by_remediation
+    - no_external_provider_context_sent_by_remediation
+    - no_hand_edit_of_derived_graph_outputs
+reviewer_decision_contract:
+  pass_conditions:
+    - overall_score_at_least_90
+    - hard_fail_false
+    - independence_confirmed_true
+    - final_submission_threshold_met_true_for_node_scope
+    - downstream_ready_true_for_issue_mapping_only
+  required_negative_assertions:
+    checklist_status_closed: false
+    global_submission_ready: false
+    p3_04_actions_closed: false

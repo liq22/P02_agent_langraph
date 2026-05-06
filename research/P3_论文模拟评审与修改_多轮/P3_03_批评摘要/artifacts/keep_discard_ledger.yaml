@@ -1,0 +1,52 @@
+version: p3_03_keep_discard_ledger_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_03_批评摘要
+generated_at: 2026-05-05
+
+decisions:
+  - item_id: six_issue_review_register
+    item_type: review_issue_register
+    decision: keep
+    rationale: It preserves three blocking, two non-blocking, and one cosmetic issue with source comment IDs, severity, affected claim or section, evidence gap, location, and next action.
+    evidence_ref: P3_03_E004_REVIEW_ISSUE_REGISTER
+    allowed_use: P3_04 revision-action mapping and P4 response evidence planning
+    forbidden_use: claiming final submission readiness
+
+  - item_id: three_blocking_clusters
+    item_type: critique_digest_cluster
+    decision: keep
+    rationale: Formal evidence eligibility, reproducibility artifact state, and global validator/response coverage are the root causes that must be fixed or retained before submission.
+    evidence_ref: P3_03_E001_CRITIQUE_DIGEST
+    allowed_use: priority ordering for P3_04 actions
+    forbidden_use: replacing upstream evidence repair
+
+  - item_id: prose_density_and_style_comments
+    item_type: non_blocking_or_cosmetic_feedback
+    decision: keep_as_lower_priority
+    rationale: P2_05 calibration improves readability, but style work must not hide evidence limitations or upgrade claims.
+    evidence_ref: P3_03_E006_P2_05_CALIBRATION
+    allowed_use: downstream manuscript-polish actions after blockers remain visible
+    forbidden_use: resolving formal evidence gaps by wording changes
+
+  - item_id: roleplay_or_author_defense_comments
+    item_type: critique_variant
+    decision: discard
+    rationale: P3 standards require independent, actionable critique tied to evidence and revision actions.
+    evidence_ref: P3_03_E002_REVIEW_ROUND_INDEX
+    allowed_use: none
+    forbidden_use: review gate, critique digest, or revision action map
+
+  - item_id: success_only_result_summary
+    item_type: result_interpretation_variant
+    decision: discard
+    rationale: A success-only summary would remove rejected, blocked, or uncertain evidence from the denominator.
+    evidence_ref: P3_03_E005_COMPLETION_AUDIT
+    allowed_use: none
+    forbidden_use: P2 result wording or P3/P4 response planning
+
+audit:
+  negative_or_failed_results_recorded: true
+  claim_evidence_ids_are_explicit_or_gap_is_reported: true
+  protected_paths_respected: true
+  source_comment_ids_retained: true
+  strong_objections_preserved: true
+

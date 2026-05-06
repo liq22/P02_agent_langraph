@@ -1,0 +1,42 @@
+version: p3_02_keep_discard_ledger_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_02_评价者档案
+generated_at: 2026-05-05
+
+decisions:
+  - item_id: six_lens_reviewer_matrix
+    item_type: reviewer_profile_set
+    decision: keep
+    rationale: It covers EIC, method expert, domain expert, cross-disciplinary reader, reproducibility skeptic, and devil's advocate roles required by the node prompt.
+    evidence_ref: P3_02_E001_LENS_MATRIX
+    allowed_use: downstream P3 critique generation and revision-action routing
+    forbidden_use: claiming final submission readiness
+
+  - item_id: three_profile_bundle_map
+    item_type: reviewer_profile_map
+    decision: keep
+    rationale: It groups the six lenses into method/reproducibility, empirical/statistics, and venue/claim-clarity bundles aligned with P3_01.
+    evidence_ref: P3_02_E002_PROFILE_MAP
+    allowed_use: P3_03 critique-summary inputs
+    forbidden_use: replacing independent review verdicts
+
+  - item_id: roleplay_only_personas
+    item_type: reviewer_profile_variant
+    decision: discard
+    rationale: Reviewer personas without attack surfaces, required evidence, and hard-fail conditions would not produce actionable critique.
+    evidence_ref: P3_02_E004_LENS_MATRIX
+    allowed_use: none
+    forbidden_use: P3 review or revision planning
+
+  - item_id: friendly_author_defense_reviewer
+    item_type: reviewer_profile_variant
+    decision: discard
+    rationale: P3 standards require independent adversarial critique, not author defense.
+    evidence_ref: P3_02_E003_P3_01_ROUND_INDEX
+    allowed_use: none
+    forbidden_use: review gate, critique summary, or revision action map
+
+audit:
+  negative_or_failed_results_recorded: true
+  claim_evidence_ids_are_explicit_or_gap_is_reported: true
+  protected_paths_respected: true
+  no_roleplay_only_profiles: true

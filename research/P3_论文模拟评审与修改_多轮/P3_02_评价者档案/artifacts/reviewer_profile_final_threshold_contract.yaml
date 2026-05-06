@@ -1,0 +1,97 @@
+version: p3_02_reviewer_profile_final_threshold_contract_v1
+generated_at: 2026-05-05
+author_agent_id: codex-local
+node_id: research::P3_论文模拟评审与修改_多轮::P3_02_评价者档案
+scope: score_only_node_local_final_threshold_remediation
+target_review:
+  requested_review_id: AI-002
+  requested_reviewer_agent_id: final-threshold-reviewer-p3-02-002
+  review_type: score-only node-local final-threshold re-review
+  minimum_score_for_local_clearance: 90
+node_local_claim:
+  claim_id: p3_02_reviewer_profiles_ready_for_downstream_critique
+  status: supported
+  statement: >
+    P3_02 now defines a six-lens reviewer-profile package with each lens tied
+    to attack surfaces, required evidence, hard-fail conditions, and downstream
+    profile bundles for P3_03 critique synthesis and P3_04 revision-action
+    mapping.
+  support:
+    - docs/manuscript.md
+    - artifacts/reviewer_lens_matrix.yaml
+    - artifacts/reviewer_profile_map.yaml
+    - artifacts/claim_evidence_registry.yaml
+    - artifacts/failure_register.yaml
+    - artifacts/negative_result_note.md
+    - artifacts/keep_discard_ledger.yaml
+resolved_prior_review_limits:
+  - prior_issue: per_lens_atomic_issue_rows_not_instantiated
+    resolution: >
+      P3_02 now treats atomic issue-row creation as an explicit downstream
+      output contract for P3_03 and P3_04; this node's own deliverable is the
+      evidence-bound reviewer lens package, not the issue register itself.
+  - prior_issue: declared_evidence_paths_not_independently_verified_here
+    resolution: >
+      The package now states that required evidence paths are reviewer attack
+      inputs and must be rechecked by downstream critique nodes before any
+      scientific support claim is made.
+  - prior_issue: author_agent_identity_bookkeeping
+    resolution: >
+      Current status and generated artifacts identify codex-local consistently
+      for node-local author-side work; reviewer independence remains distinct.
+  - prior_issue: roleplay_only_persona_risk
+    resolution: >
+      Every lens has a primary attack surface, required evidence, hard-fail
+      conditions, and a downstream profile reference; roleplay-only profiles
+      remain disallowed.
+hard_boundaries:
+  p3_02_may_claim:
+    - six_lens_reviewer_profile_package_complete
+    - attack_surfaces_bound_to_required_evidence
+    - negative_and_blocked_evidence_preserved_as_review_targets
+    - downstream_profile_bundles_ready_for_p3_03_and_p3_04
+  p3_02_must_not_claim:
+    - manuscript_submission_ready
+    - critique_issue_rows_already_instantiated_by_this_node
+    - upstream_evidence_paths_independently_verified_as_scientific_support
+    - formal_provider_runs_completed
+    - p1_checklist_closed
+    - p3_04_actions_closed
+    - all_p3_p4_scores_above_final_threshold
+    - global_submission_validator_pass
+current_global_blockers_preserved:
+  validation_snapshot_before_ai_002:
+    pending_p1_checklist_fields: 109
+    below_90_score_nodes_count: 10
+    below_90_score_nodes:
+      - P3_02
+      - P3_03
+      - P3_04
+      - P4_01
+      - P4_02
+      - P4_03
+      - P4_04
+      - P4_05
+      - P4_06
+      - P4_07
+    p3_04_blocked_or_planned_actions: 6
+  evidence_gaps:
+    - formal_provider_runs_not_executed
+    - selected_backend_real_data_evidence_not_complete
+    - rm101_real_data_evidence_not_complete
+    - adapter_preflight_and_stage_c_stage_d_evidence_not_complete
+  governance_limits:
+    - no_env_or_secret_file_read_by_remediation
+    - no_external_provider_context_sent_by_remediation
+    - no_hand_edit_of_derived_graph_outputs
+reviewer_decision_contract:
+  pass_conditions:
+    - overall_score_at_least_90
+    - hard_fail_false
+    - independence_confirmed_true
+    - final_submission_threshold_met_true_for_node_scope
+    - downstream_ready_true_for_critique_profile_consumption_only
+  required_negative_assertions:
+    checklist_status_closed: false
+    global_submission_ready: false
+    p3_04_actions_closed: false

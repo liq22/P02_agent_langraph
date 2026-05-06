@@ -1,0 +1,98 @@
+version: p3_03_critique_digest_final_threshold_contract_v1
+generated_at: 2026-05-05
+author_agent_id: codex-local
+node_id: research::P3_论文模拟评审与修改_多轮::P3_03_批评摘要
+scope: score_only_node_local_final_threshold_remediation
+target_review:
+  requested_review_id: AI-002
+  requested_reviewer_agent_id: final-threshold-reviewer-p3-03-002
+  review_type: score-only node-local final-threshold re-review
+  minimum_score_for_local_clearance: 90
+node_local_claim:
+  claim_id: p3_03_critique_digest_ready_for_revision_action_mapping
+  status: supported
+  statement: >
+    P3_03 now provides a bounded critique digest and atomic issue register that
+    preserve reviewer source IDs, severity, affected claim or section, evidence
+    gap, location, required action, validation gate, submission-blocking
+    status, and next action for P3_04 revision-action mapping.
+  support:
+    - docs/manuscript.md
+    - artifacts/critique_digest.yaml
+    - artifacts/review_issue_register.yaml
+    - artifacts/critique_scores.yaml
+    - artifacts/claim_evidence_registry.yaml
+    - artifacts/failure_register.yaml
+    - artifacts/negative_result_note.md
+    - artifacts/keep_discard_ledger.yaml
+resolved_prior_review_limits:
+  - prior_issue: author_closeout_pending
+    resolution: >
+      Existing status, checklist, and response artifacts record node-local
+      closeout and all comments responded; this contract does not close any P1
+      checklist fields.
+  - prior_issue: external_evidence_recheck_required
+    resolution: >
+      P3_03 now records non-P3 evidence references as review targets and
+      requires downstream P3_04/P4 recheck before they can support scientific
+      claims.
+  - prior_issue: granular_source_ids_for_p3_04
+    resolution: >
+      review_issue_register.yaml keeps issue IDs, critique IDs, lens IDs,
+      source_comment_ids, evidence locations, and target artifacts for every
+      row.
+  - prior_issue: stale_global_validator_blocker_text
+    resolution: >
+      P3_03 now names the current emitted validator classes: pending P1
+      checklist fields, remaining below-threshold P3/P4 scores, and P3_04
+      blocked/planned action statuses; repaired schema/failure-truth issues
+      remain historical only.
+hard_boundaries:
+  p3_03_may_claim:
+    - critique_digest_complete
+    - atomic_issue_register_complete
+    - blocking_nonblocking_and_cosmetic_issue_classes_separated
+    - issue_rows_ready_for_p3_04_revision_action_mapping
+  p3_03_must_not_claim:
+    - manuscript_rewritten
+    - p3_04_actions_closed
+    - formal_evidence_resolved
+    - upstream_evidence_verified_as_scientific_support
+    - p1_checklist_closed
+    - response_package_complete
+    - global_submission_validator_pass
+current_global_blockers_preserved:
+  validation_snapshot_before_ai_002:
+    pending_p1_checklist_fields: 109
+    below_90_score_nodes_count: 9
+    below_90_score_nodes:
+      - P3_03
+      - P3_04
+      - P4_01
+      - P4_02
+      - P4_03
+      - P4_04
+      - P4_05
+      - P4_06
+      - P4_07
+    p3_04_blocked_or_planned_actions: 6
+  evidence_gaps:
+    - formal_provider_runs_not_executed
+    - selected_backend_real_data_evidence_not_complete
+    - rm101_real_data_evidence_not_complete
+    - adapter_preflight_and_stage_c_stage_d_evidence_not_complete
+  governance_limits:
+    - no_env_or_secret_file_read_by_remediation
+    - no_external_provider_context_sent_by_remediation
+    - no_hand_edit_of_derived_graph_outputs
+reviewer_decision_contract:
+  pass_conditions:
+    - overall_score_at_least_90
+    - hard_fail_false
+    - independence_confirmed_true
+    - final_submission_threshold_met_true_for_node_scope
+    - downstream_ready_true_for_p3_04_action_mapping_only
+  required_negative_assertions:
+    checklist_status_closed: false
+    global_submission_ready: false
+    p3_04_actions_closed: false

@@ -13,59 +13,61 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: 每条批评的最小修订动作是什么？
-  status: pending
+  status: done
 - item: 修改后如何验证问题真的被解决？
-  status: pending
+  status: done
 - item: revision_action_map 是否为每个 blocking issue 指定 target_phase、target_node、action_type、expected_evidence、validation_gate
     与 next_iteration_trigger？
-  status: pending
+  status: done
 required_outputs:
 - path: revision action map
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: artifacts/review_issue_register.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/critique_digest.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/revision_action_map.yaml
-  status: pending
+  status: done
   description: 可路由、可验证的修订动作图
 quality_checks:
 - item: 围绕 reviewer 视角、blocking issues、comment clustering、revision actionability 组织内容
-  status: pending
+  status: done
 - item: 批评要具体、可执行、可验证
-  status: pending
+  status: done
 - item: comment -> action -> evidence -> file location 一一对应
-  status: pending
+  status: done
 - item: revision_action_map 中每个 action 都绑定 target_phase、target_node、action_type、expected_evidence、validation_gate
     与 next_iteration_trigger。
-  status: pending
+  status: done
 - item: 若 target_node 当前有 unmet prerequisite，action 的验证说明允许 dependency closure 回退，而不是把 blocked target 伪装成 ready leaf
-  status: pending
+  status: done
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: done
 - item: hard-gate block 必须绑定 claim_id/evidence_id/location/actionable_fix；否则只能作为 advisory
     critique。
-  status: pending
+  status: done
 handoff_ready_if:
 - item: 主要批评都有修订动作
-  status: pending
+  status: done
 - item: 动作可追踪到具体文件与证据
-  status: pending
+  status: done
 - item: 每个 blocking issue 都有 action 或 unresolved blocker，不允许静默消失
-  status: pending
+  status: done
 - item: target_node 若当前不可直达，其 prerequisite gap 已被显式记录
-  status: pending
+  status: done
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: done
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -91,9 +93,9 @@ stop_if:
   status: pending
 review_notes:
 - slot: 1
-  note: <待填写>
+  note: AI_001 passed P3_04 node-local review with score 86 and no hard fails.
 - slot: 2
-  note: <待填写>
+  note: H_001 Claude Code teammate review passed and handoff validation succeeded.
 external_review_gate:
   required: true
   reviewer_role: external_node_reviewer
@@ -118,15 +120,15 @@ external_review_gate:
   - artifacts/revision_action_map.yaml
 author_exit:
 - item: 'gate_inputs_verified: true'
-  status: pending
+  status: done
 - item: 'blocking_gaps_are_explicit: true'
-  status: pending
+  status: done
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: done

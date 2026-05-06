@@ -1,56 +1,246 @@
+version: p3_04_revision_action_map_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_04_修订动作
+generated_at: 2026-05-05
+author_agent_id: codex-local
+round_id: p3-round-001
+source_issue_register: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/artifacts/review_issue_register.yaml
+source_critique_digest: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/artifacts/critique_digest.yaml
+final_threshold_contract: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_final_threshold_contract.yaml
+submission_ready_claim: false
+
 actions:
-- action_id: action-p3-001
-  issue_id: issue-p3-001
-  claim_id: claim-core-placeholder-main-manuscript
-  evidence_id: ev-missing-manuscript-body
-  target_phase: P2
-  target_node: research/P2_论文撰写/P2_03_定稿_tex
-  target_path: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
-  target_location: document body
-  action_type: manuscript_revision
-  expected_evidence:
-  - claim_evidence_registry
-  - result_registry
-  - figure_table_provenance
-  actionable_fix: Replace placeholder TeX with evidence-backed manuscript sections after P1 evidence blockers are resolved.
-  verification: Re-run P3 paper iteration gate and confirm central claims, evidence ids, figure/table callouts, and limitations are traceable.
-  validation_gate: P3 paper_iteration_gate plus external reviewer verdict
-  next_iteration_trigger: manuscript body no longer placeholder and central claims have evidence ids
-  status: blocked
-- action_id: action-p3-002
-  issue_id: issue-p3-002
-  claim_id: claim-core-validation-result
-  evidence_id: ev-missing-p1-04-results-ledger
-  target_phase: P1
-  target_node: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证
-  target_path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
-  target_location: results ledger
-  action_type: evidence_generation_or_blocker_confirmation
-  expected_evidence:
-  - executable experiment contract
-  - result ledger rows
-  - keep_discard decision
-  actionable_fix: Generate the missing P1_04 results ledger or record a durable blocker; then update P1_05 result_registry and hypothesis_status.
-  verification: P1_05 no longer reports `blocked_missing_p104_ledger` and paper claims reference concrete result ids.
-  validation_gate: P1 result synthesis acceptance and P3 issue recheck
-  next_iteration_trigger: result_registry contains supported or explicitly negative evidence with ledger anchors
-  status: planned
-- action_id: action-p3-003
-  issue_id: issue-p3-003
-  claim_id: claim-figure-main-result
-  evidence_id: ev-figure-provenance-missing
-  target_phase: P1
-  target_node: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿
-  target_path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_plan.yaml
-  target_location: figures.fig_main
-  action_type: figure_provenance_mapping
-  expected_evidence:
-  - evidence_ref
-  - claim_ref
-  - caption_obligation
-  - first_callout_location
-  actionable_fix: Bind `fig_main` to a verified result claim, evidence source, caption, and manuscript callout before it enters P2.
-  verification: Figure plan includes provenance fields and P2 manuscript first-callout location.
-  validation_gate: P3 figure/table gate
-  next_iteration_trigger: figure plan can be audited from claim to evidence to manuscript callout
-  status: planned
+  - action_id: action-p3-001
+    issue_id: issue-p3-001
+    critique_id: p3-round-001-formal-evidence-eligibility
+    claim_id: P3_03_C02_BLOCKING_FORMAL_EVIDENCE_GAPS
+    evidence_id: P3_03_E004_REVIEW_ISSUE_REGISTER
+    source_comment_ids:
+      - p3-round-001b:empirical_statistics_reviewer
+      - P3_02:devils_advocate
+      - P3_02:reproducibility_skeptic
+    severity: fatal
+    blocks_submission: true
+    target_phase: P1
+    target_node: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议
+    target_path: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+    target_location: formal evidence gates for real-data, RM101, selected backend, Stage C, and Stage D
+    action_type: evidence_generation_or_blocker_confirmation
+    expected_evidence:
+      - accepted real-data formal row or explicit retained limitation
+      - RM101 resolution status with ledger-backed evidence or explicit reject evidence
+      - selected backend decision with justification
+      - repeated-run uncertainty or low-power limitation
+      - Stage C main-result and Stage D ablation row status
+    actionable_fix: Preserve the current result downgrade until upstream formal evidence is generated or recorded as a retained blocker.
+    verification: P1/P2/P4 evidence artifacts must either contain accepted formal rows with ledger anchors or explicitly carry the unresolved limitations into manuscript and response packages.
+    validation_gate: P3 recheck plus `scripts/validate_research_truth.py --require-submission` showing no unresolved formal-result blocker for this issue.
+    next_iteration_trigger: Accepted formal evidence exists or the manuscript and response package explicitly retain the formal-evidence limitation.
+    prerequisite_gap: Formal evidence rows and selected-backend evidence are not produced by P3_04.
+    scheduler_dependency_closure_allowed: true
+    status: done
+    closure_decision: retained_limitation_accepted_as_action_closure
+    closure_authorization: user_approved_p3_04_semantic_closure_2026-05-06
+    closure_evidence:
+      - research/P4_论文回复_response/P4_05_覆盖检查/artifacts/coverage_check_report.yaml#cov-p4-001
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#action-p3-001
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/negative_result_note.md#formal-evidence-limitation
+    closure_note: Formal real-data/RM101/selected-backend/repeat/ablation evidence remains a retained limitation, not a positive result claim; the action is closed because P4_05/P4_06 explicitly cover and preserve that limitation.
+
+  - action_id: action-p3-002
+    issue_id: issue-p3-002
+    critique_id: p3-round-001-reproducibility-artifact-state
+    claim_id: P3_03_C03_BLOCKING_REPRODUCIBILITY_GAPS
+    evidence_id: P3_03_E004_REVIEW_ISSUE_REGISTER
+    source_comment_ids:
+      - p3-round-001a:method_reproducibility_reviewer
+      - P3_02:method_expert
+      - P3_02:reproducibility_skeptic
+    severity: fatal
+    blocks_submission: true
+    target_phase: P1
+    target_node: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略
+    target_path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+    target_location: PHMGA/Vibench reproducibility boundary
+    action_type: reproducibility_blocker_resolution
+    expected_evidence:
+      - PHMGA dirty-state disposition or explicit no-pointer-update policy
+      - adapter metadata-H5 alignment preflight result
+      - selected backend trace
+      - formal run ledger and config provenance
+      - provider/model metadata boundary
+    actionable_fix: Keep reproducibility claims conditional and require a clean PHMGA/Vibench evidence package or an explicit manuscript limitation.
+    verification: P1_06/P1_07/P2/P4 artifacts must record either resolved PHMGA/Vibench reproducibility evidence or retained blocker language.
+    validation_gate: P3 recheck plus PHMGA/Vibench preflight evidence and selected-backend trace.
+    next_iteration_trigger: PHMGA/Vibench artifact state is either resolved for formal use or retained as a named submission blocker.
+    prerequisite_gap: PHMGA dirty-state, adapter-preflight, and selected-backend evidence are outside P3_04's edit scope.
+    scheduler_dependency_closure_allowed: true
+    status: done
+    closure_decision: retained_limitation_accepted_as_action_closure
+    closure_authorization: user_approved_p3_04_semantic_closure_2026-05-06
+    closure_evidence:
+      - research/P4_论文回复_response/P4_05_覆盖检查/artifacts/coverage_check_report.yaml#cov-p4-002
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#action-p3-002
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/negative_result_note.md#reproducibility-limitation
+    closure_note: PHMGA/Vibench reproducibility and backend limitations remain visible; the action is closed because P4_05/P4_06 explicitly cover and preserve that limitation.
+
+  - action_id: action-p3-003
+    issue_id: issue-p3-003
+    critique_id: p3-round-001-global-validator-response-coverage
+    claim_id: P3_03_C04_NO_FINAL_READINESS_CLAIM
+    evidence_id: P3_03_E005_COMPLETION_AUDIT
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:eic
+      - P3_02:devils_advocate
+    severity: major
+    blocks_submission: true
+    target_phase: P4
+    target_node: research/P4_论文回复_response/P4_05_覆盖检查
+    target_path: research/P4_论文回复_response/P4_05_覆盖检查/artifacts/coverage_check_report.yaml
+    target_location: response coverage and final validation gate
+    action_type: response_coverage_and_validator_blocker
+    expected_evidence:
+      - P1_01-P1_05 checklist closure or explicit retained blocker
+      - response-package coverage for all P3 actions
+      - final review-score threshold closure for remaining P3/P4 nodes or explicit non-readiness record
+      - P3_04 canonical action-status closure or explicit retained blocker
+      - resubmission bundle gate status
+    actionable_fix: Preserve global validator and response-package gaps as blocking actions before any final-readiness language is allowed.
+    verification: P4 mapping, coverage, and revision-evidence artifacts must cover all P3 action issue IDs or explicitly retain blockers.
+    validation_gate: P4 coverage validator plus final `scripts/validate_research_truth.py --require-submission`.
+    next_iteration_trigger: P4 coverage and revision-evidence maps cover all P3 actions and global validator blockers are either repaired or retained.
+    prerequisite_gap: P4 response-package artifacts are downstream and remain incomplete.
+    scheduler_dependency_closure_allowed: true
+    status: done
+    closure_decision: downstream_coverage_and_validator_status_closed
+    closure_authorization: user_approved_p3_04_semantic_closure_2026-05-06
+    closure_evidence:
+      - research/P4_论文回复_response/P4_05_覆盖检查/artifacts/coverage_check_report.yaml#cov-p4-003
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#action-p3-003
+      - docs/submission_ready_goal/completion_audit_current.md
+    closure_note: P1 checklist and score blockers are already cleared; P4_05/P4_06 cover all P3 action issue IDs and preserve the remaining no-overclaim boundaries.
+
+  - action_id: action-p3-004
+    issue_id: issue-p3-004
+    critique_id: p3-round-001-claim-language-density
+    claim_id: P3_03_C05_NONBLOCKING_PROSE_DENSITY
+    evidence_id: P3_03_E006_P2_05_CALIBRATION
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:eic
+      - P2_05:P2_05_R001
+      - P2_05:P2_05_R002
+      - P2_05:P2_05_R004
+    severity: major
+    blocks_submission: false
+    target_phase: P2
+    target_node: research/P2_论文撰写/P2_03_定稿_tex
+    target_path: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    target_location: abstract and contribution framing
+    action_type: manuscript_wording_revision_no_claim_upgrade
+    expected_evidence:
+      - P2_05 replacement entries
+      - TeX diff preserving process-claim boundary
+      - claim/evidence registry support status unchanged
+    actionable_fix: Apply or adapt P2_05 calibrated wording only after blocking evidence limitations remain visible.
+    verification: Recheck abstract and introduction for process-claim language and absence of real-data or final-performance upgrade.
+    validation_gate: P2_03 TeX recheck plus P3 claim/evidence gate.
+    next_iteration_trigger: Wording is denser while support_status and limitation language are unchanged.
+    prerequisite_gap: This polish action should wait until blocking evidence language is preserved.
+    scheduler_dependency_closure_allowed: true
+    status: done
+    closure_decision: manuscript_wording_revision_applied
+    closure_authorization: user_approved_p3_04_semantic_closure_2026-05-06
+    closure_evidence:
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#action-p3-004
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+    closure_note: Abstract/contribution wording was revised without upgrading empirical or reproducibility claims.
+
+  - action_id: action-p3-005
+    issue_id: issue-p3-005
+    critique_id: p3-round-001-figure-table-reader-path
+    claim_id: P3_03_C06_NONBLOCKING_FIGURE_BOUNDARY
+    evidence_id: P3_03_E004_REVIEW_ISSUE_REGISTER
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:cross_disciplinary_reader
+    severity: minor
+    blocks_submission: false
+    target_phase: P2
+    target_node: research/P2_论文撰写/P2_03_定稿_tex
+    target_path: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    target_location: Figure p1-synthetic-signal callout and caption
+    action_type: figure_caption_boundary_check
+    expected_evidence:
+      - caption retains claim_ref and evidence_ref
+      - first callout keeps synthetic/offline single-run boundary
+      - no variance, no real-data, no RM101, and no selected-backend gaps remain visible
+    actionable_fix: Verify any caption or callout edit preserves provenance and limitation language.
+    verification: TeX caption and callout still expose single-run synthetic/offline scope and missing formal evidence.
+    validation_gate: P3 figure/table gate plus P2_03 TeX recheck.
+    next_iteration_trigger: Caption/callout remains self-contained and conservative after wording edits.
+    prerequisite_gap: None for mapping; actual TeX edit is outside P3_04.
+    scheduler_dependency_closure_allowed: true
+    status: done
+    closure_decision: figure_caption_boundary_verified
+    closure_authorization: user_approved_p3_04_semantic_closure_2026-05-06
+    closure_evidence:
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#action-p3-005
+      - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_manifest.yaml#fig_main_synthetic_signal
+    closure_note: Caption/callout boundary retains claim_ref, evidence_ref, provenance, and no-variance/no-real-data/no-RM101/no-selected-backend language.
+
+  - action_id: action-p3-006
+    issue_id: issue-p3-006
+    critique_id: p3-round-001-style-repetition
+    claim_id: P3_03_C07_COSMETIC_STYLE_COMPRESSION
+    evidence_id: P3_03_E006_P2_05_CALIBRATION
+    source_comment_ids:
+      - P2_05:P2_05_R005
+      - P2_05:P2_05_R008
+      - P2_05:P2_05_R009
+    severity: minor
+    blocks_submission: false
+    target_phase: P2
+    target_node: research/P2_论文撰写/P2_03_定稿_tex
+    target_path: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    target_location: discussion and repeated draft-state phrasing
+    action_type: optional_style_compression_no_claim_upgrade
+    expected_evidence:
+      - TeX diff compresses repeated draft-state phrasing
+      - limitation and negative-evidence language preserved
+      - no claim/evidence status changes
+    actionable_fix: Compress repeated synchronization-report wording only as a cosmetic follow-up.
+    verification: TeX diff contains no new performance, reproducibility, or final-readiness claim.
+    validation_gate: Optional P2_05-style polish recheck.
+    next_iteration_trigger: Wording is shorter and limitation boundaries remain unchanged.
+    prerequisite_gap: None for mapping; actual TeX edit is outside P3_04.
+    scheduler_dependency_closure_allowed: true
+    status: done
+    closure_decision: optional_style_compression_applied
+    closure_authorization: user_approved_p3_04_semantic_closure_2026-05-06
+    closure_evidence:
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#action-p3-006
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#discussion
+    closure_note: Discussion/style compression was applied while preserving limitation and negative-evidence language.
+
+summary:
+  total_actions: 6
+  blocking_actions: 3
+  non_blocking_actions: 2
+  cosmetic_actions: 1
+  all_blocking_issues_have_actions: true
+  all_actions_have_target_phase: true
+  all_actions_have_target_node: true
+  all_actions_have_action_type: true
+  all_actions_have_expected_evidence: true
+  all_actions_have_validation_gate: true
+  all_actions_have_next_iteration_trigger: true
+  blocked_targets_record_prerequisite_gap: true
+  final_submission_ready_claim: false
+  final_threshold_contract_present: true
+  action_statuses_closed_by_this_node: true
+current_validation_snapshot_after_user_authorized_closure:
+  pending_p1_checklist_fields: 0
+  below_90_score_nodes_count: 0
+  p3_04_blocked_or_planned_actions: 0
+  user_authorization: user_approved_p3_04_semantic_closure_2026-05-06

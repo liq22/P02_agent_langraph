@@ -1,23 +1,132 @@
+version: p3_03_critique_digest_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_03_批评摘要
+generated_at: 2026-05-05
+author_agent_id: codex-local
 round_id: p3-round-001
-summary: Current paper snapshot is not review-ready; P3 should route blockers back to evidence and manuscript nodes.
+source_profile_map: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/artifacts/reviewer_profile_map.yaml
+source_round_index: research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/artifacts/review_round_index.yaml
+final_threshold_contract: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/artifacts/critique_digest_final_threshold_contract.yaml
+decision: route_blockers_to_p3_04_without_rewriting_manuscript
+submission_ready_claim: false
+
 clusters:
-- cluster_id: cluster-placeholder-manuscript
-  issue_ids:
+  - cluster_id: cluster-blocking-formal-evidence-eligibility
+    triage_class: blocking
+    severity: fatal
+    issue_ids:
+      - issue-p3-001
+    root_cause: The current manuscript can report only a preliminary synthetic/offline single-run signal, while real-data, RM101, selected-backend, repeated-run uncertainty, Stage C, and Stage D evidence remain unresolved.
+    source_comment_ids:
+      - p3-round-001b:empirical_statistics_reviewer
+      - P3_02:devils_advocate
+      - P3_02:reproducibility_skeptic
+    affected_claims_or_sections:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+    evidence_gap: No accepted formal row supports real-data performance, RM101 resolution, backend selection, variance, or ablation claims.
+    next_action: Route to P3_04 as a blocking revision action; either repair upstream formal evidence or preserve the limitation in P2/P4 outputs.
+
+  - cluster_id: cluster-blocking-reproducibility-artifact-state
+    triage_class: blocking
+    severity: fatal
+    issue_ids:
+      - issue-p3-002
+    root_cause: The reproducibility path is still blocked by PHMGA dirty-state protection, adapter metadata-H5 alignment, selected-backend uncertainty, and provider/model provenance boundaries.
+    source_comment_ids:
+      - p3-round-001a:method_reproducibility_reviewer
+      - P3_02:method_expert
+      - P3_02:reproducibility_skeptic
+    affected_claims_or_sections:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#code-availability
+    evidence_gap: The method section names reproducibility requirements, but formal PHMGA/Vibench eligibility is not locked by a clean submodule state and full adapter preflight.
+    next_action: Route to P3_04 and upstream P1_06/P1_07 evidence checks before any stronger reproducibility claim.
+
+  - cluster_id: cluster-blocking-global-validator-and-response-coverage
+    triage_class: blocking
+    severity: major
+    issue_ids:
+      - issue-p3-003
+    root_cause: Global submission validation still reports pending P1 checklist fields, remaining below-threshold P3/P4 scores, and P3_04 blocked or planned action statuses; repaired schema and failure-truth issues are no longer current emitted blockers.
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:eic
+      - P3_02:devils_advocate
+    affected_claims_or_sections:
+      - docs/submission_ready_goal/completion_audit_current.md
+      - scripts/validate_research_truth.py --require-submission
+    evidence_gap: Node-local passes do not close P1 checklist status, remaining score-threshold failures, P3_04 action statuses, or response-package coverage requirements.
+    next_action: Route to P3_04/P4 as explicit blockers; do not let manuscript wording imply final readiness.
+
+  - cluster_id: cluster-nonblocking-claim-language-density
+    triage_class: non_blocking
+    severity: major
+    issue_ids:
+      - issue-p3-004
+    root_cause: The abstract and contribution framing are mostly conservative, but some phrasing remains broad or low-density compared with the P2_05 calibration packet.
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:eic
+      - P2_05:P2_05_R001
+      - P2_05:P2_05_R002
+      - P2_05:P2_05_R004
+    affected_claims_or_sections:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+    evidence_gap: This is a prose-density gap, not missing scientific evidence; the risk is that broad process wording hides the conservative evidence boundary.
+    next_action: Carry P2_05 patch entries into P3_04 as non-blocking manuscript-revision actions after blocking evidence state is preserved.
+
+  - cluster_id: cluster-nonblocking-figure-table-reader-path
+    triage_class: non_blocking
+    severity: minor
+    issue_ids:
+      - issue-p3-005
+    root_cause: The table-style figure has claim and evidence refs, but a skeptical reader still needs the no-variance/no-real-data boundary to stay visible at the first callout and caption.
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:cross_disciplinary_reader
+    affected_claims_or_sections:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+      - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_manifest.yaml
+    evidence_gap: Provenance exists, but reader-facing interpretation must not outpace the single-run synthetic/offline boundary.
+    next_action: Route as a non-blocking P3_04 caption/callout check.
+
+  - cluster_id: cluster-cosmetic-style-repetition
+    triage_class: cosmetic
+    severity: minor
+    issue_ids:
+      - issue-p3-006
+    root_cause: Several draft sentences repeat "current draft" and "current TeX" framing, which makes the paper read like a synchronization report rather than a compact manuscript.
+    source_comment_ids:
+      - P2_05:P2_05_R005
+      - P2_05:P2_05_R008
+      - P2_05:P2_05_R009
+    affected_claims_or_sections:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#discussion
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    evidence_gap: No evidence gap; this is a style and compression issue after scientific boundaries are preserved.
+    next_action: Route to P3_04 as an optional polish action with no claim upgrade.
+
+repair_priority_order:
   - issue-p3-001
-  severity: fatal
-  root_cause: P2_03 TeX manuscript is a placeholder.
-  next_action: Draft evidence-backed manuscript sections in P2 after upstream evidence is available.
-- cluster_id: cluster-evidence-ledger
-  issue_ids:
   - issue-p3-002
-  severity: major
-  root_cause: P1 result ledger is missing, so validation claims are unsupported.
-  next_action: Resolve P1_04/P1_05 evidence before writing result claims.
-- cluster_id: cluster-figure-provenance
-  issue_ids:
   - issue-p3-003
-  severity: major
-  root_cause: Figure plan is not yet bound to evidence, caption, and manuscript callout.
-  next_action: Update figure provenance before figure enters final manuscript.
+  - issue-p3-004
+  - issue-p3-005
+  - issue-p3-006
+
+issue_register_schema_check:
+  source_comment_ids_retained: true
+  severity_retained: true
+  affected_claim_or_section_retained: true
+  evidence_gap_retained: true
+  location_retained: true
+  next_action_retained: true
+  strong_objections_preserved: true
+  contradictory_feedback_preserved: true
+
 preserved_conflicts:
-- There is not enough manuscript content to distinguish weak prose from missing evidence; treat this as missing-content blocker, not style feedback.
+  - The paper has an exportable TeX draft, but exportability does not imply formal empirical eligibility.
+  - A limited synthetic/offline signal can remain in the manuscript, but it cannot support real-data or final-performance language.
+  - P2_05 prose improvements can improve readability, but they must not hide unresolved evidence blockers.
+  - P3_01 and P3_02 now clear node-local final-threshold scores, but P3_03/P3_04 and P4 score blockers remain in the current final validator.

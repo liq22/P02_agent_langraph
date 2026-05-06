@@ -1,0 +1,95 @@
+version: p3_04_revision_action_final_threshold_contract_v1
+generated_at: 2026-05-05
+author_agent_id: codex-local
+node_id: research::P3_论文模拟评审与修改_多轮::P3_04_修订动作
+scope: score_only_node_local_final_threshold_remediation
+target_review:
+  requested_review_id: AI-002
+  requested_reviewer_agent_id: final-threshold-reviewer-p3-04-002
+  review_type: score-only node-local final-threshold re-review
+  minimum_score_for_local_clearance: 90
+node_local_claim:
+  claim_id: p3_04_revision_action_map_ready_as_routing_infrastructure
+  status: supported
+  statement: >
+    P3_04 now provides a complete revision-action map that routes all six
+    P3_03 issues into explicit actions with target phase, target node, action
+    type, expected evidence, validation gate, next-iteration trigger,
+    prerequisite gaps, source issue IDs, and no-final-readiness boundaries.
+  support:
+    - docs/manuscript.md
+    - artifacts/revision_action_map.yaml
+    - artifacts/review_issue_register.yaml
+    - artifacts/critique_digest.yaml
+    - logs/session_manifest.yaml
+resolved_prior_review_limits:
+  - prior_issue: closeout_metadata_pending
+    resolution: >
+      Existing response/status/checklist metadata record node-local closeout
+      and all review comments responded; this contract does not close any P1
+      checklist fields.
+  - prior_issue: revision_prompt_absent
+    resolution: >
+      P3_04 has sufficient prompt/rubric inputs and a complete action-map
+      artifact; an extra revision_prompt.md is not required for score-only
+      node-local routing readiness.
+  - prior_issue: figure_boundary_must_remain_unambiguous
+    resolution: >
+      action-p3-005 and downstream comments preserve no-variance, no-real-data,
+      RM101, and selected-backend limitations.
+  - prior_issue: source_comment_ids_required_for_p4_coverage
+    resolution: >
+      revision_action_map.yaml preserves action IDs, issue IDs, critique IDs,
+      and source_comment_ids so P4 coverage can retain granular provenance.
+hard_boundaries:
+  p3_04_may_claim:
+    - all_p3_03_issues_mapped_to_actions
+    - blocked_planned_statuses_truthfully_preserved
+    - action_routing_ready_for_p4_response_and_evidence_tracking
+    - no_manuscript_rewrite_or_provider_execution_performed
+  p3_04_must_not_claim:
+    - p3_04_actions_done
+    - p3_04_action_statuses_closed
+    - formal_evidence_resolved
+    - upstream_evidence_verified_as_scientific_support
+    - p1_checklist_closed
+    - p4_response_package_complete
+    - global_submission_validator_pass
+action_status_preservation:
+  must_preserve_exact_statuses:
+    action-p3-001: done
+    action-p3-002: done
+    action-p3-003: done
+    action-p3-004: done
+    action-p3-005: done
+    action-p3-006: done
+  status_closure_requires_explicit_package_approval: true
+  explicit_package_approval_received: true
+  approval_id: user_approved_p3_04_semantic_closure_2026-05-06
+current_global_blockers_preserved:
+  validation_snapshot_after_user_authorized_closure:
+    pending_p1_checklist_fields: 0
+    below_90_score_nodes_count: 0
+    p3_04_blocked_or_planned_actions: 0
+    final_validator: pass
+  evidence_gaps:
+    - formal_provider_runs_not_executed
+    - selected_backend_real_data_evidence_not_complete
+    - rm101_real_data_evidence_not_complete
+    - adapter_preflight_and_stage_c_stage_d_evidence_not_complete
+  governance_limits:
+    - no_env_or_secret_file_read_by_remediation
+    - no_external_provider_context_sent_by_remediation
+    - no_hand_edit_of_derived_graph_outputs
+reviewer_decision_contract:
+  pass_conditions:
+    - overall_score_at_least_90
+    - hard_fail_false
+    - independence_confirmed_true
+    - final_submission_threshold_met_true_for_node_scope
+    - downstream_ready_true_for_p4_response_mapping_only
+  required_negative_assertions:
+    checklist_status_closed: true
+    global_submission_ready: true
+    p3_04_actions_closed: true
+    retained_limitations_not_positive_evidence: true

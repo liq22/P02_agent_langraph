@@ -117,7 +117,7 @@
 - 若缺关键输入、关键证据或关键 prompt 资产，应停止并显式报告缺口。
 
 ## 供执行者填写的本轮摘要
-- 本轮最小目标：<待填写>
-- 本轮不做什么：<待填写>
+- 本轮最小目标：把 P3_01/P3_02 reviewer 输入压缩为 P3_04 可消费的 critique digest 与 review_issue_register。
+- 本轮不做什么：不改写 P2 TeX、不生成 P4 回复、不宣称最终投稿就绪。
 - 完成定义：见 `prompts/acceptance_checklist.yaml`
-- 完成后交给谁：<待填写>
+- 完成后交给谁：P3_04 修订动作节点，承接 issue-p3-001 到 issue-p3-006。

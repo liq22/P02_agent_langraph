@@ -1,15 +1,15 @@
 lifecycle:
-  stage: active
-progress_pct: 45
+  stage: done
+progress_pct: 100
 review_gate:
-  ai_review_count: 0
-  human_review_count: 0
-  all_comments_responded: false
-can_enter_fix: false
+  ai_review_count: 1
+  human_review_count: 1
+  all_comments_responded: true
+can_enter_fix: true
 lens_matrix:
   round_id: p3-round-001
   artifact: artifacts/reviewer_lens_matrix.yaml
   lens_count: 6
-heartbeat_at: 2026-04-20
-last_actor: codex
-author_agent_id: codex
+heartbeat_at: 2026-05-05
+last_actor: codex-local
+author_agent_id: codex-local

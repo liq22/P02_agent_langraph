@@ -1,0 +1,92 @@
+version: p3_01_review_round_index_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_01_评审轮次
+generated_at: 2026-05-05
+author_agent_id: codex-local
+round_group_id: p3-round-001
+decision: blocker_mapping_only
+submission_ready_claim: false
+manuscript_snapshot:
+  snapshot_id: p2-03-main-tex-2026-05-05
+  source_path: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+  required_section_inputs_for_downstream_critique:
+    - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+    - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/preliminary.tex
+    - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+    - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+  observed_state: exportable_tex_draft
+  evidence_boundary: preliminary_synthetic_offline_single_run_only
+  latest_unapplied_context:
+    - research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+final_threshold_contract:
+  path: research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/artifacts/review_round_final_threshold_contract.yaml
+  scope: score_only_node_local_final_threshold_remediation
+  minimum_score_for_local_clearance: 90
+  preserves_global_submission_ready_false: true
+rounds:
+  - round_id: p3-round-001a
+    reviewer_lens: method_reproducibility_reviewer
+    checklist_dimension:
+      - methods
+      - protocol
+      - evidence_eligibility
+      - reproducibility
+    status: active
+    output_target: blocker_issue_rows_for_p3_03_p3_04
+    stop_condition: stop_at_issue_action_mapping
+  - round_id: p3-round-001b
+    reviewer_lens: empirical_statistics_reviewer
+    checklist_dimension:
+      - results
+      - baselines
+      - uncertainty
+      - negative_evidence
+      - formal_result_eligibility
+    status: active
+    output_target: blocker_issue_rows_for_p3_03_p3_04
+    stop_condition: stop_at_issue_action_mapping
+  - round_id: p3-round-001c
+    reviewer_lens: venue_claim_clarity_reviewer
+    checklist_dimension:
+      - novelty
+      - title_abstract
+      - citation_figure_support
+      - ai_agent_disclosure
+      - overclaiming
+    status: queued
+    output_target: clarity_and_overclaiming_issue_rows
+    stop_condition: do_not_rewrite_p2_content
+required_issue_fields:
+  - issue_id
+  - lens_id
+  - severity
+  - claim_or_section
+  - evidence_location
+  - problem
+  - required_action
+  - target_node_or_artifact
+  - validation_gate
+  - blocks_submission
+non_node_blockers_preserved:
+  - pending_p1_checklist_fields
+  - remaining_p3_p4_final_review_scores_below_90
+  - p3_04_blocked_or_planned_revision_actions
+  - formal_provider_runs_not_executed
+  - selected_backend_and_rm101_real_data_evidence_gaps
+  - adapter_preflight_stage_c_stage_d_incomplete
+  - p3_p4_response_package_unfinished
+current_validation_snapshot_before_ai_002:
+  pending_p1_checklist_fields: 109
+  below_90_score_nodes_count: 11
+  below_90_score_nodes:
+    - P3_01
+    - P3_02
+    - P3_03
+    - P3_04
+    - P4_01
+    - P4_02
+    - P4_03
+    - P4_04
+    - P4_05
+    - P4_06
+    - P4_07
+  p3_04_blocked_or_planned_actions: 6

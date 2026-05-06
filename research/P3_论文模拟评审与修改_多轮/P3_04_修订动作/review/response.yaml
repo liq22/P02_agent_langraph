@@ -1,8 +1,45 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: >
+      Acknowledged. AI_001 passed P3_04 with score 86, hard_fail false,
+      downstream_ready true, independence_confirmed true, and no
+      submission-ready claim detected. The pass is node-local only: it accepts
+      the revision-action map as routing infrastructure. NB001 and NB004 are
+      handled by this closeout metadata update. NB002 is recorded as
+      non-blocking because required prompt and rubric inputs are present and
+      the node does not need an additional revision_prompt.md to map actions.
+      NB003 is carried forward: action-p3-005 must preserve no-variance,
+      no-real-data, RM101, and selected-backend boundaries in downstream
+      P2/P4 wording. NB005 is carried forward: P4 response coverage must keep
+      action_id, issue_id, and source_comment_ids. RA001-RA003 are accepted;
+      action-p3-001 through action-p3-003 remain blocked until their evidence
+      gates are satisfied or explicitly retained as limitations.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: >
+      Acknowledged. The user-authorized Claude Code teammate review passed the
+      P3_04 human-review slot and its handoff validates. It confirms all six
+      P3_03 issues map to actions, every blocking action has target phase,
+      target node, action type, expected evidence, validation gate, and next
+      iteration trigger, blocked targets record prerequisite gaps and allow
+      scheduler dependency closure, traceability from action to issue to
+      evidence to file location is preserved, non-blocking/cosmetic actions are
+      separated and no-upgrade guarded, and no manuscript rewrite or final
+      readiness claim was made. The handoff records one non-sensitive upstream
+      handoff log in inspected_files; it did not edit outside allowed files and
+      the handoff validator passes.
+
+  - comment_id: AI-002
+    responded: true
+    blocking_comments_open: false
+    note: >
+      AI_002 passes P3_04 with score 94 for score-only node-local
+      final-threshold routing readiness. The review found no open blocking
+      comments within P3_04 scope. This pass accepts only that all six P3_03
+      issues are mapped to explicit P3_04 revision-action rows with required
+      routing fields, provenance, validation gates, prerequisite gaps, and
+      no-final-readiness boundaries. It does not close P1 checklist fields,
+      P3_04 canonical action statuses, P4 response coverage, upstream evidence
+      verification, action implementation, or global submission readiness.

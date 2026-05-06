@@ -13,59 +13,66 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: 该 reviewer 的领域、方法、统计、写作偏好是什么？
-  status: pending
+  status: done
 - item: 他会优先攻击哪些薄弱点？
-  status: pending
+  status: done
 - item: reviewer_lens_matrix 是否覆盖 EIC、method expert、domain expert、cross-disciplinary
     reader、reproducibility skeptic、devil's advocate？
-  status: pending
+  status: done
 required_outputs:
 - path: reviewer profile 草案
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: artifacts/claim_evidence_registry.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/failure_register.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/negative_result_note.md
+  status: done
   description: profile-required local artifact
 - path: artifacts/keep_discard_ledger.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/reviewer_lens_matrix.yaml
-  status: pending
+  status: done
   description: reviewer lens 与 attack surface 矩阵
+- path: artifacts/reviewer_profile_map.yaml
+  status: done
+  description: reviewer profile bundle 到 P3_03/P3_04 的映射
 - path: logs/session_manifest.yaml
-  status: pending
+  status: done
   description: 记录 reviewer profile 生成与外部评审会话
 quality_checks:
 - item: 围绕 reviewer 视角、blocking issues、comment clustering、revision actionability 组织内容
-  status: pending
+  status: done
 - item: 批评要具体、可执行、可验证
-  status: pending
+  status: done
 - item: persona 应服务于批评质量，而不是角色扮演文学
-  status: pending
+  status: done
 - item: reviewer_lens_matrix 覆盖 EIC、method expert、domain expert、cross-disciplinary
     reader、reproducibility skeptic、devil's advocate
-  status: pending
+  status: done
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: done
 handoff_ready_if:
 - item: 至少形成若干 reviewer profiles
-  status: pending
+  status: done
 - item: 每个 profile 都对应清楚的关注点
-  status: pending
+  status: done
 - item: 每个 reviewer lens 都绑定 primary_attack_surface、required_evidence 与 hard_fail_conditions
-  status: pending
+  status: done
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: done
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -89,9 +96,9 @@ stop_if:
   status: pending
 review_notes:
 - slot: 1
-  note: <待填写>
+  note: AI_001 passed P3_02 node-local review with score 86 and no hard fails.
 - slot: 2
-  note: <待填写>
+  note: H_001 Claude Code teammate review passed and handoff validation succeeded.
 external_review_gate:
   required: true
   reviewer_role: external_node_reviewer
@@ -119,17 +126,17 @@ external_review_gate:
   - logs/session_manifest.yaml
 author_exit:
 - item: 'claim_evidence_ids_are_explicit_or_gap_is_reported: true'
-  status: pending
+  status: done
 - item: 'negative_or_failed_results_recorded: true'
-  status: pending
+  status: done
 - item: 'protected_paths_respected: true'
-  status: pending
+  status: done
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: done

@@ -1,0 +1,37 @@
+version: p3_02_failure_register_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_02_评价者档案
+generated_at: 2026-05-05
+
+failures:
+  - failure_id: P3_02_F001_FORMAL_RESULT_EVIDENCE_GAPS
+    context: The reviewer profiles must attack formal-result claims because real-data, selected-backend, RM101, Stage C, and Stage D evidence remain unresolved.
+    affected_claim_id: P3_02_C03_NEGATIVE_EVIDENCE_RETAINED
+    severity: high
+    interpretation: These gaps define review attack surfaces and cannot be rewritten into performance support.
+    action: document_limitation
+    status: accepted_limitation
+    evidence_ref: P3_02_E007_COMPLETION_AUDIT
+
+  - failure_id: P3_02_F002_SCORE_THRESHOLD_GAPS
+    context: Ten remaining P3/P4 node review scores are below the final submission threshold of 90 before P3_02 AI_002 re-review.
+    affected_claim_id: P3_02_C05_FINAL_THRESHOLD_BOUNDARY
+    severity: high
+    interpretation: Reviewer profiles must keep remaining low final-score thresholds as submission blockers unless a distinct reviewer raises the node-local score after bounded remediation.
+    action: document_limitation
+    status: accepted_limitation
+    evidence_ref: P3_02_E011_CURRENT_GATE_AUDIT
+
+  - failure_id: P3_02_F003_PERSONA_WITHOUT_ATTACK_SURFACE_DISCARDED
+    context: Reviewer personas that only roleplay style preferences would not produce actionable critique.
+    affected_claim_id: P3_02_C02_ATTACK_SURFACES_BOUND_TO_EVIDENCE
+    severity: medium
+    interpretation: Every lens now requires attack surfaces, required evidence, and hard-fail conditions.
+    action: revise_claim
+    status: resolved
+    evidence_ref: P3_02_E004_LENS_MATRIX
+
+failure_policy:
+  hidden_negative_results: false
+  limitations_promoted_to_positive_claims: false
+  roleplay_without_attack_surface_allowed: false
+  protected_paths_respected: true

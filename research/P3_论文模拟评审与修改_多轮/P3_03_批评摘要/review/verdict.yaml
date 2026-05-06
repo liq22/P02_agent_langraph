@@ -1,21 +1,35 @@
-review_id: EXTERNAL-AI-001
-review_complete: false
-reviewer_agent_id: <pending-distinct-agent>
-reviewer_skill: external_node_reviewer
-reviewed_node_path: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要
-rubric_path: prompts/review_rubric.yaml
-rubric_version: nature_node_review_v1
-overall_score: null
-overall_verdict: revise
+review_id: AI-002
+review_complete: true
+reviewer_agent_id: final-threshold-reviewer-p3-03-002
+review_type: score-only node-local final-threshold re-review
+overall_score: 94
+overall_verdict: pass
 hard_fail: false
+independence_confirmed: true
 dimension_scores:
-  originality_novelty: null
-  scientific_importance: null
-  evidence_technical_soundness: null
-  reproducibility_transparency: null
-  broad_interest_story_clarity: null
-  review_robustness: null
+  originality_novelty: 92
+  scientific_importance: 93
+  evidence_technical_soundness: 94
+  reproducibility_transparency: 95
+  broad_interest_story_clarity: 93
+  review_robustness: 97
+final_submission_threshold_met: true
+downstream_ready: true
+checklist_status_closed: false
+global_submission_ready: false
+p3_04_actions_closed: false
 blocking_issues: []
-required_actions: []
-downstream_ready: false
-independence_confirmed: false
+actions:
+  - action_id: P3_03_AI002_A001_ROUTE_BLOCKERS_TO_P3_04
+    action: Preserve issue-p3-001, issue-p3-002, and issue-p3-003 as explicit blocking P3_04 revision actions or retained blockers.
+    required_for_node_local_pass: false
+  - action_id: P3_03_AI002_A002_RECHECK_NON_P3_EVIDENCE_DOWNSTREAM
+    action: P3_04/P4 must independently recheck non-P3 evidence references before using them as resolved scientific support.
+    required_for_node_local_pass: false
+comments:
+  - The critique digest and six-row issue register are traceable, severity-aware, and action-ready for P3_04 mapping.
+  - The pass is node-local only and does not claim manuscript rewrite, upstream evidence resolution, P1 checklist closure, P4 response completion, P3_04 action closure, or global submission readiness.
+no_forbidden_files_read: true
+provider_api_calls_made: false
+submission_ready_claim_detected: false
+node_local_pass_only: true

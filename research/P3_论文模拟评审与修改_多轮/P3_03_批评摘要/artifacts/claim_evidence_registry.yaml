@@ -1,0 +1,114 @@
+version: p3_03_claim_evidence_registry_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_03_批评摘要
+generated_at: 2026-05-05
+author_agent_id: codex-local
+
+claims:
+  - claim_id: P3_03_C01_CRITIQUE_AGGREGATION_COMPLETE
+    claim_type: method
+    claim_text: P3_03 aggregates the P3_01 review schema and P3_02 reviewer profiles into traceable critique clusters and atomic issue rows.
+    support_status: supported
+    manuscript_location: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/docs/manuscript.md#digest-decision
+    action: keep
+    evidence_refs:
+      - evidence_id: P3_03_E001_CRITIQUE_DIGEST
+        evidence_type: code
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/artifacts/critique_digest.yaml
+      - evidence_id: P3_03_E002_REVIEW_ROUND_INDEX
+        evidence_type: code
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/artifacts/review_round_index.yaml
+      - evidence_id: P3_03_E003_PROFILE_MAP
+        evidence_type: code
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/artifacts/reviewer_profile_map.yaml
+
+  - claim_id: P3_03_C02_BLOCKING_FORMAL_EVIDENCE_GAPS
+    claim_type: limitation
+    claim_text: Formal empirical evidence remains a blocking issue because the draft only carries a preliminary synthetic/offline single-run signal.
+    support_status: supported
+    manuscript_location: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/docs/manuscript.md#required-questions
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P3_03_E004_REVIEW_ISSUE_REGISTER
+        evidence_type: review_comment
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/artifacts/review_issue_register.yaml
+      - evidence_id: P3_03_E005_COMPLETION_AUDIT
+        evidence_type: review_comment
+        source_ref: docs/submission_ready_goal/completion_audit_current.md
+
+  - claim_id: P3_03_C03_BLOCKING_REPRODUCIBILITY_GAPS
+    claim_type: limitation
+    claim_text: PHMGA/Vibench reproducibility remains blocked until dirty-state, adapter-preflight, selected-backend, and formal-ledger gaps are resolved or retained as limitations.
+    support_status: supported
+    manuscript_location: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/docs/manuscript.md#required-questions
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P3_03_E004_REVIEW_ISSUE_REGISTER
+        evidence_type: review_comment
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/artifacts/review_issue_register.yaml
+      - evidence_id: P3_03_E005_COMPLETION_AUDIT
+        evidence_type: review_comment
+        source_ref: docs/submission_ready_goal/completion_audit_current.md
+
+  - claim_id: P3_03_C04_NO_FINAL_READINESS_CLAIM
+    claim_type: limitation
+    claim_text: P3_03 creates critique infrastructure only and does not clear final submission readiness, P1 checklist status, P3_04 actions, or remaining P3/P4 score blockers.
+    support_status: supported
+    manuscript_location: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/docs/manuscript.md#final-threshold-score-boundary
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P3_03_E001_CRITIQUE_DIGEST
+        evidence_type: code
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/artifacts/critique_digest.yaml
+      - evidence_id: P3_03_E007_SESSION_MANIFEST
+        evidence_type: code
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/logs/session_manifest.yaml
+
+  - claim_id: P3_03_C05_NONBLOCKING_PROSE_DENSITY
+    claim_type: limitation
+    claim_text: P2_05 prose calibration entries should be carried into later revision planning as wording improvements without upgrading evidence strength.
+    support_status: supported
+    manuscript_location: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/docs/manuscript.md#required-questions
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P3_03_E006_P2_05_CALIBRATION
+        evidence_type: review_comment
+        source_ref: research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+      - evidence_id: P3_03_E004_REVIEW_ISSUE_REGISTER
+        evidence_type: review_comment
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/artifacts/review_issue_register.yaml
+
+  - claim_id: P3_03_C06_NONBLOCKING_FIGURE_BOUNDARY
+    claim_type: limitation
+    claim_text: Figure and caption edits must preserve the single-run synthetic/offline boundary even though the current figure has claim and evidence references.
+    support_status: supported
+    manuscript_location: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/docs/manuscript.md#required-questions
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P3_03_E004_REVIEW_ISSUE_REGISTER
+        evidence_type: review_comment
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/artifacts/review_issue_register.yaml
+
+  - claim_id: P3_03_C07_COSMETIC_STYLE_COMPRESSION
+    claim_type: limitation
+    claim_text: Repeated draft-state phrasing can be compressed later as a cosmetic action with no change to evidence status.
+    support_status: supported
+    manuscript_location: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/docs/manuscript.md#required-questions
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P3_03_E006_P2_05_CALIBRATION
+        evidence_type: review_comment
+        source_ref: research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+
+  - claim_id: P3_03_C08_FINAL_THRESHOLD_BOUNDARY
+    claim_type: limitation
+    claim_text: P3_03 can clear only the node-local critique-digest final-threshold score while preserving P1 checklist, P3_04 action, provider, evidence, response-package, and global submission blockers.
+    support_status: supported
+    manuscript_location: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/docs/manuscript.md#final-threshold-score-boundary
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P3_03_E008_FINAL_THRESHOLD_CONTRACT
+        evidence_type: code
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/artifacts/critique_digest_final_threshold_contract.yaml
+      - evidence_id: P3_03_E009_CURRENT_GATE_AUDIT
+        evidence_type: review_comment
+        source_ref: docs/submission_ready_goal/completion_audit_current.md

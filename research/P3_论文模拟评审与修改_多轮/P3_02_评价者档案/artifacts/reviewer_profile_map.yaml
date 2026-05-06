@@ -1,15 +1,98 @@
+version: p3_02_reviewer_profile_map_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_02_评价者档案
+generated_at: 2026-05-05
+author_agent_id: codex-local
 round_id: p3-round-001
+source_round_index: research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/artifacts/review_round_index.yaml
+final_threshold_contract:
+  path: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/artifacts/reviewer_profile_final_threshold_contract.yaml
+  scope: score_only_node_local_final_threshold_remediation
+  minimum_score_for_local_clearance: 90
+  preserves_global_submission_ready_false: true
 profiles:
-- profile_id: method_reproducibility_reviewer
-  lens_refs:
-  - method_expert
-  - reproducibility_skeptic
-  priority: high
-  expected_output: issues about missing experiment evidence, protocol gaps, and reproducibility blockers
-- profile_id: broad_interest_editorial_reviewer
-  lens_refs:
-  - eic
-  - cross_disciplinary_reader
-  - devils_advocate
-  priority: high
-  expected_output: issues about placeholder manuscript, unsupported novelty, and unclear paper story
+  - profile_id: method_reproducibility_reviewer
+    profile_type: reviewer_bundle
+    lens_refs:
+      - method_expert
+      - reproducibility_skeptic
+    priority: high
+    expected_output: issues about method variables, formal evidence gates, protocol gaps, dirty-state boundaries, and reproducibility blockers
+    primary_attack_surface:
+      - method_contract
+      - reproducibility_path
+      - formal_result_eligibility
+      - PHMGA_Vibench_traceability
+    required_evidence:
+      - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/artifacts/method_contract.yaml
+      - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+      - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+    hard_fail_conditions:
+      - no_inspectable_method_variable_or_protocol_gate
+      - hidden_PHMGA_or_adapter_blocker
+      - final_result_wording_without_reproducible_ledger
+
+  - profile_id: empirical_statistics_reviewer
+    profile_type: reviewer_bundle
+    lens_refs:
+      - devils_advocate
+      - reproducibility_skeptic
+    priority: high
+    expected_output: issues about weak synthetic/offline evidence, missing real-data rows, RM101, selected backend, repeatability, uncertainty, and denominator retention
+    primary_attack_surface:
+      - result_claim_strength
+      - baselines_and_controls
+      - uncertainty_and_repeats
+      - negative_evidence_retention
+    required_evidence:
+      - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/artifacts/claim_map.yaml
+      - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+      - docs/submission_ready_goal/completion_audit_current.md
+    hard_fail_conditions:
+      - synthetic_single_run_signal_promoted_to_formal_result
+      - RM101_or_real_data_gap_hidden
+      - low_review_score_threshold_ignored
+
+  - profile_id: venue_claim_clarity_reviewer
+    profile_type: reviewer_bundle
+    lens_refs:
+      - eic
+      - domain_expert
+      - cross_disciplinary_reader
+    priority: medium_high
+    expected_output: issues about title, abstract, novelty, reader path, citation/figure support, AI disclosure, and overclaiming
+    primary_attack_surface:
+      - novelty_story
+      - venue_fit
+      - section_skim_path
+      - figure_citation_support
+      - AI_agent_disclosure
+    required_evidence:
+      - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+      - research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    hard_fail_conditions:
+      - unsupported_broad_breakthrough_or_submission_ready_claim
+      - citation_or_figure_used_without_provenance
+      - negative_evidence_obscured_by_prose
+profile_policy:
+  roleplay_without_attack_surface_allowed: false
+  author_defense_as_review_allowed: false
+  final_submission_ready_claim_allowed: false
+  downstream_consumer: P3_03_批评摘要 and P3_04_修订动作
+  atomic_issue_rows_created_here: false
+  downstream_evidence_recheck_required: true
+current_validation_snapshot_before_ai_002:
+  pending_p1_checklist_fields: 109
+  below_90_score_nodes_count: 10
+  below_90_score_nodes:
+    - P3_02
+    - P3_03
+    - P3_04
+    - P4_01
+    - P4_02
+    - P4_03
+    - P4_04
+    - P4_05
+    - P4_06
+    - P4_07
+  p3_04_blocked_or_planned_actions: 6

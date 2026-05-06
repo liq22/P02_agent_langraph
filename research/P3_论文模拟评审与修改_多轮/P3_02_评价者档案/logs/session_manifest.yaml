@@ -1,12 +1,26 @@
+version: p3_02_session_manifest_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_02_评价者档案
 round_id: p3-round-001
+generated_at: 2026-05-05
 sessions:
-- role: author
-  agent_id: codex
-  thread_or_session_id: current-turn
-  input_scope: P3 standards, P2_03 main.tex, P1 available artifacts, checklist_4-20
-  output_paths:
-  - artifacts/reviewer_lens_matrix.yaml
-  - artifacts/reviewer_profile_map.yaml
+  - role: author
+    agent_id: codex-local
+    thread_or_session_id: current-turn
+    input_scope:
+      - research/P3_论文模拟评审与修改_多轮/prompts/standards.md
+      - research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/artifacts/review_round_index.yaml
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+      - research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+      - docs/submission_ready_goal/completion_audit_current.md
+    output_paths:
+      - artifacts/reviewer_lens_matrix.yaml
+      - artifacts/reviewer_profile_map.yaml
+      - artifacts/claim_evidence_registry.yaml
+      - artifacts/failure_register.yaml
+      - artifacts/negative_result_note.md
+      - artifacts/keep_discard_ledger.yaml
+      - docs/manuscript.md
 notes:
-- No independent external reviewer pass was claimed in this round.
-- Reviewer lenses were built for blocker discovery and future paper iteration.
+  - No independent external reviewer pass was claimed before review/verdict.yaml is generated for this node.
+  - Reviewer lenses are built for blocker discovery and future paper iteration, not final submission readiness.
+  - Protected paths such as .env, docs/HUMAN_ONLY.md, _reference, Canvas outputs, vendor assets, and credentials were not used.

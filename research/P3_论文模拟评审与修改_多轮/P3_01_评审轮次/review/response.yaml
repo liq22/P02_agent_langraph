@@ -1,8 +1,35 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      External AI reviewer passed P3_01 with score 84, hard_fail false,
+      downstream_ready true, and no blocking issues for the review-round
+      definition package. NB-001 is resolved by this checklist/status closeout.
+      NB-002 is acknowledged as reusable README scaffold text, while operative
+      completion state is recorded in docs/manuscript.md, artifacts, reviews,
+      response, and status. NB-003 was fixed by normalizing status.yaml to
+      codex-local. NB-004 was addressed by adding required TeX section inputs
+      for downstream critique generation to artifacts/review_round_index.yaml.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: >-
+      User-authorized Claude Code teammate delegate passed the P3_01
+      human-review slot with a valid v2 handoff. The review confirmed distinct
+      reviewer roles, explicit checklist dimensions, a current P2_03 TeX
+      snapshot plus unapplied P2_05 context, stop conditions that prevent
+      rewrite drift and submission-ready claims, an issue schema suitable for
+      P3_03/P3_04, and at least two reviewer perspectives with triggers and
+      validation gates. NB-H005 is acknowledged as prompt-template residue; the
+      completed round definition is in docs/manuscript.md and artifacts.
+
+  - comment_id: AI-002
+    responded: true
+    blocking_comments_open: false
+    note: >-
+      Independent score-only final-threshold re-review passed P3_01 with
+      overall_score 93, hard_fail false, independence_confirmed true,
+      final_submission_threshold_met true for node-local scope only, and
+      downstream_ready true for issue mapping only. AI_002 has no open blocking
+      comments. This response does not close P1 checklist fields, P3_04
+      actions, or global submission readiness.

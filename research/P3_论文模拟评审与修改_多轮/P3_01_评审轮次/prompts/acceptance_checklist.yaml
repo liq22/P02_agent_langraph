@@ -13,48 +13,55 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: 这一轮模拟谁？
-  status: pending
+  status: done
 - item: 关注 novelty、methods、statistics、format 还是 reproducibility？
-  status: pending
+  status: done
 - item: 本轮 reviewer lens、checklist dimension、manuscript snapshot 与停止条件是否明确？
-  status: pending
+  status: done
 required_outputs:
 - path: review_round_index
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: 每轮目标定义
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: docs/manuscript.md
+  status: done
   description: profile-required local artifact
+- path: artifacts/review_round_notes.md
+  status: done
+  description: node-local round notes with manuscript snapshot and next triggers
+- path: artifacts/review_round_index.yaml
+  status: done
+  description: structured review round index and issue-output contract
 quality_checks:
 - item: 围绕 reviewer 视角、blocking issues、comment clustering、revision actionability 组织内容
-  status: pending
+  status: done
 - item: 批评要具体、可执行、可验证
-  status: pending
+  status: done
 - item: 每轮评审角色明确、关注点单一清楚
-  status: pending
+  status: done
 - item: 每轮只检查声明的 reviewer lens 与 checklist dimension，不扩成整篇论文重写。
-  status: pending
+  status: done
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: done
 handoff_ready_if:
 - item: 至少定义 2 种不同评审视角
-  status: pending
+  status: done
 - item: 每轮输出格式清晰
-  status: pending
+  status: done
 - item: review_round_notes 记录 manuscript_snapshot 与下一轮 trigger
-  status: pending
+  status: done
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: done
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -78,9 +85,9 @@ stop_if:
   status: pending
 review_notes:
 - slot: 1
-  note: <待填写>
+  note: external AI reviewer passed with score 84, hard_fail false, downstream_ready true; non-blocking bookkeeping and downstream-input issues were addressed or recorded in response.
 - slot: 2
-  note: <待填写>
+  note: user-authorized Claude Code teammate delegate passed the human-review slot with a valid v2 handoff.
 external_review_gate:
   required: true
   reviewer_role: external_node_reviewer
@@ -105,17 +112,17 @@ external_review_gate:
   - docs/manuscript.md
 author_exit:
 - item: 'required_artifacts_exist: true'
-  status: pending
+  status: done
 - item: 'key_research_judgment_answered_or_gap_reported: true'
-  status: pending
+  status: done
 - item: 'citation_status_checked_when_external_sources_are_used: true'
-  status: pending
+  status: done
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: done

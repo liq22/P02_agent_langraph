@@ -1,0 +1,78 @@
+version: p3_02_claim_evidence_registry_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_02_评价者档案
+generated_at: 2026-05-05
+author_agent_id: codex-local
+
+claims:
+  - claim_id: P3_02_C01_SIX_LENS_COVERAGE
+    claim_type: method
+    claim_text: P3_02 covers EIC, method expert, domain expert, cross-disciplinary reader, reproducibility skeptic, and devil's advocate reviewer lenses.
+    support_status: supported
+    manuscript_location: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/docs/manuscript.md#reviewer-coverage
+    action: keep
+    evidence_refs:
+      - evidence_id: P3_02_E001_LENS_MATRIX
+        evidence_type: code
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/artifacts/reviewer_lens_matrix.yaml
+      - evidence_id: P3_02_E002_PROFILE_MAP
+        evidence_type: code
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/artifacts/reviewer_profile_map.yaml
+
+  - claim_id: P3_02_C02_ATTACK_SURFACES_BOUND_TO_EVIDENCE
+    claim_type: method
+    claim_text: Each reviewer lens binds its persona to attack surfaces, required evidence, and hard-fail conditions rather than roleplay-only prose.
+    support_status: supported
+    manuscript_location: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/docs/manuscript.md#attack-surface
+    action: keep
+    evidence_refs:
+      - evidence_id: P3_02_E003_P3_01_ROUND_INDEX
+        evidence_type: code
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/artifacts/review_round_index.yaml
+      - evidence_id: P3_02_E004_LENS_MATRIX
+        evidence_type: code
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/artifacts/reviewer_lens_matrix.yaml
+
+  - claim_id: P3_02_C03_NEGATIVE_EVIDENCE_RETAINED
+    claim_type: limitation
+    claim_text: The reviewer profiles preserve unresolved blockers and negative evidence as review targets rather than converting them into support.
+    support_status: supported
+    manuscript_location: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/docs/manuscript.md#evidence-boundary
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P3_02_E005_FAILURE_REGISTER
+        evidence_type: review_comment
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/artifacts/failure_register.yaml
+      - evidence_id: P3_02_E006_NEGATIVE_NOTE
+        evidence_type: review_comment
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/artifacts/negative_result_note.md
+      - evidence_id: P3_02_E007_COMPLETION_AUDIT
+        evidence_type: review_comment
+        source_ref: docs/submission_ready_goal/completion_audit_current.md
+
+  - claim_id: P3_02_C04_NO_SUBMISSION_READY_CLAIM
+    claim_type: limitation
+    claim_text: P3_02 materializes reviewer profiles only and does not claim manuscript submission readiness.
+    support_status: supported
+    manuscript_location: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/docs/manuscript.md#current-decision
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P3_02_E008_SESSION_MANIFEST
+        evidence_type: code
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/logs/session_manifest.yaml
+      - evidence_id: P3_02_E009_P3_01_ROUND_INDEX
+        evidence_type: code
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/artifacts/review_round_index.yaml
+
+  - claim_id: P3_02_C05_FINAL_THRESHOLD_BOUNDARY
+    claim_type: limitation
+    claim_text: P3_02 can clear only the node-local reviewer-profile final-threshold score while preserving P1 checklist, P3_04 action, provider, evidence, and global submission blockers.
+    support_status: supported
+    manuscript_location: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/docs/manuscript.md#final-threshold-score-boundary
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P3_02_E010_FINAL_THRESHOLD_CONTRACT
+        evidence_type: code
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/artifacts/reviewer_profile_final_threshold_contract.yaml
+      - evidence_id: P3_02_E011_CURRENT_GATE_AUDIT
+        evidence_type: review_comment
+        source_ref: docs/submission_ready_goal/completion_audit_current.md

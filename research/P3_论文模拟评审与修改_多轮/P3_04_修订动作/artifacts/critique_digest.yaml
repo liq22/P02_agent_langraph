@@ -1,0 +1,93 @@
+version: p3_04_critique_digest_projection_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_04_修订动作
+generated_at: 2026-05-05
+author_agent_id: codex-local
+round_id: p3-round-001
+source_critique_digest: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/artifacts/critique_digest.yaml
+source_revision_action_map: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+final_threshold_contract: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_final_threshold_contract.yaml
+decision: map_all_p3_03_issues_to_revision_actions_without_applying_rewrites
+submission_ready_claim: false
+
+clusters:
+  - cluster_id: cluster-blocking-formal-evidence-eligibility
+    triage_class: blocking
+    severity: fatal
+    issue_ids:
+      - issue-p3-001
+    action_ids:
+      - action-p3-001
+    target_phase: P1
+    target_node: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议
+    action_status: blocked
+    prerequisite_gap: Formal evidence rows and selected-backend evidence are not produced by P3_04.
+
+  - cluster_id: cluster-blocking-reproducibility-artifact-state
+    triage_class: blocking
+    severity: fatal
+    issue_ids:
+      - issue-p3-002
+    action_ids:
+      - action-p3-002
+    target_phase: P1
+    target_node: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略
+    action_status: blocked
+    prerequisite_gap: PHMGA dirty-state, adapter-preflight, and selected-backend evidence are outside P3_04's edit scope.
+
+  - cluster_id: cluster-blocking-global-validator-and-response-coverage
+    triage_class: blocking
+    severity: major
+    issue_ids:
+      - issue-p3-003
+    action_ids:
+      - action-p3-003
+    target_phase: P4
+    target_node: research/P4_论文回复_response/P4_05_覆盖检查
+    action_status: blocked
+    prerequisite_gap: P1 checklist closure, remaining P3/P4 score closure, P3_04 action-status closure, and final response/package validation remain outside P3_04.
+
+  - cluster_id: cluster-nonblocking-claim-language-density
+    triage_class: non_blocking
+    severity: major
+    issue_ids:
+      - issue-p3-004
+    action_ids:
+      - action-p3-004
+    target_phase: P2
+    target_node: research/P2_论文撰写/P2_03_定稿_tex
+    action_status: planned
+    prerequisite_gap: This polish action should wait until blocking evidence language is preserved.
+
+  - cluster_id: cluster-nonblocking-figure-table-reader-path
+    triage_class: non_blocking
+    severity: minor
+    issue_ids:
+      - issue-p3-005
+    action_ids:
+      - action-p3-005
+    target_phase: P2
+    target_node: research/P2_论文撰写/P2_03_定稿_tex
+    action_status: planned
+    prerequisite_gap: Actual TeX edit is outside P3_04.
+
+  - cluster_id: cluster-cosmetic-style-repetition
+    triage_class: cosmetic
+    severity: minor
+    issue_ids:
+      - issue-p3-006
+    action_ids:
+      - action-p3-006
+    target_phase: P2
+    target_node: research/P2_论文撰写/P2_03_定稿_tex
+    action_status: planned
+    prerequisite_gap: Actual TeX edit is outside P3_04.
+
+summary:
+  source_clusters: 6
+  mapped_clusters: 6
+  mapped_actions: 6
+  blocking_clusters_preserved: 3
+  negative_or_uncertain_evidence_preserved: true
+  no_manuscript_rewrite_performed: true
+  final_submission_ready_claim: false
+  action_statuses_closed_by_this_node: false

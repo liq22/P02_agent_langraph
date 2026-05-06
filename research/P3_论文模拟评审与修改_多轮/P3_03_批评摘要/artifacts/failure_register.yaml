@@ -1,0 +1,46 @@
+version: p3_03_failure_register_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_03_批评摘要
+generated_at: 2026-05-05
+
+failures:
+  - failure_id: P3_03_F001_FORMAL_EVIDENCE_NOT_ELIGIBLE
+    context: The current result section carries only a preliminary synthetic/offline single-run signal, while real-data rows, RM101 resolution, selected backend, variance, Stage C, and Stage D evidence remain unresolved.
+    affected_claim_id: P3_03_C02_BLOCKING_FORMAL_EVIDENCE_GAPS
+    severity: high
+    interpretation: This is a blocking review issue and cannot be resolved by prose polish.
+    action: document_limitation
+    status: accepted_limitation
+    evidence_ref: P3_03_E004_REVIEW_ISSUE_REGISTER
+
+  - failure_id: P3_03_F002_REPRODUCIBILITY_PATH_NOT_LOCKED
+    context: PHMGA dirty-state protection, adapter metadata-H5 alignment, selected-backend uncertainty, and formal ledger traceability still block reproducibility claims.
+    affected_claim_id: P3_03_C03_BLOCKING_REPRODUCIBILITY_GAPS
+    severity: high
+    interpretation: Reproducibility wording must remain conditional until upstream evidence is repaired or retained as a limitation.
+    action: document_limitation
+    status: accepted_limitation
+    evidence_ref: P3_03_E005_COMPLETION_AUDIT
+
+  - failure_id: P3_03_F003_VALIDATOR_AND_RESPONSE_GAPS_REMAIN
+    context: The global submission validator still reports 109 pending P1 checklist fields, 9 below-threshold P3/P4 scores before P3_03 AI_002 re-review, and 6 P3_04 blocked or planned actions.
+    affected_claim_id: P3_03_C08_FINAL_THRESHOLD_BOUNDARY
+    severity: high
+    interpretation: Node-local P3_03 pass cannot be promoted into final readiness.
+    action: document_limitation
+    status: accepted_limitation
+    evidence_ref: P3_03_E009_CURRENT_GATE_AUDIT
+
+  - failure_id: P3_03_F004_STYLE_FIX_CANNOT_HIDE_EVIDENCE
+    context: P2_05 language improvements are useful, but applying them before blocker routing could make unresolved gaps less visible.
+    affected_claim_id: P3_03_C05_NONBLOCKING_PROSE_DENSITY
+    severity: medium
+    interpretation: Style revisions must be downstream actions guarded by no-upgrade policy.
+    action: revise_claim
+    status: routed_to_p3_04
+    evidence_ref: P3_03_E006_P2_05_CALIBRATION
+
+failure_policy:
+  hidden_negative_results: false
+  limitations_promoted_to_positive_claims: false
+  blocking_issues_routed_before_style_polish: true
+  protected_paths_respected: true

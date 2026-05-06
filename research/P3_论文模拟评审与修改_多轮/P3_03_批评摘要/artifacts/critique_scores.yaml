@@ -1,6 +1,34 @@
-critique_scores:
-  - critique_id: cr001
-    clarity: 2
-    severity: high
-    novelty_gap: 3
-    actionability: 3
+version: p3_03_critique_scores_v1
+round_id: p3-round-001
+scoring_policy: actionability_and_evidence_traceability_only
+scores:
+  - issue_id: issue-p3-001
+    severity_score: 5
+    evidence_gap_score: 5
+    actionability_score: 5
+    reviewer_priority: first
+  - issue_id: issue-p3-002
+    severity_score: 5
+    evidence_gap_score: 5
+    actionability_score: 5
+    reviewer_priority: second
+  - issue_id: issue-p3-003
+    severity_score: 4
+    evidence_gap_score: 4
+    actionability_score: 4
+    reviewer_priority: third
+  - issue_id: issue-p3-004
+    severity_score: 3
+    evidence_gap_score: 1
+    actionability_score: 4
+    reviewer_priority: fourth
+  - issue_id: issue-p3-005
+    severity_score: 2
+    evidence_gap_score: 1
+    actionability_score: 3
+    reviewer_priority: fifth
+  - issue_id: issue-p3-006
+    severity_score: 1
+    evidence_gap_score: 0
+    actionability_score: 3
+    reviewer_priority: sixth

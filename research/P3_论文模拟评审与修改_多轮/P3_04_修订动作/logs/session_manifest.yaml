@@ -1,10 +1,30 @@
+version: p3_04_session_manifest_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_04_修订动作
+generated_at: 2026-05-05
+author_agent_id: codex-local
 round_id: p3-round-001
+
 sessions:
-- role: author
-  agent_id: codex
-  thread_or_session_id: current-turn
-  input_scope: P3 review issue register and critique digest
-  output_paths:
-  - artifacts/revision_action_map.yaml
+  - role: author
+    agent_id: codex-local
+    thread_or_session_id: current-turn
+    input_scope:
+      - P3_04 README/status/prompts/local skill
+      - P3 parent standards
+      - P3_03 review_issue_register
+      - P3_03 critique_digest
+      - P3_03 claim_evidence_registry
+      - P3_03 review verdict
+    protected_paths_read:
+      - none
+    output_paths:
+      - docs/manuscript.md
+      - artifacts/review_issue_register.yaml
+      - artifacts/critique_digest.yaml
+      - artifacts/revision_action_map.yaml
+      - logs/session_manifest.yaml
+
 notes:
-- Revision actions are routed to P1/P2. No P3 direct manuscript rewrite was performed.
+  - Revision actions are mapped only; P3_04 does not apply P2 edits or P1/P4 evidence repairs.
+  - Blocking actions remain blocked because their prerequisite evidence is outside this node's edit scope.
+  - No final submission readiness claim is made.

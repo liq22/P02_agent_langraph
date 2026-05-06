@@ -1,73 +1,155 @@
+version: p3_02_reviewer_lens_matrix_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_02_评价者档案
+generated_at: 2026-05-05
+author_agent_id: codex-local
 round_id: p3-round-001
-manuscript_snapshot: p2-03-main-tex-2026-04-20
+manuscript_snapshot: p2-03-main-tex-2026-05-05
+source_round_index: research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/artifacts/review_round_index.yaml
+submission_ready_claim: false
+final_threshold_contract:
+  path: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/artifacts/reviewer_profile_final_threshold_contract.yaml
+  scope: score_only_node_local_final_threshold_remediation
+  atomic_issue_rows_created_here: false
+  downstream_evidence_recheck_required: true
+
 lenses:
-- lens_id: eic
-  reviewer_role: editor_in_chief
-  primary_attack_surface: central contribution, broad interest, why-now pressure, and overclaiming
-  required_evidence:
-  - one_sentence_contribution
-  - positioning_against_strong_baselines
-  - paper_ready_result_summary
-  hard_fail_conditions:
-  - manuscript remains placeholder
-  - contribution cannot be stated without unsupported claims
-  - submission readiness is claimed while blockers remain open
-- lens_id: method_expert
-  reviewer_role: method_and_experiment_reviewer
-  primary_attack_surface: method soundness, baselines, metrics, ablations, and uncertainty
-  required_evidence:
-  - execution_contract
-  - result_registry
-  - hypothesis_status
-  - keep_discard_decision
-  hard_fail_conditions:
-  - missing upstream results ledger
-  - unsupported performance or mechanism claim
-  - no reproducible protocol for the key experiment
-- lens_id: domain_expert
-  reviewer_role: domain_reviewer
-  primary_attack_surface: novelty boundary, nearest prior work, and domain-specific failure modes
-  required_evidence:
-  - literature_gap_map
-  - strongest_baselines_list
-  - limitation_and_negative_result_notes
-  hard_fail_conditions:
-  - novelty is only a feature list
-  - nearest prior work is not identified
-  - limitations or negative results are hidden
-- lens_id: cross_disciplinary_reader
-  reviewer_role: broad_reader
-  primary_attack_surface: clarity, problem pressure, section role, and figure/table self-explanation
-  required_evidence:
-  - introduction_thesis
-  - figure_plan
-  - table_plan
-  - section_skim_path
-  hard_fail_conditions:
-  - manuscript body is absent
-  - figures or tables do not map to claims
-  - reader cannot tell why the work matters
-- lens_id: reproducibility_skeptic
-  reviewer_role: reproducibility_reviewer
-  primary_attack_surface: data, code, configuration, run logs, and artifact traceability
-  required_evidence:
-  - data_lineage
-  - run_log
-  - result_ledger
-  - configuration_record
-  hard_fail_conditions:
-  - data or code path cannot be inspected
-  - result ledger is missing
-  - claimed experiment cannot be rerun
-- lens_id: devils_advocate
-  reviewer_role: adversarial_reviewer
-  primary_attack_surface: alternative explanations, hidden null results, citation mismatch, and rhetorical overclaiming
-  required_evidence:
-  - failure_register
-  - negative_result_note
-  - citation_verification
-  - claim_evidence_registry
-  hard_fail_conditions:
-  - central claim has no evidence id
-  - citation cannot support the claim it is attached to
-  - prose resolves an evidence gap without new evidence
+  - lens_id: eic
+    reviewer_role: editor_in_chief
+    domain: specialist engineering journal or transactions editor
+    method_preference: clear claim hierarchy before empirical detail
+    statistics_preference: no final-result language without repeatability and uncertainty
+    writing_preference: concise title, factual abstract, visible limitations, no breakthrough rhetoric
+    primary_attack_surface:
+      - central contribution
+      - venue fit
+      - why now
+      - submission-readiness overclaiming
+    required_evidence:
+      - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+      - docs/submission_ready_goal/completion_audit_current.md
+    hard_fail_conditions:
+      - final_submission_ready_claim_while_score_or_formal_result_blockers_remain
+      - contribution_language_implies_real_data_performance_without_evidence
+      - agent_or_ai_involvement_hidden_or_mislabeled
+    downstream_profile_ref: venue_claim_clarity_reviewer
+
+  - lens_id: method_expert
+    reviewer_role: method_and_protocol_reviewer
+    domain: human-agent research workflow and research-operations methodology
+    method_preference: explicit unit of analysis, intervention, baselines, gates, and response coverage
+    statistics_preference: method claims separated from performance claims
+    writing_preference: methods-first audit path with reproducible variables
+    primary_attack_surface:
+      - node unit definition
+      - intervention and baseline separation
+      - review gate validity
+      - PHMGA/Vibench formal eligibility
+    required_evidence:
+      - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/artifacts/method_contract.yaml
+      - research/P2_论文撰写/P2_03_定稿_tex/artifacts/claim_evidence_registry.yaml
+      - research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/artifacts/review_round_index.yaml
+    hard_fail_conditions:
+      - method_claim_has_no_claim_or_evidence_identifier
+      - graph_canvas_or_dashboard_treated_as_research_truth
+      - formal_result_gate_collapsed_into_method_description
+    downstream_profile_ref: method_reproducibility_reviewer
+
+  - lens_id: domain_expert
+    reviewer_role: domain_and_prior_work_reviewer
+    domain: agent-assisted research systems and evidence-governed automation
+    method_preference: novelty bounded against concrete prior work and workflow alternatives
+    statistics_preference: domain claims remain separate from local process evidence
+    writing_preference: no novelty by feature list; define the field-level gap precisely
+    primary_attack_surface:
+      - novelty boundary
+      - prior-work positioning
+      - contribution specificity
+      - domain failure modes
+    required_evidence:
+      - research/P0_项目申请书/P0_03_研究内容与创新点/artifacts/contribution_claims.yaml
+      - research/P0_项目申请书/P0_01_研究背景与调研/artifacts/literature_gap_map.yaml
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+    hard_fail_conditions:
+      - novelty_claim_not_tied_to_literature_gap
+      - implementation_detail_presented_as_scientific_contribution
+      - unsupported_generalization_from_single_synthetic_signal
+    downstream_profile_ref: venue_claim_clarity_reviewer
+
+  - lens_id: cross_disciplinary_reader
+    reviewer_role: broad_scientific_reader
+    domain: reader outside the narrow AutoResearch/PHMGA subfield
+    method_preference: plain role definitions and skim-readable evidence path
+    statistics_preference: exact values only when context and limitations are visible
+    writing_preference: low jargon, self-contained captions, clear section roles
+    primary_attack_surface:
+      - title and abstract clarity
+      - figure/table self-explanation
+      - section skim path
+      - limitation visibility
+    required_evidence:
+      - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_manifest.yaml
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+      - research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+    hard_fail_conditions:
+      - reader_cannot_identify_what_is_being_evaluated
+      - figure_or_table_lacks_claim_and_evidence_mapping
+      - prose_hides_negative_or_uncertain_evidence
+    downstream_profile_ref: venue_claim_clarity_reviewer
+
+  - lens_id: reproducibility_skeptic
+    reviewer_role: reproducibility_and_artifact_reviewer
+    domain: data, code, protocol, and artifact audit
+    method_preference: inspectable data/code/protocol/config/run-log paths before any performance wording
+    statistics_preference: repeatability, uncertainty, and denominator accounting
+    writing_preference: explicit availability and dirty-state boundaries
+    primary_attack_surface:
+      - data lineage
+      - code availability
+      - PHMGA submodule state
+      - adapter preflight
+      - result-ledger traceability
+    required_evidence:
+      - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+      - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+      - research/P2_论文撰写/P2_04_形式检查/artifacts/formal_check_report.md
+    hard_fail_conditions:
+      - dirty_submodule_state_hidden_before_reproducibility_claim
+      - metadata_h5_alignment_or_selected_backend_gap_hidden
+      - claimed_result_cannot_be_traced_to_ledger_and_config
+    downstream_profile_ref: method_reproducibility_reviewer
+
+  - lens_id: devils_advocate
+    reviewer_role: adversarial_reviewer
+    domain: alternative explanations, hidden nulls, and overclaim detection
+    method_preference: force every strong claim to name missing evidence or downgrade action
+    statistics_preference: preserve null, reject, unclear, and blocked rows in the denominator
+    writing_preference: skeptical wording; no rhetoric that resolves evidence gaps
+    primary_attack_surface:
+      - alternative explanations
+      - hidden negative evidence
+      - citation mismatch
+      - rhetorical overclaiming
+      - low-score review threshold
+    required_evidence:
+      - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/artifacts/claim_map.yaml
+      - research/P2_论文撰写/P2_05_去AI味道/artifacts/claim_evidence_registry.yaml
+      - docs/submission_ready_goal/completion_audit_current.md
+    hard_fail_conditions:
+      - central_claim_has_no_evidence_id
+      - blocked_or_rejected_evidence_rewritten_as_support
+      - final_score_threshold_below_90_ignored
+    downstream_profile_ref: empirical_statistics_reviewer
+
+coverage_check:
+  eic: true
+  method_expert: true
+  domain_expert: true
+  cross_disciplinary_reader: true
+  reproducibility_skeptic: true
+  devils_advocate: true
+  persona_serves_critique_quality: true
+  roleplay_without_attack_surface: false
+  protected_paths_respected: true
+  final_submission_ready_claim: false
+  global_blockers_preserved: true

@@ -1,45 +1,174 @@
+version: p3_03_review_issue_register_v1
+node_id: research::P3_论文模拟评审与修改_多轮::P3_03_批评摘要
+generated_at: 2026-05-05
+author_agent_id: codex-local
+round_id: p3-round-001
+source_round_index: research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/artifacts/review_round_index.yaml
+source_profile_map: research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/artifacts/reviewer_profile_map.yaml
+final_threshold_contract: research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/artifacts/critique_digest_final_threshold_contract.yaml
+
 issues:
-- issue_id: issue-p3-001
-  critique_id: p3-round-001-placeholder-manuscript
-  source_comment_ids:
-  - p3-round-001:method_reproducibility_reviewer
-  - p3-round-001:broad_interest_editorial_reviewer
-  checklist_dimension: writing_venue_gate
-  triage_class: blocking
-  severity: fatal
-  claim_id: claim-core-placeholder-main-manuscript
-  evidence_id: ev-missing-manuscript-body
-  location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#document-body
-  evidence_gap: TeX body contains only a placeholder comment, so no introduction, method, result, discussion, claim, or limitation can be audited.
-  actionable_fix: Replace placeholder TeX with a manuscript draft whose sections bind claims to evidence and figures/tables.
-  next_action: Route to P2 manuscript nodes after evidence prerequisites are clarified.
-  status: open
-- issue_id: issue-p3-002
-  critique_id: p3-round-001-missing-results-ledger
-  source_comment_ids:
-  - p3-round-001:method_reproducibility_reviewer
-  checklist_dimension: method_reproducibility_gate
-  triage_class: blocking
-  severity: major
-  claim_id: claim-core-validation-result
-  evidence_id: ev-missing-p1-04-results-ledger
-  location: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml#blocked_missing_p104_ledger
-  evidence_gap: P1_05 records `blocked_missing_p104_ledger`; no validated result can support a paper claim.
-  actionable_fix: Generate or explicitly close the P1_04 results ledger, then update result_registry and hypothesis_status.
-  next_action: Route to P1_04/P1_05 before promoting validation claims into P2.
-  status: open
-- issue_id: issue-p3-003
-  critique_id: p3-round-001-figure-provenance
-  source_comment_ids:
-  - p3-round-001:cross_disciplinary_reader
-  - p3-round-001:devils_advocate
-  checklist_dimension: figure_table_gate
-  triage_class: blocking
-  severity: major
-  claim_id: claim-figure-main-result
-  evidence_id: ev-figure-provenance-missing
-  location: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_plan.yaml#fig_main
-  evidence_gap: The figure plan names `fig_main` but does not bind a verified evidence row, caption obligation, or manuscript callout.
-  actionable_fix: Bind figure plan to result evidence, caption, first callout location, and claim id before using it in the manuscript.
-  next_action: Route to P1_09 and then P2 figure/callout nodes.
-  status: open
+  - issue_id: issue-p3-001
+    critique_id: p3-round-001-formal-evidence-eligibility
+    lens_id: empirical_statistics_reviewer
+    source_comment_ids:
+      - p3-round-001b:empirical_statistics_reviewer
+      - P3_02:devils_advocate
+      - P3_02:reproducibility_skeptic
+    checklist_dimension: formal_result_eligibility
+    triage_class: blocking
+    severity: fatal
+    claim_or_section: Results and abstract evidence-strength boundary
+    claim_id: P3_03_C02_BLOCKING_FORMAL_EVIDENCE_GAPS
+    evidence_id: P3_03_E004_REVIEW_ISSUE_REGISTER
+    evidence_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#synthetic-offline-signal
+    problem: The result narrative is correctly conservative, but the paper cannot pass as submission-ready while the only positive quantitative signal is a preliminary synthetic/offline single-run table with no real-data row, no RM101 resolution, no selected-backend decision, no variance, and no Stage C or Stage D evidence.
+    evidence_gap: Missing accepted formal rows for real-data performance, RM101, selected backend, repeated-run uncertainty, and ablation evidence.
+    required_action: Keep the result claim downgraded and route a P3_04 action that either repairs the upstream formal evidence or records the limitation as a submission blocker.
+    actionable_fix: P3_04 should map this row to upstream formal-evidence artifacts and forbid any performance-upgrade edit until ledger-backed Stage C/D evidence exists.
+    target_node_or_artifact: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+    validation_gate: P3_04 revision action exists and preserves the formal-evidence blocker; later P1/P2/P4 validators must supply accepted evidence or explicit limitation records.
+    blocks_submission: true
+    next_action: route_to_p3_04_revision_action
+    status: routed_open
+
+  - issue_id: issue-p3-002
+    critique_id: p3-round-001-reproducibility-artifact-state
+    lens_id: method_reproducibility_reviewer
+    source_comment_ids:
+      - p3-round-001a:method_reproducibility_reviewer
+      - P3_02:method_expert
+      - P3_02:reproducibility_skeptic
+    checklist_dimension: method_reproducibility_gate
+    triage_class: blocking
+    severity: fatal
+    claim_or_section: Methods and code-availability reproducibility path
+    claim_id: P3_03_C03_BLOCKING_REPRODUCIBILITY_GAPS
+    evidence_id: P3_03_E004_REVIEW_ISSUE_REGISTER
+    evidence_location: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex#reproducibility-requirements
+    problem: The methods section lists an inspectable reproducibility path, but global audit still records PHMGA dirty-state protection, adapter metadata-H5 alignment, selected-backend uncertainty, and formal-run provenance gaps.
+    evidence_gap: A clean submodule state, full adapter preflight, selected backend, and formal ledger/config trace are not locked for submission-level reproducibility.
+    required_action: Route a P3_04 action to keep reproducibility wording conditional and to target upstream PHMGA/Vibench state repair before any stronger reproducibility claim.
+    actionable_fix: P3_04 should require either a clean, documented PHMGA/Vibench evidence package or a manuscript limitation that explicitly blocks final reproducibility claims.
+    target_node_or_artifact: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+    validation_gate: P3_04 revision action plus later PHMGA/Vibench preflight and selected-backend evidence.
+    blocks_submission: true
+    next_action: route_to_p3_04_revision_action
+    status: routed_open
+
+  - issue_id: issue-p3-003
+    critique_id: p3-round-001-global-validator-response-coverage
+    lens_id: venue_claim_clarity_reviewer
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:eic
+      - P3_02:devils_advocate
+    checklist_dimension: response_submission_gate
+    triage_class: blocking
+    severity: major
+    claim_or_section: Final-readiness and response-package boundary
+    claim_id: P3_03_C04_NO_FINAL_READINESS_CLAIM
+    evidence_id: P3_03_E005_COMPLETION_AUDIT
+    evidence_location: docs/submission_ready_goal/completion_audit_current.md
+    location: docs/submission_ready_goal/completion_audit_current.md#overall-submission-ready-goal-remains-incomplete
+    problem: The local P3 nodes can pass for progression, but the global validator still reports pending P1 checklist fields, remaining below-90 P3/P4 review scores, P3_04 blocked/planned actions, and unresolved response-package coverage.
+    evidence_gap: P1 checklist status, remaining below-90 review scores, P3_04 action statuses, and response coverage remain; repaired schema/failure-truth issues are historical rather than current emitted blockers.
+    required_action: Route these as explicit P3_04/P4 blockers and prevent any local P3 pass from being used as final submission approval.
+    actionable_fix: P3_04 should create a blocking action that preserves this validation gap and points later work to schema repair, response coverage, and final review-score closure.
+    target_node_or_artifact: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+    validation_gate: P3_04 action map plus final `scripts/validate_research_truth.py --require-submission`.
+    blocks_submission: true
+    next_action: route_to_p3_04_revision_action
+    status: routed_open
+
+  - issue_id: issue-p3-004
+    critique_id: p3-round-001-claim-language-density
+    lens_id: venue_claim_clarity_reviewer
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:eic
+      - P2_05:P2_05_R001
+      - P2_05:P2_05_R002
+      - P2_05:P2_05_R004
+    checklist_dimension: writing_venue_gate
+    triage_class: non_blocking
+    severity: major
+    claim_or_section: Abstract and contribution framing
+    claim_id: P3_03_C05_NONBLOCKING_PROSE_DENSITY
+    evidence_id: P3_03_E006_P2_05_CALIBRATION
+    evidence_location: research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+    problem: Some abstract and contribution sentences still sound broad or low-density compared with the calibrated replacements, even though the evidence boundary is mostly preserved.
+    evidence_gap: No missing evidence; the gap is clarity and risk of over-broad process framing.
+    required_action: Apply or adapt the P2_05 replacement sentences after blocking evidence limitations remain explicit.
+    actionable_fix: P3_04 should map this to a manuscript-polish action that cannot upgrade claim strength.
+    target_node_or_artifact: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+    validation_gate: P3_04 non-blocking action plus TeX diff that preserves support-status wording.
+    blocks_submission: false
+    next_action: route_to_p3_04_nonblocking_action
+    status: routed_open
+
+  - issue_id: issue-p3-005
+    critique_id: p3-round-001-figure-table-reader-path
+    lens_id: venue_claim_clarity_reviewer
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:cross_disciplinary_reader
+    checklist_dimension: figure_table_gate
+    triage_class: non_blocking
+    severity: minor
+    claim_or_section: Synthetic/offline result figure and caption
+    claim_id: P3_03_C06_NONBLOCKING_FIGURE_BOUNDARY
+    evidence_id: P3_03_E004_REVIEW_ISSUE_REGISTER
+    evidence_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#figure-p1-synthetic-signal
+    problem: The figure caption contains claim and evidence refs and correctly states the missing variance, real-data row, RM101 resolution, and selected-backend decision, but P3_04 should preserve this boundary when any caption or callout is edited.
+    evidence_gap: Provenance exists; the risk is reader-facing interpretation drift.
+    required_action: Keep the figure/table boundary in P3_04 caption and callout actions.
+    actionable_fix: P3_04 should verify the first callout and caption still state single-run synthetic/offline scope after any wording change.
+    target_node_or_artifact: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+    validation_gate: P3_04 figure/caption action and P2_03 TeX recheck.
+    blocks_submission: false
+    next_action: route_to_p3_04_nonblocking_action
+    status: routed_open
+
+  - issue_id: issue-p3-006
+    critique_id: p3-round-001-style-repetition
+    lens_id: cross_disciplinary_reader
+    source_comment_ids:
+      - P2_05:P2_05_R005
+      - P2_05:P2_05_R008
+      - P2_05:P2_05_R009
+    checklist_dimension: cosmetic_style_gate
+    triage_class: cosmetic
+    severity: minor
+    claim_or_section: Repeated draft-state phrasing
+    claim_id: P3_03_C07_COSMETIC_STYLE_COMPRESSION
+    evidence_id: P3_03_E006_P2_05_CALIBRATION
+    evidence_location: research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#discussion
+    problem: Repeated synchronization-language makes the draft feel like an internal progress report in a few places.
+    evidence_gap: No scientific evidence gap.
+    required_action: Compress repeated draft-state phrases only after preserving evidence boundaries.
+    actionable_fix: P3_04 may map this as an optional polish action; no claim or result status may change.
+    target_node_or_artifact: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+    validation_gate: Optional TeX polish diff with no claim upgrade.
+    blocks_submission: false
+    next_action: route_to_p3_04_cosmetic_action
+    status: routed_open
+
+category_counts:
+  blocking: 3
+  non_blocking: 2
+  cosmetic: 1
+schema_retention:
+  source_comment_ids: true
+  severity: true
+  claim_or_section: true
+  evidence_gap: true
+  location: true
+  next_action: true
+  target_node_or_artifact: true
+  current_final_gate_classes: true

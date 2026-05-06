@@ -1,8 +1,40 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: >
+      Acknowledged. AI_001 passed P3_02 with score 86, hard_fail false,
+      independence_confirmed true, and downstream_ready true. The pass is
+      node-local only and does not imply manuscript submission readiness.
+      NB-001 and NB-002 are deferred to P3_03/P3_04: downstream critique must
+      instantiate atomic issue rows and recheck upstream evidence before using
+      referenced paths as scientific support. NB-003 has been addressed by
+      normalizing status.yaml author_agent_id to codex-local. Negative,
+      blocked, rejected, and uncertain evidence must remain visible downstream,
+      and reviewer personas must stay tied to attack surfaces, required
+      evidence, and hard-fail conditions.
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: >
+      Acknowledged. The user-authorized Claude Code teammate review passed the
+      node-local package and its handoff validates successfully. The review
+      confirms six-lens coverage, complete required fields per lens, functional
+      critique-oriented personas, negative-evidence preservation, clean mapping
+      to P3_03/P3_04, and no final submission-readiness claim. Non-blocking
+      observations about downstream issue-row instantiation and upstream
+      evidence rechecking are carried into P3_03/P3_04. Checklist and local
+      response metadata are closed here.
+
+  - comment_id: AI-002
+    responded: true
+    blocking_comments_open: false
+    note: >
+      Acknowledged. AI_002 is an independent score-only node-local
+      final-threshold re-review by final-threshold-reviewer-p3-02-002. It
+      passes P3_02 with overall_score 94, hard_fail false,
+      final_submission_threshold_met true for node-local reviewer-profile
+      scope only, and downstream_ready true for critique-profile consumption
+      only. The review reports no open blocking comments and requires no
+      P3_02-local fixes. This does not close P1 checklist fields, P3_04
+      actions, provider/formal-result blockers, upstream evidence verification,
+      or global submission readiness.
