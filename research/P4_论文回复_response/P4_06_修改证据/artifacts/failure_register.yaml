@@ -1,0 +1,43 @@
+version: p4_06_failure_register_v1
+node_id: research::P4_论文回复_response::P4_06_修改证据
+generated_at: 2026-05-05
+final_threshold_contract:
+  artifact: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_final_threshold_contract.yaml
+  score_review_scope: current_scope_revision_evidence_mapping_only
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-06-002
+  global_submission_ready: true
+failures:
+  - failure_id: p4_06_f001
+    context: Formal empirical evidence is still not accepted for real-data performance, RM101, selected backend, repeat uncertainty, and Stage D ablation rows.
+    affected_claim_id: p4_06_c001_formal_evidence_limitation_retained
+    severity: high
+    interpretation: The response can only retain the limitation; it cannot claim empirical validity from the current synthetic/offline single-run figure.
+    action: document_limitation
+    status: accepted_limitation
+  - failure_id: p4_06_f002
+    context: PHMGA branch and pull facts are recorded, but the submodule still has 66 dirty or untracked entries and downstream adapter/backend traceability remains unresolved.
+    affected_claim_id: p4_06_c002_reproducibility_limitation_retained
+    severity: high
+    interpretation: Reproducibility can be described as a required artifact boundary, not as submission-ready reproducibility.
+    action: document_limitation
+    status: accepted_limitation
+  - failure_id: p4_06_f003
+    context: Global submission validation passes after user-authorized P3_04 semantic action closure; official comments and PHMGA selected-backend/formal-result evidence remain disclosed limitations, not positive evidence.
+    affected_claim_id: p4_06_c003_final_readiness_blocker_retained
+    severity: high
+    interpretation: P4_06 closes the evidence-map gate only; P4_07 must not package a final resubmission as ready.
+    action: document_limitation
+    status: accepted_limitation
+  - failure_id: p4_06_f004
+    context: Reader-facing figure interpretation can drift if the synthetic/offline caption is shortened without preserving its provenance and limitation language.
+    affected_claim_id: p4_06_c005_figure_caption_boundary_verified
+    severity: low
+    interpretation: The existing caption already contains the required boundary, so retaining it is safer than cosmetic shortening in this node.
+    action: no_action
+    status: resolved
+summary:
+  failure_count: 4
+  high_severity_accepted_limitation_count: 3
+  open_failure_count: 0
+  final_threshold_contract_present: true
+  current_final_gate_classes_preserved: true

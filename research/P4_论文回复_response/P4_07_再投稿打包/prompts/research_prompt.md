@@ -113,7 +113,7 @@
 - 若缺关键输入、关键证据或关键 prompt 资产，应停止并显式报告缺口。
 
 ## 供执行者填写的本轮摘要
-- 本轮最小目标：<待填写>
-- 本轮不做什么：<待填写>
+- 本轮最小目标：生成 P4_07 bundle manifest，核对 manuscript、response、evidence、figures、tables、metadata、citation registry、figure manifest、venue requirements、question mapping、coverage check 和 revision evidence map 是否都有可定位文件。
+- 本轮不做什么：不伪造 official journal comments、manuscript id、editor metadata、accepted formal result evidence 或最终 submission-ready 状态。
 - 完成定义：见 `prompts/acceptance_checklist.yaml`
-- 完成后交给谁：<待填写>
+- 完成后交给谁：交给最终 submission audit；若保留 blockers 未解决，manifest 只能作为 internal review handoff。

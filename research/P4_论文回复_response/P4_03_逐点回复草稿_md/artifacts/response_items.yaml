@@ -1,0 +1,144 @@
+version: p4_03_response_items_v1
+node_id: research::P4_论文回复_response::P4_03_逐点回复草稿_md
+generated_at: 2026-05-05
+author_agent_id: codex-local
+source_mapping_matrix: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+final_threshold_contract: research/P4_论文回复_response/P4_03_逐点回复草稿_md/artifacts/response_draft_final_threshold_contract.yaml
+official_journal_comments_available: false
+final_submission_ready_claim: false
+response_items:
+  - response_item_id: rsp-p4-001
+    mapping_id: map-p4-001
+    comment_id: p4-01-c001
+    source_action_id: action-p3-001
+    issue_id: issue-p3-001
+    source_comment_ids:
+      - p3-round-001b:empirical_statistics_reviewer
+      - P3_02:devils_advocate
+      - P3_02:reproducibility_skeptic
+    direct_answer: We agree that the current manuscript cannot claim submission-level empirical validity.
+    response_text: The response will state that the formal empirical evidence gap is not solved. The current manuscript remains limited to the preliminary synthetic/offline single-run signal. Accepted real-data, RM101, selected-backend, repeated-run uncertainty, Stage C main-result, and Stage D ablation rows are required before any stronger performance claim can be made.
+    evidence_refs:
+      - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml#map-p4-001
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#synthetic-offline-signal
+      - research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml#action-p3-001
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#synthetic-offline-signal
+    change_description: No completed manuscript change is claimed here; downstream work must either add accepted formal evidence or retain the limitation explicitly.
+    commitment_status: blocked
+    downstream_gate: cov-p4-001
+    revision_evidence_item_id: ev-p4-001
+  - response_item_id: rsp-p4-002
+    mapping_id: map-p4-002
+    comment_id: p4-01-c002
+    source_action_id: action-p3-002
+    issue_id: issue-p3-002
+    source_comment_ids:
+      - p3-round-001a:method_reproducibility_reviewer
+      - P3_02:method_expert
+      - P3_02:reproducibility_skeptic
+    direct_answer: We agree that the reproducibility package is not submission-ready.
+    response_text: The response will keep reproducibility claims conditional. Dirty-state disposition, adapter metadata-H5 alignment, selected-backend trace, formal ledger/config provenance, and provider/model metadata boundaries must be closed before reproducibility is claimed as submission-ready.
+    evidence_refs:
+      - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml#map-p4-002
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex#reproducibility-requirements
+      - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex#reproducibility-requirements
+    change_description: No completed reproducibility fix is claimed here; downstream work must close the artifact-state and backend-trace gaps or retain them as named blockers.
+    commitment_status: blocked
+    downstream_gate: cov-p4-002
+    revision_evidence_item_id: ev-p4-002
+  - response_item_id: rsp-p4-003
+    mapping_id: map-p4-003
+    comment_id: p4-01-c003
+    source_action_id: action-p3-003
+    issue_id: issue-p3-003
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:eic
+      - P3_02:devils_advocate
+    direct_answer: We agree that the package is not final-submission-ready while global validation and coverage blockers remain.
+    response_text: The response will explicitly state that final readiness is blocked by the current gate classes: 109 pending P1_01-P1_05 checklist fields, five remaining P4 score blockers before P4_03 AI_002, six unresolved P3_04 action statuses, official-comment absence, unfinished response-package coverage, and final validator failure. P4_05 and P4_06 must cover all P3 action IDs, issue IDs, P4 comment IDs, source_comment_ids, evidence items, and change locations before P4_07 can package any resubmission. Earlier registry and failure-truth schema gaps are repaired historical blockers, not current response blockers.
+    evidence_refs:
+      - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml#map-p4-003
+      - docs/submission_ready_goal/completion_audit_current.md#current-completion-audit
+      - research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml#action-p3-003
+    manuscript_location: docs/submission_ready_goal/completion_audit_current.md#overall-submission-ready-goal-remains-incomplete
+    change_description: No final-readiness claim is made; downstream coverage and revision-evidence maps must close or explicitly retain this blocker.
+    commitment_status: blocked
+    downstream_gate: cov-p4-003
+    revision_evidence_item_id: ev-p4-003
+  - response_item_id: rsp-p4-004
+    mapping_id: map-p4-004
+    comment_id: p4-01-c004
+    source_action_id: action-p3-004
+    issue_id: issue-p3-004
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:eic
+      - P2_05:P2_05_R001
+      - P2_05:P2_05_R002
+      - P2_05:P2_05_R004
+    direct_answer: We agree that the abstract and contribution framing should be denser and clearer without upgrading claims.
+    response_text: The response will commit only to conservative wording revision. Any edit must preserve the distinction between process-level evidence governance claims and unsupported empirical performance claims.
+    evidence_refs:
+      - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml#map-p4-004
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+      - research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+    change_description: Planned wording revision only; no claim upgrade and no completed TeX edit are claimed by P4_03.
+    commitment_status: planned
+    downstream_gate: cov-p4-004
+    revision_evidence_item_id: ev-p4-004
+  - response_item_id: rsp-p4-005
+    mapping_id: map-p4-005
+    comment_id: p4-01-c005
+    source_action_id: action-p3-005
+    issue_id: issue-p3-005
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:cross_disciplinary_reader
+    direct_answer: We agree that the figure and table path must keep the evidence boundary visible.
+    response_text: The response will preserve the synthetic/offline, single-run, no-real-data, no-RM101-resolution, no-selected-backend boundary in any future caption or callout edit. The figure can support only a limited process signal, not a formal performance result.
+    evidence_refs:
+      - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml#map-p4-005
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#figure-p1-synthetic-signal
+      - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_manifest.yaml
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#figure-p1-synthetic-signal
+    change_description: Planned caption/callout boundary check only; no completed figure or TeX edit is claimed by P4_03.
+    commitment_status: planned
+    downstream_gate: cov-p4-005
+    revision_evidence_item_id: ev-p4-005
+  - response_item_id: rsp-p4-006
+    mapping_id: map-p4-006
+    comment_id: p4-01-c006
+    source_action_id: action-p3-006
+    issue_id: issue-p3-006
+    source_comment_ids:
+      - P2_05:P2_05_R005
+      - P2_05:P2_05_R008
+      - P2_05:P2_05_R009
+    direct_answer: We agree that repeated draft-state phrasing should be compressed where it does not alter claim/evidence status.
+    response_text: The response will allow optional cosmetic compression only. Any edit must keep negative-evidence, limitation, and no-final-readiness language intact.
+    evidence_refs:
+      - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml#map-p4-006
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#discussion
+      - research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#discussion
+    change_description: Optional cosmetic compression only; no completed style edit is claimed by P4_03.
+    commitment_status: planned
+    downstream_gate: cov-p4-006
+    revision_evidence_item_id: ev-p4-006
+summary:
+  source_mapping_count: 6
+  response_item_count: 6
+  blocked_response_count: 3
+  planned_response_count: 3
+  explanation_only_closure_count: 0
+  official_comments_missing: true
+  each_response_has_comment_id: true
+  each_response_has_evidence_refs: true
+  each_response_has_manuscript_location: true
+  each_response_has_commitment_status: true
+  final_submission_ready_claim: false
+  final_threshold_contract_present: true
+  current_final_gate_classes_preserved: true

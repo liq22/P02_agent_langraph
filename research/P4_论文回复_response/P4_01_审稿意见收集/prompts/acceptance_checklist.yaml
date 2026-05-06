@@ -13,48 +13,52 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: comments 是否被完整保留？
-  status: pending
+  status: done
 - item: 多条评论是否需要拆分？
-  status: pending
+  status: done
 - item: editor comment 是否单独标识？
-  status: pending
+  status: done
 required_outputs:
 - path: 标准化 comments 列表
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: artifacts/claim_evidence_registry.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/failure_register.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/negative_result_note.md
+  status: done
   description: profile-required local artifact
 - path: artifacts/keep_discard_ledger.yaml
+  status: done
   description: profile-required local artifact
 quality_checks:
 - item: 围绕 point-by-point response、clear description of changes、coverage 和 evidence
     链组织内容
-  status: pending
+  status: done
 - item: 回复语气冷静专业，能指出具体修改位置
-  status: pending
+  status: done
 - item: 不丢信息、不混 comment 粒度
-  status: pending
+  status: done
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: done
 handoff_ready_if:
 - item: 每条 comment 都有唯一标识
-  status: pending
+  status: done
 - item: reviewer/editor 来源明确
-  status: pending
+  status: done
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: done
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -76,9 +80,9 @@ stop_if:
   status: pending
 review_notes:
 - slot: 1
-  note: <待填写>
+  note: External AI review passed with score 88, hard_fail false, downstream_ready true; it confirmed six current-scope simulated-review comments are complete and standardized.
 - slot: 2
-  note: <待填写>
+  note: User-authorized Claude Code teammate delegate passed the human-review slot; validated handoff is docs/submission_ready_goal/runtime_logs/claude_code/p4_01_human_review_handoff.yaml.
 external_review_gate:
   required: true
   reviewer_role: external_node_reviewer
@@ -103,17 +107,17 @@ external_review_gate:
   - artifacts/keep_discard_ledger.yaml
 author_exit:
 - item: 'claim_evidence_ids_are_explicit_or_gap_is_reported: true'
-  status: pending
+  status: done
 - item: 'negative_or_failed_results_recorded: true'
-  status: pending
+  status: done
 - item: 'protected_paths_respected: true'
-  status: pending
+  status: done
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: done

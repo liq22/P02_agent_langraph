@@ -1,0 +1,46 @@
+version: p4_06_keep_discard_ledger_v1
+node_id: research::P4_论文回复_response::P4_06_修改证据
+generated_at: 2026-05-05
+final_threshold_contract:
+  artifact: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_final_threshold_contract.yaml
+  score_review_scope: current_scope_revision_evidence_mapping_only
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-06-002
+  global_submission_ready: true
+decisions:
+  - item_id: p4_06_kd001
+    item_type: retained_limitation
+    decision: keep
+    rationale: Formal empirical evidence is absent, so the response must keep the synthetic/offline single-run limitation visible.
+    evidence_ref: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-001
+  - item_id: p4_06_kd002
+    item_type: retained_limitation
+    decision: keep
+    rationale: Reproducibility blockers are documented and must remain visible until PHMGA dirty-state, adapter, backend, and ledger traces close.
+    evidence_ref: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-002
+  - item_id: p4_06_kd003
+    item_type: unsupported_claim
+    decision: discard
+    rationale: Discard unsupported positive claims about official comments or accepted PHMGA/backend/formal-result evidence; final validator readiness is now supported only after user-authorized P3_04 retained-limitation action closure.
+    evidence_ref: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-003
+  - item_id: p4_06_kd004
+    item_type: manuscript_revision
+    decision: keep
+    rationale: Abstract wording revision narrows the process claim and preserves the empirical evidence boundary.
+    evidence_ref: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-004
+  - item_id: p4_06_kd005
+    item_type: figure_caption
+    decision: keep
+    rationale: Existing caption already carries provenance and limitation language; changing it in this node would add risk without improving evidence traceability.
+    evidence_ref: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-005
+  - item_id: p4_06_kd006
+    item_type: manuscript_revision
+    decision: keep
+    rationale: Discussion/result wording revision keeps negative and uncertain evidence in the manuscript record without strengthening the claim.
+    evidence_ref: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-006
+summary:
+  decision_count: 6
+  keep_count: 5
+  discard_count: 1
+  defer_count: 0
+  final_threshold_contract_present: true
+  current_final_gate_classes_preserved: true

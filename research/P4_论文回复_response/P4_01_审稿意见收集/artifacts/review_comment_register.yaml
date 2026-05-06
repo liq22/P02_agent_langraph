@@ -1,0 +1,171 @@
+version: p4_01_review_comment_register_v1
+node_id: research::P4_论文回复_response::P4_01_审稿意见收集
+generated_at: 2026-05-05
+author_agent_id: codex-local
+final_threshold_contract: research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/review_comment_final_threshold_contract.yaml
+source_scope:
+  official_journal_comments_available: false
+  official_comment_gap_recorded: true
+  primary_sources:
+    - research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+    - research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/review_issue_register.yaml
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers/R1.tex
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers/R2.tex
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers/R3.tex
+  excluded_sources:
+    - official decision letter not present
+    - official reviewer comments not present
+    - docs/HUMAN_ONLY.md not read
+
+comments:
+  - comment_id: p4-01-c001
+    source_type: simulated_review_action
+    source_action_id: action-p3-001
+    issue_id: issue-p3-001
+    critique_id: p3-round-001-formal-evidence-eligibility
+    source_comment_ids:
+      - p3-round-001b:empirical_statistics_reviewer
+      - P3_02:devils_advocate
+      - P3_02:reproducibility_skeptic
+    official_editor_comment: false
+    simulated_editor_lens_present: false
+    severity: fatal
+    blocks_submission: true
+    normalized_comment: The manuscript cannot claim submission-level empirical validity while accepted real-data formal rows, RM101 resolution, selected backend evidence, repeated-run uncertainty, Stage C main-result rows, and Stage D ablation rows remain absent.
+    affected_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#synthetic-offline-signal
+    evidence_gap: Missing accepted formal rows for real-data performance, RM101, selected backend, repeated-run uncertainty, and ablation evidence.
+    target_node: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议
+    required_change: Add ledger-backed accepted formal evidence or explicitly retain the limitation in manuscript and response artifacts.
+    downstream_mapping_target: research/P4_论文回复_response/P4_02_问题映射矩阵
+    split_decision: keep_as_atomic_action_comment
+    status: collected
+
+  - comment_id: p4-01-c002
+    source_type: simulated_review_action
+    source_action_id: action-p3-002
+    issue_id: issue-p3-002
+    critique_id: p3-round-001-reproducibility-artifact-state
+    source_comment_ids:
+      - p3-round-001a:method_reproducibility_reviewer
+      - P3_02:method_expert
+      - P3_02:reproducibility_skeptic
+    official_editor_comment: false
+    simulated_editor_lens_present: false
+    severity: fatal
+    blocks_submission: true
+    normalized_comment: The reproducibility package is not submission-ready while PHMGA dirty-state disposition, adapter metadata-H5 alignment preflight, selected backend trace, formal run ledger/config provenance, and provider/model metadata boundaries remain unresolved.
+    affected_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex#reproducibility-requirements
+    evidence_gap: Clean submodule state, adapter preflight, selected backend, and formal ledger/config trace are not locked for submission-level reproducibility.
+    target_node: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略
+    required_change: Resolve dirty-state disposition, adapter preflight, selected backend trace, formal ledger/config provenance, and provider/model boundary, or retain them as named blockers.
+    downstream_mapping_target: research/P4_论文回复_response/P4_02_问题映射矩阵
+    split_decision: keep_as_atomic_action_comment
+    status: collected
+
+  - comment_id: p4-01-c003
+    source_type: simulated_review_action
+    source_action_id: action-p3-003
+    issue_id: issue-p3-003
+    critique_id: p3-round-001-global-validator-response-coverage
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:eic
+      - P3_02:devils_advocate
+    official_editor_comment: false
+    simulated_editor_lens_present: true
+    severity: major
+    blocks_submission: true
+    normalized_comment: The response package must not state final readiness while P1 checklist fields remain pending, P4 node scores remain below threshold, P3_04 action statuses remain blocked or planned, official comments remain unavailable, and final validator blockers remain.
+    affected_location: docs/submission_ready_goal/completion_audit_current.md#overall-submission-ready-goal-remains-incomplete
+    evidence_gap: Current blockers are 109 pending P1_01-P1_05 checklist fields, seven below-threshold P4 scores before P4_01 AI_002, six unresolved P3_04 action statuses, the official-comment gap, unfinished response-package coverage, and final validator failure. Earlier registry and failure-truth gaps are repaired historical blockers, not current c003 evidence gaps.
+    target_node: research/P4_论文回复_response/P4_05_覆盖检查
+    required_change: Coverage and revision-evidence maps must cover all P3 action ids, issue ids, and source comment ids, or retain the blocker explicitly.
+    downstream_mapping_target: research/P4_论文回复_response/P4_02_问题映射矩阵
+    split_decision: keep_as_atomic_action_comment
+    status: collected
+
+  - comment_id: p4-01-c004
+    source_type: simulated_review_action
+    source_action_id: action-p3-004
+    issue_id: issue-p3-004
+    critique_id: p3-round-001-claim-language-density
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:eic
+      - P2_05:P2_05_R001
+      - P2_05:P2_05_R002
+      - P2_05:P2_05_R004
+    official_editor_comment: false
+    simulated_editor_lens_present: true
+    severity: major
+    blocks_submission: false
+    normalized_comment: The abstract and contribution framing should be denser and clearer, but the wording must not upgrade process claims into unsupported empirical performance claims.
+    affected_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+    evidence_gap: No missing evidence; the issue is clarity and risk of over-broad process framing.
+    target_node: research/P2_论文撰写/P2_03_定稿_tex
+    required_change: Apply or adapt P2_05 calibrated wording while preserving the process-claim boundary.
+    downstream_mapping_target: research/P4_论文回复_response/P4_02_问题映射矩阵
+    split_decision: keep_as_atomic_action_comment
+    status: collected
+
+  - comment_id: p4-01-c005
+    source_type: simulated_review_action
+    source_action_id: action-p3-005
+    issue_id: issue-p3-005
+    critique_id: p3-round-001-figure-table-reader-path
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:cross_disciplinary_reader
+    official_editor_comment: false
+    simulated_editor_lens_present: false
+    severity: minor
+    blocks_submission: false
+    normalized_comment: The figure/table reader path must keep the synthetic/offline, single-run, no-real-data, no-RM101-resolution, and no-selected-backend boundary visible.
+    affected_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#figure-p1-synthetic-signal
+    evidence_gap: Provenance exists; the risk is reader-facing interpretation drift.
+    target_node: research/P2_论文撰写/P2_03_定稿_tex
+    required_change: Verify any caption or callout edit keeps the synthetic/offline single-run scope and missing formal evidence visible.
+    downstream_mapping_target: research/P4_论文回复_response/P4_02_问题映射矩阵
+    split_decision: keep_as_atomic_action_comment
+    status: collected
+
+  - comment_id: p4-01-c006
+    source_type: simulated_review_action
+    source_action_id: action-p3-006
+    issue_id: issue-p3-006
+    critique_id: p3-round-001-style-repetition
+    source_comment_ids:
+      - P2_05:P2_05_R005
+      - P2_05:P2_05_R008
+      - P2_05:P2_05_R009
+    official_editor_comment: false
+    simulated_editor_lens_present: false
+    severity: minor
+    blocks_submission: false
+    normalized_comment: Repeated draft-state phrasing should be compressed where possible without changing claim/evidence status or hiding limitations.
+    affected_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#discussion
+    evidence_gap: No scientific evidence gap.
+    target_node: research/P2_论文撰写/P2_03_定稿_tex
+    required_change: Compress repeated synchronization-report wording only as a cosmetic follow-up with no claim upgrade.
+    downstream_mapping_target: research/P4_论文回复_response/P4_02_问题映射矩阵
+    split_decision: keep_as_atomic_action_comment
+    status: collected
+
+coverage:
+  current_available_comment_count: 6
+  official_comment_count: 0
+  blocking_comment_count: 3
+  non_blocking_comment_count: 2
+  cosmetic_comment_count: 1
+  comments_complete_within_available_scope: true
+  official_comments_missing: true
+  all_comments_have_unique_ids: true
+  all_comments_have_source_comment_ids: true
+  all_comments_have_split_decision: true
+  official_editor_comment_present: false
+  final_threshold_contract_present: true
+  official_comments_fabricated: false
+  current_final_gate_classes_preserved: true
+  simulated_editor_lens_records:
+    - p4-01-c003
+    - p4-01-c004

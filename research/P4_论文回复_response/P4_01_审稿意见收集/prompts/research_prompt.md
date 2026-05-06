@@ -112,7 +112,7 @@
 - 若缺关键输入、关键证据或关键 prompt 资产，应停止并显式报告缺口。
 
 ## 供执行者填写的本轮摘要
-- 本轮最小目标：<待填写>
-- 本轮不做什么：<待填写>
+- 本轮最小目标：收集当前可用的 P3_04/P4_04 simulated-review comments，形成 `artifacts/review_comment_register.yaml`，保留 6 条 action-level comments 的唯一 ID、source_comment_ids、severity、affected location、evidence gap、required change、downstream target 和 official-comment gap。
+- 本轮不做什么：不伪造 official journal decision letter、official editor comment 或 official reviewer comments；不写逐点回复；不做 coverage/revision evidence/final packaging；不声称 final submission ready。
 - 完成定义：见 `prompts/acceptance_checklist.yaml`
-- 完成后交给谁：<待填写>
+- 完成后交给谁：P4_02 问题映射矩阵；下游必须继续保留 `official_comments_missing: true`，并覆盖 `p4-01-c001` 至 `p4-01-c006`。

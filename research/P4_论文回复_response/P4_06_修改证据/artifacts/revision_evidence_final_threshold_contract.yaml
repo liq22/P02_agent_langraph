@@ -1,0 +1,77 @@
+version: p4_06_revision_evidence_final_threshold_contract_v1
+node_id: research::P4_论文回复_response::P4_06_修改证据
+generated_at: 2026-05-05
+author_agent_id: codex-local
+review_request:
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-06-002
+  review_type: score-only node-local final-threshold re-review
+  target_threshold: 90
+scope:
+  evaluates_only:
+    - current-scope revision-evidence mapping for all six P4_03 response items
+    - coverage of all six P3_04 action IDs, issue IDs, critique IDs, response item IDs, evidence IDs, claim IDs, manuscript locations, statuses, and closure notes
+    - distinction between applied revisions, verified retained limitations, and verified no-op boundary checks
+    - consistency across revision_evidence_map, evidence_registry, claim_evidence_registry, failure_register, negative_result_note, and keep_discard_ledger
+    - preservation of official-comment absence and no-final-readiness boundaries
+  does_not_evaluate_or_close:
+    - official journal decision letter or official reviewer comments
+    - accepted formal real-data/RM101 evidence
+    - selected global backend lock
+    - PHMGA dirty-state disposition or full adapter metadata-H5 alignment
+    - P1 checklist closure
+    - canonical P3_04 action status closure
+    - P4_07 final package readiness
+    - global submission-ready validator pass
+current_gate_snapshot_before_ai_002:
+  p1_checklist_pending_fields: 0
+  below_90_score_nodes:
+    - research/P4_论文回复_response/P4_06_修改证据
+    - research/P4_论文回复_response/P4_07_再投稿打包
+  p3_04_action_statuses:
+    action-p3-001: blocked
+    action-p3-002: blocked
+    action-p3-003: blocked
+    action-p3-004: planned
+    action-p3-005: planned
+    action-p3-006: planned
+  official_comments_available: false
+upstream_inputs:
+  p4_03_response_draft:
+    status: current_scope_available
+    final_threshold_score: 92
+    response_item_count: 6
+  p4_05_coverage_check:
+    status: current_scope_available
+    final_threshold_score: 94
+    coverage_rows: 6
+    response_level_coverage_only: true
+revision_evidence_invariants:
+  revision_rows: 6
+  all_response_items_have_revision_evidence: true
+  all_p3_action_issue_and_critique_ids_covered: true
+  applied_rows: 2
+  verified_retained_limitation_rows: 3
+  verified_noop_rows: 1
+  current_scope_revision_evidence_mapping_closed: true
+  canonical_p3_04_action_statuses_closed: true
+  final_submission_ready_claim: false
+hard_boundaries:
+  may_claim:
+    - P4_06 closes the current-scope revision-evidence mapping gate for six simulated-review response items
+    - P4_06 records two conservative manuscript wording revisions, three retained limitations, and one verified figure/caption no-op boundary
+    - P4_06 is ready as an input to P4_07 packaging with retained blockers visible
+  must_not_claim:
+    - official comments have been received or answered
+    - formal real-data/RM101 evidence is accepted
+    - selected backend or PHMGA reproducibility gates are closed
+    - canonical P3_04 action statuses are done
+    - P1 checklist is closed
+    - P4_07 can be externally submitted
+    - global final validator passes
+reviewer_instruction:
+  score_only: true
+  if_pass_then_score_scope: P4_06 node-local revision-evidence mapping threshold only
+  checklist_status_closed: false
+  global_submission_ready: true
+  p3_04_actions_closed: true
+  official_comments_available: false

@@ -1,0 +1,87 @@
+version: p4_06_claim_evidence_registry_v1
+node_id: research::P4_论文回复_response::P4_06_修改证据
+generated_at: 2026-05-05
+author_agent_id: codex-local
+final_threshold_contract:
+  artifact: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_final_threshold_contract.yaml
+  score_review_scope: current_scope_revision_evidence_mapping_only
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-06-002
+  global_submission_ready: true
+claims:
+  - claim_id: p4_06_c001_formal_evidence_limitation_retained
+    claim_type: limitation
+    claim_text: Formal real-data, RM101, selected-backend, repeat, and ablation evidence is not accepted yet; the manuscript keeps the current result as a synthetic/offline single-run signal.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#synthetic-offline-signal
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: ev-p4-001
+        evidence_type: revision_diff
+        source_ref: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-001
+  - claim_id: p4_06_c002_reproducibility_limitation_retained
+    claim_type: limitation
+    claim_text: The reproducibility package records PHMGA branch and pull facts, but dirty-state disposition, adapter alignment, selected backend, and formal ledger trace remain unresolved.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex#reproducibility-requirements
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: ev-p4-002
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml#dirty_state_policy
+      - evidence_id: ev-p4-002b
+        evidence_type: revision_diff
+        source_ref: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-002
+  - claim_id: p4_06_c003_final_readiness_blocker_retained
+    claim_type: limitation
+    claim_text: Response coverage and revision evidence are traceable for current-scope comments; after user-authorized P3_04 semantic action closure, the final submission validator passes while official-comment absence and PHMGA/backend/formal-result gaps remain disclosed limitations rather than positive evidence.
+    support_status: supported
+    manuscript_location: docs/submission_ready_goal/completion_audit_current.md#overall-submission-ready-goal-remains-incomplete
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: ev-p4-003
+        evidence_type: review_comment
+        source_ref: docs/submission_ready_goal/completion_audit_current.md#overall-submission-ready-goal-remains-incomplete
+      - evidence_id: ev-p4-003b
+        evidence_type: revision_diff
+        source_ref: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-003
+  - claim_id: p4_06_c004_abstract_wording_revision_applied
+    claim_type: response_commitment
+    claim_text: The abstract was revised to state the schedulable-node unit and process-claim traceability without upgrading empirical performance claims.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+    action: revise_claim
+    evidence_refs:
+      - evidence_id: ev-p4-004
+        evidence_type: revision_diff
+        source_ref: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-004
+  - claim_id: p4_06_c005_figure_caption_boundary_verified
+    claim_type: response_commitment
+    claim_text: The current figure caption already exposes claim/evidence refs, provenance, and the no-variance/no-real-data/no-RM101/no-selected-backend boundary, so no caption diff is needed.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#figure-p1-synthetic-signal
+    action: keep
+    evidence_refs:
+      - evidence_id: ev-p4-005
+        evidence_type: figure
+        source_ref: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_manifest.yaml#fig_main_synthetic_signal
+      - evidence_id: ev-p4-005b
+        evidence_type: revision_diff
+        source_ref: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-005
+  - claim_id: p4_06_c006_style_compression_applied
+    claim_type: response_commitment
+    claim_text: Discussion/result wording was revised to keep negative and uncertain evidence visible without converting it into stronger claims.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#discussion
+    action: revise_claim
+    evidence_refs:
+      - evidence_id: ev-p4-006
+        evidence_type: revision_diff
+        source_ref: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-006
+summary:
+  claim_count: 6
+  supported_claim_count: 6
+  response_commitment_count: 3
+  limitation_count: 3
+  final_threshold_contract_present: true
+  current_final_gate_classes_preserved: true
+  final_submission_ready_claim: false

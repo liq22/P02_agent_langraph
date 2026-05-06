@@ -1,0 +1,27 @@
+version: p4_07_figure_package_manifest_v1
+node_id: research::P4_论文回复_response::P4_07_再投稿打包
+generated_at: 2026-05-05
+figures:
+  - figure_id: fig_workflow_evidence_path
+    package_role: workflow_schematic
+    source_manifest: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_manifest.yaml
+    source_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/tools/render_fig_workflow_evidence_path.py
+    output_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/figures/fig_workflow_evidence_path.svg
+    claim_ref: C_WORKFLOW_EVIDENCE_PATH
+    evidence_ref: P2_02_03_FIG_WORKFLOW_MANIFEST
+    package_status: referenced_existing_file
+    boundary: schematic_only_not_empirical_result
+  - figure_id: fig_main_synthetic_signal
+    package_role: bounded_synthetic_offline_signal
+    source_manifest: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_manifest.yaml
+    source_path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/tools/render_fig_main_synthetic_signal.py
+    output_path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/figures/fig_main_synthetic_signal.svg
+    plotted_data_path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/figures/fig_main_synthetic_signal_data.tsv
+    claim_ref: c1
+    evidence_ref: P1_09_E004_FIGURE_DATA_TSV
+    package_status: referenced_existing_file
+    boundary: synthetic_offline_single_run_only_not_formal_result
+summary:
+  figure_count: 2
+  copied_into_p4_07: false
+  final_journal_artwork_claim: false

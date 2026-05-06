@@ -1,0 +1,59 @@
+version: p4_07_question_mapping_projection_v1
+node_id: research::P4_论文回复_response::P4_07_再投稿打包
+generated_at: 2026-05-05
+source: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+official_journal_comments_available: false
+final_submission_ready_claim: false
+final_threshold_contract:
+  artifact: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/package_manifest_final_threshold_contract.yaml
+  score_review_scope: bounded_internal_package_manifest_only
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-07-002
+  safe_for_external_submission_now: false
+mappings:
+  - comment_id: p4-01-c001
+    issue_id: issue-p3-001
+    critique_id: p3-round-001-formal-evidence-eligibility
+    response_item_id: rsp-p4-001
+    coverage_id: cov-p4-001
+    revision_evidence_id: ev-p4-001
+    package_status: included_with_retained_limitation
+  - comment_id: p4-01-c002
+    issue_id: issue-p3-002
+    critique_id: p3-round-001-reproducibility-artifact-state
+    response_item_id: rsp-p4-002
+    coverage_id: cov-p4-002
+    revision_evidence_id: ev-p4-002
+    package_status: included_with_retained_limitation
+  - comment_id: p4-01-c003
+    issue_id: issue-p3-003
+    critique_id: p3-round-001-global-validator-response-coverage
+    response_item_id: rsp-p4-003
+    coverage_id: cov-p4-003
+    revision_evidence_id: ev-p4-003
+    package_status: included_with_retained_limitation
+  - comment_id: p4-01-c004
+    issue_id: issue-p3-004
+    critique_id: p3-round-001-claim-language-density
+    response_item_id: rsp-p4-004
+    coverage_id: cov-p4-004
+    revision_evidence_id: ev-p4-004
+    package_status: included_with_applied_revision
+  - comment_id: p4-01-c005
+    issue_id: issue-p3-005
+    critique_id: p3-round-001-figure-table-reader-path
+    response_item_id: rsp-p4-005
+    coverage_id: cov-p4-005
+    revision_evidence_id: ev-p4-005
+    package_status: included_with_verified_boundary
+  - comment_id: p4-01-c006
+    issue_id: issue-p3-006
+    critique_id: p3-round-001-style-repetition
+    response_item_id: rsp-p4-006
+    coverage_id: cov-p4-006
+    revision_evidence_id: ev-p4-006
+    package_status: included_with_applied_revision
+summary:
+  mapping_count: 6
+  official_comments_missing: true
+  final_threshold_contract_present: true
+  final_submission_ready_claim: false

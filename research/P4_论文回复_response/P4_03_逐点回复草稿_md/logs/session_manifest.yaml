@@ -1,0 +1,48 @@
+version: p4_03_session_manifest_v1
+node_id: research::P4_论文回复_response::P4_03_逐点回复草稿_md
+generated_at: 2026-05-05
+author_agent_id: codex-local
+inputs_read:
+  - research/P4_论文回复_response/P4_03_逐点回复草稿_md/README.md
+  - research/P4_论文回复_response/P4_03_逐点回复草稿_md/status.yaml
+  - research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/research_prompt.md
+  - research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/acceptance_checklist.yaml
+  - research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/review_rubric.yaml
+  - research/P4_论文回复_response/P4_03_逐点回复草稿_md/skills/local_entry.md
+  - .agent/skills/response_worker/SKILL.md
+  - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+  - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+  - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+  - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+  - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers/R1.tex
+  - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers/R2.tex
+  - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers/R3.tex
+outputs_written:
+  - research/P4_论文回复_response/P4_03_逐点回复草稿_md/docs/manuscript.md
+  - research/P4_论文回复_response/P4_03_逐点回复草稿_md/artifacts/response_items.yaml
+  - research/P4_论文回复_response/P4_03_逐点回复草稿_md/artifacts/response_draft_final_threshold_contract.yaml
+  - research/P4_论文回复_response/P4_03_逐点回复草稿_md/logs/session_manifest.yaml
+scope_boundaries:
+  official_journal_comments_available: false
+  no_new_experiment_claimed: true
+  no_new_citation_claimed: true
+  no_tex_edit_claimed: true
+  final_submission_ready_claim: false
+  checklist_status_closed: false
+  p3_04_actions_closed: false
+  global_submission_ready: false
+current_final_gate_snapshot:
+  p1_checklist_pending_fields: 109
+  remaining_below_90_score_nodes_before_p4_03_ai_002:
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc
+    - research/P4_论文回复_response/P4_05_覆盖检查
+    - research/P4_论文回复_response/P4_06_修改证据
+    - research/P4_论文回复_response/P4_07_再投稿打包
+  p3_04_unresolved_action_count: 6
+response_policy:
+  direct_answer_first: true
+  evidence_refs_required: true
+  manuscript_location_required: true
+  commitment_status_required: true
+  blocked_items_carried_downstream: true

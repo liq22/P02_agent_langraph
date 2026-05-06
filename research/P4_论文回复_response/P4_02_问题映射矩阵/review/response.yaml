@@ -1,8 +1,12 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: "Accepted. External AI review passed node-local P4_02 with score 88, hard_fail false, downstream_ready true, and independence_confirmed true. The reviewer confirmed six current-scope comments are mapped exactly once, required trace fields and downstream keys are present, three blocking mappings remain explicit, official comments are not fabricated, and final_submission_ready_claim remains false. The stale lifecycle/checklist metadata noted by the reviewer was reconciled during closeout."
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: "Accepted. User-authorized Claude Code teammate delegate passed the P4_02 human-review slot and wrote a validating handoff. The review confirmed the same six mapping rows, the alias matrix, limitation artifacts, and no-final-readiness boundary. Non-node blockers remain: official journal/editor comments are absent, P4_03/P4_05/P4_06/P4_07 remain unsolved, mapped blocking actions remain open, selected backend and PHMGA/Vibench formal evidence are unresolved, and final submission validation still fails."
+
+  - comment_id: AI-002
+    responded: true
+    note: "Accepted. Independent score-only final-threshold re-review passed P4_02 with score 94. The finding is limited to node-local mapping readiness: all 6 current-scope comments are mapped exactly once to response_item_id, evidence_item_id, coverage_gate_id, problem_class, affected artifact, target node, and P4_03/P4_05/P4_06 downstream handoff fields. P4_02 can proceed into P4_03 response drafting, P4_05 coverage checking, and P4_06 revision-evidence handoff for current available comments. Official-response completion remains blocked because official journal/editor/reviewer comments are unavailable and were not fabricated; P1 checklist pending fields, remaining P4 score thresholds, P3_04 action statuses, response-package completion, and final submission validator failure remain global blockers."

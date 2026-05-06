@@ -113,7 +113,7 @@
 - 若缺关键输入、关键证据或关键 prompt 资产，应停止并显式报告缺口。
 
 ## 供执行者填写的本轮摘要
-- 本轮最小目标：<待填写>
-- 本轮不做什么：<待填写>
+- 本轮最小目标：把 P4_05 handoff 的六条 revision evidence item 转成 P4_06 可审查证据映射，记录实际 TeX wording revisions、figure/caption verification 和 retained blockers。
+- 本轮不做什么：不伪造 official journal comments、不声明 formal result/reproducibility/global validation 已解决、不进入 P4_07 final packaging。
 - 完成定义：见 `prompts/acceptance_checklist.yaml`
-- 完成后交给谁：<待填写>
+- 完成后交给谁：交给 P4_07 再投稿打包节点作为 revision-evidence input，同时保留未解决 blocker。

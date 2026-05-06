@@ -1,11 +1,31 @@
 decisions:
-  - item_id: p4_04_tex_scaffold_established
+  - item_id: p4_04_action_driven_formal_response_draft
     item_type: response_scaffold
     decision: keep
-    rationale: The provided TeX template gives the correct formal response structure and can be used as the node-local export target.
-    evidence_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/templates/review_response.tex
-  - item_id: p4_04_fabricated_reviewer_content
+    rationale: The TeX response package now binds each P3_04 action to a direct answer, status, target location, evidence refs, and validation gate.
+    evidence_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/response_letter.tex
+  - item_id: p4_04_blank_template_todo_blocks
+    item_type: response_scaffold
+    decision: discard
+    rationale: Empty reviewer blocks would look like missing work rather than auditable retained blockers.
+    evidence_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers
+  - item_id: p4_04_fabricated_official_reviewer_content
     item_type: response_content
     decision: discard
-    rationale: Official reviewer comments and verified manuscript changes are absent, so filling substantive responses would create unsupported commitments.
+    rationale: Official reviewer comments are not present; the draft must label the response basis as P3_04 simulated-review actions rather than invented official comments.
     evidence_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/docs/manuscript.md
+  - item_id: p4_04_unresolved_blockers
+    item_type: limitation_language
+    decision: keep
+    rationale: Formal evidence, reproducibility, coverage, metadata, and final-validator blockers must remain visible in the response package.
+    evidence_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/failure_register.yaml
+  - item_id: p4_04_claim_upgrade_language
+    item_type: response_content
+    decision: discard
+    rationale: Planned wording or style edits cannot be described as completed manuscript improvements, and no empirical claim can be upgraded without evidence.
+    evidence_ref: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+  - item_id: p4_04_global_readiness_claim_from_formal_draft
+    item_type: response_content
+    decision: discard
+    rationale: The final-threshold contract allows a P4_04 score-only pass to clear only node-local formal response draft readiness; official metadata/comment, P1 checklist, P3 action-status, P4 coverage/evidence, and final validator blockers remain open.
+    evidence_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/formal_response_final_threshold_contract.yaml

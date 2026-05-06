@@ -1,27 +1,79 @@
 node_path: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc
-research_anchor: formal response letter scaffold
+research_anchor: p3_04_action_driven_formal_response_draft
 claims:
-  - claim_id: p4_04_tex_scaffold_established
+  - claim_id: p4_04_c001_formal_response_tex_export_exists
     claim_type: method
-    claim_text: The node-local formal response TeX scaffold has been created from the provided template structure.
-    manuscript_location: artifacts/response_letter.tex
+    claim_text: The node-local formal response draft is exported as TeX through artifacts/response_letter.tex and Reviewers subfiles.
+    manuscript_location: docs/manuscript.md#导出格式
     evidence_refs:
-      - evidence_id: p4_04_template_main_tex
-        evidence_type: code
-        source_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/templates/review_response.tex
-      - evidence_id: p4_04_artifact_main_tex
+      - evidence_id: p4_04_e001_response_letter_tex
         evidence_type: code
         source_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/response_letter.tex
+      - evidence_id: p4_04_e002_reviewer_sections
+        evidence_type: code
+        source_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers
     support_status: supported
     action: keep
-  - claim_id: p4_04_final_response_not_ready
+  - claim_id: p4_04_c002_all_p3_actions_covered
+    claim_type: method
+    claim_text: The response draft covers action-p3-001 through action-p3-006 with direct answer, status, target location, evidence refs, and validation gate.
+    manuscript_location: artifacts/Reviewers
+    evidence_refs:
+      - evidence_id: p4_04_e003_p3_04_revision_action_map
+        evidence_type: review_comment
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+      - evidence_id: p4_04_e004_response_sections
+        evidence_type: code
+        source_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers
+    support_status: supported
+    action: keep
+  - claim_id: p4_04_c003_blocking_actions_retained
     claim_type: limitation
-    claim_text: The artifact is not a final response letter until official reviewer comments, manuscript metadata, verified revision locations, and evidence references are inserted.
+    claim_text: action-p3-001, action-p3-002, and action-p3-003 remain blocked and are not described as resolved by this node.
+    manuscript_location: docs/manuscript.md#仍保留的-submission-blockers
+    evidence_refs:
+      - evidence_id: p4_04_e003_p3_04_revision_action_map
+        evidence_type: review_comment
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+      - evidence_id: p4_04_e005_failure_register
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/failure_register.yaml
+    support_status: supported
+    action: document_limitation
+  - claim_id: p4_04_c004_planned_actions_no_claim_upgrade
+    claim_type: limitation
+    claim_text: action-p3-004, action-p3-005, and action-p3-006 remain planned downstream edits and do not upgrade scientific claims.
     manuscript_location: docs/manuscript.md#当前结论
     evidence_refs:
-      - evidence_id: p4_04_open_input_gaps
+      - evidence_id: p4_04_e003_p3_04_revision_action_map
         evidence_type: review_comment
-        source_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/docs/manuscript.md
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+      - evidence_id: p4_04_e006_keep_discard_ledger
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/keep_discard_ledger.yaml
+    support_status: supported
+    action: document_limitation
+  - claim_id: p4_04_c005_official_metadata_pending
+    claim_type: limitation
+    claim_text: Official manuscript id, decision type, editor name, and anonymity requirement remain pending and are explicitly marked in the response draft.
+    manuscript_location: artifacts/Reviewers/cover_letter.tex
+    evidence_refs:
+      - evidence_id: p4_04_e007_cover_letter_metadata_state
+        evidence_type: code
+        source_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers/cover_letter.tex
+    support_status: supported
+    action: document_limitation
+  - claim_id: p4_04_c006_final_threshold_boundary_preserved
+    claim_type: limitation
+    claim_text: A P4_04 final-threshold pass may clear only this node's formal-response-draft score and may not close official metadata/comment, P1 checklist, P3_04 action-status, coverage/evidence, or global submission-ready blockers.
+    manuscript_location: docs/manuscript.md#final-threshold-score-boundary
+    evidence_refs:
+      - evidence_id: p4_04_e008_final_threshold_contract
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/formal_response_final_threshold_contract.yaml
+      - evidence_id: p4_04_e009_response_letter_tex
+        evidence_type: code
+        source_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/response_letter.tex
     support_status: supported
     action: document_limitation
 author_exit:

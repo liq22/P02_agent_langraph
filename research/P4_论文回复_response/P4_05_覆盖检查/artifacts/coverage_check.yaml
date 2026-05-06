@@ -1,5 +1,28 @@
+version: p4_05_coverage_check_summary_v1
+canonical_report: research/P4_论文回复_response/P4_05_覆盖检查/artifacts/coverage_check_report.yaml
+final_threshold_contract:
+  artifact: research/P4_论文回复_response/P4_05_覆盖检查/artifacts/coverage_final_threshold_contract.yaml
+  score_review_scope: response_level_coverage_only
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-05-002
+  target_threshold: 90
+  global_submission_ready: false
 coverage:
-  - critique_collected: true
-    response_written: false
-    evidence_linked: false
+  - check_id: current_scope_comment_coverage
+    critique_collected: true
+    response_written: true
+    evidence_linked: true
     paper_modified: false
+    coverage_status: covered
+    note: All six current-scope P4_01 comments are answered by P4_03 response items; manuscript/revision evidence remains downstream P4_06 work.
+summary:
+  source_mapping_count: 6
+  response_item_count: 6
+  coverage_rows: 6
+  missing_rows: 0
+  blocked_commitments: 3
+  planned_commitments: 3
+  final_threshold_contract_present: true
+  current_final_gate_classes_preserved: true
+  response_level_coverage_only: true
+  revision_evidence_closed: false
+  final_submission_ready_claim: false

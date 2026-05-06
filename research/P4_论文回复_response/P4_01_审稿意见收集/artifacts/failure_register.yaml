@@ -1,0 +1,29 @@
+failures:
+  - failure_id: p4_01_official_comments_missing
+    context: Official journal decision letter, editor comment, and reviewer comments are not available in the current workspace inputs.
+    affected_claim_id: p4_01_c002_official_comments_missing
+    severity: high
+    interpretation: This blocks official response-package completion, but it does not block collecting the current simulated-review comments for P4 mapping and coverage work.
+    action: document_limitation
+    status: open
+  - failure_id: p4_01_no_official_editor_comment
+    context: No official editor comment exists in current inputs; P3_02:eic is only a simulated editor-in-chief lens.
+    affected_claim_id: p4_01_c003_comment_granularity_preserved
+    severity: medium
+    interpretation: The register must distinguish official editor comments from simulated editor-lens comments.
+    action: retain_boundary
+    status: open
+  - failure_id: p4_01_submission_blocking_comments_present
+    context: Three collected comments remain submission-blocking because they depend on formal evidence, reproducibility, and coverage/validator closure.
+    affected_claim_id: p4_01_c001_available_comments_collected
+    severity: high
+    interpretation: Comment collection is complete within current scope, but downstream response and evidence closure remain blocked.
+    action: carry_to_downstream
+    status: open
+  - failure_id: p4_01_final_threshold_global_gate_not_closed
+    context: Before P4_01 AI_002, the final gate still has pending P1 checklist fields, seven P4 score blockers, six unresolved P3_04 action statuses, missing official comments, unfinished response coverage, and final validator failure.
+    affected_claim_id: p4_01_c004_final_threshold_boundary_preserved
+    severity: high
+    interpretation: A P4_01 score-only pass can support P4_02 mapping readiness for current available comments, but it cannot be used as a global submission-ready claim.
+    action: retain_boundary
+    status: open

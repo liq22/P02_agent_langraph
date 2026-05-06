@@ -1,8 +1,202 @@
+version: p4_02_question_mapping_matrix_v1
+node_id: research::P4_论文回复_response::P4_02_问题映射矩阵
+generated_at: 2026-05-05
+author_agent_id: codex-local
+source_comment_register: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/review_comment_register.yaml
+final_threshold_contract: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_final_threshold_contract.yaml
+official_journal_comments_available: false
+final_submission_ready_claim: false
 mappings:
-- critique_id: cr001
-  response_item_id: rsp001
-  claim_id: pending_claim_id
-  evidence_id: ev001
-  location: pending_manuscript_location
-  response_strategy: pending_direct_answer_with_evidence
-  status: uncovered
+  - mapping_id: map-p4-001
+    comment_id: p4-01-c001
+    response_item_id: rsp-p4-001
+    claim_id: p4_02_c002_blocking_problem_classes_preserved
+    evidence_id: ev-p4-001
+    evidence_item_id: ev-p4-001
+    coverage_gate_id: cov-p4-001
+    source_action_id: action-p3-001
+    issue_id: issue-p3-001
+    source_comment_ids:
+      - p3-round-001b:empirical_statistics_reviewer
+      - P3_02:devils_advocate
+      - P3_02:reproducibility_skeptic
+    problem_class: formal_evidence_eligibility
+    severity: fatal
+    blocks_submission: true
+    affected_artifact: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    affected_location: synthetic-offline-signal
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#synthetic-offline-signal
+    evidence_gap: Missing accepted formal rows for real-data performance, RM101, selected backend, repeated-run uncertainty, and ablation evidence.
+    action_kind: evidence_generation_or_retained_blocker
+    response_strategy: acknowledge limitation; do not claim solved; require ledger-backed accepted formal rows or explicit retained limitation.
+    target_node: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议
+    downstream_nodes:
+      - research/P4_论文回复_response/P4_03_逐点回复草稿_md
+      - research/P4_论文回复_response/P4_05_覆盖检查
+      - research/P4_论文回复_response/P4_06_修改证据
+    status: mapped
+    semantic_status: mapped_blocked
+
+  - mapping_id: map-p4-002
+    comment_id: p4-01-c002
+    response_item_id: rsp-p4-002
+    claim_id: p4_02_c002_blocking_problem_classes_preserved
+    evidence_id: ev-p4-002
+    evidence_item_id: ev-p4-002
+    coverage_gate_id: cov-p4-002
+    source_action_id: action-p3-002
+    issue_id: issue-p3-002
+    source_comment_ids:
+      - p3-round-001a:method_reproducibility_reviewer
+      - P3_02:method_expert
+      - P3_02:reproducibility_skeptic
+    problem_class: reproducibility_artifact_state
+    severity: fatal
+    blocks_submission: true
+    affected_artifact: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+    affected_location: reproducibility-requirements
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex#reproducibility-requirements
+    evidence_gap: Clean submodule state, adapter preflight, selected backend, and formal ledger/config trace are not locked for submission-level reproducibility.
+    action_kind: reproducibility_blocker_resolution_or_retained_limitation
+    response_strategy: acknowledge limitation; keep reproducibility claims conditional until PHMGA/Vibench artifact state and selected backend trace are resolved or retained as blockers.
+    target_node: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略
+    downstream_nodes:
+      - research/P4_论文回复_response/P4_03_逐点回复草稿_md
+      - research/P4_论文回复_response/P4_05_覆盖检查
+      - research/P4_论文回复_response/P4_06_修改证据
+    status: mapped
+    semantic_status: mapped_blocked
+
+  - mapping_id: map-p4-003
+    comment_id: p4-01-c003
+    response_item_id: rsp-p4-003
+    claim_id: p4_02_c002_blocking_problem_classes_preserved
+    evidence_id: ev-p4-003
+    evidence_item_id: ev-p4-003
+    coverage_gate_id: cov-p4-003
+    source_action_id: action-p3-003
+    issue_id: issue-p3-003
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:eic
+      - P3_02:devils_advocate
+    problem_class: global_validator_response_coverage
+    severity: major
+    blocks_submission: true
+    affected_artifact: docs/submission_ready_goal/completion_audit_current.md
+    affected_location: overall-submission-ready-goal-remains-incomplete
+    location: docs/submission_ready_goal/completion_audit_current.md#overall-submission-ready-goal-remains-incomplete
+    evidence_gap: Current blockers are 109 pending P1_01-P1_05 checklist fields, six below-threshold P4 scores before P4_02 AI_002, six unresolved P3_04 action statuses, the official-comment gap, unfinished response-package coverage, and final validator failure. Earlier registry and failure-truth gaps are repaired historical blockers, not current map-p4-003 evidence gaps.
+    action_kind: coverage_and_validator_blocker
+    response_strategy: acknowledge no final readiness; require coverage and revision-evidence maps for all P3 action ids, issue ids, and source comment ids.
+    target_node: research/P4_论文回复_response/P4_05_覆盖检查
+    downstream_nodes:
+      - research/P4_论文回复_response/P4_03_逐点回复草稿_md
+      - research/P4_论文回复_response/P4_05_覆盖检查
+      - research/P4_论文回复_response/P4_06_修改证据
+    status: mapped
+    semantic_status: mapped_blocked
+
+  - mapping_id: map-p4-004
+    comment_id: p4-01-c004
+    response_item_id: rsp-p4-004
+    claim_id: p4_02_c003_downstream_keys_assigned
+    evidence_id: ev-p4-004
+    evidence_item_id: ev-p4-004
+    coverage_gate_id: cov-p4-004
+    source_action_id: action-p3-004
+    issue_id: issue-p3-004
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:eic
+      - P2_05:P2_05_R001
+      - P2_05:P2_05_R002
+      - P2_05:P2_05_R004
+    problem_class: claim_language_density
+    severity: major
+    blocks_submission: false
+    affected_artifact: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    affected_location: abstract
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+    evidence_gap: No missing evidence; the issue is clarity and risk of over-broad process framing.
+    action_kind: manuscript_wording_revision_no_claim_upgrade
+    response_strategy: commit only to conservative wording revision that preserves process-claim boundary and support_status.
+    target_node: research/P2_论文撰写/P2_03_定稿_tex
+    downstream_nodes:
+      - research/P4_论文回复_response/P4_03_逐点回复草稿_md
+      - research/P4_论文回复_response/P4_05_覆盖检查
+      - research/P4_论文回复_response/P4_06_修改证据
+    status: mapped
+    semantic_status: mapped_planned
+
+  - mapping_id: map-p4-005
+    comment_id: p4-01-c005
+    response_item_id: rsp-p4-005
+    claim_id: p4_02_c003_downstream_keys_assigned
+    evidence_id: ev-p4-005
+    evidence_item_id: ev-p4-005
+    coverage_gate_id: cov-p4-005
+    source_action_id: action-p3-005
+    issue_id: issue-p3-005
+    source_comment_ids:
+      - p3-round-001c:venue_claim_clarity_reviewer
+      - P3_02:cross_disciplinary_reader
+    problem_class: figure_table_reader_path
+    severity: minor
+    blocks_submission: false
+    affected_artifact: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    affected_location: figure-p1-synthetic-signal
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#figure-p1-synthetic-signal
+    evidence_gap: Provenance exists; the risk is reader-facing interpretation drift.
+    action_kind: figure_caption_boundary_check
+    response_strategy: commit only to preserving synthetic/offline single-run scope and missing formal evidence in any caption or callout edit.
+    target_node: research/P2_论文撰写/P2_03_定稿_tex
+    downstream_nodes:
+      - research/P4_论文回复_response/P4_03_逐点回复草稿_md
+      - research/P4_论文回复_response/P4_05_覆盖检查
+      - research/P4_论文回复_response/P4_06_修改证据
+    status: mapped
+    semantic_status: mapped_planned
+
+  - mapping_id: map-p4-006
+    comment_id: p4-01-c006
+    response_item_id: rsp-p4-006
+    claim_id: p4_02_c003_downstream_keys_assigned
+    evidence_id: ev-p4-006
+    evidence_item_id: ev-p4-006
+    coverage_gate_id: cov-p4-006
+    source_action_id: action-p3-006
+    issue_id: issue-p3-006
+    source_comment_ids:
+      - P2_05:P2_05_R005
+      - P2_05:P2_05_R008
+      - P2_05:P2_05_R009
+    problem_class: style_repetition
+    severity: minor
+    blocks_submission: false
+    affected_artifact: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    affected_location: discussion
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#discussion
+    evidence_gap: No scientific evidence gap.
+    action_kind: optional_style_compression_no_claim_upgrade
+    response_strategy: optional cosmetic compression only; preserve limitation and negative-evidence language.
+    target_node: research/P2_论文撰写/P2_03_定稿_tex
+    downstream_nodes:
+      - research/P4_论文回复_response/P4_03_逐点回复草稿_md
+      - research/P4_论文回复_response/P4_05_覆盖检查
+      - research/P4_论文回复_response/P4_06_修改证据
+    status: mapped
+    semantic_status: mapped_planned
+summary:
+  source_comment_count: 6
+  mapped_comment_count: 6
+  blocking_mapping_count: 3
+  planned_mapping_count: 3
+  official_comments_missing: true
+  all_comments_have_response_item_id: true
+  all_comments_have_evidence_item_id: true
+  all_comments_have_coverage_gate_id: true
+  all_comments_have_target_node: true
+  final_submission_ready_claim: false
+  final_threshold_contract_present: true
+  current_final_gate_classes_preserved: true

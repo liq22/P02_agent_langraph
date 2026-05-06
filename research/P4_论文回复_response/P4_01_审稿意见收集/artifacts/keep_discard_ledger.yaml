@@ -1,0 +1,26 @@
+decisions:
+  - item_id: p4_01_p3_04_action_comments
+    item_type: review_comment_source
+    decision: keep
+    rationale: P3_04 provides the current audited simulated-review action map with exact source_comment_ids and downstream targets.
+    evidence_ref: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+  - item_id: p4_01_p4_04_response_sections
+    item_type: response_trace_source
+    decision: keep
+    rationale: P4_04 response sections preserve the same six actions with target locations, evidence refs, required changes, and validation gates.
+    evidence_ref: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers
+  - item_id: p4_01_fabricated_official_comments
+    item_type: review_comment_source
+    decision: discard
+    rationale: Official journal comments are absent, so fabricating them would break provenance and response integrity.
+    evidence_ref: research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/failure_register.yaml
+  - item_id: p4_01_source_comment_id_collapsing
+    item_type: aggregation_policy
+    decision: discard
+    rationale: Collapsing exact source_comment_ids into vague reviewer labels would weaken downstream coverage traceability.
+    evidence_ref: research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/review_comment_register.yaml
+  - item_id: p4_01_atomic_action_granularity
+    item_type: aggregation_policy
+    decision: keep
+    rationale: Six P3_04 actions are the actionable comment units for downstream mapping; contributing source_comment_ids are preserved inside each unit.
+    evidence_ref: research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/review_comment_register.yaml

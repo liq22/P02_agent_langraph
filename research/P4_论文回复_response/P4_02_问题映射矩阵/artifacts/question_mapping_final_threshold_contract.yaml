@@ -1,0 +1,74 @@
+version: p4_02_question_mapping_final_threshold_contract_v1
+node_id: research::P4_论文回复_response::P4_02_问题映射矩阵
+generated_at: 2026-05-05
+author_agent_id: codex-local
+review_request:
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-02-002
+  review_type: score-only node-local final-threshold re-review
+  target_threshold: 90
+scope:
+  evaluates_only:
+    - mapping completeness for the six current-scope P4_01 comments
+    - one-to-one comment-to-response/evidence/coverage gate traceability
+    - current blocker-class accuracy for map-p4-003
+    - official-comment absence and no-final-readiness boundaries
+  does_not_evaluate_or_close:
+    - official journal decision letter or official reviewer comments
+    - response text completeness
+    - revision evidence application
+    - P1 checklist closure
+    - P3_04 action status closure
+    - global submission-ready validator pass
+current_gate_snapshot_before_ai_002:
+  p1_checklist_pending_fields: 109
+  below_90_score_nodes:
+    - research/P4_论文回复_response/P4_02_问题映射矩阵
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc
+    - research/P4_论文回复_response/P4_05_覆盖检查
+    - research/P4_论文回复_response/P4_06_修改证据
+    - research/P4_论文回复_response/P4_07_再投稿打包
+  p3_04_action_statuses:
+    action-p3-001: blocked
+    action-p3-002: blocked
+    action-p3-003: blocked
+    action-p3-004: planned
+    action-p3-005: planned
+    action-p3-006: planned
+  official_comments_available: false
+mapping_invariants:
+  current_scope_comment_count: 6
+  mapped_comment_count: 6
+  required_ids:
+    - comment_id
+    - response_item_id
+    - evidence_item_id
+    - coverage_gate_id
+    - source_action_id
+    - issue_id
+    - source_comment_ids
+    - problem_class
+    - affected_artifact
+    - target_node
+  blocking_mappings_preserved:
+    - map-p4-001
+    - map-p4-002
+    - map-p4-003
+hard_boundaries:
+  may_claim:
+    - P4_02 maps all six current-scope comments exactly once
+    - P4_02 is ready for P4_03 draft responses, P4_05 coverage, and P4_06 evidence handoff
+    - P4_02 preserves official-comment absence and blocking mapping semantics
+  must_not_claim:
+    - official comments have been mapped
+    - map-p4-001 through map-p4-003 are resolved
+    - response package is complete
+    - P3_04 actions are closed
+    - P1 checklist is closed
+    - global submission-ready validator passes
+reviewer_instruction:
+  score_only: true
+  if_pass_then_score_scope: P4_02 node-local mapping threshold only
+  checklist_status_closed: false
+  global_submission_ready: false
+  p3_04_actions_closed: false

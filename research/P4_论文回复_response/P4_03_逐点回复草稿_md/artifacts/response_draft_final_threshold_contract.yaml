@@ -1,0 +1,83 @@
+version: p4_03_response_draft_final_threshold_contract_v1
+node_id: research::P4_论文回复_response::P4_03_逐点回复草稿_md
+generated_at: 2026-05-05
+author_agent_id: codex-local
+review_request:
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-03-002
+  review_type: score-only node-local final-threshold re-review
+  target_threshold: 90
+scope:
+  evaluates_only:
+    - whether all six P4_02 mappings have one point-by-point response item
+    - whether direct answers, evidence refs, manuscript locations, commitment statuses, coverage gates, and revision evidence IDs are present
+    - whether blocked/planned commitments are preserved without overclaiming completed evidence
+    - whether current final-gate blockers are accurately stated in rsp-p4-003
+    - whether official-comment absence and no-final-readiness boundaries are explicit
+  does_not_evaluate_or_close:
+    - official journal decision letter or official reviewer comments
+    - manuscript TeX edits
+    - coverage closure
+    - revision evidence closure
+    - P1 checklist closure
+    - P3_04 action status closure
+    - global submission-ready validator pass
+current_gate_snapshot_before_ai_002:
+  p1_checklist_pending_fields: 109
+  below_90_score_nodes:
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc
+    - research/P4_论文回复_response/P4_05_覆盖检查
+    - research/P4_论文回复_response/P4_06_修改证据
+    - research/P4_论文回复_response/P4_07_再投稿打包
+  p3_04_action_statuses:
+    action-p3-001: blocked
+    action-p3-002: blocked
+    action-p3-003: blocked
+    action-p3-004: planned
+    action-p3-005: planned
+    action-p3-006: planned
+  official_comments_available: false
+response_invariants:
+  source_mapping_count: 6
+  response_item_count: 6
+  blocked_response_items:
+    - rsp-p4-001
+    - rsp-p4-002
+    - rsp-p4-003
+  planned_response_items:
+    - rsp-p4-004
+    - rsp-p4-005
+    - rsp-p4-006
+  required_fields:
+    - response_item_id
+    - mapping_id
+    - comment_id
+    - source_action_id
+    - issue_id
+    - source_comment_ids
+    - direct_answer
+    - response_text
+    - evidence_refs
+    - manuscript_location
+    - change_description
+    - commitment_status
+    - downstream_gate
+    - revision_evidence_item_id
+hard_boundaries:
+  may_claim:
+    - P4_03 provides a complete current-scope point-by-point response draft for the six mapped comments
+    - P4_03 is ready for P4_05 response coverage checking and P4_06 revision-evidence tracking
+    - P4_03 preserves official-comment absence and no-final-readiness boundaries
+  must_not_claim:
+    - official comments have been answered
+    - manuscript edits have been completed by this node
+    - coverage or revision evidence is closed
+    - P3_04 actions are closed
+    - P1 checklist is closed
+    - global submission-ready validator passes
+reviewer_instruction:
+  score_only: true
+  if_pass_then_score_scope: P4_03 node-local response-draft threshold only
+  checklist_status_closed: false
+  global_submission_ready: false
+  p3_04_actions_closed: false

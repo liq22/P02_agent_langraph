@@ -1,0 +1,80 @@
+version: p4_05_revision_evidence_handoff_v1
+node_id: research::P4_论文回复_response::P4_05_覆盖检查
+generated_at: 2026-05-05
+author_agent_id: codex-local
+handoff_target: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml
+final_submission_ready_claim: false
+final_threshold_contract:
+  artifact: research/P4_论文回复_response/P4_05_覆盖检查/artifacts/coverage_final_threshold_contract.yaml
+  score_review_scope: response_level_coverage_only
+  p4_06_closure_required: true
+  revision_evidence_closed: false
+  global_submission_ready: false
+revisions:
+  - comment_id: p4-01-c001
+    issue_id: issue-p3-001
+    response_item_id: rsp-p4-001
+    evidence_id: ev-p4-001
+    claim_id: p4_02_c002_blocking_problem_classes_preserved
+    evidence_kind: formal_result_or_retained_limitation
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#synthetic-offline-signal
+    required_p4_06_action: Add accepted formal evidence or retain limitation explicitly.
+    p4_05_coverage_status: covered
+    p4_06_expected_status: pending
+  - comment_id: p4-01-c002
+    issue_id: issue-p3-002
+    response_item_id: rsp-p4-002
+    evidence_id: ev-p4-002
+    claim_id: p4_02_c002_blocking_problem_classes_preserved
+    evidence_kind: reproducibility_artifact_or_retained_limitation
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex#reproducibility-requirements
+    required_p4_06_action: Close reproducibility artifact trace or retain named blocker explicitly.
+    p4_05_coverage_status: covered
+    p4_06_expected_status: pending
+  - comment_id: p4-01-c003
+    issue_id: issue-p3-003
+    response_item_id: rsp-p4-003
+    evidence_id: ev-p4-003
+    claim_id: p4_02_c002_blocking_problem_classes_preserved
+    evidence_kind: coverage_validator_or_retained_limitation
+    manuscript_location: docs/submission_ready_goal/completion_audit_current.md#overall-submission-ready-goal-remains-incomplete
+    required_p4_06_action: Record coverage/validator evidence or retain blocker explicitly.
+    p4_05_coverage_status: covered
+    p4_06_expected_status: pending
+  - comment_id: p4-01-c004
+    issue_id: issue-p3-004
+    response_item_id: rsp-p4-004
+    evidence_id: ev-p4-004
+    claim_id: p4_02_c003_downstream_keys_assigned
+    evidence_kind: manuscript_revision_or_retained_noop
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+    required_p4_06_action: Record wording revision evidence or retained no-op with rationale.
+    p4_05_coverage_status: covered
+    p4_06_expected_status: pending
+  - comment_id: p4-01-c005
+    issue_id: issue-p3-005
+    response_item_id: rsp-p4-005
+    evidence_id: ev-p4-005
+    claim_id: p4_02_c003_downstream_keys_assigned
+    evidence_kind: figure_caption_check_or_retained_noop
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#figure-p1-synthetic-signal
+    required_p4_06_action: Record figure/caption boundary check evidence or retained no-op with rationale.
+    p4_05_coverage_status: covered
+    p4_06_expected_status: pending
+  - comment_id: p4-01-c006
+    issue_id: issue-p3-006
+    response_item_id: rsp-p4-006
+    evidence_id: ev-p4-006
+    claim_id: p4_02_c003_downstream_keys_assigned
+    evidence_kind: style_revision_or_retained_noop
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#discussion
+    required_p4_06_action: Record optional style compression evidence or retained no-op with rationale.
+    p4_05_coverage_status: covered
+    p4_06_expected_status: pending
+summary:
+  revision_handoff_count: 6
+  all_coverage_rows_have_revision_handoff: true
+  p4_06_closure_required: true
+  final_threshold_contract_present: true
+  current_final_gate_classes_preserved: true
+  revision_evidence_closed: false

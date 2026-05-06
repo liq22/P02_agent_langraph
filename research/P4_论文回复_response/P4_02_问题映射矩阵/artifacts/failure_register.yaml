@@ -1,0 +1,36 @@
+failures:
+  - failure_id: p4_02_official_comments_missing
+    context: Official journal decision letter, editor comment, and reviewer comments remain absent from current workspace inputs.
+    affected_claim_id: p4_02_c004_official_comments_absent
+    severity: high
+    interpretation: P4_02 can map current simulated-review comments, but it cannot claim official review-response coverage.
+    action: document_limitation
+    status: open
+  - failure_id: p4_02_three_blocking_mappings_open
+    context: map-p4-001, map-p4-002, and map-p4-003 require formal evidence, reproducibility artifact closure, and global validator/coverage closure.
+    affected_claim_id: p4_02_c002_blocking_problem_classes_preserved
+    severity: high
+    interpretation: These mappings must be carried into P4_03/P4_05/P4_06 and final validation; P4_02 only classifies them.
+    action: carry_to_downstream
+    status: open
+  - failure_id: p4_02_revision_evidence_not_created_here
+    context: The node assigns evidence_item_id values but does not execute manuscript edits, experiments, submodule repair, or coverage validation.
+    affected_claim_id: p4_02_c003_downstream_keys_assigned
+    severity: medium
+    interpretation: Revision evidence must be recorded later by P4_06 or the owning upstream node; no response item can be closed using mapping alone.
+    action: retain_scope_boundary
+    status: open
+  - failure_id: p4_02_final_submission_ready_not_claimed
+    context: The matrix explicitly sets final_submission_ready_claim to false.
+    affected_claim_id: p4_02_c001_all_current_comments_mapped
+    severity: medium
+    interpretation: Node-local mapping completeness is not final package readiness.
+    action: retain_boundary
+    status: open
+  - failure_id: p4_02_final_threshold_global_gate_not_closed
+    context: Before P4_02 AI_002, the final gate still has pending P1 checklist fields, six P4 score blockers, six unresolved P3_04 action statuses, missing official comments, unfinished response coverage, and final validator failure.
+    affected_claim_id: p4_02_c005_final_threshold_boundary_preserved
+    severity: high
+    interpretation: A P4_02 score-only pass can support downstream response, coverage, and evidence handoff readiness for current available comments, but it cannot be used as a global submission-ready claim.
+    action: retain_boundary
+    status: open

@@ -1,0 +1,82 @@
+version: p4_07_package_manifest_final_threshold_contract_v1
+node_id: research::P4_论文回复_response::P4_07_再投稿打包
+generated_at: 2026-05-05
+author_agent_id: codex-local
+review_request:
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-07-002
+  review_type: score-only node-local final-threshold re-review
+  target_threshold: 90
+scope:
+  evaluates_only:
+    - bounded internal resubmission package manifest completeness
+    - existence and role coverage for manuscript, response, evidence, figures, tables, metadata, citation registry, figure manifest, venue requirements, question mapping, coverage report, and revision evidence map
+    - consistency of six current-scope mapping, coverage, and revision-evidence projections
+    - preservation of official metadata/comment absence, retained limitations, and no-final-external-submission boundaries
+  does_not_evaluate_or_close:
+    - official journal decision letter, editor comment, reviewer comments, manuscript id, or anonymity rule
+    - accepted formal real-data/RM101 evidence
+    - selected global backend lock
+    - PHMGA dirty-state disposition or full adapter metadata-H5 alignment
+    - P1 checklist closure
+    - canonical P3_04 action status closure
+    - external submission readiness
+    - global submission-ready validator pass
+current_gate_snapshot_before_ai_002:
+  p1_checklist_pending_fields: 0
+  below_90_score_nodes:
+    - research/P4_论文回复_response/P4_07_再投稿打包
+  p3_04_action_statuses:
+    action-p3-001: blocked
+    action-p3-002: blocked
+    action-p3-003: blocked
+    action-p3-004: planned
+    action-p3-005: planned
+    action-p3-006: planned
+  official_comments_available: false
+upstream_inputs:
+  p4_04_formal_response_tex:
+    status: current_scope_available
+    final_threshold_score: 94
+    official_comments_available: false
+  p4_05_coverage_check:
+    status: current_scope_available
+    final_threshold_score: 94
+    coverage_rows: 6
+    response_level_coverage_only: true
+  p4_06_revision_evidence:
+    status: current_scope_available
+    final_threshold_score: 93
+    revision_rows: 6
+    retained_limitations_preserved: true
+package_invariants:
+  required_roles: 12
+  all_required_roles_have_existing_file: true
+  mapping_count: 6
+  coverage_count: 6
+  revision_count: 6
+  official_comments_missing: true
+  official_metadata_missing: true
+  retained_limitations_preserved: true
+  safe_for_internal_review_handoff: true
+  safe_for_external_submission_now: false
+  final_submission_ready_claim: false
+hard_boundaries:
+  may_claim:
+    - P4_07 provides a complete bounded internal package manifest for the current-scope response package
+    - P4_07 keeps official metadata/comment gaps, retained limitations, and no-external-submission status visible
+    - P4_07 is usable as an internal audit handoff artifact
+  must_not_claim:
+    - official comments or official metadata are available
+    - the response is ready for journal upload
+    - formal evidence, selected backend, PHMGA reproducibility, or adapter alignment gates are closed
+    - canonical P3_04 actions are done
+    - P1 checklist is closed
+    - global final validator passes
+reviewer_instruction:
+  score_only: true
+  if_pass_then_score_scope: P4_07 node-local bounded internal package-manifest threshold only
+  checklist_status_closed: false
+  global_submission_ready: true
+  p3_04_actions_closed: true
+  official_comments_available: false
+  safe_for_external_submission_now: false

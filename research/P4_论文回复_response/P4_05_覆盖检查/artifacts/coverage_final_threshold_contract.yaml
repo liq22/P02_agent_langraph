@@ -1,0 +1,94 @@
+version: p4_05_coverage_final_threshold_contract_v1
+node_id: research::P4_论文回复_response::P4_05_覆盖检查
+generated_at: 2026-05-05
+author_agent_id: codex-local
+review_request:
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-05-002
+  review_type: score-only node-local final-threshold re-review
+  target_threshold: 90
+scope:
+  evaluates_only:
+    - response-level coverage of the six current-scope P4_02 mapped comments by P4_03 response items
+    - preservation of comment IDs, issue IDs, action IDs, response item IDs, claim IDs, evidence IDs, manuscript locations, and coverage IDs
+    - explicit blocked/planned commitment status for downstream P4_06 revision evidence
+    - correct distinction between response-level coverage and revision-evidence closure
+    - official-comment absence and no-final-readiness boundaries
+  does_not_evaluate_or_close:
+    - official journal decision letter or official reviewer comments
+    - manuscript TeX revision evidence
+    - P4_06 revision-evidence closure
+    - P4_07 resubmission package closure
+    - P1 checklist closure
+    - P3_04 action status closure
+    - global submission-ready validator pass
+current_gate_snapshot_before_ai_002:
+  p1_checklist_pending_fields: 109
+  below_90_score_nodes:
+    - research/P4_论文回复_response/P4_05_覆盖检查
+    - research/P4_论文回复_response/P4_06_修改证据
+    - research/P4_论文回复_response/P4_07_再投稿打包
+  p3_04_action_statuses:
+    action-p3-001: blocked
+    action-p3-002: blocked
+    action-p3-003: blocked
+    action-p3-004: planned
+    action-p3-005: planned
+    action-p3-006: planned
+  official_comments_available: false
+upstream_inputs:
+  p4_02_question_mapping_matrix:
+    status: current_scope_available
+    final_threshold_score: 94
+    mapping_count: 6
+    official_comments_available: false
+  p4_03_point_by_point_response_draft:
+    status: current_scope_available
+    final_threshold_score: 92
+    response_item_count: 6
+    official_comments_available: false
+  p4_04_formal_response_tex:
+    status: current_scope_available
+    final_threshold_score: 94
+    formal_response_is_not_revision_evidence: true
+coverage_invariants:
+  mapped_comment_count: 6
+  covered_comment_count: 6
+  missing_comment_count: 0
+  blocked_commitment_count: 3
+  planned_commitment_count: 3
+  response_level_coverage_only: true
+  revision_evidence_still_required: true
+  required_fields:
+    - coverage_id
+    - mapping_id
+    - comment_id
+    - issue_id
+    - source_action_id
+    - source_comment_ids
+    - response_item_id
+    - claim_id
+    - evidence_id
+    - manuscript_location
+    - coverage_status
+    - commitment_closure_status
+    - blocks_submission_until_revision_evidence
+hard_boundaries:
+  may_claim:
+    - P4_05 covers all six current-scope mapped comments at response level
+    - P4_05 is ready to hand all six rows to P4_06 for revision-evidence tracking
+    - P4_05 preserves blocked/planned commitment statuses and official-comment absence
+  must_not_claim:
+    - official comments have been received or answered
+    - manuscript revisions are evidenced or closed
+    - P4_06 revision evidence is closed
+    - P4_07 resubmission package is safe to submit
+    - P3_04 actions are closed
+    - P1 checklist is closed
+    - global submission-ready validator passes
+reviewer_instruction:
+  score_only: true
+  if_pass_then_score_scope: P4_05 node-local response-coverage threshold only
+  checklist_status_closed: false
+  global_submission_ready: false
+  p3_04_actions_closed: false
+  revision_evidence_closed: false

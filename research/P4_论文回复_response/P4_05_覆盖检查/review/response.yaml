@@ -1,8 +1,12 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: "Accepted. External AI review passed node-local P4_05 with score 88, hard_fail false, downstream_ready true, and independence_confirmed true. The reviewer confirmed all six mapped comments are represented, required coverage fields are present, `coverage_status: covered` is correctly limited to response-level coverage, blocked/planned commitments remain explicit, and P4_06 handoff is supported. No revision-evidence closure or final readiness is claimed."
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: "Accepted. User-authorized Claude Code teammate delegate passed the P4_05 human-review slot and wrote a validating handoff. The review confirmed all six coverage questions, agreed with the AI review, and flagged only non-node blockers: official comments absent, P4_06/P4_07 unsolved, mapped blocking actions open until revision evidence is closed or retained, review scores below 90, selected backend and PHMGA/Vibench formal evidence unresolved, registry/failure-truth blockers, and final submission validation still failing."
+
+  - comment_id: AI-002
+    responded: true
+    note: "Accepted. Score-only node-local final-threshold re-review by final-threshold-reviewer-p4-05-002 passed P4_05 with score 94, hard_fail false, independence_confirmed true, and final_submission_threshold_met true for P4_05 response-level coverage only. The review confirmed six P4_02 mapped comments, six P4_03 response items, and six P4_05 coverage rows, with blocked/planned commitment statuses, official-comment absence, no revision-evidence closure, and no global submission-ready claim preserved. Remaining blockers are 109 pending P1_01-P1_05 checklist fields, P4_06/P4_07 below-threshold score blockers after this pass, six P3_04 actions blocked or planned, absent official comments, open revision evidence, and the failing final validator."

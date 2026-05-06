@@ -113,7 +113,7 @@
 - 若缺关键输入、关键证据或关键 prompt 资产，应停止并显式报告缺口。
 
 ## 供执行者填写的本轮摘要
-- 本轮最小目标：<待填写>
-- 本轮不做什么：<待填写>
+- 本轮最小目标：把 P3_04 六个 revision actions 同步为 P4_04 node-local formal response TeX draft，保留 action/issue/evidence/source-comment/target-location/validation-gate traceability，并生成可编译 `artifacts/response_letter.tex` / `response_letter.pdf`。
+- 本轮不做什么：不伪造 official reviewer comments，不补未完成实验或 citation，不声称 P3_04 blocked/planned actions 已解决，不声称 final submission ready，不替代 P4_05/P4_06/P4_07。
 - 完成定义：见 `prompts/acceptance_checklist.yaml`
-- 完成后交给谁：<待填写>
+- 完成后交给谁：P4_05 覆盖检查和 P4_06 修改证据节点；它们需要保留 `action-p3-001` 至 `action-p3-006`、issue ids、exact source_comment_ids、evidence refs 和 retained blocker 状态。

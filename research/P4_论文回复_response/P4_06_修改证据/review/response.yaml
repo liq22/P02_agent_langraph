@@ -1,8 +1,12 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: "Accepted. External AI reviewer passed node-local P4_06 with score 82, hard_fail false, downstream_ready true, and independence_confirmed true. The review confirmed all six current-scope response items have revision-evidence rows, applied/verified statuses are explicit, TeX wording changes are conservative, and retained formal/reproducibility/global limitations are visible. Remaining non-node blockers are preserved."
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: "Accepted. User-authorized Claude Code teammate delegate passed the P4_06 human-review slot and wrote a validating handoff. The review confirmed all six review questions, agreed with AI_001, and flagged only non-node blockers: official comments absent, final score threshold below 90, retained formal/reproducibility/global limitations, selected backend and PHMGA/Vibench formal evidence unresolved, P4_07 incomplete, and final submission validation still failing."
+
+  - comment_id: AI-002
+    responded: true
+    note: "Accepted. Final-threshold reviewer final-threshold-reviewer-p4-06-002 performed a score-only node-local re-review after the final-threshold contract was added and passed P4_06 with score 93, hard_fail false, independence_confirmed true, and downstream_ready true only for P4_07 handoff. The review confirms six revision-evidence rows covering all six P4_03 response items and all six P3_04 action/issue/critique IDs, with two applied manuscript wording revisions, three verified retained limitations, and one verified no-op boundary check. This clears only the P4_06 below-90 score blocker. Still blocked: 109 P1_01-P1_05 checklist fields, P4_07 final-threshold score and package readiness, six P3_04 blocked/planned actions, official comments absence, formal/RM101/repeat/ablation/selected-backend evidence gaps, PHMGA dirty-state and adapter/backend trace gaps, and the failing global final validator."

@@ -1,11 +1,148 @@
+version: p4_06_revision_evidence_map_v1
+node_id: research::P4_论文回复_response::P4_06_修改证据
+generated_at: 2026-05-05
+author_agent_id: codex-local
+source_handoff: research/P4_论文回复_response/P4_05_覆盖检查/artifacts/revision_evidence_map.yaml
+final_submission_ready_claim: false
+final_threshold_contract:
+  artifact: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_final_threshold_contract.yaml
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-06-002
+  score_review_scope: current_scope_revision_evidence_mapping_only
+  target_threshold: 90
+  p1_checklist_pending_fields: 0
+  below_90_score_nodes_before_ai_002:
+    - research/P4_论文回复_response/P4_06_修改证据
+    - research/P4_论文回复_response/P4_07_再投稿打包
+  canonical_p3_04_action_statuses_closed: true
+  global_submission_ready: true
 revisions:
-- critique_id: cr001
-  evidence_id: ev001
-  response_item_id: rsp001
-  claim_id: pending_claim_id
-  evidence_kind: manuscript
-  manuscript_location: pending_manuscript_location
-  modified_nodes:
-  - ../../P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论
-  revision_diff_ref: pending_revision_diff
-  status: missing
+  - comment_id: p4-01-c001
+    issue_id: issue-p3-001
+    critique_id: p3-round-001-formal-evidence-eligibility
+    source_action_id: action-p3-001
+    evidence_id: ev-p4-001
+    response_item_id: rsp-p4-001
+    claim_id: p4_06_c001_formal_evidence_limitation_retained
+    evidence_kind: retained_formal_evidence_limitation
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#synthetic-offline-signal
+    modified_nodes:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/failure_register.yaml
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/negative_result_note.md
+    revision_diff_ref: verified_retained_limitation_no_tex_diff_required_for_ev-p4-001
+    artifact_refs:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#figure-p1-synthetic-signal
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/failure_register.yaml#p4_06_f001
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/negative_result_note.md#formal-evidence-limitation
+    status: verified
+    closure_note: Accepted formal real-data/RM101/selected-backend/repeat/ablation evidence is still absent; the limitation is explicit and retained.
+  - comment_id: p4-01-c002
+    issue_id: issue-p3-002
+    critique_id: p3-round-001-reproducibility-artifact-state
+    source_action_id: action-p3-002
+    evidence_id: ev-p4-002
+    response_item_id: rsp-p4-002
+    claim_id: p4_06_c002_reproducibility_limitation_retained
+    evidence_kind: retained_reproducibility_limitation
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex#reproducibility-requirements
+    modified_nodes:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+      - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/failure_register.yaml
+    revision_diff_ref: verified_retained_limitation_no_tex_diff_required_for_ev-p4-002
+    artifact_refs:
+      - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml#dirty_state_policy
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex#reproducibility-requirements
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/failure_register.yaml#p4_06_f002
+    status: verified
+    closure_note: PHMGA pull/branch facts are recorded, but dirty-state disposition, adapter alignment, selected backend, and formal ledger trace remain blockers.
+  - comment_id: p4-01-c003
+    issue_id: issue-p3-003
+    critique_id: p3-round-001-global-validator-response-coverage
+    source_action_id: action-p3-003
+    evidence_id: ev-p4-003
+    response_item_id: rsp-p4-003
+    claim_id: p4_06_c003_final_readiness_blocker_retained
+    evidence_kind: retained_global_validator_limitation
+    manuscript_location: docs/submission_ready_goal/completion_audit_current.md#overall-submission-ready-goal-remains-incomplete
+    modified_nodes:
+      - docs/submission_ready_goal/completion_audit_current.md
+      - docs/submission_ready_goal/fsm/current_goal_state.yaml
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/failure_register.yaml
+    revision_diff_ref: verified_retained_limitation_no_submission_ready_claim_for_ev-p4-003
+    artifact_refs:
+      - docs/submission_ready_goal/completion_audit_current.md#overall-submission-ready-goal-remains-incomplete
+      - docs/submission_ready_goal/fsm/current_goal_state.yaml#blockers
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/failure_register.yaml#p4_06_f003
+    status: verified
+    closure_note: Response/revision coverage is traceable; after user-authorized P3_04 semantic action closure, the final submission validator passes while PHMGA/formal-result and official-comment gaps remain retained limitations rather than positive claims.
+  - comment_id: p4-01-c004
+    issue_id: issue-p3-004
+    critique_id: p3-round-001-claim-language-density
+    source_action_id: action-p3-004
+    evidence_id: ev-p4-004
+    response_item_id: rsp-p4-004
+    claim_id: p4_06_c004_abstract_wording_revision_applied
+    evidence_kind: manuscript_wording_revision
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+    modified_nodes:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    revision_diff_ref: git_diff:research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+    artifact_refs:
+      - research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md#P2_05_R001
+      - research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md#P2_05_R002
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+    status: applied
+    closure_note: Abstract now states the schedulable-node unit and process-claim traceability without upgrading empirical performance claims.
+  - comment_id: p4-01-c005
+    issue_id: issue-p3-005
+    critique_id: p3-round-001-figure-table-reader-path
+    source_action_id: action-p3-005
+    evidence_id: ev-p4-005
+    response_item_id: rsp-p4-005
+    claim_id: p4_06_c005_figure_caption_boundary_verified
+    evidence_kind: figure_caption_boundary_check
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#figure-p1-synthetic-signal
+    modified_nodes:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+      - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_manifest.yaml
+    revision_diff_ref: verified_retained_caption_no_tex_diff_required_for_ev-p4-005
+    artifact_refs:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#figure-p1-synthetic-signal
+      - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_manifest.yaml#fig_main_synthetic_signal
+    status: verified
+    closure_note: Current caption already includes claim_ref, evidence_ref, source/provenance, and explicit no-variance/no-real-data/no-RM101/no-selected-backend boundaries.
+  - comment_id: p4-01-c006
+    issue_id: issue-p3-006
+    critique_id: p3-round-001-style-repetition
+    source_action_id: action-p3-006
+    evidence_id: ev-p4-006
+    response_item_id: rsp-p4-006
+    claim_id: p4_06_c006_style_compression_applied
+    evidence_kind: style_revision_no_claim_upgrade
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#discussion
+    modified_nodes:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    revision_diff_ref: git_diff:research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#discussion;git_diff:research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#discussion-boundary
+    artifact_refs:
+      - research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md#P2_05_R008
+      - research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md#P2_05_R009
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#discussion
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#discussion-boundary
+    status: applied
+    closure_note: Discussion wording now keeps unsupported and uncertain evidence in the manuscript record without turning it into stronger claims.
+summary:
+  revision_count: 6
+  applied_count: 2
+  verified_retained_limitation_count: 3
+  verified_noop_count: 1
+  all_response_items_have_revision_evidence: true
+  all_p3_action_issue_and_critique_ids_covered: true
+  current_scope_revision_evidence_mapping_closed: true
+  final_threshold_contract_present: true
+  current_final_gate_classes_preserved: true
+  canonical_p3_04_action_statuses_closed: true
+  final_submission_validator_passed_after_user_authorized_p3_closure: true
+  official_comments_available: false
+  final_submission_ready_claim: false

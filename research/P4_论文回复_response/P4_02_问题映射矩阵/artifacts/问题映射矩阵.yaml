@@ -1,5 +1,68 @@
-matrix:
-  - critique_id: cr001
-    response_item_id: rsp001
-    evidence_id: ev001
-    status: uncovered
+version: p4_02_question_mapping_matrix_alias_v1
+canonical_artifact: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+node_id: research::P4_论文回复_response::P4_02_问题映射矩阵
+generated_at: 2026-05-05
+purpose: Compatibility alias for the node acceptance checklist item named "问题映射矩阵".
+source_register: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/review_comment_register.yaml
+official_journal_comments_available: false
+final_submission_ready_claim: false
+matrix_index:
+  - mapping_id: map-p4-001
+    comment_id: p4-01-c001
+    response_item_id: rsp-p4-001
+    evidence_item_id: ev-p4-001
+    coverage_gate_id: cov-p4-001
+    problem_class: formal_evidence_eligibility
+    blocks_submission: true
+    canonical_row_ref: question_mapping_matrix.yaml#mappings[0]
+  - mapping_id: map-p4-002
+    comment_id: p4-01-c002
+    response_item_id: rsp-p4-002
+    evidence_item_id: ev-p4-002
+    coverage_gate_id: cov-p4-002
+    problem_class: reproducibility_artifact_state
+    blocks_submission: true
+    canonical_row_ref: question_mapping_matrix.yaml#mappings[1]
+  - mapping_id: map-p4-003
+    comment_id: p4-01-c003
+    response_item_id: rsp-p4-003
+    evidence_item_id: ev-p4-003
+    coverage_gate_id: cov-p4-003
+    problem_class: global_validator_response_coverage
+    blocks_submission: true
+    canonical_row_ref: question_mapping_matrix.yaml#mappings[2]
+  - mapping_id: map-p4-004
+    comment_id: p4-01-c004
+    response_item_id: rsp-p4-004
+    evidence_item_id: ev-p4-004
+    coverage_gate_id: cov-p4-004
+    problem_class: claim_language_density
+    blocks_submission: false
+    canonical_row_ref: question_mapping_matrix.yaml#mappings[3]
+  - mapping_id: map-p4-005
+    comment_id: p4-01-c005
+    response_item_id: rsp-p4-005
+    evidence_item_id: ev-p4-005
+    coverage_gate_id: cov-p4-005
+    problem_class: figure_table_reader_path
+    blocks_submission: false
+    canonical_row_ref: question_mapping_matrix.yaml#mappings[4]
+  - mapping_id: map-p4-006
+    comment_id: p4-01-c006
+    response_item_id: rsp-p4-006
+    evidence_item_id: ev-p4-006
+    coverage_gate_id: cov-p4-006
+    problem_class: style_repetition
+    blocks_submission: false
+    canonical_row_ref: question_mapping_matrix.yaml#mappings[5]
+summary:
+  source_comment_count: 6
+  mapped_comment_count: 6
+  blocking_mapping_count: 3
+  planned_mapping_count: 3
+  explanation_only_final_closure_count: 0
+  official_comments_missing: true
+  all_comments_have_response_item_id: true
+  all_comments_have_evidence_item_id: true
+  all_comments_have_coverage_gate_id: true
+  all_comments_have_target_node: true

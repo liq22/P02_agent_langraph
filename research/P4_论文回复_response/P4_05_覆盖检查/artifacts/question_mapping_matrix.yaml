@@ -1,0 +1,79 @@
+version: p4_05_question_mapping_matrix_projection_v1
+canonical_source: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+node_id: research::P4_论文回复_response::P4_05_覆盖检查
+generated_at: 2026-05-05
+author_agent_id: codex-local
+official_journal_comments_available: false
+final_submission_ready_claim: false
+final_threshold_contract:
+  artifact: research/P4_论文回复_response/P4_05_覆盖检查/artifacts/coverage_final_threshold_contract.yaml
+  score_review_scope: response_level_coverage_only
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-05-002
+  global_submission_ready: false
+mappings:
+  - mapping_id: map-p4-001
+    comment_id: p4-01-c001
+    issue_id: issue-p3-001
+    response_item_id: rsp-p4-001
+    claim_id: p4_02_c002_blocking_problem_classes_preserved
+    evidence_id: ev-p4-001
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#synthetic-offline-signal
+    response_strategy: acknowledge limitation; require formal evidence or retained blocker.
+    status: mapped
+    p4_05_coverage_id: cov-p4-001
+  - mapping_id: map-p4-002
+    comment_id: p4-01-c002
+    issue_id: issue-p3-002
+    response_item_id: rsp-p4-002
+    claim_id: p4_02_c002_blocking_problem_classes_preserved
+    evidence_id: ev-p4-002
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex#reproducibility-requirements
+    response_strategy: acknowledge limitation; require reproducibility closure or retained blocker.
+    status: mapped
+    p4_05_coverage_id: cov-p4-002
+  - mapping_id: map-p4-003
+    comment_id: p4-01-c003
+    issue_id: issue-p3-003
+    response_item_id: rsp-p4-003
+    claim_id: p4_02_c002_blocking_problem_classes_preserved
+    evidence_id: ev-p4-003
+    location: docs/submission_ready_goal/completion_audit_current.md#overall-submission-ready-goal-remains-incomplete
+    response_strategy: acknowledge no final readiness; require coverage and revision evidence closure.
+    status: mapped
+    p4_05_coverage_id: cov-p4-003
+  - mapping_id: map-p4-004
+    comment_id: p4-01-c004
+    issue_id: issue-p3-004
+    response_item_id: rsp-p4-004
+    claim_id: p4_02_c003_downstream_keys_assigned
+    evidence_id: ev-p4-004
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+    response_strategy: conservative wording revision with no claim upgrade.
+    status: mapped
+    p4_05_coverage_id: cov-p4-004
+  - mapping_id: map-p4-005
+    comment_id: p4-01-c005
+    issue_id: issue-p3-005
+    response_item_id: rsp-p4-005
+    claim_id: p4_02_c003_downstream_keys_assigned
+    evidence_id: ev-p4-005
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#figure-p1-synthetic-signal
+    response_strategy: preserve synthetic/offline figure and caption boundary.
+    status: mapped
+    p4_05_coverage_id: cov-p4-005
+  - mapping_id: map-p4-006
+    comment_id: p4-01-c006
+    issue_id: issue-p3-006
+    response_item_id: rsp-p4-006
+    claim_id: p4_02_c003_downstream_keys_assigned
+    evidence_id: ev-p4-006
+    location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#discussion
+    response_strategy: optional style compression with limitation language preserved.
+    status: mapped
+    p4_05_coverage_id: cov-p4-006
+summary:
+  mapping_count: 6
+  all_rows_have_comment_issue_response_claim_evidence_location: true
+  coverage_projection_complete: true
+  final_threshold_contract_present: true
+  current_final_gate_classes_preserved: true

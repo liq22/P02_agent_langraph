@@ -2,22 +2,35 @@
 \reviewer
 
 \begin{revcomment}
-TODO: Paste Reviewer 1 Comment 1 verbatim here.
+P3 action \texttt{action-p3-001} / issue \texttt{issue-p3-001}: the manuscript cannot claim submission-level empirical validity while accepted real-data formal rows, RM101 resolution, selected backend evidence, repeated-run uncertainty, Stage C main-result rows, and Stage D ablation rows remain absent.
 \end{revcomment}
 \begin{revresponse}
-TODO: Provide a direct point-by-point response after the official comment and verified manuscript change location are available. Required fields: direct answer; evidence refs; manuscript location; commitment status.
+We agree. The current response does not claim that the formal empirical evidence gap is solved. The commitment status is \textbf{blocked}: AutoResearch remains limited to the existing preliminary synthetic/offline signal until accepted formal rows or an explicit retained limitation are available.
+
+\begin{description}[leftmargin=3.2cm,style=nextline]
+    \item[Action id] \texttt{action-p3-001}.
+    \item[Issue id] \texttt{issue-p3-001}.
+    \item[Source comments] \texttt{\detokenize{p3-round-001b:empirical_statistics_reviewer}}; \texttt{\detokenize{P3_02:devils_advocate}}; \texttt{\detokenize{P3_02:reproducibility_skeptic}}.
+    \item[Evidence refs] \texttt{P3\_03\_E004\_REVIEW\_ISSUE\_REGISTER}; P3\_04 \texttt{revision\_action\_map.yaml}.
+    \item[Target location] P1\_07 formal evidence gates and P2 experiment section language.
+    \item[Required change] Either add ledger-backed accepted real-data/RM101/selected-backend/Stage C/Stage D evidence, or preserve the limitation explicitly in manuscript and response artifacts.
+    \item[Validation gate] P3 recheck plus final submission validation with no unresolved formal-result blocker for this issue.
+\end{description}
 \end{revresponse}
 
 \begin{revcomment}
-TODO: Paste Reviewer 1 Comment 2 verbatim here, or delete this block if there is no second comment.
+P3 action \texttt{action-p3-003} / issue \texttt{issue-p3-003}: the response package must not state final readiness while P1 checklist fields remain pending, P4\_04--P4\_07 remain below the final score threshold before this node's score-only re-review, P3\_04 actions remain blocked or planned, official comments are absent, response evidence is incomplete, and the final validator still fails.
 \end{revcomment}
 \begin{revresponse}
-TODO: Provide the corresponding response with evidence refs and manuscript location.
-\end{revresponse}
+We agree. The response package keeps final readiness blocked. The current P4\_04 draft records the coverage and validator gap instead of converting it into favorable language. The commitment status is \textbf{blocked}: P4\_05 and P4\_06 must prove or explicitly retain coverage for all P3 actions before P4\_07 can package any resubmission.
 
-\begin{revcomment}
-TODO: Paste Reviewer 1 Comment 3 verbatim here, or delete this block if there is no third comment.
-\end{revcomment}
-\begin{revresponse}
-TODO: Provide the corresponding response with evidence refs and manuscript location.
+\begin{description}[leftmargin=3.2cm,style=nextline]
+    \item[Action id] \texttt{action-p3-003}.
+    \item[Issue id] \texttt{issue-p3-003}.
+    \item[Source comments] \texttt{\detokenize{p3-round-001c:venue_claim_clarity_reviewer}}; \texttt{\detokenize{P3_02:eic}}; \texttt{\detokenize{P3_02:devils_advocate}}.
+    \item[Evidence refs] \texttt{P3\_03\_E005\_COMPLETION\_AUDIT}; P3\_04 \texttt{revision\_action\_map.yaml}.
+    \item[Target location] P4\_05 response coverage and final validation gate.
+    \item[Required change] P4 coverage and revision-evidence maps must cover all P3 action ids, issue ids, and source comment ids, or preserve the blocker explicitly.
+    \item[Validation gate] P4 coverage validator plus final \texttt{scripts/validate\_research\_truth.py --require-submission}.
+\end{description}
 \end{revresponse}

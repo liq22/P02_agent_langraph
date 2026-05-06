@@ -1,11 +1,20 @@
 lifecycle:
-  stage: seed
-progress_pct: 0
+  stage: done
+progress_pct: 100
 review_gate:
-  ai_review_count: 0
-  human_review_count: 0
-  all_comments_responded: false
-can_enter_fix: false
-heartbeat_at: 2026-04-10
-last_actor: system
-author_agent_id: <pending-author-agent>
+  ai_review_count: 1
+  human_review_count: 1
+  all_comments_responded: true
+can_enter_fix: true
+comment_collection:
+  artifact: artifacts/review_comment_register.yaml
+  current_available_comment_count: 6
+  official_comment_count: 0
+  official_comments_missing: true
+  blocking_comment_count: 3
+  non_blocking_comment_count: 2
+  cosmetic_comment_count: 1
+  final_submission_ready_claim: false
+heartbeat_at: 2026-05-05
+last_actor: codex-local
+author_agent_id: codex-local

@@ -1,0 +1,59 @@
+version: p4_07_evidence_registry_v1
+node_id: research::P4_论文回复_response::P4_07_再投稿打包
+generated_at: 2026-05-05
+author_agent_id: codex-local
+final_threshold_contract:
+  artifact: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/package_manifest_final_threshold_contract.yaml
+  score_review_scope: bounded_internal_package_manifest_only
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-07-002
+  safe_for_external_submission_now: false
+  global_submission_ready: true
+evidence_items:
+  - evidence_id: p4_07_e001
+    role: manuscript
+    path: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    status: exists
+    boundary: TeX source exists and compiles, but not final journal submission readiness.
+  - evidence_id: p4_07_e002
+    role: response
+    path: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/response_letter.tex
+    status: exists
+    boundary: Formal response draft is based on simulated/current-scope comments; official decision metadata is unavailable.
+  - evidence_id: p4_07_e003
+    role: citation_registry
+    path: research/P2_论文撰写/P2_03_定稿_tex/artifacts/citation_registry.yaml
+    status: exists
+    boundary: Citation registry is available for current TeX draft; no new external citation verification is claimed here.
+  - evidence_id: p4_07_e004
+    role: figure_manifest
+    path: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_manifest.yaml
+    status: exists
+    boundary: Workflow schematic is accepted node-local artwork, not final journal artwork proof.
+  - evidence_id: p4_07_e005
+    role: venue_requirements
+    path: research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+    status: exists
+    boundary: Venue fit gate passed for style selection, not acceptance or submission readiness.
+  - evidence_id: p4_07_e006
+    role: question_mapping_matrix
+    path: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/question_mapping_matrix.yaml
+    status: exists
+    boundary: Current-scope mapping projection only; official comments absent.
+  - evidence_id: p4_07_e007
+    role: coverage_check_report
+    path: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/coverage_check_report.yaml
+    status: exists
+    boundary: Response-level coverage projection only; retained limitations remain.
+  - evidence_id: p4_07_e008
+    role: revision_evidence_map
+    path: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/revision_evidence_map.yaml
+    status: exists
+    boundary: Revision-evidence projection includes applied/verified rows and retained blockers.
+summary:
+  evidence_item_count: 8
+  missing_required_role_count: 0
+  final_review_score_gate_cleared_by_ai_002: true
+  final_threshold_score: 92.0
+  final_threshold_contract_present: true
+  current_final_gate_classes_preserved: true
+  final_submission_ready_claim: false

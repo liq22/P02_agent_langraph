@@ -1,6 +1,69 @@
+version: p4_06_evidence_registry_v1
+node_id: research::P4_论文回复_response::P4_06_修改证据
+generated_at: 2026-05-05
+final_threshold_contract:
+  artifact: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_final_threshold_contract.yaml
+  score_review_scope: current_scope_revision_evidence_mapping_only
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-06-002
+  global_submission_ready: true
 evidences:
-  - evidence_id: ev001
-    response_item_id: rsp001
+  - evidence_id: ev-p4-001
+    response_item_id: rsp-p4-001
+    evidence_kind: retained_formal_evidence_limitation
+    status: verified
     modified_nodes:
-      - ../../P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论
-    artifact_refs: []
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/failure_register.yaml
+    artifact_refs:
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-001
+  - evidence_id: ev-p4-002
+    response_item_id: rsp-p4-002
+    evidence_kind: retained_reproducibility_limitation
+    status: verified
+    modified_nodes:
+      - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/failure_register.yaml
+    artifact_refs:
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-002
+  - evidence_id: ev-p4-003
+    response_item_id: rsp-p4-003
+    evidence_kind: retained_global_validator_limitation
+    status: verified
+    modified_nodes:
+      - docs/submission_ready_goal/completion_audit_current.md
+      - docs/submission_ready_goal/fsm/current_goal_state.yaml
+    artifact_refs:
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-003
+  - evidence_id: ev-p4-004
+    response_item_id: rsp-p4-004
+    evidence_kind: manuscript_wording_revision
+    status: applied
+    modified_nodes:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    artifact_refs:
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-004
+  - evidence_id: ev-p4-005
+    response_item_id: rsp-p4-005
+    evidence_kind: figure_caption_boundary_check
+    status: verified
+    modified_nodes:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+      - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_manifest.yaml
+    artifact_refs:
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-005
+  - evidence_id: ev-p4-006
+    response_item_id: rsp-p4-006
+    evidence_kind: style_revision_no_claim_upgrade
+    status: applied
+    modified_nodes:
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+      - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    artifact_refs:
+      - research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml#ev-p4-006
+summary:
+  evidence_count: 6
+  all_response_items_have_revision_evidence: true
+  current_scope_revision_evidence_mapping_closed: true
+  final_threshold_contract_present: true
+  official_comments_available: false
+  global_submission_ready: true

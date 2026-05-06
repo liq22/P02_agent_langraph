@@ -1,8 +1,12 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: "Accepted. External AI review passed the P4_07 internal manifest/package gate with score 82.5, hard_fail false, downstream_ready true for internal handoff only, and independence_confirmed true. The reviewer confirmed all required roles are locatable, package metadata blocks final submission, and official metadata, formal-result, reproducibility, PHMGA/backend, score-threshold, and validator blockers remain visible."
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: "Accepted. User-authorized Claude Code teammate delegate passed the P4_07 human-review slot and wrote a validating handoff. The review confirmed the 12 manifest roles, existing files, official-comment absence, retained P4_06 limitations, citation/figure/table/venue boundaries, and no final external submission readiness claim."
+
+  - comment_id: AI-002
+    responded: true
+    note: "Accepted. Score-only node-local final-threshold re-review by final-threshold-reviewer-p4-07-002 passes P4_07 bounded internal package-manifest completeness with score 92.0. The review confirms 12 required roles are locatable, mapping/coverage/revision counts remain six each, retained limitations and official metadata/comment gaps remain explicit, and downstream readiness is internal manifest package gate only. Remaining blockers still include 109 P1_01-P1_05 checklist fields, six P3_04 blocked/planned actions, official comments/metadata absence, formal/RM101/backend/PHMGA/adapter evidence gaps, and final validator failure; global and external submission readiness remain false."

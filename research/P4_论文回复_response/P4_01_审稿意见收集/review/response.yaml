@@ -1,8 +1,35 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: "Accepted. External AI review passed node-local P4_01 with score 88, hard_fail false, and downstream_ready true. The stale lifecycle/checklist metadata noted by the reviewer was reconciled during closeout. The official-comment gap remains visible and must be carried into P4_02/P4_03/P4_05/P4_06 until official journal comments exist."
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: "Accepted. User-authorized Claude Code teammate delegate passed the P4_01 human-review slot and wrote a validating handoff. The review confirmed six current-scope simulated-review comments are collected with exact source_comment_ids and that official editor/reviewer comments remain absent rather than fabricated."
+
+  - comment_id: F-AI002-001
+    responded: true
+    disposition: accepted
+    note: "Accepted. The six current available P4_01 comments are complete for node-local score threshold and may be consumed by P4_02 mapping."
+
+  - comment_id: F-AI002-002
+    responded: true
+    disposition: accepted
+    note: "Accepted. Official comments remain unavailable, official_comment_count stays 0, and no official editor/reviewer comment has been fabricated."
+
+  - comment_id: F-AI002-003
+    responded: true
+    disposition: accepted
+    note: "Accepted. P4_01 is downstream_ready true for P4_02 issue mapping only."
+
+  - comment_id: F-AI002-004
+    responded: true
+    disposition: accepted
+    note: "Accepted. Official-response completion remains blocked; P1 checklist pending fields, remaining P4 score blockers, P3_04 blocked/planned actions, official-comment gap, and final validator failure remain open."
+
+p4_01_ai_002_response_summary:
+  p4_01_can_enter_p4_02_mapping: true
+  official_response_completion_blocked: true
+  global_submission_ready: false
+  official_comments_available: false
+  official_comments_fabricated: false

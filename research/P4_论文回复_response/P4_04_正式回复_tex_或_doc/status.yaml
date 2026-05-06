@@ -1,11 +1,22 @@
 lifecycle:
-  stage: active
-progress_pct: 25
+  stage: done
+progress_pct: 100
 review_gate:
-  ai_review_count: 0
-  human_review_count: 0
-  all_comments_responded: false
-can_enter_fix: false
-heartbeat_at: 2026-04-29
-last_actor: codex
-author_agent_id: codex-p4-04-template-scaffold
+  ai_review_count: 1
+  human_review_count: 1
+  all_comments_responded: true
+can_enter_fix: true
+response_export:
+  artifact: artifacts/response_letter.tex
+  pdf_artifact: artifacts/response_letter.pdf
+  source_action_map: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+  covered_action_count: 6
+  blocking_actions_retained: 3
+  planned_actions_retained: 3
+  final_threshold_contract: artifacts/formal_response_final_threshold_contract.yaml
+  current_scope_p4_01_to_p4_03_available: true
+  official_comments_missing: true
+  final_submission_ready_claim: false
+heartbeat_at: 2026-05-05
+last_actor: codex-local
+author_agent_id: codex-local

@@ -1,0 +1,31 @@
+decisions:
+  - item_id: p4_02_current_scope_comment_register
+    item_type: review_comment_source
+    decision: keep
+    rationale: P4_01 provides the current auditable comment register with six simulated-review records and exact source_comment_ids.
+    evidence_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/review_comment_register.yaml
+  - item_id: p4_02_question_mapping_matrix
+    item_type: mapping_artifact
+    decision: keep
+    rationale: The matrix assigns comment, response, evidence, coverage, problem-class, affected-artifact, target-node, and downstream-node fields required by P4_03/P4_05/P4_06.
+    evidence_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+  - item_id: p4_02_official_comment_fabrication
+    item_type: review_comment_source
+    decision: discard
+    rationale: Official journal comments are absent; creating mapped official response items would break provenance.
+    evidence_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/failure_register.yaml
+  - item_id: p4_02_explanation_only_closure
+    item_type: response_policy
+    decision: discard
+    rationale: The mapped comments require evidence generation, retained limitation, coverage closure, wording revision, figure/caption boundary checks, or style edits; none can be closed by explanation alone at P4_02.
+    evidence_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+  - item_id: p4_02_source_comment_id_collapsing
+    item_type: traceability_policy
+    decision: discard
+    rationale: Exact source_comment_ids are preserved so downstream coverage checks can verify every concern without lossy aggregation.
+    evidence_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+  - item_id: p4_02_global_readiness_claim_from_mapping
+    item_type: response_policy
+    decision: discard
+    rationale: The final-threshold contract allows a P4_02 score-only pass to clear only node-local mapping readiness; official-comment, response-package, P1 checklist, P3 action-status, and global validator blockers remain open.
+    evidence_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_final_threshold_contract.yaml

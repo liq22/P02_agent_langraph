@@ -1,0 +1,53 @@
+version: p4_07_coverage_projection_v1
+node_id: research::P4_论文回复_response::P4_07_再投稿打包
+generated_at: 2026-05-05
+source: research/P4_论文回复_response/P4_05_覆盖检查/artifacts/coverage_check_report.yaml
+official_journal_comments_available: false
+final_submission_ready_claim: false
+final_threshold_contract:
+  artifact: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/package_manifest_final_threshold_contract.yaml
+  score_review_scope: bounded_internal_package_manifest_only
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-07-002
+  safe_for_external_submission_now: false
+coverage:
+  - coverage_id: cov-p4-001
+    comment_id: p4-01-c001
+    response_item_id: rsp-p4-001
+    revision_evidence_id: ev-p4-001
+    coverage_status: covered
+    package_status: retained_limitation
+  - coverage_id: cov-p4-002
+    comment_id: p4-01-c002
+    response_item_id: rsp-p4-002
+    revision_evidence_id: ev-p4-002
+    coverage_status: covered
+    package_status: retained_limitation
+  - coverage_id: cov-p4-003
+    comment_id: p4-01-c003
+    response_item_id: rsp-p4-003
+    revision_evidence_id: ev-p4-003
+    coverage_status: covered
+    package_status: retained_limitation
+  - coverage_id: cov-p4-004
+    comment_id: p4-01-c004
+    response_item_id: rsp-p4-004
+    revision_evidence_id: ev-p4-004
+    coverage_status: covered
+    package_status: applied_revision
+  - coverage_id: cov-p4-005
+    comment_id: p4-01-c005
+    response_item_id: rsp-p4-005
+    revision_evidence_id: ev-p4-005
+    coverage_status: covered
+    package_status: verified_boundary
+  - coverage_id: cov-p4-006
+    comment_id: p4-01-c006
+    response_item_id: rsp-p4-006
+    revision_evidence_id: ev-p4-006
+    coverage_status: covered
+    package_status: applied_revision
+summary:
+  coverage_count: 6
+  coverage_complete_for_current_scope: true
+  final_threshold_contract_present: true
+  final_submission_ready_claim: false

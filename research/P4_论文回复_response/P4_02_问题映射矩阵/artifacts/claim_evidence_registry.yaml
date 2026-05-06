@@ -1,0 +1,69 @@
+node_path: research/P4_论文回复_response/P4_02_问题映射矩阵
+research_anchor: response_problem_mapping
+claims:
+  - claim_id: p4_02_c001_all_current_comments_mapped
+    claim_type: method
+    claim_text: The six current-scope P4_01 comments are mapped to response items, evidence items, coverage gates, problem classes, affected artifacts, and downstream nodes.
+    manuscript_location: docs/manuscript.md#当前结论
+    evidence_refs:
+      - evidence_id: p4_02_e001_question_mapping_matrix
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+      - evidence_id: p4_02_e002_review_comment_register
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/review_comment_register.yaml
+    support_status: supported
+    action: keep
+  - claim_id: p4_02_c002_blocking_problem_classes_preserved
+    claim_type: limitation
+    claim_text: Three mapped comments remain submission-blocking because formal evidence, reproducibility, and global response/validator coverage are not closed by this mapping node.
+    manuscript_location: docs/manuscript.md#必答问题
+    evidence_refs:
+      - evidence_id: p4_02_e001_question_mapping_matrix
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+      - evidence_id: p4_02_e003_failure_register
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/failure_register.yaml
+    support_status: supported
+    action: document_limitation
+  - claim_id: p4_02_c003_downstream_keys_assigned
+    claim_type: method
+    claim_text: Every mapped comment has response_item_id, evidence_item_id, and coverage_gate_id for P4_03, P4_05, and P4_06 handoff.
+    manuscript_location: docs/manuscript.md#下一步
+    evidence_refs:
+      - evidence_id: p4_02_e001_question_mapping_matrix
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+    support_status: supported
+    action: keep
+  - claim_id: p4_02_c004_official_comments_absent
+    claim_type: limitation
+    claim_text: Official journal reviewer/editor comments are still unavailable and are not represented as mapped official response items.
+    manuscript_location: docs/manuscript.md#目标
+    evidence_refs:
+      - evidence_id: p4_02_e002_review_comment_register
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/review_comment_register.yaml
+      - evidence_id: p4_02_e003_failure_register
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/failure_register.yaml
+    support_status: supported
+    action: document_limitation
+  - claim_id: p4_02_c005_final_threshold_boundary_preserved
+    claim_type: limitation
+    claim_text: A P4_02 final-threshold pass may clear only this node's current-scope mapping score and may not close official-comment, response-package, P1 checklist, P3_04 action-status, or global submission-ready blockers.
+    manuscript_location: docs/manuscript.md#final-threshold-score-boundary
+    evidence_refs:
+      - evidence_id: p4_02_e004_final_threshold_contract
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_final_threshold_contract.yaml
+      - evidence_id: p4_02_e005_question_mapping_matrix
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+    support_status: supported
+    action: document_limitation
+author_exit:
+  claim_evidence_ids_are_explicit_or_gap_is_reported: true
+  negative_or_failed_results_recorded: true
+  protected_paths_respected: true

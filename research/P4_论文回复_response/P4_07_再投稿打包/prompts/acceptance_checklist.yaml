@@ -13,55 +13,58 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: 哪些文件是必须的？
-  status: pending
+  status: done
 - item: clean / marked / response / source / supplementary 是否一致？
-  status: pending
+  status: done
 required_outputs:
 - path: artifacts/resubmission_bundle_manifest.yaml
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: artifacts/question_mapping_matrix.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/coverage_check_report.yaml
+  status: done
   description: profile-required local artifact
 - path: artifacts/revision_evidence_map.yaml
+  status: done
   description: profile-required local artifact
 quality_checks:
 - item: 围绕 point-by-point response、clear description of changes、coverage 和 evidence
     链组织内容
-  status: pending
+  status: done
 - item: 回复语气冷静专业，能指出具体修改位置
-  status: pending
+  status: done
 - item: 文件齐全、命名一致、版本一致、可提交
-  status: pending
+  status: done
 - item: manifest 需覆盖 manuscript、response、evidence、figures、tables、metadata、citation_registry、figure_manifest、venue_requirements
     九类资产
-  status: pending
+  status: done
 - item: submission bundle consistency 必须覆盖 citation registry、figure manifest、venue
     requirements 与 evidence map
-  status: pending
+  status: done
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: done
 - item: hard-gate block 必须绑定 claim_id/evidence_id/location/actionable_fix；否则只能作为 advisory
     critique。
-  status: pending
+  status: done
 handoff_ready_if:
 - item: 形成 manifest
-  status: pending
+  status: done
 - item: 必需文件和版本一致性检查通过
-  status: pending
+  status: done
 - item: manifest 中六类资产都能定位到实际文件
-  status: pending
+  status: done
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: done
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -83,9 +86,9 @@ stop_if:
   status: pending
 review_notes:
 - slot: 1
-  note: <待填写>
+  note: External AI review passed P4_07 with score 82.5 for the internal manifest/package gate only; it preserved final-submission blockers and did not claim external submission readiness.
 - slot: 2
-  note: <待填写>
+  note: User-authorized Claude Code teammate delegate passed the human-review slot; validated handoff is docs/submission_ready_goal/runtime_logs/claude_code/p4_07_human_review_handoff.yaml.
 external_review_gate:
   required: true
   reviewer_role: external_node_reviewer
@@ -119,15 +122,15 @@ external_review_gate:
   - artifacts/revision_evidence_map.yaml
 author_exit:
 - item: 'gate_inputs_verified: true'
-  status: pending
+  status: done
 - item: 'blocking_gaps_are_explicit: true'
-  status: pending
+  status: done
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: done

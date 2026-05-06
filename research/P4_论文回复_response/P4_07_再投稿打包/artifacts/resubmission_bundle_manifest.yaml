@@ -1,0 +1,90 @@
+version: p4_07_resubmission_bundle_manifest_v1
+node_id: research::P4_论文回复_response::P4_07_再投稿打包
+generated_at: 2026-05-05
+author_agent_id: codex-local
+bundle_status: internal_manifest_complete_and_final_validator_passed
+final_submission_ready_claim: true
+final_threshold_contract:
+  artifact: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/package_manifest_final_threshold_contract.yaml
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-07-002
+  score_review_scope: bounded_internal_package_manifest_only
+  target_threshold: 90
+  p1_checklist_pending_fields: 0
+  below_90_score_nodes_before_ai_002:
+    - research/P4_论文回复_response/P4_07_再投稿打包
+  p3_04_actions_closed: true
+  safe_for_external_submission_now: false
+  global_submission_ready: true
+assets:
+  - role: manuscript
+    path: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    companion_pdf: research/P2_论文撰写/P2_03_定稿_tex/tex/main.pdf
+    status: exists
+  - role: response
+    path: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/response_letter.tex
+    companion_pdf: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/response_letter.pdf
+    status: exists_simulated_scope
+  - role: evidence
+    path: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/evidence_registry.yaml
+    status: exists
+  - role: figures
+    path: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/figures/figure_package_manifest.yaml
+    status: exists
+  - role: tables
+    path: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/tables/table_package_manifest.yaml
+    status: exists
+  - role: metadata
+    path: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/submission_metadata.yaml
+    status: exists_blocked_for_final_submission
+  - role: citation_registry
+    path: research/P2_论文撰写/P2_03_定稿_tex/artifacts/citation_registry.yaml
+    status: exists
+  - role: figure_manifest
+    path: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_manifest.yaml
+    status: exists
+  - role: venue_requirements
+    path: research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+    status: exists
+  - role: question_mapping_matrix
+    path: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/question_mapping_matrix.yaml
+    status: exists
+  - role: coverage_check_report
+    path: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/coverage_check_report.yaml
+    status: exists
+  - role: revision_evidence_map
+    path: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/revision_evidence_map.yaml
+    status: exists
+consistency_checks:
+  manuscript_exists: true
+  response_exists: true
+  evidence_exists: true
+  figures_manifest_exists: true
+  tables_manifest_exists: true
+  metadata_exists: true
+  citation_registry_exists: true
+  figure_manifest_exists: true
+  venue_requirements_exists: true
+  question_mapping_matrix_exists: true
+  coverage_check_report_exists: true
+  revision_evidence_map_exists: true
+  all_required_roles_have_existing_file: true
+  clean_marked_response_source_supplementary_consistency: blocked_by_missing_official_submission_metadata
+blocking_gaps:
+  - official_journal_decision_letter_absent
+  - official_editor_comment_absent
+  - official_reviewer_comments_absent
+  - manuscript_id_absent
+  - anonymity_rule_unconfirmed
+  - selected_global_best_backend_not_locked
+  - phmga_dirty_state_disposition_open
+  - adapter_metadata_h5_alignment_pending
+  - formal_real_data_rm101_repeat_ablation_evidence_not_accepted
+  - global_submission_validator_still_fails
+submission_decision:
+  package_manifest_complete_for_current_scope: true
+  safe_for_internal_review_handoff: true
+  safe_for_external_submission_now: false
+  final_review_score_gate_cleared_by_ai_002: true
+  final_threshold_score: 92.0
+  final_threshold_contract_present: true
+  current_final_gate_classes_preserved: true

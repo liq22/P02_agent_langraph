@@ -1,8 +1,12 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: "Accepted. External AI review passed node-local P4_03 with score 88, hard_fail false, downstream_ready true, and independence_confirmed true. The reviewer confirmed all six P4_02 mappings have exactly one response item, every item includes direct answer/evidence/location/change/commitment/gate/revision-evidence fields, blocking items remain blocked, planned items are not overstated, and no official-comment or final-readiness claim is made. Stale lifecycle/checklist metadata was reconciled during closeout."
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: "Accepted. User-authorized Claude Code teammate delegate passed the P4_03 human-review slot and wrote a validating handoff. The review confirmed the six required checks, agreed with the AI review, and flagged only non-node blockers. Current final-gate blockers are official comments absent, P4_05/P4_06/P4_07 still downstream, mapped blocking actions open, selected backend and PHMGA/Vibench formal evidence unresolved, remaining P4 score thresholds, 109 P1 checklist pending fields, 6 P3_04 blocked/planned actions, and final submission validation still failing. Earlier registry/failure-truth schema blockers are repaired historical issues and are not treated as current P4_03 blockers."
+
+  - comment_id: AI-002
+    responded: true
+    note: "Accepted. Independent final-threshold score-only re-review passed P4_03 with score 92, hard_fail false, final_submission_threshold_met true, and downstream_ready true. The review found no node-local blocking findings: all six P4_02 mappings have one response item; each item carries direct answer, evidence references, manuscript location, commitment status, downstream gate, and revision evidence ID; blocked/planned commitments are not overclaimed; rsp-p4-003 uses current gate blocker semantics; official comments are not fabricated; and no global submission readiness is claimed. P4_03 can enter P4_05/P4_06 handoff for coverage and revision-evidence tracking, while official-response completion remains blocked by missing official comments, unresolved P4_05/P4_06/P4_07 work, P1 checklist pending fields, P3_04 blocked/planned action statuses, remaining P4 score thresholds outside this node, and final validator failure."

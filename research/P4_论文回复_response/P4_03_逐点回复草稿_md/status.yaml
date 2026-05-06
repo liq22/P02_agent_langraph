@@ -1,11 +1,22 @@
 lifecycle:
-  stage: seed
-progress_pct: 0
+  stage: done
+progress_pct: 100
 review_gate:
-  ai_review_count: 0
-  human_review_count: 0
-  all_comments_responded: false
-can_enter_fix: false
-heartbeat_at: 2026-04-10
-last_actor: system
-author_agent_id: <pending-author-agent>
+  ai_review_count: 1
+  human_review_count: 1
+  all_comments_responded: true
+can_enter_fix: true
+point_response_draft:
+  artifact: artifacts/response_items.yaml
+  source_mapping_matrix: ../P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+  response_item_count: 6
+  blocked_response_count: 3
+  planned_response_count: 3
+  official_comments_missing: true
+  no_new_experiment_claimed: true
+  no_new_citation_claimed: true
+  no_tex_edit_claimed: true
+  final_submission_ready_claim: false
+heartbeat_at: 2026-05-05
+last_actor: codex-local
+author_agent_id: codex-local

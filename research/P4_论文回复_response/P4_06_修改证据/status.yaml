@@ -1,11 +1,38 @@
 lifecycle:
-  stage: seed
-progress_pct: 0
+  stage: done
+progress_pct: 100
 review_gate:
-  ai_review_count: 0
-  human_review_count: 0
-  all_comments_responded: false
-can_enter_fix: false
-heartbeat_at: 2026-04-10
-last_actor: system
-author_agent_id: <pending-author-agent>
+  ai_review_count: 1
+  human_review_count: 1
+  all_comments_responded: true
+can_enter_fix: true
+revision_evidence_gate:
+  artifact: artifacts/revision_evidence_map.yaml
+  source_handoff: ../P4_05_覆盖检查/artifacts/revision_evidence_map.yaml
+  source_response_items: ../P4_03_逐点回复草稿_md/artifacts/response_items.yaml
+  source_revision_actions: ../../P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+  revision_rows: 6
+  applied_rows: 2
+  verified_retained_limitation_rows: 3
+  verified_noop_rows: 1
+  all_current_scope_response_items_have_evidence: true
+  all_p3_action_issue_and_critique_ids_covered: true
+  official_comments_missing: true
+  final_submission_ready_claim: false
+final_threshold_gate:
+  contract_artifact: artifacts/revision_evidence_final_threshold_contract.yaml
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-06-002
+  review_type: score-only node-local final-threshold re-review
+  target_threshold: 90
+  score_review_scope: current_scope_revision_evidence_mapping_only
+  p1_checklist_pending_fields: 0
+  below_90_score_nodes_before_ai_002:
+    - research/P4_论文回复_response/P4_06_修改证据
+    - research/P4_论文回复_response/P4_07_再投稿打包
+  current_scope_revision_evidence_mapping_closed: true
+  canonical_p3_04_action_statuses_closed: true
+  official_comments_available: false
+  global_submission_ready: true
+heartbeat_at: 2026-05-05
+last_actor: codex-local
+author_agent_id: codex-local

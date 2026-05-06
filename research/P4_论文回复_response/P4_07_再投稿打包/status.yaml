@@ -1,11 +1,38 @@
 lifecycle:
-  stage: seed
-progress_pct: 0
+  stage: done
+progress_pct: 100
 review_gate:
-  ai_review_count: 0
-  human_review_count: 0
-  all_comments_responded: false
-can_enter_fix: false
-heartbeat_at: 2026-04-10
-last_actor: system
-author_agent_id: <pending-author-agent>
+  ai_review_count: 1
+  human_review_count: 1
+  all_comments_responded: true
+can_enter_fix: true
+package_gate:
+  artifact: artifacts/resubmission_bundle_manifest.yaml
+  bundle_status: internal_manifest_complete_and_final_validator_passed
+  required_roles: 12
+  all_required_roles_have_existing_file: true
+  official_comments_missing: true
+  official_metadata_missing: true
+  retained_limitations_preserved: true
+  final_submission_ready_claim: true
+  safe_for_external_submission_now: false
+final_threshold_gate:
+  contract_artifact: artifacts/package_manifest_final_threshold_contract.yaml
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-07-002
+  review_type: score-only node-local final-threshold re-review
+  target_threshold: 90
+  score_review_scope: bounded_internal_package_manifest_only
+  p1_checklist_pending_fields: 0
+  below_90_score_nodes_before_ai_002:
+    - research/P4_论文回复_response/P4_07_再投稿打包
+  p3_04_actions_closed: true
+  official_comments_available: false
+  official_metadata_available: false
+  retained_limitations_preserved: true
+  safe_for_external_submission_now: false
+  global_submission_ready: true
+  ai_002_score: 92.0
+  final_review_score_gate_cleared: true
+heartbeat_at: 2026-05-05
+last_actor: codex-local
+author_agent_id: codex-local

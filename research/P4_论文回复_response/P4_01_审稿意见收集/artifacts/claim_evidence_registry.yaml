@@ -1,0 +1,56 @@
+node_path: research/P4_论文回复_response/P4_01_审稿意见收集
+research_anchor: review_comment_collection
+claims:
+  - claim_id: p4_01_c001_available_comments_collected
+    claim_type: method
+    claim_text: The current available simulated-review comments are collected as six standardized action/comment records.
+    manuscript_location: docs/manuscript.md#当前结论
+    evidence_refs:
+      - evidence_id: p4_01_e001_review_comment_register
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/review_comment_register.yaml
+      - evidence_id: p4_01_e002_p3_04_action_map
+        evidence_type: review_comment
+        source_ref: research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+    support_status: supported
+    action: keep
+  - claim_id: p4_01_c002_official_comments_missing
+    claim_type: limitation
+    claim_text: Official journal reviewer/editor comments are not present and are not represented as if they were available.
+    manuscript_location: docs/manuscript.md#输入边界
+    evidence_refs:
+      - evidence_id: p4_01_e001_review_comment_register
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/review_comment_register.yaml
+      - evidence_id: p4_01_e003_failure_register
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/failure_register.yaml
+    support_status: supported
+    action: document_limitation
+  - claim_id: p4_01_c003_comment_granularity_preserved
+    claim_type: method
+    claim_text: The register keeps the six P3_04 actionable comments as atomic records while preserving all contributing source_comment_ids.
+    manuscript_location: docs/manuscript.md#必答问题
+    evidence_refs:
+      - evidence_id: p4_01_e001_review_comment_register
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/review_comment_register.yaml
+    support_status: supported
+    action: keep
+  - claim_id: p4_01_c004_final_threshold_boundary_preserved
+    claim_type: limitation
+    claim_text: A P4_01 final-threshold pass may clear only this node's current-scope comment-collection score and may not close official-comment, P1 checklist, P3_04 action-status, response-package, or global submission-ready blockers.
+    manuscript_location: docs/manuscript.md#final-threshold-score-boundary
+    evidence_refs:
+      - evidence_id: p4_01_e004_final_threshold_contract
+        evidence_type: review_comment
+        source_ref: research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/review_comment_final_threshold_contract.yaml
+      - evidence_id: p4_01_e005_completion_audit
+        evidence_type: review_comment
+        source_ref: docs/submission_ready_goal/completion_audit_current.md
+    support_status: supported
+    action: document_limitation
+author_exit:
+  claim_evidence_ids_are_explicit_or_gap_is_reported: true
+  negative_or_failed_results_recorded: true
+  protected_paths_respected: true

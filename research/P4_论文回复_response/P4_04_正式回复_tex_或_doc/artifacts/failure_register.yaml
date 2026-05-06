@@ -1,8 +1,36 @@
 failures:
-  - failure_id: p4_04_missing_official_review_inputs
-    context: Official reviewer comments, manuscript ID, decision type, editor name, verified revision locations, and response evidence references are not available in the current node inputs.
-    affected_claim_id: p4_04_final_response_not_ready
+  - failure_id: p4_04_missing_official_metadata
+    context: Official manuscript id, decision type, editor name, and journal anonymity rule are not available in the current node inputs.
+    affected_claim_id: p4_04_c005_official_metadata_pending
     severity: high
-    interpretation: This blocks final response completion and independent pass review, but it does not block creating the TeX scaffold.
+    interpretation: This blocks final submission export but does not block a node-local formal response draft.
+    action: document_limitation
+    status: open
+  - failure_id: p4_04_no_official_comment_replacement
+    context: P4_01, P4_02, and P4_03 are now reviewed current-scope comment-collection, mapping, and response-draft packages, but they are not official journal comments and cannot be represented as official response coverage.
+    affected_claim_id: p4_04_c002_all_p3_actions_covered
+    severity: high
+    interpretation: P4_04 may use P4_01-P4_03 as current-scope response inputs while preserving official-comment absence and no-final-readiness boundaries.
+    action: document_limitation
+    status: open
+  - failure_id: p4_04_blocking_actions_not_resolved
+    context: action-p3-001, action-p3-002, and action-p3-003 still require formal evidence, reproducibility, and coverage/validator closure.
+    affected_claim_id: p4_04_c003_blocking_actions_retained
+    severity: high
+    interpretation: These are submission blockers carried into the response draft, not defects hidden by the response draft.
+    action: retain_blocker
+    status: open
+  - failure_id: p4_04_planned_actions_not_applied
+    context: action-p3-004, action-p3-005, and action-p3-006 are wording, figure-boundary, and style-compression follow-ups that have not been applied as P2 TeX diffs by this node.
+    affected_claim_id: p4_04_c004_planned_actions_no_claim_upgrade
+    severity: medium
+    interpretation: The response draft can commit to conservative downstream edits but cannot claim that they are already complete.
+    action: carry_to_downstream
+    status: open
+  - failure_id: p4_04_final_threshold_global_gate_not_closed
+    context: Before P4_04 AI_002, the final gate still has pending P1 checklist fields, four P4 score blockers, six unresolved P3_04 action statuses, missing official metadata/comments, and final validator failure.
+    affected_claim_id: p4_04_c006_final_threshold_boundary_preserved
+    severity: high
+    interpretation: A P4_04 score-only pass can support node-local formal response draft readiness, but it cannot be used as a global submission-ready claim.
     action: document_limitation
     status: open

@@ -1,0 +1,68 @@
+version: p4_07_revision_evidence_projection_v1
+node_id: research::P4_论文回复_response::P4_07_再投稿打包
+generated_at: 2026-05-05
+source: research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml
+official_journal_comments_available: false
+final_submission_ready_claim: false
+final_threshold_contract:
+  artifact: research/P4_论文回复_response/P4_07_再投稿打包/artifacts/package_manifest_final_threshold_contract.yaml
+  score_review_scope: bounded_internal_package_manifest_only
+  requested_reviewer_agent_id: final-threshold-reviewer-p4-07-002
+  safe_for_external_submission_now: false
+revisions:
+  - evidence_id: ev-p4-001
+    comment_id: p4-01-c001
+    issue_id: issue-p3-001
+    critique_id: p3-round-001-formal-evidence-eligibility
+    response_item_id: rsp-p4-001
+    status: verified
+    package_status: retained_limitation
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#synthetic-offline-signal
+  - evidence_id: ev-p4-002
+    comment_id: p4-01-c002
+    issue_id: issue-p3-002
+    critique_id: p3-round-001-reproducibility-artifact-state
+    response_item_id: rsp-p4-002
+    status: verified
+    package_status: retained_limitation
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex#reproducibility-requirements
+  - evidence_id: ev-p4-003
+    comment_id: p4-01-c003
+    issue_id: issue-p3-003
+    critique_id: p3-round-001-global-validator-response-coverage
+    response_item_id: rsp-p4-003
+    status: verified
+    package_status: retained_limitation
+    manuscript_location: docs/submission_ready_goal/completion_audit_current.md#overall-submission-ready-goal-remains-incomplete
+  - evidence_id: ev-p4-004
+    comment_id: p4-01-c004
+    issue_id: issue-p3-004
+    critique_id: p3-round-001-claim-language-density
+    response_item_id: rsp-p4-004
+    status: applied
+    package_status: applied_revision
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#abstract
+  - evidence_id: ev-p4-005
+    comment_id: p4-01-c005
+    issue_id: issue-p3-005
+    critique_id: p3-round-001-figure-table-reader-path
+    response_item_id: rsp-p4-005
+    status: verified
+    package_status: verified_boundary
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex#figure-p1-synthetic-signal
+  - evidence_id: ev-p4-006
+    comment_id: p4-01-c006
+    issue_id: issue-p3-006
+    critique_id: p3-round-001-style-repetition
+    response_item_id: rsp-p4-006
+    status: applied
+    package_status: applied_revision
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex#discussion
+summary:
+  revision_count: 6
+  applied_count: 2
+  retained_limitation_count: 3
+  verified_boundary_count: 1
+  final_threshold_contract_present: true
+  retained_limitations_preserved: true
+  final_submission_ready_claim: false
