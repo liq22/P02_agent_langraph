@@ -1,0 +1,2134 @@
+{
+  "user_instruction": "Generate a paper-ready PHM workflow from canonical metadata.",
+  "dataset_name": "OTTAWA_SYNTH",
+  "graph_path": "ml",
+  "runtime_config": {
+    "data": {
+      "key": "ottawa_synth",
+      "dataset_name": "OTTAWA_SYNTH",
+      "catalog": "synthetic",
+      "metadata_schema_version": "synth_v1",
+      "selected_channels": null,
+      "synthetic": {
+        "sampling_rate": 10000,
+        "length": 512,
+        "channels": 2,
+        "operating_condition": "synthetic_variable_speed"
+      },
+      "splits": {
+        "train_ids": [
+          "ottawa_synth_001",
+          "ottawa_synth_002",
+          "ottawa_synth_003",
+          "ottawa_synth_004"
+        ],
+        "val_ids": [
+          "ottawa_synth_005",
+          "ottawa_synth_006"
+        ],
+        "test_ids": [
+          "ottawa_synth_007",
+          "ottawa_synth_008"
+        ]
+      },
+      "labels": {
+        "ottawa_synth_001": 0,
+        "ottawa_synth_002": 1,
+        "ottawa_synth_003": 0,
+        "ottawa_synth_004": 1,
+        "ottawa_synth_005": 0,
+        "ottawa_synth_006": 1,
+        "ottawa_synth_007": 0,
+        "ottawa_synth_008": 1
+      },
+      "window": {
+        "window_size": 256,
+        "stride": 128,
+        "slice_mode": "sliding",
+        "drop_last_window": false
+      }
+    },
+    "experiment": {
+      "graph_path": "ml",
+      "user_instruction": "Generate a paper-ready PHM workflow from canonical metadata."
+    },
+    "model": {
+      "feature_ops": [
+        "feature.mean",
+        "feature.std",
+        "feature.rms"
+      ],
+      "transform_ops": [
+        "signal.normalize",
+        "signal.fft_mag"
+      ],
+      "ml": {
+        "algorithm": "logistic_regression",
+        "max_iter": 200,
+        "output_policy": "terminal_only"
+      },
+      "torch": {
+        "phase": "compiled",
+        "epochs": 12,
+        "learning_rate": 0.2,
+        "hidden_dim": 8,
+        "device": "auto",
+        "output_policy": "terminal_only",
+        "module_runtime": {
+          "enabled": false
+        },
+        "control": {
+          "default_mode": "fixed",
+          "tau": 1.0,
+          "attention_heads": 1,
+          "attention_dropout": 0.0
+        }
+      }
+    },
+    "project": {
+      "name": "PHMGA",
+      "version": "journal_thesis_rebuild"
+    },
+    "llm": {
+      "provider": "codex_cli",
+      "mode": "offline_stub",
+      "model": "gpt-5.3-codex",
+      "api_key_env": "",
+      "base_url": "",
+      "timeout_sec": 300,
+      "temperature": 0.0,
+      "max_tokens_structured": 800,
+      "max_tokens_report": 2000,
+      "http_referer": null,
+      "app_title": "PHMGA"
+    },
+    "runtime": {
+      "action": "run_case",
+      "workflow_mode": "supervisor_proving",
+      "output_dir": "/mnt/k/2_work/lqql_os/lqql_06_工作与项目/03_论文流水线/p02_agent_langraph/research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving",
+      "max_iterations": 1,
+      "min_depth": 2,
+      "min_width": 1,
+      "max_depth": 8,
+      "provider_retry_once": true,
+      "dataset_key": "ottawa_synth",
+      "dataset_name": "OTTAWA_SYNTH",
+      "graph_path": "ml",
+      "config_path": "<hydra>",
+      "config_name": "hydra_main"
+    },
+    "evaluation": {
+      "dag_quality": {
+        "enabled": false,
+        "use_proxy_probe": null,
+        "proxy_subset_per_split": 8
+      }
+    }
+  },
+  "data_context": {
+    "catalog": "synthetic",
+    "metadata_schema_version": "synth_v1",
+    "source_mode": "synthetic",
+    "min_depth": 2,
+    "min_width": 1,
+    "max_depth": 8,
+    "stage": "SUPERVISOR_PROVING"
+  },
+  "signal_context": {
+    "dataset_name": "OTTAWA_SYNTH",
+    "channel_count": 2,
+    "window_shape": [
+      2,
+      256
+    ],
+    "sampling_rate": 10000,
+    "source_mode": "synthetic",
+    "root_node_ids": [
+      "ch1",
+      "ch2"
+    ],
+    "representative_sample_id": "ottawa_synth_001",
+    "available_splits": [
+      "train",
+      "val",
+      "test"
+    ]
+  },
+  "step_plan": {
+    "plan": [
+      {
+        "parent": "ch1",
+        "op_name": "hilbert_envelope",
+        "params": {}
+      },
+      {
+        "parent": "hilbert_envelope_01_ch1",
+        "op_name": "kurtosis",
+        "params": {}
+      },
+      {
+        "parent": "ch1",
+        "op_name": "fft",
+        "params": {}
+      },
+      {
+        "parent": "fft_03_ch1",
+        "op_name": "rms",
+        "params": {}
+      },
+      {
+        "parent": "ch2",
+        "op_name": "fft",
+        "params": {}
+      },
+      {
+        "parent": "fft_05_ch2",
+        "op_name": "rms",
+        "params": {}
+      },
+      {
+        "parent": "ch2",
+        "op_name": "crest_factor",
+        "params": {}
+      }
+    ]
+  },
+  "execution_gaps": [],
+  "reflection_history": [],
+  "reflection_results": [],
+  "dag_quality_summary": {},
+  "iteration_index": 1,
+  "max_iterations": 1,
+  "round_history": [],
+  "last_stable_dag": null,
+  "status": "verified",
+  "dag_state": {
+    "dag": {
+      "nodes": [
+        {
+          "node_id": "ch1",
+          "op_uid": "input.signal",
+          "name": "Input Channel 1",
+          "kind": "input",
+          "operator_category": "INPUT",
+          "rank_class": "rank_same",
+          "params": {
+            "channel_index": 0
+          },
+          "parents": [],
+          "in_shape": [
+            1,
+            256
+          ],
+          "out_shape": [
+            1,
+            256
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "execution_role": "fixed",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "input_bindings": {},
+          "plan_step_ref": "root_input",
+          "rationale": "Implicit multi-channel raw signal root."
+        },
+        {
+          "node_id": "ch2",
+          "op_uid": "input.signal",
+          "name": "Input Channel 2",
+          "kind": "input",
+          "operator_category": "INPUT",
+          "rank_class": "rank_same",
+          "params": {
+            "channel_index": 1
+          },
+          "parents": [],
+          "in_shape": [
+            1,
+            256
+          ],
+          "out_shape": [
+            1,
+            256
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "execution_role": "fixed",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "input_bindings": {},
+          "plan_step_ref": "root_input",
+          "rationale": "Implicit multi-channel raw signal root."
+        },
+        {
+          "node_id": "hilbert_envelope_01_ch1",
+          "op_uid": "signal.hilbert_envelope",
+          "name": "Hilbert Envelope",
+          "kind": "transform",
+          "operator_category": "TRANSFORM",
+          "rank_class": "rank_same",
+          "params": {},
+          "parents": [
+            "ch1"
+          ],
+          "in_shape": [
+            1,
+            256
+          ],
+          "out_shape": [
+            1,
+            256
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "execution_role": "fixed",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "input_bindings": {},
+          "plan_step_ref": "round_01_step_01",
+          "rationale": "Round 1 planner step 1: apply hilbert_envelope to ch1 using schema category TRANSFORM and rank class rank_same."
+        },
+        {
+          "node_id": "fft_03_ch1",
+          "op_uid": "signal.fft_mag",
+          "name": "FFT Magnitude",
+          "kind": "transform",
+          "operator_category": "TRANSFORM",
+          "rank_class": "rank_same",
+          "params": {},
+          "parents": [
+            "ch1"
+          ],
+          "in_shape": [
+            1,
+            256
+          ],
+          "out_shape": [
+            1,
+            129
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "execution_role": "fixed",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "input_bindings": {},
+          "plan_step_ref": "round_01_step_03",
+          "rationale": "Round 1 planner step 3: apply fft to ch1 using schema category TRANSFORM and rank class rank_same."
+        },
+        {
+          "node_id": "fft_05_ch2",
+          "op_uid": "signal.fft_mag",
+          "name": "FFT Magnitude",
+          "kind": "transform",
+          "operator_category": "TRANSFORM",
+          "rank_class": "rank_same",
+          "params": {},
+          "parents": [
+            "ch2"
+          ],
+          "in_shape": [
+            1,
+            256
+          ],
+          "out_shape": [
+            1,
+            129
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "execution_role": "fixed",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "input_bindings": {},
+          "plan_step_ref": "round_01_step_05",
+          "rationale": "Round 1 planner step 5: apply fft to ch2 using schema category TRANSFORM and rank class rank_same."
+        },
+        {
+          "node_id": "crest_factor_07_ch2",
+          "op_uid": "feature.crest_factor",
+          "name": "Crest Factor",
+          "kind": "feature",
+          "operator_category": "AGGREGATE",
+          "rank_class": "rank_down",
+          "params": {},
+          "parents": [
+            "ch2"
+          ],
+          "in_shape": [
+            1,
+            256
+          ],
+          "out_shape": [
+            1
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "execution_role": "outer_only",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "input_bindings": {},
+          "plan_step_ref": "round_01_step_07",
+          "rationale": "Round 1 planner step 7: apply crest_factor to ch2 using schema category AGGREGATE and rank class rank_down."
+        },
+        {
+          "node_id": "kurtosis_02_hilbert_envelope_01_ch1",
+          "op_uid": "feature.kurtosis",
+          "name": "Kurtosis",
+          "kind": "feature",
+          "operator_category": "AGGREGATE",
+          "rank_class": "rank_down",
+          "params": {},
+          "parents": [
+            "hilbert_envelope_01_ch1"
+          ],
+          "in_shape": [
+            1,
+            256
+          ],
+          "out_shape": [
+            1
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "execution_role": "outer_only",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "input_bindings": {},
+          "plan_step_ref": "round_01_step_02",
+          "rationale": "Round 1 planner step 2: apply kurtosis to hilbert_envelope_01_ch1 using schema category AGGREGATE and rank class rank_down."
+        },
+        {
+          "node_id": "rms_04_fft_03_ch1",
+          "op_uid": "feature.rms",
+          "name": "RMS",
+          "kind": "feature",
+          "operator_category": "AGGREGATE",
+          "rank_class": "rank_down",
+          "params": {},
+          "parents": [
+            "fft_03_ch1"
+          ],
+          "in_shape": [
+            1,
+            129
+          ],
+          "out_shape": [
+            1
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "execution_role": "outer_only",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "input_bindings": {},
+          "plan_step_ref": "round_01_step_04",
+          "rationale": "Round 1 planner step 4: apply rms to fft_03_ch1 using schema category AGGREGATE and rank class rank_down."
+        },
+        {
+          "node_id": "rms_06_fft_05_ch2",
+          "op_uid": "feature.rms",
+          "name": "RMS",
+          "kind": "feature",
+          "operator_category": "AGGREGATE",
+          "rank_class": "rank_down",
+          "params": {},
+          "parents": [
+            "fft_05_ch2"
+          ],
+          "in_shape": [
+            1,
+            129
+          ],
+          "out_shape": [
+            1
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "execution_role": "outer_only",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "input_bindings": {},
+          "plan_step_ref": "round_01_step_06",
+          "rationale": "Round 1 planner step 6: apply rms to fft_05_ch2 using schema category AGGREGATE and rank class rank_down."
+        }
+      ],
+      "edges": [
+        {
+          "source": "ch1",
+          "target": "hilbert_envelope_01_ch1"
+        },
+        {
+          "source": "ch1",
+          "target": "fft_03_ch1"
+        },
+        {
+          "source": "ch2",
+          "target": "fft_05_ch2"
+        },
+        {
+          "source": "ch2",
+          "target": "crest_factor_07_ch2"
+        },
+        {
+          "source": "hilbert_envelope_01_ch1",
+          "target": "kurtosis_02_hilbert_envelope_01_ch1"
+        },
+        {
+          "source": "fft_03_ch1",
+          "target": "rms_04_fft_03_ch1"
+        },
+        {
+          "source": "fft_05_ch2",
+          "target": "rms_06_fft_05_ch2"
+        }
+      ]
+    },
+    "error_log": [],
+    "graph_path": null
+  },
+  "compiled_bundle": {
+    "execution_nodes": [
+      {
+        "node_id": "ch1",
+        "op_uid": "input.signal",
+        "kind": "input",
+        "parents": [],
+        "input_bindings": {},
+        "params": {
+          "channel_index": 0
+        },
+        "channel_index": 0
+      },
+      {
+        "node_id": "ch2",
+        "op_uid": "input.signal",
+        "kind": "input",
+        "parents": [],
+        "input_bindings": {},
+        "params": {
+          "channel_index": 1
+        },
+        "channel_index": 1
+      },
+      {
+        "node_id": "hilbert_envelope_01_ch1",
+        "op_uid": "signal.hilbert_envelope",
+        "kind": "transform",
+        "parents": [
+          "ch1"
+        ],
+        "input_bindings": {},
+        "params": {},
+        "channel_index": null
+      },
+      {
+        "node_id": "fft_03_ch1",
+        "op_uid": "signal.fft_mag",
+        "kind": "transform",
+        "parents": [
+          "ch1"
+        ],
+        "input_bindings": {},
+        "params": {},
+        "channel_index": null
+      },
+      {
+        "node_id": "fft_05_ch2",
+        "op_uid": "signal.fft_mag",
+        "kind": "transform",
+        "parents": [
+          "ch2"
+        ],
+        "input_bindings": {},
+        "params": {},
+        "channel_index": null
+      },
+      {
+        "node_id": "crest_factor_07_ch2",
+        "op_uid": "feature.crest_factor",
+        "kind": "feature",
+        "parents": [
+          "ch2"
+        ],
+        "input_bindings": {},
+        "params": {},
+        "channel_index": null
+      },
+      {
+        "node_id": "kurtosis_02_hilbert_envelope_01_ch1",
+        "op_uid": "feature.kurtosis",
+        "kind": "feature",
+        "parents": [
+          "hilbert_envelope_01_ch1"
+        ],
+        "input_bindings": {},
+        "params": {},
+        "channel_index": null
+      },
+      {
+        "node_id": "rms_04_fft_03_ch1",
+        "op_uid": "feature.rms",
+        "kind": "feature",
+        "parents": [
+          "fft_03_ch1"
+        ],
+        "input_bindings": {},
+        "params": {},
+        "channel_index": null
+      },
+      {
+        "node_id": "rms_06_fft_05_ch2",
+        "op_uid": "feature.rms",
+        "kind": "feature",
+        "parents": [
+          "fft_05_ch2"
+        ],
+        "input_bindings": {},
+        "params": {},
+        "channel_index": null
+      }
+    ],
+    "output_specs": [
+      {
+        "output_node_id": "crest_factor_07_ch2",
+        "output_kind": "feature"
+      },
+      {
+        "output_node_id": "kurtosis_02_hilbert_envelope_01_ch1",
+        "output_kind": "feature"
+      },
+      {
+        "output_node_id": "rms_04_fft_03_ch1",
+        "output_kind": "feature"
+      },
+      {
+        "output_node_id": "rms_06_fft_05_ch2",
+        "output_kind": "feature"
+      }
+    ],
+    "output_policy": "terminal_only",
+    "manifest": {
+      "dag_hash": "019fb559630d574579f914e2574fbd27b2b8181ba9d552e6ae68f6472fe3fbd6",
+      "topo_order": [
+        "ch1",
+        "ch2",
+        "hilbert_envelope_01_ch1",
+        "fft_03_ch1",
+        "fft_05_ch2",
+        "crest_factor_07_ch2",
+        "kurtosis_02_hilbert_envelope_01_ch1",
+        "rms_04_fft_03_ch1",
+        "rms_06_fft_05_ch2"
+      ],
+      "nodes": [
+        {
+          "node_id": "ch1",
+          "op_uid": "input.signal",
+          "kind": "input",
+          "operator_category": "INPUT",
+          "rank_class": "rank_same",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "shape_inference": {
+            "in": [
+              1,
+              256
+            ],
+            "out": [
+              1,
+              256
+            ]
+          }
+        },
+        {
+          "node_id": "ch2",
+          "op_uid": "input.signal",
+          "kind": "input",
+          "operator_category": "INPUT",
+          "rank_class": "rank_same",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "shape_inference": {
+            "in": [
+              1,
+              256
+            ],
+            "out": [
+              1,
+              256
+            ]
+          }
+        },
+        {
+          "node_id": "hilbert_envelope_01_ch1",
+          "op_uid": "signal.hilbert_envelope",
+          "kind": "transform",
+          "operator_category": "TRANSFORM",
+          "rank_class": "rank_same",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "shape_inference": {
+            "in": [
+              1,
+              256
+            ],
+            "out": [
+              1,
+              256
+            ]
+          }
+        },
+        {
+          "node_id": "fft_03_ch1",
+          "op_uid": "signal.fft_mag",
+          "kind": "transform",
+          "operator_category": "TRANSFORM",
+          "rank_class": "rank_same",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "shape_inference": {
+            "in": [
+              1,
+              256
+            ],
+            "out": [
+              1,
+              129
+            ]
+          }
+        },
+        {
+          "node_id": "fft_05_ch2",
+          "op_uid": "signal.fft_mag",
+          "kind": "transform",
+          "operator_category": "TRANSFORM",
+          "rank_class": "rank_same",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "shape_inference": {
+            "in": [
+              1,
+              256
+            ],
+            "out": [
+              1,
+              129
+            ]
+          }
+        },
+        {
+          "node_id": "crest_factor_07_ch2",
+          "op_uid": "feature.crest_factor",
+          "kind": "feature",
+          "operator_category": "AGGREGATE",
+          "rank_class": "rank_down",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "shape_inference": {
+            "in": [
+              1,
+              256
+            ],
+            "out": [
+              1
+            ]
+          }
+        },
+        {
+          "node_id": "kurtosis_02_hilbert_envelope_01_ch1",
+          "op_uid": "feature.kurtosis",
+          "kind": "feature",
+          "operator_category": "AGGREGATE",
+          "rank_class": "rank_down",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "shape_inference": {
+            "in": [
+              1,
+              256
+            ],
+            "out": [
+              1
+            ]
+          }
+        },
+        {
+          "node_id": "rms_04_fft_03_ch1",
+          "op_uid": "feature.rms",
+          "kind": "feature",
+          "operator_category": "AGGREGATE",
+          "rank_class": "rank_down",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "shape_inference": {
+            "in": [
+              1,
+              129
+            ],
+            "out": [
+              1
+            ]
+          }
+        },
+        {
+          "node_id": "rms_06_fft_05_ch2",
+          "op_uid": "feature.rms",
+          "kind": "feature",
+          "operator_category": "AGGREGATE",
+          "rank_class": "rank_down",
+          "legal_paths": [
+            "dag_only",
+            "ml",
+            "torch"
+          ],
+          "backend_availability": [
+            "np",
+            "pt",
+            "sym"
+          ],
+          "shape_inference": {
+            "in": [
+              1,
+              129
+            ],
+            "out": [
+              1
+            ]
+          }
+        }
+      ],
+      "path_type": "ml",
+      "warnings": []
+    }
+  },
+  "compiled_manifest": {
+    "dag_hash": "019fb559630d574579f914e2574fbd27b2b8181ba9d552e6ae68f6472fe3fbd6",
+    "topo_order": [
+      "ch1",
+      "ch2",
+      "hilbert_envelope_01_ch1",
+      "fft_03_ch1",
+      "fft_05_ch2",
+      "crest_factor_07_ch2",
+      "kurtosis_02_hilbert_envelope_01_ch1",
+      "rms_04_fft_03_ch1",
+      "rms_06_fft_05_ch2"
+    ],
+    "nodes": [
+      {
+        "node_id": "ch1",
+        "op_uid": "input.signal",
+        "kind": "input",
+        "operator_category": "INPUT",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            256
+          ]
+        }
+      },
+      {
+        "node_id": "ch2",
+        "op_uid": "input.signal",
+        "kind": "input",
+        "operator_category": "INPUT",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            256
+          ]
+        }
+      },
+      {
+        "node_id": "hilbert_envelope_01_ch1",
+        "op_uid": "signal.hilbert_envelope",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            256
+          ]
+        }
+      },
+      {
+        "node_id": "fft_03_ch1",
+        "op_uid": "signal.fft_mag",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            129
+          ]
+        }
+      },
+      {
+        "node_id": "fft_05_ch2",
+        "op_uid": "signal.fft_mag",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            129
+          ]
+        }
+      },
+      {
+        "node_id": "crest_factor_07_ch2",
+        "op_uid": "feature.crest_factor",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1
+          ]
+        }
+      },
+      {
+        "node_id": "kurtosis_02_hilbert_envelope_01_ch1",
+        "op_uid": "feature.kurtosis",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1
+          ]
+        }
+      },
+      {
+        "node_id": "rms_04_fft_03_ch1",
+        "op_uid": "feature.rms",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            129
+          ],
+          "out": [
+            1
+          ]
+        }
+      },
+      {
+        "node_id": "rms_06_fft_05_ch2",
+        "op_uid": "feature.rms",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            129
+          ],
+          "out": [
+            1
+          ]
+        }
+      }
+    ],
+    "path_type": "ml",
+    "warnings": []
+  },
+  "path_artifacts": {
+    "feature_pipeline": {
+      "execution_nodes": [
+        {
+          "node_id": "ch1",
+          "op_uid": "input.signal",
+          "kind": "input",
+          "parents": [],
+          "input_bindings": {},
+          "params": {
+            "channel_index": 0
+          },
+          "channel_index": 0
+        },
+        {
+          "node_id": "ch2",
+          "op_uid": "input.signal",
+          "kind": "input",
+          "parents": [],
+          "input_bindings": {},
+          "params": {
+            "channel_index": 1
+          },
+          "channel_index": 1
+        },
+        {
+          "node_id": "hilbert_envelope_01_ch1",
+          "op_uid": "signal.hilbert_envelope",
+          "kind": "transform",
+          "parents": [
+            "ch1"
+          ],
+          "input_bindings": {},
+          "params": {},
+          "channel_index": null
+        },
+        {
+          "node_id": "fft_03_ch1",
+          "op_uid": "signal.fft_mag",
+          "kind": "transform",
+          "parents": [
+            "ch1"
+          ],
+          "input_bindings": {},
+          "params": {},
+          "channel_index": null
+        },
+        {
+          "node_id": "fft_05_ch2",
+          "op_uid": "signal.fft_mag",
+          "kind": "transform",
+          "parents": [
+            "ch2"
+          ],
+          "input_bindings": {},
+          "params": {},
+          "channel_index": null
+        },
+        {
+          "node_id": "crest_factor_07_ch2",
+          "op_uid": "feature.crest_factor",
+          "kind": "feature",
+          "parents": [
+            "ch2"
+          ],
+          "input_bindings": {},
+          "params": {},
+          "channel_index": null
+        },
+        {
+          "node_id": "kurtosis_02_hilbert_envelope_01_ch1",
+          "op_uid": "feature.kurtosis",
+          "kind": "feature",
+          "parents": [
+            "hilbert_envelope_01_ch1"
+          ],
+          "input_bindings": {},
+          "params": {},
+          "channel_index": null
+        },
+        {
+          "node_id": "rms_04_fft_03_ch1",
+          "op_uid": "feature.rms",
+          "kind": "feature",
+          "parents": [
+            "fft_03_ch1"
+          ],
+          "input_bindings": {},
+          "params": {},
+          "channel_index": null
+        },
+        {
+          "node_id": "rms_06_fft_05_ch2",
+          "op_uid": "feature.rms",
+          "kind": "feature",
+          "parents": [
+            "fft_05_ch2"
+          ],
+          "input_bindings": {},
+          "params": {},
+          "channel_index": null
+        }
+      ],
+      "output_specs": [
+        {
+          "output_node_id": "crest_factor_07_ch2",
+          "output_kind": "feature"
+        },
+        {
+          "output_node_id": "kurtosis_02_hilbert_envelope_01_ch1",
+          "output_kind": "feature"
+        },
+        {
+          "output_node_id": "rms_04_fft_03_ch1",
+          "output_kind": "feature"
+        },
+        {
+          "output_node_id": "rms_06_fft_05_ch2",
+          "output_kind": "feature"
+        }
+      ],
+      "output_policy": "terminal_only",
+      "manifest": {
+        "dag_hash": "019fb559630d574579f914e2574fbd27b2b8181ba9d552e6ae68f6472fe3fbd6",
+        "topo_order": [
+          "ch1",
+          "ch2",
+          "hilbert_envelope_01_ch1",
+          "fft_03_ch1",
+          "fft_05_ch2",
+          "crest_factor_07_ch2",
+          "kurtosis_02_hilbert_envelope_01_ch1",
+          "rms_04_fft_03_ch1",
+          "rms_06_fft_05_ch2"
+        ],
+        "nodes": [
+          {
+            "node_id": "ch1",
+            "op_uid": "input.signal",
+            "kind": "input",
+            "operator_category": "INPUT",
+            "rank_class": "rank_same",
+            "legal_paths": [
+              "dag_only",
+              "ml",
+              "torch"
+            ],
+            "backend_availability": [
+              "np",
+              "pt",
+              "sym"
+            ],
+            "shape_inference": {
+              "in": [
+                1,
+                256
+              ],
+              "out": [
+                1,
+                256
+              ]
+            }
+          },
+          {
+            "node_id": "ch2",
+            "op_uid": "input.signal",
+            "kind": "input",
+            "operator_category": "INPUT",
+            "rank_class": "rank_same",
+            "legal_paths": [
+              "dag_only",
+              "ml",
+              "torch"
+            ],
+            "backend_availability": [
+              "np",
+              "pt",
+              "sym"
+            ],
+            "shape_inference": {
+              "in": [
+                1,
+                256
+              ],
+              "out": [
+                1,
+                256
+              ]
+            }
+          },
+          {
+            "node_id": "hilbert_envelope_01_ch1",
+            "op_uid": "signal.hilbert_envelope",
+            "kind": "transform",
+            "operator_category": "TRANSFORM",
+            "rank_class": "rank_same",
+            "legal_paths": [
+              "dag_only",
+              "ml",
+              "torch"
+            ],
+            "backend_availability": [
+              "np",
+              "pt",
+              "sym"
+            ],
+            "shape_inference": {
+              "in": [
+                1,
+                256
+              ],
+              "out": [
+                1,
+                256
+              ]
+            }
+          },
+          {
+            "node_id": "fft_03_ch1",
+            "op_uid": "signal.fft_mag",
+            "kind": "transform",
+            "operator_category": "TRANSFORM",
+            "rank_class": "rank_same",
+            "legal_paths": [
+              "dag_only",
+              "ml",
+              "torch"
+            ],
+            "backend_availability": [
+              "np",
+              "pt",
+              "sym"
+            ],
+            "shape_inference": {
+              "in": [
+                1,
+                256
+              ],
+              "out": [
+                1,
+                129
+              ]
+            }
+          },
+          {
+            "node_id": "fft_05_ch2",
+            "op_uid": "signal.fft_mag",
+            "kind": "transform",
+            "operator_category": "TRANSFORM",
+            "rank_class": "rank_same",
+            "legal_paths": [
+              "dag_only",
+              "ml",
+              "torch"
+            ],
+            "backend_availability": [
+              "np",
+              "pt",
+              "sym"
+            ],
+            "shape_inference": {
+              "in": [
+                1,
+                256
+              ],
+              "out": [
+                1,
+                129
+              ]
+            }
+          },
+          {
+            "node_id": "crest_factor_07_ch2",
+            "op_uid": "feature.crest_factor",
+            "kind": "feature",
+            "operator_category": "AGGREGATE",
+            "rank_class": "rank_down",
+            "legal_paths": [
+              "dag_only",
+              "ml",
+              "torch"
+            ],
+            "backend_availability": [
+              "np",
+              "pt",
+              "sym"
+            ],
+            "shape_inference": {
+              "in": [
+                1,
+                256
+              ],
+              "out": [
+                1
+              ]
+            }
+          },
+          {
+            "node_id": "kurtosis_02_hilbert_envelope_01_ch1",
+            "op_uid": "feature.kurtosis",
+            "kind": "feature",
+            "operator_category": "AGGREGATE",
+            "rank_class": "rank_down",
+            "legal_paths": [
+              "dag_only",
+              "ml",
+              "torch"
+            ],
+            "backend_availability": [
+              "np",
+              "pt",
+              "sym"
+            ],
+            "shape_inference": {
+              "in": [
+                1,
+                256
+              ],
+              "out": [
+                1
+              ]
+            }
+          },
+          {
+            "node_id": "rms_04_fft_03_ch1",
+            "op_uid": "feature.rms",
+            "kind": "feature",
+            "operator_category": "AGGREGATE",
+            "rank_class": "rank_down",
+            "legal_paths": [
+              "dag_only",
+              "ml",
+              "torch"
+            ],
+            "backend_availability": [
+              "np",
+              "pt",
+              "sym"
+            ],
+            "shape_inference": {
+              "in": [
+                1,
+                129
+              ],
+              "out": [
+                1
+              ]
+            }
+          },
+          {
+            "node_id": "rms_06_fft_05_ch2",
+            "op_uid": "feature.rms",
+            "kind": "feature",
+            "operator_category": "AGGREGATE",
+            "rank_class": "rank_down",
+            "legal_paths": [
+              "dag_only",
+              "ml",
+              "torch"
+            ],
+            "backend_availability": [
+              "np",
+              "pt",
+              "sym"
+            ],
+            "shape_inference": {
+              "in": [
+                1,
+                129
+              ],
+              "out": [
+                1
+              ]
+            }
+          }
+        ],
+        "path_type": "ml",
+        "warnings": []
+      }
+    },
+    "feature_list": [
+      {
+        "index": 0,
+        "name": "crest_factor_07_ch2",
+        "source_node": "crest_factor_07_ch2",
+        "path": "ml"
+      },
+      {
+        "index": 1,
+        "name": "kurtosis_02_hilbert_envelope_01_ch1",
+        "source_node": "kurtosis_02_hilbert_envelope_01_ch1",
+        "path": "ml"
+      },
+      {
+        "index": 2,
+        "name": "rms_04_fft_03_ch1",
+        "source_node": "rms_04_fft_03_ch1",
+        "path": "ml"
+      },
+      {
+        "index": 3,
+        "name": "rms_06_fft_05_ch2",
+        "source_node": "rms_06_fft_05_ch2",
+        "path": "ml"
+      }
+    ],
+    "feature_separability_summary": {
+      "dataset": "OTTAWA_SYNTH",
+      "graph_path": "ml",
+      "backend": {
+        "provider": "codex_cli",
+        "model": "gpt-5.3-codex"
+      },
+      "artifact_contract_pass": true,
+      "feature_count": 4,
+      "non_empty_feature_count": 4,
+      "constant_feature_count": 0,
+      "class_count": 2,
+      "top_features": [
+        {
+          "name": "rms_04_fft_03_ch1",
+          "source_node": "rms_04_fft_03_ch1",
+          "score": 5690.219456719776
+        },
+        {
+          "name": "rms_06_fft_05_ch2",
+          "source_node": "rms_06_fft_05_ch2",
+          "score": 1520.4736072826736
+        },
+        {
+          "name": "crest_factor_07_ch2",
+          "source_node": "crest_factor_07_ch2",
+          "score": 11.78180974507781
+        },
+        {
+          "name": "kurtosis_02_hilbert_envelope_01_ch1",
+          "source_node": "kurtosis_02_hilbert_envelope_01_ch1",
+          "score": 1.9951119146584482
+        }
+      ],
+      "aggregate_scores": {
+        "mean_fisher_score": 1806.1174964155464,
+        "median_fisher_score": 766.1277085138757,
+        "top5_mean_score": 1806.1174964155464
+      },
+      "split_stability": {
+        "train_val_rank_corr": 1.0
+      },
+      "decision": "pass",
+      "reason": [
+        "feature pipeline materialized successfully",
+        "top-k features show class separation",
+        "train/val feature ranking remains directionally stable (1.000)"
+      ]
+    },
+    "algorithm": "logistic_regression",
+    "metrics": {
+      "train": {
+        "accuracy": 1.0,
+        "macro_f1": 1.0
+      },
+      "val": {
+        "accuracy": 1.0,
+        "macro_f1": 1.0
+      },
+      "test": {
+        "accuracy": 1.0,
+        "macro_f1": 1.0
+      }
+    },
+    "predictions": {
+      "train": [
+        {
+          "sample_id": "ottawa_synth_001__w0000",
+          "prediction": 0
+        },
+        {
+          "sample_id": "ottawa_synth_001__w0001",
+          "prediction": 0
+        },
+        {
+          "sample_id": "ottawa_synth_001__w0002",
+          "prediction": 0
+        },
+        {
+          "sample_id": "ottawa_synth_002__w0000",
+          "prediction": 1
+        },
+        {
+          "sample_id": "ottawa_synth_002__w0001",
+          "prediction": 1
+        },
+        {
+          "sample_id": "ottawa_synth_002__w0002",
+          "prediction": 1
+        },
+        {
+          "sample_id": "ottawa_synth_003__w0000",
+          "prediction": 0
+        },
+        {
+          "sample_id": "ottawa_synth_003__w0001",
+          "prediction": 0
+        },
+        {
+          "sample_id": "ottawa_synth_003__w0002",
+          "prediction": 0
+        },
+        {
+          "sample_id": "ottawa_synth_004__w0000",
+          "prediction": 1
+        },
+        {
+          "sample_id": "ottawa_synth_004__w0001",
+          "prediction": 1
+        },
+        {
+          "sample_id": "ottawa_synth_004__w0002",
+          "prediction": 1
+        }
+      ],
+      "val": [
+        {
+          "sample_id": "ottawa_synth_005__w0000",
+          "prediction": 0
+        },
+        {
+          "sample_id": "ottawa_synth_005__w0001",
+          "prediction": 0
+        },
+        {
+          "sample_id": "ottawa_synth_005__w0002",
+          "prediction": 0
+        },
+        {
+          "sample_id": "ottawa_synth_006__w0000",
+          "prediction": 1
+        },
+        {
+          "sample_id": "ottawa_synth_006__w0001",
+          "prediction": 1
+        },
+        {
+          "sample_id": "ottawa_synth_006__w0002",
+          "prediction": 1
+        }
+      ],
+      "test": [
+        {
+          "sample_id": "ottawa_synth_007__w0000",
+          "prediction": 0
+        },
+        {
+          "sample_id": "ottawa_synth_007__w0001",
+          "prediction": 0
+        },
+        {
+          "sample_id": "ottawa_synth_007__w0002",
+          "prediction": 0
+        },
+        {
+          "sample_id": "ottawa_synth_008__w0000",
+          "prediction": 1
+        },
+        {
+          "sample_id": "ottawa_synth_008__w0001",
+          "prediction": 1
+        },
+        {
+          "sample_id": "ottawa_synth_008__w0002",
+          "prediction": 1
+        }
+      ]
+    },
+    "importance": {
+      "crest_factor_07_ch2": 0.020211886203847524,
+      "kurtosis_02_hilbert_envelope_01_ch1": 0.14374200660015118,
+      "rms_04_fft_03_ch1": 0.842954820385397,
+      "rms_06_fft_05_ch2": 0.8491823659412772
+    },
+    "similarity_artifacts": {
+      "split_sizes": {
+        "train": 12,
+        "val": 6,
+        "test": 6
+      },
+      "class_centroids": {
+        "0": [
+          1.829347380830301,
+          2.2010511896124156,
+          12.660630419729921,
+          12.59195508345911
+        ],
+        "1": [
+          1.7409187314431638,
+          2.9004682045392904,
+          16.436294586853965,
+          16.39044222101987
+        ]
+      },
+      "class_centroid_similarity": {
+        "0__vs__1": {
+          "l2": 5.4019578139708475,
+          "cosine": 0.9996320687635951
+        }
+      },
+      "test_to_train_mean_similarity": {
+        "l2": 0.07033780476835748,
+        "cosine": 0.9999968235872533
+      }
+    }
+  },
+  "final_report": "# PHMGA Final Report: OTTAWA_SYNTH / ml\n\n## Conclusion\n- Dataset: OTTAWA_SYNTH\n- Graph path: ml\n- DAG hash: `019fb559630d574579f914e2574fbd27b2b8181ba9d552e6ae68f6472fe3fbd6`\n- Nodes: 9\n- Operator categories: AGGREGATE, INPUT, TRANSFORM\n- train: acc=1.000, macro_f1=1.000\n- val: acc=1.000, macro_f1=1.000\n- test: acc=1.000, macro_f1=1.000\n\n## Protocol\n- Catalog: synthetic\n- Metadata schema: synth_v1\n- Split sizes: train=4, val=2, test=2\n- Window: size=256, stride=128, mode=sliding\n\n## Evidence\n- Manifest warnings: 0\n- Artifact keys: algorithm, feature_list, feature_pipeline, feature_separability_summary, importance, metrics, predictions, similarity_artifacts\n\n## Workflow\n- User instruction: Generate a paper-ready PHM workflow from canonical metadata.\n- Plan steps: 7\n- Workflow rounds: 0\n- Decision side outputs: 0\n\n## DAG Quality\n- Recommendation: n/a\n- Quality issues: \n\n## Analysis Workflow\n- Front-end proving chain: signal_context -> StepPlan -> execute -> compile -> verify\n- Proving policy: no dag_quality evaluator, no reflection loop, no rollback.\n- Back-end hand-off: validated DAG JSON -> bridge -> graph-dependent artifacts -> final report\n\n## Optional Similarity Artifacts\n- Keys: class_centroid_similarity, class_centroids, split_sizes, test_to_train_mean_similarity\n",
+  "halt_reason": null,
+  "current_round_input_hash": "f5f601586348141cb59f4afc4fab6c1a56cf15d36b9b45c2bfbfcc92b9154bcc",
+  "current_round_previous_node_ids": [],
+  "dag": {
+    "nodes": [
+      {
+        "node_id": "ch1",
+        "op_uid": "input.signal",
+        "name": "Input Channel 1",
+        "kind": "input",
+        "operator_category": "INPUT",
+        "rank_class": "rank_same",
+        "params": {
+          "channel_index": 0
+        },
+        "parents": [],
+        "in_shape": [
+          1,
+          256
+        ],
+        "out_shape": [
+          1,
+          256
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "execution_role": "fixed",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "input_bindings": {},
+        "plan_step_ref": "root_input",
+        "rationale": "Implicit multi-channel raw signal root."
+      },
+      {
+        "node_id": "ch2",
+        "op_uid": "input.signal",
+        "name": "Input Channel 2",
+        "kind": "input",
+        "operator_category": "INPUT",
+        "rank_class": "rank_same",
+        "params": {
+          "channel_index": 1
+        },
+        "parents": [],
+        "in_shape": [
+          1,
+          256
+        ],
+        "out_shape": [
+          1,
+          256
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "execution_role": "fixed",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "input_bindings": {},
+        "plan_step_ref": "root_input",
+        "rationale": "Implicit multi-channel raw signal root."
+      },
+      {
+        "node_id": "hilbert_envelope_01_ch1",
+        "op_uid": "signal.hilbert_envelope",
+        "name": "Hilbert Envelope",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "params": {},
+        "parents": [
+          "ch1"
+        ],
+        "in_shape": [
+          1,
+          256
+        ],
+        "out_shape": [
+          1,
+          256
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "execution_role": "fixed",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "input_bindings": {},
+        "plan_step_ref": "round_01_step_01",
+        "rationale": "Round 1 planner step 1: apply hilbert_envelope to ch1 using schema category TRANSFORM and rank class rank_same."
+      },
+      {
+        "node_id": "fft_03_ch1",
+        "op_uid": "signal.fft_mag",
+        "name": "FFT Magnitude",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "params": {},
+        "parents": [
+          "ch1"
+        ],
+        "in_shape": [
+          1,
+          256
+        ],
+        "out_shape": [
+          1,
+          129
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "execution_role": "fixed",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "input_bindings": {},
+        "plan_step_ref": "round_01_step_03",
+        "rationale": "Round 1 planner step 3: apply fft to ch1 using schema category TRANSFORM and rank class rank_same."
+      },
+      {
+        "node_id": "fft_05_ch2",
+        "op_uid": "signal.fft_mag",
+        "name": "FFT Magnitude",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "params": {},
+        "parents": [
+          "ch2"
+        ],
+        "in_shape": [
+          1,
+          256
+        ],
+        "out_shape": [
+          1,
+          129
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "execution_role": "fixed",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "input_bindings": {},
+        "plan_step_ref": "round_01_step_05",
+        "rationale": "Round 1 planner step 5: apply fft to ch2 using schema category TRANSFORM and rank class rank_same."
+      },
+      {
+        "node_id": "crest_factor_07_ch2",
+        "op_uid": "feature.crest_factor",
+        "name": "Crest Factor",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "params": {},
+        "parents": [
+          "ch2"
+        ],
+        "in_shape": [
+          1,
+          256
+        ],
+        "out_shape": [
+          1
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "execution_role": "outer_only",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "input_bindings": {},
+        "plan_step_ref": "round_01_step_07",
+        "rationale": "Round 1 planner step 7: apply crest_factor to ch2 using schema category AGGREGATE and rank class rank_down."
+      },
+      {
+        "node_id": "kurtosis_02_hilbert_envelope_01_ch1",
+        "op_uid": "feature.kurtosis",
+        "name": "Kurtosis",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "params": {},
+        "parents": [
+          "hilbert_envelope_01_ch1"
+        ],
+        "in_shape": [
+          1,
+          256
+        ],
+        "out_shape": [
+          1
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "execution_role": "outer_only",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "input_bindings": {},
+        "plan_step_ref": "round_01_step_02",
+        "rationale": "Round 1 planner step 2: apply kurtosis to hilbert_envelope_01_ch1 using schema category AGGREGATE and rank class rank_down."
+      },
+      {
+        "node_id": "rms_04_fft_03_ch1",
+        "op_uid": "feature.rms",
+        "name": "RMS",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "params": {},
+        "parents": [
+          "fft_03_ch1"
+        ],
+        "in_shape": [
+          1,
+          129
+        ],
+        "out_shape": [
+          1
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "execution_role": "outer_only",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "input_bindings": {},
+        "plan_step_ref": "round_01_step_04",
+        "rationale": "Round 1 planner step 4: apply rms to fft_03_ch1 using schema category AGGREGATE and rank class rank_down."
+      },
+      {
+        "node_id": "rms_06_fft_05_ch2",
+        "op_uid": "feature.rms",
+        "name": "RMS",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "params": {},
+        "parents": [
+          "fft_05_ch2"
+        ],
+        "in_shape": [
+          1,
+          129
+        ],
+        "out_shape": [
+          1
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "execution_role": "outer_only",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "input_bindings": {},
+        "plan_step_ref": "round_01_step_06",
+        "rationale": "Round 1 planner step 6: apply rms to fft_05_ch2 using schema category AGGREGATE and rank class rank_down."
+      }
+    ],
+    "edges": [
+      {
+        "source": "ch1",
+        "target": "hilbert_envelope_01_ch1"
+      },
+      {
+        "source": "ch1",
+        "target": "fft_03_ch1"
+      },
+      {
+        "source": "ch2",
+        "target": "fft_05_ch2"
+      },
+      {
+        "source": "ch2",
+        "target": "crest_factor_07_ch2"
+      },
+      {
+        "source": "hilbert_envelope_01_ch1",
+        "target": "kurtosis_02_hilbert_envelope_01_ch1"
+      },
+      {
+        "source": "fft_03_ch1",
+        "target": "rms_04_fft_03_ch1"
+      },
+      {
+        "source": "fft_05_ch2",
+        "target": "rms_06_fft_05_ch2"
+      }
+    ]
+  },
+  "artifact_index_path": "artifact_index.json"
+}

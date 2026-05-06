@@ -1,0 +1,50 @@
+version: p1_06_submodule_ref_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_06_代码仓库_已有_重新初始化_子模块策略
+generated_at: 2026-05-05
+
+submodule:
+  name: PHMGA
+  path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+  url: https://github.com/PHMbench/PHMGA.git
+  expected_branch: journal_thesis
+  current_branch: journal_thesis
+  local_head: 914bc5925d5230917a5de95d88784075fb2b041e
+  origin_journal_thesis_after_fetch: 914bc5925d5230917a5de95d88784075fb2b041e
+  ahead_behind_head_vs_origin_journal_thesis:
+    ahead: 0
+    behind: 0
+  pull_command:
+    command: git -C artifacts/PHMGA pull --ff-only
+    result: Already up to date.
+    network_fetch_completed: true
+  parent_repo_git_status: modified_submodule
+  submodule_dirty_entries_count: 66
+
+dirty_state_policy:
+  current_dirty_state_is_expected_blocker_for_pointer_update: true
+  destructive_cleanup_allowed_without_explicit_user_approval: false
+  pointer_update_allowed_now: false
+  reason: >-
+    Remote branch is already at the local HEAD, so there is no remote commit to
+    merge. The remaining modified state is local PHMGA work and generated runtime
+    files; it must be reviewed, committed, stashed, or explicitly discarded
+    inside PHMGA before any future parent pointer update.
+
+facts_checked:
+  - .gitmodules path/url/branch
+  - git submodule status --recursive
+  - git fetch origin journal_thesis
+  - git rev-parse HEAD
+  - git rev-parse origin/journal_thesis
+  - git rev-list --left-right --count HEAD...origin/journal_thesis
+  - git pull --ff-only
+  - git status --porcelain dirty count
+
+author_exit:
+  phmga_submodule_exists: true
+  branch_matches_policy: true
+  remote_comparison_checked: true
+  pull_attempted_safely: true
+  pull_needed: false
+  dirty_state_recorded: true
+  rollback_policy_required_before_future_pointer_update: true

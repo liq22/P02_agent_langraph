@@ -30,3 +30,13 @@ responses:
     required_action: No P1_02-scope fixes required. Keep downstream positive result claims blocked until selected backend, RM101, adapter preflight, and Stage C/D evidence gates are complete.
     author_response: Recorded the transparent teammate review in `review/人类_001.md` and `docs/submission_ready_goal/runtime_logs/claude_code/p1_02_human_review_handoff.yaml`; closing P1_02 as reviewed while preserving downstream blockers outside this node.
     reviewer_recheck: closed
+
+  - comment_id: AI-004
+    responded: true
+    reviewer_agent_id: final-threshold-reviewer-p1-02-002
+    summary: Final-threshold score readiness needs a node-specific contract that separates interface readiness from downstream formal evidence execution and checklist closure.
+    required_action: Define the P1_02 score threshold as executable/auditable pseudocode and interface truth-source readiness, not as selected-backend, Stage C/D, adapter-preflight, checklist, or final-validator closure.
+    author_response: Added `artifacts/interface_final_threshold_contract.yaml` and updated `docs/manuscript.md` plus `artifacts/interface_contract.yaml` to bind formal row traceability from input bundle to artifact index, metrics, result markdown, ledger row, and optional paper table row while preserving downstream/global blockers.
+    reviewer_recheck: closed
+    final_reviewer_agent_id: final-threshold-reviewer-p1-02-002
+    final_reviewer_response: Score-only final-threshold review passes at 92. The contract preserves selected-backend, RM101 reject-evidence, adapter-preflight, Stage C/D, checklist/status, P3 action, and final-validator blockers as downstream/global blockers and does not use them as support.

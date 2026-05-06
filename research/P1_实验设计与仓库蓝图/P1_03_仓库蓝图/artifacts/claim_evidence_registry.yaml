@@ -1,39 +1,109 @@
-version: p1_03_claim_evidence_registry_v1
+version: p1_03_claim_evidence_registry_v2
 node_id: research::P1_实验设计与仓库蓝图::P1_03_仓库蓝图
 
 claims:
   - claim_id: P1_03_C01_MINIMAL_MODULE_SET
-    status: supported_by_design_artifact
-    statement: The formal-result repository path can be covered by seven required module responsibilities without adding UI or global orchestration modules.
+    claim_type: method
+    claim_text: The formal-result repository path can be covered by seven required module responsibilities without adding UI or global orchestration modules.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/docs/manuscript.md#2-必须模块
+    action: keep
     evidence_refs:
-      - docs/manuscript.md#2-必须模块
-      - artifacts/repo_blueprint.yaml#required_directories
-      - artifacts/module_map.yaml#modules
+      - evidence_id: P1_03_E001_MANUSCRIPT_MODULES
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/docs/manuscript.md#2-必须模块
+      - evidence_id: P1_03_E002_REPO_BLUEPRINT
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/repo_blueprint.yaml#required_directories
+      - evidence_id: P1_03_E003_MODULE_MAP
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/module_map.yaml#modules
     limitations:
       - This is an architecture/design claim, not an observed performance claim.
+
   - claim_id: P1_03_C02_RESULT_PATH_DEFINED
-    status: supported_by_design_artifact
-    statement: The path from dataset config to result ledger is explicit enough for downstream implementation and review.
+    claim_type: method
+    claim_text: The path from dataset config, operator registry, and workflow graph config to result ledger is explicit enough for downstream implementation and review.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/docs/manuscript.md#5-生成正式结果的最小路径
+    action: keep
     evidence_refs:
-      - docs/manuscript.md#5-生成正式结果的最小路径
-      - artifacts/repo_blueprint.yaml#entrypoints
-      - artifacts/module_map.yaml#edges
+      - evidence_id: P1_03_E004_MANUSCRIPT_RESULT_PATH
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/docs/manuscript.md#5-生成正式结果的最小路径
+      - evidence_id: P1_03_E005_BLUEPRINT_ENTRYPOINTS
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/repo_blueprint.yaml#entrypoints
+      - evidence_id: P1_03_E006_MODULE_EDGES
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/module_map.yaml#edges
     limitations:
       - Actual Stage C/D execution remains blocked until adapter preflight and selected backend gates pass.
-  - claim_id: P1_03_C03_NO_DUPLICATE_RESULT_TRUTH
-    status: guarded_limitation
-    statement: The blueprint prevents graph, dashboard, Canvas, review, or narrative report files from becoming duplicate metric or table truth.
+
+  - claim_id: P1_03_C05_PLANNER_PROVENANCE_BOUND
+    claim_type: method
+    claim_text: Planner/operator provenance is path-bound through configs/operators, configs/workflow_graphs, planner_normalization_trace.json, compiled_dag_manifest.json, and artifact_index.json.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/docs/manuscript.md#run-bundle-trace-contract
+    action: keep
     evidence_refs:
-      - docs/manuscript.md#7-不变量
-      - artifacts/repo_blueprint.yaml#quality_gates
+      - evidence_id: P1_03_E007_RUN_CONFIG_CONTRACT
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/repo_blueprint.yaml#run_config_contract
+      - evidence_id: P1_03_E008_OPERATOR_REGISTRY_CONTRACT
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/module_map.yaml#operator_registry_contract
+      - evidence_id: P1_03_E009_RUN_BUNDLE_TRACE_CONTRACT
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/module_map.yaml#run_bundle_trace_contract
+    limitations:
+      - This defines required provenance; downstream implementation must still enforce it in validate_artifacts.py.
+
+  - claim_id: P1_03_C06_FINAL_THRESHOLD_HANDOFF_BOUND
+    claim_type: method
+    claim_text: The repository blueprint is ready for node-specific final-threshold score review because it locks required-module ownership, config and operator truth, run-bundle evidence admission, ledger truth, duplicate-truth exclusions, and downstream blocker preservation.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/docs/manuscript.md#10-final-threshold-handoff-contract
+    action: keep
+    evidence_refs:
+      - evidence_id: P1_03_E014_FINAL_THRESHOLD_CONTRACT
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/repo_blueprint_final_threshold_contract.yaml
+      - evidence_id: P1_03_E015_REPO_BLUEPRINT_FINAL_THRESHOLD_POINTER
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/repo_blueprint.yaml#final_threshold_contract
+    limitations:
+      - This is score-readiness for repository-blueprint handoff only; selected backend, RM101 positive evidence, adapter preflight, Stage C/D rows, checklist closure, and final validator pass remain downstream blockers.
+
+  - claim_id: P1_03_C03_NO_DUPLICATE_RESULT_TRUTH
+    claim_type: limitation
+    claim_text: The blueprint prevents graph, dashboard, Canvas, review, or narrative report files from becoming duplicate metric or table truth.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/docs/manuscript.md#7-不变量
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P1_03_E010_MANUSCRIPT_INVARIANTS
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/docs/manuscript.md#7-不变量
+      - evidence_id: P1_03_E011_BLUEPRINT_QUALITY_GATES
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/repo_blueprint.yaml#quality_gates
     limitations:
       - Enforcement still depends on downstream validators and ledger discipline.
+
   - claim_id: P1_03_C04_NO_NEW_EXPERIMENT_RESULT
-    status: negative_scope_guard
-    statement: P1_03 introduces no new positive experimental result and does not promote Stage B partial rows into paper claims.
+    claim_type: limitation
+    claim_text: P1_03 introduces no new positive experimental result and does not promote Stage B partial rows into paper claims.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/docs/manuscript.md#1-节点范围
+    action: document_limitation
     evidence_refs:
-      - docs/manuscript.md#1-节点范围
-      - artifacts/negative_result_note.md
+      - evidence_id: P1_03_E012_MANUSCRIPT_SCOPE
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/docs/manuscript.md#1-节点范围
+      - evidence_id: P1_03_E013_NEGATIVE_RESULT_NOTE
+        evidence_type: revision_diff
+        source_ref: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/negative_result_note.md
     limitations:
       - Existing RM101 reject evidence remains unresolved outside this node.
 

@@ -22,6 +22,21 @@ decisions:
     rationale: Provider keys must remain in .env or process environment and never enter configs or artifacts.
     evidence_refs:
       - artifacts/repo_blueprint.yaml#secrets_policy
+  - decision_id: P1_03_KEEP_004
+    decision: keep
+    target: path_bound_operator_registry_and_planner_trace
+    rationale: OperatorRegistry is a versioned config input under configs/operators, and planner_normalization_trace.json is a required run-bundle artifact.
+    evidence_refs:
+      - artifacts/repo_blueprint.yaml#run_config_contract
+      - artifacts/module_map.yaml#operator_registry_contract
+      - artifacts/module_map.yaml#run_bundle_trace_contract
+  - decision_id: P1_03_KEEP_005
+    decision: keep
+    target: workflow_graph_path_boundary
+    rationale: Run configs must reference PHMGA workflow graph configs and must not reference scheduler graph, Canvas, or dashboard projections.
+    evidence_refs:
+      - artifacts/repo_blueprint.yaml#run_config_contract
+      - artifacts/module_map.yaml#workflow_graph_contract
   - decision_id: P1_03_DEFER_001
     decision: defer
     target: web_dashboard
@@ -40,3 +55,9 @@ decisions:
     rationale: P1_03 is a node-local blueprint, not a second scheduler or global pipeline controller.
     evidence_refs:
       - docs/manuscript.md#1-节点范围
+  - decision_id: P1_03_DISCARD_002
+    decision: discard
+    target: scheduler_graph_as_experiment_dag_input
+    rationale: backend/graph and graph_status are scheduler projections, not PHMGA experiment workflow graph configs.
+    evidence_refs:
+      - docs/manuscript.md#6-脚本与资产放置规则

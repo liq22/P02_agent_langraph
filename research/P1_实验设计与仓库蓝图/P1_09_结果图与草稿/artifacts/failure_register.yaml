@@ -1,0 +1,33 @@
+version: p1_09_failure_register_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_09_结果图与草稿
+
+failures_or_limitations:
+  - failure_id: P1_09_F001_UPSTREAM_CLAIM_MAP_UNREVIEWED
+    status: superseded_for_score_review
+    severity: medium
+    finding: P1_08 claim_map.yaml existed while P1_08 status.yaml was still stage seed at P1_09 authoring time; later P1_08 AI-002 final-threshold table-package review passed at 91.
+    impact: The historical seed-stage issue no longer blocks P1_09 node-local draft-figure score review, but the figure still must not be treated as a formal paper result.
+    mitigation: Keep the claim wording limited and require formal rows, variance, selected backend, and Stage C/D evidence before any formal figure lock.
+  - failure_id: P1_09_F002_NO_VARIANCE_OR_REPEAT_RUNS
+    status: open_limitation
+    severity: high
+    finding: The source ledger has one baseline row and one controlled attempt row only.
+    impact: Error bars, confidence intervals, and stability claims cannot be shown.
+    mitigation: Figure legend and manifest explicitly state that no variance evidence is available.
+  - failure_id: P1_09_F003_SYNTHETIC_OFFLINE_ONLY
+    status: open_limitation
+    severity: high
+    finding: P1_04/P1_05 evidence is synthetic Ottawa data with offline_stub mode only.
+    impact: The figure cannot support real-data generalization, RM101 resolution, or selected-backend readiness.
+    mitigation: Figure plan discards formal main-result and real-data figure variants for now.
+  - failure_id: P1_09_F004_PERFECT_SYNTHETIC_SCORE_AMBIGUITY
+    status: open_limitation
+    severity: medium
+    finding: The controlled attempt achieved 1.0 accuracy and 1.0 macro-F1 on a small synthetic split.
+    impact: The perfect score may reflect an easy fixture or split artifact rather than robust mechanism superiority.
+    mitigation: Treat the result as a keep signal only and require harder real-data stress tests downstream.
+
+negative_result_policy:
+  hidden_negative_results: false
+  limitations_promoted_to_positive_claims: false
+  unsupported_results_kept_visible: true

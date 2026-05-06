@@ -1,0 +1,123 @@
+{
+  "data": {
+    "key": "ottawa_synth",
+    "dataset_name": "OTTAWA_SYNTH",
+    "catalog": "synthetic",
+    "metadata_schema_version": "synth_v1",
+    "selected_channels": null,
+    "synthetic": {
+      "sampling_rate": 10000,
+      "length": 512,
+      "channels": 2,
+      "operating_condition": "synthetic_variable_speed"
+    },
+    "splits": {
+      "train_ids": [
+        "ottawa_synth_001",
+        "ottawa_synth_002",
+        "ottawa_synth_003",
+        "ottawa_synth_004"
+      ],
+      "val_ids": [
+        "ottawa_synth_005",
+        "ottawa_synth_006"
+      ],
+      "test_ids": [
+        "ottawa_synth_007",
+        "ottawa_synth_008"
+      ]
+    },
+    "labels": {
+      "ottawa_synth_001": 0,
+      "ottawa_synth_002": 1,
+      "ottawa_synth_003": 0,
+      "ottawa_synth_004": 1,
+      "ottawa_synth_005": 0,
+      "ottawa_synth_006": 1,
+      "ottawa_synth_007": 0,
+      "ottawa_synth_008": 1
+    },
+    "window": {
+      "window_size": 256,
+      "stride": 128,
+      "slice_mode": "sliding",
+      "drop_last_window": false
+    }
+  },
+  "experiment": {
+    "graph_path": "ml",
+    "user_instruction": "Generate a paper-ready PHM workflow from canonical metadata."
+  },
+  "model": {
+    "feature_ops": [
+      "feature.mean",
+      "feature.std",
+      "feature.rms"
+    ],
+    "transform_ops": [
+      "signal.normalize",
+      "signal.fft_mag"
+    ],
+    "ml": {
+      "algorithm": "logistic_regression",
+      "max_iter": 200,
+      "output_policy": "terminal_only"
+    },
+    "torch": {
+      "phase": "compiled",
+      "epochs": 12,
+      "learning_rate": 0.2,
+      "hidden_dim": 8,
+      "device": "auto",
+      "output_policy": "terminal_only",
+      "module_runtime": {
+        "enabled": false
+      },
+      "control": {
+        "default_mode": "fixed",
+        "tau": 1.0,
+        "attention_heads": 1,
+        "attention_dropout": 0.0
+      }
+    }
+  },
+  "project": {
+    "name": "PHMGA",
+    "version": "journal_thesis_rebuild"
+  },
+  "llm": {
+    "provider": "codex_cli",
+    "mode": "offline_stub",
+    "model": "gpt-5.3-codex",
+    "api_key_env": "",
+    "base_url": "",
+    "timeout_sec": 300,
+    "temperature": 0.0,
+    "max_tokens_structured": 800,
+    "max_tokens_report": 2000,
+    "http_referer": null,
+    "app_title": "PHMGA"
+  },
+  "runtime": {
+    "action": "run_case",
+    "workflow_mode": "supervisor_proving",
+    "output_dir": "/mnt/k/2_work/lqql_os/lqql_06_工作与项目/03_论文流水线/p02_agent_langraph/research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving",
+    "max_iterations": 1,
+    "min_depth": 2,
+    "min_width": 1,
+    "max_depth": 8,
+    "provider_retry_once": true,
+    "dataset_key": "ottawa_synth",
+    "dataset_name": "OTTAWA_SYNTH",
+    "graph_path": "ml",
+    "config_path": "<hydra>",
+    "config_name": "hydra_main"
+  },
+  "evaluation": {
+    "dag_quality": {
+      "enabled": false,
+      "use_proxy_probe": null,
+      "proxy_subset_per_split": 8
+    }
+  }
+}

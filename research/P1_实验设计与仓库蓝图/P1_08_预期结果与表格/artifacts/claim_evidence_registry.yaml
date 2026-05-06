@@ -1,0 +1,127 @@
+version: p1_08_claim_evidence_registry_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_08_预期结果与表格
+generated_at: 2026-05-05
+
+claims:
+  - claim_id: c1
+    claim_type: result
+    claim_text: The P1_08 table package can carry the existing synthetic/offline supervisor_proving signal only as a limited sanity-check row.
+    support_status: weak
+    protocol_support_status: supported_limited
+    support_status_vocabularies:
+      repository_claim_registry: weak
+      protocol_parser: supported_limited
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/docs/manuscript.md#Claim Alignment
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P1_08_E002_P1_05_HYPOTHESIS_STATUS
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+      - evidence_id: P1_08_E005_TABLE_PLAN
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+    boundary_label: preliminary_synthetic_only
+
+  - claim_id: c2
+    claim_type: limitation
+    claim_text: Formal PHMGA/Vibench result claims are table-eligible only after every formal eligibility gate passes.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/docs/manuscript.md#Table Strategy
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P1_08_E001_P1_07_PROTOCOL_MAP
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+      - evidence_id: P1_08_E003_P0_05_CONSTRAINT_RISK
+        evidence_type: table
+        source_ref: research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/artifacts/constraint_risk_map.yaml
+      - evidence_id: P1_08_E006_FAILURE_REGISTER
+        evidence_type: review_comment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/failure_register.yaml
+    boundary_label: protocol_ready_only
+
+  - claim_id: c3
+    claim_type: method
+    claim_text: Ablation and efficiency table rows require changed-factor, unchanged-control, budget, repeat, and uncertainty columns before positive interpretation.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/docs/manuscript.md#Required Columns
+    action: keep
+    evidence_refs:
+      - evidence_id: P1_08_E001_P1_07_PROTOCOL_MAP
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+      - evidence_id: P1_08_E005_TABLE_PLAN
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+    boundary_label: protocol_ready_only
+
+  - claim_id: c4
+    claim_type: limitation
+    claim_text: Negative, rejected, unclear, and blocked evidence has a required table location and cannot be hidden from denominators.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/docs/manuscript.md#Negative And Uncertain Results
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P1_08_E002_P1_05_HYPOTHESIS_STATUS
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+      - evidence_id: P1_08_E003_P0_05_CONSTRAINT_RISK
+        evidence_type: table
+        source_ref: research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/artifacts/constraint_risk_map.yaml
+      - evidence_id: P1_08_E006_FAILURE_REGISTER
+        evidence_type: review_comment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/failure_register.yaml
+    boundary_label: limitation
+
+  - claim_id: c5
+    claim_type: method
+    claim_text: Result-supporting table rows require repeat count, uncertainty interval, source artifact, and failure interpretation fields before result-level wording.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/docs/manuscript.md#Required Columns
+    action: keep
+    evidence_refs:
+      - evidence_id: P1_08_E001_P1_07_PROTOCOL_MAP
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+      - evidence_id: P1_08_E005_TABLE_PLAN
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+    boundary_label: protocol_ready_only
+
+  - claim_id: c6
+    claim_type: method
+    claim_text: The P1_08 table package is ready for node-local final-threshold score review because its table schemas, claim/evidence mappings, support-status bridge, formal gate fields, negative-evidence retention, and review response coverage are explicit.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/docs/manuscript.md#Final-Threshold-Score-Boundary
+    action: keep
+    evidence_refs:
+      - evidence_id: P1_08_E007_FINAL_THRESHOLD_TABLE_CONTRACT
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_final_threshold_contract.yaml
+      - evidence_id: P1_08_E005_TABLE_PLAN
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+    boundary_label: protocol_ready_only
+
+evidence:
+  - evidence_id: P1_08_E001_P1_07_PROTOCOL_MAP
+    path: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+    type: upstream_protocol_contract
+  - evidence_id: P1_08_E002_P1_05_HYPOTHESIS_STATUS
+    path: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+    type: upstream_evidence_boundary
+  - evidence_id: P1_08_E003_P0_05_CONSTRAINT_RISK
+    path: research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/artifacts/constraint_risk_map.yaml
+    type: upstream_constraint_boundary
+  - evidence_id: P1_08_E004_P1_09_DOWNSTREAM_FIGURE_REF
+    path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_manifest.yaml
+    type: downstream_compatibility_reference
+  - evidence_id: P1_08_E005_TABLE_PLAN
+    path: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+    type: local_table_plan
+  - evidence_id: P1_08_E006_FAILURE_REGISTER
+    path: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/failure_register.yaml
+    type: local_failure_register
+  - evidence_id: P1_08_E007_FINAL_THRESHOLD_TABLE_CONTRACT
+    path: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_final_threshold_contract.yaml
+    type: local_table_score_contract

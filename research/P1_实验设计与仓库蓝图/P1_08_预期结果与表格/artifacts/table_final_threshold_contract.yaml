@@ -1,0 +1,92 @@
+version: p1_08_table_final_threshold_contract_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_08_预期结果与表格
+generated_at: 2026-05-05
+contract_type: score_only_final_threshold_table_contract
+
+purpose: >-
+  Define the node-local score-review boundary for P1_08 after the prior
+  schema-bridge and table-column hard-fail findings were resolved. This
+  contract supports review of the table/claim planning package only; it does
+  not report observed formal results or make a global submission-ready claim.
+
+score_readiness_claim:
+  claim_id: c6
+  stable_claim_id: P1_08_C006_FINAL_THRESHOLD_TABLE_LOCK
+  evidence_id: P1_08_E007_FINAL_THRESHOLD_TABLE_CONTRACT
+  support_status: supported
+  statement: >-
+    P1_08 is score-ready for final-threshold node-local table-package review
+    because every planned table has parser-facing claim/evidence/source/status
+    fields, the limited synthetic signal uses a dual-vocabulary bridge, formal
+    rows remain gate-bound and future-required, negative/unclear evidence has a
+    first-class table location, and prior AI/H review comments are responded.
+  allowed_use: node_local_table_package_score_review
+  forbidden_use:
+    - observed_autoresearch_improvement_claim
+    - phmga_formal_result_claim
+    - selected_backend_evidence
+    - rm101_resolution_evidence
+    - stage_c_or_stage_d_pass_evidence
+    - final_submission_ready_claim
+
+effective_artifacts:
+  normative:
+    - docs/manuscript.md
+    - artifacts/table_plan.yaml
+    - artifacts/claim_map.yaml
+    - artifacts/claim_evidence_registry.yaml
+    - artifacts/failure_register.yaml
+    - artifacts/negative_result_note.md
+    - artifacts/keep_discard_ledger.yaml
+    - review/response.yaml
+
+prior_review_closure:
+  prior_review_id: external_reviewer_codex_p1_08_rereview_2026-05-05
+  prior_score: 88
+  prior_verdict: pass
+  hard_fail: false
+  blocking_issues: []
+  resolved_findings:
+    - finding_id: P1_08_REREVIEW_F001_SCHEMA_BRIDGE_RESOLVED
+      closure_artifacts:
+        - artifacts/claim_evidence_registry.yaml
+        - artifacts/claim_map.yaml
+        - artifacts/table_plan.yaml
+        - docs/manuscript.md
+    - finding_id: P1_08_REREVIEW_F002_TABLE_COLUMN_CONTRACT_RESOLVED
+      closure_artifacts:
+        - artifacts/table_plan.yaml
+        - artifacts/claim_map.yaml
+        - artifacts/claim_evidence_registry.yaml
+  response_coverage:
+    ai_001: responded_true_in_review_response_yaml
+    h_001: responded_true_in_review_response_yaml
+
+final_threshold_checklist:
+  table_denominator_policy_visible: true
+  c1_dual_vocabulary_bridge_visible: true
+  all_tables_have_claim_evidence_source_status_fields: true
+  formal_rows_keep_gate_fields_and_future_required_status: true
+  negative_unclear_rows_have_first_class_table_location: true
+  uncertainty_repeat_and_failure_fields_preregistered: true
+  p1_09_c1_downstream_compatibility_preserved: true
+  prior_ai_and_teammate_comments_responded: true
+  no_observed_result_claim: true
+  no_checklist_status_closure: true
+  no_p3_action_status_closure: true
+
+remaining_global_submission_blockers_outside_p1_08_score:
+  - P1_01-P1_05 checklist fields remain pending in canonical status files.
+  - P1_09, P3_01-P3_04, and P4_01-P4_07 still have below-90 scores.
+  - P3_04 revision actions still include blocked or planned statuses.
+  - selected_global_best_backend is not locked.
+  - RM101 positive selection-eligible evidence is not locked.
+  - PHMGA/Vibench adapter sample-level metadata-H5 alignment preflight remains pending.
+  - Stage C main-result rows and Stage D ablation rows have not passed.
+
+reviewer_instruction: >-
+  A distinct final-threshold reviewer may raise the P1_08 node-local score only
+  if the table package is sufficiently documented, consistent, complete,
+  parser-exercisable, negative-evidence-preserving, and review-closed within
+  this contract. The reviewer must keep global_submission_ready false unless
+  the repository-wide final validator actually passes.

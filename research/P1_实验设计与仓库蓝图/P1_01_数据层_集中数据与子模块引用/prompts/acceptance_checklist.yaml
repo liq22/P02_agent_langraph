@@ -15,57 +15,61 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: 数据从哪里来、以什么版本和许可存在？
-  status: pending
+  status: complete
 - item: 数据与代码/子模块如何绑定？
-  status: pending
+  status: complete
 - item: 是否满足可发现、可访问、可复用的最小要求？
-  status: pending
+  status: complete
 required_outputs:
 - path: 数据层描述
-  status: pending
+  status: complete
   description: 需由本节点形成或更新
 - path: 数据/子模块清单
-  status: pending
+  status: complete
   description: 需由本节点形成或更新
 - path: 最小 provenance 说明
-  status: pending
+  status: complete
   description: 需由本节点形成或更新
 - path: artifacts/claim_evidence_registry.yaml
+  status: complete
   description: profile-required local artifact
 - path: artifacts/failure_register.yaml
+  status: complete
   description: profile-required local artifact
 - path: artifacts/negative_result_note.md
+  status: complete
   description: profile-required local artifact
 - path: artifacts/keep_discard_ledger.yaml
+  status: complete
   description: profile-required local artifact
 quality_checks:
 - item: 围绕 baseline、metric、protocol、reproducibility、artifact 完整性组织内容
-  status: pending
+  status: complete
 - item: 明确 documented / consistent / complete / exercisable 的最低要求
-  status: pending
+  status: complete
 - item: 强调 metadata、version、license、access、provenance
-  status: pending
+  status: complete
 - item: artifact 需 documented/consistent/complete/exercisable
-  status: pending
+  status: complete
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: complete
 handoff_ready_if:
 - item: 数据来源与版本明确
-  status: pending
+  status: complete
 - item: 子模块引用关系明确
-  status: pending
+  status: complete
 - item: 最小复现所需的数据与依赖已说明
-  status: pending
+  status: complete
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: complete
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: complete
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: complete
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: complete
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: complete
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -116,17 +120,17 @@ external_review_gate:
   - artifacts/keep_discard_ledger.yaml
 author_exit:
 - item: 'claim_evidence_ids_are_explicit_or_gap_is_reported: true'
-  status: pending
+  status: complete
 - item: 'negative_or_failed_results_recorded: true'
-  status: pending
+  status: complete
 - item: 'protected_paths_respected: true'
-  status: pending
+  status: complete
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: complete
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: complete
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: complete
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: complete

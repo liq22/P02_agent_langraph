@@ -1,0 +1,89 @@
+version: p1_07_protocol_final_threshold_contract_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_07_优化目标_任务_评测协议
+generated_at: 2026-05-05
+contract_type: score_only_final_threshold_protocol_contract
+
+purpose: >-
+  Define the node-local evidence boundary under which P1_07 may be re-reviewed
+  against the final submission score threshold while remaining protocol-ready
+  only. This contract does not execute formal rows, lock a selected backend, or
+  claim final submission readiness.
+
+score_readiness_claim:
+  claim_id: P1_07_C009_FINAL_THRESHOLD_PROTOCOL_LOCK
+  evidence_id: P1_07_E009_FINAL_THRESHOLD_CONTRACT
+  support_status: supported_limited
+  statement: >-
+    P1_07 is score-ready for a final-threshold protocol-package review because
+    the effective v3 protocol locks upstream traceability, preregistered
+    repeat/budget constants, parser-readable workflow and formal ledger
+    contracts, stop conditions, downgrade rules, and response coverage for prior
+    reviewer comments.
+  allowed_use: node_local_protocol_score_review
+  forbidden_use:
+    - observed_autoresearch_improvement_claim
+    - phmga_formal_result_claim
+    - selected_backend_evidence
+    - rm101_resolution_evidence
+    - stage_c_or_stage_d_pass_evidence
+    - final_submission_ready_claim
+
+effective_artifacts:
+  normative:
+    - docs/manuscript.md#v3-review-fix-lock
+    - artifacts/protocol_map.yaml
+    - artifacts/experiment_rigor_plan.yaml
+    - artifacts/gate_report.md
+    - review/response.yaml
+  non_normative_history:
+    - docs/manuscript.md#legacy-context
+    - artifacts/gate_report.md#legacy-gate-report-context
+
+prior_review_closure:
+  prior_review_id: EXTERNAL-AI-001-REREVIEW
+  prior_score: 88
+  prior_verdict: pass
+  hard_fail: false
+  required_fixes: []
+  resolved_prior_hard_fails:
+    - claim_id: P1_07_C007_UPSTREAM_TRACEABILITY
+      evidence_id: P1_07_E007_UPSTREAM_EVIDENCE_PATHS
+      closure_artifact: artifacts/protocol_map.yaml
+    - claim_id: P1_07_C004_UNCERTAINTY_REQUIRED
+      evidence_id: P1_07_E004_STATISTICS_PLAN
+      closure_artifact: artifacts/experiment_rigor_plan.yaml
+    - claim_id: P1_07_C008_METRIC_PARSER_SCHEMA
+      evidence_id: P1_07_E008_METRIC_LEDGER_CONTRACT
+      closure_artifact: artifacts/protocol_map.yaml
+  response_coverage:
+    ai_001: responded_true_in_review_response_yaml
+    h_001: responded_true_in_review_response_yaml
+
+final_threshold_checklist:
+  upstream_traceability_current: true
+  normative_v3_artifacts_identified: true
+  legacy_sections_demoted_to_non_normative_history: true
+  repeat_budget_contract_preregistered: true
+  workflow_metric_parser_contract_preregistered: true
+  formal_metric_parser_contract_preregistered: true
+  stop_conditions_and_downgrade_rules_preregistered: true
+  prior_ai_and_teammate_comments_responded: true
+  no_new_execution_claim: true
+  no_checklist_status_closure: true
+  no_p3_action_status_closure: true
+
+remaining_global_submission_blockers_outside_p1_07_score:
+  - P1_01-P1_05 checklist fields remain pending in canonical status files.
+  - P1_08, P1_09, P3_01-P3_04, and P4_01-P4_07 still have below-90 scores.
+  - P3_04 revision actions still include blocked or planned statuses.
+  - selected_global_best_backend is not locked.
+  - RM101 positive selection-eligible evidence is not locked.
+  - PHMGA/Vibench adapter sample-level metadata-H5 alignment preflight remains pending.
+  - Stage C main-result rows and Stage D ablation rows have not passed.
+
+reviewer_instruction: >-
+  A distinct final-threshold reviewer may raise the node-local score only if the
+  protocol package is sufficiently documented, consistent, complete,
+  exercisable, and review-closed within this contract. The reviewer must keep
+  global_submission_ready false unless the repository-wide final validator
+  actually passes.

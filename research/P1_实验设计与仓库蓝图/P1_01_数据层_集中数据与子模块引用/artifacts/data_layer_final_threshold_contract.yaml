@@ -1,0 +1,119 @@
+version: p1_01_data_layer_final_threshold_contract_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
+generated_at: 2026-05-05
+purpose: >-
+  Define the node-specific final-threshold standard for P1_01 as a data
+  lineage, Vibench read-boundary, PHMGA submodule-binding, and result-source
+  responsibility node. The node can pass its score threshold when these
+  boundaries are auditable and no downstream evidence is overclaimed.
+
+node_specific_pass_question: >-
+  Has P1_01 locked the data source, storage boundary, Vibench read-only role,
+  PHMGA downstream ownership, submodule reference, result-source admission
+  rules, secret/provider boundary, and negative/reject-evidence blockers well
+  enough for downstream PHMGA preflight and manuscript nodes to consume?
+
+locked_node_facts:
+  data_scope:
+    data_root: /mnt/k/D01_vibench
+    storage_policy: external_to_repo
+    large_files_committed_to_repo: false
+    canonical_metadata: metadata.xlsx
+    formal_h5_files:
+      - RM_017_Ottawa19.h5
+      - RM_101_THU_GEARBOX.h5
+    extension_data_role: recorded_not_blocking_initial_submission
+    evidence_source: artifacts/data_lineage.yaml
+  vibench_boundary:
+    role: read_only_data_catalog_and_signal_access
+    allowed_scope:
+      - metadata_loading
+      - reader_selection
+      - H5_raw_signal_access
+      - cache_materialization
+      - metadata_H5_alignment_audit
+    forbidden_as_formal_truth:
+      - Vibench_task_dataset_wrapper
+      - Vibench_sampler
+      - Vibench_DataLoader_training_path
+      - Vibench_trainer_or_evaluator_output
+    evidence_sources:
+      - artifacts/vibench_data_factory_binding.yaml
+      - artifacts/data_reading_boundary.yaml
+  phmga_boundary:
+    owns:
+      - canonical_metadata_schema
+      - DatasetProtocol
+      - train_val_test_split
+      - window_slicing
+      - DAG workflow
+      - bridge compilation
+      - ML/Torch evaluation paths
+      - metrics
+      - reports
+      - result_ledger
+      - main_tables
+    submodule_ref: artifacts/submodule_ref.yaml
+    handoff_ref: artifacts/phmga_data_protocol_handoff.yaml
+  result_admission:
+    selected_global_best_backend_locked: false
+    stage_c_main_rows_passed: false
+    stage_d_ablation_rows_passed: false
+    policy: >-
+      Proving lane, simple qualification, partial Stage B rows, reject rows,
+      transport failures, and planner-timeout rows cannot enter main result
+      claims. Main tables require selected backend lock, artifact contract pass,
+      result_md, artifact_dir, ledger row, main table row, PHMGA commit, data
+      manifest, and Vibench read bundle.
+    evidence_sources:
+      - artifacts/result_source_map.yaml
+      - artifacts/failure_register.yaml
+      - artifacts/negative_result_note.md
+      - artifacts/keep_discard_ledger.yaml
+
+node_vs_global_readiness:
+  p1_01_may_claim:
+    - data lineage and external storage boundary are auditable
+    - Vibench is restricted to read/audit responsibility
+    - PHMGA owns protocol, split/window, DAG, evaluation, reports, ledger, and tables
+    - PHMGA submodule reference is recorded for downstream result traceability
+    - formal result claims remain blocked until selected backend and Stage C/D rows pass
+  p1_01_must_not_claim:
+    - full sample-level metadata-H5 alignment has passed in this node
+    - adapter preflight is complete
+    - selected_global_best_backend is locked
+    - Stage C/D rows are accepted
+    - partial Stage B or reject evidence supports manuscript main results
+    - P1_01 checklist status blockers are closed
+    - final submission validator passes
+
+reviewer_acceptance_criteria:
+  - P1_01 may pass the node-specific final score threshold if every data/result
+    claim has an evidence source, responsibility owner, downstream admission
+    gate, and blocker-preserving downgrade rule.
+  - P1_01 should fail the node-specific threshold if data files are treated as
+    committed repository truth, Vibench training/evaluation outputs are treated
+    as PHMGA formal results, or partial/reject Stage B evidence is promoted into
+    manuscript main-result claims.
+  - P1_01 should not be penalized for missing full adapter preflight, selected
+    backend lock, Stage C/D rows, or final validator pass when those are
+    explicitly preserved as downstream blockers and not used as support.
+  - P1_01 score re-review must not close canonical checklist fields; checklist
+    closure remains a separate explicitly approved status operation.
+
+global_submission_status:
+  global_submission_ready: false
+  remaining_global_blocker_classes:
+    - P1_01-P1_05 checklist fields remain incomplete until explicit approval
+    - P1/P3/P4 below-90 score nodes remain
+    - P3_04 action statuses remain blocked or planned
+    - selected backend and Stage C/D formal evidence remain pending
+    - final validator does not pass
+
+author_exit:
+  data_lineage_locked: true
+  vibench_read_boundary_locked: true
+  phmga_downstream_ownership_locked: true
+  result_admission_rules_locked: true
+  downstream_evidence_not_overclaimed: true
+  checklist_status_not_closed_by_this_contract: true

@@ -1,8 +1,28 @@
 experiments:
   - exp_id: quick_check_001
-    hypothesis: 新特征是否优于基线
+    hypothesis: 新特征或核心机制是否优于同 split、同 seed、同 metric parser 下的基线
     dataset_ref: ../P1_01_数据层_集中数据与子模块引用
-    protocol_ref: ../P1_07_优化目标_任务_评测协议
+    protocol_ref: ../P1_02_伪代码
+    contract_ref: artifacts/execution_contract.yaml
+    contract_mode: executable
+    baseline_id: P1_04_BASELINE_001
+    attempt_id: P1_04_ATTEMPT_001
+    single_changed_factor: replace simple_fullchain baseline with supervisor_proving plan-execute-compile-verify path
+    primary_metric: accuracy
+    metric_direction: higher_is_better
+    keep_rule: controlled_attempt_accuracy > baseline_accuracy
+    discard_rule: controlled_attempt_accuracy <= baseline_accuracy or either row cannot run/parse
+    current_status: keep_limited_synthetic_signal
+    baseline_result:
+      test_accuracy: 0.8333333333333334
+      test_macro_f1: 0.8285714285714285
+      output_dir: artifacts/auto_experiment/runs/baseline_simple
+    controlled_attempt_result:
+      test_accuracy: 1.0
+      test_macro_f1: 1.0
+      output_dir: artifacts/auto_experiment/runs/attempt_supervisor_proving
+    observed_delta_accuracy: 0.16666666666666663
+    limitation: synthetic offline evidence only; not Stage C/D formal paper evidence
     budget:
       max_hours: 2
       max_gpu: 1

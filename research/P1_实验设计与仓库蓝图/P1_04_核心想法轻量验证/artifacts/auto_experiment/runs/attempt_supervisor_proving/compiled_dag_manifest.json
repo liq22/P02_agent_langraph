@@ -1,0 +1,379 @@
+{
+  "execution_nodes": [
+    {
+      "node_id": "ch1",
+      "op_uid": "input.signal",
+      "kind": "input",
+      "parents": [],
+      "input_bindings": {},
+      "params": {
+        "channel_index": 0
+      },
+      "channel_index": 0
+    },
+    {
+      "node_id": "ch2",
+      "op_uid": "input.signal",
+      "kind": "input",
+      "parents": [],
+      "input_bindings": {},
+      "params": {
+        "channel_index": 1
+      },
+      "channel_index": 1
+    },
+    {
+      "node_id": "hilbert_envelope_01_ch1",
+      "op_uid": "signal.hilbert_envelope",
+      "kind": "transform",
+      "parents": [
+        "ch1"
+      ],
+      "input_bindings": {},
+      "params": {},
+      "channel_index": null
+    },
+    {
+      "node_id": "fft_03_ch1",
+      "op_uid": "signal.fft_mag",
+      "kind": "transform",
+      "parents": [
+        "ch1"
+      ],
+      "input_bindings": {},
+      "params": {},
+      "channel_index": null
+    },
+    {
+      "node_id": "fft_05_ch2",
+      "op_uid": "signal.fft_mag",
+      "kind": "transform",
+      "parents": [
+        "ch2"
+      ],
+      "input_bindings": {},
+      "params": {},
+      "channel_index": null
+    },
+    {
+      "node_id": "crest_factor_07_ch2",
+      "op_uid": "feature.crest_factor",
+      "kind": "feature",
+      "parents": [
+        "ch2"
+      ],
+      "input_bindings": {},
+      "params": {},
+      "channel_index": null
+    },
+    {
+      "node_id": "kurtosis_02_hilbert_envelope_01_ch1",
+      "op_uid": "feature.kurtosis",
+      "kind": "feature",
+      "parents": [
+        "hilbert_envelope_01_ch1"
+      ],
+      "input_bindings": {},
+      "params": {},
+      "channel_index": null
+    },
+    {
+      "node_id": "rms_04_fft_03_ch1",
+      "op_uid": "feature.rms",
+      "kind": "feature",
+      "parents": [
+        "fft_03_ch1"
+      ],
+      "input_bindings": {},
+      "params": {},
+      "channel_index": null
+    },
+    {
+      "node_id": "rms_06_fft_05_ch2",
+      "op_uid": "feature.rms",
+      "kind": "feature",
+      "parents": [
+        "fft_05_ch2"
+      ],
+      "input_bindings": {},
+      "params": {},
+      "channel_index": null
+    }
+  ],
+  "output_specs": [
+    {
+      "output_node_id": "crest_factor_07_ch2",
+      "output_kind": "feature"
+    },
+    {
+      "output_node_id": "kurtosis_02_hilbert_envelope_01_ch1",
+      "output_kind": "feature"
+    },
+    {
+      "output_node_id": "rms_04_fft_03_ch1",
+      "output_kind": "feature"
+    },
+    {
+      "output_node_id": "rms_06_fft_05_ch2",
+      "output_kind": "feature"
+    }
+  ],
+  "output_policy": "terminal_only",
+  "manifest": {
+    "dag_hash": "019fb559630d574579f914e2574fbd27b2b8181ba9d552e6ae68f6472fe3fbd6",
+    "topo_order": [
+      "ch1",
+      "ch2",
+      "hilbert_envelope_01_ch1",
+      "fft_03_ch1",
+      "fft_05_ch2",
+      "crest_factor_07_ch2",
+      "kurtosis_02_hilbert_envelope_01_ch1",
+      "rms_04_fft_03_ch1",
+      "rms_06_fft_05_ch2"
+    ],
+    "nodes": [
+      {
+        "node_id": "ch1",
+        "op_uid": "input.signal",
+        "kind": "input",
+        "operator_category": "INPUT",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            256
+          ]
+        }
+      },
+      {
+        "node_id": "ch2",
+        "op_uid": "input.signal",
+        "kind": "input",
+        "operator_category": "INPUT",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            256
+          ]
+        }
+      },
+      {
+        "node_id": "hilbert_envelope_01_ch1",
+        "op_uid": "signal.hilbert_envelope",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            256
+          ]
+        }
+      },
+      {
+        "node_id": "fft_03_ch1",
+        "op_uid": "signal.fft_mag",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            129
+          ]
+        }
+      },
+      {
+        "node_id": "fft_05_ch2",
+        "op_uid": "signal.fft_mag",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            129
+          ]
+        }
+      },
+      {
+        "node_id": "crest_factor_07_ch2",
+        "op_uid": "feature.crest_factor",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1
+          ]
+        }
+      },
+      {
+        "node_id": "kurtosis_02_hilbert_envelope_01_ch1",
+        "op_uid": "feature.kurtosis",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1
+          ]
+        }
+      },
+      {
+        "node_id": "rms_04_fft_03_ch1",
+        "op_uid": "feature.rms",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            129
+          ],
+          "out": [
+            1
+          ]
+        }
+      },
+      {
+        "node_id": "rms_06_fft_05_ch2",
+        "op_uid": "feature.rms",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            129
+          ],
+          "out": [
+            1
+          ]
+        }
+      }
+    ],
+    "path_type": "ml",
+    "warnings": []
+  }
+}

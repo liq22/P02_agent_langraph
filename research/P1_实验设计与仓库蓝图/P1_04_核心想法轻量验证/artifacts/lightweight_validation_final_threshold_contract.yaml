@@ -1,0 +1,135 @@
+version: p1_04_lightweight_validation_final_threshold_contract_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_04_核心想法轻量验证
+generated_at: 2026-05-05
+purpose: >-
+  Define the node-specific final-threshold standard for P1_04 as a bounded
+  lightweight validation node. The node can pass its score threshold when the
+  baseline, controlled attempt, metric parser, replay trace, artifact paths,
+  keep/discard decision, and promotion limits are auditable for P1_04/P1_05
+  handoff without claiming formal Stage C/D or submission-ready evidence.
+
+node_specific_pass_question: >-
+  Has P1_04 produced a replayable, baseline-first, single-factor synthetic
+  offline mechanism check whose evidence is internally consistent and whose
+  limitations prevent promotion into selected-backend, RM101, Stage C/D, or
+  final-submission claims?
+
+upstream_locks:
+  - source_path: research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/data_layer_final_threshold_contract.yaml
+    role: data_lineage_and_phmga_result_admission_boundary
+  - source_path: research/P1_实验设计与仓库蓝图/P1_02_伪代码/artifacts/interface_final_threshold_contract.yaml
+    role: executable_interface_metric_artifact_ledger_truth_boundary
+  - source_path: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/repo_blueprint_final_threshold_contract.yaml
+    role: repository_blueprint_and_duplicate_truth_exclusion_boundary
+
+execution_scope:
+  mode: bounded_offline_synthetic_execution
+  phmga_repo_path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+  source_mode: synthetic
+  llm_mode: offline_stub
+  external_provider_calls_made: false
+  formal_stage_c_or_d_evidence: false
+  submission_ready_performance_evidence: false
+
+observed_rows:
+  baseline:
+    row_id: baseline_simple
+    preset: ottawa_synth_ml_simple
+    workflow_mode: simple_fullchain
+    artifact_dir: artifacts/auto_experiment/runs/baseline_simple
+    metrics_path: artifacts/auto_experiment/runs/baseline_simple/metrics.json
+    test_accuracy: 0.8333333333333334
+    test_macro_f1: 0.8285714285714285
+    exit_code: 0
+  controlled_attempt:
+    row_id: attempt_supervisor_proving
+    preset: ottawa_ml_codex_proving
+    data_override: ottawa_synth
+    llm_mode: offline_stub
+    workflow_mode: supervisor_proving
+    artifact_dir: artifacts/auto_experiment/runs/attempt_supervisor_proving
+    metrics_path: artifacts/auto_experiment/runs/attempt_supervisor_proving/metrics.json
+    test_accuracy: 1.0
+    test_macro_f1: 1.0
+    exit_code: 0
+  single_changed_factor: replace simple_fullchain baseline with supervisor_proving plan-execute-compile-verify path while keeping synthetic Ottawa data, graph_path=ml, offline_stub, and metric parser fixed
+  observed_delta_accuracy: 0.16666666666666663
+  decision: keep_limited_synthetic_signal
+
+replay_trace:
+  status: complete_for_bounded_p1_04_p1_05_handoff
+  source_path: logs/auto_experiment/latest_run.log
+  required_fields_present:
+    - cwd
+    - python
+    - baseline_command
+    - baseline_exit_code
+    - controlled_attempt_command
+    - controlled_attempt_exit_code
+    - determinism_boundary
+  deterministic_boundary: synthetic Ottawa config with offline_stub; no external provider call; no formal Stage C/D claim
+  limitation: Full formal promotion still requires real-data protocol rows, repeated-run or variance evidence, selected-backend lock, and downstream Stage C/D acceptance.
+
+artifact_consistency:
+  results_tsv: artifacts/auto_experiment/results.tsv
+  consistency_checks:
+    - results_tsv baseline test accuracy equals baseline metrics.json test.accuracy
+    - results_tsv baseline test macro_f1 equals baseline metrics.json test.macro_f1
+    - results_tsv controlled attempt test accuracy equals attempt metrics.json test.accuracy
+    - results_tsv controlled attempt test macro_f1 equals attempt metrics.json test.macro_f1
+    - both rows have finite test.accuracy and test.macro_f1
+    - both rows have artifact directories recorded in results.tsv and gate_report.md
+  metric_truth: metrics_json_for_each_row
+  decision_truth: execution_contract_keep_discard_rule_plus_results_tsv
+  forbidden_truth_sources:
+    - narrative final_report without metrics refs
+    - review files
+    - graph or dashboard projections
+    - partial formal provider rows
+    - reject evidence rows
+
+node_vs_global_readiness:
+  p1_04_may_claim:
+    - baseline-first lightweight synthetic/offline validation completed
+    - controlled attempt improved the declared primary metric under the bounded synthetic setup
+    - replay trace is sufficient for P1_04/P1_05 handoff
+    - result is a limited mechanism signal and not formal performance evidence
+  p1_04_must_not_claim:
+    - selected_global_best_backend is locked
+    - RM101 Stage B reject evidence is resolved
+    - adapter sample-level metadata-H5 preflight is complete
+    - real-data Stage C main-result rows have passed
+    - Stage D ablation rows have passed
+    - P1_04 checklist/status fields are closed by this score review
+    - final validator passes
+
+reviewer_acceptance_criteria:
+  - P1_04 may pass the node-specific final score threshold if the reviewer can
+    trace baseline and controlled rows from declared command, cwd, exit code,
+    metrics.json, results.tsv, gate report, and keep/discard decision without
+    finding a duplicate metric truth source.
+  - P1_04 should fail if the package promotes the synthetic/offline signal into
+    Stage C/D, selected-backend, RM101 positive, or submission-ready evidence.
+  - P1_04 should not be penalized for missing formal real-data rows, variance
+    evidence, selected backend, adapter preflight, P3 action closure, checklist
+    closure, or final validator pass when those are explicitly preserved as
+    downstream blockers and not used as support.
+  - P1_04 score re-review must not close canonical checklist fields; checklist
+    closure remains a separate explicitly approved status operation.
+
+global_submission_status:
+  global_submission_ready: false
+  remaining_global_blocker_classes:
+    - P1_01-P1_05 checklist fields remain incomplete until explicit approval
+    - P1/P3/P4 below-90 score nodes remain
+    - P3_04 action statuses remain blocked or planned
+    - selected backend and Stage C/D formal evidence remain pending
+    - final validator does not pass
+
+author_exit:
+  bounded_replay_trace_locked: true
+  baseline_and_attempt_metrics_consistent: true
+  single_factor_boundary_locked: true
+  synthetic_offline_promotion_limits_locked: true
+  downstream_evidence_not_overclaimed: true
+  checklist_status_not_closed_by_this_contract: true

@@ -1,0 +1,29 @@
+version: p1_09_figure_render_protocol_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_09_结果图与草稿
+figure_id: fig_main_synthetic_signal
+
+inputs:
+  plotted_data: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/figures/fig_main_synthetic_signal_data.tsv
+  source_ledger: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+  result_registry: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml
+
+renderer:
+  script: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/tools/render_fig_main_synthetic_signal.py
+  language: python3
+  dependencies: standard_library_only
+  deterministic: true
+  command_from_repo_root: python3 research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/tools/render_fig_main_synthetic_signal.py
+
+outputs:
+  svg: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/figures/fig_main_synthetic_signal.svg
+
+rendering_policy:
+  no_smoothing_or_interpolation: true
+  no_error_bars_without_variance: true
+  no_hidden_data_rows: true
+  values_plotted_directly_from_tsv: true
+
+reviewer_fix:
+  source_review_id: EXTERNAL-AI-001
+  issue: SVG rendering lacked a deterministic generation script, plotting protocol, or config path.
+  resolution: Added this protocol and a dependency-free renderer that regenerates the SVG from the node-local TSV.

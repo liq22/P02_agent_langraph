@@ -1,21 +1,39 @@
-review_id: EXTERNAL-AI-001
-review_complete: false
-reviewer_agent_id: <pending-distinct-agent>
-reviewer_skill: external_node_reviewer
+review_id: AI-002
+review_complete: true
+reviewer_agent_id: final-threshold-reviewer-p1-04-002
+reviewer_skill: score_only_final_threshold_reviewer
 reviewed_node_path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证
-rubric_path: prompts/review_rubric.yaml
-rubric_version: nature_node_review_v1
-overall_score: null
-overall_verdict: revise
+rubric_version: p1_04_score_only_final_threshold_v1
+overall_score: 92
+overall_verdict: pass
 hard_fail: false
 dimension_scores:
-  originality_novelty: null
-  scientific_importance: null
-  evidence_technical_soundness: null
-  reproducibility_transparency: null
-  broad_interest_story_clarity: null
-  review_robustness: null
+  originality_novelty: 18
+  scientific_importance: 18
+  evidence_technical_soundness: 23
+  reproducibility_transparency: 14
+  broad_interest_story_clarity: 9
+  review_robustness: 10
+dimension_rationales:
+  originality_novelty: Meaningful node-local supervisor_proving versus simple_fullchain mechanism check, bounded as validation rather than novelty proof.
+  scientific_importance: Useful for P1_04/P1_05 lightweight handoff and PHMGA workflow triage, with impact limited to synthetic/offline scope.
+  evidence_technical_soundness: Baseline and controlled attempt both exited 0; finite metrics in results.tsv match both metrics.json files; keep rule is applied to the declared primary metric.
+  reproducibility_transparency: latest_run.log now records cwd, Python path, exact commands, exit codes, artifact outputs, and the synthetic/offline determinism boundary.
+  broad_interest_story_clarity: Manuscript, gate report, matrix, and contract clearly state baseline, metric, single changed factor, keep/discard rule, result, and limitation.
+  review_robustness: Prior AI and human reviews are preserved; downstream/global blockers are explicitly excluded from P1_04 score evidence.
 blocking_issues: []
-required_actions: []
-downstream_ready: false
-independence_confirmed: false
+required_actions:
+  - No P1_04 score-blocking action is required for the bounded lightweight synthetic/offline validation threshold.
+  - Do not promote this evidence into selected-backend, RM101-positive, Stage C/D, formal paper, or submission-ready claims.
+  - Keep checklist/status closure, P3 action closure, final validator pass, real-data Stage C rows, and Stage D ablation rows as downstream/global work outside this score-only review.
+final_threshold_verdict: pass_node_local_score_only_final_threshold
+final_submission_threshold_met: true
+downstream_ready: true
+checklist_status_closed: false
+global_submission_ready: false
+independence_confirmed: true
+comments: >
+  Score-only final-threshold pass is limited to P1_04 lightweight synthetic/offline
+  validation and P1_04/P1_05 handoff. The reviewed package must not be treated
+  as formal Stage C/D evidence, selected-backend evidence, RM101-resolution
+  evidence, adapter-preflight evidence, or submission-ready performance evidence.

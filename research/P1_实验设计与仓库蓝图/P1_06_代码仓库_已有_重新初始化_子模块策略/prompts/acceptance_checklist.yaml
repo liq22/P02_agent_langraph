@@ -15,46 +15,46 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: 哪些代码应放主仓，哪些应接入，哪些应子模块？
-  status: pending
+  status: done
 - item: 如何降低未来维护成本与版本混乱？
-  status: pending
+  status: done
 - item: 如何保证最小改动和可回滚？
-  status: pending
+  status: done
 required_outputs:
 - path: 仓库策略摘要
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: 子策略对照表
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 quality_checks:
 - item: 围绕 baseline、metric、protocol、reproducibility、artifact 完整性组织内容
-  status: pending
+  status: done
 - item: 明确 documented / consistent / complete / exercisable 的最低要求
-  status: pending
+  status: done
 - item: 最小侵入、版本清楚、可回滚、可协作
-  status: pending
+  status: done
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: done
 - item: 父节点只做 coordination/routing/summary，不替 leaf 子节点产出证据或正文。
-  status: pending
+  status: done
 handoff_ready_if:
 - item: 四个子策略节点关系清晰
-  status: pending
+  status: done
 - item: 主仓/外部仓/子模块边界合理
-  status: pending
+  status: done
 - item: 分支修改策略明确
-  status: pending
+  status: done
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: done
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -76,9 +76,9 @@ stop_if:
   status: pending
 review_notes:
 - slot: 1
-  note: <待填写>
+  note: External AI reviewer passed P1_06 with score 86, no hard fail, downstream_ready true for routing-parent use only, and no required actions.
 - slot: 2
-  note: <待填写>
+  note: User-authorized Claude Code teammate review passed P1_06 with score 87, confirmed the repository/submodule/data-secret boundaries, and retained PHMGA dirty-worktree and downstream formal-evidence blockers.
 external_review_gate:
   required: true
   reviewer_role: external_node_reviewer
@@ -100,13 +100,13 @@ external_review_gate:
   - 子策略对照表
 author_exit:
 - item: 'child_frontier_checked: true'
-  status: pending
+  status: done
 - item: 'route_child_first_or_frontier_gap_reported: true'
-  status: pending
+  status: done
 - item: 'no_leaf_content_authored_in_parent: true'
-  status: pending
+  status: done
 node_close:
 - item: 'all_required_children_closed_or_blocked_with_reason: true'
-  status: pending
+  status: done
 - item: 'parent_rollup_consistent_with_child_artifacts: true'
-  status: pending
+  status: done

@@ -1,0 +1,138 @@
+version: p1_03_repo_blueprint_final_threshold_contract_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_03_仓库蓝图
+generated_at: 2026-05-05
+purpose: >-
+  Define the node-specific final-threshold standard for P1_03 as a repository
+  blueprint and implementation handoff node. The node can pass its score
+  threshold when the formal-result repository path, ownership boundaries,
+  artifact admission gates, and duplicate-truth exclusions are reviewable
+  without claiming that downstream formal evidence has already passed.
+
+node_specific_pass_question: >-
+  Has P1_03 converted the P1_01 data boundary and P1_02 interface contract into
+  a minimal, auditable repository blueprint where every required module,
+  config, script, run artifact, ledger row, reject path, and deferred surface has
+  exactly one owner and one truth role?
+
+upstream_locks:
+  - source_path: research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/data_layer_final_threshold_contract.yaml
+    role: data_lineage_vibench_phmga_result_admission_boundary
+  - source_path: research/P1_实验设计与仓库蓝图/P1_02_伪代码/artifacts/interface_final_threshold_contract.yaml
+    role: executable_pseudocode_interface_artifact_ledger_truth_boundary
+  - source_path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/baseline_budget_protocol.yaml
+    role: equal_budget_and_baseline_scope_guard
+  - source_path: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/route_readiness_contract.yaml
+    role: downstream_stage_owner_stop_fallback_contract
+
+blueprint_readiness:
+  required_module_path_locked:
+    modules:
+      - data_read_boundary
+      - protocol_builder
+      - planner_bridge
+      - dag_compiler
+      - runner
+      - metrics_parser
+      - ledger_writer
+    pass_rule: Seven required responsibilities cover the dataset-to-ledger path without adding UI, paper export, notebook, or global orchestration modules.
+    evidence_sources:
+      - docs/manuscript.md#2-必须模块
+      - artifacts/repo_blueprint.yaml#required_directories
+      - artifacts/module_map.yaml#modules
+  config_and_operator_truth_locked:
+    config_roots:
+      - configs/datasets
+      - configs/runs
+      - configs/providers
+      - configs/operators
+      - configs/workflow_graphs
+    pass_rule: Config files are declared inputs only; provider credentials are external, operator registries are planner/compiler inputs, and workflow graph configs cannot point to scheduler, Canvas, dashboard, or web projections.
+    evidence_sources:
+      - artifacts/repo_blueprint.yaml#run_config_contract
+      - artifacts/module_map.yaml#operator_registry_contract
+      - artifacts/module_map.yaml#workflow_graph_contract
+  run_bundle_and_ledger_truth_locked:
+    required_artifacts:
+      - validated_dag.json
+      - compiled_dag_manifest.json
+      - planner_normalization_trace.json
+      - feature_pipeline.json
+      - feature_list.json
+      - feature_separability_summary.json
+      - artifact_index.json
+      - metrics.json
+      - predictions.json
+      - importance.json
+      - workflow_state.json
+      - final_report.md
+    pass_rule: Formal rows are eligible only when the run bundle validates and the ledger writer records keep/reject with evidence refs; paper tables cannot cite narrative reports, graph projections, review files, or partial/reject rows as metric truth.
+    evidence_sources:
+      - artifacts/repo_blueprint.yaml#required_run_bundle
+      - artifacts/module_map.yaml#run_bundle_trace_contract
+      - artifacts/claim_evidence_registry.yaml#claims
+  failure_and_defer_policy_locked:
+    hard_blocks:
+      - missing_preflight
+      - metric_parser_gap
+      - reject_row_promoted
+      - secret_leak
+      - operator_registry_gap
+      - scheduler_graph_confusion
+    deferred_surfaces:
+      - web_dashboard
+      - notebook_gallery
+      - multi_provider_sweeper
+      - paper_exporter
+    pass_rule: Failure modes stop or reject formal rows, while projection and writing surfaces remain artifact-derived follow-up work rather than sources of result truth.
+    evidence_sources:
+      - docs/manuscript.md#8-失败模式
+      - artifacts/failure_register.yaml
+      - artifacts/keep_discard_ledger.yaml
+
+node_vs_global_readiness:
+  p1_03_may_claim:
+    - repository responsibilities are minimal and owner-bound
+    - config, operator registry, workflow graph, run bundle, metric, and ledger truth roles are explicit
+    - downstream implementation receives a reproducible path from read-only data to result ledger
+    - graph, Canvas, dashboard, review, report, and notebook artifacts are excluded as duplicate metric/table truth
+    - unresolved formal-evidence blockers are preserved as downstream blockers
+  p1_03_must_not_claim:
+    - PHMGA implementation has completed formal Stage C/D rows
+    - selected_global_best_backend is locked
+    - RM101 reject evidence has become positive selection evidence
+    - adapter sample-level metadata-H5 preflight is complete
+    - P1_03 checklist/status fields are closed by this score review
+    - final validator passes
+
+reviewer_acceptance_criteria:
+  - P1_03 may pass the node-specific final score threshold if the blueprint
+    makes ownership, directory, config, script, artifact, metric, ledger,
+    failure, and defer boundaries precise enough for downstream implementation
+    and review.
+  - P1_03 should fail if it adds global orchestration, UI, dashboard, notebook,
+    or paper-export modules as required result-path truth, or if it allows
+    scheduler graphs, reports, review files, or partial/reject rows to become
+    metric or table truth.
+  - P1_03 should not be penalized for missing selected backend, adapter
+    preflight, Stage C/D rows, RM101 positive evidence, or final validator pass
+    when those are explicitly preserved as downstream blockers and not used as
+    support.
+  - P1_03 score re-review must not close canonical checklist fields; checklist
+    closure remains a separate explicitly approved status operation.
+
+global_submission_status:
+  global_submission_ready: false
+  remaining_global_blocker_classes:
+    - P1_01-P1_05 checklist fields remain incomplete until explicit approval
+    - P1/P3/P4 below-90 score nodes remain
+    - P3_04 action statuses remain blocked or planned
+    - selected backend and Stage C/D formal evidence remain pending
+    - final validator does not pass
+
+author_exit:
+  minimal_module_path_locked: true
+  config_operator_workflow_boundaries_locked: true
+  run_bundle_and_ledger_truth_locked: true
+  duplicate_truth_exclusions_locked: true
+  downstream_evidence_not_overclaimed: true
+  checklist_status_not_closed_by_this_contract: true

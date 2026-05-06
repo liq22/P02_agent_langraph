@@ -230,6 +230,12 @@ experiment_id
 
 `final_report.md` 不作为 metric truth，只作为 artifact-derived narrative。ledger row 是 table eligibility truth；paper table 只能引用 `keep=accept`、artifact contract pass、feature separability pass、且无 reject workflow_exit 的 row。
 
-## 11. 可审阅结论
+## 11. Final-Threshold Interface Contract
+
+P1_02 的最终分数阈值问题不是“PHMGA formal rows 是否已经执行完成”，而是“伪代码和接口契约是否已经把 formal row 的输入、状态转移、baseline、metric parser、artifact bundle、ledger truth 和 reject-evidence 导出路径锁定”。本节点的可通过条件是：每个 downstream formal row 都能从 `DataReadBundle` / `DatasetProtocol` / `RunConfig` 追踪到 `artifact_index.json`、`metrics.json`、`result_md`、ledger row 和可选 paper table row；任何 planner prose、`final_report.md`、graph/Canvas/dashboard projection、Vibench trainer/evaluator output、partial Stage B row 或 reject row 都不能成为 metric/table truth。
+
+`artifacts/interface_final_threshold_contract.yaml` 只用于 P1_02 score re-review。它不表示 selected_global_best_backend 已锁定，不表示 RM101 reject evidence 已解决，不表示 adapter preflight 或 Stage C/D rows 已通过，也不关闭 P1_02 checklist/status 字段或 final validator blocker。
+
+## 12. 可审阅结论
 
 P1_02 当前伪代码支持后续实现与审阅：输入输出明确、baseline 和 metric parser 合同显式、必要步骤和实现细节分离、状态转移可追踪、不变量保护数据/结果真值边界，并列出异常分支。独立 AI review 和用户授权的 Claude Code teammate human-review lane 均已给出 pass；这只关闭 P1_02 节点，不解锁 selected backend、Stage C/D 正结果或最终投稿声明。

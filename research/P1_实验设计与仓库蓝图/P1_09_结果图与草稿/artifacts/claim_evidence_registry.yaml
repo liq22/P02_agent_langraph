@@ -1,0 +1,123 @@
+version: p1_09_claim_evidence_registry_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_09_结果图与草稿
+
+claims:
+  - claim_id: P1_09_C01_LIMITED_SYNTHETIC_SIGNAL_FIGURE
+    claim_type: result
+    claim_text: Fig. fig_main_synthetic_signal can visualize that supervisor_proving outperformed simple_fullchain on the P1_04 bounded Ottawa synthetic/offline single run.
+    status: supported_limited
+    support_status: supported
+    statement: Fig. fig_main_synthetic_signal can visualize that supervisor_proving outperformed simple_fullchain on the P1_04 bounded Ottawa synthetic/offline single run.
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/docs/manuscript.md#Figure Draft
+    action: keep
+    mapped_upstream_claims:
+      - c1
+    evidence_ids:
+      - P1_09_E001_P1_04_RESULTS_TSV
+      - P1_09_E002_P1_05_RESULT_REGISTRY
+      - P1_09_E003_P1_05_HYPOTHESIS_STATUS
+      - P1_09_E004_FIGURE_DATA_TSV
+      - P1_09_E007_RENDER_PROTOCOL
+      - P1_09_E008_RENDER_SCRIPT
+    evidence_refs:
+      - evidence_id: P1_09_E001_P1_04_RESULTS_TSV
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+      - evidence_id: P1_09_E004_FIGURE_DATA_TSV
+        evidence_type: figure
+        source_ref: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/figures/fig_main_synthetic_signal_data.tsv
+      - evidence_id: P1_09_E008_RENDER_SCRIPT
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/tools/render_fig_main_synthetic_signal.py
+    claim_boundary: preliminary synthetic/offline single-run only
+  - claim_id: P1_09_C02_FORMAL_MAIN_RESULT_FIGURE_READY
+    claim_type: limitation
+    claim_text: A formal main-result accuracy figure is not ready.
+    status: unsupported
+    support_status: supported
+    statement: A formal main-result accuracy figure is not ready.
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/docs/manuscript.md#Deferred Figures
+    action: document_limitation
+    evidence_ids:
+      - P1_09_E003_P1_05_HYPOTHESIS_STATUS
+      - P1_09_E005_FAILURE_REGISTER
+    evidence_refs:
+      - evidence_id: P1_09_E003_P1_05_HYPOTHESIS_STATUS
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+      - evidence_id: P1_09_E005_FAILURE_REGISTER
+        evidence_type: review_comment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/failure_register.yaml
+    claim_boundary: must remain absent from paper-ready claims until real-data formal rows and variance evidence exist.
+  - claim_id: P1_09_C03_C1_FULL_OBJECTIVE_SUPPORTED
+    claim_type: limitation
+    claim_text: The broad upstream c1 objective is only partially represented by the current draft figure.
+    status: gap_reported
+    support_status: supported
+    statement: The broad upstream c1 objective is only partially represented by the current draft figure.
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/docs/manuscript.md#Claim Alignment
+    action: document_limitation
+    evidence_ids:
+      - P1_09_E006_UPSTREAM_CLAIM_MAP
+      - P1_09_E005_FAILURE_REGISTER
+    evidence_refs:
+      - evidence_id: P1_09_E006_UPSTREAM_CLAIM_MAP
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/claim_map.yaml
+      - evidence_id: P1_09_E005_FAILURE_REGISTER
+        evidence_type: review_comment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/failure_register.yaml
+    claim_boundary: draft figure maps to c1 only through a limited synthetic/offline proxy.
+  - claim_id: P1_09_C04_FINAL_THRESHOLD_FIGURE_LOCK
+    claim_type: method
+    claim_text: The P1_09 draft figure package is ready for node-local final-threshold score review because figure data, renderer, manifest, claim mapping, caption/legend boundaries, limitations, and upstream P1_08 score readiness are explicit.
+    status: supported
+    support_status: supported
+    statement: The P1_09 draft figure package is ready for node-local final-threshold score review.
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/docs/manuscript.md#Final-Threshold-Score-Boundary
+    action: keep
+    evidence_ids:
+      - P1_09_E009_FINAL_THRESHOLD_FIGURE_CONTRACT
+      - P1_09_E004_FIGURE_DATA_TSV
+      - P1_09_E007_RENDER_PROTOCOL
+      - P1_09_E008_RENDER_SCRIPT
+    evidence_refs:
+      - evidence_id: P1_09_E009_FINAL_THRESHOLD_FIGURE_CONTRACT
+        evidence_type: figure
+        source_ref: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_final_threshold_contract.yaml
+      - evidence_id: P1_09_E004_FIGURE_DATA_TSV
+        evidence_type: figure
+        source_ref: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/figures/fig_main_synthetic_signal_data.tsv
+      - evidence_id: P1_09_E008_RENDER_SCRIPT
+        evidence_type: code
+        source_ref: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/tools/render_fig_main_synthetic_signal.py
+    claim_boundary: node-local draft-figure score readiness only; not formal result or submission-ready evidence.
+
+evidence:
+  - evidence_id: P1_09_E001_P1_04_RESULTS_TSV
+    path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+    type: source_result_ledger
+  - evidence_id: P1_09_E002_P1_05_RESULT_REGISTRY
+    path: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml
+    type: result_registry
+  - evidence_id: P1_09_E003_P1_05_HYPOTHESIS_STATUS
+    path: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+    type: hypothesis_status
+  - evidence_id: P1_09_E004_FIGURE_DATA_TSV
+    path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/figures/fig_main_synthetic_signal_data.tsv
+    type: plotted_data
+  - evidence_id: P1_09_E005_FAILURE_REGISTER
+    path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/failure_register.yaml
+    type: limitation_and_failure_record
+  - evidence_id: P1_09_E006_UPSTREAM_CLAIM_MAP
+    path: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/claim_map.yaml
+    type: upstream_claim_map
+  - evidence_id: P1_09_E007_RENDER_PROTOCOL
+    path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_render_protocol.yaml
+    type: deterministic_render_protocol
+  - evidence_id: P1_09_E008_RENDER_SCRIPT
+    path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/tools/render_fig_main_synthetic_signal.py
+    type: deterministic_renderer
+  - evidence_id: P1_09_E009_FINAL_THRESHOLD_FIGURE_CONTRACT
+    path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_final_threshold_contract.yaml
+    type: local_figure_score_contract

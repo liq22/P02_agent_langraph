@@ -1,19 +1,132 @@
-# Review-only contract bound from the current P1 blueprint and protocol artifacts.
-# Promote to executable only after repo_path, run_command, and metric parsing are backed by a real runnable repo.
-contract_mode: review_only
-repo_path: ./idea_validation_repo
+version: p1_04_execution_contract_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_04_核心想法轻量验证
+node_path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证
+
+# Executable after PHMGA offline synthetic preflight and two bounded rows succeeded.
+contract_mode: executable
+contract_mode_reason: PHMGA is present in the workspace; offline synthetic preflight, baseline row, controlled attempt row, and metrics parser all completed without network/provider calls.
+repo_path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+run_command: python main.py +runs=ottawa_synth_ml_simple runtime.output_dir=<node>/artifacts/auto_experiment/runs/baseline_simple && python main.py +runs=ottawa_ml_codex_proving data=ottawa_synth llm.mode=offline_stub runtime.output_dir=<node>/artifacts/auto_experiment/runs/attempt_supervisor_proving
+
+repo_binding:
+  repo_path: ../P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+  repo_path_root_relative: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+  verified_at: 2026-05-04
+  exists_in_workspace: true
+  verification_method: PHMGA offline synthetic preflight for baseline and controlled attempt presets exited 0.
+  source_boundary: Existing PHMGA submodule, used only for bounded synthetic/offline lightweight validation in this node.
+
 editable_paths:
-  - src/data
-  - src/models
-  - src/eval
-  - configs
-run_command: "python scripts/run_train.py"
+  - config/runs
+  - config/data
+  - scripts
+  - src
+
+run_target:
+  baseline_command: python main.py +runs=ottawa_synth_ml_simple runtime.output_dir=<node>/artifacts/auto_experiment/runs/baseline_simple
+  controlled_attempt_command: python main.py +runs=ottawa_ml_codex_proving data=ottawa_synth llm.mode=offline_stub runtime.output_dir=<node>/artifacts/auto_experiment/runs/attempt_supervisor_proving
+  bindable: true
+  bindable_evidence:
+    - logs/auto_experiment/latest_run.log
+    - artifacts/auto_experiment/runs/baseline_simple/metrics.json
+    - artifacts/auto_experiment/runs/attempt_supervisor_proving/metrics.json
+  log_path: logs/auto_experiment/latest_run.log
+
+hypothesis:
+  claim_id: P1_04_C01_CORE_MECHANISM_LIGHTWEIGHT_SIGNAL
+  statement: A bounded PHMGA supervisor_proving path should improve or preserve synthetic Ottawa ML test accuracy relative to the simple_fullchain baseline under the same synthetic dataset and metric parser.
+  current_status: supported_limited_synthetic
+  evidence_boundary: This is lightweight synthetic/offline evidence only; it is not Stage C/D formal or submission-ready evidence.
+
+baseline:
+  baseline_id: P1_04_BASELINE_001
+  description: PHMGA `ottawa_synth_ml_simple` simple_fullchain baseline with offline_stub synthetic data.
+  current_status: executed
+  output_dir: artifacts/auto_experiment/runs/baseline_simple
+  test_accuracy: 0.8333333333333334
+  test_macro_f1: 0.8285714285714285
+
+controlled_attempt:
+  attempt_id: P1_04_ATTEMPT_001
+  description: PHMGA `ottawa_ml_codex_proving` supervisor_proving path forced to `data=ottawa_synth` and `llm.mode=offline_stub`.
+  single_changed_factor: replace simple_fullchain baseline with supervisor_proving plan-execute-compile-verify path while keeping synthetic Ottawa data, graph_path=ml, offline_stub, and metric parser fixed.
+  current_status: executed
+  output_dir: artifacts/auto_experiment/runs/attempt_supervisor_proving
+  test_accuracy: 1.0
+  test_macro_f1: 1.0
+
 metric:
-  name: accuracy
+  name: test_accuracy
+  primary: true
   direction: higher_is_better
-  pattern: '^accuracy:\s*([0-9.]+)'
+  pattern: test.accuracy
+  parser: parse test.accuracy from each run's metrics.json
+  parser_status: verified
+  parser_evidence:
+    - artifacts/auto_experiment/runs/baseline_simple/metrics.json
+    - artifacts/auto_experiment/runs/attempt_supervisor_proving/metrics.json
+  min_delta_for_keep: 0.0
+
+keep_discard_rule:
+  keep_if:
+    - baseline run completes
+    - controlled attempt run completes
+    - metric parser extracts finite accuracy for both rows
+    - controlled attempt accuracy is greater than baseline accuracy by at least min_delta_for_keep
+  discard_if:
+    - baseline cannot run under the declared budget
+    - controlled attempt crashes while baseline succeeds
+    - metric parser fails for either row
+    - controlled attempt accuracy is less than or equal to baseline accuracy
+  unclear_if:
+    - only one row runs
+    - metric is non-finite or missing
+    - run variance cannot be separated from the single changed factor
+  observed_decision: keep_limited_synthetic_signal
+  observed_delta_accuracy: 0.16666666666666663
+
 budget:
   max_rounds: 2
   max_no_improve_rounds: 1
   max_crashes: 1
   max_minutes_per_run: 120
+
+artifact_paths:
+  gate_report: artifacts/gate_report.md
+  results_tsv: artifacts/auto_experiment/results.tsv
+  latest_run_log: logs/auto_experiment/latest_run.log
+  final_threshold_contract: artifacts/lightweight_validation_final_threshold_contract.yaml
+
+replay_trace:
+  status: complete_for_bounded_p1_04_p1_05_handoff
+  source_path: logs/auto_experiment/latest_run.log
+  required_fields_present:
+    - cwd
+    - python
+    - baseline_command
+    - baseline_exit_code
+    - controlled_attempt_command
+    - controlled_attempt_exit_code
+    - determinism_boundary
+  no_external_provider_call: true
+  formal_promotion_allowed: false
+
+hard_gate_blockers: []
+resolved_blockers:
+  - blocker_id: P1_04_BLOCK_REPO_PATH_MISSING
+    resolution: Replaced missing idea_validation_repo with existing PHMGA submodule as bounded offline synthetic validation target.
+  - blocker_id: P1_04_BLOCK_RUN_TARGET_UNBOUND
+    resolution: Baseline and controlled attempt commands both exited 0 and wrote metrics.json.
+
+promotion_rules:
+  may_promote_to_executable_only_if:
+    - repo_binding.exists_in_workspace == true
+    - run_target.bindable == true
+    - metric.parser_status == verified
+    - baseline.current_status == executed
+  limitations:
+    - synthetic offline validation only
+    - not a formal Stage C/D result
+    - not evidence that RM101 Stage B reject rows are resolved
+    - not selected_global_best_backend
+    - not final submission-ready performance evidence

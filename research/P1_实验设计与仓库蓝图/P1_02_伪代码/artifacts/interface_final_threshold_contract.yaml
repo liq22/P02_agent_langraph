@@ -1,0 +1,130 @@
+version: p1_02_interface_final_threshold_contract_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_02_伪代码
+generated_at: 2026-05-05
+purpose: >-
+  Define the node-specific final-threshold standard for P1_02 as a pseudocode
+  and implementation-facing interface node. The node can pass its score
+  threshold when the PHMGA run-case contract is executable, auditable, and
+  blocker-preserving, without pretending downstream formal rows are complete.
+
+node_specific_pass_question: >-
+  Has P1_02 specified the inputs, outputs, state transitions, baseline rows,
+  metric parser, quality gates, artifact bundle, evidence mapping, and failure
+  modes tightly enough that downstream implementation cannot confuse planner
+  prose, partial Stage B evidence, reports, or Vibench outputs with formal
+  paper-result truth?
+
+upstream_locks:
+  - source_path: research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/data_layer_final_threshold_contract.yaml
+    role: data_lineage_vibench_phmga_result_admission_boundary
+  - source_path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/claim_evidence_scoring_protocol.yaml
+    role: claim_evidence_metric_and_reviewer_protocol
+  - source_path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/baseline_budget_protocol.yaml
+    role: fixed_node_equal_budget_baseline_protocol
+  - source_path: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/route_readiness_contract.yaml
+    role: route_stage_owner_stop_fallback_contract
+
+interface_readiness:
+  inputs_locked:
+    - DataReadBundle
+    - DatasetProtocol
+    - RunConfig
+    - OperatorRegistry
+    - ClaimPolicy
+    - BaselineSpec
+    - MetricSchema
+  outputs_locked:
+    - validated_dag.json
+    - compiled_dag_manifest.json
+    - feature_pipeline.json
+    - feature_list.json
+    - feature_separability_summary.json
+    - artifact_index.json
+    - metrics.json
+    - predictions.json
+    - importance.json
+    - final_report.md
+    - result_md
+    - ledger_row
+  quality_gates_locked:
+    - data_and_provider_preflight
+    - planner_output_parser_and_operator_registry_validation
+    - dag_schema_shape_legal_path_validation
+    - artifact_contract
+    - feature_separability
+    - metric_parser
+    - baseline_comparison
+    - paper_claim_gate
+  state_machine_locked:
+    initial: preflight_pending
+    terminal:
+      - artifact_bundle_exported
+      - reject_evidence_exported
+    required_reject_paths:
+      - preflight_failed
+      - dag_validation_failed_until_max_iterations
+      - metric_parser_reject
+      - artifact_contract_reject
+      - max_iterations_reached
+
+truth_source_rules:
+  vibench_truth: read_bundle_only
+  phmga_truth: split_window_dag_execution_metrics_ledger_tables
+  metric_truth: metrics_json
+  table_eligibility_truth: ledger_row_plus_artifact_gates
+  narrative_report_role: artifact_derived_explanation_only
+  forbidden_truth_sources:
+    - planner prose
+    - generated final_report without artifact refs
+    - graph projection
+    - Canvas or dashboard projection
+    - partial Stage B rows
+    - reject-evidence rows
+    - Vibench trainer/evaluator outputs
+
+node_vs_global_readiness:
+  p1_02_may_claim:
+    - pseudocode and interface contract are executable and auditable
+    - baseline rows and metric parser rejection rules are explicit
+    - artifact bundle and ledger eligibility rules are aligned
+    - failure modes export reject evidence rather than silent success
+    - downstream positive-result claims remain blocked until formal gates pass
+  p1_02_must_not_claim:
+    - PHMGA implementation has executed formal rows
+    - selected_global_best_backend is locked
+    - RM101 reject evidence is resolved
+    - adapter preflight is complete
+    - Stage C/D rows have passed
+    - P1_02 checklist/status fields are closed by this score review
+    - final validator passes
+
+reviewer_acceptance_criteria:
+  - P1_02 may pass the node-specific final score threshold if the pseudocode
+    and interface contract make every formal result row traceable from input
+    bundle to artifact index, metrics, result markdown, ledger row, and optional
+    paper table row.
+  - P1_02 should fail if final_report.md, planner text, graph progression,
+    Vibench training outputs, or partial/reject Stage B evidence can become
+    metric or table truth.
+  - P1_02 should not be penalized for missing selected backend, adapter
+    preflight, Stage C/D rows, or final validator pass when those are explicitly
+    preserved as downstream blockers and not used as support.
+  - P1_02 score re-review must not close canonical checklist fields; checklist
+    closure remains a separate explicitly approved status operation.
+
+global_submission_status:
+  global_submission_ready: false
+  remaining_global_blocker_classes:
+    - P1_01-P1_05 checklist fields remain incomplete until explicit approval
+    - P1/P3/P4 below-90 score nodes remain
+    - P3_04 action statuses remain blocked or planned
+    - selected backend and Stage C/D formal evidence remain pending
+    - final validator does not pass
+
+author_exit:
+  interface_inputs_outputs_locked: true
+  state_machine_locked: true
+  baseline_metric_parser_contract_locked: true
+  artifact_ledger_truth_boundary_locked: true
+  downstream_evidence_not_overclaimed: true
+  checklist_status_not_closed_by_this_contract: true

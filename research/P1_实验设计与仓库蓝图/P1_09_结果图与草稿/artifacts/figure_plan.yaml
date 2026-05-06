@@ -1,7 +1,128 @@
-figures:
-  - figure_id: fig_main
-    purpose: 主结果可视化
-    linked_claims:
+version: p1_09_figure_plan_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_09_结果图与草稿
+node_path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿
+generated_at: 2026-05-04
+author_agent_id: codex-local
+
+scope:
+  purpose: Draft result figures and bind each visual element to an explicit claim and evidence boundary.
+  not_a_formal_result_package: true
+  reason: P1_04/P1_05 currently provide only bounded synthetic/offline single-run evidence.
+
+final_threshold_contract:
+  claim_id: P1_09_C04_FINAL_THRESHOLD_FIGURE_LOCK
+  evidence_id: P1_09_E009_FINAL_THRESHOLD_FIGURE_CONTRACT
+  contract_path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_final_threshold_contract.yaml
+  status: ready_for_score_only_final_threshold_re_review
+  allowed_positive_claim: >-
+    The draft figure package is documented, traceable, deterministic,
+    claim-safe, limitation-preserving, and review-closed enough for node-local
+    final-threshold score review.
+  forbidden_upgrades:
+    - formal_main_result_claim
+    - real_data_generalization
+    - rm101_resolution
+    - selected_backend_readiness
+    - stage_c_or_stage_d_success
+    - submission_ready_performance
+  upstream_status_update:
+    p1_08_table_package_final_threshold_score: 91
+    p1_08_final_threshold_reviewer: final-threshold-reviewer-p1-08-002
+    effect: Removes the old P1_08 seed-stage score limitation for draft package review only; formal-result limitations remain.
+
+source_inputs:
+  upstream_claim_map:
+    path: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/claim_map.yaml
+    observed_claim_ids:
       - c1
+    upstream_node_stage_at_authoring: seed
+    current_score_review_status: p1_08_final_threshold_ai_002_passed_at_91
+    usage_boundary: draft input only; P1_09 records the historical seed-stage status and current score pass while preserving formal-result limitations.
+  source_result_registry:
+    path: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml
+  source_result_ledger:
+    path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+
+figures:
+  - figure_id: fig_main_synthetic_signal
+    upstream_figure_ref: fig_main
+    status: draft_for_review
+    purpose: Visualize the bounded synthetic/offline keep signal from P1_04/P1_05 without presenting it as a formal paper performance result.
+    linked_upstream_claims:
+      - c1
+    safe_claim_ids:
+      - P1_09_C01_LIMITED_SYNTHETIC_SIGNAL_FIGURE
+      - P1_05_C01_KEEP_LIMITED_SYNTHETIC_SIGNAL
     source_tables:
       - main_results
+    source_artifacts:
+      - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+      - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml
+      - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+      - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_render_protocol.yaml
+      - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/tools/render_fig_main_synthetic_signal.py
+    figure_type: grouped_bar_chart
+    output_files:
+      - figures/fig_main_synthetic_signal.svg
+      - figures/fig_main_synthetic_signal_data.tsv
+    render_command_from_repo_root: python3 research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/tools/render_fig_main_synthetic_signal.py
+    panels:
+      - panel_id: A
+        label: Accuracy
+        metric: test_accuracy
+        rows:
+          - result_id: P1_05_R001_BASELINE_SIMPLE
+            role: baseline
+            workflow_mode: simple_fullchain
+            value: 0.8333333333333334
+          - result_id: P1_05_R002_SUPERVISOR_PROVING_ATTEMPT
+            role: controlled_attempt
+            workflow_mode: supervisor_proving
+            value: 1.0
+        conclusion: Supervisor_proving is higher than simple_fullchain on this bounded synthetic/offline single run.
+      - panel_id: B
+        label: Macro-F1
+        metric: test_macro_f1
+        rows:
+          - result_id: P1_05_R001_BASELINE_SIMPLE
+            role: baseline
+            workflow_mode: simple_fullchain
+            value: 0.8285714285714285
+          - result_id: P1_05_R002_SUPERVISOR_PROVING_ATTEMPT
+            role: controlled_attempt
+            workflow_mode: supervisor_proving
+            value: 1.0
+        conclusion: Macro-F1 follows the same preliminary direction as accuracy in this synthetic/offline run.
+    legend_policy:
+      include:
+        - P1_04 bounded PHMGA Ottawa synthetic setup.
+        - single-run synthetic/offline boundary.
+        - exact workflow modes and metrics.
+        - no variance bars are available yet.
+      exclude:
+        - real-data generalization.
+        - RM101 resolution.
+        - selected-backend readiness.
+        - formal Stage C/D performance claim.
+    reviewer_attack_surface:
+      - No repeated runs or confidence intervals.
+      - Upstream P1_08 claim_map exists but P1_08 status remains seed at authoring time.
+      - Perfect synthetic accuracy may indicate an easy fixture rather than a robust method effect.
+
+discarded_or_deferred_figures:
+  - figure_id: fig_formal_main_accuracy
+    status: discarded_for_now
+    reason: Formal main-result performance figure requires real-data accepted rows and repeated-run or uncertainty evidence.
+  - figure_id: fig_ablation_results
+    status: deferred
+    reason: P1_08 table_plan lists ablation_results, but no accepted ablation result artifact is present in the current evidence chain.
+  - figure_id: fig_efficiency_results
+    status: deferred
+    reason: P1_08 table_plan lists efficiency_results, but no train_time, params, or memory evidence is present.
+
+handoff_readiness:
+  figure_plan_present: true
+  claim_figure_map_required_next: true
+  figures_output_required_next: true
+  external_review_required: true
+  final_threshold_contract_present: true

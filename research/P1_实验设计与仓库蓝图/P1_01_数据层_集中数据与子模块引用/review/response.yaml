@@ -11,6 +11,11 @@ responses:
     responded: true
     note: "Acknowledged and preserved. `artifacts/result_source_map.yaml`, `artifacts/failure_register.yaml`, and `artifacts/keep_discard_ledger.yaml` keep partial Stage B evidence blocked from main-result claims until selected backend and Stage C/D rows pass."
 
+  - comment_id: AI-004
+    responded: true
+    status: closed_pending_re_review
+    note: "Added `artifacts/data_layer_final_threshold_contract.yaml` and updated manuscript/claim registry to define P1_01 node-specific score readiness. The contract keeps full adapter preflight, selected backend, Stage C/D rows, checklist closure, P3 action closure, and final validator pass as downstream or global blockers; it only claims that data lineage, Vibench read responsibility, PHMGA ownership, submodule reference, result admission rules, and negative/reject-evidence blockers are auditable."
+
   - comment_id: H-001
     responded: true
     note: "Acknowledged. The user-authorized Claude Code teammate delegate passed the human-review slot and explicitly preserved positive-result blockers. No P1_01 content revision is required before node close."
@@ -22,3 +27,13 @@ responses:
   - comment_id: H-003
     responded: true
     note: "Acknowledged as a downstream publication limitation. `artifacts/data_lineage.yaml`, `artifacts/negative_result_note.md`, and `review/external_review_handoff.md` preserve the unresolved redistribution status and prevent overstated publication claims."
+
+  - comment_id: AI2-001
+    responded: true
+    status: score_threshold_passed
+    note: "Final-threshold score re-review passed at 93. `artifacts/data_layer_final_threshold_contract.yaml` properly separates P1_01 data-layer score readiness from downstream adapter preflight, selected backend lock, Stage C/D formal rows, checklist/status closure, P3 action closure, and final validator pass."
+
+  - comment_id: AI2-002
+    responded: true
+    status: blockers_preserved
+    note: "No author-side artifact change is required. Downstream/global blockers remain explicitly preserved and are not used as support for P1_01 score readiness; checklist/status fields remain unclosed by this review."

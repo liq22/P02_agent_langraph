@@ -1,8 +1,24 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    reviewer_agent_id: external-reviewer-subagent-p1-03-001
+    summary: Planner/operator provenance is not fully artifact-bound.
+    required_action: Declare OperatorRegistry path/owner/truth boundary, add planner trace to required artifact contract, and clarify workflow graph path boundary so it cannot be confused with scheduler graph, Canvas, or dashboard truth.
+    author_response: Added `configs/operators/*.yaml` and `configs/workflow_graphs/*.yaml` boundaries, added `planner_normalization_trace.json` to the required run bundle and artifact validation gates, defined `run_config_contract`, and updated module map, claim registry, failure register, and keep/discard ledger to bind planner/operator provenance.
+    reviewer_recheck: closed
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    reviewer_agent_id: p1-03-human-reviewer
+    summary: User-authorized Claude Code teammate delegate reviewed the P1_03 repository-blueprint package and recommended pass with no required fixes before node closure.
+    required_action: No P1_03-scope fixes required. Keep downstream positive result claims blocked until selected backend, RM101, adapter preflight, and Stage C/D evidence gates are complete.
+    author_response: Recorded the transparent teammate review in `review/人类_001.md` and `docs/submission_ready_goal/runtime_logs/claude_code/p1_03_human_review_handoff.yaml`; closing P1_03 as reviewed while preserving downstream blockers outside this node.
+    reviewer_recheck: closed
+
+  - comment_id: AI-002
+    responded: true
+    reviewer_agent_id: final-threshold-reviewer-p1-03-002
+    summary: Score-only final-threshold re-review finds P1_03 repository-blueprint handoff ready at 92/100, with no node-local blocking issue.
+    required_action: No P1_03 repository-blueprint final-threshold fixes required. Do not close checklist/status here; keep global blockers for selected backend, RM101 positive evidence, adapter preflight, Stage C/D rows, P3 actions, and final validator pass outside this score-only review.
+    author_response: Recorded AI_002 final-threshold score-only outcome in `review/AI_002.md` and updated `review/verdict.yaml`; no `status.yaml`, checklist, P3 action, or global readiness change was made.
+    reviewer_recheck: closed

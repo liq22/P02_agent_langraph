@@ -1,7 +1,41 @@
+version: p1_05_hypothesis_status_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_05_初步验证结果整理
+
 hypotheses:
-- hypothesis_id: h001
-  status: unclear
-  linked_results:
-  - blocked_missing_p104_ledger
-  source_ledger: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
-  blocking_gap: missing_upstream_results_tsv
+  - hypothesis_id: P1_05_H001_SUPERVISOR_PROVING_SYNTHETIC_SIGNAL
+    question: Does the supervisor_proving path show a positive lightweight signal over the simple_fullchain baseline under the same synthetic Ottawa setup?
+    status: supported
+    support_level: preliminary_synthetic_only
+    linked_results:
+      - P1_05_R001_BASELINE_SIMPLE
+      - P1_05_R002_SUPERVISOR_PROVING_ATTEMPT
+    evidence_summary: Controlled attempt test accuracy 1.0 versus baseline test accuracy 0.8333333333333334, delta +0.16666666666666663.
+    safe_next_action: Carry forward as a candidate mechanism for P1_05/P1_06/P1_07 planning and future real-data validation.
+    forbidden_interpretation: Do not write as formal performance improvement, selected backend, RM101 resolution, or submission-ready result.
+  - hypothesis_id: P1_05_H002_REAL_DATA_GENERALIZATION
+    question: Does the P1_04 result prove real-data generalization?
+    status: unsupported
+    linked_results:
+      - P1_05_U001_REAL_DATA_GENERALIZATION
+    evidence_summary: P1_04 contains no real-data repeated-run row.
+    safe_next_action: Require formal real-data Stage C/D rows before any broad paper claim.
+  - hypothesis_id: P1_05_H003_RM101_RESOLUTION
+    question: Does the P1_04 result resolve RM101 Stage B reject evidence?
+    status: unsupported
+    linked_results:
+      - P1_05_U002_RM101_RESOLUTION
+    evidence_summary: P1_04 uses synthetic Ottawa data only.
+    safe_next_action: Keep RM101 blockers open.
+  - hypothesis_id: P1_05_H004_VARIANCE_STABILITY
+    question: Is the observed delta stable under repeat runs or harder splits?
+    status: unclear
+    linked_results:
+      - P1_05_Q001_VARIANCE_STABILITY
+      - P1_05_Q002_PERFECT_SYNTHETIC_ACCURACY_INTERPRETATION
+    evidence_summary: Single-run synthetic evidence is insufficient for stability claims.
+    safe_next_action: Record as limitation and require repeated/real-data evidence downstream.
+
+status_counts:
+  supported_limited: 1
+  unsupported: 2
+  unclear: 1

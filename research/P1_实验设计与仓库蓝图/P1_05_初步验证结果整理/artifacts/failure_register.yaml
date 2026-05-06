@@ -1,0 +1,20 @@
+version: p1_05_failure_register_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_05_初步验证结果整理
+
+failures:
+  - failure_id: P1_05_F001_REAL_DATA_GENERALIZATION_UNSUPPORTED
+    context: P1_04 contains bounded offline synthetic Ottawa evidence only.
+    affected_claim_id: P1_05_C02_FORMAL_PERFORMANCE_READY
+    severity: high
+    interpretation: The current evidence supports only a preliminary synthetic keep signal; it cannot support real-data or formal paper performance claims.
+    action: document_limitation
+    status: accepted_limitation
+    evidence_ref: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml#P1_05_U001_REAL_DATA_GENERALIZATION
+  - failure_id: P1_05_F002_VARIANCE_STABILITY_UNCLEAR
+    context: P1_04 has one baseline row and one controlled attempt row.
+    affected_claim_id: P1_05_C03_VARIANCE_STABILITY
+    severity: medium
+    interpretation: The observed positive delta may reflect the small synthetic fixture, so variance stability must stay an explicit limitation.
+    action: document_limitation
+    status: accepted_limitation
+    evidence_ref: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml#P1_05_H004_VARIANCE_STABILITY

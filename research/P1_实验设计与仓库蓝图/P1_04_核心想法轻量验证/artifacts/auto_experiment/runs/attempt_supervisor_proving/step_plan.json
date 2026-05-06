@@ -1,0 +1,39 @@
+{
+  "plan": [
+    {
+      "parent": "ch1",
+      "op_name": "hilbert_envelope",
+      "params": {}
+    },
+    {
+      "parent": "hilbert_envelope_01_ch1",
+      "op_name": "kurtosis",
+      "params": {}
+    },
+    {
+      "parent": "ch1",
+      "op_name": "fft",
+      "params": {}
+    },
+    {
+      "parent": "fft_03_ch1",
+      "op_name": "rms",
+      "params": {}
+    },
+    {
+      "parent": "ch2",
+      "op_name": "fft",
+      "params": {}
+    },
+    {
+      "parent": "fft_05_ch2",
+      "op_name": "rms",
+      "params": {}
+    },
+    {
+      "parent": "ch2",
+      "op_name": "crest_factor",
+      "params": {}
+    }
+  ]
+}

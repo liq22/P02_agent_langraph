@@ -43,6 +43,8 @@ phmga/
     datasets/*.yaml
     runs/*.yaml
     providers/*.yaml
+    operators/*.yaml
+    workflow_graphs/*.yaml
   scripts/
     preflight_dataset.py
     run_case.py
@@ -73,6 +75,8 @@ phmga/
 ```text
 configs/datasets/<dataset>.yaml
   -> scripts/preflight_dataset.py
+  -> configs/operators/<operator_registry>.yaml
+  -> configs/workflow_graphs/<workflow_graph>.yaml
   -> src/protocol/dataset_protocol.py
   -> scripts/run_case.py
   -> src/planning/llm_bridge.py
@@ -85,19 +89,23 @@ configs/datasets/<dataset>.yaml
   -> artifacts/ledgers/result_ledger.md
 ```
 
-每个正式 row 必须携带 `experiment_id`、dataset、split/window、seed/repeat、provider/model、artifact directory、artifact contract result、feature separability result、test macro_f1、workflow exit 和 keep/reject 决策。
+每个正式 row 必须携带 `experiment_id`、dataset、split/window、seed/repeat、provider/model、operator registry id、workflow graph id、artifact directory、artifact contract result、feature separability result、test macro_f1、workflow exit 和 keep/reject 决策。
 
 ## 6. 脚本与资产放置规则
 
 | asset_type | 路径 | 最小内容 | 审计规则 |
 | --- | --- | --- | --- |
 | dataset config | `configs/datasets/*.yaml` | dataset id、read bundle path、sample/metadata/H5 mapping、split/window policy | 修改后必须跑 preflight |
-| run config | `configs/runs/*.yaml` | dataset、graph path、provider/model、budget、seed/repeat、max_iterations | 不得在运行中隐式改配置 |
+| run config | `configs/runs/*.yaml` | dataset、`workflow_graph_path`、operator registry、provider/model、budget、seed/repeat、max_iterations | 不得在运行中隐式改配置 |
 | provider config | `configs/providers/*.yaml` | free model id、endpoint family、retry/schema policy | 不写 API key |
-| run bundle | `artifacts/runs/<experiment_id>/` | DAG、feature list、metrics、predictions、importance、workflow state、final report | 缺任一 required artifact 则 reject |
+| operator registry | `configs/operators/*.yaml` | operator id、version、allowed args、schema、implementation reference | 只定义可用 operator，不记录 planner decision 或结果 |
+| workflow graph config | `configs/workflow_graphs/*.yaml` | experiment/DAG input graph id、operator sequence constraints、dataset compatibility | 不得指向 `backend/graph/*`、Canvas 或 dashboard |
+| run bundle | `artifacts/runs/<experiment_id>/` | DAG、planner trace、feature list、metrics、predictions、importance、workflow state、final report | 缺任一 required artifact 则 reject |
 | ledger | `artifacts/ledgers/result_ledger.md` | keep/reject row 和 evidence refs | paper table 只引用 keep=accept row |
 
 API key 只来自 `.env` 或进程环境，不能进入 config、artifact、ledger、review 或 manuscript。
+
+`workflow_graph_path` 只允许指向 PHMGA workflow/DAG 输入，例如 `configs/workflow_graphs/rm101_ml.yaml`。它不是 `backend/graph/graph.json`，不是 Obsidian Canvas，也不是 web/dashboard 投影；这些派生产物不能作为实验 DAG 输入或结果真值。`OperatorRegistry` 被折叠为 `configs/operators/*.yaml`，由 `planner_bridge` 读取并由 `dag_compiler` 校验，因此不是额外全局模块。
 
 ## 7. 不变量
 
@@ -107,6 +115,7 @@ API key 只来自 `.env` 或进程环境，不能进入 config、artifact、ledg
 4. reject bundle 是有效负结果证据，但不能被写成正结果 claim。
 5. 未锁定 `selected_global_best_backend` 前，Stage C/D 不得写主结果声明。
 6. 所有正式入口必须先过 adapter/sample-level metadata-H5 preflight。
+7. `planner_normalization_trace.json` 必须进入 run bundle 并被 `artifact_index.json` 引用；没有 planner trace 的 row 不能进入 ledger keep=accept。
 
 ## 8. 失败模式
 
@@ -118,7 +127,17 @@ API key 只来自 `.env` 或进程环境，不能进入 config、artifact、ledg
 | metric_parser_gap | `metrics.json` 缺 train/val/test accuracy 或 macro_f1 | reject row，记录缺键 |
 | reject_row_promoted | reject bundle 被写成 positive paper row | hard block，改入 limitation/negative evidence |
 | secret_leak | provider key 出现在 config/artifact/review/manuscript | 立即移除并重跑 secret scan |
+| operator_registry_gap | run config 引用的 operator registry 缺失、未版本化或未被 DAG compiler 校验 | reject row，补齐 `configs/operators/*.yaml` |
+| scheduler_graph_confusion | `workflow_graph_path` 指向 `backend/graph/*`、Canvas 或 dashboard | hard block，改为 PHMGA workflow graph config |
 
 ## 9. 可审阅结论
 
 P1_03 的最小仓库蓝图已经把必须模块、可后置模块、目录边界、入口脚本、artifact 路径和失败模式绑定到同一条正式结果路径。它提供的是工程边界和复现路径，不提供新的实验结果；下游仍必须完成 selected backend、adapter preflight、Stage C/D rows 和最终投稿 validator。
+
+## 10. Final-threshold handoff contract
+
+`artifacts/repo_blueprint_final_threshold_contract.yaml` 定义 P1_03 的最终分数阈值边界：本节点只因仓库蓝图交接足够完整而可进入 90+ 分，不因正式实验结果已经完成而加分。该合同把 P1_01 的数据/结果准入边界、P1_02 的接口/ledger truth 边界、P0_02 的 baseline budget 协议和 P0_04 的阶段 stop/fallback 合同统一到 P1_03 的仓库责任图。
+
+P1_03 的 final-threshold pass 条件是：7 个 required modules 覆盖 read-only data 到 result ledger 的最短路径；`configs/datasets`、`configs/runs`、`configs/providers`、`configs/operators`、`configs/workflow_graphs` 只作为声明输入；`planner_normalization_trace.json`、`artifact_index.json`、`metrics.json` 与 ledger row 构成正式 row 的最小证据链；dashboard、Canvas、scheduler graph、review 文档、narrative report、notebook 和 partial/reject rows 均不得成为 metric 或 table truth。
+
+该合同同时保留所有下游 blocker：P1 checklist/status closure、`selected_global_best_backend`、RM101 positive evidence、adapter sample-level metadata-H5 preflight、Stage C/D rows、P3 action closure 和最终 validator pass 均不属于 P1_03 score review 的可声称结果。

@@ -1,8 +1,25 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
-
+    responded: true
+    status: closed
+    note: Deterministic render provenance was added through artifacts/figure_render_protocol.yaml and tools/render_fig_main_synthetic_signal.py; the SVG was regenerated from the node-local TSV.
+  - comment_id: AI-002
+    responded: true
+    status: closed
+    note: claim_figure_map.yaml constrains c1 to supported_limited_proxy and lists forbidden formal-result wording.
+  - comment_id: AI-003
+    responded: true
+    status: closed
+    note: failure_register.yaml, negative_result_note.md, and keep_discard_ledger.yaml preserve synthetic/offline, single-run, no-variance, no-real-data, and perfect-score ambiguity limitations.
+  - comment_id: AI-004
+    responded: true
+    status: closed_for_score_review
+    note: P1_08 AI-002 final-threshold review passed at 91, so the old seed-stage issue is retained only as historical/boundary context and not treated as a P1_09 node-local draft-figure score blocker.
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    status: closed
+    note: User-authorized Claude Code teammate review passed in review/人类_001.md; no global submission-ready, P3 action, or checklist closure is made by this local response.
+  - comment_id: AI-002-final-threshold
+    responded: true
+    status: closed
+    note: AI_002 final-threshold re-review passes P1_09 at 91 for score-only node-local draft-figure readiness under artifacts/figure_final_threshold_contract.yaml; global_submission_ready remains false and checklist_status_closed remains false.

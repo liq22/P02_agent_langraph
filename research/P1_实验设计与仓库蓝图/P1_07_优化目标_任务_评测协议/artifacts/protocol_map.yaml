@@ -1,20 +1,441 @@
-protocol_map:
-  - objective: Evaluate claim-evidence validity and phase-transition discipline for AutoResearch nodes.
-    task: node-level research production and review across P0-P4
-    protocol: fixed_node_set_controlled_comparison_v1
-    primary_metric: claim_evidence_validity_rate
-    secondary_metrics:
-      - protocol_completeness
-      - independent_reviewer_pass_rate
-      - reproducibility_rerun_agreement
-      - unsupported_claim_count
-      - hard_fail_closure_rate
-      - human_gate_escalation_rate
-    baselines:
-      - manual_checklist_workflow
-      - prompt_only_agent_workflow
-      - agent_without_independent_gate
-    artifacts:
-      - artifacts/gate_report.md
+version: p1_07_protocol_map_v3
+node_id: research::P1_实验设计与仓库蓝图::P1_07_优化目标_任务_评测协议
+generated_at: 2026-05-05
+
+upstream_evidence:
+  - path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/problem_hypothesis.yaml
+    evidence_id: P1_07_UPSTREAM_P0_02_PROBLEM_HYPOTHESIS
+    role: H1_H2_H3_questions_metrics_and_falsification_paths
+    checked_at: 2026-05-05
+    line_anchors:
+      - lines_12_29_claim_evidence_validity_and_unsupported_claim_metrics
+      - lines_35_45_review_response_closure_and_negative_evidence
+      - lines_126_135_formal_evidence_eligibility_and_stage_c_d_gate
+  - path: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/okr_map.yaml
+    evidence_id: P1_07_UPSTREAM_P0_04_OKR_ROUTE
+    role: route_stages_metrics_stop_conditions
+    checked_at: 2026-05-05
+    line_anchors:
+      - lines_33_62_protocol_data_eligibility_baselines_budget_adapter_gate
+      - lines_63_88_evidence_production_boundary_stage_c_d
+      - lines_124_139_review_response_closure_stop_conditions
+  - path: research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/artifacts/constraint_risk_map.yaml
+    evidence_id: P1_07_UPSTREAM_P0_05_CONSTRAINT_RISK
+    role: resource_budget_risk_boundaries_formal_evidence_gates
+    checked_at: 2026-05-05
+    line_anchors:
+      - lines_28_44_data_adapter_and_formal_stage_b_c_d_bottlenecks
+      - lines_72_94_provider_free_policy_and_review_threshold
+      - lines_97_112_claim_registry_schema_blockers
+      - lines_121_124_adapter_alignment_before_performance_claims
+  - path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+    evidence_id: P1_07_UPSTREAM_P1_06_SUBMODULE_REF
+    role: phmga_submodule_commit_branch_dirty_state
+    checked_at: 2026-05-05
+    line_anchors:
+      - lines_6_17_phmga_path_branch_commit_and_pull_command
+      - lines_21_31_dirty_entries_and_pointer_update_policy
+      - lines_45_50_policy_checks
+  - path: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+    evidence_id: P1_07_UPSTREAM_P1_05_HYPOTHESIS_STATUS
+    role: preliminary_supported_unsupported_unclear_boundaries
+    checked_at: 2026-05-05
+    line_anchors:
+      - lines_6_14_supported_limited_synthetic_only_boundary
+      - lines_17_31_unsupported_formal_and_rm101_boundaries
+      - lines_35_41_unclear_and_status_distribution
+
+traceability_verification:
+  claim_id: P1_07_C007_UPSTREAM_TRACEABILITY
+  evidence_id: P1_07_E007_UPSTREAM_EVIDENCE_PATHS
+  status: resolved_for_re_review
+  rule: >-
+    Upstream consistency claims are limited to the canonical paths listed in
+    upstream_evidence and the line anchors recorded above. If any listed file is
+    unreachable, P1_07 must downgrade to protocol-draft and cannot claim
+    consistency with H1/H2/H3, P0_04 route stages, P0_05 constraints, P1_05
+    evidence boundaries, or P1_06 PHMGA submodule state.
+
+final_threshold_contract:
+  claim_id: P1_07_C009_FINAL_THRESHOLD_PROTOCOL_LOCK
+  evidence_id: P1_07_E009_FINAL_THRESHOLD_CONTRACT
+  contract_path: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_final_threshold_contract.yaml
+  status: ready_for_score_only_final_threshold_re_review
+  allowed_positive_claim: >-
+    The v3 protocol package is documented, consistent, complete, exercisable,
+    and review-closed enough for node-local final-threshold score review.
+  forbidden_upgrades:
+    - observed_autoresearch_improvement
+    - phmga_formal_result_eligibility
+    - selected_backend_lock
+    - rm101_positive_resolution
+    - stage_c_or_stage_d_success
+    - global_submission_ready
+  response_coverage:
+    ai_001: responded_true_in_review_response_yaml
+    h_001: responded_true_in_review_response_yaml
+  global_blockers_preserved:
+    - p1_checklist_pending
+    - remaining_below_90_scores_outside_p1_07
+    - p3_04_actions_blocked_or_planned
+    - selected_backend_not_locked
+    - rm101_positive_evidence_not_locked
+    - adapter_preflight_pending
+    - stage_c_d_rows_not_passed
+
+protocols:
+  - protocol_id: P1_07_PROTO_001_FIXED_NODE_GOVERNANCE_COMPARISON
+    linked_hypotheses:
+      - H1_CLAIM_VALIDITY
+      - H2_REVIEW_RESPONSE_CLOSURE
+    objective: Test whether gated AutoResearch improves claim-evidence validity and review-response closure under fixed node set and budget.
+    task_definition: Produce and review the same P0-P4 research-node package under multiple workflow conditions.
+    success_criterion: >-
+      AutoResearch improves claim_evidence_validity_rate over all preregistered
+      baselines without increasing unresolved unsupported_claim_count, while
+      reporting uncertainty and negative/failure cases.
+    primary_outcome:
+      metric_id: P1_07_M001_CLAIM_EVIDENCE_VALIDITY_RATE
+      name: claim_evidence_validity_rate
+      direction: maximize
+      numerator: eligible central claims with claim_id, evidence_id, artifact_path, support_status, boundary_label, review_action, and response_status
+      denominator: all eligible proposal, manuscript, review, and response central claims in the fixed node set
+      exclusion_rule: claims excluded from the denominator must have a written non_applicable rationale and reviewer-visible location
+    secondary_outcomes:
+      - metric_id: P1_07_M002_UNSUPPORTED_CLAIM_COUNT
+        name: unsupported_claim_count
+        direction: minimize
+      - metric_id: P1_07_M003_INDEPENDENT_REVIEWER_PASS_RATE
+        name: independent_reviewer_pass_rate
+        direction: maximize
+      - metric_id: P1_07_M004_RESPONSE_COVERAGE_RATE
+        name: response_coverage_rate
+        direction: maximize
+      - metric_id: P1_07_M005_HARD_FAIL_CLOSURE_RATE
+        name: hard_fail_closure_rate
+        direction: maximize
+      - metric_id: P1_07_M006_NEGATIVE_RESULT_RETENTION_RATE
+        name: negative_result_retention_rate
+        direction: maximize
+    required_baselines:
+      - baseline_id: P1_07_B001_MANUAL_CHECKLIST_WORKFLOW
+        role: human_process_baseline
+        required_record:
+          - manual_operation_ledger
+          - elapsed_time_or_budget
+          - evidence_artifact_list
+          - reviewer_verdict
+      - baseline_id: P1_07_B002_PROMPT_ONLY_AGENT_WORKFLOW
+        role: text_generation_baseline
+        required_record:
+          - prompt
+          - output
+          - budget
+          - reviewer_verdict
+          - unsupported_claim_count
+      - baseline_id: P1_07_B003_AGENT_WITHOUT_INDEPENDENT_GATE
+        role: gate_ablation
+        required_record:
+          - same_node_contract
+          - no_independent_reviewer_condition
+          - author_exit_vs_node_close_audit
+    fairness_controls:
+      - identical_fixed_node_set
+      - identical_acceptance_checklist
+      - identical_review_rubric
+      - identical_time_or_token_budget
+      - identical_artifact_audit_procedure
+      - identical_primary_metric_definition
+    repeat_and_statistics:
+      repeat_unit: random_seed_or_independent_reviewer_assignment
+      minimum_repeat_count:
+        autoresearch_gated_workflow: 3
+        manual_checklist_workflow: 3
+        prompt_only_agent_workflow: 3
+        agent_without_independent_gate: 3
+      minimum_repeat_policy: >-
+        Each workflow condition requires three independent repeat units before
+        comparative improvement can be claimed. A repeat unit is a new fixed
+        node-package attempt with a distinct random seed or distinct independent
+        reviewer assignment. Fewer than three repeats is a low_power_pilot and
+        may only produce protocol/pilot wording, not a strong result claim.
+      statistic_report: point_estimate_plus_confidence_interval_or_bootstrap_interval
+      failure_distribution_required: true
+    budget_contract:
+      authoring_wall_clock_minutes_per_node: 45
+      reviewer_wall_clock_minutes_per_node: 20
+      artifact_audit_wall_clock_minutes_per_node: 20
+      llm_token_budget_per_node_for_llm_enabled_conditions: 120000
+      llm_enabled_conditions:
+        - autoresearch_gated_workflow
+        - prompt_only_agent_workflow
+        - agent_without_independent_gate
+      manual_condition_budget_rule: >-
+        Manual checklist receives the same wall-clock, reviewer, and artifact
+        audit budgets; LLM tokens are recorded as not_applicable_manual_no_model
+        and cannot be exchanged for extra wall-clock time.
+    artifact_outputs:
+      - artifacts/protocol_map.yaml
       - artifacts/experiment_rigor_plan.yaml
+      - artifacts/gate_report.md
       - future_artifacts/result_ledger.yaml
+      - future_logs/coverage_matrix.md
+      - future_review/verdict.yaml
+      - future_review/response.yaml
+    stop_conditions:
+      - baseline record missing
+      - metric numerator or denominator ambiguous
+      - reviewer assignment not recorded
+      - uncertainty not reported
+      - negative or reject evidence hidden
+    downgrade_action: Keep the package protocol-ready only; do not write result-level improvement claims.
+
+  - protocol_id: P1_07_PROTO_002_FORMAL_EVIDENCE_ELIGIBILITY_GATE
+    linked_hypotheses:
+      - H3_FORMAL_EVIDENCE_ELIGIBILITY
+    objective: Gate PHMGA/Vibench formal result claims before they enter manuscript evidence.
+    task_definition: Verify provider, data, artifact, backend, Stage C, and Stage D eligibility for formal rows.
+    success_criterion: >-
+      All formal evidence gates pass: provider/model policy, metadata-H5
+      alignment, artifact contract, selected backend, Stage C main rows, Stage D
+      ablations, result_md, artifact_dir, ledger row, and main-table mapping.
+    primary_outcome:
+      metric_id: P1_07_M010_FORMAL_RESULT_ELIGIBILITY_PASS
+      name: formal_result_eligibility_pass
+      direction: pass_required
+      numerator: formal rows satisfying every eligibility gate
+      denominator: preregistered formal rows in Stage C and Stage D
+      exclusion_rule: no row may be excluded without a blocker or reject-evidence record
+    secondary_outcomes:
+      - metric_id: P1_07_M011_ARTIFACT_CONTRACT_PASS
+        name: artifact_contract_pass
+        direction: pass_required
+      - metric_id: P1_07_M012_METADATA_H5_ALIGNMENT_PASS
+        name: metadata_h5_alignment_pass
+        direction: pass_required
+      - metric_id: P1_07_M013_STAGE_C_MAIN_RESULT_PASS
+        name: stage_c_main_result_pass
+        direction: pass_required
+      - metric_id: P1_07_M014_STAGE_D_ABLATION_PASS
+        name: stage_d_ablation_pass
+        direction: pass_required
+      - metric_id: P1_07_M015_SELECTED_BACKEND_LOCKED
+        name: selected_global_best_backend_locked
+        direction: pass_required
+    required_controls:
+      provider_model_policy:
+        openrouter: free_models_only
+        bigmodel: GLM-4.7-flash_free_only
+      data_boundary:
+        vibench_role: read_catalog_and_read_bundle_only
+        phmga_role: protocol_split_windowing_dag_evaluation_ledger_tables
+      submodule_state:
+        branch: journal_thesis
+        commit: 914bc5925d5230917a5de95d88784075fb2b041e
+        dirty_entries_count: 66
+        pointer_update_policy: protect_dirty_work_before_future_pointer_update
+    formal_rows:
+      stage_b_backend_comparison:
+        - ottawa_ml_codex_v3
+        - ottawa_ml_openrouter_glm_v2
+        - ottawa_ml_bigmodel_glm47_v1
+        - rm101_ml_codex_v3
+        - rm101_ml_openrouter_glm_v2
+        - rm101_ml_bigmodel_glm47_v1
+      stage_c_main_rows:
+        - ottawa_ml_main_v1
+        - ottawa_torch_main_v1
+        - rm101_ml_main_v1
+        - rm101_torch_main_v1
+      stage_d_ablations:
+        - ottawa_ml_intermediate_v1
+        - rm101_ml_intermediate_v1
+        - ottawa_torch_module_runtime_v1
+        - rm101_torch_module_runtime_v1
+    repeat_and_budget_contract:
+      stage_b_backend_comparison:
+        minimum_repeat_count_per_backend_dataset: 1
+        claim_boundary: backend_lock_preflight_only_not_performance_claim
+      stage_c_main_rows:
+        minimum_repeat_count_per_formal_row: 3
+        repeat_unit: independent_seed_or_replayable_phmga_run_id
+      stage_d_ablations:
+        minimum_repeat_count_per_formal_row: 3
+        repeat_unit: independent_seed_or_replayable_phmga_run_id
+      low_power_policy: >-
+        Any Stage C or Stage D formal row with fewer than three successful
+        repeat units is non_selection_eligible and must be recorded as blocker,
+        reject evidence, or limitation.
+      provider_budget_limits:
+        openrouter_model_policy: free_models_only
+        bigmodel_model_policy: GLM-4.7-flash_free_only
+        max_provider_retries_after_rate_limit: 1
+        max_llm_calls_per_formal_row: 16
+        max_wall_clock_hours_per_formal_row: 4
+    artifact_outputs:
+      - future_phmga_result_md
+      - future_phmga_artifact_dir
+      - future_phmga_ledger_row
+      - future_main_table_row
+      - future_claim_evidence_registry_entry
+      - future_failure_or_reject_evidence_entry
+    stop_conditions:
+      - provider/model policy violation
+      - metadata-H5 alignment missing or failed
+      - artifact contract failed
+      - selected backend not locked
+      - Stage C or Stage D rows missing
+      - RM101 row remains reject evidence
+      - result_md or artifact_dir missing
+      - formal row is cherry-picked without denominator and failure distribution
+    downgrade_action: Preserve blocker/reject evidence and downgrade manuscript wording to limitation or protocol-stage claim.
+
+metric_parser_contract:
+  claim_id: P1_07_C008_METRIC_PARSER_SCHEMA
+  evidence_id: P1_07_E008_METRIC_LEDGER_CONTRACT
+  status: resolved_for_re_review
+  ledger_paths:
+    workflow_result_ledger: future_artifacts/result_ledger.yaml
+    formal_result_ledger: future_phmga_ledger_row
+    coverage_matrix: future_logs/coverage_matrix.md
+  required_common_fields:
+    - protocol_id
+    - metric_id
+    - row_id
+    - claim_id
+    - evidence_id
+    - node_id
+    - condition_id
+    - repeat_index
+    - repeat_unit_id
+    - artifact_path
+    - support_status
+    - boundary_label
+    - denominator_included
+    - numerator_included
+    - exclusion_rationale
+    - review_action
+    - response_status
+    - blocker_id
+    - failure_interpretation
+  allowed_enums:
+    support_status:
+      - supported
+      - supported_limited
+      - unsupported
+      - unclear
+      - rejected
+      - blocked
+      - not_applicable
+    boundary_label:
+      - proposal_stage
+      - protocol_ready_only
+      - preliminary_synthetic_only
+      - formal_candidate
+      - formal_selection_eligible
+      - limitation
+      - blocker
+      - reject_evidence
+    review_action:
+      - pass
+      - revise
+      - block
+      - not_reviewed
+    response_status:
+      - closed
+      - open
+      - not_applicable
+  workflow_metric_rules:
+    P1_07_M001_CLAIM_EVIDENCE_VALIDITY_RATE:
+      type: rate
+      numerator_rule: denominator_included true and all required_common_fields populated with response_status closed or not_applicable
+      denominator_rule: every eligible proposal, manuscript, review, and response central claim in the fixed node set
+    P1_07_M002_UNSUPPORTED_CLAIM_COUNT:
+      type: count
+      count_rule: central claim rows where support_status is unsupported, rejected, or blocked
+    P1_07_M003_INDEPENDENT_REVIEWER_PASS_RATE:
+      type: rate
+      numerator_rule: review_complete true, review_action pass, hard_fail false, independence_confirmed true
+      denominator_rule: every required independent review row for the fixed node set
+    P1_07_M004_RESPONSE_COVERAGE_RATE:
+      type: rate
+      numerator_rule: review issues requiring response with response_status closed and evidence-linked action recorded
+      denominator_rule: all fatal, major, hard_fail, or blocking review issues in the fixed node set
+    P1_07_M005_HARD_FAIL_CLOSURE_RATE:
+      type: rate
+      numerator_rule: hard_fail issue rows with closure evidence, actionable_fix response, and follow-up verdict pass or downgraded non-hard-fail
+      denominator_rule: all hard_fail issue rows created during the condition
+    P1_07_M006_NEGATIVE_RESULT_RETENTION_RATE:
+      type: rate
+      numerator_rule: unsupported, unclear, rejected, blocked, rate_limited, or failed rows preserved with artifact_path and failure_interpretation
+      denominator_rule: all negative or non-positive evidence rows produced during the condition
+  formal_metric_rules:
+    required_formal_fields:
+      - formal_row_id
+      - stage
+      - dataset_id
+      - backend_id
+      - provider_name
+      - model_name
+      - provider_model_policy_pass
+      - metadata_h5_alignment_pass
+      - artifact_contract_pass
+      - selected_global_best_backend_locked
+      - result_md
+      - artifact_dir
+      - ledger_row_path
+      - main_table_mapping
+      - repeat_count
+      - formal_eligibility_status
+    P1_07_M010_FORMAL_RESULT_ELIGIBILITY_PASS:
+      type: rate
+      numerator_rule: all required_formal_fields populated, repeat_count meets stage minimum, and every pass field is true
+      denominator_rule: all preregistered Stage C and Stage D formal rows
+    P1_07_M011_ARTIFACT_CONTRACT_PASS:
+      type: rate
+      numerator_rule: formal rows with artifact_contract_pass true and reachable result_md/artifact_dir
+      denominator_rule: formal rows requiring PHMGA artifact export
+    P1_07_M012_METADATA_H5_ALIGNMENT_PASS:
+      type: rate
+      numerator_rule: formal rows whose dataset adapter preflight reports metadata_h5_alignment_pass true
+      denominator_rule: formal rows requiring RM_017_Ottawa19 or RM_101_THU_GEARBOX sample-level alignment
+    P1_07_M013_STAGE_C_MAIN_RESULT_PASS:
+      type: rate
+      numerator_rule: Stage C rows with formal_eligibility_status formal_selection_eligible
+      denominator_rule: four preregistered Stage C main rows
+    P1_07_M014_STAGE_D_ABLATION_PASS:
+      type: rate
+      numerator_rule: Stage D rows with formal_eligibility_status formal_selection_eligible
+      denominator_rule: four preregistered Stage D ablation rows
+    P1_07_M015_SELECTED_BACKEND_LOCKED:
+      type: binary_gate
+      numerator_rule: selected_global_best_backend_locked true with Stage B denominator, rejects, and tie-break rule recorded
+      denominator_rule: one backend-lock decision over all preregistered Stage B rows
+  artifact_path_validation:
+    allowed_roots:
+      - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议
+      - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+    forbidden_truth_sources:
+      - backend/graph
+      - obsidian
+      - web
+      - .claude/skills
+      - .codex/skills
+    rule: >-
+      A row is parser-valid only when artifact_path exists or is explicitly
+      marked future_required, and graph/Canvas/dashboard/wrapper paths are never
+      accepted as research-truth evidence.
+
+cross_protocol_rules:
+  no_cherry_picking: Secondary metrics cannot be promoted into positive claims unless the primary outcome or hard eligibility gate passes.
+  no_projection_truth: Graph, Canvas, dashboard, wrapper files, generated prose, and single logs are not research truth.
+  negative_evidence_policy: Unsupported, unclear, failed, rate-limited, and reject evidence rows remain visible in ledgers.
+  author_exit_boundary: Author exit is not node close; review/verdict and response coverage are required for hard-gate closure.
+
+author_exit:
+  gate_inputs_verified: true
+  blocking_gaps_are_explicit: true
+  primary_secondary_outcomes_defined: true
+  baselines_and_controls_defined: true
+  repeat_uncertainty_and_failure_policy_defined: true
+  no_result_claim_made: true

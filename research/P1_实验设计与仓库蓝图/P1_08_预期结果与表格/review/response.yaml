@@ -1,8 +1,12 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: "External AI re-review passed with score 88 after fixing the c1 support-status vocabulary bridge and table common-row parser fields. Residual risks remain node-progression only and final-submission blockers outside P1_08."
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: "User-authorized Claude Code teammate human-review slot passed with score 87 and validating handoff. Advisory gaps were normalized at node close: c3 claim_type now matches method semantics, E004 downstream figure evidence is listed, and ablation table rows expose direction/numerator/denominator alongside primary_metric_delta. Broader non-node blockers remain outside P1_08."
+
+  - comment_id: AI-002
+    responded: true
+    note: "Distinct score-only final-threshold re-review passed P1_08 at 91 for node-local expected-results/table-package readiness after table_final_threshold_contract.yaml bounded the review scope. No global submission-ready, checklist/status closure, P3 action closure, observed result, selected backend, RM101, or Stage C/D claim is made."

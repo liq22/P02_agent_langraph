@@ -1,0 +1,74 @@
+version: p1_05_claim_evidence_registry_v2
+node_id: research::P1_实验设计与仓库蓝图::P1_05_初步验证结果整理
+
+claims:
+  - claim_id: P1_05_C01_KEEP_LIMITED_SYNTHETIC_SIGNAL
+    claim_type: result
+    claim_text: P1_04 provides a bounded offline synthetic keep signal for supervisor_proving over simple_fullchain on Ottawa synthetic data.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/docs/manuscript.md#limited-synthetic-signal
+    action: keep
+    evidence_refs:
+      - evidence_id: P1_05_E001_RESULTS_TSV
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+      - evidence_id: P1_05_E002_BASELINE_METRICS
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple/metrics.json
+      - evidence_id: P1_05_E003_ATTEMPT_METRICS
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving/metrics.json
+    claim_boundary: preliminary/synthetic/offline only
+  - claim_id: P1_05_C02_FORMAL_PERFORMANCE_READY
+    claim_type: limitation
+    claim_text: Formal paper performance improvement is not supported by P1_04 evidence.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/docs/manuscript.md#formal-performance-boundary
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P1_05_E004_NO_REAL_DATA_FORMAL_ROW
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml#unsupported_results
+    claim_boundary: must remain absent from main result table.
+  - claim_id: P1_05_C03_VARIANCE_STABILITY
+    claim_type: limitation
+    claim_text: Stability under repeated runs or harder real splits remains unknown.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/docs/manuscript.md#variance-stability-boundary
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P1_05_E005_SINGLE_RUN_LIMITATION
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml#P1_05_H004_VARIANCE_STABILITY
+    claim_boundary: limitation only.
+  - claim_id: P1_05_C04_FINAL_THRESHOLD_SYNTHESIS_BOUND
+    claim_type: method
+    claim_text: P1_05 is ready for node-specific final-threshold score review because supported_limited, unsupported, and unclear result states are separated and tied to explicit evidence or missing-evidence requirements.
+    support_status: supported
+    manuscript_location: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/docs/manuscript.md#final-threshold-handoff-contract
+    action: keep
+    evidence_refs:
+      - evidence_id: P1_05_E006_FINAL_THRESHOLD_CONTRACT
+        evidence_type: revision_diff
+        source_ref: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_synthesis_final_threshold_contract.yaml
+    claim_boundary: node-local result-synthesis score readiness only.
+
+evidence:
+  - evidence_id: P1_05_E001_RESULTS_TSV
+    path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+    type: source_ledger
+  - evidence_id: P1_05_E002_BASELINE_METRICS
+    path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple/metrics.json
+    type: metric_artifact
+  - evidence_id: P1_05_E003_ATTEMPT_METRICS
+    path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving/metrics.json
+    type: metric_artifact
+  - evidence_id: P1_05_E004_NO_REAL_DATA_FORMAL_ROW
+    path: artifacts/result_registry.yaml
+    type: unsupported_result_record
+  - evidence_id: P1_05_E005_SINGLE_RUN_LIMITATION
+    path: artifacts/hypothesis_status.yaml
+    type: limitation_record
+  - evidence_id: P1_05_E006_FINAL_THRESHOLD_CONTRACT
+    path: artifacts/result_synthesis_final_threshold_contract.yaml
+    type: final_threshold_contract

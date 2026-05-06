@@ -1,21 +1,28 @@
-review_id: EXTERNAL-AI-001
-review_complete: false
-reviewer_agent_id: <pending-distinct-agent>
-reviewer_skill: external_node_reviewer
-reviewed_node_path: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格
-rubric_path: prompts/review_rubric.yaml
-rubric_version: nature_node_review_v1
-overall_score: null
-overall_verdict: revise
+review_id: AI-002
+review_complete: true
+reviewer_agent_id: final-threshold-reviewer-p1-08-002
+review_type: score-only node-local final-threshold re-review
+overall_score: 91
+overall_verdict: pass
 hard_fail: false
+independence_confirmed: true
 dimension_scores:
-  originality_novelty: null
-  scientific_importance: null
-  evidence_technical_soundness: null
-  reproducibility_transparency: null
-  broad_interest_story_clarity: null
-  review_robustness: null
+  originality_novelty: 18
+  scientific_importance: 18
+  evidence_technical_soundness: 23
+  reproducibility_transparency: 14
+  broad_interest_story_clarity: 8
+  review_robustness: 10
+final_submission_threshold_met: true
+downstream_ready: true
+checklist_status_closed: false
+global_submission_ready: false
 blocking_issues: []
 required_actions: []
-downstream_ready: false
-independence_confirmed: false
+comments:
+  - "Score-only pass for P1_08 node-local expected-results/table-package readiness; this is not a global submission-ready verdict."
+  - "Prior hard fails are resolved: c1 now has a dual support-status bridge, and all planned tables expose parser-facing claim/evidence/source/status/failure fields or formal equivalents."
+  - "The final-threshold contract sufficiently confines the score review to table-package readiness and forbids observed result, selected backend, RM101, Stage C/D, and global submission-ready claims."
+  - "Negative, unclear, rejected, blocked, low-power, and missing formal rows retain first-class table locations through the negative ledger, failure register, negative note, and keep/discard ledger."
+  - "P1_09 c1 compatibility is preserved through fig_main_synthetic_signal with a synthetic/offline single-run boundary."
+  - "Prior AI/H review comments are responded in review/response.yaml; no P1 checklist, P3 action, status, current gate, or global audit closure is made by this review."

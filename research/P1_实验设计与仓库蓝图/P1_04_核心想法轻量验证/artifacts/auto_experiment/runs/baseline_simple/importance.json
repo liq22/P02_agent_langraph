@@ -1,0 +1,5 @@
+{
+  "cross_correlation_14_normalize_01_ch1__normalize_02_ch2": 7.599870943884204e-05,
+  "band_power_13_psd_12_normalize_02_ch2": 1.9282379196081366e-08,
+  "concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1": 0.3359259043638299
+}

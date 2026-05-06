@@ -1,0 +1,758 @@
+{
+  "execution_nodes": [
+    {
+      "node_id": "ch1",
+      "op_uid": "input.signal",
+      "kind": "input",
+      "parents": [],
+      "input_bindings": {},
+      "params": {
+        "channel_index": 0
+      },
+      "channel_index": 0
+    },
+    {
+      "node_id": "ch2",
+      "op_uid": "input.signal",
+      "kind": "input",
+      "parents": [],
+      "input_bindings": {},
+      "params": {
+        "channel_index": 1
+      },
+      "channel_index": 1
+    },
+    {
+      "node_id": "normalize_01_ch1",
+      "op_uid": "signal.normalize",
+      "kind": "transform",
+      "parents": [
+        "ch1"
+      ],
+      "input_bindings": {},
+      "params": {
+        "eps": 1e-06
+      },
+      "channel_index": null
+    },
+    {
+      "node_id": "normalize_02_ch2",
+      "op_uid": "signal.normalize",
+      "kind": "transform",
+      "parents": [
+        "ch2"
+      ],
+      "input_bindings": {},
+      "params": {
+        "eps": 1e-06
+      },
+      "channel_index": null
+    },
+    {
+      "node_id": "filter_03_normalize_01_ch1",
+      "op_uid": "signal.filter",
+      "kind": "transform",
+      "parents": [
+        "normalize_01_ch1"
+      ],
+      "input_bindings": {},
+      "params": {
+        "mode": "bandpass",
+        "fs": 10000,
+        "low_cut_hz": 200.0,
+        "high_cut_hz": 2000.0,
+        "order": 4
+      },
+      "channel_index": null
+    },
+    {
+      "node_id": "stft_06_normalize_01_ch1",
+      "op_uid": "signal.stft",
+      "kind": "transform",
+      "parents": [
+        "normalize_01_ch1"
+      ],
+      "input_bindings": {},
+      "params": {
+        "nperseg": 64,
+        "noverlap": 32
+      },
+      "channel_index": null
+    },
+    {
+      "node_id": "patch_08_normalize_01_ch1",
+      "op_uid": "signal.patch",
+      "kind": "transform",
+      "parents": [
+        "normalize_01_ch1"
+      ],
+      "input_bindings": {},
+      "params": {
+        "patch_length": 32,
+        "stride": 16
+      },
+      "channel_index": null
+    },
+    {
+      "node_id": "psd_10_normalize_01_ch1",
+      "op_uid": "signal.psd",
+      "kind": "transform",
+      "parents": [
+        "normalize_01_ch1"
+      ],
+      "input_bindings": {},
+      "params": {
+        "fs": 10000,
+        "nperseg": 64
+      },
+      "channel_index": null
+    },
+    {
+      "node_id": "psd_12_normalize_02_ch2",
+      "op_uid": "signal.psd",
+      "kind": "transform",
+      "parents": [
+        "normalize_02_ch2"
+      ],
+      "input_bindings": {},
+      "params": {
+        "fs": 10000,
+        "nperseg": 64
+      },
+      "channel_index": null
+    },
+    {
+      "node_id": "cross_correlation_14_normalize_01_ch1__normalize_02_ch2",
+      "op_uid": "multi.cross_correlation",
+      "kind": "multi",
+      "parents": [
+        "normalize_01_ch1",
+        "normalize_02_ch2"
+      ],
+      "input_bindings": {
+        "arg0": "normalize_01_ch1",
+        "arg1": "normalize_02_ch2"
+      },
+      "params": {},
+      "channel_index": null
+    },
+    {
+      "node_id": "hilbert_envelope_04_filter_03_normalize_01_ch1",
+      "op_uid": "signal.hilbert_envelope",
+      "kind": "transform",
+      "parents": [
+        "filter_03_normalize_01_ch1"
+      ],
+      "input_bindings": {},
+      "params": {},
+      "channel_index": null
+    },
+    {
+      "node_id": "spectral_centroid_07_stft_06_normalize_01_ch1",
+      "op_uid": "feature.spectral_centroid",
+      "kind": "feature",
+      "parents": [
+        "stft_06_normalize_01_ch1"
+      ],
+      "input_bindings": {},
+      "params": {
+        "fs": 10000
+      },
+      "channel_index": null
+    },
+    {
+      "node_id": "kurtosis_09_patch_08_normalize_01_ch1",
+      "op_uid": "feature.kurtosis",
+      "kind": "feature",
+      "parents": [
+        "patch_08_normalize_01_ch1"
+      ],
+      "input_bindings": {},
+      "params": {},
+      "channel_index": null
+    },
+    {
+      "node_id": "band_power_11_psd_10_normalize_01_ch1",
+      "op_uid": "feature.band_power",
+      "kind": "feature",
+      "parents": [
+        "psd_10_normalize_01_ch1"
+      ],
+      "input_bindings": {},
+      "params": {
+        "fs": 10000,
+        "band_low_hz": 200.0,
+        "band_high_hz": 2000.0
+      },
+      "channel_index": null
+    },
+    {
+      "node_id": "band_power_13_psd_12_normalize_02_ch2",
+      "op_uid": "feature.band_power",
+      "kind": "feature",
+      "parents": [
+        "psd_12_normalize_02_ch2"
+      ],
+      "input_bindings": {},
+      "params": {
+        "fs": 10000,
+        "band_low_hz": 200.0,
+        "band_high_hz": 2000.0
+      },
+      "channel_index": null
+    },
+    {
+      "node_id": "kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1",
+      "op_uid": "feature.kurtosis",
+      "kind": "feature",
+      "parents": [
+        "hilbert_envelope_04_filter_03_normalize_01_ch1"
+      ],
+      "input_bindings": {},
+      "params": {},
+      "channel_index": null
+    },
+    {
+      "node_id": "concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1",
+      "op_uid": "multi.concatenate",
+      "kind": "multi",
+      "parents": [
+        "kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1",
+        "spectral_centroid_07_stft_06_normalize_01_ch1",
+        "kurtosis_09_patch_08_normalize_01_ch1",
+        "band_power_11_psd_10_normalize_01_ch1"
+      ],
+      "input_bindings": {
+        "arg0": "kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1",
+        "arg1": "spectral_centroid_07_stft_06_normalize_01_ch1",
+        "arg2": "kurtosis_09_patch_08_normalize_01_ch1",
+        "arg3": "band_power_11_psd_10_normalize_01_ch1"
+      },
+      "params": {
+        "axis": 0
+      },
+      "channel_index": null
+    }
+  ],
+  "output_specs": [
+    {
+      "output_node_id": "cross_correlation_14_normalize_01_ch1__normalize_02_ch2",
+      "output_kind": "multi"
+    },
+    {
+      "output_node_id": "band_power_13_psd_12_normalize_02_ch2",
+      "output_kind": "feature"
+    },
+    {
+      "output_node_id": "concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1",
+      "output_kind": "multi"
+    }
+  ],
+  "output_policy": "terminal_only",
+  "manifest": {
+    "dag_hash": "77939d5174070d351b08929f5ee53b8ece96e928ad9cfec7f089d957976e8918",
+    "topo_order": [
+      "ch1",
+      "ch2",
+      "normalize_01_ch1",
+      "normalize_02_ch2",
+      "filter_03_normalize_01_ch1",
+      "stft_06_normalize_01_ch1",
+      "patch_08_normalize_01_ch1",
+      "psd_10_normalize_01_ch1",
+      "psd_12_normalize_02_ch2",
+      "cross_correlation_14_normalize_01_ch1__normalize_02_ch2",
+      "hilbert_envelope_04_filter_03_normalize_01_ch1",
+      "spectral_centroid_07_stft_06_normalize_01_ch1",
+      "kurtosis_09_patch_08_normalize_01_ch1",
+      "band_power_11_psd_10_normalize_01_ch1",
+      "band_power_13_psd_12_normalize_02_ch2",
+      "kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1",
+      "concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1",
+      "threshold_16_concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1"
+    ],
+    "nodes": [
+      {
+        "node_id": "ch1",
+        "op_uid": "input.signal",
+        "kind": "input",
+        "operator_category": "INPUT",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            256
+          ]
+        }
+      },
+      {
+        "node_id": "ch2",
+        "op_uid": "input.signal",
+        "kind": "input",
+        "operator_category": "INPUT",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            256
+          ]
+        }
+      },
+      {
+        "node_id": "normalize_01_ch1",
+        "op_uid": "signal.normalize",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            256
+          ]
+        }
+      },
+      {
+        "node_id": "normalize_02_ch2",
+        "op_uid": "signal.normalize",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            256
+          ]
+        }
+      },
+      {
+        "node_id": "filter_03_normalize_01_ch1",
+        "op_uid": "signal.filter",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            256
+          ]
+        }
+      },
+      {
+        "node_id": "stft_06_normalize_01_ch1",
+        "op_uid": "signal.stft",
+        "kind": "transform",
+        "operator_category": "EXPAND",
+        "rank_class": "rank_up",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            33,
+            7
+          ]
+        }
+      },
+      {
+        "node_id": "patch_08_normalize_01_ch1",
+        "op_uid": "signal.patch",
+        "kind": "transform",
+        "operator_category": "EXPAND",
+        "rank_class": "rank_up",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            15,
+            32
+          ]
+        }
+      },
+      {
+        "node_id": "psd_10_normalize_01_ch1",
+        "op_uid": "signal.psd",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            33
+          ]
+        }
+      },
+      {
+        "node_id": "psd_12_normalize_02_ch2",
+        "op_uid": "signal.psd",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            33
+          ]
+        }
+      },
+      {
+        "node_id": "cross_correlation_14_normalize_01_ch1__normalize_02_ch2",
+        "op_uid": "multi.cross_correlation",
+        "kind": "multi",
+        "operator_category": "MULTI_VARIABLE",
+        "rank_class": "multi_input",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            512
+          ],
+          "out": [
+            1
+          ]
+        }
+      },
+      {
+        "node_id": "hilbert_envelope_04_filter_03_normalize_01_ch1",
+        "op_uid": "signal.hilbert_envelope",
+        "kind": "transform",
+        "operator_category": "TRANSFORM",
+        "rank_class": "rank_same",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1,
+            256
+          ]
+        }
+      },
+      {
+        "node_id": "spectral_centroid_07_stft_06_normalize_01_ch1",
+        "op_uid": "feature.spectral_centroid",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            33,
+            7
+          ],
+          "out": [
+            1
+          ]
+        }
+      },
+      {
+        "node_id": "kurtosis_09_patch_08_normalize_01_ch1",
+        "op_uid": "feature.kurtosis",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            15,
+            32
+          ],
+          "out": [
+            1
+          ]
+        }
+      },
+      {
+        "node_id": "band_power_11_psd_10_normalize_01_ch1",
+        "op_uid": "feature.band_power",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            33
+          ],
+          "out": [
+            1
+          ]
+        }
+      },
+      {
+        "node_id": "band_power_13_psd_12_normalize_02_ch2",
+        "op_uid": "feature.band_power",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            33
+          ],
+          "out": [
+            1
+          ]
+        }
+      },
+      {
+        "node_id": "kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1",
+        "op_uid": "feature.kurtosis",
+        "kind": "feature",
+        "operator_category": "AGGREGATE",
+        "rank_class": "rank_down",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            1,
+            256
+          ],
+          "out": [
+            1
+          ]
+        }
+      },
+      {
+        "node_id": "concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1",
+        "op_uid": "multi.concatenate",
+        "kind": "multi",
+        "operator_category": "MULTI_VARIABLE",
+        "rank_class": "multi_input",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            4
+          ],
+          "out": [
+            4
+          ]
+        }
+      },
+      {
+        "node_id": "threshold_16_concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1",
+        "op_uid": "decision.threshold",
+        "kind": "decision",
+        "operator_category": "DECISION",
+        "rank_class": "terminal_decision",
+        "legal_paths": [
+          "dag_only",
+          "ml",
+          "torch"
+        ],
+        "backend_availability": [
+          "np",
+          "pt",
+          "sym"
+        ],
+        "shape_inference": {
+          "in": [
+            4
+          ],
+          "out": [
+            1
+          ]
+        }
+      }
+    ],
+    "path_type": "ml",
+    "warnings": []
+  }
+}

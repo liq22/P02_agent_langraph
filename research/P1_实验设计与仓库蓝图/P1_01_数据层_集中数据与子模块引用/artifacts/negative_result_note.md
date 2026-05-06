@@ -10,4 +10,4 @@ Current negative or limitation statements to preserve:
 - Vibench is a read-only data interface and must not provide formal paper result truth.
 - Pending, failed, no-evidence, transport-failure, or planner-timeout rows cannot enter paper tables.
 - Full sample-level metadata-H5 alignment should still be rechecked by the Vibench/PHMGA adapter during preflight.
-- Independent external review is still required before closing the node.
+- Independent external review has passed for this node; downstream limitations remain limited to backend selection, Stage C/D evidence, and adapter preflight.

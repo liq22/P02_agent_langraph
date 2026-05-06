@@ -3,6 +3,7 @@ node_id: research::P1_实验设计与仓库蓝图::P1_02_伪代码
 scope: PHMGA run-case pseudocode and implementation-facing interface
 author_agent_id: codex-local
 updated_at: 2026-05-04
+final_threshold_contract: artifacts/interface_final_threshold_contract.yaml
 
 upstream_dependencies:
   data_boundary_node: research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用
@@ -11,6 +12,7 @@ upstream_dependencies:
     - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/data_reading_boundary.yaml
     - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/phmga_data_protocol_handoff.yaml
     - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/result_source_map.yaml
+    - research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/artifacts/data_layer_final_threshold_contract.yaml
 
 interfaces:
   DataReadBundle:
@@ -211,6 +213,9 @@ author_exit:
   required_artifacts_exist: true
   key_research_judgment_answered_or_gap_reported: true
   citation_status_checked_when_external_sources_are_used: true
+  interface_final_threshold_contract_present: true
+  downstream_evidence_not_overclaimed: true
+  checklist_status_not_closed_by_this_contract: true
 
 review_status:
   external_review_required: true
@@ -223,3 +228,4 @@ review_status:
     - rm101_stage_b_rows_not_selection_eligible
     - phmga_vibench_adapter_alignment_preflight_pending
     - stage_c_d_formal_rows_not_passed
+    - checklist_status_closure_requires_separate_explicit_approval

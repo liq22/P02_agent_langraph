@@ -25,6 +25,16 @@ required_directories:
     responsibility: Free model identifiers, endpoint family, retry and schema policy.
     required_now: true
     truth_boundary: no credentials
+  - path: configs/operators
+    owner: planner_bridge
+    responsibility: Versioned OperatorRegistry entries with operator ids, schemas, allowed args, and implementation references.
+    required_now: true
+    truth_boundary: planner and DAG compiler input only; not result truth and not a global registry
+  - path: configs/workflow_graphs
+    owner: dag_compiler
+    responsibility: PHMGA workflow/DAG input graph configs referenced by run configs.
+    required_now: true
+    truth_boundary: experiment DAG input only; must not point to backend/graph, Canvas, dashboard, or scheduler projections
   - path: scripts
     owner: operator
     responsibility: Stable CLI entrypoints for preflight, run, validation, and ledger build.
@@ -59,7 +69,7 @@ entrypoints:
     purpose: Execute one declared run config through planner, DAG compiler, workflow, metrics, and artifact export.
     blocks_on_failure: true
   - path: scripts/validate_artifacts.py
-    purpose: Parse one run bundle and enforce required artifact/metric schema.
+    purpose: Parse one run bundle and enforce required artifact, planner trace, operator registry, workflow graph, and metric schema.
     blocks_on_failure: true
   - path: scripts/build_ledger.py
     purpose: Append keep/reject row with evidence refs to result ledger.
@@ -68,6 +78,7 @@ entrypoints:
 required_run_bundle:
   - validated_dag.json
   - compiled_dag_manifest.json
+  - planner_normalization_trace.json
   - feature_pipeline.json
   - feature_list.json
   - feature_separability_summary.json
@@ -96,8 +107,14 @@ quality_gates:
     pass_condition: Dataset config, run config, provider config, seed/repeat, and artifact directory are declared before run.
     fail_policy: Stop before formal execution.
   artifact_contract:
-    pass_condition: Required run bundle files exist and parse.
+    pass_condition: Required run bundle files exist and parse, including planner_normalization_trace.json linked from artifact_index.json.
     fail_policy: Mark row reject and exclude from paper table.
+  operator_registry:
+    pass_condition: Run config references a versioned configs/operators/*.yaml file and the DAG compiler records the resolved operator ids in compiled_dag_manifest.json.
+    fail_policy: Reject row before ledger keep=accept.
+  workflow_graph_boundary:
+    pass_condition: Run config workflow_graph_path references configs/workflow_graphs/*.yaml and never backend/graph, Canvas, dashboard, or web projection files.
+    fail_policy: Hard block formal execution until the path is corrected.
   ledger_truth:
     pass_condition: Paper table eligibility is determined only by ledger keep/reject row.
     fail_policy: Block positive claim.
@@ -117,4 +134,38 @@ handoff_ready:
   module_boundaries_defined: true
   minimum_directory_plan_defined: true
   result_generation_path_defined: true
+  operator_registry_path_defined: true
+  planner_trace_artifact_defined: true
+  workflow_graph_boundary_defined: true
+  final_threshold_contract_defined: true
   review_required_before_node_close: true
+
+run_config_contract:
+  required_fields:
+    - experiment_id
+    - dataset_config
+    - workflow_graph_path
+    - operator_registry_path
+    - provider_config
+    - model_id
+    - seed
+    - repeat_id
+    - max_iterations
+  workflow_graph_path:
+    allowed_prefix: configs/workflow_graphs/
+    forbidden_prefixes:
+      - backend/graph/
+      - obsidian/
+      - web/
+    invariant: Names a PHMGA experiment/DAG input graph, not scheduler, Canvas, or dashboard truth.
+  operator_registry_path:
+    allowed_prefix: configs/operators/
+    invariant: Names a versioned operator registry consumed by planner_bridge and validated by dag_compiler.
+
+final_threshold_contract:
+  path: artifacts/repo_blueprint_final_threshold_contract.yaml
+  role: Defines node-specific score readiness for repository-blueprint handoff only.
+  may_claim:
+    - minimal module path, config ownership, run bundle, ledger truth, and duplicate-truth exclusions are locked
+  must_not_claim:
+    - selected backend, RM101 positive evidence, adapter preflight, Stage C/D formal rows, checklist closure, or final validator pass

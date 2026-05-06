@@ -1,0 +1,26 @@
+[
+  {
+    "index": 0,
+    "name": "crest_factor_07_ch2",
+    "source_node": "crest_factor_07_ch2",
+    "path": "ml"
+  },
+  {
+    "index": 1,
+    "name": "kurtosis_02_hilbert_envelope_01_ch1",
+    "source_node": "kurtosis_02_hilbert_envelope_01_ch1",
+    "path": "ml"
+  },
+  {
+    "index": 2,
+    "name": "rms_04_fft_03_ch1",
+    "source_node": "rms_04_fft_03_ch1",
+    "path": "ml"
+  },
+  {
+    "index": 3,
+    "name": "rms_06_fft_05_ch2",
+    "source_node": "rms_06_fft_05_ch2",
+    "path": "ml"
+  }
+]

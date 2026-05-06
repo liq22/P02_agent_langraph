@@ -1,8 +1,12 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: "External re-review passed with score 88 after v3 fixes. Prior hard fails P1_07_C007, P1_07_C004, and P1_07_C008 are resolved by canonical upstream paths/anchors, preregistered repeat-budget rules, and parser-readable metric ledger contracts. Residual risks remain protocol-readiness only and below-final-threshold score."
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: "User-authorized Claude Code teammate human-review slot passed with score 88 and validating handoff. Advisory notes about stale status/checklist and unresponded AI comment were addressed at node close; broader non-node blockers remain outside P1_07."
+
+  - comment_id: AI-002
+    responded: true
+    note: "Score-only final-threshold re-review passed with score 90 for node-local P1_07 protocol-package readiness after artifacts/protocol_final_threshold_contract.yaml locked the review boundary. No blocking P1_07-scope actions remain; this does not close P1 checklist status, P3 actions, selected backend, RM101, adapter preflight, Stage C/D, global final validator, or submission readiness."

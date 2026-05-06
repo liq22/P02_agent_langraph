@@ -1,0 +1,336 @@
+{
+  "nodes": [
+    {
+      "node_id": "ch1",
+      "op_uid": "input.signal",
+      "name": "Input Channel 1",
+      "kind": "input",
+      "operator_category": "INPUT",
+      "rank_class": "rank_same",
+      "params": {
+        "channel_index": 0
+      },
+      "parents": [],
+      "in_shape": [
+        1,
+        256
+      ],
+      "out_shape": [
+        1,
+        256
+      ],
+      "backend_availability": [
+        "np",
+        "pt",
+        "sym"
+      ],
+      "execution_role": "fixed",
+      "legal_paths": [
+        "dag_only",
+        "ml",
+        "torch"
+      ],
+      "input_bindings": {},
+      "plan_step_ref": "root_input",
+      "rationale": "Implicit multi-channel raw signal root."
+    },
+    {
+      "node_id": "ch2",
+      "op_uid": "input.signal",
+      "name": "Input Channel 2",
+      "kind": "input",
+      "operator_category": "INPUT",
+      "rank_class": "rank_same",
+      "params": {
+        "channel_index": 1
+      },
+      "parents": [],
+      "in_shape": [
+        1,
+        256
+      ],
+      "out_shape": [
+        1,
+        256
+      ],
+      "backend_availability": [
+        "np",
+        "pt",
+        "sym"
+      ],
+      "execution_role": "fixed",
+      "legal_paths": [
+        "dag_only",
+        "ml",
+        "torch"
+      ],
+      "input_bindings": {},
+      "plan_step_ref": "root_input",
+      "rationale": "Implicit multi-channel raw signal root."
+    },
+    {
+      "node_id": "hilbert_envelope_01_ch1",
+      "op_uid": "signal.hilbert_envelope",
+      "name": "Hilbert Envelope",
+      "kind": "transform",
+      "operator_category": "TRANSFORM",
+      "rank_class": "rank_same",
+      "params": {},
+      "parents": [
+        "ch1"
+      ],
+      "in_shape": [
+        1,
+        256
+      ],
+      "out_shape": [
+        1,
+        256
+      ],
+      "backend_availability": [
+        "np",
+        "pt",
+        "sym"
+      ],
+      "execution_role": "fixed",
+      "legal_paths": [
+        "dag_only",
+        "ml",
+        "torch"
+      ],
+      "input_bindings": {},
+      "plan_step_ref": "round_01_step_01",
+      "rationale": "Round 1 planner step 1: apply hilbert_envelope to ch1 using schema category TRANSFORM and rank class rank_same."
+    },
+    {
+      "node_id": "fft_03_ch1",
+      "op_uid": "signal.fft_mag",
+      "name": "FFT Magnitude",
+      "kind": "transform",
+      "operator_category": "TRANSFORM",
+      "rank_class": "rank_same",
+      "params": {},
+      "parents": [
+        "ch1"
+      ],
+      "in_shape": [
+        1,
+        256
+      ],
+      "out_shape": [
+        1,
+        129
+      ],
+      "backend_availability": [
+        "np",
+        "pt",
+        "sym"
+      ],
+      "execution_role": "fixed",
+      "legal_paths": [
+        "dag_only",
+        "ml",
+        "torch"
+      ],
+      "input_bindings": {},
+      "plan_step_ref": "round_01_step_03",
+      "rationale": "Round 1 planner step 3: apply fft to ch1 using schema category TRANSFORM and rank class rank_same."
+    },
+    {
+      "node_id": "fft_05_ch2",
+      "op_uid": "signal.fft_mag",
+      "name": "FFT Magnitude",
+      "kind": "transform",
+      "operator_category": "TRANSFORM",
+      "rank_class": "rank_same",
+      "params": {},
+      "parents": [
+        "ch2"
+      ],
+      "in_shape": [
+        1,
+        256
+      ],
+      "out_shape": [
+        1,
+        129
+      ],
+      "backend_availability": [
+        "np",
+        "pt",
+        "sym"
+      ],
+      "execution_role": "fixed",
+      "legal_paths": [
+        "dag_only",
+        "ml",
+        "torch"
+      ],
+      "input_bindings": {},
+      "plan_step_ref": "round_01_step_05",
+      "rationale": "Round 1 planner step 5: apply fft to ch2 using schema category TRANSFORM and rank class rank_same."
+    },
+    {
+      "node_id": "crest_factor_07_ch2",
+      "op_uid": "feature.crest_factor",
+      "name": "Crest Factor",
+      "kind": "feature",
+      "operator_category": "AGGREGATE",
+      "rank_class": "rank_down",
+      "params": {},
+      "parents": [
+        "ch2"
+      ],
+      "in_shape": [
+        1,
+        256
+      ],
+      "out_shape": [
+        1
+      ],
+      "backend_availability": [
+        "np",
+        "pt",
+        "sym"
+      ],
+      "execution_role": "outer_only",
+      "legal_paths": [
+        "dag_only",
+        "ml",
+        "torch"
+      ],
+      "input_bindings": {},
+      "plan_step_ref": "round_01_step_07",
+      "rationale": "Round 1 planner step 7: apply crest_factor to ch2 using schema category AGGREGATE and rank class rank_down."
+    },
+    {
+      "node_id": "kurtosis_02_hilbert_envelope_01_ch1",
+      "op_uid": "feature.kurtosis",
+      "name": "Kurtosis",
+      "kind": "feature",
+      "operator_category": "AGGREGATE",
+      "rank_class": "rank_down",
+      "params": {},
+      "parents": [
+        "hilbert_envelope_01_ch1"
+      ],
+      "in_shape": [
+        1,
+        256
+      ],
+      "out_shape": [
+        1
+      ],
+      "backend_availability": [
+        "np",
+        "pt",
+        "sym"
+      ],
+      "execution_role": "outer_only",
+      "legal_paths": [
+        "dag_only",
+        "ml",
+        "torch"
+      ],
+      "input_bindings": {},
+      "plan_step_ref": "round_01_step_02",
+      "rationale": "Round 1 planner step 2: apply kurtosis to hilbert_envelope_01_ch1 using schema category AGGREGATE and rank class rank_down."
+    },
+    {
+      "node_id": "rms_04_fft_03_ch1",
+      "op_uid": "feature.rms",
+      "name": "RMS",
+      "kind": "feature",
+      "operator_category": "AGGREGATE",
+      "rank_class": "rank_down",
+      "params": {},
+      "parents": [
+        "fft_03_ch1"
+      ],
+      "in_shape": [
+        1,
+        129
+      ],
+      "out_shape": [
+        1
+      ],
+      "backend_availability": [
+        "np",
+        "pt",
+        "sym"
+      ],
+      "execution_role": "outer_only",
+      "legal_paths": [
+        "dag_only",
+        "ml",
+        "torch"
+      ],
+      "input_bindings": {},
+      "plan_step_ref": "round_01_step_04",
+      "rationale": "Round 1 planner step 4: apply rms to fft_03_ch1 using schema category AGGREGATE and rank class rank_down."
+    },
+    {
+      "node_id": "rms_06_fft_05_ch2",
+      "op_uid": "feature.rms",
+      "name": "RMS",
+      "kind": "feature",
+      "operator_category": "AGGREGATE",
+      "rank_class": "rank_down",
+      "params": {},
+      "parents": [
+        "fft_05_ch2"
+      ],
+      "in_shape": [
+        1,
+        129
+      ],
+      "out_shape": [
+        1
+      ],
+      "backend_availability": [
+        "np",
+        "pt",
+        "sym"
+      ],
+      "execution_role": "outer_only",
+      "legal_paths": [
+        "dag_only",
+        "ml",
+        "torch"
+      ],
+      "input_bindings": {},
+      "plan_step_ref": "round_01_step_06",
+      "rationale": "Round 1 planner step 6: apply rms to fft_05_ch2 using schema category AGGREGATE and rank class rank_down."
+    }
+  ],
+  "edges": [
+    {
+      "source": "ch1",
+      "target": "hilbert_envelope_01_ch1"
+    },
+    {
+      "source": "ch1",
+      "target": "fft_03_ch1"
+    },
+    {
+      "source": "ch2",
+      "target": "fft_05_ch2"
+    },
+    {
+      "source": "ch2",
+      "target": "crest_factor_07_ch2"
+    },
+    {
+      "source": "hilbert_envelope_01_ch1",
+      "target": "kurtosis_02_hilbert_envelope_01_ch1"
+    },
+    {
+      "source": "fft_03_ch1",
+      "target": "rms_04_fft_03_ch1"
+    },
+    {
+      "source": "fft_05_ch2",
+      "target": "rms_06_fft_05_ch2"
+    }
+  ]
+}

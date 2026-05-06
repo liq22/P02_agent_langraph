@@ -1,0 +1,104 @@
+{
+  "train": [
+    {
+      "sample_id": "ottawa_synth_001__w0000",
+      "prediction": 0
+    },
+    {
+      "sample_id": "ottawa_synth_001__w0001",
+      "prediction": 0
+    },
+    {
+      "sample_id": "ottawa_synth_001__w0002",
+      "prediction": 0
+    },
+    {
+      "sample_id": "ottawa_synth_002__w0000",
+      "prediction": 1
+    },
+    {
+      "sample_id": "ottawa_synth_002__w0001",
+      "prediction": 1
+    },
+    {
+      "sample_id": "ottawa_synth_002__w0002",
+      "prediction": 1
+    },
+    {
+      "sample_id": "ottawa_synth_003__w0000",
+      "prediction": 0
+    },
+    {
+      "sample_id": "ottawa_synth_003__w0001",
+      "prediction": 0
+    },
+    {
+      "sample_id": "ottawa_synth_003__w0002",
+      "prediction": 0
+    },
+    {
+      "sample_id": "ottawa_synth_004__w0000",
+      "prediction": 1
+    },
+    {
+      "sample_id": "ottawa_synth_004__w0001",
+      "prediction": 1
+    },
+    {
+      "sample_id": "ottawa_synth_004__w0002",
+      "prediction": 1
+    }
+  ],
+  "val": [
+    {
+      "sample_id": "ottawa_synth_005__w0000",
+      "prediction": 0
+    },
+    {
+      "sample_id": "ottawa_synth_005__w0001",
+      "prediction": 0
+    },
+    {
+      "sample_id": "ottawa_synth_005__w0002",
+      "prediction": 0
+    },
+    {
+      "sample_id": "ottawa_synth_006__w0000",
+      "prediction": 1
+    },
+    {
+      "sample_id": "ottawa_synth_006__w0001",
+      "prediction": 1
+    },
+    {
+      "sample_id": "ottawa_synth_006__w0002",
+      "prediction": 1
+    }
+  ],
+  "test": [
+    {
+      "sample_id": "ottawa_synth_007__w0000",
+      "prediction": 0
+    },
+    {
+      "sample_id": "ottawa_synth_007__w0001",
+      "prediction": 0
+    },
+    {
+      "sample_id": "ottawa_synth_007__w0002",
+      "prediction": 0
+    },
+    {
+      "sample_id": "ottawa_synth_008__w0000",
+      "prediction": 1
+    },
+    {
+      "sample_id": "ottawa_synth_008__w0001",
+      "prediction": 0
+    },
+    {
+      "sample_id": "ottawa_synth_008__w0002",
+      "prediction": 1
+    }
+  ]
+}

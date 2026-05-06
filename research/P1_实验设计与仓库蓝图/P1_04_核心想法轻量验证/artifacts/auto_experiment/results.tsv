@@ -1,0 +1,3 @@
+row_id	role	preset	data_override	llm_mode	workflow_mode	source_mode	graph_path	test_accuracy	test_macro_f1	artifact_dir	decision	claim_boundary
+baseline_simple	baseline	ottawa_synth_ml_simple	ottawa_synth	offline_stub	simple_fullchain	synthetic	ml	0.8333333333333334	0.8285714285714285	artifacts/auto_experiment/runs/baseline_simple	baseline	synthetic_offline_only
+attempt_supervisor_proving	controlled_attempt	ottawa_ml_codex_proving	ottawa_synth	offline_stub	supervisor_proving	synthetic	ml	1.0	1.0	artifacts/auto_experiment/runs/attempt_supervisor_proving	keep_limited_synthetic_signal	synthetic_offline_only

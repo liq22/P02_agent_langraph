@@ -1,0 +1,115 @@
+version: p1_06_substrategy_matrix_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_06_代码仓库_已有_重新初始化_子模块策略
+generated_at: 2026-05-05
+
+child_frontier:
+  explicit_child_directories_found: false
+  checked_with: find P1_06 -maxdepth 2 excluding artifacts/PHMGA
+  route_child_first_triggered: false
+  route_decision: parent_coordination_only
+
+submodule_reference:
+  path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+  url: https://github.com/PHMbench/PHMGA.git
+  expected_branch: journal_thesis
+  current_branch: journal_thesis
+  local_head: 914bc5925d5230917a5de95d88784075fb2b041e
+  origin_journal_thesis: 914bc5925d5230917a5de95d88784075fb2b041e
+  ahead_behind_head_vs_origin_journal_thesis:
+    ahead: 0
+    behind: 0
+  pull_ff_only_result: Already up to date.
+  dirty_entries_count: 66
+  parent_repo_status: submodule_modified_due_to_dirty_worktree
+
+substrategies:
+  - strategy_id: P1_06_S001_MAIN_REPO_TRUTH_BOUNDARY
+    strategy_name: main_repo_orchestration_and_paper_truth
+    owned_by: parent_repository
+    includes:
+      - scheduler truth sources and graph refresh scripts
+      - node-local manuscript/artifact/review/response/status files
+      - submission-ready validators and FSM/audit files
+      - PHMGA/Vibench boundary and handoff specifications
+      - Claude/Codex wrapper skills and review handoff logs
+    excludes:
+      - PHMGA source code
+      - PHMGA internal experiment ledgers as copied parent artifacts
+      - Vibench raw/H5 data
+      - credentials or provider secrets
+    minimum_requirements:
+      documented: true
+      consistent: true
+      complete: parent artifacts cite submodule paths instead of duplicating implementation
+      exercisable: graph refresh and validators can run without importing PHMGA internals as parent truth
+    rollback: Revert parent node artifacts or submodule pointer; do not manually copy PHMGA internals into parent repo.
+  - strategy_id: P1_06_S002_PHMGA_SUBMODULE_BOUNDARY
+    strategy_name: phmga_submodule_source_and_experiment_boundary
+    owned_by: PHMGA_submodule
+    includes:
+      - PHMGA src, config, tests, scripts, docs, ledgers, and paper_phmga evidence bundles
+      - provider/model implementation details inside PHMGA
+      - Stage B/C/D experiment execution assets when later nodes authorize them
+    excludes:
+      - parent graph or Canvas state
+      - parent review verdict authority
+      - final submission-ready claim authority
+    minimum_requirements:
+      documented: true
+      consistent: branch and commit match .gitmodules policy
+      complete: dirty state is surfaced before pointer movement
+      exercisable: future update path is fetch -> compare -> protect dirty work -> fast-forward or explicit blocker
+    rollback: Restore prior submodule commit pointer after PHMGA dirty work is protected; never reset unreviewed dirty work by default.
+  - strategy_id: P1_06_S003_EXTERNAL_DATA_AND_SECRET_BOUNDARY
+    strategy_name: external_data_and_runtime_secret_boundary
+    owned_by: local_runtime_environment
+    includes:
+      - /mnt/k/D01_vibench as external data root
+      - .env runtime credentials outside committed artifacts
+      - provider/model policy checks that avoid printing secret values
+    excludes:
+      - copied H5 datasets in the repository
+      - committed API keys or credential fragments
+      - Vibench trainer/evaluator output as PHMGA formal evidence
+    minimum_requirements:
+      documented: true
+      consistent: data root and credential boundary match submission-ready policy
+      complete: secret-fragment scans exclude .env but cover artifacts
+      exercisable: PHMGA receives read bundles/protocol inputs rather than parent-copied data
+    rollback: Remove invalid runtime references from artifacts and rerun boundary checks; do not rewrite .env into node files.
+  - strategy_id: P1_06_S004_UPDATE_REVIEW_AND_ROLLBACK_POLICY
+    strategy_name: update_review_and_rollback_policy
+    owned_by: codex_lead_with_user_authorization
+    includes:
+      - submodule fetch and fast-forward-only update policy
+      - dirty work protection before pointer movement
+      - independent review gates for parent strategy closure
+      - explicit blocker recording when pull/update cannot be done safely
+    excludes:
+      - destructive cleanup without user approval
+      - manual path magic
+      - unpinned dependency upgrades
+      - graph progression as proof of code validity
+    minimum_requirements:
+      documented: true
+      consistent: update policy preserves local PHMGA modifications
+      complete: review/verdict and response records distinguish node pass from final submission readiness
+      exercisable: a reviewer can reproduce git facts with status, rev-parse, rev-list, fetch, and pull --ff-only
+    rollback: If update breaks evidence path, return parent pointer to previous commit and retain failed update as blocker evidence.
+
+maintenance_cost_controls:
+  - Keep PHMGA as a submodule instead of copying code into the parent repository.
+  - Keep generated graph files derived; do not use them to encode submodule policy.
+  - Record only stable commit/path/status facts in parent artifacts.
+  - Treat dirty submodule work as first-class evidence that must be protected before update.
+  - Run validation and review before claiming node closure.
+
+author_exit:
+  child_frontier_checked: true
+  route_child_first_or_frontier_gap_reported: true
+  no_leaf_content_authored_in_parent: true
+  repository_strategy_summary_present: true
+  substrategy_table_present: true
+  submodule_reference_facts_recorded: true
+  pull_checked: true
+  no_submission_ready_claim: true

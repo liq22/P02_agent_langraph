@@ -1,8 +1,8 @@
 responses:
   - comment_id: AI-001
-    responded: false
-    note: ""
+    responded: true
+    note: "External AI reviewer passed P1_06 with score 86, no hard fail, downstream_ready true, and no required actions. The pass is accepted only for routing-parent repository strategy; it is not PHMGA experiment validation or final submission approval."
 
   - comment_id: H-001
-    responded: false
-    note: ""
+    responded: true
+    note: "User-authorized Claude Code teammate human-review-slot review passed P1_06 with score 87, confirmed the three-way repository boundary, submodule git facts, non-destructive rollback policy, and parent-node scope discipline. Remaining non-node blockers are retained."

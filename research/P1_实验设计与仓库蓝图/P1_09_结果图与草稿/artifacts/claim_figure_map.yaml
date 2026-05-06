@@ -1,0 +1,73 @@
+version: p1_09_claim_figure_map_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_09_结果图与草稿
+source_claim_map: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/claim_map.yaml
+
+claim_figure_map:
+  - upstream_claim_id: c1
+    upstream_objective: 提升主任务准确率
+    upstream_task: 故障识别
+    upstream_protocol: split_by_machine_v1
+    source_table_ref: main_results
+    figure_ids:
+      - fig_main_synthetic_signal
+    local_support_status: supported_limited_proxy
+    safe_interpretation: The figure can show a bounded synthetic/offline keep signal for supervisor_proving over simple_fullchain.
+    required_wording: preliminary synthetic/offline single-run signal
+    forbidden_wording:
+      - formal main-task accuracy improvement
+      - real-data generalization
+      - RM101 resolved
+      - selected backend ready
+      - submission-ready performance result
+    evidence_ids:
+      - P1_09_E001_P1_04_RESULTS_TSV
+      - P1_09_E002_P1_05_RESULT_REGISTRY
+      - P1_09_E003_P1_05_HYPOTHESIS_STATUS
+    limitations:
+      - P1_08 upstream node stage was seed at authoring time; later AI-002 final-threshold table-package review passed at 91, which removes only the score-readiness limitation.
+      - Only one baseline row and one controlled attempt row are available.
+      - No variance, confidence interval, or repeated-run evidence is available.
+      - Evidence is synthetic/offline only.
+
+  - upstream_claim_id: c1
+    local_claim_id: P1_09_C04_FINAL_THRESHOLD_FIGURE_LOCK
+    figure_ids:
+      - fig_main_synthetic_signal
+    local_support_status: supported
+    safe_interpretation: The draft figure package is ready for node-local final-threshold score review under the figure_final_threshold_contract boundary.
+    required_wording: node-local draft figure score-readiness only
+    forbidden_wording:
+      - formal main-result figure
+      - real-data generalization
+      - RM101 resolved
+      - selected backend ready
+      - Stage C/D success
+      - submission-ready performance result
+    evidence_ids:
+      - P1_09_E009_FINAL_THRESHOLD_FIGURE_CONTRACT
+      - P1_09_E004_FIGURE_DATA_TSV
+      - P1_09_E007_RENDER_PROTOCOL
+      - P1_09_E008_RENDER_SCRIPT
+    limitations:
+      - Score readiness does not add variance, real-data, RM101, selected-backend, or Stage C/D evidence.
+
+unmapped_or_deferred_claims:
+  - claim_id: c2
+    source: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml#ablation_results
+    status: deferred
+    reason: Table plan mentions ablation_results, but upstream claim_map does not define c2 and no accepted ablation evidence is present.
+  - claim_id: c3
+    source: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml#efficiency_results
+    status: deferred
+    reason: Table plan mentions efficiency_results, but upstream claim_map does not define c3 and no accepted efficiency evidence is present.
+
+figure_to_claim_summary:
+  - figure_id: fig_main_synthetic_signal
+    supports:
+      - c1
+      - P1_09_C04_FINAL_THRESHOLD_FIGURE_LOCK
+    only_under_boundary: preliminary synthetic/offline single-run signal
+    does_not_support:
+      - formal Stage C/D result
+      - selected_global_best_backend lock
+      - real-data RM101 or PHMGA/Vibench readiness

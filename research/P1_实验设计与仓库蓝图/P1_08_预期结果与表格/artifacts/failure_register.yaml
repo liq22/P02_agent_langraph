@@ -1,0 +1,46 @@
+version: p1_08_failure_register_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_08_预期结果与表格
+generated_at: 2026-05-05
+
+failures:
+  - failure_id: P1_08_F001_REAL_DATA_GENERALIZATION_UNSUPPORTED
+    context: P1_05 records no real-data repeated-run evidence for broad generalization.
+    affected_claim_id: c2
+    severity: high
+    interpretation: The formal main-result table must retain real-data rows as missing or blocked until Stage C/D evidence exists.
+    action: document_limitation
+    status: accepted_limitation
+    evidence_ref: P1_08_E002_P1_05_HYPOTHESIS_STATUS
+
+  - failure_id: P1_08_F002_RM101_RESOLUTION_UNSUPPORTED
+    context: P1_05 records that synthetic Ottawa evidence does not resolve RM101 reject evidence.
+    affected_claim_id: c2
+    severity: high
+    interpretation: RM101 rows belong in the negative/unclear table until eligible formal reruns pass.
+    action: document_limitation
+    status: accepted_limitation
+    evidence_ref: P1_08_E002_P1_05_HYPOTHESIS_STATUS
+
+  - failure_id: P1_08_F003_VARIANCE_STABILITY_UNCLEAR
+    context: P1_05 records that single-run synthetic evidence is insufficient for stability claims.
+    affected_claim_id: c5
+    severity: medium
+    interpretation: Main and ablation tables require repeat counts and uncertainty intervals before positive result-level wording.
+    action: document_limitation
+    status: accepted_limitation
+    evidence_ref: P1_08_E002_P1_05_HYPOTHESIS_STATUS
+
+  - failure_id: P1_08_F004_FORMAL_GATE_BLOCKERS_REMAIN
+    context: P0_05 records adapter alignment, selected backend, Stage C/D, registry schema, review-threshold, and PHMGA dirty-worktree blockers.
+    affected_claim_id: c4
+    severity: high
+    interpretation: The expected table package must include blocker rows and cannot convert these blockers into final evidence.
+    action: document_limitation
+    status: accepted_limitation
+    evidence_ref: P1_08_E003_P0_05_CONSTRAINT_RISK
+
+failure_policy:
+  hidden_negative_results: false
+  limitations_promoted_to_positive_claims: false
+  denominator_exclusion_without_rationale_allowed: false
+  protected_paths_respected: true

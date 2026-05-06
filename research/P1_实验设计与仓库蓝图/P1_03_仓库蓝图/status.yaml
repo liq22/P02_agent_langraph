@@ -1,14 +1,21 @@
 lifecycle:
-  stage: active
-progress_pct: 72
+  stage: done
+progress_pct: 100
 review_gate:
-  ai_review_count: 0
-  human_review_count: 0
-  all_comments_responded: false
+  ai_review_count: 1
+  human_review_count: 1
+  all_comments_responded: true
   external_ai_review_required: true
-  external_ai_review_complete: false
+  external_ai_review_complete: true
+  external_ai_review_verdict: pass
+  external_ai_review_score: 84
+  external_ai_review_hard_fail: false
+  external_ai_reviewer_id: external-reviewer-subagent-p1-03-001
   human_gate_required: true
-can_enter_fix: false
+  human_gate_state: pass
+  human_gate_passed: true
+  human_reviewer_id: p1-03-human-reviewer
+can_enter_fix: true
 heartbeat_at: 2026-05-04
 last_actor: codex
 author_agent_id: codex-local
@@ -20,9 +27,14 @@ local_outputs:
   failure_register: artifacts/failure_register.yaml
   negative_result_note: artifacts/negative_result_note.md
   keep_discard_ledger: artifacts/keep_discard_ledger.yaml
-blocking_reasons:
-  - external AI review for P1_03 is not complete.
-  - human review for P1_03 is not complete.
+blocking_reasons: []
+last_review_validation:
+  reviewer_agent_id: external-reviewer-subagent-p1-03-001
+  human_reviewer_id: p1-03-human-reviewer
+  overall_verdict: pass
+  overall_score: 84
+  hard_fail: false
+  terminal_excerpt: P1_03 external AI re-review and user-authorized Claude Code teammate human-review lane both passed; downstream submission-ready gates remain outside node scope.
 downstream_open_risks:
   - selected_global_best_backend is not locked; Stage C/D positive claims remain blocked.
   - RM101 Stage B rows remain reject-evidence bundles, not selection-eligible positive evidence.

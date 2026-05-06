@@ -1,0 +1,123 @@
+version: p1_05_result_synthesis_final_threshold_contract_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_05_初步验证结果整理
+generated_at: 2026-05-05
+purpose: >-
+  Define the node-specific final-threshold standard for P1_05 as a preliminary
+  result-synthesis node. The node can pass its score threshold when every
+  positive, unsupported, and unclear result state is traceable to the P1_04
+  source ledger or an explicit absence of required evidence, and when the
+  summary is safe for preliminary/synthetic wording only.
+
+node_specific_pass_question: >-
+  Has P1_05 converted the P1_04 bounded offline synthetic ledger into a
+  reviewer-auditable result registry, hypothesis status map, claim/evidence
+  registry, paper-ready summary, and gate report that preserve supported,
+  unsupported, and unclear states without upgrading the result into formal
+  Stage C/D or submission-ready evidence?
+
+upstream_locks:
+  - source_path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/lightweight_validation_final_threshold_contract.yaml
+    role: bounded_synthetic_offline_replay_metric_and_promotion_boundary
+  - source_path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+    role: source_ledger_for_two_row_preliminary_signal
+  - source_path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple/metrics.json
+    role: baseline_metric_truth
+  - source_path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving/metrics.json
+    role: controlled_attempt_metric_truth
+
+result_state_contract:
+  supported_limited:
+    claim_id: P1_05_C01_KEEP_LIMITED_SYNTHETIC_SIGNAL
+    linked_result_ids:
+      - P1_05_R001_BASELINE_SIMPLE
+      - P1_05_R002_SUPERVISOR_PROVING_ATTEMPT
+    source_rows:
+      - baseline_simple
+      - attempt_supervisor_proving
+    allowed_statement: supervisor_proving shows a preliminary bounded offline synthetic keep signal over simple_fullchain on Ottawa synthetic data.
+    observed_delta_test_accuracy: 0.16666666666666663
+    observed_delta_test_macro_f1: 0.17142857142857149
+    allowed_context:
+      - preliminary/synthetic sanity-check narrative
+      - candidate-mechanism carry-forward for downstream formal validation
+    forbidden_context:
+      - formal main result table
+      - selected-backend evidence
+      - RM101-resolution evidence
+      - real-data generalization claim
+      - submission-ready performance claim
+  unsupported:
+    - result_id: P1_05_U001_REAL_DATA_GENERALIZATION
+      reason: P1_04 contains no real-data repeated run or Stage C/D formal row.
+      required_evidence_before_support: accepted real-data formal rows with repeated-run or variance evidence.
+    - result_id: P1_05_U002_RM101_RESOLUTION
+      reason: P1_04 uses synthetic Ottawa data and does not address RM101 Stage B reject evidence.
+      required_evidence_before_support: RM101 accepted artifact-backed row and selected-backend decision.
+  unclear:
+    - result_id: P1_05_Q001_VARIANCE_STABILITY
+      reason: The P1_04 ledger contains one baseline row and one controlled attempt row only.
+      required_evidence_before_resolution: repeated synthetic and real-data runs with variance or confidence intervals.
+    - result_id: P1_05_Q002_PERFECT_SYNTHETIC_ACCURACY_INTERPRETATION
+      reason: The controlled attempt reached 1.0 test accuracy on a tiny synthetic split.
+      required_evidence_before_resolution: stronger real-data baseline and stress tests before any broad claim.
+
+artifact_consistency:
+  result_registry: artifacts/result_registry.yaml
+  hypothesis_status: artifacts/hypothesis_status.yaml
+  claim_evidence_registry: artifacts/claim_evidence_registry.yaml
+  paper_ready_summary: artifacts/paper_ready_result_summary.md
+  gate_report: artifacts/gate_report.md
+  consistency_checks:
+    - result registry safe claim delta equals P1_04 results.tsv delta
+    - hypothesis supported_limited count is one
+    - unsupported results remain separate from the supported_limited claim
+    - unclear variance/perfect-accuracy rows remain limitations only
+    - paper-ready summary names the preliminary/synthetic/offline boundary
+    - gate report forbids formal Stage C/D, selected-backend, RM101, and submission-ready use
+
+node_vs_global_readiness:
+  p1_05_may_claim:
+    - P1_04 source ledger has been faithfully summarized
+    - supported_limited, unsupported, and unclear states are separated
+    - preliminary synthetic keep signal is safe to carry forward as a candidate mechanism
+    - summary text is usable only with explicit preliminary/synthetic/offline qualifiers
+  p1_05_must_not_claim:
+    - real-data generalization has been shown
+    - selected_global_best_backend is locked
+    - RM101 Stage B reject evidence is resolved
+    - adapter sample-level metadata-H5 preflight is complete
+    - formal Stage C/D evidence has passed
+    - variance stability has been established
+    - P1_05 checklist/status fields are closed by this score review
+    - final validator passes
+
+reviewer_acceptance_criteria:
+  - P1_05 may pass the node-specific final score threshold if every positive
+    statement maps to the P1_04 source ledger and every unsupported or unclear
+    statement records the missing evidence and safe next action.
+  - P1_05 should fail if unsupported or unclear states are written as positive
+    findings, if paper-ready wording omits the preliminary/synthetic boundary,
+    or if the result is used as formal Stage C/D, selected-backend, RM101, or
+    submission-ready evidence.
+  - P1_05 should not be penalized for missing real-data rows, variance evidence,
+    selected backend, adapter preflight, P3 action closure, checklist closure,
+    or final validator pass when those are explicitly preserved as downstream
+    blockers and not used as support.
+  - P1_05 score re-review must not close canonical checklist fields; checklist
+    closure remains a separate explicitly approved status operation.
+
+global_submission_status:
+  global_submission_ready: false
+  remaining_global_blocker_classes:
+    - P1_01-P1_05 checklist fields remain incomplete until explicit approval
+    - P1/P3/P4 below-90 score nodes remain
+    - P3_04 action statuses remain blocked or planned
+    - selected backend and Stage C/D formal evidence remain pending
+    - final validator does not pass
+
+author_exit:
+  source_ledger_mapping_locked: true
+  supported_unsupported_unclear_separation_locked: true
+  preliminary_summary_boundary_locked: true
+  downstream_evidence_not_overclaimed: true
+  checklist_status_not_closed_by_this_contract: true

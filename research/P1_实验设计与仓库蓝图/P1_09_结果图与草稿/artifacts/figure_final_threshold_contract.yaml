@@ -1,0 +1,112 @@
+version: p1_09_figure_final_threshold_contract_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_09_结果图与草稿
+generated_at: 2026-05-05
+contract_type: score_only_final_threshold_figure_contract
+
+purpose: >-
+  Define the node-local score-review boundary for P1_09 after deterministic
+  figure provenance, claim-figure mapping, limitation retention, and upstream
+  P1_08 table-package score readiness are locked. This contract supports review
+  of draft figure readiness only; it does not make a formal result or global
+  submission-ready claim.
+
+score_readiness_claim:
+  claim_id: P1_09_C04_FINAL_THRESHOLD_FIGURE_LOCK
+  evidence_id: P1_09_E009_FINAL_THRESHOLD_FIGURE_CONTRACT
+  support_status: supported
+  statement: >-
+    P1_09 is score-ready for final-threshold node-local draft-figure review
+    because the kept figure has deterministic render provenance, plotted-data
+    traceability, claim/figure/evidence mapping, explicit caption and legend
+    boundaries, retained negative/unclear limitations, deferred formal-result
+    figure decisions, and upstream P1_08 table-package score readiness.
+  allowed_use: node_local_draft_figure_score_review
+  forbidden_use:
+    - formal_main_result_claim
+    - real_data_generalization_claim
+    - rm101_resolution_claim
+    - selected_backend_evidence
+    - stage_c_or_stage_d_pass_evidence
+    - submission_ready_performance_claim
+
+effective_artifacts:
+  normative:
+    - docs/manuscript.md
+    - artifacts/figure_plan.yaml
+    - artifacts/claim_figure_map.yaml
+    - artifacts/figure_manifest.yaml
+    - artifacts/claim_evidence_registry.yaml
+    - artifacts/figure_render_protocol.yaml
+    - artifacts/failure_register.yaml
+    - artifacts/negative_result_note.md
+    - artifacts/keep_discard_ledger.yaml
+    - figures/fig_main_synthetic_signal_data.tsv
+    - figures/fig_main_synthetic_signal.svg
+    - tools/render_fig_main_synthetic_signal.py
+    - review/response.yaml
+
+source_value_lock:
+  plotted_data_path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/figures/fig_main_synthetic_signal_data.tsv
+  source_ledger_path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+  rows:
+    - row_id: baseline_simple
+      workflow_mode: simple_fullchain
+      source_mode: synthetic
+      llm_mode: offline_stub
+      test_accuracy: 0.8333333333333334
+      test_macro_f1: 0.8285714285714285
+    - row_id: attempt_supervisor_proving
+      workflow_mode: supervisor_proving
+      source_mode: synthetic
+      llm_mode: offline_stub
+      test_accuracy: 1.0
+      test_macro_f1: 1.0
+  allowed_visual_statement: supervisor_proving is higher than simple_fullchain in this bounded synthetic/offline single run.
+  no_uncertainty_claim: true
+
+prior_review_closure:
+  prior_review_id: EXTERNAL-AI-001
+  prior_score: 86
+  prior_verdict: pass
+  hard_fail: false
+  blocking_issues: []
+  resolved_comments:
+    - comment_id: AI-001
+      closure: deterministic render protocol, renderer, TSV, manifest, and SVG provenance are present.
+    - comment_id: AI-002
+      closure: claim_figure_map limits c1 to supported_limited_proxy and forbids formal wording.
+    - comment_id: AI-003
+      closure: failure register, negative note, and keep/discard ledger preserve limitations.
+    - comment_id: AI-004
+      closure: P1_08 seed-stage limitation is superseded by P1_08 AI-002 final-threshold pass but formal-result limits remain.
+    - comment_id: H-001
+      closure: user-authorized teammate review is recorded and responded.
+
+final_threshold_checklist:
+  deterministic_renderer_present: true
+  plotted_tsv_values_trace_to_source_ledger: true
+  figure_manifest_links_claim_evidence_and_source_files: true
+  claim_figure_map_forbids_formal_overclaim: true
+  caption_and_legend_boundary_present: true
+  negative_unclear_limitations_retained: true
+  formal_ablation_efficiency_errorbar_figures_deferred_or_discarded: true
+  p1_08_table_package_no_longer_below_final_threshold: true
+  prior_ai_and_teammate_comments_responded: true
+  no_checklist_status_closure: true
+  no_p3_action_status_closure: true
+
+remaining_global_submission_blockers_outside_p1_09_score:
+  - P1_01-P1_05 checklist fields remain pending in canonical status files.
+  - P3_01-P3_04 and P4_01-P4_07 still have below-90 scores.
+  - P3_04 revision actions still include blocked or planned statuses.
+  - selected_global_best_backend is not locked.
+  - RM101 positive selection-eligible evidence is not locked.
+  - PHMGA/Vibench adapter sample-level metadata-H5 alignment preflight remains pending.
+  - Stage C main-result rows and Stage D ablation rows have not passed.
+
+reviewer_instruction: >-
+  A distinct final-threshold reviewer may raise the P1_09 node-local score only
+  if the draft figure package is sufficiently documented, traceable,
+  deterministic, claim-safe, limitation-preserving, and review-closed within
+  this contract. The reviewer must keep global_submission_ready false unless
+  the repository-wide final validator actually passes.

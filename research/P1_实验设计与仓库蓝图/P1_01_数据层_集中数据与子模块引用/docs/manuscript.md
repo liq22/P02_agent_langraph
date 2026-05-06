@@ -68,7 +68,13 @@ API key 不写入仓库文件。live key check 只允许使用 `tools/submission
 - 不把 Vibench DataLoader/sampler/trainer/evaluator 的输出写成 PHMGA formal result。
 - 不把 pending、fail、no_evidence、transport-failure 或 planner-timeout 行写入论文主表。
 
-## 7. 本节点交付物
+## 7. Final-Threshold Data Layer Contract
+
+P1_01 的最终分数阈值问题不是“adapter preflight、selected backend、Stage C/D rows 是否已经由本节点完成”，而是“数据来源、读写责任、子模块引用、结果准入规则和 blocker 保留是否足够明确，使下游 PHMGA/P2/P3/P4 不能把错误事实源写成论文证据”。本节点的可通过条件是：DATA_ROOT 外置、metadata/H5 范围、checksum/行数/key 数、Vibench read-only 角色、PHMGA protocol/evaluation/ledger/table 所有权、PHMGA commit 记录、API/secret 边界、result-source admission rule、failure/negative/reject evidence 均可复核。
+
+本节点不能关闭以下全局 blocker：完整 sample-level metadata-H5 adapter preflight、selected_global_best_backend、Stage C/D accepted rows、P1_01-P1_05 checklist 状态、P3_04 action 状态和 final validator pass。`artifacts/data_layer_final_threshold_contract.yaml` 只用于约束 P1_01 score re-review，不能被解释为 checklist closure 或 formal evidence completion。
+
+## 8. 本节点交付物
 
 本节点已经建立数据与代码边界的本地工件：
 
@@ -78,11 +84,12 @@ API key 不写入仓库文件。live key check 只允许使用 `tools/submission
 - `artifacts/data_reading_boundary.yaml`
 - `artifacts/phmga_data_protocol_handoff.yaml`
 - `artifacts/result_source_map.yaml`
+- `artifacts/data_layer_final_threshold_contract.yaml`
 - `artifacts/claim_evidence_registry.yaml`
 - `artifacts/failure_register.yaml`
 - `artifacts/negative_result_note.md`
 - `artifacts/keep_discard_ledger.yaml`
 
-## 8. Handoff 条件
+## 9. Handoff 条件
 
 本节点只有在数据来源、版本/许可、子模块引用、最小复现路径、claim-evidence registry、negative result 记录和 external reviewer verdict 都满足后，才能交给 P1_02。当前数据审计和子模块记录已完成；正式进入下游实验前仍需要独立 reviewer gate 和 PHMGA preflight gate。

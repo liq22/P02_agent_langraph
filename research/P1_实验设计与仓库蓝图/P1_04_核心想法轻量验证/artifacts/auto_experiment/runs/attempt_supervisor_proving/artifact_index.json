@@ -1,0 +1,19 @@
+{
+  "validated_dag.json": "validated_dag.json",
+  "compiled_dag_manifest.json": "compiled_dag_manifest.json",
+  "dag_graph.md": "dag_graph.md",
+  "resolved_splits.json": "resolved_splits.json",
+  "resolved_dataset_manifest.json": "resolved_dataset_manifest.json",
+  "step_plan.json": "step_plan.json",
+  "feature_pipeline.json": "feature_pipeline.json",
+  "feature_list.json": "feature_list.json",
+  "feature_separability_summary.json": "feature_separability_summary.json",
+  "metrics.json": "metrics.json",
+  "predictions.json": "predictions.json",
+  "importance.json": "importance.json",
+  "similarity_artifacts.json": "similarity_artifacts.json",
+  "final_report.md": "final_report.md",
+  "resolved_config.json": "resolved_config.json",
+  "workflow_state.json": "workflow_state.json",
+  "artifact_index.json": "artifact_index.json"
+}

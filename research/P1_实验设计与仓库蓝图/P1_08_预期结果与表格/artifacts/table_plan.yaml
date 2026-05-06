@@ -1,34 +1,294 @@
+version: p1_08_table_plan_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_08_预期结果与表格
+generated_at: 2026-05-05
+
+upstream_evidence:
+  - evidence_id: P1_08_E001_P1_07_PROTOCOL_MAP
+    path: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+    role: metrics_baselines_formal_gate_repeat_budget_parser_contract
+  - evidence_id: P1_08_E002_P1_05_HYPOTHESIS_STATUS
+    path: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+    role: supported_limited_unsupported_unclear_boundaries
+  - evidence_id: P1_08_E003_P0_05_CONSTRAINT_RISK
+    path: research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/artifacts/constraint_risk_map.yaml
+    role: provider_data_phmga_stage_b_c_d_selected_backend_registry_review_blockers
+  - evidence_id: P1_08_E004_P1_09_DOWNSTREAM_FIGURE_REF
+    path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_manifest.yaml
+    role: downstream_c1_claim_ref_to_preserve
+
+table_plan_policy:
+  status: protocol_table_plan_only
+  no_observed_formal_claim: true
+  no_selected_backend_claim: true
+  no_stage_c_or_stage_d_success_claim: true
+  no_rm101_resolution_claim: true
+  table_denominator_policy: blocked, rejected, unclear, rate-limited, and low-power rows stay visible
+  evidence_boundary: >-
+    The only existing positive signal is P1_05 supported_limited synthetic/offline
+    evidence. Formal PHMGA and real-data rows remain future-required or blocker
+    rows until their gates pass.
+  status_vocabulary_bridge:
+    protocol_support_status_for_limited_signal: supported_limited
+    claim_registry_support_status_for_limited_signal: weak
+    rule: >-
+      Parser-facing table rows may carry supported_limited, while the
+      repository-wide claim_evidence_registry support_status uses weak and
+      stores supported_limited in protocol_support_status.
+
+final_threshold_contract:
+  claim_id: c6
+  stable_claim_id: P1_08_C006_FINAL_THRESHOLD_TABLE_LOCK
+  evidence_id: P1_08_E007_FINAL_THRESHOLD_TABLE_CONTRACT
+  contract_path: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_final_threshold_contract.yaml
+  status: ready_for_score_only_final_threshold_re_review
+  allowed_positive_claim: >-
+    The table package is documented, consistent, complete, parser-exercisable,
+    negative-evidence-preserving, and review-closed enough for node-local
+    final-threshold score review.
+  forbidden_upgrades:
+    - observed_autoresearch_improvement
+    - phmga_formal_result_eligibility
+    - selected_backend_lock
+    - rm101_positive_resolution
+    - stage_c_or_stage_d_success
+    - global_submission_ready
+  review_response_coverage:
+    ai_001: responded_true_in_review_response_yaml
+    h_001: responded_true_in_review_response_yaml
+
 tables:
   - table_id: main_results
-    type: 主结果表
-    tasks:
-      - 故障识别
-    protocols:
-      - split_by_machine_v1
-    metrics:
-      - accuracy
-      - f1_macro
-    claims:
+    title: Workflow governance comparison and limited synthetic signal
+    table_type: main_result_and_sanity_check
+    status: planned_with_limited_existing_signal
+    supports_claims:
       - c1
-  - table_id: ablation_results
-    type: 消融实验表
-    tasks:
-      - 故障识别
-    protocols:
-      - split_by_machine_v1
-    metrics:
-      - accuracy
-    claims:
+      - c5
+    linked_protocols:
+      - P1_07_PROTO_001_FIXED_NODE_GOVERNANCE_COMPARISON
+    required_columns:
+      - row_id
+      - condition_id
+      - dataset_or_node_set
+      - claim_id
+      - evidence_id
+      - source_artifact
+      - metric_id
+      - metric_name
+      - direction
+      - numerator
+      - denominator
+      - point_estimate
+      - confidence_or_bootstrap_interval
+      - repeat_count
+      - unsupported_claim_count
+      - independent_reviewer_pass_rate
+      - response_coverage_rate
+      - negative_result_retention_rate
+      - budget_record
+      - support_status
+      - boundary_label
+      - failure_or_limitation_ref
+    row_groups:
+      - group_id: existing_limited_synthetic_signal
+        row_status: weak_support_only
+        rows:
+          - row_id: P1_08_T1_R001_P1_05_SYNTHETIC_SIGNAL
+            evidence_id: P1_08_E002_P1_05_HYPOTHESIS_STATUS
+            source_artifact: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+            allowed_use: sanity_check_or_planning_context
+            forbidden_use: formal_performance_improvement_or_submission_ready_result
+      - group_id: future_fixed_node_governance_comparison
+        row_status: future_required
+        required_conditions:
+          - autoresearch_gated_workflow
+          - manual_checklist_workflow
+          - prompt_only_agent_workflow
+          - agent_without_independent_gate
+        minimum_repeat_count_per_condition: 3
+        missing_row_action: keep_as_blocker_or_limitation
+    non_cherry_pick_rule: Favorable synthetic rows cannot substitute for the preregistered primary outcome or uncertainty rows.
+
+  - table_id: formal_eligibility_gate
+    title: PHMGA/Vibench formal result eligibility gate
+    table_type: formal_evidence_gate
+    status: planned_blocker_table
+    supports_claims:
       - c2
-  - table_id: efficiency_results
-    type: 资源效率表
-    tasks:
-      - 故障识别
-    protocols:
-      - split_by_machine_v1
-    metrics:
-      - train_time
-      - params
-      - memory
-    claims:
+      - c4
+    linked_protocols:
+      - P1_07_PROTO_002_FORMAL_EVIDENCE_ELIGIBILITY_GATE
+    required_columns:
+      - formal_row_id
+      - claim_id
+      - evidence_id
+      - source_artifact
+      - stage
+      - dataset_id
+      - backend_id
+      - provider_name
+      - model_name
+      - provider_model_policy_pass
+      - metadata_h5_alignment_pass
+      - artifact_contract_pass
+      - selected_global_best_backend_locked
+      - result_md
+      - artifact_dir
+      - ledger_row_path
+      - main_table_mapping
+      - repeat_count
+      - formal_eligibility_status
+      - support_status
+      - boundary_label
+      - failure_or_limitation_ref
+      - failure_or_reject_evidence_ref
+    row_groups:
+      - group_id: stage_b_backend_comparison
+        row_status: backend_lock_preflight_only
+        required_rows:
+          - ottawa_ml_codex_v3
+          - ottawa_ml_openrouter_glm_v2
+          - ottawa_ml_bigmodel_glm47_v1
+          - rm101_ml_codex_v3
+          - rm101_ml_openrouter_glm_v2
+          - rm101_ml_bigmodel_glm47_v1
+        minimum_repeat_count_per_backend_dataset: 1
+        allowed_claim_boundary: selected_backend_preflight_only_not_performance_claim
+      - group_id: stage_c_main_rows
+        row_status: future_required
+        required_rows:
+          - ottawa_ml_main_v1
+          - ottawa_torch_main_v1
+          - rm101_ml_main_v1
+          - rm101_torch_main_v1
+        minimum_repeat_count_per_formal_row: 3
+      - group_id: stage_d_ablations
+        row_status: future_required
+        required_rows:
+          - ottawa_ml_intermediate_v1
+          - rm101_ml_intermediate_v1
+          - ottawa_torch_module_runtime_v1
+          - rm101_torch_module_runtime_v1
+        minimum_repeat_count_per_formal_row: 3
+    stop_conditions:
+      - provider_model_policy_violation
+      - metadata_h5_alignment_missing_or_failed
+      - artifact_contract_failed
+      - selected_backend_not_locked
+      - result_md_or_artifact_dir_missing
+      - row_remains_reject_evidence
+
+  - table_id: ablation_and_efficiency_results
+    title: Ablation, budget, and efficiency accounting
+    table_type: ablation_efficiency_budget
+    status: planned_no_positive_claim_until_rows_exist
+    supports_claims:
       - c3
+      - c5
+    linked_protocols:
+      - P1_07_PROTO_001_FIXED_NODE_GOVERNANCE_COMPARISON
+      - P1_07_PROTO_002_FORMAL_EVIDENCE_ELIGIBILITY_GATE
+    required_columns:
+      - row_id
+      - ablation_id
+      - changed_factor
+      - unchanged_controls
+      - dataset_or_node_set
+      - backend_id
+      - claim_id
+      - evidence_id
+      - source_artifact
+      - metric_id
+      - direction
+      - numerator
+      - denominator
+      - primary_metric_delta
+      - budget_minutes
+      - llm_calls
+      - token_budget
+      - repeat_count
+      - uncertainty_interval
+      - support_status
+      - boundary_label
+      - failure_or_limitation_ref
+    row_groups:
+      - group_id: workflow_gate_ablation
+        required_rows:
+          - agent_without_independent_gate
+        minimum_repeat_count_per_condition: 3
+      - group_id: stage_d_phmga_ablations
+        required_rows:
+          - ottawa_ml_intermediate_v1
+          - rm101_ml_intermediate_v1
+          - ottawa_torch_module_runtime_v1
+          - rm101_torch_module_runtime_v1
+        minimum_repeat_count_per_formal_row: 3
+    missing_row_action: write limitation, not positive ablation claim
+
+  - table_id: negative_unclear_result_ledger
+    title: Negative, unclear, rejected, and blocked evidence
+    table_type: negative_unclear_failure_register
+    status: required_first_class_table
+    supports_claims:
+      - c4
+      - c5
+    required_columns:
+      - record_id
+      - claim_id
+      - affected_claim_id
+      - evidence_id
+      - source_artifact
+      - support_status
+      - boundary_label
+      - severity
+      - interpretation
+      - action
+      - retained_location
+      - failure_or_limitation_ref
+      - downgrade_rule
+      - denominator_included
+    required_entries:
+      - record_id: P1_08_NEG_001_REAL_DATA_GENERALIZATION_UNSUPPORTED
+        claim_id: c2
+        affected_claim_id: c2
+        evidence_id: P1_08_E002_P1_05_HYPOTHESIS_STATUS
+        source_artifact: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+        support_status: unsupported
+        boundary_label: limitation
+        failure_or_limitation_ref: P1_08_F001_REAL_DATA_GENERALIZATION_UNSUPPORTED
+        retained_location: artifacts/failure_register.yaml
+      - record_id: P1_08_NEG_002_RM101_RESOLUTION_UNSUPPORTED
+        claim_id: c2
+        affected_claim_id: c2
+        evidence_id: P1_08_E002_P1_05_HYPOTHESIS_STATUS
+        source_artifact: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+        support_status: unsupported
+        boundary_label: reject_evidence
+        failure_or_limitation_ref: P1_08_F002_RM101_RESOLUTION_UNSUPPORTED
+        retained_location: artifacts/failure_register.yaml
+      - record_id: P1_08_NEG_003_VARIANCE_STABILITY_UNCLEAR
+        claim_id: c5
+        affected_claim_id: c5
+        evidence_id: P1_08_E002_P1_05_HYPOTHESIS_STATUS
+        source_artifact: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+        support_status: unclear
+        boundary_label: limitation
+        failure_or_limitation_ref: P1_08_F003_VARIANCE_STABILITY_UNCLEAR
+        retained_location: artifacts/failure_register.yaml
+      - record_id: P1_08_NEG_004_SCHEMA_AND_REVIEW_THRESHOLD_BLOCKERS
+        claim_id: c4
+        affected_claim_id: c4
+        evidence_id: P1_08_E003_P0_05_CONSTRAINT_RISK
+        source_artifact: research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/artifacts/constraint_risk_map.yaml
+        support_status: blocked
+        boundary_label: blocker
+        failure_or_limitation_ref: P1_08_F004_FORMAL_GATE_BLOCKERS_REMAIN
+        retained_location: artifacts/failure_register.yaml
+
+table_checks:
+  every_table_has_claim_ids: true
+  every_required_column_has_parser_role: true
+  negative_or_unclear_rows_have_table_location: true
+  existing_synthetic_signal_not_promoted: true
+  formal_rows_require_stage_c_d_and_adapter_gates: true
+  final_threshold_score_boundary_locked: true

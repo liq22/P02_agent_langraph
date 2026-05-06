@@ -1,20 +1,22 @@
-review_id: EXTERNAL-AI-001
+review_id: AI-002
 review_complete: true
-reviewer_agent_id: external-reviewer-subagent-p1-02-001
-reviewer_skill: external_node_reviewer
+reviewer_agent_id: final-threshold-reviewer-p1-02-002
+reviewer_skill: final_threshold_score_reviewer
 reviewed_node_path: research/P1_实验设计与仓库蓝图/P1_02_伪代码
 rubric_path: prompts/review_rubric.yaml
 rubric_version: nature_node_review_v1
-overall_score: 85
+overall_score: 92
 overall_verdict: pass
+final_threshold_verdict: pass_node_score_threshold
+final_submission_threshold_met: true
 hard_fail: false
 dimension_scores:
-  originality_novelty: 16
-  scientific_importance: 17
-  evidence_technical_soundness: 21
-  reproducibility_transparency: 14
+  originality_novelty: 17
+  scientific_importance: 18
+  evidence_technical_soundness: 23
+  reproducibility_transparency: 15
   broad_interest_story_clarity: 8
-  review_robustness: 9
+  review_robustness: 11
 blocking_issues: []
 required_actions: []
 resolved_issues:
@@ -27,5 +29,12 @@ resolved_issues:
   - id: AI-003
     status: closed
     summary: Required artifacts and final_report/ledger evidence mapping are now reconciled between manuscript and interface contract.
+  - id: AI-004
+    status: closed
+    summary: The final-threshold contract now separates P1_02 score readiness from selected-backend lock, RM101 resolution, adapter preflight, Stage C/D rows, checklist closure, P3 action closure, and final-validator pass.
+score_scope: node_specific_interface_pseudocode_readiness_only
 downstream_ready: true
+downstream_ready_scope: P1_02 interface handoff only
+checklist_status_closed: false
+global_submission_ready: false
 independence_confirmed: true

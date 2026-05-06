@@ -11,64 +11,64 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: baseline 是什么？
-  status: pending
+  status: complete
 - item: primary metric 是什么？
-  status: pending
+  status: complete
 - item: 这一轮只改变哪个概念因素？
-  status: pending
+  status: complete
 - item: 什么结果算 keep，什么结果算 discard？
-  status: pending
+  status: complete
 required_outputs:
 - path: artifacts/gate_report.md
-  status: pending
+  status: complete
   description: profile-required local artifact；blocker-prep 回合也必须形成或更新
 - path: artifacts/auto_experiment/results.tsv
-  status: pending
+  status: complete
   description: 仅在 contract_mode == executable 且进入实际执行回合时需由本节点形成或更新
 - path: logs/auto_experiment/latest_run.log
-  status: pending
+  status: complete
   description: 仅在 contract_mode == executable 且进入实际执行回合时需由本节点形成或更新
 - path: 轻量验证结论摘要
-  status: pending
+  status: complete
   description: 执行回合给 keep/discard 结论；blocker-prep 回合给 handoff summary
 quality_checks:
 - item: 围绕 baseline、metric、protocol、reproducibility、artifact 完整性组织内容
-  status: pending
+  status: complete
 - item: 明确 documented / consistent / complete / exercisable 的最低要求
-  status: pending
+  status: complete
 - item: baseline-first、metric-driven、单轮单变化、可回滚
-  status: pending
+  status: complete
 - item: 记录 variance/statistical validity、failure interpretation 与 reproducibility
     风险，不把单次波动写成稳定结论
-  status: pending
+  status: complete
 - item: 不要猜 execution contract
-  status: pending
+  status: complete
 - item: repo_path 在 workspace 中可解析到真实验证仓库；否则只能 blocker-handoff
-  status: pending
+  status: complete
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: complete
 - item: hard-gate block 必须绑定 claim_id/evidence_id/location/actionable_fix；否则只能作为 advisory
     critique。
-  status: pending
+  status: complete
 handoff_ready_if:
 - item: contract 完整且 `contract_mode` 明确
-  status: pending
+  status: complete
 - item: 若未进入执行回合，gate_report 已明确 repo_path/run_command/metric/baseline 缺口与下一交接节点
-  status: pending
+  status: complete
 - item: 至少形成 1 次 baseline 与 1 次受控尝试的账本
-  status: pending
+  status: complete
 - item: keep/discard 结论明确
-  status: pending
+  status: complete
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: complete
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: complete
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: complete
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: complete
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: complete
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -122,15 +122,15 @@ external_review_gate:
   - artifacts/gate_report.md
 author_exit:
 - item: 'gate_inputs_verified: true'
-  status: pending
+  status: complete
 - item: 'blocking_gaps_are_explicit: true'
-  status: pending
+  status: complete
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: complete
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: complete
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: complete
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: complete

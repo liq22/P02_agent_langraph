@@ -1,0 +1,19 @@
+version: p1_05_keep_discard_ledger_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_05_初步验证结果整理
+
+decisions:
+  - item_id: P1_05_D001_SUPERVISOR_PROVING_SYNTHETIC_SIGNAL
+    item_type: result_claim
+    decision: keep
+    rationale: The P1_04 ledger shows a bounded offline synthetic positive delta over the simple_fullchain baseline.
+    evidence_ref: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv#attempt_supervisor_proving
+  - item_id: P1_05_D002_FORMAL_PERFORMANCE_CLAIM
+    item_type: overclaim
+    decision: discard
+    rationale: P1_04 has no real-data repeated-run or formal Stage C/D row, so formal performance language must not enter the manuscript.
+    evidence_ref: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml#P1_05_U001_REAL_DATA_GENERALIZATION
+  - item_id: P1_05_D003_VARIANCE_STABILITY_CLAIM
+    item_type: overclaim
+    decision: discard
+    rationale: The current evidence is single-run synthetic only, so stability language must remain a limitation.
+    evidence_ref: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml#P1_05_H004_VARIANCE_STABILITY

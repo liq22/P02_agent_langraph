@@ -22,7 +22,7 @@ failures:
     mitigation: revise RM101 feature/model plan or run another eligible free-model candidate before selecting a global backend
     status: open
   - failure_id: F-P02-REVIEW-001
-    condition: independent external reviewer verdict not yet passed after this authoring step
-    impact: node close and submission-ready claim blocked
-    mitigation: run a distinct external reviewer lane and require review/verdict.yaml pass
-    status: open
+    condition: independent external reviewer verdict required after this authoring step
+    impact: node close would be blocked if review/verdict.yaml did not pass
+    mitigation: distinct external reviewer lane completed and review/verdict.yaml records pass with hard_fail false
+    status: closed

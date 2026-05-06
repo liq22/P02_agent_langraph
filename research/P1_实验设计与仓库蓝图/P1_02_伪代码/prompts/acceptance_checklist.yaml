@@ -15,46 +15,47 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: 输入输出和状态转移是否清楚？
-  status: pending
+  status: complete
 - item: 哪些步骤是必要的，哪些只是实现细节？
-  status: pending
+  status: complete
 - item: 伪代码是否支持后续实现与审阅，而不是叙述性散文？
-  status: pending
+  status: complete
 required_outputs:
 - path: 伪代码草案
-  status: pending
+  status: complete
   description: 需由本节点形成或更新
 - path: 接口与不变量说明
-  status: pending
+  status: complete
   description: 需由本节点形成或更新
 - path: docs/manuscript.md
+  status: complete
   description: profile-required local artifact
 quality_checks:
 - item: 围绕 baseline、metric、protocol、reproducibility、artifact 完整性组织内容
-  status: pending
+  status: complete
 - item: 明确 documented / consistent / complete / exercisable 的最低要求
-  status: pending
+  status: complete
 - item: 伪代码应可映射到实现与实验，不只是高层口号
-  status: pending
+  status: complete
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: complete
 handoff_ready_if:
 - item: 核心流程完整
-  status: pending
+  status: complete
 - item: 输入输出与关键步骤明确
-  status: pending
+  status: complete
 - item: 至少列出 1–2 个失败模式或异常分支
-  status: pending
+  status: complete
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: complete
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: complete
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: complete
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: complete
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: complete
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -101,17 +102,17 @@ external_review_gate:
   - docs/manuscript.md
 author_exit:
 - item: 'required_artifacts_exist: true'
-  status: pending
+  status: complete
 - item: 'key_research_judgment_answered_or_gap_reported: true'
-  status: pending
+  status: complete
 - item: 'citation_status_checked_when_external_sources_are_used: true'
-  status: pending
+  status: complete
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: complete
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: complete
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: complete
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: complete

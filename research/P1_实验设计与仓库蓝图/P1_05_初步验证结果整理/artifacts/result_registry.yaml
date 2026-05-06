@@ -1,9 +1,88 @@
+version: p1_05_result_registry_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_05_初步验证结果整理
+source_ledger: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+source_boundary: P1_04 bounded PHMGA offline synthetic validation only; not Stage C/D formal evidence.
+final_threshold_contract: artifacts/result_synthesis_final_threshold_contract.yaml
+
 results:
-- result_id: blocked_missing_p104_ledger
-  status: unclear
-  source_ledger: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
-  ledger_rows: []
-  evidence: Upstream P1_04 results ledger has not been generated, so no improvement
-    claim is supported.
-  claim_impact: Do not promote any validation claim into manuscript text.
-  blocking_gap: missing_upstream_results_tsv
+  - result_id: P1_05_R001_BASELINE_SIMPLE
+    status: supported
+    row_id: baseline_simple
+    evidence_ref: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+    source_row_id: baseline_simple
+    role: baseline
+    preset: ottawa_synth_ml_simple
+    workflow_mode: simple_fullchain
+    source_mode: synthetic
+    graph_path: ml
+    llm_mode: offline_stub
+    metrics:
+      test_accuracy: 0.8333333333333334
+      test_macro_f1: 0.8285714285714285
+    artifact_dir: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple
+    evidence_status: supported_as_baseline_row
+    claim_impact: Baseline comparator for the P1_04 lightweight synthetic test.
+    paper_use:
+      allowed: true
+      allowed_context: preliminary/synthetic sanity-check only
+      forbidden_context: formal main result table, selected-backend evidence, RM101-resolution evidence, submission-ready performance claim
+  - result_id: P1_05_R002_SUPERVISOR_PROVING_ATTEMPT
+    status: supported
+    row_id: attempt_supervisor_proving
+    evidence_ref: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+    source_row_id: attempt_supervisor_proving
+    role: controlled_attempt
+    preset: ottawa_ml_codex_proving
+    workflow_mode: supervisor_proving
+    source_mode: synthetic
+    graph_path: ml
+    llm_mode: offline_stub
+    metrics:
+      test_accuracy: 1.0
+      test_macro_f1: 1.0
+    artifact_dir: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving
+    evidence_status: supported_limited_synthetic
+    claim_impact: Supports continuing the supervisor_proving path as a lightweight mechanism candidate.
+    comparison:
+      baseline_result_id: P1_05_R001_BASELINE_SIMPLE
+      delta_test_accuracy: 0.16666666666666663
+      delta_test_macro_f1: 0.17142857142857149
+      decision: keep_limited_synthetic_signal
+    paper_use:
+      allowed: true
+      allowed_context: preliminary/synthetic sanity-check narrative with explicit limitation
+      forbidden_context: formal main result table, selected-backend evidence, RM101-resolution evidence, submission-ready performance claim
+
+unsupported_results:
+  - result_id: P1_05_U001_REAL_DATA_GENERALIZATION
+    status: unsupported
+    reason: No real-data repeated run or Stage C/D formal row is present in the P1_04 ledger.
+    required_evidence: accepted real-data formal rows with repeated-run or variance evidence.
+  - result_id: P1_05_U002_RM101_RESOLUTION
+    status: unsupported
+    reason: P1_04 uses synthetic Ottawa data and does not address RM101 Stage B reject evidence.
+    required_evidence: RM101 accepted artifact-backed row and selected-backend decision.
+
+unclear_results:
+  - result_id: P1_05_Q001_VARIANCE_STABILITY
+    status: unclear
+    reason: The P1_04 ledger contains one baseline row and one controlled attempt row only.
+    required_evidence: repeated synthetic and real-data runs with variance or confidence intervals.
+  - result_id: P1_05_Q002_PERFECT_SYNTHETIC_ACCURACY_INTERPRETATION
+    status: unclear
+    reason: The controlled attempt achieved 1.0 test accuracy on a tiny synthetic split; this may reflect an easy synthetic fixture.
+    required_evidence: stronger real-data baseline and stress tests before any broad claim.
+
+safe_claims:
+  - claim_id: P1_05_C01_KEEP_LIMITED_SYNTHETIC_SIGNAL
+    status: supported_limited
+    statement: In the P1_04 bounded offline synthetic Ottawa check, supervisor_proving outperformed simple_fullchain on test accuracy by 0.16666666666666663.
+    evidence_refs:
+      - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+      - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple/metrics.json
+      - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving/metrics.json
+    limitations:
+      - synthetic/offline only
+      - single-run only
+      - not formal Stage C/D evidence
+      - not selected-backend evidence

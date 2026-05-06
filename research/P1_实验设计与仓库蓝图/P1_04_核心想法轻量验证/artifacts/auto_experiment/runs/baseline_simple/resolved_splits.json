@@ -1,0 +1,16 @@
+{
+  "train_ids": [
+    "ottawa_synth_001",
+    "ottawa_synth_002",
+    "ottawa_synth_003",
+    "ottawa_synth_004"
+  ],
+  "val_ids": [
+    "ottawa_synth_005",
+    "ottawa_synth_006"
+  ],
+  "test_ids": [
+    "ottawa_synth_007",
+    "ottawa_synth_008"
+  ]
+}

@@ -15,47 +15,48 @@ prompt_assets:
   status: required
 required_questions_answered:
 - item: primary/secondary outcomes 是什么？
-  status: pending
+  status: done
 - item: task 定义和 success criterion 是什么？
-  status: pending
+  status: done
 - item: 什么 baseline 与对照是必须的？
-  status: pending
+  status: done
 required_outputs:
 - path: protocol_map
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: 可执行评测协议摘要
-  status: pending
+  status: done
   description: 需由本节点形成或更新
 - path: artifacts/gate_report.md
+  status: done
   description: profile-required local artifact
 quality_checks:
 - item: 围绕 baseline、metric、protocol、reproducibility、artifact 完整性组织内容
-  status: pending
+  status: done
 - item: 明确 documented / consistent / complete / exercisable 的最低要求
-  status: pending
+  status: done
 - item: 清晰 primary metric、基线、公平比较、可重复计算
-  status: pending
+  status: done
 - item: 节点产物必须能通过独立 reviewer agent 基于 `prompts/review_rubric.yaml` 的外部评审。
-  status: pending
+  status: done
 - item: hard-gate block 必须绑定 claim_id/evidence_id/location/actionable_fix；否则只能作为 advisory
     critique。
-  status: pending
+  status: done
 handoff_ready_if:
 - item: 目标/任务/协议一一对应
-  status: pending
+  status: done
 - item: 缺失指标或 baseline 会被明确暴露
-  status: pending
+  status: done
 - item: 独立 reviewer agent 已生成 `review/verdict.yaml`
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `review_complete == true`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `overall_verdict == pass`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `hard_fail == false`'
-  status: pending
+  status: done
 - item: '`review/verdict.yaml` 中 `independence_confirmed == true`'
-  status: pending
+  status: done
 stop_if:
 - item: 缺关键输入或关键证据
   status: pending
@@ -77,9 +78,9 @@ stop_if:
   status: pending
 review_notes:
 - slot: 1
-  note: <待填写>
+  note: External AI re-review passed P1_07 with score 88 after v3 fixes resolved upstream traceability, repeat/budget preregistration, and metric parser contract hard fails; protocol-ready only and below final submission threshold 90.
 - slot: 2
-  note: <待填写>
+  note: User-authorized Claude Code teammate human-review slot passed P1_07 with score 88, validating protocol-ready scope while retaining non-node blockers for final score, registry schema, selected backend, PHMGA dirty worktree, adapter preflight, Stage C/D, RM101, and unfinished graph nodes.
 external_review_gate:
   required: true
   reviewer_role: external_node_reviewer
@@ -102,15 +103,15 @@ external_review_gate:
   - artifacts/gate_report.md
 author_exit:
 - item: 'gate_inputs_verified: true'
-  status: pending
+  status: done
 - item: 'blocking_gaps_are_explicit: true'
-  status: pending
+  status: done
 node_close:
 - item: 'review/verdict.yaml:review_complete: true'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:overall_verdict: pass'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:hard_fail: false'
-  status: pending
+  status: done
 - item: 'review/verdict.yaml:independence_confirmed: true'
-  status: pending
+  status: done

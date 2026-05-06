@@ -1,0 +1,49 @@
+{
+  "dataset": "OTTAWA_SYNTH",
+  "graph_path": "ml",
+  "backend": {
+    "provider": "codex_cli",
+    "model": "gpt-5.3-codex"
+  },
+  "artifact_contract_pass": true,
+  "feature_count": 4,
+  "non_empty_feature_count": 4,
+  "constant_feature_count": 0,
+  "class_count": 2,
+  "top_features": [
+    {
+      "name": "rms_04_fft_03_ch1",
+      "source_node": "rms_04_fft_03_ch1",
+      "score": 5690.219456719776
+    },
+    {
+      "name": "rms_06_fft_05_ch2",
+      "source_node": "rms_06_fft_05_ch2",
+      "score": 1520.4736072826736
+    },
+    {
+      "name": "crest_factor_07_ch2",
+      "source_node": "crest_factor_07_ch2",
+      "score": 11.78180974507781
+    },
+    {
+      "name": "kurtosis_02_hilbert_envelope_01_ch1",
+      "source_node": "kurtosis_02_hilbert_envelope_01_ch1",
+      "score": 1.9951119146584482
+    }
+  ],
+  "aggregate_scores": {
+    "mean_fisher_score": 1806.1174964155464,
+    "median_fisher_score": 766.1277085138757,
+    "top5_mean_score": 1806.1174964155464
+  },
+  "split_stability": {
+    "train_val_rank_corr": 1.0
+  },
+  "decision": "pass",
+  "reason": [
+    "feature pipeline materialized successfully",
+    "top-k features show class separation",
+    "train/val feature ranking remains directionally stable (1.000)"
+  ]
+}

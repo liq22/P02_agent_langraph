@@ -1,21 +1,33 @@
-review_id: EXTERNAL-AI-001
-review_complete: false
-reviewer_agent_id: <pending-distinct-agent>
-reviewer_skill: external_node_reviewer
+review_id: AI-002
+review_complete: true
+reviewer_agent_id: final-threshold-reviewer-p1-09-002
+review_type: score-only node-local final-threshold re-review
 reviewed_node_path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿
 rubric_path: prompts/review_rubric.yaml
 rubric_version: nature_node_review_v1
-overall_score: null
-overall_verdict: revise
+overall_score: 91
+overall_verdict: pass
 hard_fail: false
+independence_confirmed: true
 dimension_scores:
-  originality_novelty: null
-  scientific_importance: null
-  evidence_technical_soundness: null
-  reproducibility_transparency: null
-  broad_interest_story_clarity: null
-  review_robustness: null
+  originality_novelty: 17
+  scientific_importance: 17
+  evidence_technical_soundness: 23
+  reproducibility_transparency: 15
+  broad_interest_story_clarity: 9
+  review_robustness: 10
+final_submission_threshold_met: true
+downstream_ready: true
+checklist_status_closed: false
+global_submission_ready: false
 blocking_issues: []
 required_actions: []
-downstream_ready: false
-independence_confirmed: false
+comments:
+  - "Pass for score-only P1_09 node-local draft-figure final-threshold readiness; this is not a global submission-ready verdict."
+  - "The new figure_final_threshold_contract.yaml sufficiently confines the score review to documented, traceable, deterministic, claim-safe, limitation-preserving draft-figure readiness."
+  - "Prior deterministic renderer/protocol/TSV/SVG provenance concerns are resolved through the render protocol, standard-library renderer, node-local TSV, manifest, and generated SVG."
+  - "The kept figure remains limited to c1 as a supported_limited_proxy and must not be used for formal main-result, real-data, RM101, selected-backend, Stage C/D, or submission-ready claims."
+  - "Plotted values trace to P1_04/P1_05: baseline_simple accuracy 0.8333333333333334 and macro-F1 0.8285714285714285; attempt_supervisor_proving accuracy 1.0 and macro-F1 1.0."
+  - "No variance, confidence interval, or error bar is invented; no-variance and perfect-score ambiguity limitations remain visible."
+  - "P1_08 AI-002 final-threshold pass at 91 removes the old P1_08 seed-stage score blocker for this P1_09 draft package, while formal-result limitations remain."
+  - "Prior AI and teammate comments are responded in review/response.yaml; this review does not close checklist status, P3 actions, current gate/global audit blockers, or global submission readiness."

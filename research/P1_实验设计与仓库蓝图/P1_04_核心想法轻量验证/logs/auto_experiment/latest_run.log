@@ -1,0 +1,29 @@
+[P1_04] baseline command: ottawa_synth_ml_simple offline_stub
+{
+  "config_name": "hydra_main",
+  "dataset": "OTTAWA_SYNTH",
+  "graph_path": "ml",
+  "source_mode": "synthetic",
+  "output_dir": "/mnt/k/2_work/lqql_os/lqql_06_工作与项目/03_论文流水线/p02_agent_langraph/research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple",
+  "manifest_path": "/mnt/k/2_work/lqql_os/lqql_06_工作与项目/03_论文流水线/p02_agent_langraph/research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple/compiled_dag_manifest.json",
+  "report_path": "/mnt/k/2_work/lqql_os/lqql_06_工作与项目/03_论文流水线/p02_agent_langraph/research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple/final_report.md"
+}
+[P1_04] controlled attempt command: ottawa_ml_codex_proving data=ottawa_synth llm.mode=offline_stub
+{
+  "config_name": "hydra_main",
+  "dataset": "OTTAWA_SYNTH",
+  "graph_path": "ml",
+  "source_mode": "synthetic",
+  "output_dir": "/mnt/k/2_work/lqql_os/lqql_06_工作与项目/03_论文流水线/p02_agent_langraph/research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving",
+  "manifest_path": "/mnt/k/2_work/lqql_os/lqql_06_工作与项目/03_论文流水线/p02_agent_langraph/research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving/compiled_dag_manifest.json",
+  "report_path": "/mnt/k/2_work/lqql_os/lqql_06_工作与项目/03_论文流水线/p02_agent_langraph/research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving/final_report.md"
+}
+
+[P1_04] replay_trace
+cwd=/mnt/k/2_work/lqql_os/lqql_06_工作与项目/03_论文流水线/p02_agent_langraph/research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
+python=/mnt/k/2_work/lqql_os/lqql_06_工作与项目/03_论文流水线/p02_agent_langraph/.venv/bin/python
+baseline_exit_code=0
+baseline_command=/mnt/k/2_work/lqql_os/lqql_06_工作与项目/03_论文流水线/p02_agent_langraph/.venv/bin/python main.py +runs=ottawa_synth_ml_simple "runtime.output_dir='/mnt/k/2_work/lqql_os/lqql_06_工作与项目/03_论文流水线/p02_agent_langraph/research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple'"
+controlled_attempt_exit_code=0
+controlled_attempt_command=/mnt/k/2_work/lqql_os/lqql_06_工作与项目/03_论文流水线/p02_agent_langraph/.venv/bin/python main.py +runs=ottawa_ml_codex_proving data=ottawa_synth llm.mode=offline_stub "runtime.output_dir='/mnt/k/2_work/lqql_os/lqql_06_工作与项目/03_论文流水线/p02_agent_langraph/research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving'"
+determinism_boundary=synthetic Ottawa config with offline_stub; no external provider call; no formal Stage C/D claim

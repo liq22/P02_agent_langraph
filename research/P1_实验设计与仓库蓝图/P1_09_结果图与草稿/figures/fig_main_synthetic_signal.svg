@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" role="img" aria-labelledby="title desc">
+  <title id="title">Draft figure: bounded synthetic/offline signal</title>
+  <desc id="desc">Grouped bar chart showing P1_04 single-run synthetic offline accuracy and macro-F1 for simple_fullchain baseline and supervisor_proving controlled attempt.</desc>
+  <rect width="900" height="520" fill="#ffffff"/>
+  <text x="48" y="42" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#18212f">Bounded synthetic/offline signal</text>
+  <text x="48" y="70" font-family="Arial, sans-serif" font-size="14" fill="#526071">P1_04 Ottawa synthetic, offline_stub, single run. Draft only; not formal Stage C/D evidence.</text>
+
+  <line x1="110" y1="105" x2="110" y2="375" stroke="#233042" stroke-width="1.5"/>
+  <line x1="110" y1="375" x2="675" y2="375" stroke="#233042" stroke-width="1.5"/>
+  <line x1="106" y1="105" x2="675" y2="105" stroke="#d5dce5" stroke-width="1"/>
+  <line x1="106" y1="240" x2="675" y2="240" stroke="#e7ebf0" stroke-width="1"/>
+  <line x1="106" y1="375" x2="675" y2="375" stroke="#d5dce5" stroke-width="1"/>
+  <text x="74" y="110" font-family="Arial, sans-serif" font-size="12" fill="#526071">1.0</text>
+  <text x="74" y="245" font-family="Arial, sans-serif" font-size="12" fill="#526071">0.5</text>
+  <text x="82" y="380" font-family="Arial, sans-serif" font-size="12" fill="#526071">0</text>
+
+  <rect x="180" y="150.0" width="54" height="225.0" fill="#2f6fed"/>
+  <text x="184" y="142.0" font-family="Arial, sans-serif" font-size="12" fill="#233042">0.833</text>
+  <rect x="242" y="105.0" width="54" height="270.0" fill="#d97706"/>
+  <text x="246" y="97.0" font-family="Arial, sans-serif" font-size="12" fill="#233042">1.000</text>
+  <rect x="380" y="151.3" width="54" height="223.7" fill="#2f6fed"/>
+  <text x="384" y="143.3" font-family="Arial, sans-serif" font-size="12" fill="#233042">0.829</text>
+  <rect x="442" y="105.0" width="54" height="270.0" fill="#d97706"/>
+  <text x="446" y="97.0" font-family="Arial, sans-serif" font-size="12" fill="#233042">1.000</text>
+  <text x="198" y="407" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#233042">Accuracy</text>
+  <text x="423" y="407" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#233042">Macro-F1</text>
+
+  <rect x="545" y="124" width="16" height="16" fill="#2f6fed"/>
+  <text x="568" y="137" font-family="Arial, sans-serif" font-size="13" fill="#233042">simple_fullchain baseline</text>
+  <rect x="545" y="150" width="16" height="16" fill="#d97706"/>
+  <text x="568" y="163" font-family="Arial, sans-serif" font-size="13" fill="#233042">supervisor_proving attempt</text>
+
+  <rect x="705" y="115" width="150" height="190" rx="6" fill="#f6f8fb" stroke="#d5dce5"/>
+  <text x="722" y="142" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#18212f">Scope guard</text>
+  <text x="722" y="170" font-family="Arial, sans-serif" font-size="12" fill="#526071">Synthetic/offline only</text>
+  <text x="722" y="194" font-family="Arial, sans-serif" font-size="12" fill="#526071">Single run, no variance</text>
+  <text x="722" y="218" font-family="Arial, sans-serif" font-size="12" fill="#526071">No real-data claim</text>
+  <text x="722" y="242" font-family="Arial, sans-serif" font-size="12" fill="#526071">No RM101 resolution</text>
+  <text x="722" y="266" font-family="Arial, sans-serif" font-size="12" fill="#526071">Not selected backend</text>
+
+  <text x="110" y="458" font-family="Arial, sans-serif" font-size="13" fill="#526071">Source: P1_04 auto_experiment/results.tsv and P1_05 result_registry.yaml. Values are plotted directly from observed rows.</text>
+  <text x="110" y="482" font-family="Arial, sans-serif" font-size="13" fill="#526071">Legend must not claim formal performance improvement, real-data generalization, or submission readiness.</text>
+</svg>

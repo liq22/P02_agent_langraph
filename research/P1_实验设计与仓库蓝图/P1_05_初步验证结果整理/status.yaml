@@ -1,11 +1,45 @@
 lifecycle:
-  stage: seed
-progress_pct: 0
+  stage: done
+progress_pct: 100
 review_gate:
-  ai_review_count: 0
-  human_review_count: 0
-  all_comments_responded: false
-can_enter_fix: false
-heartbeat_at: 2026-04-10
-last_actor: system
-author_agent_id: <pending-author-agent>
+  ai_review_count: 1
+  human_review_count: 1
+  all_comments_responded: true
+  external_ai_review_required: true
+  external_ai_review_complete: true
+  external_ai_review_verdict: pass
+  external_ai_review_score: 86
+  external_ai_review_hard_fail: false
+  external_ai_reviewer_id: external-reviewer-subagent-p1-05-001
+  human_gate_required: true
+  human_gate_state: pass
+  human_gate_passed: true
+  human_reviewer_id: p1-05-human-reviewer
+can_enter_fix: true
+heartbeat_at: 2026-05-04
+last_actor: codex
+author_agent_id: codex-local
+local_outputs:
+  result_registry: artifacts/result_registry.yaml
+  hypothesis_status: artifacts/hypothesis_status.yaml
+  claim_evidence_registry: artifacts/claim_evidence_registry.yaml
+  paper_ready_result_summary: artifacts/paper_ready_result_summary.md
+  gate_report: artifacts/gate_report.md
+blocking_reasons: []
+downstream_open_risks:
+  - P1_05 evidence is preliminary synthetic/offline only and must not be promoted to formal Stage C/D claims.
+  - selected_global_best_backend is not locked; Stage C/D positive claims remain blocked.
+  - RM101 Stage B rows remain reject-evidence bundles, not selection-eligible positive evidence.
+  - PHMGA/Vibench adapter sample-level metadata-H5 alignment preflight remains pending.
+  - Downstream Stage C main-result rows and Stage D ablation rows have not passed.
+last_result_synthesis:
+  input_ledger: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+  supported_limited_claims: 1
+  unsupported_claims: 2
+  unclear_claims: 1
+  decision: keep_limited_synthetic_signal
+  external_ai_verdict: pass
+  external_ai_score: 86
+  human_reviewer_id: p1-05-human-reviewer
+  human_gate_state: pass
+  terminal_excerpt: P1_05 summarized P1_04 results into claim-safe registry/status/summary; external AI and user-authorized Claude Code teammate review passed; formal claims remain blocked.

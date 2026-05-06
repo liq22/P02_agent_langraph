@@ -1,0 +1,50 @@
+version: p1_08_keep_discard_ledger_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_08_预期结果与表格
+generated_at: 2026-05-05
+
+decisions:
+  - item_id: main_results_table_shell
+    item_type: table
+    decision: keep
+    rationale: It provides the required location for the limited synthetic signal and future fixed-node governance comparison without promoting either beyond its evidence boundary.
+    evidence_ref: P1_08_E005_TABLE_PLAN
+    allowed_use: protocol table plan and later manuscript table shell
+    forbidden_use: formal performance evidence without repeat and uncertainty rows
+
+  - item_id: formal_eligibility_gate_table_shell
+    item_type: table
+    decision: keep
+    rationale: It keeps provider, metadata-H5, artifact, selected-backend, Stage C, and Stage D gates visible before formal result claims.
+    evidence_ref: P1_08_E001_P1_07_PROTOCOL_MAP
+    allowed_use: formal evidence gate and blocker table
+    forbidden_use: selected-backend or formal-eligibility success claim before all gates pass
+
+  - item_id: negative_unclear_result_ledger_table
+    item_type: table
+    decision: keep
+    rationale: It gives unsupported, unclear, rejected, rate-limited, low-power, and blocked evidence a first-class table location.
+    evidence_ref: P1_08_E006_FAILURE_REGISTER
+    allowed_use: limitations, blocker tracking, reviewer-visible denominator accounting
+    forbidden_use: hiding negative rows outside the main evidence trail
+
+  - item_id: success_only_main_result_table
+    item_type: table_variant
+    decision: discard
+    rationale: A success-only table would hide missing formal rows, uncertainty gaps, RM101 reject evidence, and adapter blockers.
+    evidence_ref: P1_08_E003_P0_05_CONSTRAINT_RISK
+    allowed_use: none
+    forbidden_use: manuscript or submission package
+
+  - item_id: accuracy_only_columns
+    item_type: column_set
+    decision: discard
+    rationale: Accuracy-only columns cannot satisfy claim/evidence mapping, denominator, uncertainty, artifact, or failure interpretation requirements.
+    evidence_ref: P1_08_E001_P1_07_PROTOCOL_MAP
+    allowed_use: none
+    forbidden_use: result table schema
+
+audit:
+  negative_or_failed_results_recorded: true
+  claim_evidence_ids_are_explicit_or_gap_is_reported: true
+  protected_paths_respected: true
+  no_success_only_table: true

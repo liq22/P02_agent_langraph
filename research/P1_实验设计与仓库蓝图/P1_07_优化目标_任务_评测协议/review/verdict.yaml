@@ -1,21 +1,97 @@
-review_id: EXTERNAL-AI-001
-review_complete: false
-reviewer_agent_id: <pending-distinct-agent>
-reviewer_skill: external_node_reviewer
+review_id: AI-002
+review_complete: true
+reviewer_agent_id: final-threshold-reviewer-p1-07-002
+review_type: score-only node-local final-threshold re-review
 reviewed_node_path: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议
 rubric_path: prompts/review_rubric.yaml
 rubric_version: nature_node_review_v1
-overall_score: null
-overall_verdict: revise
+score: 90
+overall_score: 90
+passed: true
+overall_verdict: pass
 hard_fail: false
+independence_confirmed: true
 dimension_scores:
-  originality_novelty: null
-  scientific_importance: null
-  evidence_technical_soundness: null
-  reproducibility_transparency: null
-  broad_interest_story_clarity: null
-  review_robustness: null
+  originality_novelty: 17
+  scientific_importance: 18
+  evidence_technical_soundness: 23
+  reproducibility_transparency: 15
+  broad_interest_story_clarity: 8
+  review_robustness: 9
+final_submission_threshold_met: true
+downstream_ready: true
+checklist_status_closed: false
+global_submission_ready: false
+summary: >-
+  Score-only node-local final-threshold re-review after the addition of
+  artifacts/protocol_final_threshold_contract.yaml. The v3 protocol package now
+  supports a score of 90 for protocol-package readiness because the final score
+  boundary, canonical upstream traceability, repeat/budget constants,
+  workflow/formal parser contracts, stop/downgrade rules, legacy
+  non-normative boundary, and prior AI/H response coverage are all explicit.
+findings:
+  - severity: score_threshold_met
+    claim_id: P1_07_C009_FINAL_THRESHOLD_PROTOCOL_LOCK
+    evidence_id: P1_07_E009_FINAL_THRESHOLD_CONTRACT
+    location: artifacts/protocol_final_threshold_contract.yaml
+    issue: >-
+      The contract sufficiently limits this review to node-local protocol score
+      readiness and forbids observed-result, formal-evidence, selected-backend,
+      RM101-resolution, Stage C/D, checklist/P3-action, and global-submission
+      upgrades.
+    actionable_fix: none_required_preserve_score_boundary
+  - severity: resolved_prior_review_response_gap
+    claim_id: P1_07_C009_FINAL_THRESHOLD_PROTOCOL_LOCK
+    evidence_id: P1_07_E009_FINAL_THRESHOLD_CONTRACT
+    location: review/response.yaml
+    issue: >-
+      Prior AI-001 and H-001 comments are now recorded as responded, resolving
+      the earlier response-coverage residual risk for this score-only review.
+    actionable_fix: none_required_keep_response_coverage_current
+  - severity: preserved_global_boundary
+    claim_id: P1_07_C009_FINAL_THRESHOLD_PROTOCOL_LOCK
+    evidence_id: P1_07_E009_FINAL_THRESHOLD_CONTRACT
+    location: artifacts/protocol_final_threshold_contract.yaml
+    issue: >-
+      The review preserves global non-readiness: P1 checklist closure, P3
+      action closure, selected backend, RM101 positive evidence, adapter
+      preflight, Stage C/D rows, and final validator status are outside this
+      node-local protocol score.
+    actionable_fix: none_required_do_not_close_global_blockers_from_p1_07_score
+required_fixes: []
+residual_risks:
+  - >-
+    This score is protocol-package readiness only. It does not validate any
+    observed AutoResearch improvement, PHMGA formal result, selected backend,
+    RM101 resolution, Stage C/D success, or final submission package.
+  - >-
+    Legacy sections remain present but are explicitly non-normative history.
+    Downstream workers should cite the v3 lock and v3 artifacts.
+reviewed_files:
+  - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/README.md
+  - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/status.yaml
+  - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/prompts/research_prompt.md
+  - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/prompts/acceptance_checklist.yaml
+  - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/prompts/review_rubric.yaml
+  - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/docs/manuscript.md
+  - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_final_threshold_contract.yaml
+  - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+  - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/experiment_rigor_plan.yaml
+  - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/gate_report.md
+  - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/review/AI_001.md
+  - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/review/verdict.yaml
+  - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/review/response.yaml
+  - research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/problem_hypothesis.yaml
+  - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/okr_map.yaml
+  - research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/artifacts/constraint_risk_map.yaml
+  - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+  - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
 blocking_issues: []
 required_actions: []
-downstream_ready: false
-independence_confirmed: false
+comments:
+  - >-
+    Pass at 90 for node-local protocol-package readiness only; no global
+    submission-ready claim is made or supported.
+  - >-
+    Checklist status and P3 actions remain outside this review and are not
+    closed by this verdict.

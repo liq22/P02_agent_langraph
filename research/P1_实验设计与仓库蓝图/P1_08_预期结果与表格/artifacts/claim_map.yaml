@@ -1,8 +1,129 @@
+version: p1_08_claim_map_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_08_预期结果与表格
+generated_at: 2026-05-05
+
 claim_map:
   - claim_id: c1
-    objective: 提升主任务准确率
-    task: 故障识别
-    protocol: split_by_machine_v1
+    stable_claim_id: P1_08_C001_LIMITED_SYNTHETIC_SIGNAL_SLOT
+    claim_type: result
+    claim_text: The current table package can carry the P1_04/P1_05 synthetic/offline supervisor_proving signal only as a limited sanity-check row.
+    support_status: supported_limited
+    submission_support_status: weak
+    support_status_vocabularies:
+      protocol_parser: supported_limited
+      repository_claim_registry: weak
+    evidence_ids:
+      - P1_08_E002_P1_05_HYPOTHESIS_STATUS
     table_ref: main_results
+    figure_ref: fig_main_synthetic_signal
+    paper_section: P2_02_05_实验与讨论
+    allowed_wording: limited synthetic/offline sanity-check signal
+    forbidden_wording:
+      - formal performance improvement
+      - real-data generalization
+      - selected backend
+      - RM101 resolution
+      - submission-ready result
+    boundary_label: preliminary_synthetic_only
+
+  - claim_id: c2
+    stable_claim_id: P1_08_C002_FORMAL_ELIGIBILITY_TABLE_GATE
+    claim_type: limitation
+    claim_text: Formal PHMGA/Vibench result claims are table-eligible only after provider policy, metadata-H5 alignment, artifact contract, selected backend, Stage C, Stage D, result_md, artifact_dir, and repeat gates pass.
+    support_status: supported
+    evidence_ids:
+      - P1_08_E001_P1_07_PROTOCOL_MAP
+      - P1_08_E003_P0_05_CONSTRAINT_RISK
+    table_ref: formal_eligibility_gate
     figure_ref: null
     paper_section: P2_02_05_实验与讨论
+    allowed_wording: formal eligibility gate remains planned or blocked until every gate passes
+    forbidden_wording:
+      - Stage C success
+      - Stage D success
+      - RM101 positive evidence
+      - selected backend locked
+    boundary_label: protocol_ready_only
+
+  - claim_id: c3
+    stable_claim_id: P1_08_C003_ABLATION_EFFICIENCY_TABLE_GATE
+    claim_type: method
+    claim_text: Ablation and efficiency claims require explicit changed factor, unchanged controls, budget, repeat count, and uncertainty columns before any positive interpretation.
+    support_status: supported
+    evidence_ids:
+      - P1_08_E001_P1_07_PROTOCOL_MAP
+    table_ref: ablation_and_efficiency_results
+    figure_ref: null
+    paper_section: P2_02_05_实验与讨论
+    allowed_wording: ablation and efficiency table structure is preregistered
+    forbidden_wording:
+      - ablation confirms mechanism
+      - efficiency advantage observed
+    boundary_label: protocol_ready_only
+
+  - claim_id: c4
+    stable_claim_id: P1_08_C004_NEGATIVE_UNCLEAR_RETENTION
+    claim_type: limitation
+    claim_text: Negative, rejected, unclear, and blocked evidence has a required table location and cannot be hidden from denominators.
+    support_status: supported
+    evidence_ids:
+      - P1_08_E002_P1_05_HYPOTHESIS_STATUS
+      - P1_08_E003_P0_05_CONSTRAINT_RISK
+    table_ref: negative_unclear_result_ledger
+    figure_ref: null
+    paper_section: P2_02_05_实验与讨论
+    allowed_wording: negative and unclear evidence is retained in first-class table rows
+    forbidden_wording:
+      - negative rows omitted
+      - unclear evidence rewritten as supported
+    boundary_label: limitation
+
+  - claim_id: c5
+    stable_claim_id: P1_08_C005_UNCERTAINTY_REPRODUCIBILITY_COLUMNS
+    claim_type: method
+    claim_text: Each result-supporting table row requires repeat count, uncertainty interval, source artifact, and failure interpretation fields before result-level wording.
+    support_status: supported
+    evidence_ids:
+      - P1_08_E001_P1_07_PROTOCOL_MAP
+    table_ref:
+      - main_results
+      - ablation_and_efficiency_results
+      - negative_unclear_result_ledger
+    figure_ref: null
+    paper_section: P2_02_05_实验与讨论
+    allowed_wording: table parser fields are preregistered
+    forbidden_wording:
+      - stable improvement without repeat or uncertainty evidence
+    boundary_label: protocol_ready_only
+
+  - claim_id: c6
+    stable_claim_id: P1_08_C006_FINAL_THRESHOLD_TABLE_LOCK
+    claim_type: method
+    claim_text: The P1_08 table package is ready for node-local final-threshold score review because table schemas, claim/evidence mappings, support-status bridge, formal gate fields, negative-evidence retention, and review response coverage are explicit.
+    support_status: supported
+    evidence_ids:
+      - P1_08_E007_FINAL_THRESHOLD_TABLE_CONTRACT
+      - P1_08_E005_TABLE_PLAN
+    table_ref:
+      - main_results
+      - formal_eligibility_gate
+      - ablation_and_efficiency_results
+      - negative_unclear_result_ledger
+    figure_ref: null
+    paper_section: P1_08_预期结果与表格
+    allowed_wording: node-local table package is final-threshold score-review ready
+    forbidden_wording:
+      - observed result improvement
+      - formal evidence passed
+      - final submission ready
+    boundary_label: protocol_ready_only
+
+mapping_checks:
+  downstream_c1_ref_preserved_for_p1_09: true
+  c1_protocol_status_preserved_as_supported_limited: true
+  c1_submission_registry_status_bridged_to_weak: true
+  every_claim_has_table_ref: true
+  every_claim_has_evidence_id: true
+  negative_or_unclear_results_have_table_ref: true
+  formal_claims_are_protocol_or_limitation_only: true
+  final_threshold_score_boundary_has_claim_ref: true

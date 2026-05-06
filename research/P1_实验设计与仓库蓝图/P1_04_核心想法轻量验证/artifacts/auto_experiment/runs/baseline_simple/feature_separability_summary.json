@@ -1,0 +1,54 @@
+{
+  "dataset": "OTTAWA_SYNTH",
+  "graph_path": "ml",
+  "backend": {
+    "provider": "codex_cli",
+    "model": "gpt-5.3-codex"
+  },
+  "artifact_contract_pass": true,
+  "feature_count": 6,
+  "non_empty_feature_count": 6,
+  "constant_feature_count": 0,
+  "class_count": 2,
+  "top_features": [
+    {
+      "name": "concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1[2]",
+      "source_node": "concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1",
+      "score": 53.15821432709834
+    },
+    {
+      "name": "concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1[3]",
+      "source_node": "concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1",
+      "score": 37.606623442597346
+    },
+    {
+      "name": "concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1[1]",
+      "source_node": "concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1",
+      "score": 19.25174839708433
+    },
+    {
+      "name": "band_power_13_psd_12_normalize_02_ch2",
+      "source_node": "band_power_13_psd_12_normalize_02_ch2",
+      "score": 10.026333321914164
+    },
+    {
+      "name": "concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1[0]",
+      "source_node": "concatenate_15_kurtosis_05_hilbert_envelope_04_filter_03_normalize_01_ch1__spectral_centroid_07_stft_06_normalize_01_ch1__kurtosis_09_patch_08_normalize_01_ch1__band_power_11_psd_10_normalize_01_ch1",
+      "score": 0.8061231969809622
+    }
+  ],
+  "aggregate_scores": {
+    "mean_fisher_score": 20.141589912884374,
+    "median_fisher_score": 14.639040859499246,
+    "top5_mean_score": 24.16980853713503
+  },
+  "split_stability": {
+    "train_val_rank_corr": 0.942857142857143
+  },
+  "decision": "pass",
+  "reason": [
+    "feature pipeline materialized successfully",
+    "top-k features show class separation",
+    "train/val feature ranking remains directionally stable (0.943)"
+  ]
+}

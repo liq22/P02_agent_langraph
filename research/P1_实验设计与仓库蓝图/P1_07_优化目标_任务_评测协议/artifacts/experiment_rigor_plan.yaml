@@ -1,3 +1,308 @@
+effective_version: p1_07_experiment_rigor_plan_v3
+effective_generated_at: 2026-05-05
+v3_review_fix_register:
+  external_review_addressed:
+    - claim_id: P1_07_C007_UPSTREAM_TRACEABILITY
+      evidence_id: P1_07_E007_UPSTREAM_EVIDENCE_PATHS
+      action: canonical upstream paths and line anchors recorded in protocol_map.yaml upstream_evidence
+      status: ready_for_re_review
+    - claim_id: P1_07_C004_UNCERTAINTY_REQUIRED
+      evidence_id: P1_07_E004_STATISTICS_PLAN
+      action: minimum repeats, fixed budgets, and low-power downgrade rules preregistered below
+      status: ready_for_re_review
+    - claim_id: P1_07_C008_METRIC_PARSER_SCHEMA
+      evidence_id: P1_07_E008_METRIC_LEDGER_CONTRACT
+      action: parser-readable workflow and formal ledger contracts recorded below and in protocol_map.yaml
+      status: ready_for_re_review
+  upstream_traceability:
+    canonical_paths:
+      - evidence_id: P1_07_UPSTREAM_P0_02_PROBLEM_HYPOTHESIS
+        path: research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/artifacts/problem_hypothesis.yaml
+        checked_at: 2026-05-05
+        anchors:
+          - lines_12_29_claim_validity_metrics
+          - lines_35_45_review_response_negative_evidence
+          - lines_126_135_formal_evidence_eligibility
+      - evidence_id: P1_07_UPSTREAM_P0_04_OKR_ROUTE
+        path: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/okr_map.yaml
+        checked_at: 2026-05-05
+        anchors:
+          - lines_33_62_protocol_data_eligibility
+          - lines_63_88_evidence_production_boundary_stage_c_d
+          - lines_124_139_review_response_closure
+      - evidence_id: P1_07_UPSTREAM_P0_05_CONSTRAINT_RISK
+        path: research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/artifacts/constraint_risk_map.yaml
+        checked_at: 2026-05-05
+        anchors:
+          - lines_28_44_data_and_formal_stage_b_c_d_bottlenecks
+          - lines_72_94_provider_free_policy_and_review_threshold
+          - lines_97_112_registry_schema_blockers
+      - evidence_id: P1_07_UPSTREAM_P1_05_HYPOTHESIS_STATUS
+        path: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+        checked_at: 2026-05-05
+        anchors:
+          - lines_6_14_supported_limited_synthetic_only
+          - lines_17_31_unsupported_formal_and_rm101
+          - lines_35_41_unclear_status_distribution
+      - evidence_id: P1_07_UPSTREAM_P1_06_SUBMODULE_REF
+        path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+        checked_at: 2026-05-05
+        anchors:
+          - lines_6_17_phmga_path_branch_commit_pull
+          - lines_21_31_dirty_entries_pointer_policy
+  preregistered_repeat_budget:
+    workflow_conditions:
+      autoresearch_gated_workflow:
+        minimum_repeat_count: 3
+        repeat_unit: independent_seed_or_reviewer_assignment
+        authoring_wall_clock_minutes_per_node: 45
+        reviewer_wall_clock_minutes_per_node: 20
+        artifact_audit_wall_clock_minutes_per_node: 20
+        llm_token_budget_per_node: 120000
+      manual_checklist_workflow:
+        minimum_repeat_count: 3
+        repeat_unit: independent_operator_or_reviewer_assignment
+        authoring_wall_clock_minutes_per_node: 45
+        reviewer_wall_clock_minutes_per_node: 20
+        artifact_audit_wall_clock_minutes_per_node: 20
+        llm_token_budget_per_node: not_applicable_manual_no_model
+      prompt_only_agent_workflow:
+        minimum_repeat_count: 3
+        repeat_unit: independent_seed_or_reviewer_assignment
+        authoring_wall_clock_minutes_per_node: 45
+        reviewer_wall_clock_minutes_per_node: 20
+        artifact_audit_wall_clock_minutes_per_node: 20
+        llm_token_budget_per_node: 120000
+      agent_without_independent_gate:
+        minimum_repeat_count: 3
+        repeat_unit: independent_seed_or_reviewer_assignment
+        authoring_wall_clock_minutes_per_node: 45
+        reviewer_wall_clock_minutes_per_node: 20
+        artifact_audit_wall_clock_minutes_per_node: 20
+        llm_token_budget_per_node: 120000
+    formal_rows:
+      stage_b_backend_comparison:
+        minimum_repeat_count_per_backend_dataset: 1
+        max_wall_clock_hours_per_row: 4
+        max_llm_calls_per_row: 16
+        claim_boundary: backend_lock_preflight_only_not_performance_claim
+      stage_c_main_rows:
+        minimum_repeat_count_per_formal_row: 3
+        max_wall_clock_hours_per_row: 4
+        max_llm_calls_per_row: 16
+      stage_d_ablations:
+        minimum_repeat_count_per_formal_row: 3
+        max_wall_clock_hours_per_row: 4
+        max_llm_calls_per_row: 16
+    provider_budget:
+      openrouter: free_models_only
+      bigmodel: GLM-4.7-flash_free_only
+      max_provider_retries_after_rate_limit: 1
+    low_power_downgrade_rule: >-
+      Any workflow condition with fewer than three repeats or any Stage C/D
+      formal row with fewer than three successful repeat units is
+      low_power_pilot or non_selection_eligible. It may be reported only as
+      protocol, blocker, reject evidence, or limitation, never as comparative
+      improvement or formal result eligibility.
+  parser_contract_summary:
+    workflow_result_ledger_required_fields:
+      - protocol_id
+      - metric_id
+      - row_id
+      - claim_id
+      - evidence_id
+      - node_id
+      - condition_id
+      - repeat_index
+      - repeat_unit_id
+      - artifact_path
+      - support_status
+      - boundary_label
+      - denominator_included
+      - numerator_included
+      - exclusion_rationale
+      - review_action
+      - response_status
+      - blocker_id
+      - failure_interpretation
+    formal_result_ledger_required_fields:
+      - formal_row_id
+      - stage
+      - dataset_id
+      - backend_id
+      - provider_name
+      - model_name
+      - provider_model_policy_pass
+      - metadata_h5_alignment_pass
+      - artifact_contract_pass
+      - selected_global_best_backend_locked
+      - result_md
+      - artifact_dir
+      - ledger_row_path
+      - main_table_mapping
+      - repeat_count
+      - formal_eligibility_status
+    parser_block_conditions:
+      - missing numerator_or_denominator field for rate metrics
+      - missing count_rule for count metrics
+      - missing row-level formal gate field
+      - artifact_path missing without future_required marker
+      - graph_canvas_dashboard_or_wrapper_path_used_as_research_truth
+final_threshold_score_contract:
+  claim_id: P1_07_C009_FINAL_THRESHOLD_PROTOCOL_LOCK
+  evidence_id: P1_07_E009_FINAL_THRESHOLD_CONTRACT
+  contract_path: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_final_threshold_contract.yaml
+  status: ready_for_score_only_final_threshold_re_review
+  scoreable_strengths:
+    - upstream traceability is limited to canonical paths and line anchors
+    - repeat and budget constants are preregistered for workflow and formal-row contexts
+    - workflow and formal metric parser contracts are field-level and enum-bounded
+    - low-power, stop-condition, and no-cherry-picking downgrade rules are explicit
+    - prior AI and teammate review comments are responded in review/response.yaml
+  score_boundary:
+    may_support: node_local_protocol_score_above_final_threshold
+    must_not_support:
+      - observed_result_claim
+      - formal_result_claim
+      - selected_backend_claim
+      - rm101_resolution_claim
+      - global_submission_ready_claim
+  checklist_and_action_boundary:
+    p1_checklist_status_changed: false
+    p3_action_status_changed: false
+v2_rigor_plan:
+  rigor_policy: >-
+    Metrics must be preregistered before execution or review scoring. Favorable
+    single metrics cannot be cherry-picked into claims; unsupported, unclear,
+    failed, rate-limited, and reject evidence remain visible.
+  documented:
+    objectives:
+      - H1_CLAIM_VALIDITY
+      - H2_REVIEW_RESPONSE_CLOSURE
+      - H3_FORMAL_EVIDENCE_ELIGIBILITY
+    protocols:
+      - P1_07_PROTO_001_FIXED_NODE_GOVERNANCE_COMPARISON
+      - P1_07_PROTO_002_FORMAL_EVIDENCE_ELIGIBILITY_GATE
+    primary_outcomes:
+      - claim_evidence_validity_rate
+      - formal_result_eligibility_pass
+    secondary_outcomes:
+      - unsupported_claim_count
+      - independent_reviewer_pass_rate
+      - response_coverage_rate
+      - hard_fail_closure_rate
+      - negative_result_retention_rate
+      - protocol_completeness_rate
+      - reproducibility_rerun_agreement
+      - boundary_violation_count
+      - final_validator_blocker_count
+      - stage_c_main_result_pass
+      - stage_d_ablation_pass
+    baselines:
+      - manual_checklist_workflow
+      - prompt_only_agent_workflow
+      - agent_without_independent_gate
+    formal_controls:
+      - provider_model_policy_free_boundary
+      - vibench_read_only_boundary
+      - phmga_protocol_and_result_ownership
+      - selected_backend_lock
+      - artifact_contract
+      - stage_c_main_rows
+      - stage_d_ablation_rows
+  consistent:
+    claim_identity_rule: Every central claim must retain a stable claim_id and evidence_id across protocol, result ledger, manuscript, review, response, and revision evidence.
+    support_status_rule: Supported_limited, unsupported, unclear, rejected, blocked, and not_applicable statuses must not be renamed into supported without new evidence.
+    path_rule: Artifact paths must point to node-local artifacts or PHMGA-owned result artifacts; graph/Canvas/dashboard paths cannot support research claims.
+    provider_rule: Provider/model labels must match OpenRouter free-only and BigModel GLM-4.7-flash free-only boundaries.
+  complete:
+    required_success_records:
+      - numerator_denominator_for_rate_metrics
+      - baseline_input_budget_output_records
+      - reviewer_assignment_or_seed_record
+      - artifact_contract_record
+      - result_md_and_artifact_dir_for_formal_rows
+      - confidence_interval_or_bootstrap_interval
+      - failure_distribution
+    required_failure_records:
+      - missing_baseline_record
+      - missing_metric_definition
+      - missing_repeat_or_uncertainty
+      - unsupported_claim_without_boundary
+      - reviewer_hard_fail_without_actionable_fix
+      - metadata_h5_alignment_missing_or_failed
+      - selected_backend_not_locked
+      - stage_c_or_stage_d_row_missing
+      - rm101_reject_evidence
+      - provider_rate_limit_or_policy_failure
+      - claim_evidence_registry_schema_failure
+  exercisable:
+    worker_can_execute_without_redefining:
+      - fixed_node_set
+      - claim_universe
+      - baselines
+      - primary_metric
+      - secondary_metrics
+      - formal_row_denominator
+      - artifact_outputs
+      - stop_conditions
+    minimum_execution_inputs:
+      - research prompt bundle
+      - acceptance checklist
+      - review rubric
+      - allowed edit scope
+      - PHMGA submodule reference
+      - Vibench read boundary
+      - provider/model policy
+      - output ledger schema
+    missing_input_policy: Missing command, manual operation form, reviewer assignment, result ledger schema, or formal row denominator blocks result claims.
+  statistics_plan:
+    rate_metrics:
+      estimator: proportion
+      uncertainty: confidence_interval_or_bootstrap_interval
+      denominator_required: true
+    repeated_conditions:
+      repeat_unit: random_seed_or_independent_reviewer_assignment
+      low_power_policy: low repeat budget must be reported and blocks strong claims
+    formal_rows:
+      denominator: preregistered_stage_c_and_stage_d_rows
+      pass_rule: every eligibility gate must pass for selection-eligible formal claim
+      failure_distribution_required: true
+  budget_plan:
+    workflow_comparison_budget:
+      equality_rule: same node set, token/time budget, reviewer rubric, and artifact audit procedure across conditions
+      budget_missing_action: downgrade to protocol-ready
+    provider_budget:
+      openrouter: free_model_only
+      bigmodel: GLM-4.7-flash_free_only
+      rate_limit_action: record blocker or reject evidence
+    data_budget:
+      formal_scope:
+        - RM_017_Ottawa19
+        - RM_101_THU_GEARBOX
+      adapter_alignment_required: true
+    submodule_budget:
+      phmga_commit: 914bc5925d5230917a5de95d88784075fb2b041e
+      dirty_entries_count: 66
+      pointer_update_allowed_now: false
+  stop_conditions:
+    - id: P1_07_STOP_001_CHERRY_PICKED_METRIC
+      trigger: favorable secondary metric is promoted while primary metric or formal eligibility gate fails
+      action: block claim and record failure interpretation
+    - id: P1_07_STOP_002_BASELINE_MISSING
+      trigger: required baseline lacks input, budget, output, reviewer, or artifact record
+      action: downgrade to protocol-ready
+    - id: P1_07_STOP_003_UNCERTAINTY_MISSING
+      trigger: point estimate reported without repeat or uncertainty statement
+      action: block strong result claim
+    - id: P1_07_STOP_004_FORMAL_GATE_MISSING
+      trigger: provider, adapter, artifact contract, selected backend, Stage C, or Stage D gate is missing or failed
+      action: preserve blocker/reject evidence
+    - id: P1_07_STOP_005_NEGATIVE_EVIDENCE_HIDDEN
+      trigger: unsupported, unclear, rejected, rate-limited, or failed rows disappear from ledger
+      action: block submission-ready claim
+
+legacy_node_path: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议
 node_path: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议
 research_anchor: AutoResearch as a human-agent research operating system
 protocol_id: fixed_node_set_controlled_comparison_v1

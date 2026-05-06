@@ -26,6 +26,18 @@ failures:
     trigger: OPENROUTER_API_KEY, BIGMODEL_API_KEY, or provider token appears in configs, artifacts, docs, review, or ledger files.
     severity: hard_block
     required_response: Remove leaked material, rotate if needed, and rerun secret scan excluding .env.
+  - failure_id: P1_03_F07_OPERATOR_REGISTRY_GAP
+    trigger: Run config references a missing, unversioned, or unvalidated operator registry.
+    severity: hard_block
+    required_response: Add configs/operators/*.yaml, validate resolved operator ids in compiled_dag_manifest.json, and rerun artifact validation.
+  - failure_id: P1_03_F08_PLANNER_TRACE_MISSING
+    trigger: Run bundle omits planner_normalization_trace.json or artifact_index.json does not reference it.
+    severity: hard_block
+    required_response: Mark the row reject and block ledger keep=accept until trace provenance exists.
+  - failure_id: P1_03_F09_WORKFLOW_GRAPH_BOUNDARY_CONFUSION
+    trigger: Run config workflow_graph_path points to backend/graph, Obsidian Canvas, web dashboard, or another projection surface.
+    severity: hard_block
+    required_response: Replace with configs/workflow_graphs/*.yaml and rerun preflight or validation.
 
 open_external_blockers:
   - selected_global_best_backend_not_locked

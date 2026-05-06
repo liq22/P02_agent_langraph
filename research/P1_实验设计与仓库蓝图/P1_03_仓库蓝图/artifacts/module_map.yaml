@@ -30,10 +30,12 @@ modules:
     responsibility: Call free-model provider, normalize planner step plan, and record planner traces.
     inputs:
       - RunConfig
-      - OperatorRegistry
+      - configs/providers/*.yaml
+      - configs/operators/*.yaml
     outputs:
       - planner_normalization_trace.json
       - normalized_step_plan
+    truth_boundary: Provider transport and planner normalization trace only; does not define metrics, ledger, or paper claims.
   - module_id: dag_compiler
     path: src/dag/compiler.py
     required_now: true
@@ -41,10 +43,15 @@ modules:
     inputs:
       - normalized_step_plan
       - DatasetProtocol
+      - configs/workflow_graphs/*.yaml
+      - configs/operators/*.yaml
     outputs:
       - validated_dag.json
       - compiled_dag_manifest.json
       - feature_pipeline.json
+    validation_obligations:
+      - resolved operator ids must be recorded in compiled_dag_manifest.json
+      - workflow_graph_path must not reference backend/graph, Canvas, dashboard, or web projection files
   - module_id: runner
     path: src/run/workflow.py
     required_now: true
@@ -104,3 +111,35 @@ deferred_modules:
     reason: Must be generated from artifacts after ledger lock if needed.
   - module_id: paper_exporter
     reason: Writing/export concern belongs to later paper nodes.
+
+operator_registry_contract:
+  path: configs/operators/*.yaml
+  owner: planner_bridge
+  validator: dag_compiler
+  required_fields:
+    - operator_id
+    - version
+    - allowed_args
+    - schema
+    - implementation_ref
+  truth_boundary: Operator availability/config input only; not a result ledger, not a planner decision log, and not a global scheduler registry.
+
+workflow_graph_contract:
+  path: configs/workflow_graphs/*.yaml
+  owner: dag_compiler
+  required_fields:
+    - workflow_graph_id
+    - compatible_dataset_protocols
+    - allowed_operator_ids
+    - dag_constraints
+  forbidden_sources:
+    - backend/graph/graph.json
+    - backend/graph/graph_status.json
+    - obsidian/
+    - web/
+  truth_boundary: PHMGA experiment DAG input only.
+
+run_bundle_trace_contract:
+  required_trace: planner_normalization_trace.json
+  artifact_index_required_ref: true
+  validation_rule: scripts/validate_artifacts.py must reject bundles without planner trace provenance.

@@ -1,0 +1,37 @@
+version: p1_09_keep_discard_ledger_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_09_结果图与草稿
+
+decisions:
+  - item_id: fig_main_synthetic_signal
+    item_type: figure
+    decision: keep_limited_draft
+    rationale: It visualizes observed P1_04/P1_05 synthetic/offline values, has deterministic render provenance, and is explicitly scoped as preliminary; P1_08 table-package score readiness is now above the final threshold but does not upgrade the figure to formal evidence.
+    allowed_use: planning draft and reviewer discussion.
+    forbidden_use: formal main-result figure or submission-ready performance evidence.
+  - item_id: p1_09_final_threshold_figure_contract
+    item_type: score_review_contract
+    decision: keep_for_node_local_score_review
+    rationale: It locks the draft-figure final-threshold review boundary without adding real-data, variance, RM101, selected-backend, or Stage C/D evidence.
+    allowed_use: node-local final-threshold score review.
+    forbidden_use: formal result claim or global submission-ready proof.
+  - item_id: fig_formal_main_accuracy
+    item_type: figure_variant
+    decision: discard_for_now
+    rationale: Formal main-result accuracy requires real-data accepted rows and uncertainty evidence that are not present.
+  - item_id: fig_ablation_results
+    item_type: figure_variant
+    decision: defer
+    rationale: P1_08 table_plan mentions ablation_results, but no accepted ablation artifact exists.
+  - item_id: fig_efficiency_results
+    item_type: figure_variant
+    decision: defer
+    rationale: P1_08 table_plan mentions efficiency_results, but no accepted efficiency artifact exists.
+  - item_id: error_bars_or_confidence_intervals
+    item_type: visual_encoding
+    decision: discard_for_now
+    rationale: No repeated-run or variance estimate is available; drawing error bars would be invented evidence.
+
+audit:
+  negative_or_failed_results_recorded: true
+  claim_evidence_ids_are_explicit_or_gap_is_reported: true
+  protected_paths_respected: true

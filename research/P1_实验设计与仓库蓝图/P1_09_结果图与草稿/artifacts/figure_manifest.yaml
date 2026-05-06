@@ -1,0 +1,60 @@
+version: p1_09_figure_manifest_v1
+node_id: research::P1_实验设计与仓库蓝图::P1_09_结果图与草稿
+generated_at: 2026-05-04
+
+figures:
+  - figure_id: fig_main_synthetic_signal
+    claim_ref: c1
+    evidence_ref: P1_09_E004_FIGURE_DATA_TSV
+    first_callout_location: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/docs/manuscript.md#Figure Draft
+    source_kind: python
+    necessity: supporting
+    status: accepted
+    locked_by_node_status: done
+    source_path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/figures/fig_main_synthetic_signal_data.tsv
+    output_path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/figures/fig_main_synthetic_signal.svg
+    title: Bounded synthetic/offline signal for supervisor_proving
+    files:
+      - path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/figures/fig_main_synthetic_signal.svg
+        kind: static_svg_draft
+      - path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/figures/fig_main_synthetic_signal_data.tsv
+        kind: plotted_data
+      - path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/tools/render_fig_main_synthetic_signal.py
+        kind: deterministic_renderer
+      - path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_render_protocol.yaml
+        kind: render_protocol
+    plotted_values:
+      - row_id: baseline_simple
+        workflow_mode: simple_fullchain
+        test_accuracy: 0.8333333333333334
+        test_macro_f1: 0.8285714285714285
+      - row_id: attempt_supervisor_proving
+        workflow_mode: supervisor_proving
+        test_accuracy: 1.0
+        test_macro_f1: 1.0
+    source_artifacts:
+      - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+      - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml
+      - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+      - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_final_threshold_contract.yaml
+    reproducibility_notes:
+      - Values are copied from the P1_04 observed results ledger and P1_05 registry.
+      - The TSV is the canonical plotted data inside this node.
+      - The SVG is regenerated deterministically from the TSV by tools/render_fig_main_synthetic_signal.py.
+      - No smoothing, interpolation, or additional computation is applied beyond plotting the two observed metric rows.
+    render_command_from_repo_root: python3 research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/tools/render_fig_main_synthetic_signal.py
+    claim_boundary: synthetic/offline single-run only; not a formal paper result.
+    score_review_boundary: node-local draft-figure final-threshold readiness only; not submission-ready evidence.
+    quality_checks:
+      colorblind_or_grayscale_checked: true
+      vector_or_dpi_checked: true
+      source_permission_checked: true
+      caption_self_contained: true
+
+manifest_checks:
+  all_figures_have_claim_map_entries: true
+  all_plotted_values_have_source_artifacts: true
+  deterministic_render_path_present: true
+  legend_scope_guard_present: true
+  negative_or_unclear_evidence_referenced: true
+  final_threshold_contract_referenced: true
