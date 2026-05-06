@@ -1,0 +1,138 @@
+handoff_version: claude_code_handoff_v2
+task_id: p2_04_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P2_04 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P2_04 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P2_论文撰写::P2_04_形式检查
+  node_path: research/P2_论文撰写/P2_04_形式检查
+scope:
+  inspected_files:
+    - research/P2_论文撰写/P2_04_形式检查/README.md
+    - research/P2_论文撰写/P2_04_形式检查/status.yaml
+    - research/P2_论文撰写/P2_04_形式检查/prompts/research_prompt.md
+    - research/P2_论文撰写/P2_04_形式检查/prompts/acceptance_checklist.yaml
+    - research/P2_论文撰写/P2_04_形式检查/prompts/review_rubric.yaml
+    - research/P2_论文撰写/P2_04_形式检查/skills/local_entry.md
+    - research/P2_论文撰写/P2_04_形式检查/docs/manuscript.md
+    - research/P2_论文撰写/P2_04_形式检查/artifacts/formal_check_report.md
+    - research/P2_论文撰写/P2_04_形式检查/artifacts/gate_report.md
+    - research/P2_论文撰写/P2_04_形式检查/artifacts/citation_registry.yaml
+    - research/P2_论文撰写/P2_04_形式检查/artifacts/figure_manifest.yaml
+    - research/P2_论文撰写/P2_04_形式检查/artifacts/venue_requirements.yaml
+    - research/P2_论文撰写/P2_04_形式检查/review/AI_001.md
+    - research/P2_论文撰写/P2_04_形式检查/review/verdict.yaml
+    - research/P2_论文撰写/P2_04_形式检查/review/human_reviewer_prompt.md
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+    - research/P2_论文撰写/P2_03_定稿_tex/artifacts/citation_registry.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_manifest.yaml
+    - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    - docs/submission_ready_goal/completion_audit_current.md
+  changed_files:
+    - research/P2_论文撰写/P2_04_形式检查/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p2_04_human_review_handoff.yaml
+  allowed_files:
+    - research/P2_论文撰写/P2_04_形式检查/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p2_04_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p2_04_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Formal check covers title, abstract, figures, references, availability, and venue requirements
+      evidence: >-
+        formal_check_report.md pass checks 1-6 cover article skeleton, venue profile,
+        abstract boundary, figure provenance, citation registry, and availability
+        sections. Cross-verified against tex/main.tex containing title, abstract,
+        IMRAD sections, data/code availability, and references.
+    - claim: Citation criticality correctly classifies format-only citations without promoting to core support
+      evidence: >-
+        citation_registry.yaml classifies all three citations as format_supporting or
+        method_reference with support_strength format_and_reporting_context or
+        local_method_record. Cross-verified against P2_03 citation_registry —
+        consistent classifications. No citation is used as core scientific support.
+    - claim: Figure manifest has complete provenance, claim/evidence ref, callout, status, and forbidden claims
+      evidence: >-
+        figure_manifest.yaml records source_kind python, source_path, output_path,
+        claim_ref C_WORKFLOW_EVIDENCE_PATH, evidence_ref P2_02_03_FIG_WORKFLOW_MANIFEST,
+        first_callout_location with paragraph anchor, status accepted,
+        locked_by_node_status done, and cannot_support_claims listing six forbidden
+        categories. Cross-verified against P2_02_03 upstream manifest — fully
+        consistent.
+    - claim: All five hard blocks have complete claim_id/evidence_id/location/actionable_fix chains
+      evidence: >-
+        formal_check_report.md hard blocks table B001-B005 each have severity hard,
+        blocker_id, claim_id, evidence_id, location, and actionable_fix. Verified
+        against completion_audit_current.md — all five correspond to real documented
+        global blockers.
+    - claim: Package does not rewrite science and does not claim submission readiness
+      evidence: >-
+        manuscript.md explicitly states does not rewrite scientific content and does
+        not claim submission readiness. gate_report records
+        final_submission_decision: blocked. venue_requirements.yaml lists six
+        forbidden_claim_strength categories.
+    - claim: Advisory issues clearly separated from hard blocks
+      evidence: >-
+        formal_check_report.md has distinct Hard Blocks table and Advisory Issues
+        section. Advisory section explicitly states items are not hard blocks because
+        they lack complete claim/evidence/actionable-fix chains. gate_report records
+        non-upgrade policy.
+  gaps:
+    - gap: status.yaml remains seed/pending despite completed artifacts and reviews
+      severity: non_blocking
+      file: research/P2_论文撰写/P2_04_形式检查/status.yaml
+    - gap: TeX title is generic; final polish should make it more specific
+      severity: non_blocking
+      file: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    - gap: TeX draft behind newest P2_02_04/P2_02_05 Markdown sections
+      severity: non_blocking
+      file: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+  risks:
+    - risk: Stale status metadata could mislead scheduler into treating node as incomplete
+      mitigation: Node owner should update status.yaml and acceptance_checklist.yaml after accepting this review
+    - risk: TeX sync lag accumulates if draft/export nodes are not run after each section closure
+      mitigation: Run P2_03-style export sync after remaining P2 section closures
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P2_论文撰写/P2_04_形式检查/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 87
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - Final-score thresholds: all closed nodes score below the 90 submission threshold
+    - Global registry schema errors: P1_03 and P1_05 registries fail submission schema validator
+    - P1_05 missing failure-truth artifacts
+    - Selected backend not locked
+    - RM101 Stage B reject evidence unresolved
+    - PHMGA dirty worktree protection incomplete (66 dirty entries)
+    - PHMGA/Vibench adapter preflight pending
+    - Downstream Stage C main-result rows incomplete
+    - Downstream Stage D ablation rows incomplete
+    - Broader unfinished graph nodes (13 remaining after P2_02_05 closure)
+    - P3/P4 response-package gaps unresolved
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: >-
+    Codex to verify handoff, update status.yaml human_review_count to 1,
+    process node toward fix/close, update stale acceptance_checklist and
+    status metadata, and advance scheduler to next node.
+  blockers: []

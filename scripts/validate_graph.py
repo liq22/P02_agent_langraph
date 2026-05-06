@@ -143,6 +143,12 @@ def validate_graph(root: Path) -> list[str]:
         fail(errors, "graph_status.json `unfinished_count` must be an integer")
 
     next_node = graph_status.get("next_node")
+    if next_node is None and graph_status.get("unfinished_count") == 0:
+        if graph_status.get("ready_nodes") != []:
+            fail(errors, "graph_status.json `ready_nodes` must be empty when scheduler is finished")
+        if graph_status.get("blocked_nodes") != []:
+            fail(errors, "graph_status.json `blocked_nodes` must be empty when scheduler is finished")
+        return errors
     if not isinstance(next_node, str) or not next_node:
         fail(errors, "graph_status.json `next_node` must be a non-empty string")
         return errors

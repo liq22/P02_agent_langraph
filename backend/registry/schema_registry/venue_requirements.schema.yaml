@@ -14,6 +14,9 @@ allowed_values:
   selected_profiles:
     - nature_article
     - ieee_tpami
+    - elsevier_specialist_engineering_imrad
+    - ieee_transactions_technical
+    - nature_broad_interest
   active_gate_stage:
     - draft
     - review

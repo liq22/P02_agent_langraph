@@ -1,0 +1,142 @@
+handoff_version: claude_code_handoff_v2
+task_id: p4_03_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P4_03 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P4_03 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P4_论文回复_response::P4_03_逐点回复草稿_md
+  node_path: research/P4_论文回复_response/P4_03_逐点回复草稿_md
+scope:
+  inspected_files:
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/review/human_reviewer_prompt.md
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/review_rubric.yaml
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/review/AI_001.md
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/review/verdict.yaml
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/review/人类_001.md
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/README.md
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/status.yaml
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/docs/manuscript.md
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/artifacts/response_items.yaml
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/logs/session_manifest.yaml
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/research_prompt.md
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/acceptance_checklist.yaml
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/skills/local_entry.md
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+    - docs/submission_ready_goal/completion_audit_current.md
+  changed_files:
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p4_03_human_review_handoff.yaml
+  allowed_files:
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p4_03_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p4_03_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: All six P4_02 mappings have exactly one P4_03 response item
+      evidence: >-
+        P4_02 contains 6 mappings (map-p4-001 through map-p4-006) and P4_03
+        contains exactly 6 response items (rsp-p4-001 through rsp-p4-006).
+        Each mapping_id field in response_items.yaml matches the corresponding
+        P4_02 mapping. Summary confirms source_mapping_count: 6 and
+        response_item_count: 6.
+    - claim: Every response item includes all seven required fields
+      evidence: >-
+        All 6 response items include direct_answer, evidence_refs,
+        manuscript_location, change_description, commitment_status,
+        downstream_gate, and revision_evidence_item_id. Verified field-by-field
+        against the human_reviewer_prompt review questions.
+    - claim: Three blocking items remain blocked, not silently closed
+      evidence: >-
+        rsp-p4-001, rsp-p4-002, and rsp-p4-003 all have commitment_status:
+        blocked. Their change_description fields explicitly state "No completed
+        manuscript change is claimed here" and require downstream work to close
+        gaps or retain blockers. No blocking item has been resolved through
+        explanation alone.
+    - claim: Three planned items are not overstated as completed edits
+      evidence: >-
+        rsp-p4-004, rsp-p4-005, and rsp-p4-006 all have commitment_status:
+        planned. Their change_description fields explicitly use "Planned wording
+        revision only", "Planned caption/callout boundary check only", and
+        "Optional cosmetic compression only" language, with explicit denial of
+        completed TeX/figure/style edits.
+    - claim: Draft avoids all six forbidden claims
+      evidence: >-
+        session_manifest.yaml records no_new_experiment_claimed: true,
+        no_new_citation_claimed: true, no_tex_edit_claimed: true.
+        response_items.yaml records official_journal_comments_available: false
+        and final_submission_ready_claim: false. docs/manuscript.md explicitly
+        states no new experiment, citation, figure, or TeX edit is claimed.
+    - claim: Official-comment absence and no-final-readiness boundaries are explicit
+      evidence: >-
+        docs/manuscript.md states official journal comments are absent and must
+        not be fabricated. response_items.yaml header records both flags as
+        false. manuscript.md next-step section explicitly gates P4_07 packaging
+        on official comments, coverage, revision evidence, final validation,
+        and score thresholds.
+    - claim: Cross-reference integrity between P4_02 mappings and P4_03 response items
+      evidence: >-
+        Each response item's mapping_id, comment_id, source_action_id, issue_id,
+        source_comment_ids, evidence_item_id, and coverage_gate_id match the
+        corresponding P4_02 mapping row. Verified across all 6 items.
+  gaps:
+    - gap: status.yaml shows stale pre-closeout state (stage seed, progress_pct 0, review counts 0)
+      severity: non_blocking
+      file: research/P4_论文回复_response/P4_03_逐点回复草稿_md/status.yaml
+    - gap: acceptance_checklist.yaml has all items marked pending
+      severity: non_blocking
+      file: research/P4_论文回复_response/P4_03_逐点回复草稿_md/prompts/acceptance_checklist.yaml
+  risks:
+    - risk: Stale status metadata could mislead resumed agents about node completion state
+      mitigation: Update status.yaml and acceptance_checklist.yaml after accepting this review
+    - risk: P4_05/P4_06 might treat evidence_refs pointing outside their read scope as verified
+      mitigation: P4_05/P4_06 must validate closure of declared trace targets before changing blocker statuses
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P4_论文回复_response/P4_03_逐点回复草稿_md/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 88
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - Official journal comments are absent (no decision letter, editor comment, or reviewer comments)
+    - Official editor comment is absent (P3_02:eic is simulated lens only)
+    - P4_05/P4_06/P4_07 are not solved by P4_03
+    - P3_04 blocked/planned actions remain open (action-p3-001 through action-p3-006)
+    - Mapped blocking actions remain open (formal evidence, reproducibility, validator/coverage)
+    - Review-score thresholds: all closed nodes score 82-88, below 90 submission threshold
+    - Selected backend not locked and PHMGA/Vibench formal evidence unresolved
+    - Final submission validation still fails
+    - P1_03/P1_05 registry schema errors unresolved
+    - P1_05 failure-truth artifacts missing
+    - RM101 Stage B reject evidence unresolved
+    - Downstream Stage C main-result rows and Stage D ablation rows incomplete
+    - PHMGA dirty worktree protection incomplete (66 entries)
+    - PHMGA/Vibench adapter preflight pending
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: >-
+    Codex to verify handoff, update status.yaml human_review_count to 1,
+    process node toward close, update stale status.yaml and acceptance_checklist
+    metadata, and advance scheduler to next node (P4_05 coverage check or
+    other downstream P4 work).
+  blockers: []

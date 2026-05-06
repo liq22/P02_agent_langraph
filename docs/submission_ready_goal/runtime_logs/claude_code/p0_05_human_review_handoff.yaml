@@ -1,0 +1,98 @@
+handoff_version: claude_code_handoff_v2
+task_id: p0_05_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P0_05 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P0_05 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P0_项目申请书::P0_05_项目约束_资源预算_风险边界
+  node_path: research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界
+scope:
+  inspected_files:
+    - research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/README.md
+    - research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/status.yaml
+    - research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/prompts/research_prompt.md
+    - research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/prompts/acceptance_checklist.yaml
+    - research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/prompts/review_rubric.yaml
+    - research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/docs/manuscript.md
+    - research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/artifacts/constraint_risk_map.yaml
+    - research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/artifacts/gate_report.md
+    - research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/review/AI_001.md
+    - research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/review/verdict.yaml
+    - research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/review/human_reviewer_prompt.md
+  changed_files:
+    - research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p0_05_human_review_handoff.yaml
+  allowed_files:
+    - research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p0_05_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p0_05_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Package answers all three required questions with specific, non-generic answers
+      evidence: docs/manuscript.md identifies formal evidence eligibility chain as largest bottleneck, preliminary/reject evidence overpromotion as most likely failure path, and enumerates reviewer-misunderstanding boundaries across Vibench/PHMGA, provider/model, synthetic/offline, teammate review identity, and final validator
+    - claim: At least three major constraints/risks present with mitigation or downgrade actions
+      evidence: constraint_risk_map.yaml contains six risks (R001-R006) each with severity, probability, affected hypotheses, guardrail, mitigation, and downgrade plan; five budget items (B001-B005) each with success gates and stop/downgrade conditions
+    - claim: Provider/model, data/license, PHMGA/Vibench, review-threshold, registry-schema, and preliminary-evidence boundaries are all explicit
+      evidence: B003 covers provider/model policy; B001 covers data scope and license; PHMGA/Vibench boundary in B001 success gates and do_not_do_boundaries; B004 covers review thresholds; B005 covers registry schema; R2 and do_not_do cover preliminary evidence
+    - claim: Package avoids treating graph projections, Vibench outputs, synthetic/offline evidence, single logs, or teammate reviews as final research truth
+      evidence: do_not_do_boundaries in both manuscript and constraint_risk_map.yaml explicitly enumerate all prohibited truth-promotion paths; no instance found of any such artifact being promoted as final evidence
+    - claim: Non-node blockers are preserved rather than smoothed into a submission-ready claim
+      evidence: gate_report.md lists seven explicit non-node blockers; manuscript conclusion states node does not resolve submission-ready blockers; no submission-ready claim is made anywhere in the package
+    - claim: Independent AI review is credible and consistent with this review
+      evidence: review/AI_001.md score 86 pass; review/verdict.yaml independence_confirmed true; no blocking issues; all four non-blocking carry-forward actions validated as reasonable
+  gaps:
+    - gap: The package is inherently procedural/defensive, limiting originality_novelty ceiling
+      severity: non_blocking
+      file: docs/manuscript.md
+    - gap: budget table references PHMGA/Vibench adapter alignment as a gate but the actual adapter preflight result was not inspected
+      severity: non_blocking
+      file: artifacts/constraint_risk_map.yaml P0_05_B001
+    - gap: Provider/model policy verification status is partially_verified_with_rate_limit_blockers_retained but original verification logs were not inspected in this review
+      severity: non_blocking
+      file: artifacts/constraint_risk_map.yaml P0_05_B003
+  risks:
+    - risk: The formal evidence eligibility chain framing could be misunderstood as implying all blockers are equally likely to fail
+      mitigation: constraint_risk_map.yaml assigns distinct severity and probability to each risk; R001 and R003 are high probability while R006 is low with guardrails
+    - risk: The defensive posture could lead downstream authors to understate legitimate positive results when they become available
+      mitigation: Do-not-do boundaries specifically target premature promotion, not legitimate formal evidence; success gates define exactly when claims can be made
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 86
+  ai_verdict: pass
+  human_score: 86
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - Final submission requires node scores at or above the final threshold of 90
+    - Claim-evidence registry schema errors exist in P1_03, P1_05, and P2_02_04
+    - selected_global_best_backend is not locked
+    - RM101 remains reject evidence, not selection-eligible positive evidence
+    - Full PHMGA/Vibench adapter sample-level metadata-H5 alignment remains pending
+    - Stage C main-result rows and Stage D ablation rows are not passed
+    - Final scripts/validate_research_truth.py --require-submission does not pass
+    - Broader unfinished graph nodes across P0/P2/P3/P4 remain outside P0_05 scope
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: Codex to verify handoff, update status.yaml human_review_count, and process node toward fix/close
+  blockers: []

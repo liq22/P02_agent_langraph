@@ -1,0 +1,106 @@
+handoff_version: claude_code_handoff_v2
+task_id: p2_02_04_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P2_02_04 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P2_02_04 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_04_方法
+  node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法
+scope:
+  inspected_files:
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/README.md
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/status.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/research_prompt.md
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/acceptance_checklist.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/prompts/review_rubric.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/artifacts/outline_map.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/docs/manuscript.md
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/artifacts/method_contract.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/artifacts/claim_evidence_registry.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/review/AI_001.md
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/review/verdict.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/review/human_reviewer_prompt.md
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+    - docs/submission_ready_goal/completion_audit_current.md
+  changed_files:
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p2_02_04_human_review_handoff.yaml
+  allowed_files:
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p2_02_04_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p2_02_04_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Methods prose defines unit of analysis, intervention, baselines, lifecycle split, and reproducibility record
+      evidence: docs/manuscript.md Sections 1-2 cover research-node unit, AutoResearch intervention, three baselines from protocol_map.yaml, author-exit/node-close separation, and minimum node record with projection-not-truth policy
+    - claim: Claim/evidence/protocol registry is explicit and traceable
+      evidence: claim_evidence_registry.yaml has 5 claims with all required fields; evidence refs resolve to local and upstream artifacts; cannot_support_claims lists match across registry, contract, and outline map
+    - claim: Independent review, response closure, and teammate transparency are described honestly
+      evidence: Section 4 describes review as method step; Claude Code teammate reviews labeled as user-authorized agent handoffs, not biological human; hard-fail blocking and response coverage described; C_METHOD_REVIEW_RESPONSE_GATE boundary_label enforces non-biological claim
+    - claim: Negative, rejected, unclear, rate-limited, low-power, and blocked rows are retained
+      evidence: Section 5 retains all non-positive rows in denominator; method_contract.yaml forbidden_upgrades list matches outline_map and table_plan; registry confirms negative_or_failed_results_recorded true and negative_evidence_deleted_or_hidden false
+    - claim: PHMGA, Vibench, provider policy, dirty-submodule, selected-backend, Stage C/D, RM101 boundaries are honest and consistent
+      evidence: Section 6 matches submodule_ref.yaml branch/commit/dirty state, protocol_map.yaml provider policy, and table_plan formal gate stop conditions; Section 9 Local Evidence Boundary defers all result claims
+    - claim: Registry aligns with manuscript, method contract, and upstream evidence
+      evidence: All 5 claim manuscript_location anchors confirmed present in docs/manuscript.md; upstream source refs verified against protocol_map.yaml, table_plan.yaml, submodule_ref.yaml, venue_requirements.yaml, and completion_audit_current.md
+  gaps:
+    - gap: status.yaml and acceptance_checklist.yaml remain seed/pending despite completed artifacts
+      severity: non_blocking
+      file: status.yaml, prompts/acceptance_checklist.yaml
+    - gap: Global registry-schema validator reports P2_02_04 among blockers while local registry claims conformance
+      severity: non_blocking
+      file: artifacts/claim_evidence_registry.yaml vs docs/submission_ready_goal/completion_audit_current.md
+    - gap: Metrics and Statistics Plan section is concise; exact bootstrap formulas and power analysis deferred to results node
+      severity: non_blocking
+      file: docs/manuscript.md Section 7
+  risks:
+    - risk: Stale status metadata could mislead scheduler into treating node as incomplete
+      mitigation: Author/maintainer lane should update status.yaml and acceptance_checklist.yaml before node closure
+    - risk: Global registry schema mismatch could block final submission validation
+      mitigation: Maintainer should run global validator and reconcile before submission
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 86
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - Final-score thresholds: multiple nodes score below the 90 submission threshold
+    - Global registry schema errors: submission-pass validation not yet met
+    - P1_05 missing failure-truth artifacts
+    - Selected backend not locked
+    - RM101 Stage B reject evidence unresolved
+    - PHMGA dirty worktree protection incomplete
+    - PHMGA/Vibench adapter preflight pending
+    - Downstream Stage C main-result rows incomplete
+    - Downstream Stage D ablation rows incomplete
+    - Broader unfinished graph nodes outside P2_02_04 scope
+    - P3/P4 response-package gaps unresolved
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: Codex to verify handoff, update status.yaml human_review_count to 1, process node toward fix/close, update stale acceptance_checklist and status metadata, and reconcile global registry-schema blocker for P2_02_04
+  blockers: []

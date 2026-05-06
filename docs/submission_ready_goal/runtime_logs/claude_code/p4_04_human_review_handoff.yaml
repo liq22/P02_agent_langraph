@@ -1,0 +1,148 @@
+handoff_version: claude_code_handoff_v2
+task_id: p4_04_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P4_04 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P4_04 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P4_论文回复_response::P4_04_正式回复_tex_或_doc
+  node_path: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc
+scope:
+  inspected_files:
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/review/human_reviewer_prompt.md
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/prompts/review_rubric.yaml
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/review/AI_001.md
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/review/verdict.yaml
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/review/人类_001.md
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/README.md
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/status.yaml
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/docs/manuscript.md
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/response_letter.tex
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers/cover_letter.tex
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers/R1.tex
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers/R2.tex
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers/R3.tex
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/claim_evidence_registry.yaml
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/failure_register.yaml
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/negative_result_note.md
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/keep_discard_ledger.yaml
+    - research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+    - research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/review_issue_register.yaml
+    - docs/submission_ready_goal/completion_audit_current.md
+  changed_files:
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p4_04_human_review_handoff.yaml
+  allowed_files:
+    - research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p4_04_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p4_04_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: TeX response-letter package provides coherent formal-format structure
+      evidence: >-
+        response_letter.tex loads reviewresponse.sty, includes cover_letter.tex
+        and R1/R2/R3 section files with standard packages. docs/manuscript.md
+        describes entry file, style package, and subfile structure. The TeX
+        compiles conceptually with correct document class, package imports, and
+        input chain.
+    - claim: Anonymity, numbering, and export-format states are explicit without claiming journal compliance
+      evidence: >-
+        response_letter.tex author block is "Author block withheld until journal
+        anonymity rule is confirmed". Cover letter records manuscript ID, decision
+        type, editor name, and author block all as pending or withheld.
+        reviewresponse.sty auto-generates reviewer/comment counters while each
+        response block preserves explicit action/issue/evidence/target/gate IDs.
+        docs/manuscript.md states "当前文件是正式 TeX 草案包，不是最终投稿回复".
+    - claim: All six P3_04 actions covered with action id, issue id, evidence refs, target location, status, and validation gate
+      evidence: >-
+        R1.tex covers action-p3-001/issue-p3-001 and action-p3-003/issue-p3-003.
+        R2.tex covers action-p3-002/issue-p3-002 and action-p3-005/issue-p3-005.
+        R3.tex covers action-p3-004/issue-p3-004 and action-p3-006/issue-p3-006.
+        All match revision_action_map.yaml. Each response block contains all six
+        required fields (action id, issue id, evidence refs, target location,
+        validation gate) plus source comments and required change.
+    - claim: Draft avoids unsupported claims that blocked or planned actions are already complete
+      evidence: >-
+        action-p3-001: "does not claim that the formal empirical evidence gap is
+        solved", status blocked. action-p3-002: "does not claim that the
+        reproducibility gap is solved", status blocked. action-p3-003: "keeps
+        final readiness blocked", status blocked. action-p3-004: "the actual P2
+        TeX wording change remains outside this node", status planned.
+        action-p3-005: "does not claim that the TeX figure text has already been
+        changed", status planned. action-p3-006: "does not claim that style
+        edits have been applied", status planned cosmetic follow-up.
+    - claim: Claim/evidence, failure, negative-result, and keep/discard artifacts preserve limitations
+      evidence: >-
+        claim_evidence_registry.yaml has 5 claims, 3 typed as limitation with
+        action document_limitation. failure_register.yaml has 4 open failures
+        with retain_blocker/document_limitation/carry_to_downstream actions.
+        negative_result_note.md lists all 6 actions with blocking/planned state
+        and states "must not be presented as a completed final response".
+        keep_discard_ledger.yaml discards blank templates and fabricated content
+        while keeping unresolved blockers.
+  gaps:
+    - gap: status.yaml shows stale pre-closeout state (ai_review_count 0, human_review_count 0, progress_pct 25)
+      severity: non_blocking
+      file: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/status.yaml
+    - gap: acceptance_checklist.yaml has all items marked pending
+      severity: non_blocking
+      file: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/prompts/acceptance_checklist.yaml
+    - gap: TeX source-comment fields use paraphrased role labels not exact source_comment_ids
+      severity: non_blocking
+      file: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/artifacts/Reviewers/R1.tex
+  risks:
+    - risk: Stale status metadata could mislead resumed agents about node completion state
+      mitigation: Update status.yaml and acceptance_checklist.yaml after accepting this review
+    - risk: P4_05 coverage work might lose granular source_comment_ids if only paraphrased labels are copied
+      mitigation: P4_05 must carry exact source_comment_ids from revision_action_map.yaml
+    - risk: reviewresponse.sty not independently verified for TeX formatting defects
+      mitigation: TeX compilation test should be run before final export
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 86
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - P4_01/P4_02/P4_03 seed inputs remain unpopulated
+    - Official manuscript ID, decision type, editor name, and journal anonymity rule pending
+    - P3_04 blocking actions remain dependent on upstream evidence and coverage closure
+    - Final-score thresholds: all closed nodes score 82-88, below the 90 submission threshold
+    - P1_03/P1_05 registry schema errors unresolved
+    - P1_05 failure-truth artifacts missing
+    - Selected backend not locked
+    - RM101 Stage B reject evidence unresolved
+    - PHMGA dirty worktree protection incomplete
+    - PHMGA/Vibench adapter preflight pending
+    - Downstream Stage C main-result rows incomplete
+    - Downstream Stage D ablation rows incomplete
+    - Final submission validation still fails
+    - P2 TeX wording, figure/caption, and style-compression actions remain planned
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: >-
+    Codex to verify handoff, update status.yaml human_review_count to 1,
+    process node toward close, update stale status.yaml and acceptance_checklist
+    metadata, and advance scheduler to next node (P4_05 coverage check or other
+    downstream P4 work).
+  blockers: []

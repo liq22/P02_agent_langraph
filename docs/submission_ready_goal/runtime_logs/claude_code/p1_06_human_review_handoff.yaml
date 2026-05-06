@@ -1,0 +1,88 @@
+handoff_version: claude_code_handoff_v2
+task_id: p1_06_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P1_06 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P1_06 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P1_实验设计与仓库蓝图::P1_06_代码仓库_已有_重新初始化_子模块策略
+  node_path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略
+scope:
+  inspected_files:
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/README.md
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/status.yaml
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/prompts/research_prompt.md
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/prompts/acceptance_checklist.yaml
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/prompts/review_rubric.yaml
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/review/human_reviewer_prompt.md
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/review/AI_001.md
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/review/verdict.yaml
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/repository_strategy_summary.md
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/substrategy_matrix.yaml
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+  changed_files:
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_06_human_review_handoff.yaml
+  allowed_files:
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_06_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p1_06_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Three-way code boundary is explicit and consistent across all artifacts
+      evidence: repository_strategy_summary.md sections on main repo, connected externally, and PHMGA submodule; substrategy_matrix.yaml S001-S003 includes/excludes
+    - claim: Version confusion is reduced with complete git facts
+      evidence: submodule_ref.yaml records path, URL, branch, local HEAD (914bc592), remote HEAD (same), ahead/behind (0/0), pull result (Already up to date.), dirty count (66), facts_checked list
+    - claim: Minimal-edit and rollback policy prohibits destructive cleanup and manual path magic
+      evidence: substrategy_matrix.yaml S004 excludes destructive cleanup without approval, manual path magic, unpinned dependency upgrades; rollback defined as pointer revert not file copying
+    - claim: Parent node does not produce leaf experiment evidence, manuscript claims, or PHMGA implementation changes
+      evidence: repository_strategy_summary.md explicit scope statement; substrategy_matrix.yaml author_exit no_leaf_content_authored_in_parent true; no child directories found
+    - claim: Sub-strategy relationships are clear for downstream use without making PHMGA a second source of truth
+      evidence: Four substrategies S001-S004 with clear ownership, explicit includes/excludes, documented/consistent/complete/exercisable requirements; S001 excludes PHMGA source and ledgers
+    - claim: Dirty worktree state (66 entries) is properly surfaced as a blocker for future pointer updates
+      evidence: submodule_ref.yaml dirty_entries_count=66, pointer_update_allowed_now=false, destructive_cleanup_allowed_without_explicit_user_approval=false
+  gaps: []
+  risks:
+    - risk: acceptance_checklist.yaml all items remain status pending
+      mitigation: advisory only; does not affect review correctness; Codex may update at node-close time
+    - risk: research_prompt.md execution summary fields unfilled
+      mitigation: advisory only; does not affect strategy-artifact output quality
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 86
+  ai_verdict: pass
+  non_node_blockers:
+    - PHMGA dirty worktree protection (66 dirty/untracked entries require commit/stash/discard before future pointer update)
+    - Final-score thresholds not met by node-level pass alone
+    - Claim-evidence registry schema errors not addressed by this node
+    - Selected backend remains pending (P1_06 explicitly does not select)
+    - RM101 Stage B reject evidence unresolved
+    - PHMGA/Vibench adapter preflight incomplete
+    - Downstream Stage C main-result rows not passed
+    - Downstream Stage D ablation rows not passed
+    - Broader unfinished graph nodes retain their own open gates
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: Codex to verify handoff, update status.yaml human_review_count to 1, set all_comments_responded as appropriate, and process node toward fix/close
+  blockers: []

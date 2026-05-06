@@ -1,0 +1,104 @@
+handoff_version: claude_code_handoff_v2
+task_id: p2_02_03_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P2_02_03 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P2_02_03 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_03_流程图草稿
+  node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿
+scope:
+  inspected_files:
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/README.md
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/status.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/research_prompt.md
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/acceptance_checklist.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/prompts/review_rubric.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/artifacts/outline_map.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/docs/manuscript.md
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/figures/fig_workflow_evidence_path.svg
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/tools/render_fig_workflow_evidence_path.py
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_plan.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_manifest.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/claim_evidence_registry.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/review/AI_001.md
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/review/verdict.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/review/人类_001.md
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/review/human_reviewer_prompt.md
+  changed_files:
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p2_02_03_human_review_handoff.yaml
+  allowed_files:
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p2_02_03_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p2_02_03_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Workflow figure reflects core mechanism and evidence path, not implementation clutter
+      evidence: SVG top lane (5 bounded gates) and bottom lane (negative evidence, eligibility, upgrade); figure_plan must_show/must_not_show respected; render script deterministic Python with no external dependencies
+    - claim: Caption is self-contained and consistent with first manuscript callout
+      evidence: Manifest caption matches docs/manuscript.md paragraph 1 callout; caption names workflow, explains gating, identifies lower lane, states schematic-not-result boundary
+    - claim: Figure manifest includes all required provenance and mapping fields
+      evidence: figure_manifest.yaml records source_kind, source_path, output_path, claim_ref, evidence_ref, upstream_evidence_refs, necessity, first_callout_location, caption, boundary_label, cannot_support_claims, and 9 quality_checks all true
+    - claim: Claim/evidence registry aligns with manuscript and figure manifest
+      evidence: claim_evidence_registry.yaml has 2 claims (C_WORKFLOW_EVIDENCE_PATH, C_FIGURE_PROVENANCE_REQUIRED) with consistent cross-references to manifest, figure plan, outline map, and render script; cannot_support_claims lists match across all files
+    - claim: Figure avoids decorative/provenance-free content and all forbidden success claims
+      evidence: Figure classified essential with full deterministic Python provenance; cannot_support_claims blocks PHMGA performance, selected-backend success, RM101 resolution, Stage C/D passage, submission readiness; manuscript Local Evidence Boundary reinforces exclusions
+    - claim: Negative evidence retention is visible and not hidden
+      evidence: SVG includes explicit negative-evidence lane box; registry records figure_shows_negative_evidence_lane=true, negative_evidence_deleted_or_hidden=false
+    - claim: Independent AI review is credible, scores 86/100, verdict pass, independence confirmed
+      evidence: review/AI_001.md, review/verdict.yaml
+  gaps:
+    - gap: status.yaml and acceptance_checklist.yaml item statuses remain seed/pending despite completed artifacts
+      severity: non_blocking
+      file: status.yaml, prompts/acceptance_checklist.yaml
+    - gap: SVG embeds provenance metadata as text elements rather than structured machine-readable metadata
+      severity: non_blocking
+      file: figures/fig_workflow_evidence_path.svg
+  risks:
+    - risk: Stale status metadata could mislead scheduler into treating the node as incomplete
+      mitigation: Author/maintainer lane should update status.yaml and acceptance_checklist.yaml before node closure
+    - risk: Draft figure status means production layout polish is still needed before journal submission
+      mitigation: Expected; not a P2_02_03 blocker
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 86
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - Final-score thresholds: multiple nodes score below the 90 submission threshold
+    - Global registry schema errors: submission-pass validation not yet met
+    - P1_05 missing failure-truth artifacts
+    - Selected backend not locked
+    - RM101 Stage B reject evidence unresolved
+    - PHMGA dirty worktree protection incomplete
+    - PHMGA/Vibench adapter preflight pending
+    - Downstream Stage C main-result rows incomplete
+    - Downstream Stage D ablation rows incomplete
+    - Broader unfinished graph nodes outside P2_02_03 scope
+    - P3/P4 response-package gaps unresolved
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: Codex to verify handoff, update status.yaml human_review_count to 1, process node toward fix/close, and update stale acceptance_checklist and status metadata
+  blockers: []

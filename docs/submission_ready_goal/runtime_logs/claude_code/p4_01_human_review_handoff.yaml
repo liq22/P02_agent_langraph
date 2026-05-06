@@ -1,0 +1,135 @@
+handoff_version: claude_code_handoff_v2
+task_id: p4_01_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P4_01 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P4_01 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P4_论文回复_response::P4_01_审稿意见收集
+  node_path: research/P4_论文回复_response/P4_01_审稿意见收集
+scope:
+  inspected_files:
+    - research/P4_论文回复_response/P4_01_审稿意见收集/review/human_reviewer_prompt.md
+    - research/P4_论文回复_response/P4_01_审稿意见收集/prompts/review_rubric.yaml
+    - research/P4_论文回复_response/P4_01_审稿意见收集/review/AI_001.md
+    - research/P4_论文回复_response/P4_01_审稿意见收集/review/verdict.yaml
+    - research/P4_论文回复_response/P4_01_审稿意见收集/review/人类_001.md
+    - research/P4_论文回复_response/P4_01_审稿意见收集/README.md
+    - research/P4_论文回复_response/P4_01_审稿意见收集/status.yaml
+    - research/P4_论文回复_response/P4_01_审稿意见收集/docs/manuscript.md
+    - research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/review_comment_register.yaml
+    - research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/claim_evidence_registry.yaml
+    - research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/failure_register.yaml
+    - research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/negative_result_note.md
+    - research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/keep_discard_ledger.yaml
+    - research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+    - docs/submission_ready_goal/completion_audit_current.md
+  changed_files:
+    - research/P4_论文回复_response/P4_01_审稿意见收集/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p4_01_human_review_handoff.yaml
+  allowed_files:
+    - research/P4_论文回复_response/P4_01_审稿意见收集/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p4_01_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p4_01_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Six P3_04 action comments are collected and standardized with all required fields
+      evidence: >-
+        review_comment_register.yaml contains 6 records (p4-01-c001 through
+        p4-01-c006) matching the 6 P3_04 actions. Each record has unique
+        comment_id, source_comment_ids, severity, affected_location,
+        evidence_gap, required_change, and downstream_mapping_target.
+        Cross-checked against revision_action_map.yaml action-p3-001 through
+        action-p3-006.
+    - claim: Official-comment gap is explicit in register, manuscript, failure register, and negative-result note
+      evidence: >-
+        Register states official_journal_comments_available: false,
+        official_comment_gap_recorded: true, official_comment_count: 0.
+        Manuscript lists all 6 missing official inputs. Failure register has
+        p4_01_official_comments_missing (high) and p4_01_no_official_editor_comment
+        (medium), both open. Negative result note documents all absences.
+    - claim: Official editor comment absence is cleanly separated from simulated P3_02:eic lens
+      evidence: >-
+        All 6 records have official_editor_comment: false. Two records
+        (p4-01-c003, p4-01-c004) include P3_02:eic in source_comment_ids and
+        have simulated_editor_lens_present: true. Manuscript explicitly states
+        the distinction.
+    - claim: Aggregation keeps atomic action granularity while preserving source_comment_ids
+      evidence: >-
+        All 6 records use split_decision: keep_as_atomic_action_comment.
+        Multiple source_comment_ids are preserved within each record.
+        keep_discard_ledger.yaml documents rationale for keeping atomic
+        granularity and discarding source_comment_id collapsing and fabricated
+        official comments.
+    - claim: Blocking/non-blocking/cosmetic classification matches P3_04 action map
+      evidence: >-
+        3 blocking (fatal/major with blocks_submission: true), 2 non-blocking
+        (major/minor with blocks_submission: false), 1 cosmetic (minor with
+        blocks_submission: false). Coverage summary confirms counts match.
+    - claim: Claim/evidence, failure, negative-result, and keep/discard artifacts preserve limitations
+      evidence: >-
+        claim_evidence_registry.yaml has 3 claims with explicit support_status
+        and limitation actions. failure_register.yaml has 3 open failures.
+        negative_result_note.md states must not claim official-review
+        completeness. keep_discard_ledger.yaml has 5 documented decisions.
+        No negative results deleted, hidden, or rewritten as positive evidence.
+  gaps:
+    - gap: status.yaml shows stale pre-closeout state (stage seed, progress_pct 0, review counts 0)
+      severity: non_blocking
+      file: research/P4_论文回复_response/P4_01_审稿意见收集/status.yaml
+    - gap: acceptance_checklist.yaml has all items marked pending
+      severity: non_blocking
+      file: research/P4_论文回复_response/P4_01_审稿意见收集/prompts/acceptance_checklist.yaml
+  risks:
+    - risk: Stale status metadata could mislead resumed agents about node completion state
+      mitigation: Update status.yaml and acceptance_checklist.yaml after accepting this review
+    - risk: P4_02 might treat the 6 collected comments as exhaustive instead of scoped to available simulated-review inputs
+      mitigation: P4_02 must carry forward the official-comment gap flag from the register header
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P4_论文回复_response/P4_01_审稿意见收集/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 88
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - Official journal comments are absent (no decision letter, editor comment, or reviewer comments)
+    - Official editor comment is absent (P3_02:eic is simulated lens only)
+    - P4_02/P4_03/P4_05/P4_06/P4_07 are not solved by P4_01
+    - P3_04 blocked/planned actions remain open (action-p3-001 through action-p3-006)
+    - Review-score thresholds: all closed nodes score 82-88, below 90 submission threshold
+    - Selected backend not locked and PHMGA/Vibench formal evidence unresolved
+    - Final submission validation still fails
+    - P1_03/P1_05 registry schema errors unresolved
+    - P1_05 failure-truth artifacts missing
+    - RM101 Stage B reject evidence unresolved
+    - Downstream Stage C main-result rows and Stage D ablation rows incomplete
+    - PHMGA dirty worktree protection incomplete (66 entries)
+    - PHMGA/Vibench adapter preflight pending
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: >-
+    Codex to verify handoff, update status.yaml human_review_count to 1,
+    process node toward close, update stale status.yaml and acceptance_checklist
+    metadata, and advance scheduler to next node (P4_02 mapping matrix or other
+    downstream P4 work).
+  blockers: []

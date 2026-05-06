@@ -1,0 +1,96 @@
+handoff_version: claude_code_handoff_v2
+task_id: p2_01_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P2_01 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P2_01 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P2_论文撰写::P2_01_风格选择_IEEE_Elsevier_Nature
+  node_path: research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature
+scope:
+  inspected_files:
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/README.md
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/status.yaml
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/prompts/research_prompt.md
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/prompts/acceptance_checklist.yaml
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/prompts/review_rubric.yaml
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/docs/manuscript.md
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/review/AI_001.md
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/review/verdict.yaml
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/review/人类_001.md
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/review/human_reviewer_prompt.md
+  changed_files:
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p2_01_human_review_handoff.yaml
+  allowed_files:
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p2_01_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p2_01_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Venue/style comparison covers all six required areas (title, abstract, figures, methods, results/discussion, disclosure)
+      evidence: artifacts/venue_requirements.yaml venue_fit_comparison section
+    - claim: Three profiles compared with clear primary recommendation and backup
+      evidence: artifacts/venue_requirements.yaml selected_profiles and recommendation sections
+    - claim: Contradiction list, evidence gaps, scope-fit judgment, and summary paragraph requirements all present
+      evidence: artifacts/venue_requirements.yaml contradiction_list, evidence_gaps, scope_fit, summary_paragraph_requirements
+    - claim: No acceptance-ready overclaiming; forbidden claim strengths explicitly listed
+      evidence: artifacts/venue_requirements.yaml forbidden_claim_strength and acceptance_ready_claim=false; docs/manuscript.md repeated disclaimers
+    - claim: Downstream writing rules are bounded drafting constraints, not a second source of research truth
+      evidence: docs/manuscript.md Writing Rules For Downstream P2 Nodes section
+    - claim: Independent AI review is credible, scores 85/100, verdict pass, independence confirmed
+      evidence: review/AI_001.md, review/verdict.yaml
+  gaps:
+    - gap: Source-check traceability for venue-policy pages is self-reported rather than locally inspectable in the node package
+      severity: non_blocking
+      file: artifacts/venue_requirements.yaml source_status section references artifacts/source_check_ledger.yaml
+    - gap: Status metadata in status.yaml and acceptance_checklist.yaml still shows pending states despite artifacts existing
+      severity: non_blocking
+      file: status.yaml, prompts/acceptance_checklist.yaml
+  risks:
+    - risk: Downstream P2 drafting agents might treat selected_rule entries as new research truth
+      mitigation: The rules are explicitly bounded drafting constraints; forbidden_claim_strength list in venue_requirements.yaml prevents upgrade
+    - risk: Stale status metadata could mislead scheduler into treating the node as incomplete
+      mitigation: Maintainer/author lane should update status.yaml and acceptance_checklist.yaml before node closure
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 85
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - Final-score thresholds: multiple nodes score below the 90 submission threshold
+    - Global registry schema errors (G006): scripts_validate_research_truth_require_submission_passes not met
+    - P1_05 missing failure-truth artifacts (G007)
+    - Selected backend not locked (G001)
+    - RM101 Stage B reject evidence unresolved (C003)
+    - PHMGA dirty worktree protection incomplete (C005)
+    - PHMGA/Vibench adapter preflight pending (G002)
+    - Downstream Stage C main-result rows incomplete (G003)
+    - Downstream Stage D ablation rows incomplete (G004)
+    - Broader unfinished graph nodes outside P2_01 scope
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: Codex to verify handoff, update status.yaml human_review_count to 1, process node toward fix/close, and update stale acceptance_checklist statuses
+  blockers: []

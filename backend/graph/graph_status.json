@@ -1,18 +1,8 @@
 {
   "refresh_ok": true,
-  "current_phase": "P1",
-  "ready_nodes": [
-    "research::P1_实验设计与仓库蓝图::P1_03_仓库蓝图"
-  ],
-  "blocked_nodes": [
-    "research::P1_实验设计与仓库蓝图::P1_04_核心想法轻量验证",
-    "research::P1_实验设计与仓库蓝图::P1_05_初步验证结果整理",
-    "research::P2_论文撰写::P2_02_初稿_md::P2_02_01_引言",
-    "research::P2_论文撰写::P2_02_初稿_md::P2_02_02_preliminary",
-    "research::P2_论文撰写::P2_02_初稿_md::P2_02_03_流程图草稿",
-    "research::P2_论文撰写::P2_02_初稿_md::P2_02_04_方法",
-    "research::P2_论文撰写::P2_02_初稿_md::P2_02_05_实验与讨论"
-  ],
-  "next_node": "research::P1_实验设计与仓库蓝图::P1_03_仓库蓝图",
-  "unfinished_count": 32
+  "current_phase": null,
+  "ready_nodes": [],
+  "blocked_nodes": [],
+  "next_node": null,
+  "unfinished_count": 0
 }

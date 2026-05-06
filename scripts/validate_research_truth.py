@@ -76,7 +76,13 @@ FIGURE_QUALITY_CHECKS = {
     "colorblind_or_grayscale_checked",
     "source_permission_checked",
 }
-VENUE_PROFILES = {"nature_article", "ieee_tpami"}
+VENUE_PROFILES = {
+    "nature_article",
+    "ieee_tpami",
+    "elsevier_specialist_engineering_imrad",
+    "ieee_transactions_technical",
+    "nature_broad_interest",
+}
 VENUE_GATE_STAGES = {"draft", "review", "submission"}
 VENUE_FIT_DECISIONS = {"venue_gate_passed", "revise", "block", "not_fit"}
 GAP_EVIDENCE_STATUSES = {"supported", "weak", "pending", "contradicted"}
@@ -165,7 +171,16 @@ def node_dirs(root: Path) -> list[Path]:
         path.parent
         for path in research.glob("**/status.yaml")
         if (path.parent / "README.md").is_file()
+        and not node_is_parent(path.parent)
     )
+
+
+def node_is_parent(node: Path) -> bool:
+    checklist = node / "prompts" / "acceptance_checklist.yaml"
+    if not checklist.is_file():
+        return False
+    payload = load_yaml(checklist)
+    return str(payload.get("node_kind", "")).strip().lower() == "parent"
 
 
 def node_stage(status_payload: dict[str, Any]) -> str | None:

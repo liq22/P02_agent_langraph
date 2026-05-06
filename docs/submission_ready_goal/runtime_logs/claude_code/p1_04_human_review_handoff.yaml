@@ -1,0 +1,91 @@
+handoff_version: claude_code_handoff_v2
+task_id: p1_04_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P1_04 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P1_04 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P1_实验设计与仓库蓝图::P1_04_核心想法轻量验证
+  node_path: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证
+scope:
+  inspected_files:
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/README.md
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/status.yaml
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/skills/local_entry.md
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/prompts/research_prompt.md
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/prompts/acceptance_checklist.yaml
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/prompts/review_rubric.yaml
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/review/human_reviewer_prompt.md
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/review/AI_001.md
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/review/verdict.yaml
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/execution_contract.yaml
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/experiment_matrix.yaml
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/docs/manuscript.md
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/gate_report.md
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/logs/auto_experiment/latest_run.log
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/baseline_simple/metrics.json
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/runs/attempt_supervisor_proving/metrics.json
+  changed_files:
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_04_human_review_handoff.yaml
+  allowed_files:
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_04_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p1_04_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Execution contract is genuinely executable and bounded to PHMGA offline synthetic validation
+      evidence: artifacts/execution_contract.yaml contract_mode executable, repo_binding verified, llm.mode=offline_stub, promotion_rules.limitations four explicit gates
+    - claim: Baseline, primary metric, single changed factor, and keep/discard rule are clear and applied consistently
+      evidence: execution_contract.yaml baseline/controlled_attempt/metric/keep_discard_rule sections, results.tsv, gate_report.md, manuscript.md all report identical values
+    - claim: results.tsv matches both metrics.json files exactly
+      evidence: baseline_simple/metrics.json test.accuracy 0.8333333333333334 and test.macro_f1 0.8285714285714285 match results.tsv row 1; attempt_supervisor_proving/metrics.json test.accuracy 1.0 and test.macro_f1 1.0 match results.tsv row 2
+    - claim: latest_run.log contains sufficient replay information for P1_04/P1_05 handoff
+      evidence: logs/auto_experiment/latest_run.log records cwd, python path, both exit codes (0), full shell commands, and determinism_boundary note
+    - claim: Package avoids promoting synthetic/offline evidence to Stage C/D, selected-backend, RM101-resolution, or submission-ready claims
+      evidence: execution_contract.yaml promotion_rules.limitations, manuscript.md Section 4, gate_report.md Artifact Boundary, experiment_matrix.yaml limitation all explicitly bound evidence
+    - claim: Independent AI review is credible and responsive to review_rubric.yaml
+      evidence: review/AI_001.md score 83 with all six rubric dimensions scored, review/verdict.yaml pass with independence_confirmed true and no blocking_issues
+  gaps: []
+  risks:
+    - risk: Perfect 1.0 accuracy on controlled attempt suggests potential overfitting or trivial synthetic split
+      mitigation: acceptable as lightweight signal; must be re-examined on real data before any formal claim, documented in execution_contract.yaml evidence_boundary and promotion_rules
+    - risk: Single-run no-variance evidence limits statistical validity
+      mitigation: correctly acknowledged in AI_001 evidence_technical_soundness score 22/25 and required_actions; real-data reruns with repeated runs required downstream
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 83
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - selected_global_best_backend remains pending
+    - RM101 Stage B reject evidence unresolved
+    - PHMGA/Vibench adapter preflight incomplete
+    - Downstream Stage C main-result rows not passed
+    - Downstream Stage D ablation rows not passed
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: Codex to verify handoff, update status.yaml human_review_count to 1, set all_comments_responded as appropriate, and process node toward fix/close
+  blockers: []

@@ -1,8 +1,8 @@
 
 version: current_goal_state_v4
 current_state: S2_DATA_RESOURCE_AUDIT
-expected_next_node: research::P1_实验设计与仓库蓝图::P1_03_仓库蓝图
-selected_node_path: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图
+expected_next_node: none_scheduler_frontier_exhausted
+selected_node_path: none_scheduler_frontier_exhausted
 phmga_submodule_path: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA
 phmga_branch_expected: journal_thesis
 state_history:
@@ -45,15 +45,223 @@ state_history:
       - P1_01 closed; at S2 entry the scheduler advanced to P1_02, while the broader submission-ready FSM still had downstream data/resource and PHMGA gates to keep verified.
       - P1_02 pseudocode/interface package closed after external AI review pass and user-authorized Claude Code teammate human-review pass.
       - Graph refreshed after P1_02 closure; scheduler next_node now points to P1_03 and unfinished_count is 32.
+      - P1_03 repository-blueprint package closed after external AI re-review pass and user-authorized Claude Code teammate human-review pass.
+      - Graph refreshed after P1_03 closure; scheduler next_node now points to P1_04 and unfinished_count is 31.
+      - P1_04 contract-prep round completed without execution because artifacts/execution_contract.yaml remains review_only and repo_path ./idea_validation_repo is missing.
+      - P1_04 artifacts/gate_report.md now records baseline, primary metric, single changed factor, keep/discard rules, blocker ids, evidence ids, locations, and actionable fixes.
+      - P1_04 was rebound to the existing PHMGA submodule for bounded synthetic/offline validation after offline preflight passed.
+      - P1_04 generated artifacts/auto_experiment/results.tsv and logs/auto_experiment/latest_run.log from two successful offline_stub synthetic runs: baseline test accuracy 0.8333333333333334 and controlled attempt test accuracy 1.0.
+      - P1_04 external AI review passed with score 83, and user-authorized Claude Code teammate human-review slot passed with a validating handoff.
+      - Later distinct P1_04 score-only final-threshold AI_002 review passed with score 92 after `artifacts/lightweight_validation_final_threshold_contract.yaml` locked replay trace, metric consistency, synthetic/offline boundary, and downstream blocker preservation; checklist fields are now complete.
+      - Graph refreshed after P1_04 closure; scheduler next_node now points to P1_05 and unfinished_count is 30.
+      - P1_05 result-synthesis package closed after external AI review pass and user-authorized Claude Code teammate human-review pass.
+      - Later distinct P1_05 score-only final-threshold AI_002 review passed with score 92 after `artifacts/result_synthesis_final_threshold_contract.yaml` locked preliminary synthetic/offline result-synthesis boundaries; checklist fields are now complete.
+      - Graph refreshed after P1_05 closure; scheduler next_node now points to P1_09 and unfinished_count is 29.
+      - P1_09 result-figure draft package closed after external AI re-review pass and user-authorized Claude Code teammate human-review pass.
+      - P1_09 artifacts include deterministic figure renderer/protocol, claim-figure map, figure manifest, claim evidence registry, failure register, negative result note, keep/discard ledger, SVG draft, and plotted TSV.
+      - Later distinct P1_09 score-only final-threshold AI_002 review passed with score 91 after `artifacts/figure_final_threshold_contract.yaml` locked node-local draft-figure score boundaries; later P1 checklist, P3 action, and global final-validator blockers were closed.
+      - Graph refreshed after P1_09 closure; scheduler next_node now points to P2_03 and unfinished_count is 28.
+      - P2_03 TeX synchronization package closed after external AI re-review pass; TeX compiles to main.pdf with section files, embedded P1_09 figure callout, bibliography, citation registry, export constraints, compile report, and claim-evidence registry.
+      - Filtered final submission validation reports only one P2_03-specific blocker after node close: overall_score is below 90.
+      - Graph refreshed after P2_03 closure; scheduler next_node now points to P0_01 and unfinished_count is 27.
+      - P0_01 background/literature-gap package closed after external AI review pass with score 82 and user-authorized Claude Code teammate human-review pass.
+      - P0_01 artifacts include docs/manuscript.md, one_sentence_gap.md, positioning_matrix.yaml, literature_gap_map.yaml, and citation_registry.yaml with bibliographic records and proposal-stage boundary.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p0_01_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Filtered final submission validation reports only one P0_01-specific blocker after node close: overall_score is below 90.
+      - Graph refreshed after P0_01 closure; scheduler next_node now points to P0_02 and unfinished_count is 26.
+      - P0_02 challenge/science-engineering problem package closed after external AI review pass with score 86 and user-authorized Claude Code teammate human-review pass.
+      - P0_02 artifacts include docs/manuscript.md, problem_hypothesis.yaml, literature_gap_map.yaml, and citation_registry.yaml with science/engineering split, metrics, falsification paths, evidence boundaries, and citation audit trail.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p0_02_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Filtered final submission validation reports only one P0_02-specific blocker after node close: overall_score is below 90.
+      - Graph refreshed after P0_02 closure; scheduler next_node now points to P0_03 and unfinished_count is 25.
+      - P0_03 research-content/innovation package first closed after external AI review pass with score 86 and user-authorized Claude Code teammate human-review pass; a later distinct final-threshold AI_003 review raised the node to score 92.
+      - P0_03 artifacts include docs/manuscript.md, contribution_claims.yaml, evidence_readiness_contract.yaml, literature_gap_map.yaml, and citation_registry.yaml with four bounded research content units, contribution/implementation separation, innovation boundaries, downstream evidence-readiness rows, downgrade rules, and citation audit trail.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p0_03_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Filtered final submission validation no longer reports P0_03 as a below-90 score blocker after the AI_003 final-threshold re-review.
+      - Graph refreshed after P0_03 closure; scheduler next_node now points to P0_04 and unfinished_count is 24.
+      - P0_04 technical-route/OKR package first closed after external AI review pass with score 86 and user-authorized Claude Code teammate human-review pass; a later distinct final-threshold AI_003 review raised the node to score 92.
+      - P0_04 artifacts include docs/manuscript.md, okr_map.yaml, route_readiness_contract.yaml, claim_evidence_registry.yaml, and risk_decision_map.yaml linking hypotheses, route stages, experiments/metrics, stop conditions, fallback branches, route-readiness ownership, claim/evidence IDs, and negative/reject evidence preservation.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p0_04_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Filtered final submission validation no longer reports P0_04 as a below-90 score blocker after the AI_003 final-threshold re-review.
+      - Graph refreshed after P0_04 closure; scheduler next_node now points to P0_05 and unfinished_count is 23.
+      - P0_05 project-constraints/resource-budget/risk-boundary package closed after external AI review pass with score 86 and user-authorized Claude Code teammate human-review pass.
+      - P0_05 artifacts include docs/manuscript.md, constraint_risk_map.yaml, and gate_report.md covering data/license, provider/model, PHMGA/Vibench responsibility, formal Stage B/C/D, selected backend, review threshold, registry schema, preliminary-evidence, secret-hygiene, and do-not-do boundaries.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p0_05_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Filtered final submission validation reports the P0_05-specific blocker after node close: overall_score is below 90.
+      - Global submission validation still reports low-score blockers across unfinished/unreviewed nodes and existing claim_evidence_registry schema blockers for P1_03, P1_05, and P2_02_04.
+      - Graph refreshed after P0_05 closure; scheduler next_node now points to P1_06 with ready frontier P1_06, P1_07, and P1_08; unfinished_count is 22.
+      - P1_06 code-repository/submodule strategy package closed after PHMGA submodule fetch and fast-forward-only pull check, external AI review pass with score 86, and user-authorized Claude Code teammate human-review pass with score 87.
+      - P1_06 artifacts include repository_strategy_summary.md, substrategy_matrix.yaml, and submodule_ref.yaml recording main-repo/external-data/PHMGA-submodule boundaries, branch journal_thesis, local and remote commit 914bc5925d5230917a5de95d88784075fb2b041e, ahead/behind 0/0, pull result Already up to date, dirty-entry count 66, and non-destructive rollback/update policy.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p1_06_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Filtered final submission validation reports the P1_06-specific blocker after node close: overall_score is below 90.
+      - Graph refreshed after P1_06 closure; scheduler next_node now points to P1_07 with ready frontier P1_07 and P1_08; unfinished_count is 21.
+      - P1_07 optimization-objective/task/evaluation-protocol package closed after external AI re-review pass with score 88 and user-authorized Claude Code teammate human-review pass with score 88.
+      - P1_07 artifacts include docs/manuscript.md, protocol_map.yaml, experiment_rigor_plan.yaml, and gate_report.md defining primary/secondary outcomes, H1-H3 protocol mapping, baselines, PHMGA formal eligibility gates, repeat/uncertainty/statistics, no cherry-picking, negative evidence retention, canonical upstream evidence paths, and parser-readable metric ledger contracts.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p1_07_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Later distinct P1_07 score-only final-threshold AI_002 review passed with score 90 after `artifacts/protocol_final_threshold_contract.yaml` locked node-local protocol score boundaries; later P1 checklist, P3 action, and global final-validator blockers were closed.
+      - Filtered final submission validation no longer reports P1_07 as a below-90 score blocker.
+      - Graph refreshed after P1_07 closure; scheduler next_node now points to P1_08 with ready frontier P1_08 and unfinished_count is 20.
+      - P1_08 expected-results/table package closed after external AI re-review pass with score 88 and user-authorized Claude Code teammate human-review pass with score 87.
+      - P1_08 artifacts include docs/manuscript.md, table_plan.yaml, claim_map.yaml, claim_evidence_registry.yaml, failure_register.yaml, negative_result_note.md, and keep_discard_ledger.yaml defining main result, formal eligibility, ablation/efficiency, and negative/unclear table slots with claim/evidence IDs, parser-facing required columns, c1 downstream compatibility, and no success-only table policy.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p1_08_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Later distinct P1_08 score-only final-threshold AI_002 review passed with score 91 after `artifacts/table_final_threshold_contract.yaml` locked node-local expected-results/table-package score boundaries; later P1 checklist, P3 action, and global final-validator blockers were closed.
+      - Filtered final submission validation no longer reports P1_08 as a below-90 score blocker.
+      - Graph refreshed after P1_08 closure; scheduler next_node now points to P2_01 with ready frontier P2_01, P2_02_01, P2_02_02, P2_02_03, P2_02_04, P2_02_05, P2_04, and P2_05; unfinished_count is 19.
+      - P2_01 venue/style selection package closed after external AI review pass with score 85 and user-authorized Claude Code teammate human-review pass with score 85.
+      - P2_01 artifacts include docs/manuscript.md, artifacts/venue_requirements.yaml, and artifacts/source_check_ledger.yaml selecting Elsevier specialist engineering IMRAD as primary, IEEE Transactions-style technical writing as backup, and Nature as stretch quality lens only; contradiction list, evidence gaps, scope-fit judgment, and summary paragraph requirements are explicit.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p2_01_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Graph refreshed after P2_01 closure; scheduler next_node now points to P2_02_01 with ready frontier P2_02_01, P2_02_02, P2_02_03, P2_02_04, P2_02_05, P2_04, and P2_05; unfinished_count is 18.
+      - P2_02_01 introduction package closed after external AI re-review pass with score 86 and user-authorized Claude Code teammate human-review pass.
+      - P2_02_01 artifacts include docs/manuscript.md, parent artifacts/outline_map.yaml, and artifacts/citation_trace.yaml mapping every introduction citation key to a specific supported claim and boundary.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p2_02_01_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Graph refreshed after P2_02_01 closure; scheduler next_node now points to P2_02_02 with ready frontier P2_02_02, P2_02_03, P2_02_04, P2_02_05, P2_04, and P2_05; unfinished_count is 17.
+      - P2_02_02 preliminary package closed after external AI review pass with score 86 and user-authorized Claude Code teammate human-review pass.
+      - P2_02_02 artifacts include docs/manuscript.md and artifacts/positioning_matrix.yaml defining node, author exit, node close, claim/evidence/protocol identifiers, support status, boundary labels, evidence-strength labels, and preliminary/related-work/methods/results boundaries.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p2_02_02_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Graph refreshed after P2_02_02 closure; scheduler next_node now points to P2_02_03 with ready frontier P2_02_03, P2_02_04, P2_02_05, P2_04, and P2_05; unfinished_count is 16.
+      - P2_02_03 workflow figure package closed after external AI review pass with score 86 and user-authorized Claude Code teammate human-review pass.
+      - P2_02_03 artifacts include docs/manuscript.md, figures/fig_workflow_evidence_path.svg, tools/render_fig_workflow_evidence_path.py, artifacts/figure_plan.yaml, artifacts/figure_manifest.yaml, and artifacts/claim_evidence_registry.yaml with provenance, claim_ref, evidence_ref, first callout, caption, and boundary metadata.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p2_02_03_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Graph refreshed after P2_02_03 closure; scheduler next_node now points to P2_02_04 with ready frontier P2_02_04, P2_02_05, P2_04, and P2_05; unfinished_count is 15.
+      - P2_02_04 methods package closed after external AI review pass with score 86 and user-authorized Claude Code teammate human-review pass.
+      - P2_02_04 artifacts include docs/manuscript.md, artifacts/method_contract.yaml, and artifacts/claim_evidence_registry.yaml defining node unit, intervention, baselines, lifecycle split, registry semantics, review-response gate, negative evidence retention, PHMGA/Vibench/provider boundaries, metrics, and local evidence boundary.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p2_02_04_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Filtered final submission validation now reports only one P2_02_04-specific blocker: overall_score is below 90.
+      - Graph refreshed after P2_02_04 closure; scheduler next_node now points to P2_02_05 with ready frontier P2_02_05, P2_04, and P2_05; unfinished_count is 14.
+      - P2_02_05 experiments/discussion package closed after external AI review pass with score 87 and user-authorized Claude Code teammate human-review pass.
+      - P2_02_05 artifacts include docs/manuscript.md, artifacts/claim_map.yaml, and artifacts/claim_evidence_registry.yaml mapping evidence-maturity order, weak synthetic/offline signal, formal-gate blockers, negative/unclear retention, and discussion limitation boundaries.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p2_02_05_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Filtered final submission validation now reports only one P2_02_05-specific blocker: overall_score is below 90.
+      - Graph refreshed after P2_02_05 closure; scheduler next_node now points to P2_04 with ready frontier P2_04 and P2_05; unfinished_count is 13.
+      - P2_04 formal-check package closed after external AI review pass with score 87 and user-authorized Claude Code teammate human-review pass.
+      - P2_04 artifacts include docs/manuscript.md, artifacts/formal_check_report.md, artifacts/gate_report.md, artifacts/citation_registry.yaml, artifacts/figure_manifest.yaml, and artifacts/venue_requirements.yaml covering venue requirements, contradiction/evidence-gap checks, citation criticality, figure provenance, availability statements, and hard-block/advisory separation.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p2_04_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Filtered final submission validation now reports only one P2_04-specific blocker: overall_score is below 90.
+      - Graph refreshed after P2_04 closure; scheduler next_node now points to P2_05 with ready frontier P2_05 and unfinished_count is 12.
+      - P2_05 academic-expression and claim-calibration package closed after external AI review pass with score 84 and user-authorized Claude Code teammate human-review pass.
+      - P2_05 artifacts include docs/manuscript.md, artifacts/academic_expression_claim_calibration.md, and artifacts/claim_evidence_registry.yaml identifying concrete template-like sentences, patch-ready replacements, TeX target locations, no-upgrade rules, negative-evidence retention, and final-submission-not-ready boundaries.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p2_05_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Filtered final submission validation now reports only one P2_05-specific blocker: overall_score is below 90.
+      - Graph refreshed after P2_05 closure; scheduler next_node now points to P3_01 with ready frontier P3_01, P3_02, P3_03, and P3_04; unfinished_count is 11.
+      - P3_01 review-round definition package closed after external AI review pass with score 84 and user-authorized Claude Code teammate human-review pass.
+      - P3_01 artifacts include docs/manuscript.md, artifacts/review_round_notes.md, and artifacts/review_round_index.yaml defining p3-round-001, current P2_03 TeX snapshot, reviewer lenses, checklist dimensions, issue-output schema, stop conditions, downstream triggers, and blocker-mapping-only boundary.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p3_01_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Later distinct P3_01 score-only final-threshold AI_002 review passed with score 93 after artifacts/review_round_final_threshold_contract.yaml locked the node-local review-round-definition boundary; later P1 checklist, P3 action, and global final-validator blockers were closed.
+      - Filtered final submission validation no longer reports P3_01 as a below-90 score blocker.
+      - Graph refreshed after P3_01 closure; scheduler next_node now points to P3_02 with ready frontier P3_02, P3_03, and P3_04; unfinished_count is 10.
+      - P3_02 reviewer-profile package closed after external AI review pass with score 86 and user-authorized Claude Code teammate human-review pass.
+      - P3_02 artifacts include docs/manuscript.md, reviewer_lens_matrix.yaml, reviewer_profile_map.yaml, claim_evidence_registry.yaml, failure_register.yaml, negative_result_note.md, keep_discard_ledger.yaml, and session_manifest.yaml covering six reviewer lenses, three downstream reviewer bundles, attack surfaces, required evidence, hard-fail conditions, and no final-readiness claim.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p3_02_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Later distinct P3_02 score-only final-threshold AI_002 review passed with score 94 after artifacts/reviewer_profile_final_threshold_contract.yaml locked the node-local reviewer-profile boundary; issue-row creation and upstream evidence verification boundaries remain disclosed, while later P1/P3/global validator blockers were closed.
+      - Filtered final submission validation no longer reports P3_02 as a below-90 score blocker.
+      - Graph refreshed after P3_02 closure; scheduler next_node now points to P3_03 with ready frontier P3_03 and P3_04; unfinished_count is 9.
+      - P3_03 critique-digest package closed after external AI review pass with score 86 and user-authorized Claude Code teammate human-review pass.
+      - P3_03 artifacts include docs/manuscript.md, critique_digest.yaml, review_issue_register.yaml, critique_scores.yaml, claim_evidence_registry.yaml, failure_register.yaml, negative_result_note.md, keep_discard_ledger.yaml, and session_manifest.yaml covering three blocking root causes, two non-blocking issues, one cosmetic issue, source comment IDs, severity, evidence gaps, locations, validation gates, and P3_04 routing.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p3_03_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Later distinct P3_03 score-only final-threshold AI_002 review passed with score 94 after artifacts/critique_digest_final_threshold_contract.yaml locked the node-local critique-digest boundary; later P3_04 action closure and global validator pass were completed.
+      - Filtered final submission validation no longer reports P3_03 as a below-90 score blocker.
+      - Graph refreshed after P3_03 closure; scheduler next_node now points to P3_04 with ready frontier P3_04; unfinished_count is 8.
+      - P3_04 revision-action map package closed after external AI review pass with score 86 and user-authorized Claude Code teammate human-review pass.
+      - P3_04 artifacts include docs/manuscript.md, revision_action_map.yaml, review_issue_register.yaml, critique_digest.yaml, and session_manifest.yaml mapping six P3_03 issues to six revision actions; after user authorization all six canonical action statuses are done with retained-limitation/action-coverage closure evidence.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p3_04_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Later distinct P3_04 score-only final-threshold AI_002 review passed with score 94 after artifacts/revision_action_final_threshold_contract.yaml locked the node-local revision-action routing boundary; explicit user authorization later closed all six canonical action statuses as done with retained-limitation/action-coverage evidence.
+      - Final submission validation no longer reports P3_04 as a below-90 score blocker or an action-status blocker.
+      - Graph refreshed after P3_04 closure; scheduler next_node now points to P4_04 with P4_01 through P4_07 ready; unfinished_count is 7.
+      - P4_04 formal response TeX draft package closed after external AI review pass with score 86 and user-authorized Claude Code teammate human-review pass.
+      - P4_04 artifacts include docs/manuscript.md, response_letter.tex, response_letter.pdf, reviewresponse.sty, Reviewers/cover_letter.tex, Reviewers/R1.tex, Reviewers/R2.tex, Reviewers/R3.tex, claim_evidence_registry.yaml, failure_register.yaml, negative_result_note.md, and keep_discard_ledger.yaml.
+      - P4_04 maps action-p3-001 through action-p3-006 into response sections with action IDs, issue IDs, exact source_comment_ids, evidence refs, target locations, status history, required changes, and validation gates.
+      - lualatex compiled artifacts/response_letter.tex twice and generated artifacts/response_letter.pdf; only non-fatal overfull warnings from long source IDs remain.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p4_04_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Later distinct P4_04 score-only final-threshold AI_002 review passed with score 94 after artifacts/formal_response_final_threshold_contract.yaml locked formal-response-draft traceability, current-scope P4_01-P4_03 input boundaries, official metadata/comment absence, TeX compile status, and no-final-readiness boundaries.
+      - Final submission validation no longer reports P4_04 as a below-90 score blocker or P3_04 as an action-status blocker.
+      - Graph refreshed after P4_04 closure; scheduler next_node now points to P4_01 with P4_01, P4_02, P4_03, P4_05, P4_06, and P4_07 ready; unfinished_count is 6.
+      - P4_01 review-comment collection package closed after external AI review pass with score 88 and user-authorized Claude Code teammate human-review pass.
+      - P4_01 artifacts include docs/manuscript.md, review_comment_register.yaml, claim_evidence_registry.yaml, failure_register.yaml, negative_result_note.md, and keep_discard_ledger.yaml.
+      - P4_01 collected six current-scope simulated-review comments p4-01-c001 through p4-01-c006, preserving action IDs, issue IDs, exact source_comment_ids, severity, affected location, evidence gap, required change, downstream mapping target, and split decision.
+      - P4_01 explicitly records official_journal_comments_available false, official_comment_count 0, and separates simulated P3_02:eic lens from official editor comments.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p4_01_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Later distinct P4_01 score-only final-threshold AI_002 review passed with score 94 after artifacts/review_comment_final_threshold_contract.yaml locked current-scope comment collection, official-comment absence, and no-final-readiness boundaries.
+      - Filtered final submission validation no longer reports P4_01 as a below-90 score blocker.
+      - Graph refreshed after P4_01 closure; scheduler next_node now points to P4_02 with P4_02, P4_03, P4_05, P4_06, and P4_07 ready; unfinished_count is 5.
+      - P4_02 problem-mapping matrix package closed after external AI review pass with score 88 and user-authorized Claude Code teammate human-review pass.
+      - P4_02 artifacts include docs/manuscript.md, review_comment_register.yaml, question_mapping_matrix.yaml, 问题映射矩阵.yaml, claim_evidence_registry.yaml, failure_register.yaml, negative_result_note.md, and keep_discard_ledger.yaml.
+      - P4_02 maps six current-scope P4_01 comments p4-01-c001 through p4-01-c006 into map-p4-001 through map-p4-006 with response_item_id, evidence_item_id, coverage_gate_id, affected artifact/location, target_node, downstream_nodes, source_action_id, issue_id, and exact source_comment_ids.
+      - P4_02 retains three blocking mappings for formal evidence, reproducibility, and global validator/coverage; official journal/editor comments remain absent and final_submission_ready_claim remains false.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p4_02_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Later distinct P4_02 score-only final-threshold AI_002 review passed with score 94 after artifacts/question_mapping_final_threshold_contract.yaml locked current-scope mapping completeness, map-p4-003 current gate semantics, official-comment absence, and no-final-readiness boundaries.
+      - Filtered final submission validation no longer reports P4_02 as a below-90 score blocker; map-p4-001 through map-p4-003 remain downstream blockers by design.
+      - Graph refreshed after P4_02 closure; scheduler next_node now points to P4_03 with P4_03, P4_05, P4_06, and P4_07 ready; unfinished_count is 4.
+      - P4_03 point-by-point response draft package closed after external AI review pass with score 88 and user-authorized Claude Code teammate human-review pass.
+      - P4_03 artifacts include docs/manuscript.md, artifacts/response_items.yaml, and logs/session_manifest.yaml.
+      - P4_03 maps rsp-p4-001 through rsp-p4-006 one-to-one from P4_02 map-p4-001 through map-p4-006, preserving direct answers, evidence_refs, manuscript_location, change_description, commitment_status, downstream_gate, and revision_evidence_item_id.
+      - P4_03 keeps rsp-p4-001 through rsp-p4-003 blocked and rsp-p4-004 through rsp-p4-006 planned/optional; it does not claim new experiments, new citations, figure edits, TeX edits, official comments, or final submission readiness.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p4_03_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Later distinct P4_03 score-only final-threshold AI_002 review passed with score 92 after artifacts/response_draft_final_threshold_contract.yaml locked response-item completeness, rsp-p4-003 current gate semantics, official-comment absence, and no-final-readiness boundaries.
+      - Filtered final submission validation no longer reports P4_03 as a below-90 score blocker; response blockers remain downstream by design.
+      - Graph refreshed after P4_03 closure; scheduler next_node now points to P4_05 with P4_05, P4_06, and P4_07 ready; unfinished_count is 3.
+      - P4_05 response coverage package closed after external AI review pass with score 88 and user-authorized Claude Code teammate human-review pass.
+      - P4_05 artifacts include docs/manuscript.md, artifacts/coverage_check_report.yaml, artifacts/coverage_check.yaml, artifacts/question_mapping_matrix.yaml, and artifacts/revision_evidence_map.yaml.
+      - P4_05 confirms response-level coverage for all six P4_01 comments and P4_03 response items while keeping revision-evidence closure delegated to P4_06.
+      - Later distinct P4_05 score-only final-threshold AI_002 review passed with score 94 after artifacts/coverage_final_threshold_contract.yaml locked response-level coverage scope, P4_06 revision-evidence handoff, official-comment absence, and no-final-readiness boundaries.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p4_05_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Filtered final submission validation no longer reports P4_05 as a below-90 score blocker; revision-evidence work remains downstream by design.
+      - Graph refreshed after P4_05 closure; scheduler next_node now points to P4_06 with P4_06 and P4_07 ready; unfinished_count is 2.
+      - P4_06 revision-evidence package closed after external AI review pass with score 82 and user-authorized Claude Code teammate human-review pass.
+      - P4_06 artifacts include docs/manuscript.md, artifacts/revision_evidence_map.yaml, artifacts/evidence_registry.yaml, artifacts/claim_evidence_registry.yaml, artifacts/failure_register.yaml, artifacts/negative_result_note.md, and artifacts/keep_discard_ledger.yaml.
+      - P4_06 maps all six P4_03 response items and all six P3_04 issue/critique IDs to revision evidence rows: two applied TeX wording revisions, three verified retained limitations, and one verified figure/caption no-op boundary check.
+      - P4_06 TeX edits in P2_03 main.tex and sections/experiment.tex compiled successfully with lualatex; warnings were non-fatal font fallback/URL underfull messages.
+      - Later distinct P4_06 score-only final-threshold AI_002 review passed with score 93 after artifacts/revision_evidence_final_threshold_contract.yaml locked current-scope revision-evidence mapping, retained formal/reproducibility/global limitations, canonical P3_04 action-status boundary, and no-final-readiness boundaries.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p4_06_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Filtered final submission validation no longer reports P4_06 as a below-90 score blocker.
+      - Graph refreshed after P4_06 closure; scheduler next_node now points to P4_07 with only P4_07 ready; unfinished_count is 1.
+      - P4_07 resubmission bundle manifest package closed after external AI review pass with score 82.5 and user-authorized Claude Code teammate human-review pass.
+      - P4_07 artifacts include docs/manuscript.md, artifacts/resubmission_bundle_manifest.yaml, artifacts/evidence_registry.yaml, artifacts/submission_metadata.yaml, artifacts/figures/figure_package_manifest.yaml, artifacts/tables/table_package_manifest.yaml, artifacts/question_mapping_matrix.yaml, artifacts/coverage_check_report.yaml, and artifacts/revision_evidence_map.yaml.
+      - P4_07 manifest lists manuscript, response, evidence, figures, tables, metadata, citation_registry, figure_manifest, venue_requirements, question_mapping_matrix, coverage_check_report, and revision_evidence_map roles with existing file paths.
+      - P4_07 explicitly marks package_status blocked_for_final_submission, final_submission_ready_claim false, can_submit_now false, and safe_for_external_submission_now false.
+      - Later distinct P4_07 score-only final-threshold AI_002 review passed with score 92.0 after artifacts/package_manifest_final_threshold_contract.yaml locked bounded internal package-manifest scope, official metadata/comment absence, retained limitations, and no-external-submission boundaries.
+      - docs/submission_ready_goal/runtime_logs/claude_code/p4_07_human_review_handoff.yaml passed validate_claude_handoff.py with no blockers or warnings.
+      - Filtered final submission validation no longer reports P4_07 as a below-90 score blocker.
+      - Graph refreshed after P4_07 closure; scheduler next_node is None, ready_nodes is empty, and unfinished_count is 0.
+      - Full final submission validation passes in submission-ready mode after user-authorized P3_04 semantic action closure.
     blockers:
       - downstream PHMGA/Vibench adapter preflight still needs full sample-level metadata-H5 alignment verification before formal downstream execution.
+      - PHMGA submodule has 66 dirty/untracked entries and must be committed, stashed, or explicitly discarded before any future parent pointer update.
+      - P0_01 final-threshold score-only review passed at 91, but this is background/SOTA boundary readiness only and not global submission readiness.
+      - P0_02 final-threshold score-only review passed at 91, but this is challenge/problem boundary readiness only and not global submission readiness.
+      - P0_05 final-threshold score-only review passed at 91, but this is resource/risk boundary readiness only and not global submission readiness.
+      - P1_06 node-level review passed at 86/87; it is outside the latest final score-failure count but remains a PHMGA/submodule dependency.
+      - P1_07 final-threshold score-only review passed at 90, but this is protocol-package readiness only and not global submission readiness.
+      - P1_08 final-threshold score-only review passed at 91, but this is expected-results/table-package readiness only and not global submission readiness.
+      - P2_01 through P2_05 final-threshold score-only reviews are above 90, but they are manuscript/package boundary readiness only and not global submission readiness.
+      - P3_01 final-threshold score-only review passed at 93, but this is review-round-definition readiness only and not global submission readiness.
+      - P3_02 final-threshold score-only review passed at 94, but this is reviewer-profile readiness only and not global submission readiness.
+      - P3_03 final-threshold score-only review passed at 94, but this is critique-digest/action-mapping readiness only and not global submission readiness.
+      - P3_04 final-threshold score-only review passed at 94, but this is revision-action routing readiness only and not action closure or global submission readiness.
+      - P4_04 final-threshold score-only review passed at 94, but this is formal-response-draft readiness only and not official response completion or global submission readiness.
+      - P4_01 final-threshold score-only review passed at 94, but this is current-scope comment-collection readiness only and not official response completion or global submission readiness.
+      - P4_02 final-threshold score-only review passed at 94, but this is current-scope mapping readiness only and not official response completion or global submission readiness.
+      - P4_03 final-threshold score-only review passed at 92, but this is current-scope response-draft readiness only and not official response completion or global submission readiness.
+      - P4_05 final-threshold score-only review passed at 94, but this is response-level coverage readiness only and not revision-evidence closure or global submission readiness.
+      - P4_06 final-threshold score-only review passed at 93, but this is current-scope revision-evidence mapping readiness only and not formal evidence, canonical P3_04 action closure, P4_07 package readiness, or global submission readiness.
+      - P4_07 final-threshold score-only review passed at 92.0, but this is bounded internal package-manifest readiness only and not external submission readiness or global submission readiness.
+      - P3_04 revision actions action-p3-001 through action-p3-006 are done after explicit user authorization, with P4_05/P4_06 coverage or retained-limitation evidence recorded.
+      - P4_04 formal response draft preserves official metadata/anonymity/comment-collection/coverage/revision-evidence/final-packaging blockers.
+      - P4_01 official journal comment and official editor comment inputs remain absent and must be retained downstream.
+      - P4_02 maps the comments but keeps map-p4-001 through map-p4-003 blocked until downstream response, coverage, and revision-evidence work closes or retains them.
+      - P4_06 closes current-scope revision-evidence mapping but retains formal empirical evidence, reproducibility, and final-readiness limitations for P4_07 packaging policy.
+      - P4_07 closes the internal bundle-manifest gate but explicitly blocks final external submission because official metadata/comments, formal evidence, reproducibility, selected backend, score threshold, and final validator are unresolved.
+      - P1_09 final-threshold score-only review passed at 91, but this is draft-figure readiness only and not global submission readiness.
+      - P2_03 final-threshold score-only review passed at 92.3, but this is TeX synchronization readiness only and not global submission readiness.
+      - Earlier P1/P2 claim-evidence schema and failure-truth validator blockers have been repaired and are not present in the latest final-gate output.
 last_validation:
-  command: .venv/bin/python scripts/refresh_views.py --mode graph_only
+  command: python3 scripts/validate_research_truth.py --require-submission
   exit_code: 0
-  terminal_excerpt: next_node=research::P1_实验设计与仓库蓝图::P1_03_仓库蓝图; unfinished_count=32
-blockers:
-  - openrouter_glm_free_model_rate_limit_blocks_glm_v2_row
-  - phmga_rm101_openrouter_nemotron_qualityfix1_not_selection_eligible
-  - phmga_rm101_bigmodel_qualityfix7_not_selection_eligible
+  terminal_excerpt: scheduler next_node=None and unfinished_count=0; latest final submission validator passes with `research truth: pass mode=submission-ready nodes=33`; P1 checklist blocker count is 0; score blocker count is 0; P3 action blocker count is 0
+blockers: []
+retained_limitations:
+  - p4_01_official_journal_comments_missing_not_used_as_positive_evidence
+  - phmga_submodule_dirty_worktree_requires_protection_before_pointer_update
+  - selected_global_best_backend_not_locked
+  - rm101_positive_selection_eligible_evidence_not_locked
   - phmga_adapter_full_metadata_h5_alignment_preflight_pending
   - phmga_formal_rows_not_passed

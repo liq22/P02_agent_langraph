@@ -1,0 +1,91 @@
+handoff_version: claude_code_handoff_v2
+task_id: p1_07_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P1_07 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P1_07 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P1_实验设计与仓库蓝图::P1_07_优化目标_任务_评测协议
+  node_path: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议
+scope:
+  inspected_files:
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/README.md
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/status.yaml
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/prompts/research_prompt.md
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/prompts/acceptance_checklist.yaml
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/prompts/review_rubric.yaml
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/review/human_reviewer_prompt.md
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/review/AI_001.md
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/review/verdict.yaml
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/docs/manuscript.md
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/experiment_rigor_plan.yaml
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/gate_report.md
+  changed_files:
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_07_human_review_handoff.yaml
+  allowed_files:
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_07_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p1_07_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Primary and secondary outcomes have explicit numerator, denominator, direction, and non-cherry-picking rules
+      evidence: protocol_map.yaml P1_07_M001 through M015 define numerators, denominators, exclusion rules, and directions; cross_protocol_rules.no_cherry_picking blocks secondary promotion; metric_parser_contract encodes parseable rules for every metric
+    - claim: Task definitions map to H1/H2/H3 with specific success criteria
+      evidence: protocol_map.yaml links P1_07_PROTO_001 to H1/H2 and P1_07_PROTO_002 to H3; manuscript v2 Task Families A-D map to hypothesis branches; success criteria are falsifiable
+    - claim: Required baselines and controls are complete for fair comparison
+      evidence: Three workflow baselines with required_record entries; six fairness controls (identical node set, checklist, rubric, budget, audit, primary metric); formal evidence controls enumerate provider/model, Vibench, PHMGA, backend lock, artifact contract, Stage B/C/D rows
+    - claim: Repeat, uncertainty, statistics, budget, artifact paths, and failure interpretation are preregistered
+      evidence: experiment_rigor_plan.yaml preregistered_repeat_budget specifies minimum 3 repeats per condition and per formal row; statistics plan requires point estimate plus CI or bootstrap; budget contract locks wall-clock and token budgets; 5 stop conditions with triggers and actions; metric parser contract with 17 common and 16 formal fields
+    - claim: Package correctly scopes itself as protocol-ready only without premature result claims
+      evidence: manuscript v2 Current Conclusion; gate_report v3 Gate Decision; AI_001 re-review Additional Checks; no observed improvement, formal eligibility, selected backend, Stage C/D success, RM101 resolution, or submission readiness claimed
+  gaps: []
+  risks:
+    - risk: acceptance_checklist.yaml all items remain status pending
+      mitigation: advisory only; does not affect protocol-artifact quality; Codex may update at node-close time
+    - risk: status.yaml shows stage seed and progress_pct 0 despite substantial v3 artifacts
+      mitigation: advisory only; status.yaml update is outside this review slot scope
+    - risk: Legacy sections in manuscript and experiment_rigor_plan marked non-normative but present
+      mitigation: explicitly labeled; downstream workers instructed to cite v3 lock
+    - risk: review/response.yaml still has old AI comments marked unresponded
+      mitigation: this review slot does not edit response.yaml; Codex should process at node-close
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 88
+  ai_verdict: pass
+  non_node_blockers:
+    - Final-score thresholds not met by node-level pass alone
+    - Claim-evidence registry schema errors not addressed by this node
+    - Selected backend remains pending (P1_07 scopes Stage B as preflight only)
+    - RM101 Stage B reject evidence unresolved
+    - PHMGA dirty worktree protection (66 dirty/untracked entries block future pointer update)
+    - PHMGA/Vibench adapter preflight incomplete
+    - Downstream Stage C main-result rows not executed or passed
+    - Downstream Stage D ablation rows not executed or passed
+    - Broader unfinished graph nodes retain their own open gates
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: Codex to verify handoff, update status.yaml human_review_count to 1, set all_comments_responded as appropriate, and process node toward fix/close
+  blockers: []

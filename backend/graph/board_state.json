@@ -1,0 +1,31 @@
+{
+  "lanes": {
+    "scheduler_now": [
+      "research::P1_实验设计与仓库蓝图::P1_01_数据层_集中数据与子模块引用"
+    ],
+    "truth_ready": [],
+    "review_blocked": [],
+    "execution_blocked": [
+      "research::P1_实验设计与仓库蓝图::P1_04_核心想法轻量验证",
+      "research::P1_实验设计与仓库蓝图::P1_05_初步验证结果整理",
+      "research::P2_论文撰写::P2_04_形式检查",
+      "research::P4_论文回复_response::P4_07_再投稿打包"
+    ],
+    "truth_blocked": [
+      "research::P3_论文模拟评审与修改_多轮::P3_03_批评摘要",
+      "research::P3_论文模拟评审与修改_多轮::P3_04_修订动作",
+      "research::P3_论文模拟评审与修改_多轮::P3_02_评价者档案",
+      "research::P3_论文模拟评审与修改_多轮::P3_01_评审轮次",
+      "research::P3_论文模拟评审与修改_多轮",
+      "research::P4_论文回复_response::P4_04_正式回复_tex_或_doc",
+      "research::P0_项目申请书",
+      "research::P0_项目申请书::P0_01_研究背景与调研",
+      "research::P0_项目申请书::P0_02_研究挑战与科学问题_工程问题",
+      "research::P0_项目申请书::P0_03_研究内容与创新点",
+      "research::P0_项目申请书::P0_04_技术路线_研究计划_OKR",
+      "research::P0_项目申请书::P0_05_项目约束_资源预算_风险边界"
+    ],
+    "active_work": [],
+    "parked": []
+  }
+}

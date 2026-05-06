@@ -1,0 +1,155 @@
+handoff_version: claude_code_handoff_v2
+task_id: p4_07_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P4_07 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P4_07 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P4_论文回复_response::P4_07_再投稿打包
+  node_path: research/P4_论文回复_response/P4_07_再投稿打包
+scope:
+  inspected_files:
+    - research/P4_论文回复_response/P4_07_再投稿打包/review/human_reviewer_prompt.md
+    - research/P4_论文回复_response/P4_07_再投稿打包/prompts/review_rubric.yaml
+    - research/P4_论文回复_response/P4_07_再投稿打包/review/AI_001.md
+    - research/P4_论文回复_response/P4_07_再投稿打包/review/verdict.yaml
+    - research/P4_论文回复_response/P4_07_再投稿打包/review/人类_001.md
+    - research/P4_论文回复_response/P4_07_再投稿打包/docs/manuscript.md
+    - research/P4_论文回复_response/P4_07_再投稿打包/artifacts/resubmission_bundle_manifest.yaml
+    - research/P4_论文回复_response/P4_07_再投稿打包/artifacts/evidence_registry.yaml
+    - research/P4_论文回复_response/P4_07_再投稿打包/artifacts/submission_metadata.yaml
+    - research/P4_论文回复_response/P4_07_再投稿打包/artifacts/figures/figure_package_manifest.yaml
+    - research/P4_论文回复_response/P4_07_再投稿打包/artifacts/tables/table_package_manifest.yaml
+    - research/P4_论文回复_response/P4_07_再投稿打包/artifacts/question_mapping_matrix.yaml
+    - research/P4_论文回复_response/P4_07_再投稿打包/artifacts/coverage_check_report.yaml
+    - research/P4_论文回复_response/P4_07_再投稿打包/artifacts/revision_evidence_map.yaml
+    - research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml
+    - research/P2_论文撰写/P2_03_定稿_tex/artifacts/citation_registry.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_manifest.yaml
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+  changed_files:
+    - research/P4_论文回复_response/P4_07_再投稿打包/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p4_07_human_review_handoff.yaml
+  allowed_files:
+    - research/P4_论文回复_response/P4_07_再投稿打包/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p4_07_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p4_07_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Bundle manifest includes exactly the 12 required roles with no extras or omissions
+      evidence: >-
+        resubmission_bundle_manifest.yaml assets array has exactly 12 entries:
+        manuscript, response, evidence, figures, tables, metadata,
+        citation_registry, figure_manifest, venue_requirements,
+        question_mapping_matrix, coverage_check_report, revision_evidence_map.
+        This matches the required_package_roles list in
+        submission_metadata.yaml (12 items) and the rubric node_level_5_criterion.
+    - claim: Every manifest role points to an existing file
+      evidence: >-
+        Verified file existence for all 14 declared paths (12 roles plus 2
+        companion PDFs). main.tex (3138 bytes), main.pdf (167654 bytes),
+        response_letter.tex (1194 bytes), response_letter.pdf (102707 bytes),
+        evidence_registry.yaml (8 items, 0 missing), figure_package_manifest
+        (2 figures), table_package_manifest (1 embedded table),
+        submission_metadata.yaml, citation_registry.yaml (3 citations),
+        figure_manifest.yaml (1 figure), venue_requirements.yaml,
+        question_mapping_matrix.yaml (6 mappings), coverage_check_report.yaml
+        (6 rows), revision_evidence_map.yaml (6 revisions). All manifest
+        consistency_checks report true.
+    - claim: Local metadata and manifest clearly block final external submission
+      evidence: >-
+        submission_metadata.yaml: package_status blocked_for_final_submission,
+        final_submission_ready_claim false, can_submit_now false. Manifest:
+        bundle_status internal_manifest_complete_but_final_submission_blocked,
+        safe_for_external_submission_now false. Eleven explicit blocking_gaps
+        listed. No file in the package claims submission-ready.
+    - claim: Official decision-letter, editor, reviewer comments, and manuscript metadata absence are preserved
+      evidence: >-
+        submission_metadata.yaml: manuscript_id_available false,
+        editor_comment_available false, official_reviewer_comments_available
+        false, anonymity_rule_confirmed false. question_mapping_matrix,
+        coverage_check_report, and revision_evidence_map all carry
+        official_journal_comments_available false. Response letter metadata
+        state is simulated_review_action_package_only.
+    - claim: Retained P4_06 formal-evidence, reproducibility, and global-readiness limitations are faithfully carried into the package
+      evidence: >-
+        revision_evidence_map carries all 6 rows from P4_06: 3 retained
+        limitations (ev-p4-001 formal evidence, ev-p4-002 reproducibility,
+        ev-p4-003 global validator), 2 applied revisions (ev-p4-004 abstract
+        wording, ev-p4-006 style compression), 1 verified boundary
+        (ev-p4-005 figure caption). Summary counts match P4_06 upstream.
+        No limitation was dropped, resolved without evidence, or rewritten
+        as positive. Manifest blocking_gaps preserves all five blocker families.
+    - claim: Citation registry, figure manifest, venue requirements, figure package, and table package are represented without inventing missing assets
+      evidence: >-
+        Citation registry: 3 entries, all action keep, no new verification
+        claimed. Figure manifest: 1 accepted schematic with
+        schematic_only_not_empirical_result boundary. Figure package: 2
+        figures, final_journal_artwork_claim false, copied_into_p4_07 false.
+        Table package: 1 embedded table with preliminary synthetic signal
+        boundary. Venue requirements: full comparison with contradiction list,
+        evidence gaps, acceptance_ready_claim false.
+    - claim: Cross-reference consistency across question_mapping, coverage, and revision evidence
+      evidence: >-
+        All 6 rows have matching comment_id, response_item_id, coverage_id,
+        and evidence_id across question_mapping_matrix, coverage_check_report,
+        and revision_evidence_map. No orphaned or missing cross-references.
+        All coverage_status values are covered. Package statuses are internally
+        consistent.
+  gaps: []
+  risks:
+    - risk: Downstream consumers might misinterpret the manifest-gate pass as final submission readiness
+      mitigation: >-
+        Multiple independent labels (package_status, final_submission_ready_claim,
+        safe_for_external_submission_now, can_submit_now, 11 blocking_gaps)
+        enforce the boundary. Codex should verify these labels are preserved
+        by any downstream consumer.
+    - risk: When official journal comments arrive, the entire question_mapping, coverage, and revision evidence will need rebuilding
+      mitigation: >-
+        All current-scope projections explicitly carry
+        official_journal_comments_available false. Codex must trigger a full
+        revalidation cycle when official comments become available.
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P4_论文回复_response/P4_07_再投稿打包/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 82.5
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - Official journal decision letter, official editor comment, official reviewer comments, manuscript id, and anonymity rule are absent or unconfirmed
+    - Official journal comments are absent; the package only covers current simulated/internal review comments
+    - Retained formal result limitation: no accepted real-data, RM101, selected-backend, repeated-run, or Stage C/D ablation rows
+    - Retained reproducibility limitation: PHMGA dirty-state disposition, adapter metadata-H5 alignment, selected backend trace, and formal ledger provenance unresolved
+    - Retained global readiness limitation: review-score threshold remains below the 90 nature-ready submission threshold
+    - Selected backend and PHMGA/Vibench formal evidence are unresolved
+    - Final submission validation still fails
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: >-
+    Codex to verify handoff, update status.yaml human_review_count to 1,
+    update stale status.yaml and acceptance_checklist.yaml metadata,
+    and close the P4_07 human-review gate. P4 pipeline is now complete
+    through the internal manifest/package gate. Final external submission
+    remains blocked until official journal metadata, accepted formal evidence,
+    score threshold, and final validator are resolved.
+  blockers: []

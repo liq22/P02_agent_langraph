@@ -1,0 +1,139 @@
+handoff_version: claude_code_handoff_v2
+task_id: p2_02_05_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P2_02_05 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P2_02_05 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P2_论文撰写::P2_02_初稿_md::P2_02_05_实验与讨论
+  node_path: research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论
+scope:
+  inspected_files:
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/README.md
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/status.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/research_prompt.md
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/acceptance_checklist.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/prompts/review_rubric.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/artifacts/outline_map.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/docs/manuscript.md
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/artifacts/claim_map.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/artifacts/claim_evidence_registry.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/review/AI_001.md
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/review/verdict.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/review/human_reviewer_prompt.md
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/claim_evidence_registry.yaml
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/claim_map.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/failure_register.yaml
+    - research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/artifacts/protocol_map.yaml
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+    - docs/submission_ready_goal/completion_audit_current.md
+  changed_files:
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p2_02_05_human_review_handoff.yaml
+  allowed_files:
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p2_02_05_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p2_02_05_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Evidence-maturity ordering is correct and matches claim_map policy
+      evidence: >-
+        Manuscript orders limited synthetic/offline signal before formal-gate
+        blockers, then negative/unclear evidence, then discussion — matching
+        claim_map.yaml evidence_order_policy and P1_08 table_plan row_groups.
+    - claim: Primary outcome is evidence governance, not performance improvement
+      evidence: >-
+        docs/manuscript.md line 5 states primary result as evidence-governance
+        finding; single positive signal kept at weak/supported_limited with
+        seven explicit forbidden upgrade categories matching claim_map and
+        claim_evidence_registry forbidden_wording/cannot_support_claims lists.
+    - claim: All unsupported and unclear results are retained in denominator
+      evidence: >-
+        Manuscript lists real-data generalization (unsupported), RM101 resolution
+        (unsupported), variance stability (unclear), perfect score ambiguity
+        (unclear) — all matching P1_05 result_registry, hypothesis_status, and
+        P1_08 failure_register entries exactly.
+    - claim: Discussion separates finding, interpretation, limitations, and future upgrade path
+      evidence: >-
+        docs/manuscript.md Discussion section has four distinct layers: narrow
+        finding, non-overclaiming interpretation, explicit limitations, and
+        six-step future upgrade path — matching C_EXP_DISCUSSION_INTERPRETATION_LIMITS
+        allowed/forbidden wording.
+    - claim: Metric values match upstream P1_04 TSV and P1_05 result_registry exactly
+      evidence: >-
+        All six metric values (baseline test_accuracy 0.8333333333333334,
+        baseline test_macro_f1 0.8285714285714285, attempt test_accuracy 1.0,
+        attempt test_macro_f1 1.0, delta accuracy +0.16666666666666663,
+        delta macro_f1 +0.17142857142857149) verified against P1_04 TSV source
+        ledger and P1_05 result_registry — exact match.
+    - claim: PHMGA/Vibench, selected-backend, Stage C/D, RM101, dirty-submodule, and submission-readiness boundaries are honest
+      evidence: >-
+        Manuscript states formal rows blocked, selected backend not locked, RM101
+        reject evidence retained, dirty submodule state acknowledged, Stage C/D
+        incomplete, and submission readiness not claimed — consistent with
+        P1_06 submodule_ref, P1_07 protocol_map, P1_08 failure_register, and
+        completion_audit_current.md.
+  gaps:
+    - gap: status.yaml remains seed/pending despite completed artifacts and reviews
+      severity: non_blocking
+      file: status.yaml, prompts/acceptance_checklist.yaml
+    - gap: Secondary outcome vocabulary is implicit in section ordering, not explicitly named
+      severity: non_blocking
+      file: docs/manuscript.md
+    - gap: Test-split sample count not stated for the perfect-score sanity check
+      severity: non_blocking
+      file: docs/manuscript.md
+  risks:
+    - risk: Stale status metadata could mislead scheduler into treating node as incomplete
+      mitigation: Author/maintainer lane should update status.yaml and acceptance_checklist.yaml before node closure
+    - risk: Prose style is governance-report-heavy; final manuscript integration may need smoother transitions
+      mitigation: Address during P2 polishing or P3 revision pass
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 87
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - Final-score thresholds: all closed nodes score below the 90 submission threshold
+    - Global registry schema errors: P1_03 and P1_05 registries fail submission schema validator
+    - P1_05 missing failure-truth artifacts
+    - Selected backend not locked
+    - RM101 Stage B reject evidence unresolved
+    - PHMGA dirty worktree protection incomplete (66 dirty entries)
+    - PHMGA/Vibench adapter preflight pending
+    - Downstream Stage C main-result rows incomplete
+    - Downstream Stage D ablation rows incomplete
+    - Broader unfinished graph nodes (14 remaining after P2_02_05 closure)
+    - P3/P4 response-package gaps unresolved
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: >-
+    Codex to verify handoff, update status.yaml human_review_count to 1,
+    process node toward fix/close, update stale acceptance_checklist and
+    status metadata, and advance scheduler to next node.
+  blockers: []

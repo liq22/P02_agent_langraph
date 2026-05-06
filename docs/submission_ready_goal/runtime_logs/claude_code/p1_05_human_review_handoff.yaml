@@ -1,0 +1,91 @@
+handoff_version: claude_code_handoff_v2
+task_id: p1_05_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P1_05 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P1_05 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P1_实验设计与仓库蓝图::P1_05_初步验证结果整理
+  node_path: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理
+scope:
+  inspected_files:
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/README.md
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/status.yaml
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/prompts/research_prompt.md
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/prompts/acceptance_checklist.yaml
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/prompts/review_rubric.yaml
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/review/human_reviewer_prompt.md
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/review/AI_001.md
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/review/verdict.yaml
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/claim_evidence_registry.yaml
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/paper_ready_result_summary.md
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/gate_report.md
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/docs/manuscript.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_04_human_review_handoff.yaml
+    - tools/submission_ready_goal/validate_claude_handoff.py
+  changed_files:
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_05_human_review_handoff.yaml
+  allowed_files:
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_05_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p1_05_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: The only positive conclusion P1_05_C01 maps faithfully to P1_04 results.tsv
+      evidence: result_registry.yaml P1_05_R001/R002 source_row_id match baseline_simple and attempt_supervisor_proving; accuracy delta +0.16666666666666663 confirmed from ledger
+    - claim: Supported, unsupported, and unclear categories are correctly separated without overclaiming
+      evidence: result_registry.yaml has 2 supported (1 baseline + 1 limited synthetic), 2 unsupported (real-data, RM101), 2 unclear (variance, perfect accuracy); hypothesis_status.yaml mirrors with 1 supported_limited, 2 unsupported, 1 unclear; claim_evidence_registry.yaml consistent
+    - claim: paper_ready_result_summary.md is limited to preliminary/synthetic sanity-check wording
+      evidence: Explicit four-item forbidden_context list in summary; no formal Stage C/D, selected-backend, RM101-resolution, or submission-ready language
+    - claim: Real-data generalization, RM101 resolution, selected-backend readiness, and Stage C/D claims are explicitly unsupported
+      evidence: Listed as unsupported in result_registry.yaml (P1_05_U001, P1_05_U002), hypothesis_status.yaml (P1_05_H002, P1_05_H003), gate_report.md, and manuscript.md
+    - claim: Variance stability and perfect synthetic accuracy interpretation are correctly classified as unclear
+      evidence: result_registry.yaml unclear_results P1_05_Q001 and P1_05_Q002; hypothesis_status.yaml P1_05_H004 status=unclear; claim_evidence_registry.yaml P1_05_C03 claim_boundary=limitation only
+    - claim: Independent AI review is credible and responsive to review_rubric.yaml
+      evidence: AI_001.md score 86/100 covering all six rubric dimensions; verdict.yaml pass with independence_confirmed true and no blocking_issues
+  gaps: []
+  risks:
+    - risk: acceptance_checklist.yaml status fields remain pending despite substantive completion
+      mitigation: advisory only; does not affect review correctness; Codex may update at node-close time
+    - risk: research_prompt.md execution summary fields unfilled
+      mitigation: advisory only; does not affect result-synthesis output quality
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 86
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - selected_global_best_backend remains pending
+    - RM101 Stage B reject evidence unresolved
+    - PHMGA/Vibench adapter preflight incomplete
+    - Downstream Stage C main-result rows not passed
+    - Downstream Stage D ablation rows not passed
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: Codex to verify handoff, update status.yaml human_review_count to 1, set all_comments_responded as appropriate, and process node toward fix/close
+  blockers: []

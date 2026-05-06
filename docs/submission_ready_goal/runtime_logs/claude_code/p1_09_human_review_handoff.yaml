@@ -1,0 +1,92 @@
+handoff_version: claude_code_handoff_v2
+task_id: p1_09_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P1_09 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P1_09 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P1_实验设计与仓库蓝图::P1_09_结果图与草稿
+  node_path: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿
+scope:
+  inspected_files:
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/review/human_reviewer_prompt.md
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/prompts/review_rubric.yaml
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/review/AI_001.md
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/review/verdict.yaml
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/docs/manuscript.md
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_plan.yaml
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/claim_figure_map.yaml
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_manifest.yaml
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/claim_evidence_registry.yaml
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/failure_register.yaml
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/negative_result_note.md
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/keep_discard_ledger.yaml
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/figures/fig_main_synthetic_signal.svg
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/figures/fig_main_synthetic_signal_data.tsv
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/claim_map.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+    - research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml
+    - research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/hypothesis_status.yaml
+    - tools/submission_ready_goal/validate_claude_handoff.py
+  changed_files:
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_09_human_review_handoff.yaml
+  allowed_files:
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_09_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p1_09_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Every figure maps to an explicit claim and evidence ID
+      evidence: fig_main_synthetic_signal maps to c1 via claim_figure_map.yaml as supported_limited_proxy with 8 evidence IDs; unmapped c2 and c3 are explicitly deferred
+    - claim: Draft figure shows provenance and avoids invented uncertainty
+      evidence: TSV values match P1_04 results.tsv exactly; deterministic renderer reads TSV and writes SVG; no smoothing, interpolation, or error bars; error_bars explicitly discarded in keep_discard_ledger.yaml
+    - claim: Negative, unsupported, and unclear results are kept visible
+      evidence: failure_register.yaml has 4 open limitations (F001-F004); negative_result_note.md states no formal positive result; claim_evidence_registry.yaml has C02 unsupported and C03 gap_reported; keep_discard_ledger records all discard/defer decisions
+    - claim: Text avoids real-data, RM101, selected-backend, Stage C/D, and submission-ready overclaims
+      evidence: claim_figure_map.yaml forbidden_wording list covers all five categories; SVG scope guard box; figure_plan legend_policy.exclude mirrors guardrails; manuscript uses only bounded synthetic/offline signal language
+    - claim: AI review is credible and consistent with review_rubric.yaml
+      evidence: AI_001.md scores 86/100 across all six rubric dimensions; independence_confirmed true; no blocking_issues; comments reference specific artifacts; node_blocking_failure criterion not triggered; verdict.yaml consistent
+  gaps: []
+  risks:
+    - risk: P1_08 upstream node remains at stage seed
+      mitigation: Recorded as open limitation P1_09_F001 and advisory note in AI_001; does not invalidate P1_09 draft scope
+    - risk: Perfect synthetic score (1.0 accuracy, 1.0 macro-F1) may indicate easy fixture
+      mitigation: Recorded as P1_09_F004 medium severity; treated as keep signal only, not mechanism superiority
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 86
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - P1_08 status is still stage seed at this review point
+    - selected_global_best_backend is not locked
+    - RM101 Stage B reject evidence remains unresolved
+    - PHMGA/Vibench adapter sample-level metadata-H5 alignment preflight remains pending
+    - Formal Stage C/D rows are not passed
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: Codex to verify handoff, update status.yaml human_review_count to 1, set all_comments_responded as appropriate, and process node toward fix/close
+  blockers: []

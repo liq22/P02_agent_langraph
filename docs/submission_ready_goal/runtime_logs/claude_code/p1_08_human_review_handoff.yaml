@@ -1,0 +1,99 @@
+handoff_version: claude_code_handoff_v2
+task_id: p1_08_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P1_08 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P1_08 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P1_实验设计与仓库蓝图::P1_08_预期结果与表格
+  node_path: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格
+scope:
+  inspected_files:
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/README.md
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/status.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/prompts/research_prompt.md
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/prompts/acceptance_checklist.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/prompts/review_rubric.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/review/human_reviewer_prompt.md
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/review/AI_001.md
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/review/verdict.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/docs/manuscript.md
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/table_plan.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/claim_map.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/claim_evidence_registry.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/failure_register.yaml
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/negative_result_note.md
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/artifacts/keep_discard_ledger.yaml
+  changed_files:
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_08_human_review_handoff.yaml
+  allowed_files:
+    - research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_08_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p1_08_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Each planned table supports a named claim with explicit claim IDs and evidence IDs
+      evidence: table_plan.yaml maps main_results to c1/c5, formal_eligibility_gate to c2/c4, ablation_and_efficiency_results to c3/c5, negative_unclear_result_ledger to c4/c5; claim_map.yaml and claim_evidence_registry.yaml agree on all bindings
+    - claim: All required columns are present for main results, formal eligibility, ablation, uncertainty, and negative evidence
+      evidence: main_results has 23 columns including rate metrics and uncertainty; formal_eligibility_gate has 24 columns including provider/model policy and artifact gates; ablation has 18 columns including changed_factor and budget; negative ledger has 15 columns including severity and denominator_included
+    - claim: Negative, rejected, unclear, blocked, low-power, and missing formal rows have first-class table locations
+      evidence: negative_unclear_result_ledger is a dedicated table with 4 concrete entries; failure_register.yaml records 4 failures; negative_result_note.md states strict interpretation rule; keep_discard_ledger.yaml discards success-only table variant; failure policy confirms hidden_negative_results false
+    - claim: P1_09 downstream c1 figure reference is preserved while narrowed to limited synthetic/offline sanity-check claim
+      evidence: claim_map c1 figure_ref fig_main_synthetic_signal preserved; boundary_label preliminary_synthetic_only; allowed_wording limited synthetic/offline sanity-check signal; forbidden_wording blocks overclaiming; mapping_checks confirms downstream_c1_ref_preserved_for_p1_09 true
+    - claim: Package avoids claiming observed AutoResearch improvement, PHMGA formal eligibility, selected backend, Stage C/D success, RM101 resolution, or final submission readiness
+      evidence: manuscript Current Conclusion explicitly disclaims all six; table_plan_policy sets no_observed_formal_claim true, no_selected_backend_claim true, no_stage_c_or_stage_d_success_claim true, no_rm101_resolution_claim true; every claim has forbidden_wording lists blocking overclaiming
+  gaps:
+    - gap: c3 claim_type labeled as limitation in claim_map.yaml but method in claim_evidence_registry.yaml
+      severity: advisory
+      mitigation: non-semantic label discrepancy; same claim text and evidence; Codex may normalize at node-close
+    - gap: P1_08_E004_P1_09_DOWNSTREAM_FIGURE_REF referenced in table_plan.yaml upstream_evidence but missing from claim_evidence_registry evidence list
+      severity: advisory
+      mitigation: not used as direct evidence for any claim; non-blocking registry completeness gap
+    - gap: ablation_and_efficiency_results table lacks explicit numerator/denominator/direction columns mentioned in manuscript rate-metric requirement
+      severity: advisory
+      mitigation: ablation rows use primary_metric_delta semantics instead of rate decomposition; downstream parser may need clarification note
+  risks:
+    - risk: acceptance_checklist.yaml all items remain status pending
+      mitigation: advisory only; does not affect artifact quality; Codex may update at node-close
+    - risk: status.yaml shows stage seed and progress_pct 0 despite substantial artifacts
+      mitigation: advisory only; status.yaml update is outside this review slot scope
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 88
+  ai_verdict: pass
+  non_node_blockers:
+    - Final-score thresholds not met by node-level pass alone
+    - Existing claim-evidence registry schema errors outside P1_08 remain unresolved
+    - Selected backend remains pending (P1_08 formal_eligibility_gate records backend lock as required gate not completed)
+    - RM101 Stage B reject evidence remains unresolved (P1_08_NEG_002 retains as reject_evidence)
+    - PHMGA dirty worktree protection (dirty/untracked entries block future pointer updates)
+    - PHMGA/Vibench adapter preflight incomplete (formal_eligibility_gate Stage B rows are preflight-only)
+    - Downstream Stage C main-result rows not executed or passed
+    - Downstream Stage D ablation rows not executed or passed
+    - Broader unfinished graph nodes retain their own open gates
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: Codex to verify handoff, update status.yaml human_review_count to 1, set all_comments_responded as appropriate, and process node toward fix/close
+  blockers: []

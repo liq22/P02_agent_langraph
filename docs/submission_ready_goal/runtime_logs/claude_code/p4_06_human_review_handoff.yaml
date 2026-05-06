@@ -1,0 +1,164 @@
+handoff_version: claude_code_handoff_v2
+task_id: p4_06_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P4_06 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P4_06 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P4_论文回复_response::P4_06_修改证据
+  node_path: research/P4_论文回复_response/P4_06_修改证据
+scope:
+  inspected_files:
+    - research/P4_论文回复_response/P4_06_修改证据/review/human_reviewer_prompt.md
+    - research/P4_论文回复_response/P4_06_修改证据/prompts/review_rubric.yaml
+    - research/P4_论文回复_response/P4_06_修改证据/review/AI_001.md
+    - research/P4_论文回复_response/P4_06_修改证据/review/verdict.yaml
+    - research/P4_论文回复_response/P4_06_修改证据/review/人类_001.md
+    - research/P4_论文回复_response/P4_06_修改证据/README.md
+    - research/P4_论文回复_response/P4_06_修改证据/status.yaml
+    - research/P4_论文回复_response/P4_06_修改证据/docs/manuscript.md
+    - research/P4_论文回复_response/P4_06_修改证据/artifacts/revision_evidence_map.yaml
+    - research/P4_论文回复_response/P4_06_修改证据/artifacts/evidence_registry.yaml
+    - research/P4_论文回复_response/P4_06_修改证据/artifacts/claim_evidence_registry.yaml
+    - research/P4_论文回复_response/P4_06_修改证据/artifacts/failure_register.yaml
+    - research/P4_论文回复_response/P4_06_修改证据/artifacts/negative_result_note.md
+    - research/P4_论文回复_response/P4_06_修改证据/artifacts/keep_discard_ledger.yaml
+    - research/P4_论文回复_response/P4_05_覆盖检查/artifacts/revision_evidence_map.yaml
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/artifacts/response_items.yaml
+    - research/P4_论文回复_response/P4_03_逐点回复草稿_md/docs/manuscript.md
+    - research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+    - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+    - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/submodule_ref.yaml
+    - research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/artifacts/figure_manifest.yaml
+    - research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+  changed_files:
+    - research/P4_论文回复_response/P4_06_修改证据/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p4_06_human_review_handoff.yaml
+  allowed_files:
+    - research/P4_论文回复_response/P4_06_修改证据/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p4_06_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p4_06_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Revision evidence map covers all six P4_03 response items and all P3_04 issue/critique IDs
+      evidence: >-
+        revision_evidence_map.yaml has exactly 6 rows (ev-p4-001 through
+        ev-p4-006). Each row carries comment_id (p4-01-c001 through
+        p4-01-c006), issue_id (issue-p3-001 through issue-p3-006),
+        critique_id from P3 round 001, source_action_id (action-p3-001 through
+        action-p3-006), and response_item_id (rsp-p4-001 through rsp-p4-006).
+        Cross-referenced against P4_02 question_mapping_matrix (6 mappings),
+        P4_03 response_items (6 items), P3_04 revision_action_map (6 actions),
+        and P4_05 handoff (6 rows with p4_06_expected_status: pending).
+        Complete coverage confirmed; no missing or extraneous rows.
+    - claim: Every row contains all required fields with correct identity chain
+      evidence: >-
+        Each of the 6 rows in revision_evidence_map.yaml contains comment_id,
+        issue_id, critique_id, source_action_id, response_item_id, claim_id,
+        evidence_id, evidence_kind, manuscript_location, modified_nodes,
+        revision_diff_ref, artifact_refs, status, and closure_note. All IDs
+        match upstream sources (P4_02, P4_03, P3_04) correctly.
+    - claim: Applied TeX changes are limited to conservative wording revisions with no claim upgrade
+      evidence: >-
+        ev-p4-004 (abstract wording): main.tex abstract now reads "The draft's
+        process claim is that manuscript statements should remain traceable to
+        evidence artifacts, review gates, response coverage, and limitation
+        records before stronger claims are allowed." This matches P2_05_R002
+        replacement. No empirical performance claim added.
+        ev-p4-006 (style compression): main.tex discussion now reads
+        "limitations remain explicit so that negative and uncertain evidence
+        stays part of the manuscript record rather than being converted into
+        stronger claims." Matches P2_05_R009 replacement.
+        P2_05 non-upgrade ledger confirms no new dataset, baseline, statistical
+        test, citation, figure, real-data, RM101, selected-backend, Stage C/D,
+        or final-readiness claim was introduced. No negative evidence removed.
+    - claim: Formal evidence, reproducibility, and final-readiness gaps are retained as limitations
+      evidence: >-
+        ev-p4-001: status verified, closure note confirms formal evidence
+        absent and limitation retained. experiment.tex preserves
+        synthetic/offline single-run language.
+        ev-p4-002: status verified, closure note lists dirty-state, adapter,
+        backend, and ledger blockers. method.tex preserves reproducibility
+        requirements. P1_06 submodule_ref.yaml confirms 66 dirty entries and
+        pointer_update_allowed_now: false.
+        ev-p4-003: status verified, closure note lists score, schema, PHMGA,
+        formal-result, and packaging gates still blocking.
+        failure_register.yaml: 3 high-severity accepted limitations, 0 open
+        failures. negative_result_note.md records 3 negative results with no
+        positive conversion.
+    - claim: Figure/caption row verifies existing boundary without inventing a diff
+      evidence: >-
+        ev-p4-005 has revision_diff_ref
+        "verified_retained_caption_no_tex_diff_required_for_ev-p4-005", status
+        verified. Verified against experiment.tex caption: contains claim_ref,
+        evidence_ref, provenance, and explicit no-variance/no-real-data/no-RM101/
+        no-selected-backend boundaries. P1_09 figure_manifest confirms
+        claim_boundary "synthetic/offline single-run only; not a formal paper
+        result." No diff was fabricated.
+    - claim: Claim/failure/negative/keep-discard artifacts preserve negative evidence and avoid final-readiness claims
+      evidence: >-
+        claim_evidence_registry.yaml: 6 claims, all supported, 3 limitations, 3
+        response_commitments, final_submission_ready_claim: false.
+        failure_register.yaml: 4 failures, 3 accepted limitations, 1 resolved
+        low-severity, 0 open. No failure deleted or rewritten as positive.
+        negative_result_note.md: 3 explicit negative results with alternative
+        interpretations stated.
+        keep_discard_ledger.yaml: 6 decisions (5 keep, 1 discard, 0 defer).
+        Discard decision correctly rejects unsupported final-readiness claim.
+  gaps:
+    - gap: status.yaml shows stale pre-closeout state (stage seed, progress 0, ai_review_count 0, human_review_count 0)
+      severity: non_blocking
+      file: research/P4_论文回复_response/P4_06_修改证据/status.yaml
+    - gap: acceptance_checklist.yaml has all items marked pending
+      severity: non_blocking
+      file: research/P4_论文回复_response/P4_06_修改证据/prompts/acceptance_checklist.yaml
+  risks:
+    - risk: Stale status metadata could mislead resumed agents about node completion state
+      mitigation: Codex to update status.yaml and acceptance_checklist.yaml after accepting this review
+    - risk: P4_07 may consume this evidence map and incorrectly assume all limitations are resolved
+      mitigation: P4_07 must re-verify all retained-limitation rows against current upstream evidence before packaging
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P4_论文回复_response/P4_06_修改证据/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 82
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - Official journal decision letter, official editor comment, and official reviewer comments remain absent
+    - Official journal comments are absent; the package only covers current simulated/internal review comments
+    - Retained formal result limitation: no accepted real-data, RM101, selected-backend, repeated-run, or Stage C/D ablation rows
+    - Retained reproducibility limitation: PHMGA dirty-state, adapter alignment, selected-backend trace, and formal ledger provenance unresolved
+    - Retained global readiness limitation: review-score thresholds remain below the 90 nature-ready submission threshold
+    - Selected backend and PHMGA/Vibench formal evidence are unresolved
+    - P4_07 packaging is not complete
+    - Final submission validation still fails
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: >-
+    Codex to verify handoff, update status.yaml human_review_count to 1,
+    update stale status.yaml and acceptance_checklist.yaml metadata,
+    and advance scheduler to P4_07 or other downstream P4 work.
+  blockers: []

@@ -1,0 +1,144 @@
+handoff_version: claude_code_handoff_v2
+task_id: p4_02_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P4_02 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P4_02 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P4_论文回复_response::P4_02_问题映射矩阵
+  node_path: research/P4_论文回复_response/P4_02_问题映射矩阵
+scope:
+  inspected_files:
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/review/human_reviewer_prompt.md
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/prompts/review_rubric.yaml
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/review/AI_001.md
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/review/verdict.yaml
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/review/人类_001.md
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/README.md
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/status.yaml
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/docs/manuscript.md
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/review_comment_register.yaml
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/问题映射矩阵.yaml
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/claim_evidence_registry.yaml
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/failure_register.yaml
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/negative_result_note.md
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/artifacts/keep_discard_ledger.yaml
+    - research/P4_论文回复_response/P4_01_审稿意见收集/artifacts/review_comment_register.yaml
+    - research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/artifacts/revision_action_map.yaml
+    - docs/submission_ready_goal/completion_audit_current.md
+  changed_files:
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p4_02_human_review_handoff.yaml
+  allowed_files:
+    - research/P4_论文回复_response/P4_02_问题映射矩阵/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p4_02_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p4_02_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: All six P4_01 comments are mapped exactly once in the canonical mapping matrix
+      evidence: >-
+        question_mapping_matrix.yaml contains 6 mapping rows (map-p4-001 through
+        map-p4-006). Each P4_01 comment_id appears exactly once. The alias matrix
+        问题映射矩阵.yaml confirms the same index. Cross-checked against the P4_01
+        upstream register (6 comments p4-01-c001 through p4-01-c006) and the P3_04
+        revision_action_map (6 actions action-p3-001 through action-p3-006).
+    - claim: Every mapping preserves all required trace fields
+      evidence: >-
+        Each of the 6 mapping rows preserves comment_id, source_action_id,
+        issue_id, source_comment_ids (exact lists verified against P4_01 register),
+        problem_class, severity, blocks_submission, affected_artifact,
+        affected_location, evidence_gap, action_kind, response_strategy,
+        target_node, and downstream_nodes. All verified field-by-field.
+    - claim: Every mapping has required downstream keys for P4_03/P4_05/P4_06
+      evidence: >-
+        All 6 mappings have response_item_id (rsp-p4-001 through rsp-p4-006),
+        evidence_item_id (ev-p4-001 through ev-p4-006), coverage_gate_id
+        (cov-p4-001 through cov-p4-006), target_node, and downstream_nodes
+        listing P4_03, P4_05, and P4_06. Alias matrix summary confirms all four
+        boolean checks are true.
+    - claim: Three submission-blocking mappings remain explicit and not silently closed
+      evidence: >-
+        map-p4-001 (formal_evidence_eligibility, fatal), map-p4-002
+        (reproducibility_artifact_state, fatal), and map-p4-003
+        (global_validator_response_coverage, major) all have blocks_submission: true
+        and status mapped_blocked. Failure register has
+        p4_02_three_blocking_mappings_open (high, open). Negative result note
+        lists all three as still blocking.
+    - claim: Official journal comments and editor comments marked absent, not fabricated
+      evidence: >-
+        official_journal_comments_available: false across mapping matrix, alias
+        matrix, and comment register. official_comments_missing: true. Failure
+        register has p4_02_official_comments_missing (high, open). Keep/discard
+        ledger records discarding official-comment fabrication. Negative result
+        note lists all three absent official inputs.
+    - claim: Claim/evidence, failure, negative-result, and keep/discard artifacts preserve limitations
+      evidence: >-
+        claim_evidence_registry.yaml has 4 claims: 2 method (supported, keep) and
+        2 limitation (supported, document_limitation). failure_register.yaml has
+        4 open failures with correct scope boundaries. negative_result_note.md
+        lists 6 negative conditions and states must not claim final readiness.
+        keep_discard_ledger.yaml has 5 documented decisions preserving atomic
+        granularity and discarding fabrication, explanation-only closure, and
+        source_comment_id collapsing.
+  gaps:
+    - gap: status.yaml shows stale pre-closeout state (stage seed, progress_pct 0, review counts 0)
+      severity: non_blocking
+      file: research/P4_论文回复_response/P4_02_问题映射矩阵/status.yaml
+    - gap: acceptance_checklist.yaml has all items marked pending
+      severity: non_blocking
+      file: research/P4_论文回复_response/P4_02_问题映射矩阵/prompts/acceptance_checklist.yaml
+  risks:
+    - risk: Stale status metadata could mislead resumed agents about node completion state
+      mitigation: Update status.yaml and acceptance_checklist.yaml after accepting this review
+    - risk: P4_03 might treat mapped_blocked rows as closed instead of carrying the blocker forward
+      mitigation: P4_03 must read status field and preserve mapped_blocked semantics until evidence resolves or limitation is formally retained
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P4_论文回复_response/P4_02_问题映射矩阵/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 88
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - Official journal comments are absent (no decision letter, editor comment, or reviewer comments)
+    - Official editor comment is absent (P3_02:eic is simulated lens only)
+    - P4_03/P4_05/P4_06/P4_07 are not solved by P4_02
+    - P3_04 blocked/planned actions remain open (action-p3-001 through action-p3-006)
+    - Mapped blocking actions remain open (formal evidence, reproducibility, validator/coverage)
+    - Review-score thresholds: all closed nodes score 82-88, below 90 submission threshold
+    - Selected backend not locked and PHMGA/Vibench formal evidence unresolved
+    - Final submission validation still fails
+    - P1_03/P1_05 registry schema errors unresolved
+    - P1_05 failure-truth artifacts missing
+    - RM101 Stage B reject evidence unresolved
+    - Downstream Stage C main-result rows and Stage D ablation rows incomplete
+    - PHMGA dirty worktree protection incomplete (66 entries)
+    - PHMGA/Vibench adapter preflight pending
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: >-
+    Codex to verify handoff, update status.yaml human_review_count to 1,
+    process node toward close, update stale status.yaml and acceptance_checklist
+    metadata, and advance scheduler to next node (P4_03 point-by-point response
+    draft or other downstream P4 work).
+  blockers: []

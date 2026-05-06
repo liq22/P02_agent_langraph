@@ -1,0 +1,87 @@
+handoff_version: claude_code_handoff_v2
+task_id: p1_03_human_review_2026_05_04
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P1_03 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P1_03 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P1_实验设计与仓库蓝图::P1_03_仓库蓝图
+  node_path: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图
+scope:
+  inspected_files:
+    - research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/prompts/review_rubric.yaml
+    - research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/review/AI_001.md
+    - research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/review/verdict.yaml
+    - research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/review/human_reviewer_prompt.md
+    - research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/docs/manuscript.md
+    - research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/repo_blueprint.yaml
+    - research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/module_map.yaml
+    - research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/claim_evidence_registry.yaml
+    - research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/failure_register.yaml
+    - research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/negative_result_note.md
+    - research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/artifacts/keep_discard_ledger.yaml
+  changed_files:
+    - research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_03_human_review_handoff.yaml
+  allowed_files:
+    - research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p1_03_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p1_03_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Required and deferred modules are clearly separated with explicit rationale and entry conditions
+      evidence: docs/manuscript.md Sections 2-3, artifacts/repo_blueprint.yaml required_directories and deferred_directories, artifacts/module_map.yaml modules and deferred_modules
+    - claim: Directory and responsibility boundaries are minimal, reproducible, and free of duplicate result truth
+      evidence: docs/manuscript.md Section 4 minimal directory plan, Section 7 invariants, artifacts/repo_blueprint.yaml quality_gates, artifacts/keep_discard_ledger.yaml decisions P1_03_KEEP_002 and P1_03_DISCARD_002
+    - claim: Scripts, configs, logs, artifacts, and ledger paths are clear enough for downstream implementation
+      evidence: docs/manuscript.md Section 5 result path and Section 6 asset placement rules, artifacts/repo_blueprint.yaml entrypoints and required_run_bundle and run_config_contract, artifacts/module_map.yaml edges and operator_registry_contract and workflow_graph_contract
+    - claim: P1_01 data boundary and P1_02 pseudocode/interface contract are preserved
+      evidence: artifacts/repo_blueprint.yaml upstream_contracts, artifacts/module_map.yaml data_read_boundary forbidden_responsibilities, artifacts/claim_evidence_registry.yaml forbidden_claims
+    - claim: Failure modes and negative/reject evidence are explicit including RM101 and selected-backend blockers
+      evidence: artifacts/failure_register.yaml 9 failure modes and open_external_blockers, artifacts/negative_result_note.md 4 unresolved items, artifacts/claim_evidence_registry.yaml P1_03_C04 negative_scope_guard and P1_03_FORBID_RM101_POSITIVE
+    - claim: Independent AI review is credible and responsive to review_rubric.yaml
+      evidence: review/AI_001.md score 84 with B01 recheck closed, review/verdict.yaml pass with independence_confirmed true and no blocking_issues
+  gaps: []
+  risks:
+    - risk: selected_global_best_backend not locked blocks Stage C/D execution
+      mitigation: documented in failure_register.yaml open_external_blockers and claim_evidence_registry.yaml forbidden_claims P1_03_FORBID_STAGE_C_READY
+    - risk: PHMGA/Vibench adapter preflight for metadata-H5 sample-level alignment incomplete
+      mitigation: documented in failure_register.yaml P1_03_F03 and negative_result_note.md
+    - risk: RM101 Stage B reject evidence unresolved
+      mitigation: documented in negative_result_note.md and claim_evidence_registry.yaml P1_03_FORBID_RM101_POSITIVE
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 84
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - selected_global_best_backend remains pending
+    - RM101 Stage B reject evidence unresolved
+    - PHMGA/Vibench adapter preflight incomplete
+    - Downstream Stage C main-result rows not passed
+    - Downstream Stage D ablation rows not passed
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: Codex to verify handoff, update status.yaml human_review_count to 1, set all_comments_responded as appropriate, and process node toward fix/close
+  blockers: []

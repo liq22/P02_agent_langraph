@@ -1,0 +1,142 @@
+handoff_version: claude_code_handoff_v2
+task_id: p2_05_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P2_05 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P2_05 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P2_论文撰写::P2_05_去AI味道
+  node_path: research/P2_论文撰写/P2_05_去AI味道
+scope:
+  inspected_files:
+    - research/P2_论文撰写/P2_05_去AI味道/README.md
+    - research/P2_论文撰写/P2_05_去AI味道/status.yaml
+    - research/P2_论文撰写/P2_05_去AI味道/prompts/research_prompt.md
+    - research/P2_论文撰写/P2_05_去AI味道/prompts/acceptance_checklist.yaml
+    - research/P2_论文撰写/P2_05_去AI味道/prompts/review_rubric.yaml
+    - research/P2_论文撰写/P2_05_去AI味道/skills/local_entry.md
+    - research/P2_论文撰写/P2_05_去AI味道/skills/SKILL.md
+    - research/P2_论文撰写/P2_05_去AI味道/docs/manuscript.md
+    - research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+    - research/P2_论文撰写/P2_05_去AI味道/artifacts/claim_evidence_registry.yaml
+    - research/P2_论文撰写/P2_05_去AI味道/review/AI_001.md
+    - research/P2_论文撰写/P2_05_去AI味道/review/verdict.yaml
+    - research/P2_论文撰写/P2_05_去AI味道/review/human_reviewer_prompt.md
+    - research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+    - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+    - research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    - research/P2_论文撰写/P2_03_定稿_tex/artifacts/claim_evidence_registry.yaml
+    - research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/artifacts/claim_map.yaml
+    - research/P2_论文撰写/P2_04_形式检查/artifacts/formal_check_report.md
+    - research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml
+    - docs/submission_ready_goal/completion_audit_current.md
+  changed_files:
+    - research/P2_论文撰写/P2_05_去AI味道/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p2_05_human_review_handoff.yaml
+  allowed_files:
+    - research/P2_论文撰写/P2_05_去AI味道/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p2_05_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p2_05_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Calibration artifact identifies concrete template-like sentences with specific replacements
+      evidence: >-
+        academic_expression_claim_calibration.md records nine patch entries
+        (P2_05_R001-R009) with target TeX locations, original sentences, risk
+        levels, and bounded replacements. High-risk entries target "research
+        operating system" (R001), "the auditable connection" (R002), "turns
+        manuscript production into" (R004), and "negative as much as positive"
+        (R008). Cross-verified each original sentence against P2_03 TeX source
+        files — all quotes match verbatim.
+    - claim: Replacements make prose more specific without strengthening scientific claims
+      evidence: >-
+        R002 downgrades "the contribution is" to "The draft's process claim is"
+        — narrowing scope. R004 replaces "turns manuscript production into" with
+        "makes a narrower process contribution" — explicitly self-limiting. R006
+        expands "the AutoResearch contract" to name actual package components.
+        Non-upgrade ledger explicitly lists seven forbidden upgrade categories.
+        Cross-verified against P2_02_05 claim_map forbidden_wording — no
+        replacement violates any forbidden wording entry.
+    - claim: Negative unsupported uncertain rejected and blocked evidence kept visible
+      evidence: >-
+        R008 replacement makes negative evidence retention more explicit:
+        "unsupported rows are not rewritten as support." Manuscript Claim And
+        Evidence Boundary section lists all retained global blockers. Claim
+        P2_05_C04_NEGATIVE_EVIDENCE_RETAINED records preservation with upstream
+        evidence refs. Non-upgrade ledger explicitly states no negative evidence
+        removed. Cross-verified against P2_04 formal_check_report hard blocks —
+        all remain preserved.
+    - claim: Claim-evidence registry is schema-shaped with all required fields
+      evidence: >-
+        claim_evidence_registry.yaml contains five claims with explicit
+        claim_id, claim_type (method/limitation), support_status (supported),
+        manuscript_location, action (keep/document_limitation), and nested
+        evidence_refs with evidence_id, evidence_type, and source_ref. Registry
+        scope is appropriately node-local.
+    - claim: Package does not claim final submission readiness
+      evidence: >-
+        Claim P2_05_C05_FINAL_SUBMISSION_STILL_BLOCKED explicitly records that
+        P2_05 does not establish submission readiness. Manuscript Author Exit
+        section states node close depends on independent review and response
+        coverage. All global blockers preserved without softening.
+  gaps:
+    - gap: status.yaml remains seed/pending with zero progress despite completed artifacts and reviews
+      severity: non_blocking
+      file: research/P2_论文撰写/P2_05_去AI味道/status.yaml
+    - gap: Some evidence refs are coarse (directory-level or global skill refs)
+      severity: non_blocking
+      file: research/P2_论文撰写/P2_05_去AI味道/artifacts/claim_evidence_registry.yaml
+    - gap: Patch entries quote original sentences but lack exact TeX line anchors for downstream sync
+      severity: non_blocking
+      file: research/P2_论文撰写/P2_05_去AI味道/artifacts/academic_expression_claim_calibration.md
+  risks:
+    - risk: Stale status metadata could mislead scheduler into treating node as incomplete
+      mitigation: Node owner should update status.yaml after accepting this review
+    - risk: Patch application without re-running formal checks could introduce unreviewed prose changes
+      mitigation: Rerun P2_04 formal check after TeX sync applies the patch packet
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P2_论文撰写/P2_05_去AI味道/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 84
+  ai_verdict: pass
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - Final-score thresholds: all closed nodes score below the 90 submission threshold
+    - Global registry schema errors: P1_03 and P1_05 registries fail submission schema validator
+    - P1_05 missing failure-truth artifacts
+    - Selected backend not locked
+    - RM101 Stage B reject evidence unresolved
+    - PHMGA dirty worktree protection incomplete (66 dirty entries)
+    - PHMGA/Vibench adapter preflight pending
+    - Downstream Stage C main-result rows incomplete
+    - Downstream Stage D ablation rows incomplete
+    - Broader unfinished graph nodes (12 remaining)
+    - P3/P4 response-package gaps unresolved
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: >-
+    Codex to verify handoff, update status.yaml human_review_count to 1,
+    process node toward fix/close, update stale acceptance_checklist and
+    status metadata, and advance scheduler to next node.
+  blockers: []

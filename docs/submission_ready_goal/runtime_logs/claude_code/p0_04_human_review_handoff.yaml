@@ -1,0 +1,99 @@
+handoff_version: claude_code_handoff_v2
+task_id: p0_04_human_review_2026_05_05
+assistant: claude_code
+role: user-authorized Claude Code teammate delegate for P0_04 human-review slot
+mode: edit_allowed
+status: pass
+non_authority_statement: >-
+  This review was performed by a Claude Code teammate delegate acting under
+  explicit user authorization for the P0_04 human-review slot. This is not a
+  biological human review. This handoff does not claim submission-ready status.
+  Codex remains the lead and final gate owner.
+delegation:
+  requested_by: codex
+  target_gate: human_review
+  node_id: research::P0_项目申请书::P0_04_技术路线_研究计划_OKR
+  node_path: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR
+scope:
+  inspected_files:
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/README.md
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/status.yaml
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/prompts/research_prompt.md
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/prompts/acceptance_checklist.yaml
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/prompts/review_rubric.yaml
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/skills/SKILL.md
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/docs/manuscript.md
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/okr_map.yaml
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/claim_evidence_registry.yaml
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/artifacts/risk_decision_map.yaml
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/review/AI_001.md
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/review/verdict.yaml
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/review/response.yaml
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/review/human_reviewer_prompt.md
+  changed_files:
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p0_04_human_review_handoff.yaml
+  allowed_files:
+    - research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/review/人类_001.md
+    - docs/submission_ready_goal/runtime_logs/claude_code/p0_04_human_review_handoff.yaml
+  forbidden_files:
+    - review/verdict.yaml
+    - review/AI_001.md
+    - review/response.yaml
+    - backend/graph/
+    - docs/HUMAN_ONLY.md
+commands_run:
+  - command: python tools/submission_ready_goal/validate_claude_handoff.py --handoff docs/submission_ready_goal/runtime_logs/claude_code/p0_04_human_review_handoff.yaml
+    exit_code: 0
+findings:
+  supported:
+    - claim: Five-stage route links hypotheses to experiments, metrics, stop conditions, and fallback branches
+      evidence: docs/manuscript.md technical route section; artifacts/okr_map.yaml S0-S4 with inputs, endpoints, observable_metrics, stop_conditions, fallback per stage
+    - claim: At least one main route and multiple risk branches with explicit milestones and evaluation points
+      evidence: docs/manuscript.md main route S0-S4; Risk branches A-D; artifacts/risk_decision_map.yaml R001-R005 with triggers, severity, decisions, fallbacks, observable signals
+    - claim: OKR map uses observable claim-validation and boundary-preservation metrics, not task-only planning
+      evidence: artifacts/okr_map.yaml O1-O4 with KRs using claim_evidence_validity_rate, unsupported_claim_count, provider_model_policy_pass, metadata_h5_alignment_pass, negative_result_retention_rate etc; current_status honestly marked as proposal_stage_only or pending
+    - claim: Claim/evidence IDs are explicit and consistent across manuscript, registry, and risk map
+      evidence: artifacts/claim_evidence_registry.yaml P0_04_C001-C004 with evidence_refs cross-referencing P0_02, P0_03, and local artifacts; risk_decision_map.yaml affected_claim_ids pointing to C001-C004; manuscript sections mapped via manuscript_location fields
+    - claim: Package preserves negative/reject evidence and avoids presenting route design as proven AutoResearch effectiveness
+      evidence: P0_04_C004 explicit limitation claim; R001 active_blocker for formal evidence ineligibility; R005 active_guardrail against hidden negative/reject evidence; manuscript conclusion explicitly disclaims proven effectiveness
+    - claim: Independent AI review is credible and consistent with this review
+      evidence: review/AI_001.md score 86 pass; review/verdict.yaml independence_confirmed true; no blocking issues; all four non-blocking strengthening notes validated as reasonable
+  gaps:
+    - gap: Stage-to-hypothesis mapping is inferable through metrics and upstream inputs but not explicitly listed under each stage in okr_map.yaml
+      severity: non_blocking
+      file: artifacts/okr_map.yaml stages lack explicit H1/H2/H3 per stage
+    - gap: No compact budget/resource table for fixed node set, run budget, provider/model allowance, and review rounds
+      severity: non_blocking
+      file: docs/manuscript.md OKR section
+    - gap: Provider/model policy verification status is partially_verified_from_prior_logs but those logs were not inspected in this review
+      severity: non_blocking
+      file: artifacts/okr_map.yaml O2_KR1
+  risks:
+    - risk: RC1-RC4 governance contributions could collapse into generic multi-agent orchestration in reviewer view
+      mitigation: R002 explicitly guards this with revise_novelty_boundary fallback and observable signals; contribution_claims.yaml keeps structural distinction
+    - risk: Claim registry and manuscript could diverge during later phases
+      mitigation: R003 blocks handoff until registry repaired; O3 KRs require 100 percent claim_registry_coverage and 0 unsupported central claims before submission
+  hard_fail_candidates: []
+evidence:
+  human_review_file: research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/review/人类_001.md
+  recommendation: pass
+  ai_review_consistent: true
+  ai_score: 86
+  ai_verdict: pass
+  human_score: 86
+  positive_result_claims_blocked: true
+  non_node_blockers:
+    - Final submission requires node scores at or above the final threshold of 90
+    - selected_global_best_backend is not locked
+    - RM101 Stage B reject evidence remains unresolved
+    - PHMGA/Vibench adapter sample-level metadata-H5 alignment preflight remains pending
+    - Formal Stage C/D rows are not passed
+    - Broader P0/P2/P3/P4 nodes remain incomplete
+validation:
+  requires_codex_validation: true
+  expected_codex_validator: tools/submission_ready_goal/validate_claude_handoff.py
+handoff_to_codex:
+  safe_to_merge: true
+  recommended_next_action: Codex to verify handoff, update status.yaml human_review_count, and process node toward fix/close
+  blockers: []
