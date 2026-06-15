@@ -8,7 +8,7 @@ venue_format_key_items:
   required_main_sections:
     - abstract
     - introduction
-    - preliminaries
+    - evidence model
     - methods
     - results
     - discussion
@@ -21,18 +21,22 @@ venue_format_key_items:
     - Use section files only as synchronized export targets, not new truth sources.
     - Do not cite graph, Canvas, or dashboard projections as research truth.
     - Material method and motivation claims must use an explicit citation or a local evidence-gate reference.
-    - The P1_09 result signal must be embedded with caption, label, claim_ref, evidence_ref, and provenance if it is mentioned in Results.
+    - The P1_09 result signal must be embedded with caption, label, and publication-facing provenance if it is mentioned in Results; detailed claim and evidence identifiers remain in node-local registries.
+    - PHMGA Stage B rows may be reported only as ledger-bound partial real-data evidence; pending rows with emitted metrics must retain their needs-rerun and non-selection status; no row may imply selected-backend success unless both Ottawa and RM101 accepted rows exist for the same backend.
+    - The RM101 thesis case may be reported only as a simulated-planner mechanism case; it must not imply online Gemini performance, Stage B acceptance, selected-backend success, or leave-domain-out generalization.
+    - Submission-level empirical claims must stay below the closure criteria in artifacts/submission_evidence_gap_matrix.yaml until PHMGA provides accepted Stage C/D and repeated real-data evidence.
 
 markdown_specialization:
   introduction: Convert unfilled upstream introduction into a conservative contribution-and-boundary section.
-  preliminary: Define node, claim-evidence registry, figure manifest, and evidence boundary terms.
+  evidence_model: Define evidence unit, claim-evidence registry, figure manifest, and evidence boundary terms.
   methods: Synchronize the substantive P2_02_04 method source into complete academic paragraphs.
-  results: Convert preliminary synthetic/offline evidence into a bounded result-and-limitation section.
-  references: Use the local citation registry and TeX bibliography for reporting-policy and local-rubric references.
+  results: Convert preliminary synthetic/offline evidence, PHMGA Stage B ledger evidence, and the RM101 simulated-planner case into bounded result-and-limitation sections.
+  references: Use the local citation registry and TeX bibliography for reporting-policy references; retain the local audit rubric only as a reproducibility artifact, not as a bibliography item.
 
 blocked_or_deferred_for_submission:
-  - Formal real-data result claims remain blocked.
-  - RM101 resolution remains blocked.
+  - Cross-dataset real-data performance claims remain blocked.
+  - Formal RM101 Stage B resolution remains blocked.
   - selected_global_best_backend remains unlocked.
   - Stage C/D accepted rows remain unavailable.
   - P1_09 review score remains below the final submission threshold of 90.
+  - Submission-level empirical claims remain blocked until artifacts/submission_evidence_gap_matrix.yaml closure criteria are satisfied.

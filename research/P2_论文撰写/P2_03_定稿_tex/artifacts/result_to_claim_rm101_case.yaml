@@ -1,0 +1,53 @@
+version: p2_03_result_to_claim_rm101_case_v1
+node_id: research::P2_论文撰写::P2_03_定稿_tex
+generated_at: 2026-05-31
+
+source_refs:
+  - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/paper_phmga/thesis_rm101_case/README.md
+  - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/paper_phmga/thesis_rm101_case/assets/metadata.json
+  - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/paper_phmga/thesis_rm101_case/tables/rm101_main_results.tex
+  - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/paper_phmga/thesis_rm101_case/tables/rm101_cross_dag_fusion.tex
+
+claim_decisions:
+  - claim_id: P2_03_C06_RM101_SIMULATED_CASE_STUDY
+    support_status: supported_limited
+    decision: add_bounded_case_study
+    supported_claim: >
+      Under the RM101 all-domain mixed protocol, the thesis_rm101_case package
+      supports a mechanism-level observation: the richest simulated planner DAG
+      has higher recorded test accuracy and macro-F1 than the real BigModel
+      baseline, while cross-DAG late fusion remains below the best single DAG.
+    key_numbers:
+      protocol:
+        dataset_id: 101
+        split: mixed-domain stratified split
+        split_before_windowing: true
+        domain_count: 12
+        window_size: 4096
+        stride: 4096
+        train_val_test_source_records: 146/46/48
+        train_val_test_windows: 27448/8648/9024
+      real_baseline:
+        label: BigModel / GLM-4.7-FlashX
+        test_accuracy: 0.8140514184397163
+        test_macro_f1: 0.8229110215858482
+      best_simulated_variant:
+        label: Gemini 2.5 Pro (simulated, all-domain mixed)
+        best_leaf: torque_normalize_24_rms_10_stft_06_ch6
+        branch_summary: stft -> rms -> torque_normalize
+        test_accuracy: 0.8865248226950354
+        test_macro_f1: 0.8864772952124089
+      cross_dag_late_fusion:
+        test_accuracy: 0.8241356382978723
+        test_macro_f1: 0.8298924465603508
+    not_supported:
+      - online Gemini API superiority
+      - PHMGA Stage B acceptance on RM101
+      - selected_global_best_backend
+      - cross-dataset performance improvement
+      - leave-domain-out generalization
+      - statistical significance or variance
+    manuscript_action:
+      - Add one compact Results subsection/table with explicit simulated-planner boundary.
+      - Keep the PHMGA Stage B reject rows unchanged.
+      - State that this case complements, but does not resolve, the Stage B blocker.

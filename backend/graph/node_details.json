@@ -195,7 +195,7 @@
       "path": "research/P0_项目申请书/P0_01_研究背景与调研",
       "title": "P0_01_研究背景与调研",
       "phase": "P0",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "lite",
       "node_archetype_family": "lite_research_leaf_family",
@@ -203,24 +203,24 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 91,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "distinct_final_threshold_reviewer_codex_p0_01_ai_003_2026-05-05"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P0_项目申请书/P0_01_研究背景与调研/README.md",
       "status_path": "research/P0_项目申请书/P0_01_研究背景与调研/status.yaml",
       "files": [
@@ -234,7 +234,7 @@
           "label": "status.yaml",
           "path": "research/P0_项目申请书/P0_01_研究背景与调研/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -307,19 +307,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P0_项目申请书/P0_01_研究背景与调研/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 91,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
+        "reviewer_agent_id": "distinct_final_threshold_reviewer_codex_p0_01_ai_003_2026-05-05",
+        "reviewer_skill": "distinct_final_threshold_reviewer",
         "downstream_ready": false,
-        "independence_confirmed": false,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P0_项目申请书/P0_01_研究背景与调研"
       },
       "node_entry_packet": {
         "node_path": "research/P0_项目申请书/P0_01_研究背景与调研",
-        "status": "seed",
+        "status": "done",
         "node_mode": "lite",
         "node_archetype_family": "lite_research_leaf_family",
         "node_profile": null,
@@ -362,30 +362,25 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "required_output_missing:docs/manuscript.md 中的背景与相关工作草稿",
         "unmapped_required_output:研究 gap 的一句话版本",
         "required_output_missing:docs/manuscript.md",
-        "required_output_missing:artifacts/literature_gap_map.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/literature_gap_map.yaml"
       ]
     },
     "research::P0_项目申请书::P0_02_研究挑战与科学问题_工程问题": {
       "path": "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题",
       "title": "P0_02_研究挑战与科学问题_工程问题",
       "phase": "P0",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "lite",
       "node_archetype_family": "lite_research_leaf_family",
@@ -393,24 +388,24 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 91,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "AI_003_distinct_final_threshold_re_reviewer_codex_p0_02_2026-05-05"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/README.md",
       "status_path": "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/status.yaml",
       "files": [
@@ -424,7 +419,7 @@
           "label": "status.yaml",
           "path": "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -497,19 +492,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 91,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "AI_003_distinct_final_threshold_re_reviewer_codex_p0_02_2026-05-05",
+        "reviewer_skill": "distinct_final_threshold_re_reviewer",
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题"
       },
       "node_entry_packet": {
         "node_path": "research/P0_项目申请书/P0_02_研究挑战与科学问题_工程问题",
-        "status": "seed",
+        "status": "done",
         "node_mode": "lite",
         "node_archetype_family": "lite_research_leaf_family",
         "node_profile": null,
@@ -551,30 +546,25 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "required_output_missing:docs/manuscript.md 中的问题定义草稿",
         "required_output_missing:科学问题/工程问题映射",
         "required_output_missing:docs/manuscript.md",
-        "required_output_missing:artifacts/literature_gap_map.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/literature_gap_map.yaml"
       ]
     },
     "research::P0_项目申请书::P0_03_研究内容与创新点": {
       "path": "research/P0_项目申请书/P0_03_研究内容与创新点",
       "title": "P0_03_研究内容与创新点",
       "phase": "P0",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "lite",
       "node_archetype_family": "lite_research_leaf_family",
@@ -582,24 +572,24 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "distinct_final_threshold_reviewer_codex_p0_03_AI_003_2026-05-05"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P0_项目申请书/P0_03_研究内容与创新点/README.md",
       "status_path": "research/P0_项目申请书/P0_03_研究内容与创新点/status.yaml",
       "files": [
@@ -613,7 +603,7 @@
           "label": "status.yaml",
           "path": "research/P0_项目申请书/P0_03_研究内容与创新点/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -692,19 +682,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P0_项目申请书/P0_03_研究内容与创新点/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "distinct_final_threshold_reviewer_codex_p0_03_AI_003_2026-05-05",
+        "reviewer_skill": "distinct_final_threshold_reviewer",
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P0_项目申请书/P0_03_研究内容与创新点"
       },
       "node_entry_packet": {
         "node_path": "research/P0_项目申请书/P0_03_研究内容与创新点",
-        "status": "seed",
+        "status": "done",
         "node_mode": "lite",
         "node_archetype_family": "lite_research_leaf_family",
         "node_profile": null,
@@ -746,31 +736,26 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:研究内容清单",
         "unmapped_required_output:创新点清单",
         "unmapped_required_output:内容-问题-创新映射",
         "required_output_missing:docs/manuscript.md",
-        "required_output_missing:artifacts/literature_gap_map.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/literature_gap_map.yaml"
       ]
     },
     "research::P0_项目申请书::P0_04_技术路线_研究计划_OKR": {
       "path": "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR",
       "title": "P0_04_技术路线_研究计划_OKR",
       "phase": "P0",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -778,24 +763,24 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "codex_distinct_final_threshold_p0_04_ai_003_2026-05-05"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/README.md",
       "status_path": "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/status.yaml",
       "files": [
@@ -809,7 +794,7 @@
           "label": "status.yaml",
           "path": "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -889,19 +874,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "codex_distinct_final_threshold_p0_04_ai_003_2026-05-05",
+        "reviewer_skill": "distinct_final_threshold_reviewer",
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR"
       },
       "node_entry_packet": {
         "node_path": "research/P0_项目申请书/P0_04_技术路线_研究计划_OKR",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -944,32 +929,27 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:技术路线草图",
         "unmapped_required_output:阶段性计划与 OKR 草案",
         "unmapped_required_output:风险分支说明",
         "required_output_missing:docs/manuscript.md",
         "required_output_missing:artifacts/claim_evidence_registry.yaml",
-        "required_output_missing:artifacts/risk_decision_map.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/risk_decision_map.yaml"
       ]
     },
     "research::P0_项目申请书::P0_05_项目约束_资源预算_风险边界": {
       "path": "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界",
       "title": "P0_05_项目约束_资源预算_风险边界",
       "phase": "P0",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -977,24 +957,24 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 91,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "distinct_final_threshold_reviewer_codex_p0_05_ai003_2026-05-05"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/README.md",
       "status_path": "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/status.yaml",
       "files": [
@@ -1008,7 +988,7 @@
           "label": "status.yaml",
           "path": "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -1088,19 +1068,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 91,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
+        "reviewer_agent_id": "distinct_final_threshold_reviewer_codex_p0_05_ai003_2026-05-05",
         "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界"
       },
       "node_entry_packet": {
         "node_path": "research/P0_项目申请书/P0_05_项目约束_资源预算_风险边界",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": "hard_gate",
@@ -1143,23 +1123,18 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:资源预算草案",
         "unmapped_required_output:风险边界与降级计划",
         "unmapped_required_output:不做什么的边界说明",
-        "required_output_missing:artifacts/gate_report.md",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/gate_report.md"
       ]
     },
     "research::P1_实验设计与仓库蓝图": {
@@ -1357,7 +1332,7 @@
       "path": "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用",
       "title": "P1_01_数据层_集中数据与子模块引用",
       "phase": "P1",
-      "status": "active",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -1365,21 +1340,21 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "active",
-      "progress_pct": 80,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 93,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "distinct-final-threshold-reviewer-p1-01-002"
       },
-      "can_enter_fix": false,
+      "can_enter_fix": true,
       "heartbeat_at": "2026-05-04",
       "author_agent_id": "codex-local",
       "last_actor": "codex",
@@ -1396,7 +1371,7 @@
           "label": "status.yaml",
           "path": "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/status.yaml",
           "exists": true,
-          "state": "active"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -1476,19 +1451,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 93,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "distinct-final-threshold-reviewer-p1-01-002",
+        "reviewer_skill": "final_threshold_score_reviewer",
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用"
       },
       "node_entry_packet": {
         "node_path": "research/P1_实验设计与仓库蓝图/P1_01_数据层_集中数据与子模块引用",
-        "status": "active",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -1532,33 +1507,28 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
-      "scheduler_ready": true,
+      "placeholder_risk": "suspected",
+      "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:数据层描述",
         "required_output_missing:数据/子模块清单",
         "unmapped_required_output:最小 provenance 说明",
         "required_output_missing:artifacts/claim_evidence_registry.yaml",
         "required_output_missing:artifacts/failure_register.yaml",
         "required_output_missing:artifacts/negative_result_note.md",
-        "required_output_missing:artifacts/keep_discard_ledger.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/keep_discard_ledger.yaml"
       ]
     },
     "research::P1_实验设计与仓库蓝图::P1_02_伪代码": {
       "path": "research/P1_实验设计与仓库蓝图/P1_02_伪代码",
       "title": "P1_02_伪代码",
       "phase": "P1",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "lite",
       "node_archetype_family": "lite_research_leaf_family",
@@ -1566,24 +1536,24 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p1-02-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-04",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex",
       "readme_path": "research/P1_实验设计与仓库蓝图/P1_02_伪代码/README.md",
       "status_path": "research/P1_实验设计与仓库蓝图/P1_02_伪代码/status.yaml",
       "files": [
@@ -1597,7 +1567,7 @@
           "label": "status.yaml",
           "path": "research/P1_实验设计与仓库蓝图/P1_02_伪代码/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -1670,19 +1640,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P1_实验设计与仓库蓝图/P1_02_伪代码/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p1-02-002",
+        "reviewer_skill": "final_threshold_score_reviewer",
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P1_实验设计与仓库蓝图/P1_02_伪代码"
       },
       "node_entry_packet": {
         "node_path": "research/P1_实验设计与仓库蓝图/P1_02_伪代码",
-        "status": "seed",
+        "status": "done",
         "node_mode": "lite",
         "node_archetype_family": "lite_research_leaf_family",
         "node_profile": null,
@@ -1724,29 +1694,24 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:伪代码草案",
         "unmapped_required_output:接口与不变量说明",
-        "required_output_missing:docs/manuscript.md",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:docs/manuscript.md"
       ]
     },
     "research::P1_实验设计与仓库蓝图::P1_03_仓库蓝图": {
       "path": "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图",
       "title": "P1_03_仓库蓝图",
       "phase": "P1",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -1754,24 +1719,24 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p1-03-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-04",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex",
       "readme_path": "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/README.md",
       "status_path": "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/status.yaml",
       "files": [
@@ -1785,7 +1750,7 @@
           "label": "status.yaml",
           "path": "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -1865,19 +1830,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p1-03-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图"
       },
       "node_entry_packet": {
         "node_path": "research/P1_实验设计与仓库蓝图/P1_03_仓库蓝图",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -1920,33 +1885,28 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:repo blueprint",
         "unmapped_required_output:模块图",
         "unmapped_required_output:最小目录方案",
         "required_output_missing:artifacts/claim_evidence_registry.yaml",
         "required_output_missing:artifacts/failure_register.yaml",
         "required_output_missing:artifacts/negative_result_note.md",
-        "required_output_missing:artifacts/keep_discard_ledger.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/keep_discard_ledger.yaml"
       ]
     },
     "research::P1_实验设计与仓库蓝图::P1_04_核心想法轻量验证": {
       "path": "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证",
       "title": "P1_04_核心想法轻量验证",
       "phase": "P1",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "execution",
       "node_archetype_family": "execution_leaf_family",
@@ -1958,24 +1918,24 @@
       "optional_local_reads": [
         "docs/manuscript.md"
       ],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p1-04-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-04",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex",
       "readme_path": "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/README.md",
       "status_path": "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/status.yaml",
       "files": [
@@ -1989,7 +1949,7 @@
           "label": "status.yaml",
           "path": "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -2083,19 +2043,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p1-04-002",
+        "reviewer_skill": "score_only_final_threshold_reviewer",
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证"
       },
       "node_entry_packet": {
         "node_path": "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证",
-        "status": "seed",
+        "status": "done",
         "node_mode": "execution",
         "node_archetype_family": "execution_leaf_family",
         "node_profile": "hard_gate",
@@ -2146,38 +2106,31 @@
         "contract": {
           "path": "research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/execution_contract.yaml",
           "exists": true,
-          "contract_mode": "review_only"
+          "contract_mode": "executable"
         },
-        "execution_contract_ready": false,
-        "next_blocking_gap": [
-          "execution_contract_not_executable"
-        ]
+        "execution_contract_ready": true,
+        "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
-      "execution_gate_state": "review_only",
-      "placeholder_risk": "confirmed",
+      "flags": [],
+      "review_gate_state": "passed",
+      "execution_gate_state": "missing_outputs",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_execution",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "required_output_missing:artifacts/gate_report.md",
         "required_output_missing:artifacts/auto_experiment/results.tsv",
         "required_output_missing:logs/auto_experiment/latest_run.log",
         "unmapped_required_output:轻量验证结论摘要",
-        "quality_checks_incomplete",
-        "execution_review_only",
-        "review_gate_incomplete"
+        "execution_missing_outputs"
       ]
     },
     "research::P1_实验设计与仓库蓝图::P1_05_初步验证结果整理": {
       "path": "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理",
       "title": "P1_05_初步验证结果整理",
       "phase": "P1",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "execution",
       "node_archetype_family": "execution_leaf_family",
@@ -2189,24 +2142,24 @@
       "optional_local_reads": [
         "docs/manuscript.md"
       ],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p1-05-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-04",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex",
       "readme_path": "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/README.md",
       "status_path": "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/status.yaml",
       "files": [
@@ -2220,7 +2173,7 @@
           "label": "status.yaml",
           "path": "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -2314,19 +2267,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p1-05-002",
+        "reviewer_skill": "score_only_final_threshold_reviewer",
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理"
       },
       "node_entry_packet": {
         "node_path": "research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理",
-        "status": "seed",
+        "status": "done",
         "node_mode": "execution",
         "node_archetype_family": "execution_leaf_family",
         "node_profile": "hard_gate",
@@ -2380,36 +2333,29 @@
           "exists": false,
           "contract_mode": null
         },
-        "execution_contract_ready": false,
-        "next_blocking_gap": [
-          "missing_required_read:research/P1_实验设计与仓库蓝图/P1_04_核心想法轻量验证/artifacts/auto_experiment/results.tsv"
-        ]
+        "execution_contract_ready": true,
+        "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "missing_contract",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_execution",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "required_output_missing:artifacts/result_registry.yaml",
         "required_output_missing:artifacts/hypothesis_status.yaml",
         "required_output_missing:artifacts/paper_ready_result_summary.md",
         "required_output_missing:artifacts/gate_report.md",
-        "quality_checks_incomplete",
-        "execution_missing_contract",
-        "review_gate_incomplete"
+        "execution_missing_contract"
       ]
     },
     "research::P1_实验设计与仓库蓝图::P1_06_代码仓库_已有_重新初始化_子模块策略": {
       "path": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略",
       "title": "P1_06_代码仓库_已有_重新初始化_子模块策略",
       "phase": "P1",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "parent",
       "node_archetype_family": "parent_coordination_family",
@@ -2417,24 +2363,24 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 86,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "external_reviewer_codex_p1_06_2026-05-05"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/README.md",
       "status_path": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/status.yaml",
       "files": [
@@ -2448,7 +2394,7 @@
           "label": "status.yaml",
           "path": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -2521,19 +2467,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 86,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
+        "reviewer_agent_id": "external_reviewer_codex_p1_06_2026-05-05",
         "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略"
       },
       "node_entry_packet": {
         "node_path": "research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略",
-        "status": "seed",
+        "status": "done",
         "node_mode": "parent",
         "node_archetype_family": "parent_coordination_family",
         "node_profile": null,
@@ -2572,28 +2518,23 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:仓库策略摘要",
-        "unmapped_required_output:子策略对照表",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "unmapped_required_output:子策略对照表"
       ]
     },
     "research::P1_实验设计与仓库蓝图::P1_07_优化目标_任务_评测协议": {
       "path": "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议",
       "title": "P1_07_优化目标_任务_评测协议",
       "phase": "P1",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -2601,24 +2542,24 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 90,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p1-07-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/README.md",
       "status_path": "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/status.yaml",
       "files": [
@@ -2632,7 +2573,7 @@
           "label": "status.yaml",
           "path": "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -2725,19 +2666,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 90,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p1-07-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议"
       },
       "node_entry_packet": {
         "node_path": "research/P1_实验设计与仓库蓝图/P1_07_优化目标_任务_评测协议",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": "hard_gate",
@@ -2781,29 +2722,24 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:protocol_map",
         "unmapped_required_output:可执行评测协议摘要",
-        "required_output_missing:artifacts/gate_report.md",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/gate_report.md"
       ]
     },
     "research::P1_实验设计与仓库蓝图::P1_08_预期结果与表格": {
       "path": "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格",
       "title": "P1_08_预期结果与表格",
       "phase": "P1",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -2811,24 +2747,24 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 91,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p1-08-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/README.md",
       "status_path": "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/status.yaml",
       "files": [
@@ -2842,7 +2778,7 @@
           "label": "status.yaml",
           "path": "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -2929,19 +2865,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 91,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p1-08-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格"
       },
       "node_entry_packet": {
         "node_path": "research/P1_实验设计与仓库蓝图/P1_08_预期结果与表格",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -2985,32 +2921,27 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:table_plan",
         "unmapped_required_output:claim_map",
         "required_output_missing:artifacts/claim_evidence_registry.yaml",
         "required_output_missing:artifacts/failure_register.yaml",
         "required_output_missing:artifacts/negative_result_note.md",
-        "required_output_missing:artifacts/keep_discard_ledger.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/keep_discard_ledger.yaml"
       ]
     },
     "research::P1_实验设计与仓库蓝图::P1_09_结果图与草稿": {
       "path": "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿",
       "title": "P1_09_结果图与草稿",
       "phase": "P1",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -3022,24 +2953,24 @@
         "artifacts/figure_plan.yaml"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 91,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p1-09-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-04",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/README.md",
       "status_path": "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/status.yaml",
       "files": [
@@ -3053,7 +2984,7 @@
           "label": "status.yaml",
           "path": "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -3140,19 +3071,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 91,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p1-09-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿"
       },
       "node_entry_packet": {
         "node_path": "research/P1_实验设计与仓库蓝图/P1_09_结果图与草稿",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -3205,26 +3136,21 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:figure_plan",
         "unmapped_required_output:claim_figure_map",
         "required_output_missing:figures/",
         "required_output_missing:artifacts/claim_evidence_registry.yaml",
         "required_output_missing:artifacts/failure_register.yaml",
         "required_output_missing:artifacts/negative_result_note.md",
-        "required_output_missing:artifacts/keep_discard_ledger.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/keep_discard_ledger.yaml"
       ]
     },
     "research::P2_论文撰写": {
@@ -3422,7 +3348,7 @@
       "path": "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature",
       "title": "P2_01_风格选择_IEEE_Elsevier_Nature",
       "phase": "P2",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "lite",
       "node_archetype_family": "lite_research_leaf_family",
@@ -3430,24 +3356,24 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "external_reviewer_codex_p2_01_final_threshold_2026-05-05"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/README.md",
       "status_path": "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/status.yaml",
       "files": [
@@ -3461,7 +3387,7 @@
           "label": "status.yaml",
           "path": "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -3534,19 +3460,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
+        "reviewer_agent_id": "external_reviewer_codex_p2_01_final_threshold_2026-05-05",
         "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature"
       },
       "node_entry_packet": {
         "node_path": "research/P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature",
-        "status": "seed",
+        "status": "done",
         "node_mode": "lite",
         "node_archetype_family": "lite_research_leaf_family",
         "node_profile": null,
@@ -3588,23 +3514,18 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:venue-fit 比较",
         "unmapped_required_output:推荐风格与理由",
         "required_output_missing:artifacts/venue_requirements.yaml",
-        "required_output_missing:docs/manuscript.md",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:docs/manuscript.md"
       ]
     },
     "research::P2_论文撰写::P2_02_初稿_md": {
@@ -3800,7 +3721,7 @@
       "path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言",
       "title": "P2_02_01_引言",
       "phase": "P2",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "lite",
       "node_archetype_family": "lite_research_leaf_family",
@@ -3810,24 +3731,24 @@
         "../artifacts/outline_map.yaml"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "external_reviewer_codex_p2_02_01_final_threshold_2026-05-05"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/README.md",
       "status_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/status.yaml",
       "files": [
@@ -3841,7 +3762,7 @@
           "label": "status.yaml",
           "path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -3914,19 +3835,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
+        "reviewer_agent_id": "external_reviewer_codex_p2_02_01_final_threshold_2026-05-05",
         "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言"
       },
       "node_entry_packet": {
         "node_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_01_引言",
-        "status": "seed",
+        "status": "done",
         "node_mode": "lite",
         "node_archetype_family": "lite_research_leaf_family",
         "node_profile": null,
@@ -3968,32 +3889,26 @@
           "contract_mode": null
         },
         "execution_contract_ready": false,
-        "next_blocking_gap": [
-          "missing_required_read:../artifacts/outline_map.yaml"
-        ]
+        "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:引言草稿",
         "required_output_missing:docs/manuscript.md",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/citation_trace.yaml"
       ]
     },
     "research::P2_论文撰写::P2_02_初稿_md::P2_02_02_preliminary": {
       "path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary",
       "title": "P2_02_02_preliminary",
       "phase": "P2",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "lite",
       "node_archetype_family": "lite_research_leaf_family",
@@ -4003,24 +3918,24 @@
         "../artifacts/outline_map.yaml"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "external_reviewer_codex_p2_02_02_final_threshold_2026-05-05"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/README.md",
       "status_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/status.yaml",
       "files": [
@@ -4034,7 +3949,7 @@
           "label": "status.yaml",
           "path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -4107,19 +4022,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
+        "reviewer_agent_id": "external_reviewer_codex_p2_02_02_final_threshold_2026-05-05",
         "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary"
       },
       "node_entry_packet": {
         "node_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary",
-        "status": "seed",
+        "status": "done",
         "node_mode": "lite",
         "node_archetype_family": "lite_research_leaf_family",
         "node_profile": null,
@@ -4162,32 +4077,26 @@
           "contract_mode": null
         },
         "execution_contract_ready": false,
-        "next_blocking_gap": [
-          "missing_required_read:../artifacts/outline_map.yaml"
-        ]
+        "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:preliminary 草稿",
         "required_output_missing:docs/manuscript.md",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/positioning_matrix.yaml"
       ]
     },
     "research::P2_论文撰写::P2_02_初稿_md::P2_02_03_流程图草稿": {
       "path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿",
       "title": "P2_02_03_流程图草稿",
       "phase": "P2",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -4198,24 +4107,24 @@
         "docs/manuscript.md"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "external_reviewer_codex_p2_02_03_final_threshold_2026-05-05"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/README.md",
       "status_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/status.yaml",
       "files": [
@@ -4229,7 +4138,7 @@
           "label": "status.yaml",
           "path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -4309,19 +4218,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
+        "reviewer_agent_id": "external_reviewer_codex_p2_02_03_final_threshold_2026-05-05",
         "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿"
       },
       "node_entry_packet": {
         "node_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -4368,34 +4277,30 @@
           "contract_mode": null
         },
         "execution_contract_ready": false,
-        "next_blocking_gap": [
-          "missing_required_read:../artifacts/outline_map.yaml"
-        ]
+        "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:流程图草稿或说明",
         "unmapped_required_output:配套 caption 草稿",
         "required_output_missing:docs/manuscript.md",
         "required_output_missing:artifacts/claim_evidence_registry.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:figures/fig_workflow_evidence_path.svg",
+        "required_output_missing:artifacts/figure_plan.yaml",
+        "required_output_missing:artifacts/figure_manifest.yaml"
       ]
     },
     "research::P2_论文撰写::P2_02_初稿_md::P2_02_04_方法": {
       "path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法",
       "title": "P2_02_04_方法",
       "phase": "P2",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -4405,24 +4310,24 @@
         "../artifacts/outline_map.yaml"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "external_codex_reviewer_p2_02_04_ai002_2026_05_05"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/README.md",
       "status_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/status.yaml",
       "files": [
@@ -4436,7 +4341,7 @@
           "label": "status.yaml",
           "path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -4522,19 +4427,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "external_codex_reviewer_p2_02_04_ai002_2026_05_05",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法"
       },
       "node_entry_packet": {
         "node_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -4577,33 +4482,26 @@
           "contract_mode": null
         },
         "execution_contract_ready": false,
-        "next_blocking_gap": [
-          "missing_required_read:../artifacts/outline_map.yaml"
-        ]
+        "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:methods 草稿",
         "required_output_missing:docs/manuscript.md",
-        "required_output_missing:artifacts/claim_evidence_registry.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/claim_evidence_registry.yaml"
       ]
     },
     "research::P2_论文撰写::P2_02_初稿_md::P2_02_05_实验与讨论": {
       "path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论",
       "title": "P2_02_05_实验与讨论",
       "phase": "P2",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -4616,24 +4514,24 @@
         "../../../P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/claim_evidence_registry.yaml"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 91.0,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "codex-external-ai-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/README.md",
       "status_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/status.yaml",
       "files": [
@@ -4647,7 +4545,7 @@
           "label": "status.yaml",
           "path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -4727,19 +4625,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 91.0,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
+        "reviewer_agent_id": "codex-external-ai-002",
         "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论"
       },
       "node_entry_packet": {
         "node_path": "research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -4789,35 +4687,26 @@
           "contract_mode": null
         },
         "execution_contract_ready": false,
-        "next_blocking_gap": [
-          "missing_required_read:../artifacts/outline_map.yaml",
-          "missing_required_read:artifacts/claim_map.yaml",
-          "missing_required_read:../../../P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/claim_evidence_registry.yaml"
-        ]
+        "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:实验与讨论草稿",
         "required_output_missing:docs/manuscript.md",
-        "required_output_missing:artifacts/claim_evidence_registry.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/claim_evidence_registry.yaml"
       ]
     },
     "research::P2_论文撰写::P2_03_定稿_tex": {
       "path": "research/P2_论文撰写/P2_03_定稿_tex",
       "title": "P2_03_定稿_tex",
       "phase": "P2",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -4829,24 +4718,24 @@
         "sync_map.yaml"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
+        "ai_review_count": 2,
         "human_review_count": 0,
-        "all_comments_responded": false,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92.3,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "external_reviewer_p2_03_ai002_2026_05_05"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P2_论文撰写/P2_03_定稿_tex/README.md",
       "status_path": "research/P2_论文撰写/P2_03_定稿_tex/status.yaml",
       "files": [
@@ -4860,7 +4749,7 @@
           "label": "status.yaml",
           "path": "research/P2_论文撰写/P2_03_定稿_tex/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -4959,19 +4848,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P2_论文撰写/P2_03_定稿_tex/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92.3,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
+        "reviewer_agent_id": "external_reviewer_p2_03_ai002_2026_05_05",
         "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P2_论文撰写/P2_03_定稿_tex"
       },
       "node_entry_packet": {
         "node_path": "research/P2_论文撰写/P2_03_定稿_tex",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -5021,30 +4910,25 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:tex 草稿或同步计划",
         "unmapped_required_output:导出约束清单",
         "required_output_missing:docs/manuscript.md",
-        "required_output_missing:artifacts/claim_evidence_registry.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/claim_evidence_registry.yaml"
       ]
     },
     "research::P2_论文撰写::P2_04_形式检查": {
       "path": "research/P2_论文撰写/P2_04_形式检查",
       "title": "P2_04_形式检查",
       "phase": "P2",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "execution",
       "node_archetype_family": "execution_leaf_family",
@@ -5057,24 +4941,24 @@
         "../P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_manifest.yaml"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 90.9,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "codex_external_ai_002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P2_论文撰写/P2_04_形式检查/README.md",
       "status_path": "research/P2_论文撰写/P2_04_形式检查/status.yaml",
       "files": [
@@ -5088,7 +4972,7 @@
           "label": "status.yaml",
           "path": "research/P2_论文撰写/P2_04_形式检查/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -5182,19 +5066,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P2_论文撰写/P2_04_形式检查/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 90.9,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "codex_external_ai_002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P2_论文撰写/P2_04_形式检查"
       },
       "node_entry_packet": {
         "node_path": "research/P2_论文撰写/P2_04_形式检查",
-        "status": "seed",
+        "status": "done",
         "node_mode": "execution",
         "node_archetype_family": "execution_leaf_family",
         "node_profile": "hard_gate",
@@ -5250,38 +5134,29 @@
           "contract_mode": null
         },
         "execution_contract_ready": false,
-        "next_blocking_gap": [
-          "missing_required_read:../P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml",
-          "missing_required_read:../P2_03_定稿_tex/artifacts/citation_registry.yaml",
-          "missing_required_read:../P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_manifest.yaml"
-        ]
+        "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "missing_contract",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_execution",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "required_output_missing:artifacts/formal_check_report.md",
         "required_output_missing:artifacts/gate_report.md",
         "required_output_missing:artifacts/citation_registry.yaml",
         "required_output_missing:artifacts/figure_manifest.yaml",
         "required_output_missing:artifacts/venue_requirements.yaml",
-        "quality_checks_incomplete",
-        "execution_missing_contract",
-        "review_gate_incomplete"
+        "execution_missing_contract"
       ]
     },
     "research::P2_论文撰写::P2_05_去AI味道": {
       "path": "research/P2_论文撰写/P2_05_去AI味道",
       "title": "P2_05_去AI味道",
       "phase": "P2",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -5291,24 +5166,24 @@
         "docs/manuscript.md"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92.9,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "external_node_reviewer_codex_p2_05_ai_003_2026-05-05"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P2_论文撰写/P2_05_去AI味道/README.md",
       "status_path": "research/P2_论文撰写/P2_05_去AI味道/status.yaml",
       "files": [
@@ -5322,7 +5197,7 @@
           "label": "status.yaml",
           "path": "research/P2_论文撰写/P2_05_去AI味道/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -5402,19 +5277,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P2_论文撰写/P2_05_去AI味道/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92.9,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
+        "reviewer_agent_id": "external_node_reviewer_codex_p2_05_ai_003_2026-05-05",
         "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P2_论文撰写/P2_05_去AI味道"
       },
       "node_entry_packet": {
         "node_path": "research/P2_论文撰写/P2_05_去AI味道",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -5460,22 +5335,18 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:去风格化修订建议或局部改写",
         "required_output_missing:docs/manuscript.md",
         "required_output_missing:artifacts/claim_evidence_registry.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/academic_expression_claim_calibration.md"
       ]
     },
     "research::P3_论文模拟评审与修改_多轮": {
@@ -5676,7 +5547,7 @@
       "path": "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次",
       "title": "P3_01_评审轮次",
       "phase": "P3",
-      "status": "active",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "lite",
       "node_archetype_family": "lite_research_leaf_family",
@@ -5687,24 +5558,24 @@
         "../../P2_论文撰写/P2_03_定稿_tex/tex/main.tex"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "active",
-      "progress_pct": 40,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 93,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p3-01-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-20",
-      "author_agent_id": "codex",
-      "last_actor": "codex",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/README.md",
       "status_path": "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/status.yaml",
       "files": [
@@ -5718,7 +5589,7 @@
           "label": "status.yaml",
           "path": "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/status.yaml",
           "exists": true,
-          "state": "active"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -5791,19 +5662,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 93,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p3-01-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次"
       },
       "node_entry_packet": {
         "node_path": "research/P3_论文模拟评审与修改_多轮/P3_01_评审轮次",
-        "status": "active",
+        "status": "done",
         "node_mode": "lite",
         "node_archetype_family": "lite_research_leaf_family",
         "node_profile": null,
@@ -5849,29 +5720,26 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:review_round_index",
         "unmapped_required_output:每轮目标定义",
         "required_output_missing:docs/manuscript.md",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/review_round_notes.md",
+        "required_output_missing:artifacts/review_round_index.yaml"
       ]
     },
     "research::P3_论文模拟评审与修改_多轮::P3_02_评价者档案": {
       "path": "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案",
       "title": "P3_02_评价者档案",
       "phase": "P3",
-      "status": "active",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -5881,24 +5749,24 @@
         "../prompts/standards.md"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "active",
-      "progress_pct": 45,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 94,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p3-02-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-20",
-      "author_agent_id": "codex",
-      "last_actor": "codex",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/README.md",
       "status_path": "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/status.yaml",
       "files": [
@@ -5912,7 +5780,7 @@
           "label": "status.yaml",
           "path": "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/status.yaml",
           "exists": true,
-          "state": "active"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -5992,19 +5860,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 94,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p3-02-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案"
       },
       "node_entry_packet": {
         "node_path": "research/P3_论文模拟评审与修改_多轮/P3_02_评价者档案",
-        "status": "active",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -6051,33 +5919,29 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:reviewer profile 草案",
         "required_output_missing:artifacts/claim_evidence_registry.yaml",
         "required_output_missing:artifacts/failure_register.yaml",
         "required_output_missing:artifacts/negative_result_note.md",
         "required_output_missing:artifacts/keep_discard_ledger.yaml",
         "required_output_missing:artifacts/reviewer_lens_matrix.yaml",
-        "required_output_missing:logs/session_manifest.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/reviewer_profile_map.yaml",
+        "required_output_missing:logs/session_manifest.yaml"
       ]
     },
     "research::P3_论文模拟评审与修改_多轮::P3_03_批评摘要": {
       "path": "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要",
       "title": "P3_03_批评摘要",
       "phase": "P3",
-      "status": "active",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -6088,24 +5952,24 @@
         "review/"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "active",
-      "progress_pct": 50,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 94,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p3-03-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-20",
-      "author_agent_id": "codex",
-      "last_actor": "codex",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/README.md",
       "status_path": "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/status.yaml",
       "files": [
@@ -6119,7 +5983,7 @@
           "label": "status.yaml",
           "path": "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/status.yaml",
           "exists": true,
-          "state": "active"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -6199,19 +6063,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 94,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p3-03-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要"
       },
       "node_entry_packet": {
         "node_path": "research/P3_论文模拟评审与修改_多轮/P3_03_批评摘要",
-        "status": "active",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -6262,17 +6126,14 @@
           "missing_required_read:review/"
         ]
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "none",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:critique digest",
         "unmapped_required_output:问题聚类结果",
         "required_output_missing:artifacts/claim_evidence_registry.yaml",
@@ -6281,16 +6142,14 @@
         "required_output_missing:artifacts/keep_discard_ledger.yaml",
         "required_output_missing:artifacts/critique_digest.yaml",
         "required_output_missing:artifacts/review_issue_register.yaml",
-        "required_output_missing:logs/session_manifest.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:logs/session_manifest.yaml"
       ]
     },
     "research::P3_论文模拟评审与修改_多轮::P3_04_修订动作": {
       "path": "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作",
       "title": "P3_04_修订动作",
       "phase": "P3",
-      "status": "active",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -6300,24 +6159,24 @@
         "../prompts/standards.md"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "active",
-      "progress_pct": 50,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 94,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p3-04-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-20",
-      "author_agent_id": "codex",
-      "last_actor": "codex",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/README.md",
       "status_path": "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/status.yaml",
       "files": [
@@ -6331,7 +6190,7 @@
           "label": "status.yaml",
           "path": "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/status.yaml",
           "exists": true,
-          "state": "active"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -6411,19 +6270,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 94,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p3-04-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作"
       },
       "node_entry_packet": {
         "node_path": "research/P3_论文模拟评审与修改_多轮/P3_04_修订动作",
-        "status": "active",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": "hard_gate",
@@ -6468,23 +6327,18 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "none",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:revision action map",
         "required_output_missing:artifacts/review_issue_register.yaml",
         "required_output_missing:artifacts/critique_digest.yaml",
-        "required_output_missing:artifacts/revision_action_map.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/revision_action_map.yaml"
       ]
     },
     "research::P4_论文回复_response": {
@@ -6682,7 +6536,7 @@
       "path": "research/P4_论文回复_response/P4_01_审稿意见收集",
       "title": "P4_01_审稿意见收集",
       "phase": "P4",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -6690,24 +6544,24 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 94,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p4-01-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P4_论文回复_response/P4_01_审稿意见收集/README.md",
       "status_path": "research/P4_论文回复_response/P4_01_审稿意见收集/status.yaml",
       "files": [
@@ -6721,7 +6575,7 @@
           "label": "status.yaml",
           "path": "research/P4_论文回复_response/P4_01_审稿意见收集/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -6801,19 +6655,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P4_论文回复_response/P4_01_审稿意见收集/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 94,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p4-01-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P4_论文回复_response/P4_01_审稿意见收集"
       },
       "node_entry_packet": {
         "node_path": "research/P4_论文回复_response/P4_01_审稿意见收集",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -6855,31 +6709,26 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "none",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:标准化 comments 列表",
         "required_output_missing:artifacts/claim_evidence_registry.yaml",
         "required_output_missing:artifacts/failure_register.yaml",
         "required_output_missing:artifacts/negative_result_note.md",
-        "required_output_missing:artifacts/keep_discard_ledger.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/keep_discard_ledger.yaml"
       ]
     },
     "research::P4_论文回复_response::P4_02_问题映射矩阵": {
       "path": "research/P4_论文回复_response/P4_02_问题映射矩阵",
       "title": "P4_02_问题映射矩阵",
       "phase": "P4",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -6887,24 +6736,24 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 94,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p4-02-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P4_论文回复_response/P4_02_问题映射矩阵/README.md",
       "status_path": "research/P4_论文回复_response/P4_02_问题映射矩阵/status.yaml",
       "files": [
@@ -6918,7 +6767,7 @@
           "label": "status.yaml",
           "path": "research/P4_论文回复_response/P4_02_问题映射矩阵/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -7005,19 +6854,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P4_论文回复_response/P4_02_问题映射矩阵/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 94,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p4-02-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P4_论文回复_response/P4_02_问题映射矩阵"
       },
       "node_entry_packet": {
         "node_path": "research/P4_论文回复_response/P4_02_问题映射矩阵",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -7060,31 +6909,26 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:问题映射矩阵",
         "required_output_missing:artifacts/claim_evidence_registry.yaml",
         "required_output_missing:artifacts/failure_register.yaml",
         "required_output_missing:artifacts/negative_result_note.md",
-        "required_output_missing:artifacts/keep_discard_ledger.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/keep_discard_ledger.yaml"
       ]
     },
     "research::P4_论文回复_response::P4_03_逐点回复草稿_md": {
       "path": "research/P4_论文回复_response/P4_03_逐点回复草稿_md",
       "title": "P4_03_逐点回复草稿_md",
       "phase": "P4",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "lite",
       "node_archetype_family": "lite_research_leaf_family",
@@ -7095,24 +6939,24 @@
         "../P4_02_问题映射矩阵/artifacts/question_mapping_matrix.yaml"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p4-03-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P4_论文回复_response/P4_03_逐点回复草稿_md/README.md",
       "status_path": "research/P4_论文回复_response/P4_03_逐点回复草稿_md/status.yaml",
       "files": [
@@ -7126,7 +6970,7 @@
           "label": "status.yaml",
           "path": "research/P4_论文回复_response/P4_03_逐点回复草稿_md/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -7199,19 +7043,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P4_论文回复_response/P4_03_逐点回复草稿_md/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p4-03-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P4_论文回复_response/P4_03_逐点回复草稿_md"
       },
       "node_entry_packet": {
         "node_path": "research/P4_论文回复_response/P4_03_逐点回复草稿_md",
-        "status": "seed",
+        "status": "done",
         "node_mode": "lite",
         "node_archetype_family": "lite_research_leaf_family",
         "node_profile": null,
@@ -7259,28 +7103,23 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "suspected",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:逐点回复草稿",
-        "required_output_missing:docs/manuscript.md",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:docs/manuscript.md"
       ]
     },
     "research::P4_论文回复_response::P4_04_正式回复_tex_或_doc": {
       "path": "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc",
       "title": "P4_04_正式回复_tex_或_doc",
       "phase": "P4",
-      "status": "active",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -7288,24 +7127,24 @@
       "execution_profile": null,
       "required_local_reads": [],
       "optional_local_reads": [],
-      "lifecycle_stage": "active",
-      "progress_pct": 25,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 94,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p4-04-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-29",
-      "author_agent_id": "codex-p4-04-template-scaffold",
-      "last_actor": "codex",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/README.md",
       "status_path": "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/status.yaml",
       "files": [
@@ -7319,7 +7158,7 @@
           "label": "status.yaml",
           "path": "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/status.yaml",
           "exists": true,
-          "state": "active"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -7406,19 +7245,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 94,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p4-04-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc"
       },
       "node_entry_packet": {
         "node_path": "research/P4_论文回复_response/P4_04_正式回复_tex_或_doc",
-        "status": "active",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -7461,31 +7300,26 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "none",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:正式回复文档",
         "required_output_missing:artifacts/claim_evidence_registry.yaml",
         "required_output_missing:artifacts/failure_register.yaml",
         "required_output_missing:artifacts/negative_result_note.md",
-        "required_output_missing:artifacts/keep_discard_ledger.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/keep_discard_ledger.yaml"
       ]
     },
     "research::P4_论文回复_response::P4_05_覆盖检查": {
       "path": "research/P4_论文回复_response/P4_05_覆盖检查",
       "title": "P4_05_覆盖检查",
       "phase": "P4",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -7496,24 +7330,24 @@
         "../P4_03_逐点回复草稿_md/docs/manuscript.md"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 94,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p4-05-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P4_论文回复_response/P4_05_覆盖检查/README.md",
       "status_path": "research/P4_论文回复_response/P4_05_覆盖检查/status.yaml",
       "files": [
@@ -7527,7 +7361,7 @@
           "label": "status.yaml",
           "path": "research/P4_论文回复_response/P4_05_覆盖检查/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -7614,19 +7448,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P4_论文回复_response/P4_05_覆盖检查/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 94,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p4-05-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P4_论文回复_response/P4_05_覆盖检查"
       },
       "node_entry_packet": {
         "node_path": "research/P4_论文回复_response/P4_05_覆盖检查",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": "hard_gate",
@@ -7674,29 +7508,24 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "none",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "required_output_missing:artifacts/coverage_check_report.yaml",
         "required_output_missing:artifacts/question_mapping_matrix.yaml",
-        "required_output_missing:artifacts/revision_evidence_map.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/revision_evidence_map.yaml"
       ]
     },
     "research::P4_论文回复_response::P4_06_修改证据": {
       "path": "research/P4_论文回复_response/P4_06_修改证据",
       "title": "P4_06_修改证据",
       "phase": "P4",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "standard",
       "node_archetype_family": "standard_research_leaf_family",
@@ -7708,24 +7537,24 @@
         "../../P2_论文撰写/P2_03_定稿_tex/tex/main.tex"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 93,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p4-06-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P4_论文回复_response/P4_06_修改证据/README.md",
       "status_path": "research/P4_论文回复_response/P4_06_修改证据/status.yaml",
       "files": [
@@ -7739,7 +7568,7 @@
           "label": "status.yaml",
           "path": "research/P4_论文回复_response/P4_06_修改证据/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -7826,19 +7655,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P4_论文回复_response/P4_06_修改证据/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 93,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p4-06-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P4_论文回复_response/P4_06_修改证据"
       },
       "node_entry_packet": {
         "node_path": "research/P4_论文回复_response/P4_06_修改证据",
-        "status": "seed",
+        "status": "done",
         "node_mode": "standard",
         "node_archetype_family": "standard_research_leaf_family",
         "node_profile": null,
@@ -7888,31 +7717,26 @@
         "execution_contract_ready": false,
         "next_blocking_gap": []
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "not_applicable",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "none",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_truth",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "unmapped_required_output:revision evidence map",
         "required_output_missing:artifacts/claim_evidence_registry.yaml",
         "required_output_missing:artifacts/failure_register.yaml",
         "required_output_missing:artifacts/negative_result_note.md",
-        "required_output_missing:artifacts/keep_discard_ledger.yaml",
-        "quality_checks_incomplete",
-        "review_gate_incomplete"
+        "required_output_missing:artifacts/keep_discard_ledger.yaml"
       ]
     },
     "research::P4_论文回复_response::P4_07_再投稿打包": {
       "path": "research/P4_论文回复_response/P4_07_再投稿打包",
       "title": "P4_07_再投稿打包",
       "phase": "P4",
-      "status": "seed",
+      "status": "done",
       "kind": "leaf",
       "node_mode": "execution",
       "node_archetype_family": "execution_leaf_family",
@@ -7931,24 +7755,24 @@
         "artifacts/tables/"
       ],
       "optional_local_reads": [],
-      "lifecycle_stage": "seed",
-      "progress_pct": 0,
+      "lifecycle_stage": "done",
+      "progress_pct": 100,
       "review_gate": {
-        "ai_review_count": 0,
-        "human_review_count": 0,
-        "all_comments_responded": false,
+        "ai_review_count": 1,
+        "human_review_count": 1,
+        "all_comments_responded": true,
         "response_exists": true,
         "external_ai_review_required": true,
-        "external_ai_review_complete": false,
-        "external_ai_review_verdict": "revise",
-        "external_ai_review_score": null,
+        "external_ai_review_complete": true,
+        "external_ai_review_verdict": "pass",
+        "external_ai_review_score": 92.0,
         "external_ai_review_hard_fail": false,
-        "external_ai_reviewer_id": "<pending-distinct-agent>"
+        "external_ai_reviewer_id": "final-threshold-reviewer-p4-07-002"
       },
-      "can_enter_fix": false,
-      "heartbeat_at": "2026-04-10",
-      "author_agent_id": "<pending-author-agent>",
-      "last_actor": "system",
+      "can_enter_fix": true,
+      "heartbeat_at": "2026-05-05",
+      "author_agent_id": "codex-local",
+      "last_actor": "codex-local",
       "readme_path": "research/P4_论文回复_response/P4_07_再投稿打包/README.md",
       "status_path": "research/P4_论文回复_response/P4_07_再投稿打包/status.yaml",
       "files": [
@@ -7962,7 +7786,7 @@
           "label": "status.yaml",
           "path": "research/P4_论文回复_response/P4_07_再投稿打包/status.yaml",
           "exists": true,
-          "state": "seed"
+          "state": "done"
         },
         {
           "label": "docs/manuscript.md",
@@ -8056,19 +7880,19 @@
         "rubric_exists": true,
         "verdict_path": "research/P4_论文回复_response/P4_07_再投稿打包/review/verdict.yaml",
         "verdict_exists": true,
-        "review_complete": false,
-        "overall_verdict": "revise",
-        "overall_score": null,
+        "review_complete": true,
+        "overall_verdict": "pass",
+        "overall_score": 92.0,
         "hard_fail": false,
-        "reviewer_agent_id": "<pending-distinct-agent>",
-        "reviewer_skill": "external_node_reviewer",
-        "downstream_ready": false,
-        "independence_confirmed": false,
+        "reviewer_agent_id": "final-threshold-reviewer-p4-07-002",
+        "reviewer_skill": null,
+        "downstream_ready": true,
+        "independence_confirmed": true,
         "reviewed_node_path": "research/P4_论文回复_response/P4_07_再投稿打包"
       },
       "node_entry_packet": {
         "node_path": "research/P4_论文回复_response/P4_07_再投稿打包",
-        "status": "seed",
+        "status": "done",
         "node_mode": "execution",
         "node_archetype_family": "execution_leaf_family",
         "node_profile": "hard_gate",
@@ -8137,33 +7961,23 @@
         },
         "execution_contract_ready": false,
         "next_blocking_gap": [
-          "missing_required_read:artifacts/evidence_registry.yaml",
-          "missing_required_read:artifacts/submission_metadata.yaml",
-          "missing_required_read:../../P2_论文撰写/P2_03_定稿_tex/artifacts/citation_registry.yaml",
-          "missing_required_read:../../P2_论文撰写/P2_02_初稿_md/P2_02_03_流程图草稿/artifacts/figure_manifest.yaml",
-          "missing_required_read:../../P2_论文撰写/P2_01_风格选择_IEEE_Elsevier_Nature/artifacts/venue_requirements.yaml",
           "missing_required_read:artifacts/figures/",
           "missing_required_read:artifacts/tables/"
         ]
       },
-      "flags": [
-        "review-not-started"
-      ],
-      "review_gate_state": "incomplete",
+      "flags": [],
+      "review_gate_state": "passed",
       "execution_gate_state": "missing_contract",
-      "placeholder_risk": "confirmed",
+      "placeholder_risk": "none",
       "scheduler_ready": false,
       "truth_ready": false,
       "handoff_readiness": "blocked_execution",
       "blocking_reasons": [
-        "required_questions_incomplete",
         "required_output_missing:artifacts/resubmission_bundle_manifest.yaml",
         "required_output_missing:artifacts/question_mapping_matrix.yaml",
         "required_output_missing:artifacts/coverage_check_report.yaml",
         "required_output_missing:artifacts/revision_evidence_map.yaml",
-        "quality_checks_incomplete",
-        "execution_missing_contract",
-        "review_gate_incomplete"
+        "execution_missing_contract"
       ]
     }
   }

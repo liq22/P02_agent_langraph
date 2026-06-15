@@ -64,6 +64,68 @@ no_upgrade_checks:
   selected_backend_success_claim_added: false
   stage_c_or_d_success_claim_added: false
   final_submission_ready_claimed: false
+subsequent_publication_prose_calibration:
+  date: 2026-05-31
+  scope:
+    - tex/main.tex
+    - tex/sections/introduction.tex
+    - tex/sections/preliminary.tex
+    - tex/sections/experiment.tex
+  effect: >
+    Replaced remaining workflow-log expressions with publication-facing
+    manuscript language while preserving the existing PHMGA Stage B, RM101
+    simulated-planner, selected-backend, Stage C/D, variance, and
+    submission-level empirical-performance boundaries.
+  compile_verification:
+    command: lualatex -interaction=nonstopmode -halt-on-error main.tex
+    cwd: research/P2_论文撰写/P2_03_定稿_tex/tex
+    exit_code: 0
+    runs: 2
+    output_pdf: research/P2_论文撰写/P2_03_定稿_tex/tex/main.pdf
+    pages: 7
+    nonfatal_warnings:
+      - luaotfload-main not found; TeX reverted to OT1 layer
+      - URL and repository-path underfull hbox warnings in bibliography
+  no_upgrade_checks:
+    new_dataset_added: false
+    new_baseline_added: false
+    new_statistical_claim_added: false
+    formal_performance_claim_added: false
+    rm101_resolution_claim_added: false
+    selected_backend_success_claim_added: false
+    stage_c_or_d_success_claim_added: false
+    final_submission_ready_claimed: false
+subsequent_evidence_model_definition_polish:
+  date: 2026-05-31
+  scope:
+    - tex/sections/preliminary.tex
+    - docs/manuscript.md
+  effect: >
+    Rewrote the Evidence Model section in less system-descriptive language:
+    the evidence unit is now the accounting unit between experiment and claim,
+    claim records answer the strongest-statement question for each paragraph,
+    table, or figure, and the method contribution is stated as preserving
+    accepted/rejected/pending distinctions without changing PHMGA or RM101
+    evidence strength.
+  compile_verification:
+    command: lualatex -interaction=nonstopmode -halt-on-error main.tex
+    cwd: research/P2_论文撰写/P2_03_定稿_tex/tex
+    exit_code: 0
+    runs: 2
+    output_pdf: research/P2_论文撰写/P2_03_定稿_tex/tex/main.pdf
+    pages: 7
+    nonfatal_warnings:
+      - luaotfload-main not found; TeX reverted to OT1 layer
+      - URL underfull hbox warnings in bibliography
+  no_upgrade_checks:
+    new_dataset_added: false
+    new_baseline_added: false
+    new_statistical_claim_added: false
+    formal_performance_claim_added: false
+    rm101_resolution_claim_added: false
+    selected_backend_success_claim_added: false
+    stage_c_or_d_success_claim_added: false
+    final_submission_ready_claimed: false
 current_final_gate_boundary:
   P1_checklist_pending: 109
   review_scores_below_90_after_P2_05: 25

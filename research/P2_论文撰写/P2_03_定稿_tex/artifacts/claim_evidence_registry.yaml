@@ -4,7 +4,11 @@ node_id: research::P2_论文撰写::P2_03_定稿_tex
 claims:
   - claim_id: P2_03_C01_NODE_UNIT_OF_ANALYSIS
     claim_type: method
-    claim_text: AutoResearch evaluates research nodes as the unit of analysis for claim-grounded manuscript production.
+    claim_text: >
+      AutoResearch uses evidence units to decide when an experimental result can
+      be used in manuscript text by pairing the measured result with its
+      protocol, inspected artifact, source status, claim boundary, and closure
+      condition before the result becomes prose, a table entry, or a caption.
     support_status: supported
     manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
     action: keep
@@ -15,9 +19,17 @@ claims:
       - evidence_id: P2_03_E002_TEX_METHOD_SECTION
         evidence_type: code
         source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+      - evidence_id: P2_03_E049_TEX_STATUS_POLICY_TABLE
+        evidence_type: table
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/preliminary.tex
   - claim_id: P2_03_C02_CLAIM_EVIDENCE_DISCIPLINE
     claim_type: method
-    claim_text: The TeX draft preserves claim-evidence boundaries through synchronized section files, a local export constraint list, and a node-local claim registry.
+    claim_text: >
+      The TeX article preserves claim-evidence boundaries through synchronized
+      section files, a local export constraint list, an evidence-unit claim
+      registry, and availability statements that limit claim evidence to the
+      table sources, validation scripts, and PHMGA evidence records used for
+      reported values.
     support_status: supported
     manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
     action: keep
@@ -39,7 +51,7 @@ claims:
         source_ref: research/P2_论文撰写/P2_03_定稿_tex/artifacts/p2_05_tex_sync_trace.yaml
   - claim_id: P2_03_C03_PRELIMINARY_SYNTHETIC_SIGNAL_ONLY
     claim_type: limitation
-    claim_text: The current results section can only discuss the P1_04/P1_05/P1_09 preliminary synthetic/offline single-run signal, not formal real-data performance.
+    claim_text: The P1_04/P1_05/P1_09 preliminary synthetic/offline single-run signal can be discussed only as a limited proxy, not as formal real-data performance.
     support_status: supported
     manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
     action: document_limitation
@@ -53,12 +65,91 @@ claims:
       - evidence_id: P2_03_E008_P1_05_RESULT_REGISTRY
         evidence_type: experiment
         source_ref: research/P1_实验设计与仓库蓝图/P1_05_初步验证结果整理/artifacts/result_registry.yaml
-      - evidence_id: P2_03_E012_TEX_FIGURE_CALLOUT
-        evidence_type: figure
+      - evidence_id: P2_03_E012_TEX_SYNTHETIC_TABLE_CALLOUT
+        evidence_type: table
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+  - claim_id: P2_03_C05_PHMGA_STAGE_B_PARTIAL_EVIDENCE
+    claim_type: experiment
+    claim_text: >
+      The PHMGA Stage B comparison record currently contains eight active
+      rows: two accepted Ottawa rows, three rejected rows, and three pending
+      rows; the manuscript reports the metric-bearing subset, including the
+      pending Ottawa Codex row withheld after provider fallback, as evidence for
+      status preservation by showing that the highest visible score is not the
+      strongest evidence when source verdicts remain unresolved, rejected, or
+      dataset-limited. The Stage B text keeps source-status authority over
+      score ordering rather than selected-backend or cross-dataset performance
+      claims.
+    support_status: supported_limited
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    action: report_with_boundary
+    evidence_refs:
+      - evidence_id: P2_03_E015_PHMGA_RESULT_LEDGER
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/doc/experiments/01_result_ledger.md
+      - evidence_id: P2_03_E016_PHMGA_OTTAWA_OPENROUTER_RESULT
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/doc/experiments/handoff/results/ottawa_ml_openrouter_nemotron_v3.md
+      - evidence_id: P2_03_E017_PHMGA_OTTAWA_BIGMODEL_RESULT
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/doc/experiments/handoff/results/ottawa_ml_bigmodel_glm47_v1.md
+      - evidence_id: P2_03_E018_PHMGA_RM101_OPENROUTER_RESULT
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/doc/experiments/handoff/results/rm101_ml_openrouter_nemotron_v3.md
+      - evidence_id: P2_03_E019_PHMGA_RM101_BIGMODEL_RESULT
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/doc/experiments/handoff/results/rm101_ml_bigmodel_glm47_v1.md
+      - evidence_id: P2_03_E020_TEX_STAGE_B_TABLE
+        evidence_type: table
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+      - evidence_id: P2_03_E021_PHMGA_MAIN_TABLE_BOUNDARY
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/doc/experiments/02_main_tables.md
+      - evidence_id: P2_03_E022_PHMGA_STAGE_B_SNAPSHOT
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/paper_phmga/stages/stage_b_backend_comparison.md
+      - evidence_id: P2_03_E023_PHMGA_HISTORICAL_INCIDENTS
+        evidence_type: review_comment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/paper_phmga/historical_incidents.md
+      - evidence_id: P2_03_E048_OTTAWA_CODEX_V3_PENDING_RESULT
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/doc/experiments/handoff/results/ottawa_ml_codex_v3.md
+  - claim_id: P2_03_C06_RM101_SIMULATED_CASE_STUDY
+    claim_type: experiment
+    claim_text: >
+      The RM101 all-domain mixed thesis case supports a limited mechanism claim:
+      within the documented mixed-domain protocol, two simulated variants remain
+      poor, late fusion stays near the real BigModel baseline, and only the
+      branch combining time-frequency structure with load normalization records
+      stronger accuracy and macro-F1 than the baseline. This supports a concrete
+      branch for a formal RM101 run; it does not establish online Gemini
+      performance, Stage B acceptance, cross-dataset generalization, or
+      statistical significance.
+    support_status: supported_limited
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    action: report_with_boundary
+    evidence_refs:
+      - evidence_id: P2_03_E024_RM101_CASE_README
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/paper_phmga/thesis_rm101_case/README.md
+      - evidence_id: P2_03_E025_RM101_CASE_METADATA
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/paper_phmga/thesis_rm101_case/assets/metadata.json
+      - evidence_id: P2_03_E026_RM101_MAIN_RESULTS_TABLE
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/paper_phmga/thesis_rm101_case/tables/rm101_main_results.tex
+      - evidence_id: P2_03_E027_RM101_CROSS_DAG_FUSION_TABLE
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/paper_phmga/thesis_rm101_case/tables/rm101_cross_dag_fusion.tex
+      - evidence_id: P2_03_E028_RM101_RESULT_TO_CLAIM_NOTE
+        evidence_type: review_comment
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/artifacts/result_to_claim_rm101_case.yaml
+      - evidence_id: P2_03_E029_TEX_RM101_CASE_TABLE
+        evidence_type: table
         source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
   - claim_id: P2_03_C04_FINAL_SUBMISSION_NOT_ESTABLISHED
     claim_type: limitation
-    claim_text: The current TeX synchronization does not establish final submission readiness.
+    claim_text: The current TeX article does not establish final submission readiness.
     support_status: supported
     manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
     action: document_limitation
@@ -72,3 +163,174 @@ claims:
       - evidence_id: P2_03_E014_CURRENT_GATE_TRACE
         evidence_type: review_comment
         source_ref: research/P2_论文撰写/P2_04_形式检查/artifacts/current_final_gate_trace.yaml
+  - claim_id: P2_03_C07_EVIDENCE_CLAIM_SYNTHESIS
+    claim_type: method
+    claim_text: >
+      The manuscript explicitly maps each observed result to a source-status
+      decision and closes the Results by stating the narrow supported result:
+      source status remains attached while claims are formed across the
+      synthetic/offline, Stage B, and RM101 streams. It names the relevant
+      claim-promotion error, the claim withheld by current evidence status, and
+      the source-record closure evidence needed before that claim can be made.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex and research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_03_E030_TEX_EVIDENCE_CLAIM_SYNTHESIS
+        evidence_type: table
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+      - evidence_id: P2_03_E031_RESULT_TO_CLAIM_RM101_CASE
+        evidence_type: review_comment
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/artifacts/result_to_claim_rm101_case.yaml
+      - evidence_id: P2_03_E052_TEX_RESULTS_CLOSE
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex
+  - claim_id: P2_03_C08_BOUNDED_CONTRIBUTION_FRAMING
+    claim_type: method
+    claim_text: >
+      The title, abstract, and introduction present AutoResearch as a
+      methodological contribution for preserving source status in manuscript
+      claims: evidence units keep protocol, artifact, source status, allowed
+      use, and closure condition attached to the constrained statement; the
+      contribution is evaluated through three claim-promotion errors--proxy
+      promotion, authority inversion, and mechanism inflation--using the
+      synthetic/offline, PHMGA Stage B, and RM101 simulated-planner evidence
+      streams without turning the comparison into a backend ranking or
+      diagnostic-performance claim.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex and research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_03_E032_TEX_INTRODUCTION_CONTRIBUTIONS
+        evidence_type: table
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+      - evidence_id: P2_03_E033_TEX_EVIDENCE_CLAIM_SYNTHESIS
+        evidence_type: table
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+  - claim_id: P2_03_C09_LIMITATIONS_BOUNDARY
+    claim_type: limitation
+    claim_text: >
+      The manuscript presents PHMGA's metric-bearing rows as limitations-aware
+      evidence for source-status preservation rather than diagnostic-model
+      evidence. It treats real metrics as a scope risk, keeps sparse and partly
+      simulated evidence, Codex provider fallback, the Ottawa--RM101 status
+      split, RM101 mixed-domain simulation, absent Stage C/D evidence, and
+      missing repeated real-data variance attached to withheld claims and
+      closure conditions; the Discussion keeps the same alternative
+      explanations attached to the source record rather than folding them into
+      a performance narrative.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P2_03_E034_TEX_LIMITATIONS
+        evidence_type: review_comment
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+      - evidence_id: P2_03_E050_TEX_ALTERNATIVE_EXPLANATIONS
+        evidence_type: review_comment
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+      - evidence_id: P2_03_E035_EXPORT_CONSTRAINT_BOUNDARIES
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/artifacts/export_constraints.yaml
+  - claim_id: P2_03_C10_CONCLUSION_BOUNDARY
+    claim_type: limitation
+    claim_text: >
+      The conclusion states a narrow method result rather than a performance
+      result: source status remains attached as the synthetic/offline 1.0000
+      macro-F1 score stays a proxy, the Ottawa Codex 0.8775 macro-F1 row stays
+      pending after provider fallback, and the RM101 simulated-planner gain
+      stays a mechanism hypothesis. It states these outcomes as blocked proxy
+      promotion, authority inversion, and mechanism inflation while preserving
+      one backend accepted on both Ottawa and RM101, accepted Stage C/D rows,
+      and repeated real-data variance estimates as closure requirements.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P2_03_E036_TEX_CONCLUSION
+        evidence_type: review_comment
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+      - evidence_id: P2_03_E037_EVIDENCE_CLAIM_SYNTHESIS
+        evidence_type: table
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+  - claim_id: P2_03_C11_SUBMISSION_EVIDENCE_GAP_MATRIX
+    claim_type: limitation
+    claim_text: >
+      The submission evidence gap matrix converts PHMGA progress into allowed
+      claims, blocked claims, closure criteria, and manuscript actions so that
+      partial Stage B evidence cannot be upgraded into a final performance
+      claim.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/experiment.tex and research/P2_论文撰写/P2_03_定稿_tex/artifacts/submission_evidence_gap_matrix.yaml
+    action: document_limitation
+    evidence_refs:
+      - evidence_id: P2_03_E038_SUBMISSION_EVIDENCE_GAP_MATRIX
+        evidence_type: review_comment
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/artifacts/submission_evidence_gap_matrix.yaml
+      - evidence_id: P2_03_E039_PHMGA_SELECTION_STATUS
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/paper_phmga/selection_status.json
+      - evidence_id: P2_03_E040_PHMGA_MAIN_TABLE_BOUNDARY
+        evidence_type: table
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/doc/experiments/02_main_tables.md
+  - claim_id: P2_03_C12_INNOVATION_OPERATIONALIZATION
+    claim_type: method
+    claim_text: >
+      The Methods section treats PHMGA as a mixed-evidence case study and
+      evaluates source-status preservation by asking, before a result is used,
+      what was measured, which source verdict is attached, what claim that
+      verdict permits, and what evidence would be required to go further. The
+      three streams are then checked against named claim-promotion errors:
+      proxy promotion, authority inversion, and mechanism inflation.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_03_E041_TEX_METHOD_OPERATIONALIZATION
+        evidence_type: code
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/method.tex
+      - evidence_id: P2_03_E042_TEX_EVIDENCE_CLAIM_SYNTHESIS_REVISED
+        evidence_type: table
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/main.tex
+      - evidence_id: P2_03_E049_TEX_STATUS_POLICY_TABLE
+        evidence_type: table
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/preliminary.tex
+  - claim_id: P2_03_C13_LITERATURE_POSITIONING
+    claim_type: method
+    claim_text: >
+      The introduction positions ReAct, Reflexion, and Toolformer as upstream
+      capability work on action selection, feedback use, and tool invocation,
+      while limiting AutoResearch to downstream admissibility control for
+      manuscript claims made after candidate artifacts have already been
+      produced.
+    support_status: supported
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+    action: keep
+    evidence_refs:
+      - evidence_id: P2_03_E043_TEX_LITERATURE_POSITIONING
+        evidence_type: citation
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/tex/sections/introduction.tex
+      - evidence_id: P2_03_E044_CITATION_REGISTRY_AGENT_WORK
+        evidence_type: citation
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/artifacts/citation_registry.yaml
+  - claim_id: P2_03_C14_STAGE_B_PENDING_EXECUTION_PRIORITY
+    claim_type: experiment
+    claim_text: >
+      Stage B pending-row preflight and the first Ottawa Codex v3 full-run
+      attempt show that the Codex v3 pair is the highest-value next experiment
+      target for selected-backend closure; the first Ottawa attempt emitted
+      complete artifacts and metrics but remains needs-rerun because Codex
+      provider fallback prevents clean backend evidence.
+    support_status: supported_limited
+    manuscript_location: research/P2_论文撰写/P2_03_定稿_tex/artifacts/submission_evidence_gap_matrix.yaml
+    action: execution_priority_only
+    evidence_refs:
+      - evidence_id: P2_03_E045_STAGE_B_PENDING_CLOSURE_CONTRACT
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/doc/experiments/handoff/08_stage_b_pending_closure_contract.md
+      - evidence_id: P2_03_E046_SUBMISSION_GAP_MATRIX_PREFLIGHT_UPDATE
+        evidence_type: review_comment
+        source_ref: research/P2_论文撰写/P2_03_定稿_tex/artifacts/submission_evidence_gap_matrix.yaml
+      - evidence_id: P2_03_E047_OTTAWA_CODEX_V3_WORKER_RESULT
+        evidence_type: experiment
+        source_ref: research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/doc/experiments/handoff/results/ottawa_ml_codex_v3.md

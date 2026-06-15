@@ -11,18 +11,19 @@ sync_items:
   - md_node: research/P2_论文撰写/P2_02_初稿_md/P2_02_02_preliminary
     source_state: source_manuscript_unfilled
     tex_file: tex/sections/preliminary.tex
+    section_title: Evidence Model
     sync_status: done_with_gap_disclosure
-    gap_policy: Defined only terms needed by the current TeX draft and claim-evidence registry.
+    gap_policy: Defined only terms needed by the current TeX article and claim-evidence registry.
   - md_node: research/P2_论文撰写/P2_02_初稿_md/P2_02_04_方法
     source_state: substantive_source_available
     tex_file: tex/sections/method.tex
     sync_status: done
     gap_policy: Synchronized content without external-citation expansion.
   - md_node: research/P2_论文撰写/P2_02_初稿_md/P2_02_05_实验与讨论
-    source_state: source_manuscript_unfilled
+    source_state: source_manuscript_unfilled_with_newer_phmga_stage_b_and_rm101_case_evidence
     tex_file: tex/sections/experiment.tex
     sync_status: done_with_gap_disclosure
-    gap_policy: Reported only P1_04/P1_05/P1_09 preliminary synthetic/offline evidence and preserved missing formal-result blockers.
+    gap_policy: Reported P1_04/P1_05/P1_09 preliminary synthetic/offline evidence, bounded PHMGA Stage B accepted/rejected/pending record rows, and the RM101 simulated-planner case; preserved selected-backend, formal RM101 Stage B resolution, Stage C/D, and final-readiness blockers.
   - md_node: research/P2_论文撰写/P2_05_去AI味道
     source_state: expression_calibration_available
     tex_file:
@@ -34,9 +35,25 @@ sync_items:
     gap_policy: Applied or confirmed P2_05 wording calibration entries without adding datasets, baselines, statistics, citations, figures, formal performance, RM101, selected-backend, Stage C/D, or final-readiness claims.
 
 validation_targets:
-  - tex/main.tex contains abstract, introduction, methods, results, discussion, data availability, and code availability.
+  - tex/main.tex contains a title and problem-method-case-boundary abstract that foreground source-status preservation in manuscript claims without first-person study wording, plus introduction, evidence model, methods, results, discussion, data availability, and code availability.
   - tex/main.tex contains a bibliography with explicit references for broader method and reporting claims.
   - sync_map.yaml points to existing section files.
   - section files contain no unfilled-source markers.
-  - tex/sections/experiment.tex contains a first callout to the P1_09 figure with caption, label, claim_ref, evidence_ref, and provenance.
+  - tex/sections/preliminary.tex defines evidence units as the point where measured results become manuscript prose, table entries, or captions, and contains an evidence-status policy table that maps accepted, rejected, pending, proxy, and mechanism-level sources to allowed manuscript use and withheld claims.
+  - tex/sections/experiment.tex contains a first callout to the preliminary synthetic/offline table with caption, label, and publication-facing provenance; detailed claim and evidence identifiers remain in node-local registries.
+  - tex/sections/experiment.tex contains a bounded PHMGA Stage B table with accepted Ottawa rows, the pending Ottawa Codex v3 needs-rerun row, rejected RM101 rows, publication-facing provenance, and no selected-backend upgrade.
+  - tex/sections/method.tex names the three claim-promotion errors used to interpret results: proxy promotion, authority inversion, and mechanism inflation.
+  - tex/sections/experiment.tex states the Stage B status outcome as source-status authority over score ordering, including the point that the highest visible score is not the strongest evidence when its source verdict remains pending.
+  - tex/sections/experiment.tex contains a bounded RM101 simulated-planner case table and interpretation that compare weak simulated variants, near-baseline late fusion, and the stronger time-frequency/load-normalized branch without a Stage B, online-model, or leave-domain-out upgrade.
+  - tex/sections/experiment.tex closes the Results by stating the narrow supported result across the synthetic/offline, Stage B, and RM101 streams: source status remains attached while claims are formed.
+  - tex/sections/introduction.tex contains a bounded contribution paragraph that identifies the evidence-unit contract and the three claim-promotion errors--proxy promotion, authority inversion, and mechanism inflation--without upgrading performance claims.
+  - tex/sections/introduction.tex contains a literature-positioning paragraph that treats agent reasoning/action, verbal-feedback, and tool-use work as upstream capabilities and limits AutoResearch to downstream claim-admissibility control.
+  - tex/main.tex contains a claim-boundary synthesis table that states each evidence stream's source-status decision, names the claim-promotion error it blocks, reports the claim withheld by the current evidence status, and records the missing evidence.
+  - tex/main.tex contains a Discussion paragraph that distinguishes AutoResearch from generic conservative prose by tying metrics, source status, withheld claims, and closure conditions to the source record.
+  - tex/main.tex contains a Discussion paragraph that retains alternative explanations for the Ottawa, Codex, and RM101 simulated-planner signals without adjudicating them from incomplete evidence.
+  - tex/sections/method.tex states how each innovation claim is defined before result interpretation.
+  - tex/main.tex contains a Limitations section covering scope mismatch, sparse and simulated evidence, Ottawa--RM101 transfer limits, and missing closure evidence without hiding rejected or unavailable evidence.
+  - tex/main.tex contains a concise Conclusion that states the narrow method result, blocks proxy promotion, authority inversion, and mechanism inflation, and keeps backend readiness and diagnostic-performance claims open.
+  - tex/main.tex contains Data and Code availability statements that identify derived metric sources, exclude raw external/private datasets, and limit claim evidence to table sources, validation scripts, and PHMGA evidence records.
   - artifacts/p2_05_tex_sync_trace.yaml records expression-calibration target status and a successful post-sync lualatex run.
+  - artifacts/submission_evidence_gap_matrix.yaml maps PHMGA progress into allowed claims, blocked claims, closure criteria, and manuscript actions before any future empirical-claim upgrade.

@@ -4,12 +4,12 @@ node_id: research::P2_论文撰写::P2_03_定稿_tex
 citations:
   - citation_key: nature-reporting
     claim_id: P2_03_C02_CLAIM_EVIDENCE_DISCIPLINE
-    claim_context: Reporting policies expect transparent evidence, reproducibility, and limitations.
+    claim_context: Nature Portfolio reporting standards are used as reporting-format context for transparent data, code, materials, and protocol availability.
     source_ref: Nature Portfolio reporting standards
     source_locator: https://www.nature.com/nature-portfolio/editorial-policies/reporting-standards
-    support_strength: format_and_reporting_context
+    support_strength: reporting_governance_context
     claim_criticality: method_reference
-    support_status: minor_distortion
+    support_status: verified
     action: keep
     bibliographic_facts_checked:
       title: true
@@ -18,12 +18,12 @@ citations:
       venue: true
   - citation_key: ieee-policies
     claim_id: P2_03_C02_CLAIM_EVIDENCE_DISCIPLINE
-    claim_context: Peer-review and publication policies motivate auditable evidence and transparent claims.
+    claim_context: IEEE submission and peer-review policies are used as governance context for originality, disclosure, and peer-review accountability.
     source_ref: IEEE Author Center submission and peer-review policies
     source_locator: https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/guidelines-and-policies/submission-and-peer-review-policies/
-    support_strength: format_and_reporting_context
+    support_strength: peer_review_governance_context
     claim_criticality: method_reference
-    support_status: minor_distortion
+    support_status: verified
     action: keep
     bibliographic_facts_checked:
       title: true
@@ -32,11 +32,53 @@ citations:
       venue: true
   - citation_key: local-rubric
     claim_id: P2_03_C01_NODE_UNIT_OF_ANALYSIS
-    claim_context: The repository local rubric defines node-level evidence and review expectations.
+    claim_context: The predefined local audit rubric defines node-level evidence and review expectations.
     source_ref: test/NATURE_LEVEL_NODE_RUBRIC.md and node-local review_rubric.yaml files
     source_locator: test/NATURE_LEVEL_NODE_RUBRIC.md
     support_strength: local_method_record
     claim_criticality: method_reference
+    support_status: verified
+    action: retain_as_reproducibility_artifact_not_bibliography_item
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+  - citation_key: react
+    claim_id: P2_03_C13_LITERATURE_POSITIONING
+    claim_context: ReAct is cited as prior work on interleaving language-model reasoning and action.
+    source_ref: Yao et al., ReAct Synergizing Reasoning and Acting in Language Models
+    source_locator: https://arxiv.org/abs/2210.03629
+    support_strength: literature_positioning
+    claim_criticality: background_reference
+    support_status: verified
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+  - citation_key: reflexion
+    claim_id: P2_03_C13_LITERATURE_POSITIONING
+    claim_context: Reflexion is cited as prior work on language agents using verbal feedback for later trials.
+    source_ref: Shinn et al., Reflexion Language Agents with Verbal Reinforcement Learning
+    source_locator: https://arxiv.org/abs/2303.11366
+    support_strength: literature_positioning
+    claim_criticality: background_reference
+    support_status: verified
+    action: keep
+    bibliographic_facts_checked:
+      title: true
+      authors: true
+      year: true
+      venue: true
+  - citation_key: toolformer
+    claim_id: P2_03_C13_LITERATURE_POSITIONING
+    claim_context: Toolformer is cited as prior work on language models learning when and how to invoke tools.
+    source_ref: Schick et al., Toolformer Language Models Can Teach Themselves to Use Tools
+    source_locator: https://arxiv.org/abs/2302.04761
+    support_strength: literature_positioning
+    claim_criticality: background_reference
     support_status: verified
     action: keep
     bibliographic_facts_checked:

@@ -34,3 +34,13 @@ responses:
     responded: true
     status: not_required_for_this_node
     note: README marks human review as needed only on demand; no separate human review was required for this P2_03 external-review gate.
+
+  - comment_id: AI-002-W01
+    responded: true
+    status: closed
+    note: >-
+      The Nature and IEEE entries in artifacts/citation_registry.yaml are now
+      marked verified as reporting_governance_context /
+      peer_review_governance_context, and the active Introduction uses them
+      only as background for transparent reporting, disclosure, originality,
+      and peer-review accountability rather than as empirical support.

@@ -1,5 +1,25 @@
-A research node is a schedulable unit with a local manuscript, acceptance checklist, review rubric, artifacts, and status. A node may reach author exit when its local outputs are coherent, but node closure requires review evidence and response coverage. This distinction prevents an authoring agent from treating generated text as accepted research truth.
+An evidence unit defines when an experimental result can be used in manuscript text. It pairs the measured result with the protocol that produced it, the artifact inspected, the source status assigned to it, the claim boundary, and the condition that would close that boundary. The unit is needed where a result becomes prose, a table entry, or a caption, because those are the places where accepted, rejected, pending, proxy, and mechanism-level evidence can be made to sound stronger than its source allows.
 
-A claim-evidence registry records claim identifiers, claim types, support status, manuscript location, actions, and evidence references. A figure manifest records figure identifiers, claim references, evidence references, source paths, output paths, and quality checks. These registries are part of the scientific record for this workflow: they define what a paragraph or figure is allowed to say.
+The status is read before the metric. Accepted units support claims only within their documented scope. Rejected rows remain negative evidence. Pending rows may report metrics, but they cannot decide a backend. Proxy or mechanism-level units can motivate further testing, but they cannot become performance evidence. The evidence model asks for the strongest statement source status permits, not the largest number in the row.
 
-Evidence status is intentionally stricter than narrative plausibility. Supported evidence can be used only within its documented boundary. Unsupported and uncertain evidence remain visible as limitations or deferred work. For example, the P1\_09 result figure is a limited proxy for a synthetic/offline single-run signal. It is not evidence for real-data generalization, RM101 resolution, selected-backend readiness, or final submission fitness.
+Table~\ref{tab:evidence-status-policy} states the policy used to read the PHMGA case.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{L{0.18\linewidth}L{0.36\linewidth}L{0.36\linewidth}}
+\toprule
+Source status & Allowed manuscript use & Claim still withheld \\
+\midrule
+Accepted & Report the result within the documented protocol, dataset, and review scope. & Generalization beyond the accepted protocol. \\
+Rejected & Report the row as negative evidence and keep the failure reason visible. & Success, backend selection, or repaired performance. \\
+Pending & Report a metric only with the unresolved condition attached. & Ranking, selection, or closure based on that metric. \\
+Proxy & Use the result as a sanity check or motivation for formal testing. & Benchmark-level or real-data performance. \\
+Mechanism-level & Use simulated or bounded evidence as a hypothesis about model structure. & Online performance, out-of-domain generalization, or statistical reliability. \\
+\bottomrule
+\end{tabular}
+\caption{Evidence-status policy. The table defines the strongest manuscript use allowed by each source status before numerical results are interpreted.}
+\label{tab:evidence-status-policy}
+\end{table}
+
+PHMGA then supplies an uneven case. The synthetic/offline result has a perfect single-run score but remains proxy evidence. Stage B contains accepted Ottawa evidence, rejected RM101 evidence, and a high-scoring Ottawa Codex v3 row left pending by provider fallback. The RM101 all-domain mixed case contains a simulated-planner signal. These sources motivate the source-status test, but none establishes cross-dataset generalization, selected-backend readiness, Stage C/D completion, or a final diagnostic performance claim.

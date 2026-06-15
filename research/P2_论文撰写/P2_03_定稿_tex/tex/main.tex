@@ -5,22 +5,25 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{longtable}
+\usepackage{array}
 
-\title{AutoResearch: Claim-Grounded Human--Agent Research Operations}
-\author{Draft synchronized from node-local manuscripts}
-\date{2026-05-05}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\title{AutoResearch: Preserving Source Status in Manuscript Claims under Incomplete Experimental Evidence}
+\author{Anonymous authors}
+\date{}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-This draft evaluates AutoResearch at the level of schedulable research nodes, where each node carries local prompts, artifacts, review status, and closure conditions. The current TeX draft synchronizes the available node-local manuscripts into an exportable structure and preserves the evidence boundary: the only positive quantitative signal currently carried into the draft is a preliminary synthetic/offline single-run figure package, not a formal real-data result. The draft's process claim is that manuscript statements should remain traceable to evidence artifacts, review gates, response coverage, and limitation records before stronger claims are allowed.
+Agent-assisted drafting can detach manuscript claims from experiment records whose status remains unresolved. AutoResearch addresses that failure mode by binding each reportable result to an evidence unit: protocol, artifact, source status, allowed use, and closure condition. The evaluation uses PHMGA, a fault-diagnosis case with uneven evidence across a synthetic/offline proxy, an eight-row Stage B backend comparison, and an RM101 mixed-domain simulated-planner analysis. The synthetic/offline proxy reaches 1.0000 macro-F1 but remains below benchmark evidence. Stage B contains two accepted Ottawa rows, three rejected rows, and three pending rows; the Ottawa Codex row reaches 0.8775 macro-F1, matching the accepted OpenRouter/Nemotron Ottawa row, but remains ineligible for selection because planning and reflection used a fallback provider path. The RM101 simulated planner raises macro-F1 from a 0.8229 real baseline to 0.8865, yet remains mechanism-level evidence because the planner is simulated and the split is mixed-domain. These records support one methodological claim: source status remains attached to claims where proxy promotion, authority inversion, and mechanism inflation can arise. They do not support selected-backend readiness, cross-dataset performance, or a final diagnostic performance claim.
 \end{abstract}
 
 \section{Introduction}
 \input{sections/introduction}
 
-\section{Preliminaries}
+\section{Evidence Model}
 \input{sections/preliminary}
 
 \section{Methods}
@@ -30,24 +33,70 @@ This draft evaluates AutoResearch at the level of schedulable research nodes, wh
 \input{sections/experiment}
 
 \section{Discussion}
-The synchronized draft separates process claims from performance claims. It can argue that node-local contracts, evidence registries, and independent review gates make the research process inspectable. It cannot yet argue that AutoResearch improves real-data model performance, resolves RM101 evidence, locks a selected backend, or passes formal Stage C/D evaluation. Those limitations remain explicit so that negative and uncertain evidence stays part of the manuscript record rather than being converted into stronger claims.
+Stage B does not identify a winning backend; it preserves the conflict between score and admissible status. Ottawa Codex v3 reports a 0.8775 macro-F1, the same value as the accepted OpenRouter/Nemotron Ottawa row. A score-only reading would make that row selection-relevant. Source status prevents that move: planning and reflection followed a fallback provider path, so the row remains pending and selection-ineligible while the accepted Ottawa rows and rejected RM101 rows remain visible. The high metric, failed provenance condition, positive Ottawa evidence, and negative RM101 evidence stay in one account without becoming backend selection evidence.
+
+The RM101 simulated-planner case tests a different claim boundary. It does not repair the rejected RM101 Stage B rows; it identifies a physics-aware DAG branch for a formal RM101 run. The evidence is comparative within the bounded case: two simulated variants are poor, late fusion does not exceed the best single branch, and only the path that combines time-frequency structure with load normalization rises above the real baseline. That pattern supports a mechanism hypothesis rather than online diagnostic-performance evidence, because the planner is simulated and the split is mixed-domain.
+
+Table~\ref{tab:evidence-claim-synthesis} summarizes the result-to-claim test. Each row states the source-status decision, the stronger claim withheld, and the evidence needed before that stronger claim could be made.
+
+\begin{table}[t]
+\centering
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{L{0.25\linewidth}L{0.28\linewidth}L{0.23\linewidth}L{0.18\linewidth}}
+\toprule
+Observed result & Source-status decision & Claim withheld & Evidence still needed \\
+\midrule
+Synthetic/offline sanity check improves from 0.8286 to 1.0000 macro-F1 in one offline run. & The proxy result stays below benchmark strength; proxy promotion is blocked. & Benchmark-level or real-data improvement. & Repeated real-data runs with variance. \\
+Stage B rows include accepted Ottawa scores of 0.8775 and 0.7227, rejected RM101 scores of 0.1834 and 0.1893, and a pending Ottawa Codex score of 0.8775. & Backend selection follows source status rather than metric rank; authority inversion is blocked. & Backend ranking or selected-backend claim from the high Codex number. & Backend accepted on both Ottawa and RM101. \\
+RM101 mixed-domain case records a real baseline at 0.8229 macro-F1 and a best simulated planner row at 0.8865. & The physics-aware DAG signal remains a simulated, mixed-domain mechanism case; mechanism inflation is blocked. & Online RM101 performance, Stage B repair, or leave-domain-out generalization. & Accepted online backend and out-of-domain validation. \\
+\bottomrule
+\end{tabular}
+}
+\caption{Claim-boundary synthesis. Each empirical stream states the source-status decision, the stronger claim still withheld, and the evidence needed before that claim could be made.}
+\label{tab:evidence-claim-synthesis}
+\end{table}
+
+The comparison matters because the source record, not the narrative summary, controls claim upgrades. A score-only summary could drop the pending Codex row, soften the rejected RM101 rows into a qualifier, or present the RM101 simulated result as a score alone. AutoResearch keeps the metric, source status, withheld claim, and closure condition in the same record. A clean provider rerun, accepted RM101 backend row, accepted Stage C/D rows, or repeated-run variance estimate can change the manuscript only after the corresponding source record changes.
+
+The retained boundaries also preserve alternative explanations. The Ottawa rows may reflect dataset-specific separability rather than a portable backend advantage. The Codex row may reflect the fallback provider path rather than model quality. The RM101 simulated-planner signal may reflect mixed-domain structure rather than leave-domain-out generalization. Those explanations remain attached to withheld claims and closure conditions, rather than being folded into a performance narrative.
+
+This leaves a defined manuscript boundary. Backend selection requires accepted Ottawa--RM101 evidence for the same backend, not an Ottawa-only score. A performance-centered claim requires accepted Stage C main-result rows, Stage D ablations, and repeated real-data estimates. Until those sources exist, the evidence supports source-status preservation and a bounded mechanism hypothesis; cross-dataset improvement, selected-backend readiness, statistical significance, and final diagnostic performance claims remain unclaimed.
+
+\section{Limitations}
+PHMGA's real metrics create the main scope risk. The accepted Ottawa rows, the high-scoring pending Codex row, and the stronger RM101 simulated-planner row can look like a partial diagnostic-model comparison. Their role here is different: they show whether source-status labels stay attached when metrics are reportable. The supported contribution is source-status preservation under incomplete evidence, not a diagnostic-model result.
+
+The empirical base remains thin. The synthetic/offline result is one run, the Ottawa Codex row may describe a fallback provider path rather than the configured backend, and the RM101 planner rows are simulated. These facts explain why narrower claims are reported. They leave accepted online backend runs, repeated trials, confidence intervals, and variance estimates as open requirements.
+
+Ottawa and RM101 also differ in status. Ottawa contains accepted Stage B rows, whereas the corresponding RM101 rows remain rejected. The RM101 mixed-domain split may reflect within-domain structure rather than leave-domain-out transfer. The simulated planner identifies a candidate branch for a formal RM101 run; it does not forecast that such a run will pass.
+
+Evidence for a final diagnostic performance claim is still absent. No backend has accepted evidence on both datasets, Stage C/D rows are unavailable, and repeated real-data variance is absent. The present record supports evidence-unit contracts for source-status preservation and a physics-aware DAG candidate for RM101 testing. It does not support selected-backend readiness, cross-dataset improvement, statistical reliability, or a final diagnostic performance claim.
+
+\section{Conclusion}
+The PHMGA case leaves a narrow method result. AutoResearch keeps source status attached when metrics are carried into manuscript claims: the synthetic/offline 1.0000 macro-F1 score remains a proxy, the Ottawa Codex 0.8775 macro-F1 row remains pending after provider fallback, and the RM101 simulated-planner gain remains a mechanism hypothesis. These outcomes block proxy promotion, authority inversion, and mechanism inflation without erasing the metrics that motivate follow-up experiments. Claims about backend readiness or diagnostic performance require one backend accepted on both Ottawa and RM101, accepted Stage C/D rows, and repeated real-data runs with variance estimates.
 
 \section*{Data availability}
-The data for this draft are repository-local research artifacts, node prompts, checklists, review verdicts, response files, result ledgers, figure data files, and TeX synchronization maps. The current draft references the P1\_04 synthetic/offline result ledger and the P1\_09 figure package as local evidence artifacts. No external private data are redistributed by this TeX node.
+The tables report derived metrics rather than redistributed raw data. Raw external or private datasets are not included. The reported values are traceable to the synthetic/offline sanity-check record, PHMGA Stage B backend-comparison records, and RM101 mixed-domain simulated-planner metadata. The accompanying metadata are limited to the fields needed to check source status, protocol scope, and the claim boundaries stated in the manuscript.
 
 \section*{Code availability}
-The code relevant to this TeX synchronization node is the repository validation and export metadata, including the P2\_03 section and sync maps, the P1\_09 deterministic figure renderer, and the submission validation script. Graph, Canvas, web dashboard, and other projections are not treated as sources of research truth.
+The accompanying materials include the manuscript source, validation scripts, table source files, and PHMGA evidence records used for the reported values. Claim evidence is limited to those table sources, validation scripts, and evidence records. Planning notes, display views, and repository-operation files are excluded from the manuscript evidence base.
 
 \begin{thebibliography}{9}
 
 \bibitem{nature-reporting}
-Nature Portfolio. Reporting standards. \url{https://www.nature.com/nature-portfolio/editorial-policies/reporting-standards}.
+Nature Portfolio. Reporting standards. Available at \href{https://www.nature.com/nature-portfolio/editorial-policies/reporting-standards}{Nature Portfolio reporting standards}.
 
 \bibitem{ieee-policies}
-IEEE Author Center. Submission and peer-review policies. \url{https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/guidelines-and-policies/submission-and-peer-review-policies/}.
+IEEE Author Center. Submission and peer-review policies. Available at \href{https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/guidelines-and-policies/submission-and-peer-review-policies/}{IEEE Author Center policies}.
 
-\bibitem{local-rubric}
-Local repository evidence gate. \texttt{test/NATURE\_LEVEL\_NODE\_RUBRIC.md} and node-local review rubrics.
+\bibitem{react}
+S. Yao, J. Zhao, D. Yu, N. Du, I. Shafran, K. Narasimhan, and Y. Cao. ReAct: Synergizing reasoning and acting in language models. arXiv:2210.03629, 2022.
+
+\bibitem{reflexion}
+N. Shinn, F. Cassano, E. Berman, A. Gopinath, K. Narasimhan, and S. Yao. Reflexion: Language agents with verbal reinforcement learning. arXiv:2303.11366, 2023.
+
+\bibitem{toolformer}
+T. Schick, J. Dwivedi-Yu, R. Dessi, R. Raileanu, M. Lomeli, L. Zettlemoyer, N. Cancedda, and T. Scialom. Toolformer: Language models can teach themselves to use tools. arXiv:2302.04761, 2023.
 
 \end{thebibliography}
 

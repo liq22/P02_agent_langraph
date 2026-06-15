@@ -1,0 +1,164 @@
+version: p2_03_submission_evidence_gap_matrix_v1
+node_id: research::P2_论文撰写::P2_03_定稿_tex
+generated_at: 2026-05-31
+
+purpose: >
+  Convert the current PHMGA progress state into manuscript claim boundaries
+  and submission-level closure criteria. This matrix is a writing and review
+  guard: it does not upgrade experiment status.
+
+source_refs:
+  - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/doc/experiments/02_main_tables.md
+  - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/paper_phmga/selection_status.json
+  - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/paper_phmga/stages/stage_b_backend_comparison.md
+  - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/paper_phmga/thesis_rm101_case/assets/metadata.json
+  - research/P2_论文撰写/P2_03_定稿_tex/artifacts/result_to_claim_rm101_case.yaml
+  - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/doc/experiments/handoff/08_stage_b_pending_closure_contract.md
+  - research/P1_实验设计与仓库蓝图/P1_06_代码仓库_已有_重新初始化_子模块策略/artifacts/PHMGA/doc/experiments/handoff/results/ottawa_ml_codex_v3.md
+
+current_phmga_state:
+  stage_b_rows:
+    status_distribution:
+      active_row_count: 8
+      accepted_count: 2
+      rejected_count: 3
+      pending_count: 3
+      manuscript_table_policy: >
+        Report the rows that carry direct metric or artifact evidence, while
+        using the full accepted/rejected/pending distribution to interpret the
+        Stage B comparison as a status-preservation result rather than a
+        backend ranking.
+    accepted:
+      - experiment_id: ottawa_ml_openrouter_nemotron_v3
+        dataset: Ottawa
+        backend: openrouter / nvidia/nemotron-3-super-120b-a12b:free
+        test_macro_f1: 0.8774661249538376
+      - experiment_id: ottawa_ml_bigmodel_glm47_v1
+        dataset: Ottawa
+        backend: bigmodel / glm-4.7-flash
+        test_macro_f1: 0.7226535613558728
+    rejected:
+      - experiment_id: rm101_ml_openrouter_nemotron_v3
+        dataset: RM101
+        backend: openrouter / nvidia/nemotron-3-super-120b-a12b:free
+        test_macro_f1: 0.18337824193501234
+      - experiment_id: rm101_ml_bigmodel_glm47_v1
+        dataset: RM101
+        backend: bigmodel / glm-4.7-flash
+        test_macro_f1: 0.18934628733653974
+    pending:
+      - experiment_id: ottawa_ml_codex_v3
+        preflight_status: pass
+        full_run_status: needs_rerun
+        full_run_test_macro_f1: 0.8774661249538376
+        full_run_note: complete artifacts and metrics emitted, but Codex provider plan/reflection fell back after LLMProviderError/read-only filesystem initialization failure
+        selection_relevance: Codex Ottawa/RM101 pair candidate
+      - experiment_id: rm101_ml_codex_v3
+        preflight_status: pass
+        selection_relevance: Codex Ottawa/RM101 pair candidate
+      - experiment_id: rm101_ml_openrouter_glm_v2
+        preflight_status: pass
+        selection_relevance: diagnostic/backfill only unless rejected Ottawa OpenRouter GLM row is reopened
+  selected_global_best_backend:
+    status: pending
+    selected_from_stage_b: false
+    selection_basis: mean macro_f1 over Ottawa + RM101 canonical ml mainline
+  stage_c_d:
+    status: locked
+    reason: no backend has accepted Stage B evidence on both Ottawa and RM101
+  rm101_case:
+    protocol: mixed-domain stratified split
+    planner_mode: simulated
+    real_baseline_macro_f1: 0.8229110215858482
+    best_simulated_macro_f1: 0.8864772952124089
+    boundary: mechanism signal only; not online backend evidence
+
+allowed_claims_now:
+  - claim_id: P2_03_C02_CLAIM_EVIDENCE_DISCIPLINE
+    decision: keep
+    manuscript_scope: >
+      The article may claim that node-local registries and comparison records
+      preserve claim-evidence boundaries during manuscript production.
+    evidence_refs:
+      - P2_03_C02_CLAIM_EVIDENCE_DISCIPLINE
+      - P2_03_C07_EVIDENCE_CLAIM_SYNTHESIS
+  - claim_id: P2_03_C05_PHMGA_STAGE_B_PARTIAL_EVIDENCE
+    decision: report_with_boundary
+    manuscript_scope: >
+      The article may report accepted Ottawa rows, the pending Ottawa Codex v3
+      needs-rerun row, and rejected RM101 rows as partial Stage B comparison
+      evidence.
+    retained_boundary: >
+      The rows support failure retention, pending-evidence retention, and
+      auditability, not selected-backend success.
+    evidence_refs:
+      - P2_03_C05_PHMGA_STAGE_B_PARTIAL_EVIDENCE
+  - claim_id: P2_03_C06_RM101_SIMULATED_CASE_STUDY
+    decision: report_with_boundary
+    manuscript_scope: >
+      The article may report the RM101 all-domain mixed simulated-planner case
+      as a mechanism hypothesis for physics-aware DAG design.
+    retained_boundary: >
+      The case does not establish online Gemini performance, Stage B
+      acceptance, leave-domain-out generalization, or statistical significance.
+    evidence_refs:
+      - P2_03_C06_RM101_SIMULATED_CASE_STUDY
+
+blocked_claims_until_closure:
+  - claim: selected global backend
+    blocker: selected_global_best_backend.status is pending
+    closure_criteria:
+      - at least one backend has accepted Stage B evidence on both Ottawa and RM101
+      - selection_status.json marks selected_from_stage_b as true
+  - claim: cross-dataset real-data performance improvement
+    blocker: current accepted real-data rows cover Ottawa only; RM101 rows are rejected
+    closure_criteria:
+      - accepted Ottawa and RM101 rows exist under the same backend family
+      - comparison protocol and baseline rows are fixed before reporting
+  - claim: RM101 Stage B resolution
+    blocker: RM101 active accepted row is unavailable for the compared backends
+    closure_criteria:
+      - RM101 active Stage B row passes artifact contract and feature separability
+      - reject evidence is retained in the comparison record after acceptance
+  - claim: Stage C/D empirical success
+    blocker: Stage C/D rows are locked by pending Stage B selection
+    closure_criteria:
+      - Stage C main-result rows accepted
+      - Stage D ablation rows accepted
+  - claim: statistical significance or variance-supported effect
+    blocker: current evidence lacks repeated real-data runs and variance estimates
+    closure_criteria:
+      - repeated real-data runs completed under the selected backend
+      - variance or confidence intervals reported for the main metrics
+  - claim: final submission readiness
+    blocker: empirical performance, review threshold, and adapter preflight gates remain open
+    closure_criteria:
+      - selected backend closed
+      - Stage C/D accepted
+      - repeated real-data evidence summarized
+      - final review score threshold reached
+      - export and adapter preflight checks passed
+
+manuscript_action:
+  current_version:
+    framing: bounded process article with a mechanism hypothesis
+    keep:
+      - PHMGA Stage B table with accepted Ottawa, pending Ottawa Codex v3, and rejected RM101 rows
+      - RM101 simulated-planner case table with explicit simulated boundary
+      - evidence-to-claim synthesis table
+      - Limitations section
+      - conclusion boundary against final performance claims
+    do_not_upgrade:
+      - selected-backend wording
+      - cross-dataset performance wording
+      - RM101 success wording
+      - Stage C/D success wording
+      - submission-ready wording
+  next_upgrade_trigger: >
+    Revisit Results, Discussion, Abstract, and Conclusion only after the closure
+    criteria above are satisfied by local PHMGA artifacts.
+  next_experiment_action: >
+    Obtain explicit authorization for a clean Codex provider run and rerun the
+    Codex v3 Ottawa/RM101 Stage B pair. The first Ottawa attempt emitted
+    complete artifacts and metrics, but provider fallback prevents it from
+    serving as selected-backend evidence.

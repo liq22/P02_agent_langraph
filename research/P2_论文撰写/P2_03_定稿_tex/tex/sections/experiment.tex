@@ -1,19 +1,65 @@
-The current result content is limited to a preliminary synthetic/offline signal carried forward from the P1\_04 and P1\_05 evidence chain and visualized in P1\_09. Figure~\ref{fig:p1-synthetic-signal} is the first TeX callout for this signal. The source ledger contains one baseline row, simple\_fullchain on Ottawa synthetic data with offline stub mode, and one controlled attempt row, supervisor\_proving under the same synthetic/offline boundary. The controlled attempt is higher on the recorded accuracy and macro-F1 values, but this is a single-run signal rather than a formal result.
+The three evidence streams are organized by the claim upgrade each could invite. The synthetic/offline stream is the proxy case. Under the same Ottawa-style offline condition, the AutoResearch run records higher accuracy and macro-F1 than the baseline pipeline (Table~\ref{tab:p1-synthetic-signal}). The status assigned to the row stays with the metric: the 1.0000 macro-F1 remains a proxy, not benchmark evidence.
 
-\begin{figure}[t]
+\begin{table}[t]
 \centering
 \begin{tabular}{lcc}
 \toprule
-Workflow row & Test accuracy & Test macro-F1 \\
+Evidence row & Test accuracy & Test macro-F1 \\
 \midrule
-simple\_fullchain baseline & 0.8333 & 0.8286 \\
-supervisor\_proving attempt & 1.0000 & 1.0000 \\
+Baseline pipeline & 0.8333 & 0.8286 \\
+AutoResearch run & 1.0000 & 1.0000 \\
 \bottomrule
 \end{tabular}
-\caption{Preliminary synthetic/offline signal carried into the TeX draft. claim\_ref: c1. evidence\_ref: P1\_09\_E004\_FIGURE\_DATA\_TSV. Source/provenance: P1\_04 auto-experiment ledger, P1\_05 result registry, and P1\_09 figure manifest. The figure reports no variance, no real-data row, no RM101 resolution, and no selected-backend decision.}
-\label{fig:p1-synthetic-signal}
-\end{figure}
+\caption{Preliminary synthetic/offline signal. The table reports one offline run only; it includes no variance, no real-data row, no RM101 resolution, and no selected-backend decision.}
+\label{tab:p1-synthetic-signal}
+\end{table}
 
-The P1\_09 figure package maps this signal to upstream claim c1 only as a supported limited proxy. It also records the missing evidence: no accepted real-data formal row, no repeated-run variance, no RM101 resolution, no selected-backend lock, and ambiguity around the perfect synthetic score. The TeX draft therefore reports the signal as a candidate reason to continue the mechanism path, not as proof of general performance improvement.
+The 1.0000 synthetic score is reported as evidence for status retention, not performance. It supports the narrower observation that a strong offline signal can be carried forward without authorizing a stronger empirical claim. The missing evidence remains visible: no accepted Stage C/D formal row, no repeated-run variance, no RM101 resolution, and no selected backend.
 
-The discussion reports both the bounded synthetic/offline signal and the retained unsupported or uncertain evidence; unsupported rows are not rewritten as support. This is central to the AutoResearch argument. A submission-quality empirical claim will require accepted Stage C main-result rows, Stage D ablation rows, adapter preflight closure, and review scores that meet the final submission threshold.
+The PHMGA Stage B comparison provides the real-data check for authority inversion. Table~\ref{tab:phmga-stage-b-ledger} reports the metric-bearing rows. The accepted Ottawa evidence is narrow: OpenRouter/Nemotron reaches 0.8775 macro-F1 and BigModel GLM-4.7 reaches 0.7227 under Ottawa only. The corresponding RM101 evidence is negative, with OpenRouter/Nemotron at 0.1834 macro-F1 and BigModel GLM-4.7 at 0.1893. A later Ottawa Codex v3 run emitted the same 0.8775 macro-F1 as the accepted OpenRouter/Nemotron row, but its planning and reflection used a fallback provider path. The highest visible score is not the strongest evidence.
+
+Across the complete active Stage B set, eight rows resolve to two accepted Ottawa rows, three rejected rows, and three pending rows. Table~\ref{tab:phmga-stage-b-ledger} shows the subset with direct metric evidence. The interpretation follows status before score: accepted source status authorizes an Ottawa-only report, rejected RM101 rows remain negative evidence, and pending rows identify closure tasks rather than backend winners. This pattern is the real-data evidence for the authority-inversion part of source-status preservation.
+
+\begin{table}[t]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llllr}
+\toprule
+Dataset & Backend & Evidence status & Evidence note & Test macro-F1 \\
+\midrule
+Ottawa & OpenRouter/Nemotron & accepted & checks passed & 0.8775 \\
+Ottawa & BigModel GLM-4.7 & accepted & checks passed & 0.7227 \\
+Ottawa & Codex v3 & pending & fallback path & 0.8775 \\
+RM101 & OpenRouter/Nemotron & rejected & plan revision needed & 0.1834 \\
+RM101 & BigModel GLM-4.7 & rejected & implementation revision needed & 0.1893 \\
+\bottomrule
+\end{tabular}
+}
+\caption{PHMGA Stage B real-data rows. The Codex row is reported only as pending evidence because the provider path fell back. The table does not select a global backend because no backend has accepted evidence on both Ottawa and RM101, and Stage C/D rows remain unavailable.}
+\label{tab:phmga-stage-b-ledger}
+\end{table}
+
+The RM101 all-domain mixed experiment is separate from the Stage B acceptance decision. Its role is narrower: it tests whether richer, physics-aware planner DAGs produce a measurable signal under a fixed RM101 mixed-domain protocol. The protocol uses \texttt{Dataset\_id=101}, all 12 domains, split-before-windowing stratification, window size 4096, stride 4096, 146/46/48 source records, and 27448/8648/9024 train/validation/test windows. Table~\ref{tab:rm101-simulated-case} reports the result boundary.
+
+\begin{table}[t]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llccp{0.38\linewidth}}
+\toprule
+Row & Planner status & Test accuracy & Test macro-F1 & Interpretation \\
+\midrule
+BigModel GLM-4.7-FlashX & real baseline & 0.8141 & 0.8229 & reference baseline only \\
+Gemini 2.0 Flash & simulated variant & 0.1539 & 0.1305 & negative simulated variant \\
+Gemini 2.5 Flash & simulated variant & 0.2585 & 0.2525 & negative simulated variant \\
+Gemini 2.5 Pro & simulated variant & 0.8865 & 0.8865 & mechanism-level DAG signal \\
+Cross-DAG late fusion & post hoc fusion & 0.8241 & 0.8299 & below best single DAG \\
+\bottomrule
+\end{tabular}
+}
+\caption{RM101 all-domain mixed case study. The strongest row is a simulated planner variant; this table does not resolve the RM101 Stage B rejection, support online Gemini performance, or establish leave-domain-out generalization.}
+\label{tab:rm101-simulated-case}
+\end{table}
+
+The RM101 signal is not a general gain from simulated planning. Two simulated variants remain far below the real baseline, and cross-DAG late fusion stays near the baseline. The only stronger row is a specific operator path: short-time Fourier structure, RMS aggregation, and torque normalization on a gearbox vibration channel. That pattern gives a concrete branch for the next RM101 run, while the simulated planner status and mixed-domain split keep the claim below online performance or leave-domain-out generalization.
+
+Across the three streams, the supported result is narrow: source status remains attached while claims are formed. The synthetic row keeps a perfect offline score below benchmark strength, blocking proxy promotion. Stage B keeps the high-scoring pending Codex row outside backend selection while rejected RM101 rows remain visible, blocking authority inversion. The RM101 case keeps the physics-aware DAG branch as a target for a formal RM101 run, blocking mechanism inflation. A diagnostic performance claim still requires one backend accepted on both datasets, accepted Stage C and Stage D rows, and repeated real-data runs with variance.
