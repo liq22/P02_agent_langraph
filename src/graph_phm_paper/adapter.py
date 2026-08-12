@@ -12,9 +12,9 @@ ALLOWED_TRANSITIONS = {
     "orient": {"acquire"},
     "acquire": {"analyze", "recover"},
     "analyze": {"analyze", "model", "recover"},
-    "model": {"analyze", "submit", "recover"},
+    "model": {"analyze", "model", "submit", "recover"},
     "recover": {"acquire", "analyze", "model", "submit", "recover"},
-    "submit": {"submit"},
+    "submit": {"submit", "recover"},
 }
 
 
@@ -48,7 +48,7 @@ class GraphDecisionAgent(GenericLLMToolAgent):
             return "orient"
         if not _success(trajectory, "data.read_window"):
             return "acquire"
-        if not _success(trajectory, "model.list"):
+        if not _success(trajectory, "op.list"):
             return "analyze"
         if not _success(trajectory, "model.predict"):
             return "model"
@@ -75,7 +75,10 @@ class GraphDecisionAgent(GenericLLMToolAgent):
             "orient": {"data.search", "data.describe"},
             "acquire": {"data.search", "data.describe", "data.read_window"},
             "analyze": {"data.summarize", "op.list", "op.schema", "op.run"},
-            "model": {"op.schema", "op.run", "model.list", "model.schema", "model.predict"},
+            "model": {
+                "data.summarize", "op.list", "op.schema", "op.run",
+                "model.list", "model.schema", "model.predict",
+            },
             "recover": {
                 "data.describe", "data.read_window", "data.summarize", "op.list", "op.schema", "op.run",
                 "model.list", "model.schema", "model.predict", "submit",

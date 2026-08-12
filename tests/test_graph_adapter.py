@@ -15,7 +15,24 @@ class GraphAdapterTests(unittest.TestCase):
         self.assertEqual("orient", agent.decision_state(task, trajectory))
         trajectory.steps.append(TrajectoryStep(0, task.public_observation(), "tool_call", "data.describe", {}, tool_result={}))
         self.assertEqual("acquire", agent.decision_state(task, trajectory))
-        trajectory.steps.append(TrajectoryStep(1, task.public_observation(), "tool_call", "data.read_window", {}, error="bad bounds"))
+        trajectory.steps.append(TrajectoryStep(1, task.public_observation(), "tool_call", "data.read_window", {}, tool_result={"artifact_ref": "w1"}))
+        self.assertEqual("analyze", agent.decision_state(task, trajectory))
+        trajectory.steps.append(TrajectoryStep(2, task.public_observation(), "tool_call", "op.list", {}, tool_result={"operators": []}))
+        self.assertEqual("model", agent.decision_state(task, trajectory))
+        visible = {
+            tool["function"]["name"]
+            for tool in agent.available_tools(
+                task,
+                trajectory,
+                [
+                    {"function": {"name": "op.run"}},
+                    {"function": {"name": "model.list"}},
+                    {"function": {"name": "submit"}},
+                ],
+            )
+        }
+        self.assertEqual({"op.run", "model.list"}, visible)
+        trajectory.steps.append(TrajectoryStep(3, task.public_observation(), "tool_call", "model.list", {}, error="temporary"))
         self.assertEqual("recover", agent.decision_state(task, trajectory))
 
     def test_state_metrics_reject_invalid_jump(self) -> None:
