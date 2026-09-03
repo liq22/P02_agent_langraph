@@ -1,0 +1,43 @@
+{
+  "evaluator_id": "phase1",
+  "evaluator_method": "deterministic",
+  "rollout_metrics": {
+    "agent_decision_error_rate": 0.0,
+    "artifact_lineage_completeness": 1.0,
+    "budget_exhaustion": 0.0,
+    "completion": 1.0,
+    "data_bytes_read": 65536.0,
+    "data_points_read": 8192.0,
+    "failure_count": 0.0,
+    "grounded_completion": 1.0,
+    "grounded_recovery_success": 0.0,
+    "input_tokens": 59317.0,
+    "llm_turns": 22.0,
+    "model_calls": 1.0,
+    "operator_calls": 11.0,
+    "output_tokens": 724.0,
+    "p95_step_latency_seconds": 0.0007903986999735933,
+    "recovery_coverage": null,
+    "recovery_success": 0.0,
+    "repeated_action_ratio": 0.0,
+    "repeated_error_rate": 0.0,
+    "steps": 22.0,
+    "steps_to_next_success_after_failure": null,
+    "steps_to_recovery": null,
+    "submission_grounding": 1.0,
+    "submission_rate": 1.0,
+    "submitted_after_failure": 0.0,
+    "supporting_reference_validity": 1.0,
+    "tool_execution_failure_rate": 0.0,
+    "valid_tool_call_rate": 1.0,
+    "wall_clock_seconds": 0.012226945989823435,
+    "window_reads": 1.0
+  },
+  "task_id": "unsupervised_anomaly_detection",
+  "task_metrics": {
+    "anomaly_score": 0.9592179597746929,
+    "grounded_submission": 1.0,
+    "submission": 1.0
+  },
+  "terminal_status": "submitted"
+}

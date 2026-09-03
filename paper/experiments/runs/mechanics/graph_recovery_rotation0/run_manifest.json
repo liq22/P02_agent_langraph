@@ -1,0 +1,28 @@
+{
+  "arm": "graph",
+  "evidence_class": "mechanics_only_not_performance_evidence",
+  "inject_recoverable_error": true,
+  "rotation": "rotation_0",
+  "runtime": "mock",
+  "seed": 20260808,
+  "selected_diagnosis_model_id": "ridge-ovr-v1",
+  "study": "graph_guided_phm",
+  "temperature": null,
+  "validation_model_macro_f1": {
+    "knn-v1": 0.4222222222222222,
+    "nearest-centroid-v1": 0.13333333333333333,
+    "ridge-ovr-v1": 0.611111111111111
+  },
+  "window_protocol": {
+    "bounded_read": true,
+    "channel_indices": [
+      0,
+      1,
+      2
+    ],
+    "channel_semantics": "provider_exposes_three_vibration_channels_without_axis_names",
+    "end_point": 8192,
+    "max_returned_points": 4096,
+    "start_point": 0
+  }
+}

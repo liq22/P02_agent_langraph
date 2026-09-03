@@ -1,0 +1,1501 @@
+{
+  "cell": "h12:graph_no_persistent_graph_state",
+  "content_retained": false,
+  "requests": [
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 2,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 0
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 5,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 1
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 7,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 2
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 9,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 3
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 11,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 4
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 13,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 5
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 15,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 6
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 17,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 7
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 19,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 8
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 21,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 9
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 23,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 10
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 25,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 11
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 27,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 12
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 29,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 13
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 31,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 14
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 33,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 15
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 35,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 16
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 37,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 17
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 39,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 18
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 41,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 19
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 43,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 20
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 45,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 21
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 47,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 22
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 49,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 23
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 51,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 24
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 53,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 25
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 55,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 26
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 57,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 27
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 59,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 28
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 61,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 29
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 63,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 30
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 65,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 31
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 67,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 32
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 69,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 33
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 71,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 34
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 73,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 35
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 75,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 36
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 77,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 37
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 79,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 38
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 81,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 39
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 83,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 40
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 85,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 41
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 87,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 42
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 89,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 43
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 91,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 44
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 93,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 45
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 95,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 46
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 97,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 47
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 99,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 48
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 101,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 49
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 103,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 50
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 105,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 51
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 107,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 52
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 109,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 53
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 111,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 54
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 113,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 55
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 115,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 56
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 117,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 57
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 119,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 58
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 121,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 59
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 123,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 60
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 125,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 61
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 127,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 62
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 129,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 63
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 131,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 64
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 133,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 65
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 135,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 66
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 137,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 67
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 139,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 68
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 141,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 69
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 143,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 70
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 145,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 71
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 147,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 72
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 149,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 73
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 151,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 74
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 153,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 75
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 155,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 76
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 157,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 77
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 159,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 78
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 161,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 79
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 163,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 80
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 165,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 81
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 167,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 82
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 169,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 83
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 171,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 84
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 173,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 85
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 175,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 86
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 177,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 87
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 179,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 88
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 181,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 89
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 183,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 90
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 185,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 91
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 187,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 92
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 189,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 93
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 191,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 94
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 193,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 95
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 195,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 96
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 197,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 97
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 199,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 98
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 201,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 99
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 203,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 100
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 205,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 101
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 207,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 102
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 209,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 103
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 211,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 104
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 213,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 105
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 215,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 106
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 217,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 107
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 219,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 108
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 221,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 109
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 223,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 110
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 225,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 111
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 227,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 112
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 229,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 113
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 231,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 114
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 233,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 115
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 235,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 116
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 237,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 117
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 239,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 118
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 241,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 119
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 243,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 120
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 245,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 121
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 247,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 122
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 249,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 123
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 251,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 124
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 253,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 125
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 255,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 126
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 257,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 127
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 259,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 128
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 261,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 129
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 263,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 130
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 265,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 131
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 267,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 132
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 269,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 133
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 271,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 134
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 273,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 135
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 275,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 136
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 277,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 137
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 279,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 138
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 281,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 139
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 283,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 140
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 285,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 141
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 287,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 142
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 289,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 143
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 291,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 144
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 293,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 145
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 295,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 146
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 297,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 147
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 299,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 148
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 301,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 149
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 303,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 150
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 305,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 151
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 307,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 152
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 309,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 153
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 311,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 154
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 313,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 155
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 315,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 156
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 317,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 157
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 319,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 158
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 321,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 159
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 323,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 160
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 325,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 161
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 327,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 162
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 329,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 163
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 331,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 164
+    },
+    {
+      "current_state_guidance_count": 1,
+      "historical_decision_state_key_messages": 0,
+      "message_count": 333,
+      "state_guidance_roles": [
+        "system"
+      ],
+      "tool_message_count": 165
+    }
+  ],
+  "schema_version": "graph_dynamic_outbound_request_audit_v1"
+}

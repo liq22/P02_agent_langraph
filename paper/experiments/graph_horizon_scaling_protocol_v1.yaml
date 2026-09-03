@@ -1,0 +1,354 @@
+schema_version: graph_horizon_scaling_protocol_v1
+protocol_id: paderborn_graph_horizon_scaling_p2e2_v1
+status: superseded_phmskills_base
+frozen_date: "2026-08-20"
+superseded_by: graph_horizon_scaling_protocol_v2.yaml
+formal_launch: forbidden
+
+authority:
+  benchmark_core: ../p01-phm-agent-benchmark/CORE.md
+  source_dynamic_protocol: paper/experiments/graph_dynamic_ablation_protocol_v1.yaml
+  experiment_matrix: ../p01-phm-agent-benchmark/obsidian/goal/8-12/phm_agent_three_paper_goal_pack_20260812_v1/experiments/PAPER2_MATRIX.md
+  projection_rule: >-
+    This contract is the executable P2-E2 schedule projection of the source
+    dynamic protocol. It cannot change its data, sequence, event, model,
+    provider, runtime, budget, metric, or statistical semantics.
+  non_authority_note: >-
+    This historical projection used the retired PHMskills-base control. It is
+    retained only to explain old scheduler tests and must never be loaded as
+    the default, resumed, launched, or pooled with the Generic-base v2 design.
+
+scope:
+  matrix_id: P2-E2
+  question: >-
+    Whether the matched Graph-full minus Reactive difference changes over
+    nested offline replay horizons.
+  task_id: online_replay_monitoring
+  control_cell: reactive
+  treatment_cell: graph_full
+  excluded_cells:
+    - graph_no_recovery_revision_edge
+    - graph_no_observation_conditioned_branching
+    - graph_no_persistent_graph_state
+    - graph_no_replanning
+  excluded_claims:
+    - physical_time_scaling
+    - fault_onset_detection
+    - event_f1
+    - detection_delay
+    - live_streaming
+    - cross_dataset_validity
+
+sequence_contract:
+  dataset_id: paderborn-bearing-datacenter
+  rotation: rotation_0
+  public_sequence_ids:
+    - sequence-0001
+    - sequence-0002
+    - sequence-0003
+    - sequence-0004
+    - sequence-0005
+    - sequence-0006
+    - sequence-0007
+    - sequence-0008
+  master_sequence_key: [rotation, public_sequence_id]
+  deliberately_excluded_master_key_fields: [seed, horizon, cell, provider, model]
+  master_horizon: 12
+  horizons: [3, 6, 12]
+  construction: "sequence_h = master_sequence[0:h]"
+  one_master_sequence_per_public_sequence: true
+  independently_resample_each_horizon: false
+  independently_resample_each_seed_or_cell: false
+  public_record_order: ascending_data_port_metadata_order
+  master_selection_formula: "index_k = floor(k * (N - 1) / 11), k = 0,...,11"
+  duplicate_master_index_policy: fail_before_schedule_execution
+  expected_public_domain_schedule: [1, 1, 1, 2, 2, 2, 3, 3, 3, 0, 0, 0]
+  expected_change_release_indices_zero_based: [3, 6, 9]
+  claim_boundary: >-
+    Horizon is the number of released windows in one nested, metadata-ordered
+    offline sequence. It is not elapsed physical time or time to failure.
+
+matched_cells:
+  order: [reactive, graph_full]
+  reactive:
+    runner_arm: reactive
+    runner_graph_profile: full
+    graph_profile_semantics: not_applicable_to_reactive_control
+    state_router_enabled: false
+  graph_full:
+    runner_arm: graph
+    runner_graph_profile: full
+    graph_profile_semantics: graph_dynamic_full_v1
+    state_router_enabled: true
+  shared:
+    backbone_model: cohere/north-mini-code:free
+    provider_profile_id: openrouter_north_graph_dynamic_ablation_v1
+    provider: openrouter-free
+    inference_protocol: openai_chat_completions
+    runtime_contract: phase1_graph_dynamic_ablation_v1
+    temperature: 0.2
+    max_output_tokens_per_turn: 2048
+    input_usd_per_million: 0.0
+    output_usd_per_million: 0.0
+    prompt_information: identical
+    public_event_payload: identical
+    tools_before_graph_filtering: identical
+    numerical_experts: identical
+    evaluator: identical
+    episode_order: identical
+  only_treatment_difference: >-
+    Graph-full selects a public decision state and exposes that state's legal
+    subset of the otherwise shared tools.
+
+schedule:
+  seeds: [20260808, 20260809, 20260810]
+  rotations: [rotation_0]
+  order: [seed, rotation, public_sequence_id, horizon, cell]
+  expected_public_sequences: 8
+  expected_horizons: 3
+  expected_cells: 2
+  expected_matched_pairs: 72
+  expected_episode_bundles: 144
+  expected_bundles_per_horizon: 48
+  expected_bundles_per_cell: 72
+  unit_id_format: "p2e2-%04d"
+  reuse_rule: >-
+    Horizon-12 Reactive and Graph-full units may serve registered P2-E7
+    contrasts, but each episode is stored once and appears once in every
+    applicable denominator.
+
+budgets:
+  source: source_dynamic_protocol.budgets.by_horizon
+  scaling_rule:
+    max_tool_calls: "24 * horizon"
+    max_window_reads: horizon
+    max_operator_calls: "(50 * horizon) / 3"
+    max_model_calls: horizon
+    max_llm_turns: "24 * horizon"
+    max_data_points: "8192 * horizon"
+    max_data_bytes: "65536 * horizon"
+    max_wall_clock_seconds: null
+  by_horizon:
+    3:
+      max_tool_calls: 72
+      max_window_reads: 3
+      max_operator_calls: 50
+      max_model_calls: 3
+      max_llm_turns: 72
+      max_data_points: 24576
+      max_data_bytes: 196608
+      max_wall_clock_seconds: null
+    6:
+      max_tool_calls: 144
+      max_window_reads: 6
+      max_operator_calls: 100
+      max_model_calls: 6
+      max_llm_turns: 144
+      max_data_points: 49152
+      max_data_bytes: 393216
+      max_wall_clock_seconds: null
+    12:
+      max_tool_calls: 288
+      max_window_reads: 12
+      max_operator_calls: 200
+      max_model_calls: 12
+      max_llm_turns: 288
+      max_data_points: 98304
+      max_data_bytes: 786432
+      max_wall_clock_seconds: null
+
+runtime_projection:
+  runner: scripts/run_graph_experiment.py
+  python_command: python
+  dynamic_protocol_argument: paper/experiments/graph_dynamic_ablation_protocol_v1.yaml
+  runtime: openai
+  required_runner_flags:
+    - --arm
+    - --runtime
+    - --graph-profile
+    - --runtime-contract
+    - --dynamic-protocol
+    - --public-sequence-id
+    - --horizon
+    - --tasks
+    - --seed
+    - --rotation
+    - --temperature
+    - --max-output-tokens-per-turn
+    - --provider-label
+    - --base-url-env
+    - --api-key-env
+    - --model-env
+    - --resume-provider-partial
+    - --output
+  environment_variable_names:
+    base_url: OPENROUTER_BASE_URL
+    api_key: OPENROUTER_API_KEY
+    model: OPENROUTER_MODEL
+  environment_values_must_not_be_read_by_scheduler: true
+  budget_resolution: >-
+    The dynamic runner reads the exact horizon budget from
+    dynamic_protocol_argument; the scheduler must not synthesize independent
+    budget flags.
+  resume_policy: >-
+    Re-run the exact same unit command and output root with
+    --resume-provider-partial. Never switch model, route, profile, or horizon.
+
+output_contract:
+  schedule_view_root: paper/experiments/schedules/graph_horizon_scaling_v1
+  formal_root: paper/experiments/runs/formal/graph_dynamic_ablation_v1/openrouter_north_graph_dynamic_ablation_v1
+  results_root: paper/experiments/results/graph_dynamic_ablation_v1/openrouter_north_graph_dynamic_ablation_v1
+  active_v6_primary_root_reuse: forbidden
+  unit_output_pattern: >-
+    {formal_root}/{agent_profile_id}/seed_{seed}/{rotation}/horizon_{horizon}/episodes/{public_sequence_id}
+  unit_output_roots_must_be_unique: true
+  attempt_leaf_pattern: "{unit_output_root}/attempt_{attempt_index}"
+  canonical_episode_files:
+    - run.json
+    - rollout.jsonl
+    - submission.json
+    - metrics.json
+    - failures.jsonl
+    - artifacts.json
+  root_rollout_jsonl_forbidden: true
+  generated_schedule_is_performance_evidence: false
+
+failure_and_denominator_contract:
+  # Compatibility alias retained for existing protocol consumers. It is
+  # exactly the canonical-terminal list; failure kinds remain separate below.
+  retain_statuses:
+    - submitted
+    - stopped
+    - partial
+    - timeout
+    - failed
+    - invalid_submission
+    - budget_exhausted
+  retain_terminal_statuses:
+    - submitted
+    - stopped
+    - partial
+    - timeout
+    - failed
+    - invalid_submission
+    - budget_exhausted
+  retain_failure_kinds:
+    - provider_error
+    - agent_decision_error
+    - invalid_action
+    - tool_error
+    - timeout
+    - budget_exhausted
+    - invalid_submission
+  provider_failure_resolution: >-
+    Retain the failed provider attempt and require exactly one later
+    same-profile non-provider terminal for that scheduled unit before cohort
+    acceptance. An unresolved provider failure leaves the cohort incomplete.
+  non_provider_failure_policy: retain_in_denominator
+  denominator: every_one_of_144_scheduled_episode_bundles
+  undefined_metric_policy: report_undefined_not_zero
+  provider_failed_unit_retry: new_attempt_under_same_unit_output_root
+  non_provider_terminal_retry_within_cohort: forbidden
+  silent_unit_deletion_or_replacement: forbidden
+
+metrics:
+  primary:
+    - grounded_completion_rate_by_horizon_and_cell
+    - paired_graph_full_minus_reactive_grounded_completion_by_horizon
+  task_outcomes:
+    - window_average_precision_over_grounded_submissions
+    - completion_adjusted_window_average_precision
+    - window_auroc_over_grounded_submissions
+    - false_alarm_rate
+    - true_positive_rate
+  dynamic_behavior:
+    - operating_condition_event_delivery_count
+    - event_to_Monitor_transition_rate
+    - event_to_Revise_transition_rate
+    - steps_from_event_to_next_successful_action
+    - steps_from_event_to_next_model_prediction
+    - post_event_repeated_action_ratio
+    - post_event_budget_exhaustion_rate
+  rollout_and_cost:
+    - valid_tool_call_rate
+    - invalid_action_rate
+    - valid_state_transition_rate
+    - repeated_action_ratio
+    - loop_incidence
+    - steps
+    - llm_turns
+    - input_tokens
+    - output_tokens
+    - wall_clock_latency
+    - estimated_model_cost_usd
+  forbidden:
+    - event_f1
+    - detection_delay
+    - time_to_fault_detection
+
+statistics:
+  paired_unit: [seed, rotation, public_sequence_id, horizon]
+  horizon_reports: separate
+  pool_episode_rows_across_horizons: false
+  pooled_headline_graph_effect_across_horizons: forbidden
+  pool_across_provider_model_or_runtime_profiles: false
+  horizon_interaction: >-
+    (Graph-full minus Reactive at horizon 12) minus the matched difference at
+    horizon 3, preserving the within-sequence pairing.
+  treat_nested_horizons_as_independent_samples: false
+  evaluator_private_bearing_cluster: retained_for_inference_only
+  exact_paired_permutation: all_256_sign_assignments_for_8_rotation_0_bearings
+  paired_cluster_bootstrap_iterations: 10000
+  paired_cluster_bootstrap_seed: 20260813
+  confidence_level: 0.95
+  multiplicity_family: horizon_interaction_Holm
+  report_regardless_of_direction: true
+
+gates:
+  scheduler_static:
+    - protocol_and_source_yaml_parse
+    - horizons_sequences_seeds_cells_and_budgets_match_source_authority
+    - exactly_144_unique_unit_keys_and_output_roots
+    - every_short_horizon_is_declared_as_an_exact_master_prefix
+    - no_secret_value_or_private_bearing_identifier_enters_the_schedule
+  runtime_integration:
+    required_source_implementation_flags:
+      - event_emitter_implemented
+      - dynamic_runtime_profile_implemented
+      - formal_runner_implemented
+    requirements:
+      - runner_exposes_every_required_flag
+      - dynamic_protocol_is_loaded_by_the_runner
+      - runtime_releases_only_the_selected_public_prefix
+      - runtime_applies_the_registered_budget_for_that_horizon
+      - output_is_one_canonical_resumable_unit_root
+  provider_free_mechanics:
+    - one_public_sequence_across_all_six_P2_E2_cells
+    - exactly_six_canonical_files_per_attempt
+    - matched_public_events_and_no_future_access
+    - failed_and_partial_attempts_retained
+    - mechanics_only_not_performance_evidence
+  formal_launch:
+    - runtime_integration_gate_passed
+    - provider_free_mechanics_gate_passed
+    - same_profile_two_turn_tool_probe_passed
+    - one_provider_bound_runner_only
+    - no_model_route_protocol_or_runtime_switch
+  cohort_acceptance:
+    - all_144_scheduled_units_have_one_effective_terminal_attempt
+    - no_duplicate_unit_keys_or_output_roots
+    - reactive_and_graph_full_public_sequences_and_events_match
+    - failures_remain_in_denominators
+    - no_cross_horizon_or_cross_profile_pooling
+    - formal_manifest_proves_provider_model_protocol_temperature_output_cap_and_zero_price
+    - scripts_analyze_graph_dynamic_formal_accepts_and_recomputes_the_complete_cohort
+
+scheduler_cli:
+  command: forbidden_superseded_protocol
+  provider_calls_allowed: false
+  runner_invocation_allowed: false
+  environment_value_reads_allowed: false
+  filesystem_writes_allowed_in_dry_run: false
+  missing_runtime_prerequisite_policy: >-
+    This protocol is superseded. Every scheduler invocation selecting v1 must
+    fail before unit or command construction.

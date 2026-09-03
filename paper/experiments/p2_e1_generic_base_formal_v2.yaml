@@ -1,0 +1,141 @@
+schema_version: p2_e1_generic_base_formal_v2
+status: active
+experiment_id: P2-E1
+
+benchmark_control_source:
+  contract: benchmark_active_v0_2_control_source_v1
+  protocol_id: benchmark_v0_2_0--paderborn_phase1_v1--runtime_v6--window_v3
+  profile_id: paper0-paderborn-primary-v1
+  formal_run_stamp: explicit_cli_required
+  public_leaf_root_path: forbidden
+
+authority:
+  control:
+    repository: liq22/phm-agent-benchmark
+    policy: GenericLLMToolAgent
+    agent_id: generic-llm-tool-agent
+    reuse_mode: external_immutable_read_only
+    duplicate_provider_execution: forbidden
+    core_root: null
+    replay_root: null
+    external_root_contract:
+      schema: benchmark_active_v0_2_external_timestamped_root_v1
+      benchmark_protocol_version: 0.2.0
+      root_layout: protocol_id/arm_scope/profile_id/run_{formal_run_stamp}/seed_{seed}/{rotation}/cohort_index.json
+      root_resolution: explicit_cli_root_required
+      core_cli_flag: --generic-core-root
+      replay_cli_flag: --generic-replay-root
+  treatment:
+    repository: liq22/P02_agent_langraph
+    policy: GraphDecisionAgent
+    agent_id: graph-decision-agent
+    graph_policy_profile: full
+    formal_root_version: p2_graph_vs_generic_llm_active_v0_2_v1
+    core_root: null
+    replay_root: null
+    external_root_contract:
+      schema: benchmark_active_v0_2_external_timestamped_root_v1
+      benchmark_protocol_version: 0.2.0
+      root_layout: protocol_id/arm_scope/profile_id/run_{formal_run_stamp}/seed_{seed}/{rotation}/cohort_index.json
+      root_resolution: explicit_cli_root_required
+      core_cli_flag: --graph-core-root
+      replay_cli_flag: --graph-replay-root
+    identity:
+      p2_experiment_id: p2_graph_vs_generic_llm_v1
+      matched_control_id: benchmark_generic_llm_tool_agent_v1
+      agent_control_id: graph_decision_control_v1
+      agent_implementation_id: graph_decision_agent_v1
+
+dataset_protocol: ../P01-phm-agent-benchmark/paper/experiments/datasets/dataset_protocol.yaml
+
+registered_design:
+  seeds: [20260808, 20260809, 20260810]
+  core:
+    rotations: [rotation_0, rotation_1, rotation_2, rotation_3]
+    tasks: [cold_start_fault_diagnosis, unsupervised_anomaly_detection]
+    expected_statistical_outcomes_per_arm: 192
+  replay:
+    rotations: [rotation_0]
+    tasks: [online_replay_monitoring]
+    expected_statistical_outcomes_per_arm: 24
+
+authority_correction:
+  status: applied_before_any_accepted_p2_e1_result
+  basis: CORE.md_task_performance_primary_rollout_diagnostics_secondary
+  superseded_primary_endpoint: rollout.grounded_completion
+  corrected_primary_endpoint: task.average_precision
+  graph_treatment_formal_outcomes_observed_at_correction: 0
+
+frozen_profile:
+  runtime: openai
+  runtime_contract: phase1_opaque_sample_vibration_feature_schema_v6
+  provider: openrouter-free
+  model: cohere/north-mini-code:free
+  inference_protocol: openai_chat_completions
+  thinking_mode: not_requested
+  temperature: 0.2
+  max_output_tokens_per_turn: 2048
+  input_usd_per_million: 0.0
+  output_usd_per_million: 0.0
+
+pairing:
+  key: [seed, rotation, sample_id, task_id]
+  require_exact_key_equality: true
+  require_identical_task_spec: true
+  require_identical_budget: true
+  require_identical_world_and_inference_contract: true
+
+failure_and_denominator_policy:
+  canonical_attempt_contract: exact_six
+  provider_error: retain_attempt_exclude_until_same_profile_retry_terminates
+  retry_indices: contiguous_from_zero
+  statistical_attempts_per_episode: exactly_one_for_accepted_cohort
+  non_provider_terminal_failure: retain_in_denominator
+  unresolved_provider_error: blocks_arm_acceptance
+  partial_prefix_aggregation: forbidden
+
+analysis:
+  direction: treatment_minus_control
+  bootstrap:
+    method: paired_bearing_cluster_percentile_bootstrap
+    cluster_unit: physical_bearing
+    iterations: 2000
+    seed: 20260820
+  task_endpoints:
+    cold_start_fault_diagnosis:
+      - task.macro_f1
+    unsupervised_anomaly_detection:
+      - task.completion_adjusted_average_precision
+    online_replay_monitoring:
+      - task.average_precision
+  rollout_endpoints:
+    - rollout.grounded_completion
+    - rollout.submission_rate
+    - rollout.budget_exhaustion
+    - rollout.valid_tool_call_rate
+    - rollout.repeated_action_ratio
+    - rollout.grounded_recovery_success
+    - rollout.recovery_coverage
+    - rollout.steps_to_recovery
+    - rollout.steps
+    - rollout.p95_step_latency_seconds
+    - rollout.llm_turns
+    - rollout.input_tokens
+    - rollout.output_tokens
+    - rollout.wall_clock_seconds
+    - rollout.estimated_model_cost_usd
+  replay_missing_score_policy_id: phase1_replay_target_adverse_missing_score_v1
+  primary_endpoint:
+    cohort: replay
+    task: online_replay_monitoring
+    metric: task.average_precision
+
+outputs:
+  readiness: paper/experiments/results/p2_e1_primary_readiness_v2.json
+  result: paper/experiments/results/p2_e1_generic_base_formal_v2_result.json
+
+claim_boundary: >-
+  No P2-E1 effect is estimated until all four complete arm gates and both exact
+  paired-cohort gates accept. Provider errors remain immutable retry history;
+  every natural non-provider terminal outcome remains in the registered
+  denominator. Historical PHMskills-derived E0/E1 roots are excluded.

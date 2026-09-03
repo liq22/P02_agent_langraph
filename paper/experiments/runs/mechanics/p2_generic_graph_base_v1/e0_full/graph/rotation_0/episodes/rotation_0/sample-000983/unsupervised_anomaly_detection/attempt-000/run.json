@@ -1,0 +1,134 @@
+{
+  "agent_id": "graph-decision-agent",
+  "budget": {
+    "max_data_bytes": null,
+    "max_data_points": null,
+    "max_llm_turns": 33,
+    "max_model_calls": 2,
+    "max_operator_calls": 17,
+    "max_tool_calls": 33,
+    "max_wall_clock_seconds": null,
+    "max_window_reads": 3
+  },
+  "failure_kind": null,
+  "metadata": {
+    "agent_control_id": "graph_decision_control_v1",
+    "agent_implementation_id": "graph_decision_agent_v1",
+    "arm": "graph",
+    "attempt_index": 0,
+    "dataset_protocol": "phm_agent_dataset_protocol_v1",
+    "ended_at": "2026-08-20T12:48:21.506771+00:00",
+    "episode_key": [
+      "rotation_0",
+      "sample-000983",
+      "unsupervised_anomaly_detection"
+    ],
+    "graph_policy_profile": "full",
+    "inference_protocol": "mock-tools",
+    "matched_control_id": "benchmark_generic_llm_tool_agent_v1",
+    "model": "deterministic-mock-llm",
+    "p2_experiment_id": "p2_graph_vs_generic_llm_v1",
+    "provider": "benchmark-local",
+    "reference_baseline": null,
+    "rotation": "rotation_0",
+    "runtime": "mock",
+    "runtime_contract": "phase1_opaque_sample_vibration_feature_schema_v6",
+    "sample_id": "sample-000983",
+    "seed": 20260808,
+    "selected_diagnosis_model_id": "ridge-ovr-v1",
+    "started_at": "2026-08-20T12:48:21.493747+00:00",
+    "task_id": "unsupervised_anomaly_detection",
+    "thinking_mode": "not_applicable"
+  },
+  "protocol_version": "0.1.0",
+  "raw_terminal_status": null,
+  "run_id": "graph-rotation_0-unsupervised_anomaly_detection-sample-000983-attempt-000",
+  "task": {
+    "allowed_actions": [
+      "data.search",
+      "data.describe",
+      "data.read_window",
+      "data.summarize",
+      "op.list",
+      "op.schema",
+      "op.run",
+      "model.list",
+      "model.schema",
+      "model.predict",
+      "artifact.describe",
+      "submit",
+      "stop"
+    ],
+    "budget": {
+      "max_data_bytes": null,
+      "max_data_points": null,
+      "max_llm_turns": 33,
+      "max_model_calls": 2,
+      "max_operator_calls": 17,
+      "max_tool_calls": 33,
+      "max_wall_clock_seconds": null,
+      "max_window_reads": 3
+    },
+    "evaluator_id": "anomaly-v0",
+    "instruction": "Use normal-only reference data and bounded vibration windows to return an anomaly score, a normal/anomaly decision, and grounding artifacts.",
+    "primary_metrics": [
+      "average_precision",
+      "auroc",
+      "false_alarm_rate"
+    ],
+    "protocol_version": "0.1.0",
+    "public_context": {
+      "channels": [
+        2
+      ],
+      "max_points": 8192,
+      "sample_id": "sample-000983",
+      "training_labels": "normal_only",
+      "window_end": 8192,
+      "window_start": 0
+    },
+    "submission_schema": {
+      "properties": {
+        "predicted_class": {
+          "enum": [
+            "normal",
+            "anomaly"
+          ],
+          "type": "string"
+        },
+        "score": {
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "supporting_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "score",
+        "predicted_class",
+        "supporting_refs"
+      ],
+      "type": "object"
+    },
+    "task_id": "unsupervised_anomaly_detection",
+    "task_type": "unsupervised_anomaly_detection"
+  },
+  "terminal_status": "submitted",
+  "usage": {
+    "data_bytes_read": 65536,
+    "data_points_read": 8192,
+    "input_tokens": 59317,
+    "llm_turns": 22,
+    "model_calls": 1,
+    "operator_calls": 11,
+    "output_tokens": 724,
+    "tool_calls": 22,
+    "wall_clock_seconds": 0.012226945989823435,
+    "window_reads": 1
+  }
+}

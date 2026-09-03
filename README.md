@@ -1,100 +1,94 @@
-# GraphDecisionAgent — Paper 2
+# Graph-Guided PHM Agent
 
-> **Authority:** read [`CORE.md`](CORE.md) first. It defines the graph object, primary task, comparison, and data-condition recovery semantics.
+This repository studies whether an explicit decision-state graph changes
+long-horizon PHM-agent rollouts when the Benchmark world and the underlying
+Generic LLM policy are held fixed.
 
-Paper 2 asks whether a compact PHM decision graph improves streaming fault/anomaly diagnosis relative to a matched sequential or reactive agent.
-
-```text
-same PHM task, data, tools, model, budget, and evaluator
-                    │
-        ┌───────────┴───────────┐
-        ▼                       ▼
-Sequential/Reactive Agent   GraphDecisionAgent
-```
-
-## Scientific object
-
-The graph is a library-independent policy scaffold:
+## Active comparison
 
 ```text
-ORIENT
-→ QUERY
-→ ANALYZE
-→ DECIDE
-→ SUBMISSION_CHECK
-→ SUBMIT
+Control:   Benchmark Generic (Reactive-equivalent)
+           ReactiveSequentialAgent = GenericLLMToolAgent with zero behavior overrides
+
+Treatment: GraphDecisionAgent over the same Generic base
+           + registered state guidance and state-specific tool visibility
 ```
 
-Observation-conditioned edges may return to `QUERY`, `ANALYZE`, or `DECIDE` when new data contradict the current hypothesis. LangGraph may be used as an implementation, but “using LangGraph” is not the contribution.
+Neither arm imports the Paper-1 PHMskills runtime. Both arms use the same
+Paderborn tasks, split, model/provider profile, base prompt, data tools,
+vibration operators, numerical experts, budget, episode order, and evaluator
+from `../p01-phm-agent-benchmark`. The graph has eight states: Inspect,
+Hypothesize, Analyze, Check, Monitor, Revise, Recover, and Submit. The active v6
+primary registers no `public_condition_event`, so Monitor and Revise are
+unreachable there. Their observation-conditioned execution belongs only to the
+separate task-primary dynamic-v3 profile.
 
-## Repository role
+## Current evidence boundary
 
-This repository owns both Paper 2 authority and the active GraphDecisionAgent runtime. The historical `PHMbench/PHMGA` submodule may be inspected for reusable code but is not the active authority. No additional runtime repository is required for Phase 1.
+- P2-E0-v2 accepts provider-free real-Paderborn adapter/world mechanics: 16
+  matched exact-six units per arm, 352 canonical actions and 16 submitted
+  terminal paths per arm, and zero provider calls.
+- The frozen P2-E1 Generic-base finalizer reports the current availability
+  without aggregating it: Benchmark Generic core has 23 attempts (20
+  statistical, 3 provider errors), Graph core has zero, both replay arms have
+  zero, and no effect estimate exists. Its focused checks pass 15/15.
+- Dynamic-v3 retains the unchanged 10/10 provider-free exact-six v2 Mock
+  mechanics cells. Its task-primary endpoint is target-adverse assigned-window
+  Average Precision; grounded completion is secondary. The dedicated runner
+  and dry scheduler validate 240/240 commands, none invoked, with formal
+  coverage 0/240. Its accepted-only analyzer rebuilds the eight private
+  12-window masters through the registered DataPort and reads predictions from
+  canonical rollout submit prefixes; derived `evaluation.jsonl` rows are not
+  target or prediction authority. Its accepted-result consumer recomputes and
+  separately labels eight task-primary and 26 P2-E3--P2-E7 mechanism rows; a
+  real 240-unit provider-free analyzer fixture reaches the consumer.
+- Horizon-v3 projects the same endpoint and matched bearing-cluster inference
+  over 144 registered units. Its provider-free dry schedule emits 144/144
+  commands; none has been invoked and no formal result exists.
+- Reliability-v2 is runner-ready and its provider-free dry schedule emits
+  160/160 inert commands. It invokes none of them, performs zero provider calls
+  and zero writes, has zero formal results, and passes 7/7 focused checks. Its
+  accepted-only analyzer now uses private DataPort targets plus canonical
+  rollout submit prefixes to recompute target-adverse AP over all 24 assigned
+  windows per repeat; grounded completion remains explanatory.
+- Cross-dataset-v3 registers the accepted Ottawa ordered-state target and its
+  CSV DataPort. The provider-free preflight emits 18/18 commands for 72 episode
+  bundles, 36 matched pairs, and 216 assigned windows; the accepted-only
+  analyzer is implemented. Its accepted-result consumer rechecks the exact
+  cohort, target-adverse accounting, displayed task deltas, and bootstrap
+  metadata before an atomic table/figure/manuscript update. The E8 chain passes
+  30/30 provider-free checks. No command has run, no formal result or result row
+  exists, and external provider execution remains unauthorized.
+- The provider-free repository suite passes 163/163. Tests and mechanics gates
+  are implementation evidence, not task-performance or treatment-effect
+  evidence.
 
-Paper 2 imports the shared benchmark's:
+The generated current snapshot is available as
+`paper/assets/tables/p2_current_mechanics_status.md` and
+`paper/assets/figures/p2_current_mechanics_status.svg`. Neither artifact
+contains a task score or Graph performance claim.
 
-```text
-TaskSpec
-Observation
-CanonicalAction
-Budget
-RolloutEvent
-Submission
-operator/model contracts
-Evaluator interface and task metrics
-```
+## Active execution paths
 
-The benchmark does not import GraphDecisionAgent.
+- graph implementation and single-arm runner: `src/phm_graph_agent/` and
+  `scripts/run_graph_experiment.py`;
+- P2-E8 Ottawa dry scheduler and accepted-only analyzer:
+  `scripts/schedule_graph_cross_dataset_replay.py` and
+  `scripts/analyze_graph_cross_dataset_replay.py`;
+- authoritative task/data contract:
+  `../p01-phm-agent-benchmark/paper/experiments/datasets/dataset_protocol.yaml`;
+- Benchmark Generic P0 launcher:
+  `../p01-phm-agent-benchmark/paper/experiments/run_formal_paper0_v6.sh`;
+- provider-free P1/P2 v2 schedule:
+  `../p01-phm-agent-benchmark/paper/experiments/schedule_downstream_formal_v2.py`;
+- manuscript and evidence authority: `paper/draft/main.md`, `paper/paper.yaml`,
+  and `paper/experiments/evidence_matrix.md`.
 
-## Task priority
+The downstream scheduler emits 27 inert commands: 12 P1, 12 P2 Graph core, and
+3 P2 Graph monitoring jobs. P2 reuses the Benchmark Generic P0 roots as its
+control, so it does not duplicate provider execution for a separate Reactive
+arm. Scheduling is not inference and is not result evidence.
 
-```text
-Primary: online/replay monitoring and streaming fault/anomaly diagnosis
-Auxiliary: cold-start fault diagnosis
-Auxiliary: unsupervised anomaly detection
-```
-
-Task performance—accuracy, macro-F1, AUPRC, event-F1, false alarms, and delay—is primary. Graph-state, branch, completion, and cost measures explain the mechanism.
-
-## Meaning of recovery
-
-The main “fault” is an equipment or data condition exposed by data-factory, not an injected invalid LLM action.
-
-Graph decision revision may respond to:
-
-```text
-fault/anomaly onset
-operating-condition shift
-noisy or uninformative windows
-missing/delayed windows declared by the data protocol
-new observations that contradict the current diagnosis branch
-```
-
-Natural tool errors remain in rollouts, but exhaustive software-failure injection is not the Paper 2 center.
-
-## Primary comparison
-
-```text
-B2 ScriptedHeuristicAgent
-B3 Sequential/Reactive Generic LLM Agent
-M2 GraphDecisionAgent
-```
-
-The main causal comparison is `B3` versus `M2`, with matched model, prompt information content, data, tools, budget, run policy, and evaluator.
-
-## Execution order
-
-```text
-1. make one real-data, one-seed replay episode run sequentially
-2. run the matched GraphDecisionAgent episode
-3. verify temporal order and no future-window access
-4. inspect task outcome and graph-state transitions
-5. add a small repeated pilot
-6. run ablations and formal comparisons selected by the statistical plan
-```
-
-Optional agent-emitted reasoning traces may be stored when permitted. Hidden provider chain-of-thought is not a required field or official score.
-
-## Historical workspace
-
-The current generic AutoResearch/Canvas/project-management material is historical scaffolding rather than the active Paper 2 identity. See [`SUPERSEDED.md`](SUPERSEDED.md).
+Historical six-state, PHMskills-derived, dynamic-v1, scheduler, graph-UI, PHMGA,
+and autoresearch artifacts are non-authoritative. They cannot be resumed,
+pooled, or reported as the current Generic-base treatment.

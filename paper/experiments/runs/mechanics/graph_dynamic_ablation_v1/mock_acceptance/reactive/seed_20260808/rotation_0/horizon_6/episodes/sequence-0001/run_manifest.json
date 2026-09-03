@@ -1,0 +1,26 @@
+{
+  "agent_profile_id": "reactive",
+  "arm": "reactive",
+  "budget": {
+    "max_data_bytes": 393216,
+    "max_data_points": 49152,
+    "max_llm_turns": 144,
+    "max_model_calls": 6,
+    "max_operator_calls": 100,
+    "max_tool_calls": 144,
+    "max_wall_clock_seconds": null,
+    "max_window_reads": 6
+  },
+  "canonical_episode_count": 1,
+  "dataset_protocol": "phm_agent_dataset_protocol_v1",
+  "dynamic_protocol": "graph_dynamic_ablation_protocol_v1",
+  "evidence_class": "mechanics_only_not_performance_evidence",
+  "graph_policy_profile": "reactive",
+  "horizon": 6,
+  "public_sequence_id": "sequence-0001",
+  "rotation": "rotation_0",
+  "runtime": "mock",
+  "runtime_contract": "phase1_graph_dynamic_ablation_v1",
+  "seed": 20260808,
+  "study": "graph_dynamic_ablation_v1"
+}
