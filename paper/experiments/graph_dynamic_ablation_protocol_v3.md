@@ -53,7 +53,8 @@ repetition, and budget exhaustion. Seven additional P2-E7 rows compare full
 Graph with Reactive on the same horizon-12 condition events. This produces no
 fault-onset, event-F1, detection-delay, or physical-time claim and never
 duplicates an episode denominator. The consumer updates the standalone table,
-task-primary SVG, and one marked manuscript block atomically. Rejected,
+task-primary SVG, and one marked manuscript block as a group with exception
+rollback. Rejected,
 partial, identity-drifted, or arithmetically inconsistent inputs leave all
 three outputs unchanged. With formal coverage at 0/240, the manuscript block
 remains Pending.

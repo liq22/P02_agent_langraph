@@ -28,10 +28,17 @@ separate task-primary dynamic-v3 profile.
 - P2-E0-v2 accepts provider-free real-Paderborn adapter/world mechanics: 16
   matched exact-six units per arm, 352 canonical actions and 16 submitted
   terminal paths per arm, and zero provider calls.
-- The frozen P2-E1 Generic-base finalizer reports the current availability
-  without aggregating it: Benchmark Generic core has 23 attempts (20
-  statistical, 3 provider errors), Graph core has zero, both replay arms have
-  zero, and no effect estimate exists. Its focused checks pass 15/15.
+- The frozen P2-E1 Generic-base snapshot records that no four-root audit has
+  been performed and emits no effect estimate. The finalizer binds every
+  accepted result to the protocol identity, resolved Benchmark control stamp,
+  frozen model profile, registered design, analysis contract, and exact
+  Benchmark/Data Factory/P2 Git topology, then publishes readiness and result as
+  one group with exception rollback. The accepted-only manuscript
+  consumer independently rechecks those bindings, all displayed deltas and
+  replay assigned-window accounting; it deterministically emits the primary
+  table, core figure, Graph-state artifacts, and manuscript update as one group.
+  Finalizer checks pass 13/13 and consumer checks pass 18/18, including a full
+  192-core/24-replay-per-arm fixture. No accepted P2-E1 result exists.
 - Dynamic-v3 retains the unchanged 10/10 provider-free exact-six v2 Mock
   mechanics cells. Its task-primary endpoint is target-adverse assigned-window
   Average Precision; grounded completion is secondary. The dedicated runner
@@ -47,7 +54,7 @@ separate task-primary dynamic-v3 profile.
   commands; none has been invoked and no formal result exists.
 - Reliability-v2 is runner-ready and its provider-free dry schedule emits
   160/160 inert commands. It invokes none of them, performs zero provider calls
-  and zero writes, has zero formal results, and passes 7/7 focused checks. Its
+  and zero writes, has zero formal results, and passes 12/12 focused checks. Its
   accepted-only analyzer now uses private DataPort targets plus canonical
   rollout submit prefixes to recompute target-adverse AP over all 24 assigned
   windows per repeat; grounded completion remains explanatory.
@@ -56,10 +63,10 @@ separate task-primary dynamic-v3 profile.
   bundles, 36 matched pairs, and 216 assigned windows; the accepted-only
   analyzer is implemented. Its accepted-result consumer rechecks the exact
   cohort, target-adverse accounting, displayed task deltas, and bootstrap
-  metadata before an atomic table/figure/manuscript update. The E8 chain passes
+  metadata before a grouped replacement with exception rollback. The E8 chain passes
   30/30 provider-free checks. No command has run, no formal result or result row
   exists, and external provider execution remains unauthorized.
-- The provider-free repository suite passes 163/163. Tests and mechanics gates
+- The provider-free repository suite passes 185/185. Tests and mechanics gates
   are implementation evidence, not task-performance or treatment-effect
   evidence.
 

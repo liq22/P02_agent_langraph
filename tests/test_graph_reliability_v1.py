@@ -10,6 +10,23 @@ from pathlib import Path
 
 import yaml
 
+ROOT = Path(__file__).resolve().parents[1]
+BENCHMARK_SRC = ROOT.parent / "p01-phm-agent-benchmark" / "src"
+if BENCHMARK_SRC.is_dir() and str(BENCHMARK_SRC) not in sys.path:
+    sys.path.insert(0, str(BENCHMARK_SRC))
+
+from phm_agent_benchmark.phase1 import (
+    Budget,
+    DataAccessScope,
+    EvaluatorResult,
+    Rollout,
+    RolloutEvent,
+    TaskInstance,
+)
+from phm_agent_benchmark.phase1.active_path import evaluate_phase1_episode
+from phm_agent_benchmark.phase1.policy_adapter import phase1_task_spec
+from phm_agent_benchmark.rollout_io import read_run_bundle, write_run_bundle
+
 from scripts.analyze_graph_reliability import (
     GraphReliabilityContractError,
     analyze_graph_reliability,
@@ -22,9 +39,14 @@ from scripts.schedule_graph_reliability import (
     build_graph_reliability_schedule,
     graph_reliability_runner_readiness,
 )
+from scripts.run_graph_reliability_v2 import (
+    GraphReliabilityRunnerError,
+    _exclusive_profile_lock,
+    _stamp_attempts,
+    _write_json as _write_runner_json,
+)
 
 
-ROOT = Path(__file__).resolve().parents[1]
 PROTOCOL_PATH = ROOT / "paper/experiments/graph_reliability_protocol_v2.yaml"
 LEGACY_PROTOCOL_PATH = ROOT / "paper/experiments/graph_reliability_protocol_v1.yaml"
 
@@ -57,6 +79,32 @@ def _private_assignments(protocol: dict) -> dict[str, dict]:
     }
 
 
+def _selected_success_leaf(root: Path, protocol: dict) -> Path:
+    return (
+        root
+        / protocol["profile"]["reliability_profile_id"]
+        / protocol["cohort"]["repeats"][0]["repeat_id"]
+        / "graph"
+        / protocol["scope"]["rotation"]
+        / "episodes"
+        / protocol["scope"]["rotation"]
+        / protocol["scope"]["public_sequence_ids"][0]
+        / protocol["scope"]["task_id"]
+        / "attempt_000"
+    )
+
+
+def _read_jsonl(path: Path) -> list[dict]:
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+
+
+def _write_jsonl(path: Path, rows: list[dict]) -> None:
+    path.write_text(
+        "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows),
+        encoding="utf-8",
+    )
+
+
 def _write_attempt(
     run_dir: Path,
     protocol: dict,
@@ -68,9 +116,16 @@ def _write_attempt(
     attempt_index: int,
     provider_failure: bool = False,
     agent_failure: bool = False,
+    submitted_window_count: int = 3,
 ) -> None:
     scope = protocol["scope"]
     profile = protocol["profile"]
+    sample_ids = [f"{sequence_id}-window-{index}" for index in range(3)]
+    targets = {
+        sample_ids[0]: 0,
+        sample_ids[1]: 1,
+        sample_ids[2]: 1,
+    }
     leaf = (
         run_dir
         / "episodes"
@@ -79,26 +134,183 @@ def _write_attempt(
         / scope["task_id"]
         / f"attempt_{attempt_index:03d}"
     )
-    leaf.mkdir(parents=True)
-    grounded = None if provider_failure else (0.0 if agent_failure else 1.0)
+    leaf.parent.mkdir(parents=True, exist_ok=True)
     failure_kind = (
         "provider_error"
         if provider_failure
         else ("agent_decision_error" if agent_failure else None)
     )
     terminal_status = "failed" if failure_kind is not None else "submitted"
+    instance = TaskInstance(
+        task_id=scope["task_id"],
+        sample_id=sequence_id,
+        private_target=targets,
+        public_context={
+            "replay_sample_ids": sample_ids,
+            "window_start": 0,
+            "window_end": 8192,
+            "channels": [2],
+            "max_points": 8192,
+        },
+    )
+    task = phase1_task_spec(instance, Budget(**profile["budget"]))
+    episode_id = task.task_spec_id
+    decisions = [
+        {
+            "sample_id": sample_id,
+            "score": score,
+            "predicted_class": "normal" if index == 0 else "anomaly",
+            "supporting_refs": [f"prediction-{sequence_id}-{index}"],
+        }
+        for index, (sample_id, score) in enumerate(
+            zip(sample_ids, (0.1, 0.9, 0.8), strict=True)
+        )
+    ]
+    active_decisions = decisions[:submitted_window_count]
+    input_tokens = 120 if arm == "graph" else 100
+    output_tokens = 12 if arm == "graph" else 10
+    steps: list[RolloutEvent] = []
+    if failure_kind is None:
+        for index, decision in enumerate(active_decisions):
+            observation = {
+                "task_id": scope["task_id"],
+                "sample_id": sample_ids[index],
+                "task_spec_id": task.task_spec_id,
+                "task_type": scope["task_id"],
+                "episode_id": episode_id,
+                "context": {
+                    "replay_sample_ids": sample_ids[: index + 1],
+                    "replay_cursor": index,
+                },
+            }
+            prediction_ref = decision["supporting_refs"][0]
+            steps.append(
+                RolloutEvent(
+                    index=len(steps),
+                    observation_summary=observation,
+                    action="tool_call",
+                    tool_name="model.predict",
+                    tool_args={"sample_id": sample_ids[index]},
+                    tool_result={
+                        "prediction_ref": prediction_ref,
+                        "required_supporting_refs": [prediction_ref],
+                        "source_sample_id": sample_ids[index],
+                        "anomaly_score": decision["score"],
+                        "predicted_class": decision["predicted_class"],
+                    },
+                    usage_delta={
+                        "tool_calls": 1,
+                        "model_calls": 1,
+                        "llm_turns": 1,
+                        "input_tokens": input_tokens if index == 0 else 0,
+                        "output_tokens": output_tokens if index == 0 else 0,
+                        "agent_inference_seconds": 0.0,
+                        "tool_execution_seconds": 0.0,
+                    },
+                )
+            )
+            prefix = copy.deepcopy(active_decisions[: index + 1])
+            stream_end = index == len(active_decisions) - 1
+            submit_output = {
+                "accepted": True,
+                "decisions": prefix,
+                "stream_end": stream_end,
+                "released_sample_id": None if stream_end else sample_ids[index + 1],
+            }
+            steps.append(
+                RolloutEvent(
+                    index=len(steps),
+                    observation_summary=observation,
+                    action="tool_call",
+                    tool_name="submit",
+                    tool_args={"decision": copy.deepcopy(decision)},
+                    tool_result=submit_output,
+                    usage_delta={
+                        "tool_calls": 1,
+                        "llm_turns": 1,
+                        "input_tokens": 0,
+                        "output_tokens": 0,
+                        "agent_inference_seconds": 0.0,
+                        "tool_execution_seconds": 0.0,
+                    },
+                )
+            )
     usage = {
-        "input_tokens": 120 if arm == "graph" else 100,
-        "output_tokens": 12 if arm == "graph" else 10,
-        "llm_turns": 4,
-        "tool_calls": 6,
+        "tool_calls": len(steps),
+        "window_reads": 0,
+        "data_points_read": 0,
+        "data_bytes_read": 0,
+        "operator_calls": 0,
+        "model_calls": len(active_decisions) if steps else 0,
+        "llm_turns": len(steps),
+        "input_tokens": input_tokens if steps else 0,
+        "output_tokens": output_tokens if steps else 0,
+        "agent_inference_seconds": 0.0,
+        "tool_execution_seconds": 0.0,
+        "wall_clock_seconds": 0.0,
     }
+    failures = (
+        []
+        if failure_kind is None
+        else [
+            {
+                "step": None,
+                "tool_name": None,
+                "kind": failure_kind,
+                "error": "fixture terminal failure",
+            }
+        ]
+    )
+    submission = None if failure_kind is not None else dict(steps[-1].tool_result)
+    rollout = Rollout(
+        task_spec_id=task.task_spec_id,
+        task_type=task.task_type,
+        episode_id=episode_id,
+        agent_id=profile["arms"][arm]["agent_id"],
+        steps=steps,
+        failures=failures,
+        usage=usage,
+        submission=submission,
+        terminal_status=terminal_status,
+        terminal_failure_kind=failure_kind,
+        terminal_message=(None if failure_kind is None else "fixture terminal failure"),
+        runtime_contract=profile["effective_runtime_contract"],
+    )
+    evaluator_instance = TaskInstance(
+        episode_id=episode_id,
+        task_spec_id=task.task_spec_id,
+        task_type=task.task_type,
+        sample_handle=sequence_id,
+        private_target=targets,
+        public_context=dict(task.public_context),
+        scope=DataAccessScope(replay_handles=tuple(sample_ids)),
+    )
+    evaluated = evaluate_phase1_episode(
+        task=task,
+        instance=evaluator_instance,
+        rollout=rollout,
+    )
+    evaluated_rollout = dict(evaluated.rollout_metrics)
+    evaluated_rollout["estimated_model_cost_usd"] = 0.0
+    evaluation = EvaluatorResult(
+        task_spec_id=evaluated.task_spec_id,
+        task_type=evaluated.task_type,
+        episode_id=evaluated.episode_id,
+        task_metrics=evaluated.task_metrics,
+        rollout_metrics=evaluated_rollout,
+        terminal_status=evaluated.terminal_status,
+        evaluator_id=evaluated.evaluator_id,
+        evaluator_method=evaluated.evaluator_method,
+    )
     shared = protocol["matched_contract"]["shared"]
-    run = {
-        "run_id": f"{repeat_id}-{arm}-{sequence_id}-{attempt_index}",
-        "agent_id": profile["arms"][arm]["agent_id"],
-        "budget": dict(profile["budget"]),
-        "metadata": {
+    write_run_bundle(
+        leaf,
+        run_id=f"{repeat_id}-{arm}-{sequence_id}-{attempt_index}",
+        task=task,
+        rollout=rollout,
+        evaluation=evaluation,
+        artifacts={},
+        run_metadata={
             "reliability_profile_id": profile["reliability_profile_id"],
             "reliability_execution_contract": protocol["execution"][
                 "dedicated_runner_contract"
@@ -134,84 +346,21 @@ def _write_attempt(
             "input_usd_per_million": float(profile["input_usd_per_million"]),
             "output_usd_per_million": float(profile["output_usd_per_million"]),
             "public_sequence_id": sequence_id,
+            "sample_id": sequence_id,
             "episode_key": [scope["rotation"], sequence_id, scope["task_id"]],
             "attempt_index": attempt_index,
-        },
-        "terminal_status": terminal_status,
-        "failure_kind": failure_kind,
-        "usage": usage,
-    }
-    metrics = {
-        "task_id": scope["task_id"],
-        "terminal_status": terminal_status,
-        "task_metrics": {
-            "completion_adjusted_average_precision": None,
-            "average_precision": None,
-            "auroc": None,
-            "false_alarm_rate": None,
-            "true_positive_rate": None,
-        },
-        "rollout_metrics": {
-            "grounded_completion": grounded,
-            "submission_rate": 0.0 if failure_kind is not None else 1.0,
-            "grounded_recovery_success": None,
-            "repeated_action_ratio": 0.0,
-            "budget_exhaustion": 0.0,
-            "steps": 6.0,
-            "llm_turns": float(usage["llm_turns"]),
-            "tool_calls": float(usage["tool_calls"]),
-            "input_tokens": float(usage["input_tokens"]),
-            "output_tokens": float(usage["output_tokens"]),
-            "estimated_model_cost_usd": 0.0,
-        },
-    }
-    decisions = [
-        {
-            "sample_id": f"{sequence_id}-window-{index}",
-            "score": score,
-            "predicted_class": "normal" if index == 0 else "anomaly",
-        }
-        for index, score in enumerate((0.1, 0.9, 0.8))
-    ]
-    effective_decisions = [] if failure_kind is not None else decisions
-    rollout_rows = []
-    if effective_decisions:
-        rollout_rows.append(
-            {
-                "event_type": "action",
-                "action": {"name": "submit"},
-                "result": {
-                    "status": "ok",
-                    "output": {"accepted": True, "alarms": effective_decisions},
-                },
-            }
-        )
-    rollout_rows.append(
-        {"event_type": "terminal", "terminal_status": terminal_status}
-    )
-    _json(leaf / "run.json", run)
-    (leaf / "rollout.jsonl").write_text(
-        "".join(json.dumps(row, sort_keys=True) + "\n" for row in rollout_rows),
-        encoding="utf-8",
-    )
-    _json(
-        leaf / "submission.json",
-        {
-            "status": terminal_status,
-            "terminal_status": terminal_status,
-            "payload": (
-                {"accepted": True, "alarms": effective_decisions}
-                if terminal_status == "submitted"
-                else None
-            ),
+            "started_at": "2026-09-03T00:00:00+00:00",
+            "ended_at": "2026-09-03T00:00:01+00:00",
         },
     )
-    _json(leaf / "metrics.json", metrics)
-    (leaf / "failures.jsonl").write_text("", encoding="utf-8")
-    _json(leaf / "artifacts.json", {"artifacts": []})
 
 
-def _build_fixture(root: Path, *, unresolved_provider: bool = False) -> dict:
+def _build_fixture(
+    root: Path,
+    *,
+    unresolved_provider: bool = False,
+    truncated_submission: bool = False,
+) -> dict:
     protocol = _fixture_protocol()
     profile = protocol["profile"]
     scope = protocol["scope"]
@@ -331,11 +480,109 @@ def _build_fixture(root: Path, *, unresolved_provider: bool = False) -> dict:
                     sequence_id=sequence_id,
                     attempt_index=1 if resolved_provider_retry else 0,
                     agent_failure=agent_failure,
+                    submitted_window_count=(
+                        1
+                        if truncated_submission
+                        and repeat_index == 0
+                        and arm == "graph"
+                        and sequence_index == 0
+                        else 3
+                    ),
                 )
     return protocol
 
 
 class GraphReliabilityV2Tests(unittest.TestCase):
+    def test_runner_profile_lock_and_unique_temporary_write_are_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            lock = root / "profile/.provider.lock"
+            with _exclusive_profile_lock(lock):
+                with self.assertRaisesRegex(
+                    GraphReliabilityRunnerError, "holds the profile lock"
+                ):
+                    with _exclusive_profile_lock(lock):
+                        pass
+
+            fixed_temporary = root / "run.json.tmp"
+            fixed_temporary.write_text("unrelated writer\n", encoding="utf-8")
+            output = root / "run.json"
+            _write_runner_json(output, {"status": "complete"})
+            self.assertEqual(
+                json.loads(output.read_text(encoding="utf-8")),
+                {"status": "complete"},
+            )
+            self.assertEqual(
+                fixed_temporary.read_text(encoding="utf-8"), "unrelated writer\n"
+            )
+
+    def test_runner_does_not_rewrite_stamped_attempts_and_rejects_partial_stamp(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            protocol = _fixture_protocol()
+            profile = protocol["profile"]
+            scope = protocol["scope"]
+            repeat = protocol["cohort"]["repeats"][0]
+            arm = "reactive"
+            sequence_id = scope["public_sequence_ids"][0]
+            run_directory = (
+                root
+                / profile["reliability_profile_id"]
+                / repeat["repeat_id"]
+                / arm
+                / scope["rotation"]
+            )
+            _write_attempt(
+                run_directory,
+                protocol,
+                repeat_id=repeat["repeat_id"],
+                seed=repeat["seed"],
+                arm=arm,
+                sequence_id=sequence_id,
+                attempt_index=0,
+            )
+            episode_root = (
+                run_directory
+                / "episodes"
+                / scope["rotation"]
+                / sequence_id
+                / scope["task_id"]
+            )
+            contract = {
+                "episode_root": str(episode_root),
+                "run_directory": str(run_directory),
+                "reliability_profile_id": profile["reliability_profile_id"],
+                "seed": repeat["seed"],
+                "repeat_id": repeat["repeat_id"],
+                "arm": arm,
+                "agent_id": profile["arms"][arm]["agent_id"],
+                "agent_control_id": profile["arms"][arm]["agent_control_id"],
+                "agent_implementation_id": profile["arms"][arm][
+                    "agent_implementation_id"
+                ],
+                "graph_policy_profile": profile["arms"][arm][
+                    "graph_policy_profile"
+                ],
+                "rotation": scope["rotation"],
+                "horizon": scope["windows_per_episode"],
+                "public_sequence_id": sequence_id,
+                "task_id": scope["task_id"],
+            }
+            run_path = episode_root / "attempt_000/run.json"
+            before = run_path.read_bytes()
+            _stamp_attempts(contract, protocol)
+            self.assertEqual(run_path.read_bytes(), before)
+
+            run = json.loads(run_path.read_text(encoding="utf-8"))
+            del run["metadata"]["repeat_id"]
+            _json(run_path, run)
+            with self.assertRaisesRegex(
+                GraphReliabilityRunnerError, "partial reliability provenance stamp"
+            ):
+                _stamp_attempts(contract, protocol)
+
     def test_v1_is_superseded_and_rejected(self) -> None:
         legacy = yaml.safe_load(LEGACY_PROTOCOL_PATH.read_text(encoding="utf-8"))
         self.assertEqual(legacy["status"], "superseded_phmskills_base")
@@ -615,6 +862,123 @@ class GraphReliabilityV2Tests(unittest.TestCase):
                     protocol,
                     acceptance,
                     private_replay_assignments=malformed,
+                )
+
+    def test_canonical_gate_rejects_exact_six_identity_submission_failure_and_usage_tamper(
+        self,
+    ) -> None:
+        for tamper in ("exact_six", "identity", "submission", "failure", "usage"):
+            with self.subTest(tamper=tamper), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                protocol = _build_fixture(root)
+                leaf = _selected_success_leaf(root, protocol)
+                if tamper == "exact_six":
+                    (leaf / "unexpected.txt").write_text("extra\n", encoding="utf-8")
+                elif tamper == "identity":
+                    rows = _read_jsonl(leaf / "rollout.jsonl")
+                    rows[0]["agent_id"] = "tampered-agent"
+                    _write_jsonl(leaf / "rollout.jsonl", rows)
+                elif tamper == "submission":
+                    submission = json.loads(
+                        (leaf / "submission.json").read_text(encoding="utf-8")
+                    )
+                    submission["payload"]["decisions"][0]["score"] = 0.25
+                    _json(leaf / "submission.json", submission)
+                elif tamper == "failure":
+                    _write_jsonl(
+                        leaf / "failures.jsonl",
+                        [
+                            {
+                                "step": None,
+                                "tool_name": None,
+                                "kind": "tool_error",
+                                "error": "fabricated failure",
+                            }
+                        ],
+                    )
+                else:
+                    run = json.loads((leaf / "run.json").read_text(encoding="utf-8"))
+                    run["usage"]["tool_calls"] += 1
+                    _json(leaf / "run.json", run)
+
+                report = accept_graph_reliability_cohort(root, protocol)
+                self.assertFalse(report["accepted"])
+                self.assertTrue(report["errors"])
+
+    def test_analyzer_rejects_metrics_tamper_after_canonical_acceptance(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            protocol = _build_fixture(root)
+            leaf = _selected_success_leaf(root, protocol)
+            metrics = json.loads((leaf / "metrics.json").read_text(encoding="utf-8"))
+            metrics["task_metrics"]["average_precision"] = 0.125
+            _json(leaf / "metrics.json", metrics)
+            acceptance = accept_graph_reliability_cohort(root, protocol)
+            self.assertTrue(acceptance["accepted"], acceptance["errors"])
+            with self.assertRaisesRegex(
+                GraphReliabilityContractError,
+                "metrics differ from the independent evaluator",
+            ):
+                analyze_graph_reliability(
+                    root,
+                    protocol,
+                    acceptance,
+                    private_replay_assignments=_private_assignments(protocol),
+                )
+
+    def test_analyzer_rejects_coherent_unassigned_prefix_and_incomplete_submission(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            protocol = _build_fixture(root)
+            leaf = _selected_success_leaf(root, protocol)
+            assigned = _private_assignments(protocol)
+            sequence_id = protocol["scope"]["public_sequence_ids"][0]
+            old_sample = assigned[sequence_id]["sample_ids"][0]
+            new_sample = "unregistered-window"
+
+            def replace(value):
+                if isinstance(value, dict):
+                    return {key: replace(child) for key, child in value.items()}
+                if isinstance(value, list):
+                    return [replace(child) for child in value]
+                return new_sample if value == old_sample else value
+
+            rows = replace(_read_jsonl(leaf / "rollout.jsonl"))
+            submission = replace(
+                json.loads((leaf / "submission.json").read_text(encoding="utf-8"))
+            )
+            _write_jsonl(leaf / "rollout.jsonl", rows)
+            _json(leaf / "submission.json", submission)
+            read_run_bundle(leaf)
+            acceptance = accept_graph_reliability_cohort(root, protocol)
+            self.assertTrue(acceptance["accepted"], acceptance["errors"])
+            with self.assertRaisesRegex(
+                GraphReliabilityContractError,
+                "registered assigned-window prefix",
+            ):
+                analyze_graph_reliability(
+                    root,
+                    protocol,
+                    acceptance,
+                    private_replay_assignments=assigned,
+                )
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            protocol = _build_fixture(root, truncated_submission=True)
+            acceptance = accept_graph_reliability_cohort(root, protocol)
+            self.assertTrue(acceptance["accepted"], acceptance["errors"])
+            with self.assertRaisesRegex(
+                GraphReliabilityContractError,
+                "submit cursor differs from the registered assignment",
+            ):
+                analyze_graph_reliability(
+                    root,
+                    protocol,
+                    acceptance,
+                    private_replay_assignments=_private_assignments(protocol),
                 )
 
     def test_unresolved_provider_attempt_and_empty_root_fail_closed(self) -> None:

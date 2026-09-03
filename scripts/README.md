@@ -34,8 +34,8 @@ Use these first unless you are debugging one lower layer on purpose.
   consumer; revalidates the 240-unit gate and independently recomputes eight
   task-primary plus 26 separately labeled P2-E3--P2-E7 mechanism rows,
   including paired-cluster arithmetic, intervals, exact tests, and per-metric
-  Holm families, before atomically updating the table, task-primary SVG, and
-  marked manuscript block
+  Holm families, before updating the table, task-primary SVG, and marked
+  manuscript block as a group with exception rollback
 - `schedule_graph_cross_dataset_replay.py`: provider-free P2-E8 Ottawa source,
   runtime, analyzer, and 18-command dry preflight
 - `analyze_graph_cross_dataset_replay.py`: accepted-only P2-E8 analyzer; no
@@ -43,7 +43,7 @@ Use these first unless you are debugging one lower layer on purpose.
 - `render_graph_cross_dataset_manuscript.py`: provider-free P2-E8 accepted-result
   consumer; revalidates the 72-bundle/36-pair Ottawa-only gate, target-adverse
   window accounting, displayed task deltas, and bootstrap metadata before an
-  atomic table, SVG, and manuscript-marker update
+  grouped table, SVG, and manuscript-marker replacement with exception rollback
 - `schedule_graph_reliability.py`: provider-free P2-E9 dry schedule and
   exact-160 acceptance gate
 - `analyze_graph_reliability.py`: accepted-only P2-E9 task-primary analyzer;
@@ -52,7 +52,7 @@ Use these first unless you are debugging one lower layer on purpose.
 - `render_graph_reliability_manuscript.py`: provider-free P2-E9 accepted-result
   consumer; revalidates the isolated 160-bundle/80-pair cohort, repeat-level
   task-primary deltas, pass projections, and selected cost outcomes before an
-  atomic table, SVG, and manuscript-marker update
+  grouped table, SVG, and manuscript-marker replacement with exception rollback
 
 ### Projection pipeline
 

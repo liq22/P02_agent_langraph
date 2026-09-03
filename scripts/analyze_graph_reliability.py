@@ -31,8 +31,19 @@ _BENCHMARK_SRC = ROOT.parent / "p01-phm-agent-benchmark" / "src"
 if _BENCHMARK_SRC.is_dir() and str(_BENCHMARK_SRC) not in sys.path:
     sys.path.insert(0, str(_BENCHMARK_SRC))
 
-from phm_agent_benchmark.phase1 import LocalPaderbornDataPort, anomaly_target
+from phm_agent_benchmark.phase1 import (
+    Budget,
+    DataAccessScope,
+    LocalPaderbornDataPort,
+    Rollout,
+    RolloutEvent,
+    TaskInstance,
+    TaskSpec,
+    anomaly_target,
+)
+from phm_agent_benchmark.phase1.active_path import evaluate_phase1_episode
 from phm_agent_benchmark.phase1.experiment import aggregate_results, load_dataset_protocol
+from phm_agent_benchmark.rollout_io import RunBundleView, read_run_bundle
 from phm_graph_agent.dynamic_runtime import build_master_sequences
 
 
@@ -656,25 +667,6 @@ def _read_json(path: Path, label: str) -> dict[str, Any]:
     return _mapping(value, f"{label} {path}")
 
 
-def _read_jsonl(path: Path, label: str) -> list[dict[str, Any]]:
-    try:
-        lines = path.read_text(encoding="utf-8").splitlines()
-    except OSError as exc:
-        raise GraphReliabilityContractError(f"cannot read {label} {path}: {exc}") from exc
-    rows: list[dict[str, Any]] = []
-    for line_number, line in enumerate(lines, 1):
-        if not line.strip():
-            continue
-        try:
-            value = json.loads(line)
-        except json.JSONDecodeError as exc:
-            raise GraphReliabilityContractError(
-                f"invalid {label} line {line_number} in {path}: {exc}"
-            ) from exc
-        rows.append(_mapping(value, f"{label} line {line_number}"))
-    return rows
-
-
 def _expected_model_profile(profile: Mapping[str, Any]) -> dict[str, Any]:
     return {
         "provider": profile["provider"],
@@ -744,19 +736,174 @@ def _validate_manifest(
         raise GraphReliabilityContractError(f"manifest profile drift at {path}: {drift}")
 
 
-def _validate_exact_six(leaf: Path, protocol: Mapping[str, Any]) -> None:
-    expected = set(protocol["attempt_policy"]["canonical_episode_files"])
+def _task_spec_from_bundle(bundle: RunBundleView) -> TaskSpec:
+    """Rebuild the executable public task card from one canonical leaf."""
+
+    raw = _mapping(bundle.run.get("task"), f"canonical task at {bundle.root}")
+    raw_budget = _mapping(raw.get("budget"), f"canonical task budget at {bundle.root}")
     try:
-        children = list(leaf.iterdir())
-    except OSError as exc:
-        raise GraphReliabilityContractError(f"cannot inspect bundle {leaf}: {exc}") from exc
-    observed = {item.name for item in children if item.is_file()}
-    directories = [item.name for item in children if item.is_dir()]
-    if observed != expected or directories:
-        raise GraphReliabilityContractError(
-            f"bundle is not exact-six at {leaf}: files={sorted(observed)}, "
-            f"directories={sorted(directories)}"
+        task = TaskSpec(
+            task_spec_id=raw.get("task_spec_id"),
+            task_type=str(raw.get("task_type", "")),
+            instruction=str(raw.get("instruction", "")),
+            budget=Budget(**raw_budget),
+            allowed_actions=raw.get("allowed_actions", ()),
+            evaluator_id=str(raw.get("evaluator_id", "")),
+            primary_metric=raw.get("primary_metric"),
+            secondary_metrics=raw.get("secondary_metrics", ()),
+            submission_schema=raw.get("submission_schema"),
+            public_context=raw.get("public_context"),
+            protocol_version=str(raw.get("protocol_version", "")),
         )
+    except (TypeError, ValueError) as exc:
+        raise GraphReliabilityContractError(
+            f"canonical task is invalid at {bundle.root}: {exc}"
+        ) from exc
+    if task.to_dict() != raw:
+        raise GraphReliabilityContractError(
+            f"canonical task does not round-trip at {bundle.root}"
+        )
+    if task.budget.to_protocol_dict() != bundle.run.get("budget"):
+        raise GraphReliabilityContractError(
+            f"canonical task budget differs from run budget at {bundle.root}"
+        )
+    return task
+
+
+def _rollout_from_bundle(bundle: RunBundleView, task: TaskSpec) -> Rollout:
+    """Rebuild the evaluator input from canonical rollout event truth."""
+
+    terminal = bundle.terminal_event
+    episode_id = terminal.get("episode_id")
+    if not isinstance(episode_id, str) or not episode_id:
+        raise GraphReliabilityContractError(
+            f"canonical terminal episode identity is missing at {bundle.root}"
+        )
+    expected_identity = {
+        "task_id": task.task_spec_id,
+        "task_spec_id": task.task_spec_id,
+        "task_type": task.task_type,
+        "episode_id": episode_id,
+        "agent_id": bundle.run.get("agent_id"),
+    }
+    steps: list[RolloutEvent] = []
+    for row_number, raw in enumerate(bundle.rollout_records[:-1], 1):
+        if any(raw.get(field) != value for field, value in expected_identity.items()):
+            raise GraphReliabilityContractError(
+                f"canonical action identity drift at {bundle.root} row {row_number}"
+            )
+        action = raw.get("action")
+        result = raw.get("result")
+        timing = raw.get("timing")
+        observation = raw.get("observation")
+        if not all(
+            isinstance(value, Mapping)
+            for value in (action, result, timing, observation)
+        ):
+            raise GraphReliabilityContractError(
+                f"canonical action shape is invalid at {bundle.root} row {row_number}"
+            )
+        try:
+            steps.append(
+                RolloutEvent(
+                    index=int(raw["index"]),
+                    observation_summary=dict(observation),
+                    action="tool_call",
+                    tool_name=str(action["name"]),
+                    tool_args=dict(action["arguments"]),
+                    tool_result=(
+                        None
+                        if result.get("output") is None
+                        else dict(result["output"])
+                    ),
+                    error=result.get("error_message"),
+                    latency_seconds=float(raw["latency_seconds"]),
+                    usage_delta=dict(raw["usage_delta"]),
+                    agent_inference_seconds=float(
+                        timing["agent_inference_seconds"]
+                    ),
+                    tool_execution_seconds=float(
+                        timing["tool_execution_seconds"]
+                    ),
+                    decision_state=action.get("decision_state"),
+                    reasoning_trace=action.get("reasoning_trace"),
+                    failure_kind=result.get("failure_kind"),
+                )
+            )
+        except (KeyError, TypeError, ValueError) as exc:
+            raise GraphReliabilityContractError(
+                f"canonical action cannot be rebuilt at {bundle.root}: {exc}"
+            ) from exc
+    if any(terminal.get(field) != value for field, value in expected_identity.items()):
+        raise GraphReliabilityContractError(
+            f"canonical terminal identity drift at {bundle.root}"
+        )
+    terminal_observation = terminal.get("observation")
+    try:
+        return Rollout(
+            task_spec_id=task.task_spec_id,
+            task_type=task.task_type,
+            episode_id=episode_id,
+            agent_id=str(bundle.run["agent_id"]),
+            steps=steps,
+            failures=[dict(item) for item in bundle.failures],
+            usage=dict(bundle.run["usage"]),
+            submission=(
+                None
+                if bundle.submission["payload"] is None
+                else dict(bundle.submission["payload"])
+            ),
+            terminal_status=(
+                bundle.run.get("raw_terminal_status") or bundle.terminal_status
+            ),
+            terminal_failure_kind=bundle.run.get("failure_kind"),
+            terminal_message=terminal.get("terminal_message"),
+            terminal_observation_summary=(
+                None
+                if terminal_observation is None
+                else dict(terminal_observation)
+            ),
+            terminal_observation_phase=terminal.get("observation_phase"),
+            terminal_usage_delta=dict(terminal.get("usage_delta", {})),
+            runtime_contract=terminal.get("runtime_contract"),
+        )
+    except (KeyError, TypeError, ValueError) as exc:
+        raise GraphReliabilityContractError(
+            f"canonical rollout cannot be rebuilt at {bundle.root}: {exc}"
+        ) from exc
+
+
+def _validate_bundle_identity(
+    bundle: RunBundleView,
+    protocol: Mapping[str, Any],
+) -> TaskSpec:
+    """Bind canonical event and metric identities before cohort acceptance."""
+
+    task = _task_spec_from_bundle(bundle)
+    scope = protocol["scope"]
+    if task.task_type != scope["task_id"]:
+        raise GraphReliabilityContractError(
+            f"canonical task type drift at {bundle.root}"
+        )
+    rollout = _rollout_from_bundle(bundle, task)
+    metrics = bundle.metrics
+    expected_metrics_identity = {
+        "task_id": task.task_spec_id,
+        "task_spec_id": task.task_spec_id,
+        "task_type": task.task_type,
+        "episode_id": rollout.episode_id,
+        "terminal_status": bundle.terminal_status,
+        "evaluator_id": task.evaluator_id,
+        "evaluator_method": "deterministic",
+    }
+    drift = _profile_drift(metrics, expected_metrics_identity)
+    if drift:
+        raise GraphReliabilityContractError(
+            f"canonical metric identity drift at {bundle.root}: {drift}"
+        )
+    _mapping(metrics.get("task_metrics"), f"task metrics at {bundle.root}")
+    _mapping(metrics.get("rollout_metrics"), f"rollout metrics at {bundle.root}")
+    return task
 
 
 def _read_attempt(
@@ -767,13 +914,17 @@ def _read_attempt(
     seed: int,
     arm: str,
 ) -> dict[str, Any]:
-    _validate_exact_six(leaf, protocol)
-    run = _read_json(leaf / "run.json", "canonical run")
-    metrics = _read_json(leaf / "metrics.json", "canonical metrics")
-    submission = _read_json(leaf / "submission.json", "canonical submission")
-    _read_json(leaf / "artifacts.json", "canonical artifacts")
-    rollout_records = _read_jsonl(leaf / "rollout.jsonl", "canonical rollout")
-    _read_jsonl(leaf / "failures.jsonl", "canonical failures")
+    try:
+        bundle = read_run_bundle(leaf)
+    except (FileNotFoundError, OSError, TypeError, ValueError) as exc:
+        raise GraphReliabilityContractError(
+            f"canonical bundle validation failed at {leaf}: {exc}"
+        ) from exc
+    task = _validate_bundle_identity(bundle, protocol)
+    run = bundle.run
+    metrics = bundle.metrics
+    submission = bundle.submission
+    rollout_records = list(bundle.rollout_records)
 
     profile = protocol["profile"]
     scope = protocol["scope"]
@@ -854,10 +1005,6 @@ def _read_attempt(
     )
     if observed_leaf_names != expected_leaf_names:
         raise GraphReliabilityContractError(f"canonical attempt layout drift at {leaf}")
-    if metrics.get("task_id") != scope["task_id"]:
-        raise GraphReliabilityContractError(f"metric task drift at {leaf}")
-    if metrics.get("terminal_status") != run.get("terminal_status"):
-        raise GraphReliabilityContractError(f"terminal status mismatch at {leaf}")
     rollout_metrics = _mapping(metrics.get("rollout_metrics"), f"rollout metrics {leaf}")
     task_metrics = _mapping(metrics.get("task_metrics"), f"task metrics {leaf}")
     usage = _mapping(run.get("usage", {}), f"run usage {leaf}")
@@ -886,6 +1033,8 @@ def _read_attempt(
         "usage": usage,
         "submission_document": submission,
         "rollout_records": rollout_records,
+        "bundle": bundle,
+        "task_spec": task,
     }
 
 
@@ -1100,25 +1249,54 @@ def validate_graph_reliability_acceptance(
 
 def _payload_decisions(value: Any, *, label: str) -> list[dict[str, Any]]:
     payload = _mapping(value, label)
-    decisions_value = payload.get("decisions")
-    alarms_value = payload.get("alarms")
-    if decisions_value is not None and alarms_value is not None:
-        if decisions_value != alarms_value:
-            raise GraphReliabilityContractError(
-                f"{label} has conflicting decisions and alarms"
-            )
-        raw = decisions_value
-    else:
-        raw = decisions_value if decisions_value is not None else alarms_value
+    if "alarms" in payload:
+        raise GraphReliabilityContractError(
+            f"{label} uses legacy alarms instead of canonical decisions"
+        )
+    raw = payload.get("decisions")
     if not isinstance(raw, list) or any(not isinstance(item, Mapping) for item in raw):
         raise GraphReliabilityContractError(f"{label} lacks a decision list")
     return [dict(item) for item in raw]
 
 
-def _canonical_replay_decisions(record: Mapping[str, Any]) -> list[dict[str, Any]]:
+def _validate_assigned_decision_prefix(
+    decisions: Sequence[Mapping[str, Any]],
+    assignment: Mapping[str, Any],
+    *,
+    label: str,
+) -> list[dict[str, Any]]:
+    assigned = [str(value) for value in assignment["sample_ids"]]
+    rows = [dict(item) for item in decisions]
+    observed_ids = [str(item.get("sample_id")) for item in rows]
+    if observed_ids != assigned[: len(rows)]:
+        raise GraphReliabilityContractError(
+            f"{label} is not the registered assigned-window prefix"
+        )
+    for item in rows:
+        score = item.get("score")
+        if (
+            isinstance(score, bool)
+            or not isinstance(score, (int, float))
+            or not math.isfinite(float(score))
+            or float(score) < 0.0
+        ):
+            raise GraphReliabilityContractError(
+                f"{label} has a non-finite or negative score"
+            )
+        if item.get("predicted_class") not in {"normal", "anomaly"}:
+            raise GraphReliabilityContractError(
+                f"{label} has an invalid predicted_class"
+            )
+    return rows
+
+
+def _canonical_replay_decisions(
+    record: Mapping[str, Any], assignment: Mapping[str, Any]
+) -> list[dict[str, Any]]:
     """Project the last immutable successful submit prefix from rollout truth."""
 
     prefix: list[dict[str, Any]] = []
+    assigned = [str(value) for value in assignment["sample_ids"]]
     rows = record["rollout_records"]
     if not rows or rows[-1].get("event_type") != "terminal":
         raise GraphReliabilityContractError(
@@ -1142,15 +1320,30 @@ def _canonical_replay_decisions(record: Mapping[str, Any]) -> list[dict[str, Any
         observed = _payload_decisions(
             result.get("output"), label=f"successful submit output at {record['leaf']}"
         )
-        if len(observed) <= len(prefix) or observed[: len(prefix)] != prefix:
+        observed = _validate_assigned_decision_prefix(
+            observed,
+            assignment,
+            label=f"successful submit output at {record['leaf']}",
+        )
+        if len(observed) != len(prefix) + 1 or observed[:-1] != prefix:
             raise GraphReliabilityContractError(
                 f"canonical successful submissions rewrite their prefix: {record['leaf']}"
+            )
+        expected_stream_end = len(observed) == len(assigned)
+        expected_released = None if expected_stream_end else assigned[len(observed)]
+        if (
+            result["output"].get("stream_end") is not expected_stream_end
+            or "released_sample_id" not in result["output"]
+            or result["output"].get("released_sample_id") != expected_released
+        ):
+            raise GraphReliabilityContractError(
+                f"canonical submit cursor differs from the registered assignment: "
+                f"{record['leaf']}"
             )
         prefix = observed
 
     submission = record["submission_document"]
-    submission_status = submission.get("terminal_status", submission.get("status"))
-    if submission_status != record["terminal_status"]:
+    if submission.get("terminal_status") != record["terminal_status"]:
         raise GraphReliabilityContractError(
             f"canonical submission status drift: {record['leaf']}"
         )
@@ -1163,6 +1356,19 @@ def _canonical_replay_decisions(record: Mapping[str, Any]) -> list[dict[str, Any
             raise GraphReliabilityContractError(
                 f"terminal submission differs from rollout submit truth: {record['leaf']}"
             )
+        if len(final) != len(assigned):
+            raise GraphReliabilityContractError(
+                f"submitted terminal does not cover every assigned window: "
+                f"{record['leaf']}"
+            )
+        if (
+            payload.get("stream_end") is not True
+            or payload.get("released_sample_id") is not None
+        ):
+            raise GraphReliabilityContractError(
+                f"submitted terminal does not close the assigned stream: "
+                f"{record['leaf']}"
+            )
     elif payload is not None:
         raise GraphReliabilityContractError(
             f"failed terminal unexpectedly has a submission payload: {record['leaf']}"
@@ -1170,19 +1376,101 @@ def _canonical_replay_decisions(record: Mapping[str, Any]) -> list[dict[str, Any
     return prefix
 
 
+def _same_derived_value(actual: Any, expected: Any) -> bool:
+    """Compare deterministic evaluator output without weakening its topology."""
+
+    if (
+        type(actual) in (int, float)
+        and type(expected) in (int, float)
+    ):
+        return math.isclose(
+            float(actual), float(expected), rel_tol=1e-12, abs_tol=1e-15
+        )
+    if isinstance(actual, Mapping) and isinstance(expected, Mapping):
+        return actual.keys() == expected.keys() and all(
+            _same_derived_value(actual[key], expected[key]) for key in actual
+        )
+    if isinstance(actual, list) and isinstance(expected, list):
+        return len(actual) == len(expected) and all(
+            _same_derived_value(left, right)
+            for left, right in zip(actual, expected, strict=True)
+        )
+    return actual == expected
+
+
+def _independent_episode_evaluation(
+    record: Mapping[str, Any],
+    assignment: Mapping[str, Any],
+    profile: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Re-evaluate one canonical leaf from private assignment authority."""
+
+    bundle = record.get("bundle")
+    task = record.get("task_spec")
+    if not isinstance(bundle, RunBundleView) or not isinstance(task, TaskSpec):
+        raise GraphReliabilityContractError(
+            f"canonical evaluator input is missing at {record['leaf']}"
+        )
+    rollout = _rollout_from_bundle(bundle, task)
+    sample_ids = tuple(str(value) for value in assignment["sample_ids"])
+    instance = TaskInstance(
+        episode_id=rollout.episode_id,
+        task_spec_id=task.task_spec_id,
+        task_type=task.task_type,
+        sample_handle=str(record["public_sequence_id"]),
+        private_target=dict(assignment["private_target"]),
+        public_context=dict(task.public_context),
+        scope=DataAccessScope(replay_handles=sample_ids),
+    )
+    try:
+        evaluated = evaluate_phase1_episode(
+            task=task,
+            instance=instance,
+            rollout=rollout,
+        ).to_protocol_dict()
+    except (KeyError, TypeError, ValueError) as exc:
+        raise GraphReliabilityContractError(
+            f"independent evaluator failed at {record['leaf']}: {exc}"
+        ) from exc
+    rollout_metrics = dict(evaluated["rollout_metrics"])
+    input_tokens = rollout_metrics.get("input_tokens")
+    output_tokens = rollout_metrics.get("output_tokens")
+    rollout_metrics["estimated_model_cost_usd"] = (
+        None
+        if input_tokens is None or output_tokens is None
+        else (
+            float(input_tokens) * float(profile["input_usd_per_million"])
+            + float(output_tokens) * float(profile["output_usd_per_million"])
+        )
+        / 1_000_000.0
+    )
+    evaluated["rollout_metrics"] = rollout_metrics
+    if not _same_derived_value(bundle.metrics, evaluated):
+        raise GraphReliabilityContractError(
+            f"canonical metrics differ from the independent evaluator at "
+            f"{record['leaf']}"
+        )
+    return evaluated
+
+
 def _analysis_replay_record(
     record: Mapping[str, Any], assignment: Mapping[str, Any]
 ) -> dict[str, Any]:
+    trusted_evaluation = record.get("trusted_evaluation")
+    if not isinstance(trusted_evaluation, Mapping):
+        raise GraphReliabilityContractError(
+            f"independent evaluator result is missing at {record['leaf']}"
+        )
     return {
         "task_id": record["task_id"],
         "bearing_id": record["public_sequence_id"],
         "sample_ids": list(assignment["sample_ids"]),
         "private_target": dict(assignment["private_target"]),
-        "replay_decisions": _canonical_replay_decisions(record),
+        "replay_decisions": _canonical_replay_decisions(record, assignment),
         "submission": record["submission_document"].get("payload"),
         "evaluation": {
-            "task_metrics": dict(record["task_metrics"]),
-            "rollout_metrics": dict(record["rollout_metrics"]),
+            "task_metrics": dict(trusted_evaluation["task_metrics"]),
+            "rollout_metrics": dict(trusted_evaluation["rollout_metrics"]),
         },
     }
 
@@ -1603,6 +1891,13 @@ def analyze_graph_reliability(
     assignments = _validate_private_replay_assignments(
         private_replay_assignments, protocol
     )
+    for record in records:
+        assignment = assignments[str(record["public_sequence_id"])]
+        _canonical_replay_decisions(record, assignment)
+        trusted = _independent_episode_evaluation(record, assignment, protocol["profile"])
+        record["trusted_evaluation"] = trusted
+        record["task_metrics"] = dict(trusted["task_metrics"])
+        record["rollout_metrics"] = dict(trusted["rollout_metrics"])
 
     repeat_ids = [str(item["repeat_id"]) for item in protocol["cohort"]["repeats"]]
     sequence_ids = list(protocol["scope"]["public_sequence_ids"])

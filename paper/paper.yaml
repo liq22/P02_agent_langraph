@@ -115,8 +115,8 @@ observation_conditioning:
     formal_launch_allowed: false
     focused_formal_runner_tests_passed: 17
     focused_formal_runner_tests_total: 17
-    dynamic_focused_tests_passed: 50
-    dynamic_focused_tests_total: 50
+    dynamic_focused_tests_passed: 46
+    dynamic_focused_tests_total: 46
     task_primary_metric: target_adverse_window_average_precision
     missing_score_policy_id: phase1_replay_target_adverse_missing_score_v1
     private_target_authority: registered_private_data_port_assignment
@@ -228,34 +228,51 @@ shared_deterministic_reference:
   supports_graph_treatment_effect: false
 
 provider_bound_generic_base_primary:
-  frozen_as_of: "2026-08-20"
-  status: incomplete_no_effect_estimate
+  frozen_as_of: "2026-09-03"
+  status: external_roots_required_no_audit_no_effect_estimate
   readiness_artifact: paper/experiments/results/p2_e1_primary_readiness_v2.json
   finalizer: scripts/finalize_p2_e1_generic_base_formal_v2.py
+  accepted_result_consumer: scripts/render_graph_manuscript_table.py
   control: Benchmark_GenericLLMToolAgent
   treatment: P02_GraphDecisionAgent_over_same_Generic_base
   duplicate_reactive_provider_execution_required: false
+  external_roots_audited_in_checked_in_snapshot: false
   expected_core_per_arm: 192
   expected_monitor_per_arm: 24
   generic_core:
-    attempt_leaves: 23
-    statistical_outcomes: 20
-    provider_error_attempts: 3
+    attempt_leaves: null
+    statistical_outcomes: null
+    provider_error_attempts: null
   graph_core_v2:
-    attempt_leaves: 0
-    statistical_outcomes: 0
-    provider_error_attempts: 0
+    attempt_leaves: null
+    statistical_outcomes: null
+    provider_error_attempts: null
   generic_monitor:
-    attempt_leaves: 0
-    statistical_outcomes: 0
+    attempt_leaves: null
+    statistical_outcomes: null
   graph_monitor_v2:
-    attempt_leaves: 0
-    statistical_outcomes: 0
-  matched_core_statistical_keys: 0
-  matched_monitor_statistical_keys: 0
+    attempt_leaves: null
+    statistical_outcomes: null
+  matched_core_statistical_keys: null
+  matched_monitor_statistical_keys: null
   effect_estimates_emitted: 0
-  focused_finalizer_tests_passed: 15
-  focused_finalizer_tests_total: 15
+  focused_finalizer_tests_passed: 13
+  focused_finalizer_tests_total: 13
+  focused_consumer_tests_passed: 18
+  focused_consumer_tests_total: 18
+  complete_fixture_core_per_arm: 192
+  complete_fixture_replay_per_arm: 24
+  accepted_publication_outputs:
+    table: paper/assets/tables/graph_monitor_manuscript_results.md
+    core_figure: paper/assets/figures/p2_e1_core_primary.svg
+    graph_state_json: paper/experiments/results/p2_e1_graph_state_summary_v2.json
+    graph_state_table: paper/assets/tables/p2_e1_graph_state_summary.md
+    manuscript: paper/draft/main.md
+  accepted_publication_grouped_replace_with_exception_rollback: true
+  accepted_publication_external_state_override_allowed: false
+  optional_mechanism_case_blocks_primary_figure: false
+  optional_mechanism_case_status: omitted_until_bound_extractor
+  legacy_multifile_publication_allowed: false
   legacy_phmskills_derived_graph_leaves: historical_non_authoritative_excluded
   accepted_provider_bound_cohort_gates: false
   partial_aggregation_allowed: false
@@ -280,8 +297,8 @@ provider_free_execution_readiness:
     accepted_manuscript_consumer_focused_tests_total: 11
     focused_formal_runner_tests_passed: 17
     focused_formal_runner_tests_total: 17
-    dynamic_focused_tests_passed: 50
-    dynamic_focused_tests_total: 50
+    dynamic_focused_tests_passed: 46
+    dynamic_focused_tests_total: 46
     private_target_authority: registered_private_data_port_assignment
     prediction_authority: canonical_rollout_successful_submit_prefix
     derived_evaluation_jsonl_ingested: false
@@ -337,8 +354,10 @@ provider_free_execution_readiness:
     accepted_manuscript_rows_emitted: 0
     accepted_manuscript_consumer_provider_calls: 0
     accepted_manuscript_consumer_raw_private_reads: 0
-    accepted_manuscript_consumer_focused_tests_passed: 9
-    accepted_manuscript_consumer_focused_tests_total: 9
+    runner_analyzer_scheduler_focused_tests_passed: 12
+    runner_analyzer_scheduler_focused_tests_total: 12
+    accepted_manuscript_consumer_focused_tests_passed: 10
+    accepted_manuscript_consumer_focused_tests_total: 10
     primary_metric: task.average_precision
     primary_missing_score_policy: phase1_replay_target_adverse_missing_score_v1
     primary_repeat_population: 24_assigned_windows_recomputed_within_each_repeat
@@ -416,8 +435,8 @@ current_mechanics_assets:
   performance_claims_allowed: false
 
 implementation_validation:
-  provider_free_tests: 163
-  provider_free_tests_passed: 163
+  provider_free_tests: 185
+  provider_free_tests_passed: 185
   provider_calls: 0
 
 result_reporting:
@@ -425,7 +444,7 @@ result_reporting:
   require_accepted_cohort_gates: true
   undefined_metrics: N/A
   report_bootstrap_valid_replicates: true
-  default_mechanism_case: semantic_and_state_divergence_only
+  default_mechanism_case: omitted_until_bound_extractor
   recovery_case_requires_matched_evaluator_gating: true
   no_eligible_recovery_case: N/A
   dynamic_v3_consumer: scripts/render_graph_dynamic_manuscript.py
@@ -434,17 +453,17 @@ result_reporting:
   dynamic_v3_secondary_mechanism_rows_after_acceptance: 26
   dynamic_v3_registered_rows_after_acceptance: 34
   dynamic_v3_current_rows_emitted: 0
-  dynamic_v3_atomic_table_figure_manuscript_update: true
+  dynamic_v3_grouped_replace_with_exception_rollback: true
   cross_dataset_v3_consumer: scripts/render_graph_cross_dataset_manuscript.py
   cross_dataset_v3_acceptance_required: true
   cross_dataset_v3_registered_rows_after_acceptance: 5
   cross_dataset_v3_current_rows_emitted: 0
-  cross_dataset_v3_atomic_table_figure_manuscript_update: true
+  cross_dataset_v3_grouped_replace_with_exception_rollback: true
   reliability_v2_consumer: scripts/render_graph_reliability_manuscript.py
   reliability_v2_acceptance_required: true
   reliability_v2_registered_rows_after_acceptance: 8
   reliability_v2_current_rows_emitted: 0
-  reliability_v2_atomic_table_figure_manuscript_update: true
+  reliability_v2_grouped_replace_with_exception_rollback: true
 
 review_readiness:
   shared_deterministic_v6_accepted: true

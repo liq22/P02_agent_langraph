@@ -137,7 +137,7 @@ formal_analysis:
     displayed_mechanism_arithmetic_recomputed: true
     displayed_holm_adjustment_recomputed: true
     task_primary_and_mechanism_sections_separate: true
-    atomic_outputs: true
+    write_contract: grouped_replace_with_exception_rollback
     focused_tests: tests/test_render_graph_dynamic_manuscript.py
     mechanism_reporting:
       role: secondary_explanatory_not_task_performance

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import argparse
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -25,6 +27,7 @@ from phm_agent_benchmark.rollout_io import write_episode_bundle
 from scripts import finalize_p2_e1_generic_base_formal_v2 as MODULE
 from scripts.render_graph_manuscript_table import (
     render_tables_from_combined_result,
+    write_table,
 )
 
 
@@ -75,6 +78,42 @@ BENCHMARK_CONTROL_SOURCE = {
     "formal_run_stamp": FORMAL_RUN_STAMP,
     "protocol_id": MODULE.ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
     "profile_id": MODULE.ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+}
+BENCHMARK_FORMAL_EXECUTION_TOPOLOGY = {
+    "contract": MODULE.BENCHMARK_FORMAL_EXECUTION_TOPOLOGY_CONTRACT,
+    "benchmark_repository": MODULE.BENCHMARK_REPOSITORY,
+    "benchmark_revision": "a" * 40,
+    "data_factory_repository": MODULE.DATA_FACTORY_REPOSITORY,
+    "data_factory_revision": "b" * 40,
+    "data_factory_distribution_version": "0.2.1",
+    "data_factory_lock_version": "0.2.1",
+}
+GRAPH_FORMAL_EXECUTION_TOPOLOGY = {
+    "contract": MODULE.P2_FORMAL_EXECUTION_TOPOLOGY_CONTRACT,
+    "benchmark_formal_execution_topology": BENCHMARK_FORMAL_EXECUTION_TOPOLOGY,
+    "source_repositories": {
+        "benchmark": MODULE.BENCHMARK_REPOSITORY,
+        "data_factory": MODULE.DATA_FACTORY_REPOSITORY,
+        "p2": MODULE.P2_REPOSITORY,
+    },
+    "source_revisions": {
+        "benchmark": "a" * 40,
+        "data_factory": "b" * 40,
+        "p2": "c" * 40,
+    },
+    "formal_sources_clean": {
+        "benchmark": True,
+        "data_factory": True,
+        "p2": True,
+    },
+    "canonical_origins_verified": {
+        "benchmark": True,
+        "data_factory": True,
+        "p2": True,
+    },
+    "p2_formal_reproducibility_paths": list(
+        MODULE.P2_FORMAL_REPRODUCIBILITY_PATHS
+    ),
 }
 
 
@@ -211,6 +250,11 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
                 else None
             ),
             "agent_id": "graph-decision-agent" if graph else "generic-llm-tool-agent",
+            "formal_execution_topology": (
+                GRAPH_FORMAL_EXECUTION_TOPOLOGY
+                if graph
+                else BENCHMARK_FORMAL_EXECUTION_TOPOLOGY
+            ),
         }
         if graph:
             value.update(
@@ -391,6 +435,7 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
                 else None
             ),
             "monitoring_budget" if scope == "replay" else "core_budget": profile["budget_protocol"],
+            "formal_execution_topology": profile["formal_execution_topology"],
         }
         if graph:
             resume_identity["benchmark_control_source"] = dict(
@@ -422,6 +467,7 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
                 else None
             ),
             "cohort_resume_identity": resume_identity,
+            "formal_execution_topology": profile["formal_execution_topology"],
         }
         if graph:
             metadata.update(
@@ -465,6 +511,7 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
         *,
         provider_retry: bool = False,
         natural_failure: bool = False,
+        max_units: int | None = None,
     ) -> None:
         graph = name.startswith("graph")
         scope = "replay" if name.endswith("replay") else "core"
@@ -472,8 +519,11 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
         tasks = MODULE.REPLAY_TASKS if scope == "replay" else MODULE.CORE_TASKS
         root = self.roots[name]
         first_episode = True
+        populated_units = 0
         for seed in (20260808, 20260809, 20260810):
             for rotation in rotations:
+                if max_units is not None and populated_units >= max_units:
+                    return
                 unit = root / f"seed_{seed}" / rotation
                 unit.mkdir(parents=True, exist_ok=True)
                 fold = self.dataset["split"]["rotations"][int(rotation[-1])]["test"]
@@ -522,6 +572,7 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
                     records=private_rows,
                     status="complete",
                 )
+                populated_units += 1
 
     def _populate_generic_core_prefix_46(self) -> None:
         root = self.roots["generic_core"]
@@ -568,6 +619,35 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
                     else "provider_failure_incomplete_cohort"
                 ),
             )
+
+    @staticmethod
+    def _rewrite_unit_topology(unit: Path, topology: dict | None) -> None:
+        cohort = read_cohort_index(unit / "cohort_index.json")
+        profile = dict(cohort["profile"])
+        if topology is None:
+            profile.pop("formal_execution_topology", None)
+        else:
+            profile["formal_execution_topology"] = topology
+        for run_path in unit.rglob("run.json"):
+            run = json.loads(run_path.read_text(encoding="utf-8"))
+            metadata = run["metadata"]
+            resume_identity = metadata["cohort_resume_identity"]
+            if topology is None:
+                metadata.pop("formal_execution_topology", None)
+                resume_identity.pop("formal_execution_topology", None)
+            else:
+                metadata["formal_execution_topology"] = topology
+                resume_identity["formal_execution_topology"] = topology
+            run_path.write_text(
+                json.dumps(run, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+        write_cohort_index(
+            unit / "cohort_index.json",
+            profile=profile,
+            records=cohort["records"],
+            status=cohort["status"],
+        )
 
     def _build(self):
         return MODULE.build_documents(
@@ -654,22 +734,48 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
             )
             tasks = sorted({row["task_id"] for row in control})
             endpoints = registered_endpoints(tasks)
-            def value(metric):
-                return 0.0 if metric == "task.average_precision" else 1.0
+            control_summary = MODULE.aggregate_results(
+                control,
+                diagnosis_classes=self.dataset["tasks"]["diagnosis"]["labels"],
+                replay_missing_score_policy_id=replay_missing_score_policy_id,
+            )
+            treatment_summary = MODULE.aggregate_results(
+                treatment,
+                diagnosis_classes=self.dataset["tasks"]["diagnosis"]["labels"],
+                replay_missing_score_policy_id=replay_missing_score_policy_id,
+            )
+
+            def value(task, metric):
+                section, name = metric.split(".", 1)
+                control_value = control_summary[task][section][name]
+                treatment_value = treatment_summary[task][section][name]
+                if control_value is None or treatment_value is None:
+                    return None
+                return float(treatment_value) - float(control_value)
+
             return {
                 "estimate": {
-                    task: {metric: value(metric) for metric in endpoints[task]}
+                    task: {
+                        metric: value(task, metric) for metric in endpoints[task]
+                    }
                     for task in tasks
                 },
                 "bearing_bootstrap_95ci": {
                     task: {
-                        metric: [value(metric), value(metric)]
+                        metric: (
+                            None
+                            if value(task, metric) is None
+                            else [value(task, metric), value(task, metric)]
+                        )
                         for metric in endpoints[task]
                     }
                     for task in tasks
                 },
                 "bearing_bootstrap_valid_replicates": {
-                    task: {metric: 2000 for metric in endpoints[task]}
+                    task: {
+                        metric: 0 if value(task, metric) is None else 2000
+                        for metric in endpoints[task]
+                    }
                     for task in tasks
                 },
                 "bootstrap_iterations": iterations,
@@ -761,6 +867,30 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
         self.assertEqual(readiness["observed"]["generic_core"]["retry_chains"], 1)
         self.assertEqual(readiness["observed"]["generic_core"]["failure_denominator"], 192)
         self.assertTrue(result["accepted"])
+        protocol = yaml.safe_load(self.protocol_path.read_text(encoding="utf-8"))
+        self.assertEqual(result["frozen_profile"], protocol["frozen_profile"])
+        self.assertEqual(
+            result["benchmark_control_source"], BENCHMARK_CONTROL_SOURCE
+        )
+        self.assertEqual(
+            result["formal_execution_topology"],
+            {
+                "benchmark_control": BENCHMARK_FORMAL_EXECUTION_TOPOLOGY,
+                "graph_treatment": GRAPH_FORMAL_EXECUTION_TOPOLOGY,
+                "shared_benchmark_data_factory": (
+                    BENCHMARK_FORMAL_EXECUTION_TOPOLOGY
+                ),
+            },
+        )
+        self.assertEqual(
+            result["protocol_identity"],
+            {
+                "schema_version": protocol["schema_version"],
+                "experiment_id": protocol["experiment_id"],
+            },
+        )
+        self.assertEqual(result["registered_design"], protocol["registered_design"])
+        self.assertEqual(result["analysis"], protocol["analysis"])
         self.assertEqual(result["registered_denominators"], {"core_per_arm": 192, "replay_per_arm": 24})
         self.assertEqual(result["paired_bearing_bootstrap"]["replay"]["bootstrap_iterations"], 2000)
         self.assertEqual(result["primary_endpoint"]["metric"], "task.average_precision")
@@ -795,6 +925,69 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
         self.assertIn("| Primary | Monitoring Average Precision |", replay_table)
         self.assertIn("| Rollout | Grounded completion |", replay_table)
 
+        result_path = self.root / "accepted_result.json"
+        result_path.write_text(
+            json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        manuscript_path = self.root / "main.md"
+        manuscript_path.write_text(
+            "<!-- GRAPH_CORE_PRIMARY_COMPACT:BEGIN -->\ncore pending\n"
+            "<!-- GRAPH_CORE_PRIMARY_COMPACT:END -->\n"
+            "<!-- GRAPH_MONITOR_PRIMARY_COMPACT:BEGIN -->\nreplay pending\n"
+            "<!-- GRAPH_MONITOR_PRIMARY_COMPACT:END -->\n"
+            "<!-- GRAPH_FORMAL_FIGURES:BEGIN -->\nfigures pending\n"
+            "<!-- GRAPH_FORMAL_FIGURES:END -->\n",
+            encoding="utf-8",
+        )
+        publication = argparse.Namespace(
+            protocol=self.protocol_path,
+            combined_result=result_path,
+            expected_benchmark_formal_run_stamp=self.formal_run_stamp,
+            core_state_summary=None,
+            state_summary=None,
+            core_comparison_figure=None,
+            monitor_mechanism_json=None,
+            monitor_mechanism_figure=None,
+            output=self.root / "accepted_table.md",
+            core_figure_output=self.root / "accepted_core.svg",
+            state_json_output=self.root / "accepted_states.json",
+            state_table_output=self.root / "accepted_states.md",
+            manuscript=manuscript_path,
+        )
+        publication_protocol = yaml.safe_load(
+            self.protocol_path.read_text(encoding="utf-8")
+        )
+        publication_protocol["outputs"]["result"] = str(result_path)
+        declared_publication = publication_protocol["outputs"][
+            "accepted_publication"
+        ]
+        declared_publication.update(
+            {
+                "table": str(publication.output),
+                "core_figure": str(publication.core_figure_output),
+                "state_json": str(publication.state_json_output),
+                "state_table": str(publication.state_table_output),
+                "manuscript": str(publication.manuscript),
+            }
+        )
+        self.protocol_path.write_text(
+            yaml.safe_dump(publication_protocol, sort_keys=False),
+            encoding="utf-8",
+        )
+        write_table(publication)
+        for path in (
+            publication.output,
+            publication.core_figure_output,
+            publication.state_json_output,
+            publication.state_table_output,
+            publication.manuscript,
+        ):
+            self.assertTrue(path.is_file())
+        self.assertIn(
+            "No descriptive replay mechanism case is admitted",
+            publication.manuscript.read_text(encoding="utf-8"),
+        )
+
     def test_protocol_replay_policy_drift_fails_before_bootstrap(self) -> None:
         protocol = yaml.safe_load(self.protocol_path.read_text(encoding="utf-8"))
         protocol["analysis"]["replay_missing_score_policy_id"] = "wrong-policy"
@@ -812,6 +1005,23 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
             ):
                 self._build()
 
+    def test_protocol_bootstrap_seed_drift_fails_before_bootstrap(self) -> None:
+        protocol = yaml.safe_load(self.protocol_path.read_text(encoding="utf-8"))
+        protocol["analysis"]["bootstrap"]["seed"] = 20260821
+        self.protocol_path.write_text(
+            yaml.safe_dump(protocol, sort_keys=False), encoding="utf-8"
+        )
+        with patch.object(
+            MODULE,
+            "paired_bearing_bootstrap_deltas",
+            side_effect=AssertionError("bootstrap must stay closed"),
+        ):
+            with self.assertRaisesRegex(
+                MODULE.FinalizationError,
+                "bootstrap seed must be exactly 20260820",
+            ):
+                self._build()
+
     def test_cross_stamp_graph_root_is_rejected_before_pairing(self) -> None:
         other_stamp = "20260902T010203Z"
         self.roots["graph_core"] = (
@@ -826,6 +1036,59 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
             "graph_core root belongs to a different formal run stamp",
         ):
             self._build()
+
+    def test_missing_formal_execution_topology_fails_before_bootstrap(self) -> None:
+        self._populate_arm("graph_core", max_units=1)
+        unit = self.roots["graph_core"] / "seed_20260808" / "rotation_0"
+        self._rewrite_unit_topology(unit, None)
+        with patch.object(
+            MODULE,
+            "paired_bearing_bootstrap_deltas",
+            side_effect=AssertionError("bootstrap must stay closed"),
+        ):
+            with self.assertRaisesRegex(
+                MODULE.FinalizationError,
+                "formal_execution_topology.*must be a mapping",
+            ):
+                self._build()
+
+    def test_cross_unit_formal_execution_topology_drift_fails_before_bootstrap(self) -> None:
+        self._populate_generic_core_prefix_46()
+        unit = self.roots["generic_core"] / "seed_20260808" / "rotation_1"
+        drifted = dict(BENCHMARK_FORMAL_EXECUTION_TOPOLOGY)
+        drifted["benchmark_revision"] = "d" * 40
+        self._rewrite_unit_topology(unit, drifted)
+        with patch.object(
+            MODULE,
+            "paired_bearing_bootstrap_deltas",
+            side_effect=AssertionError("bootstrap must stay closed"),
+        ):
+            with self.assertRaisesRegex(
+                MODULE.FinalizationError,
+                "formal_execution_topology differs across units",
+            ):
+                self._build()
+
+    def test_generic_graph_shared_topology_drift_fails_before_bootstrap(self) -> None:
+        self._populate_arm("generic_core", max_units=1)
+        self._populate_arm("graph_core", max_units=1)
+        unit = self.roots["graph_core"] / "seed_20260808" / "rotation_0"
+        benchmark_drift = dict(BENCHMARK_FORMAL_EXECUTION_TOPOLOGY)
+        benchmark_drift["benchmark_revision"] = "d" * 40
+        graph_drift = json.loads(json.dumps(GRAPH_FORMAL_EXECUTION_TOPOLOGY))
+        graph_drift["benchmark_formal_execution_topology"] = benchmark_drift
+        graph_drift["source_revisions"]["benchmark"] = "d" * 40
+        self._rewrite_unit_topology(unit, graph_drift)
+        with patch.object(
+            MODULE,
+            "paired_bearing_bootstrap_deltas",
+            side_effect=AssertionError("bootstrap must stay closed"),
+        ):
+            with self.assertRaisesRegex(
+                MODULE.FinalizationError,
+                "shared Benchmark/Data Factory formal_execution_topology differs",
+            ):
+                self._build()
 
     def test_retry_gap_fails_closed(self) -> None:
         self._populate_arm("generic_core")
@@ -862,6 +1125,124 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
         self.assertEqual(gate["statistical_outcomes"], 192)
         self.assertEqual(gate["failure_denominator"], 192)
         self.assertEqual(gate["nonprovider_terminal_failures_retained"], 1)
+
+    def test_second_replace_failure_rolls_back_readiness_and_result(self) -> None:
+        readiness_path = self.root / "outputs" / "readiness.json"
+        result_path = self.root / "outputs" / "result.json"
+        readiness_path.parent.mkdir(parents=True)
+        readiness_path.write_text("old readiness\n", encoding="utf-8")
+        result_path.write_text("old result\n", encoding="utf-8")
+        originals = {
+            readiness_path: readiness_path.read_bytes(),
+            result_path: result_path.read_bytes(),
+        }
+        real_replace = MODULE.os.replace
+        replacement_count = 0
+
+        def fail_second_replace(source: object, destination: object) -> None:
+            nonlocal replacement_count
+            replacement_count += 1
+            if replacement_count == 2:
+                raise OSError("simulated second replace failure")
+            real_replace(source, destination)
+
+        argv = [
+            "--benchmark-formal-run-stamp",
+            self.formal_run_stamp,
+            "--benchmark-control-protocol-id",
+            MODULE.ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
+            "--benchmark-control-profile-id",
+            MODULE.ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+            "--generic-core-root",
+            str(self.roots["generic_core"]),
+            "--generic-replay-root",
+            str(self.roots["generic_replay"]),
+            "--graph-core-root",
+            str(self.roots["graph_core"]),
+            "--graph-replay-root",
+            str(self.roots["graph_replay"]),
+            "--readiness-output",
+            str(readiness_path),
+            "--result-output",
+            str(result_path),
+        ]
+        documents = ({"accepted": False}, {"effect_estimates_emitted": 0})
+        with (
+            patch.object(MODULE, "build_documents", return_value=documents),
+            patch.object(MODULE.os, "replace", side_effect=fail_second_replace),
+        ):
+            with self.assertRaisesRegex(OSError, "simulated second replace failure"):
+                MODULE.main(argv)
+
+        self.assertEqual(replacement_count, 2)
+        for path, original in originals.items():
+            self.assertEqual(path.read_bytes(), original)
+        self.assertEqual(list(readiness_path.parent.glob(".*.tmp")), [])
+
+    def test_publication_outputs_reject_aliases_and_immutable_inputs(self) -> None:
+        output_root = self.root / "outputs"
+        output_root.mkdir()
+
+        def arguments(readiness: Path, result: Path) -> argparse.Namespace:
+            return argparse.Namespace(
+                protocol=self.protocol_path,
+                generic_core_root=self.roots["generic_core"],
+                generic_replay_root=self.roots["generic_replay"],
+                graph_core_root=self.roots["graph_core"],
+                graph_replay_root=self.roots["graph_replay"],
+                readiness_output=readiness,
+                result_output=result,
+            )
+
+        first = output_root / "same-inode-a.json"
+        second = output_root / "same-inode-b.json"
+        first.write_text("old\n", encoding="utf-8")
+        os.link(first, second)
+        with self.assertRaisesRegex(
+            MODULE.FinalizationError,
+            "distinct non-hardlinked paths",
+        ):
+            MODULE._validate_publication_output_paths(
+                arguments(first, second), dataset_path=self.dataset_path
+            )
+
+        protocol_alias = output_root / "protocol-alias.json"
+        os.link(self.protocol_path, protocol_alias)
+        with self.assertRaisesRegex(
+            MODULE.FinalizationError,
+            "must not overwrite protocol, dataset, or cohort_index",
+        ):
+            MODULE._validate_publication_output_paths(
+                arguments(protocol_alias, output_root / "result.json"),
+                dataset_path=self.dataset_path,
+            )
+
+        immutable_root = self.roots["generic_core"]
+        cohort_index = immutable_root / "seed_20260808/rotation_0/cohort_index.json"
+        cohort_index.parent.mkdir(parents=True)
+        cohort_index.write_text("{}\n", encoding="utf-8")
+        cohort_alias = output_root / "cohort-index-alias.json"
+        os.link(cohort_index, cohort_alias)
+        with self.assertRaisesRegex(
+            MODULE.FinalizationError,
+            "must not overwrite protocol, dataset, or cohort_index",
+        ):
+            MODULE._validate_publication_output_paths(
+                arguments(cohort_alias, output_root / "result.json"),
+                dataset_path=self.dataset_path,
+            )
+
+        with self.assertRaisesRegex(
+            MODULE.FinalizationError,
+            "outside all four external immutable roots",
+        ):
+            MODULE._validate_publication_output_paths(
+                arguments(
+                    self.roots["graph_core"] / "publication.json",
+                    output_root / "result.json",
+                ),
+                dataset_path=self.dataset_path,
+            )
 
     def test_legacy_phmskills_e0_and_e1_clis_refuse_active_use(self) -> None:
         for script in (

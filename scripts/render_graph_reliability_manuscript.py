@@ -489,6 +489,35 @@ def _validate_metric_report(
     return report
 
 
+def _validate_complete_grounded_report(
+    report: Mapping[str, Any], *, label: str
+) -> None:
+    """Require grounded completion to cover every registered episode and repeat."""
+
+    if report.get("defined_episode_numerator") != EXPECTED_EPISODES_PER_ARM:
+        raise ReliabilityResultsPending(
+            f"{label} must define all {EXPECTED_EPISODES_PER_ARM} assigned episodes"
+        )
+    if report.get("defined_repeat_numerator") != EXPECTED_REPEATS:
+        raise ReliabilityResultsPending(
+            f"{label} must define all {EXPECTED_REPEATS} registered repeats"
+        )
+
+
+def _validate_display_delta(
+    *, reactive: Any, graph: Any, delta: Any, label: str
+) -> None:
+    """Bind a displayed paired contrast to its two displayed arm estimates."""
+
+    if reactive is None or graph is None:
+        expected = None
+    else:
+        expected = _finite(graph, f"{label}.graph") - _finite(
+            reactive, f"{label}.reactive"
+        )
+    _same_number(delta, expected, f"{label}.Graph-minus-Reactive")
+
+
 def _validate_pass_all(
     value: Any, *, label: str, bootstrap_iterations: int
 ) -> dict[str, Any]:
@@ -656,6 +685,14 @@ def _validate_arm(
         f"arms.{arm}.pass@1 estimate",
     )
     grounded = metric_reports["rollout.grounded_completion"]
+    _validate_complete_grounded_report(
+        grounded, label=f"arms.{arm}.metrics.rollout.grounded_completion"
+    )
+    _same_number(
+        pass_at_1.get("estimate"),
+        grounded.get("mean_across_registered_repeats"),
+        f"arms.{arm}.pass@1 estimate versus grounded repeat mean",
+    )
     for key in (
         "mean_across_registered_repeats",
         "between_repeat_variance",
@@ -722,6 +759,11 @@ def _validate_paired(
                 bootstrap_iterations=bootstrap_iterations,
                 bounds=bounds,
             )
+
+    _validate_complete_grounded_report(
+        reports["rollout.grounded_completion"],
+        label="paired.metrics.rollout.grounded_completion",
+    )
 
     for metric in (PRIMARY_METRIC, *SELECTED_METRICS, "rollout.grounded_completion"):
         graph_report = arms["graph"]["metrics"][metric]
@@ -844,6 +886,15 @@ def validate_reliability_inputs(
     """Validate accepted P2-E9 artifacts and return the display rows."""
 
     try:
+        consumer = _mapping(
+            protocol.get("execution", {}).get("accepted_manuscript_consumer"),
+            "P2-E9 accepted manuscript consumer",
+        )
+        if (
+            consumer.get("write_contract")
+            != "grouped_replace_with_exception_rollback"
+        ):
+            raise ReliabilityResultsPending("P2-E9 manuscript write contract drifted")
         _exact_keys(
             result,
             {
@@ -995,6 +1046,13 @@ def validate_reliability_inputs(
             metric_row("Model cost (USD)", "Cost", "rollout.estimated_model_cost_usd"),
         ]
     )
+    for row in rows:
+        _validate_display_delta(
+            reactive=row["reactive"],
+            graph=row["graph"],
+            delta=row["delta"],
+            label=str(row["label"]),
+        )
     return rows
 
 
@@ -1137,7 +1195,7 @@ def _restore(path: Path, original: bytes | None) -> None:
     path.write_bytes(original)
 
 
-def _atomic_write_group(contents: Mapping[Path, str]) -> None:
+def _write_group_with_exception_rollback(contents: Mapping[Path, str]) -> None:
     originals = {
         path: path.read_bytes() if path.exists() else None for path in contents
     }
@@ -1194,7 +1252,7 @@ def write_reliability_manuscript(
     manuscript = _replace_block(
         source, render_manuscript_block(rows, figure_name=figure_path.name)
     )
-    _atomic_write_group(
+    _write_group_with_exception_rollback(
         {
             table_path: table,
             figure_path: figure,

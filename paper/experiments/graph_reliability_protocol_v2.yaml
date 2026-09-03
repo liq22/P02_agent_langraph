@@ -274,7 +274,7 @@ execution:
     provider_calls: false
     displayed_repeat_arithmetic_recomputed: true
     displayed_pass_and_cost_projections_recomputed: true
-    atomic_outputs: true
+    write_contract: grouped_replace_with_exception_rollback
     focused_tests: tests/test_render_graph_reliability_manuscript.py
   forbidden_primary_roots:
     - paper/experiments/runs/formal/p2_graph_vs_generic_llm_v1/graph_core_primary

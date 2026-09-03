@@ -484,6 +484,7 @@ def _validate_mechanism_reporting_contract(
         "render_schema": "p2_dynamic_formal_manuscript_render_v2",
         "task_primary_rows_after_acceptance": 8,
         "secondary_mechanism_rows_after_acceptance": 26,
+        "write_contract": "grouped_replace_with_exception_rollback",
     }
     for key, expected in expected_scalars.items():
         if consumer.get(key) != expected:
@@ -1544,7 +1545,7 @@ def _restore(path: Path, original: bytes | None) -> None:
     path.write_bytes(original)
 
 
-def _atomic_write_group(contents: Mapping[Path, str]) -> None:
+def _write_group_with_exception_rollback(contents: Mapping[Path, str]) -> None:
     originals = {
         path: path.read_bytes() if path.exists() else None for path in contents
     }
@@ -1604,7 +1605,7 @@ def write_dynamic_manuscript(
         source,
         render_manuscript_block(rows, figure_name=figure_path.name),
     )
-    _atomic_write_group(
+    _write_group_with_exception_rollback(
         {
             table_path: table,
             figure_path: figure,

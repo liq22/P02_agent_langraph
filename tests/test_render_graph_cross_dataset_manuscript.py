@@ -234,7 +234,10 @@ class CrossDatasetManuscriptRendererTest(unittest.TestCase):
         self.assertIs(consumer["raw_run_or_private_data_reads"], False)
         self.assertIs(consumer["provider_calls"], False)
         self.assertIs(consumer["displayed_paired_arithmetic_recomputed"], True)
-        self.assertIs(consumer["atomic_outputs"], True)
+        self.assertEqual(
+            consumer["write_contract"],
+            "grouped_replace_with_exception_rollback",
+        )
 
     def test_accepted_result_writes_table_svg_and_unique_marker(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

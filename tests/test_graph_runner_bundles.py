@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import asyncio
 import json
 import shutil
 import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import Mock, patch
 
 from phm_agent_benchmark import (
     Budget,
@@ -18,15 +20,23 @@ from phm_agent_benchmark.phase1 import ModelProfile
 from phm_agent_benchmark.phase1.resume import ResumeProfile
 from phm_agent_benchmark.phase1.cohort import write_cohort_index
 from phm_agent_benchmark.rollout_io import RUN_BUNDLE_FILES, read_run_bundle
+from scripts import run_graph_experiment as RUNNER
 from scripts.run_graph_experiment import (
     ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
     ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
     BENCHMARK_CONTROL_SOURCE_CONTRACT,
+    BENCHMARK_FORMAL_EXECUTION_TOPOLOGY_CONTRACT,
+    BENCHMARK_REPOSITORY,
+    DATA_FACTORY_REPOSITORY,
+    P2_FORMAL_EXECUTION_TOPOLOGY_CONTRACT,
+    P2_FORMAL_REPRODUCIBILITY_PATHS,
+    P2_REPOSITORY,
     P2_EXPERIMENT_ID,
     P2_GRAPH_CONTROL_ID,
     P2_GRAPH_IMPLEMENTATION_ID,
     P2_MATCHED_CONTROL_ID,
     _active_cohort_contract,
+    _benchmark_control_unit_topology,
     _episode_sink,
     _graph_policy_profile,
     _public_bundle_evaluation,
@@ -52,6 +62,40 @@ FORMAL_INFERENCE = {
     "provider": "openrouter-free",
     "inference_protocol": "openai_chat_completions",
     "thinking_mode": "not_requested",
+}
+BENCHMARK_FORMAL_EXECUTION_TOPOLOGY = {
+    "contract": BENCHMARK_FORMAL_EXECUTION_TOPOLOGY_CONTRACT,
+    "benchmark_repository": BENCHMARK_REPOSITORY,
+    "benchmark_revision": "a" * 40,
+    "data_factory_repository": DATA_FACTORY_REPOSITORY,
+    "data_factory_revision": "b" * 40,
+    "data_factory_distribution_version": "0.2.1",
+    "data_factory_lock_version": "0.2.1",
+}
+P2_FORMAL_EXECUTION_TOPOLOGY = {
+    "contract": P2_FORMAL_EXECUTION_TOPOLOGY_CONTRACT,
+    "benchmark_formal_execution_topology": BENCHMARK_FORMAL_EXECUTION_TOPOLOGY,
+    "source_repositories": {
+        "benchmark": BENCHMARK_REPOSITORY,
+        "data_factory": DATA_FACTORY_REPOSITORY,
+        "p2": P2_REPOSITORY,
+    },
+    "source_revisions": {
+        "benchmark": "a" * 40,
+        "data_factory": "b" * 40,
+        "p2": "c" * 40,
+    },
+    "formal_sources_clean": {
+        "benchmark": True,
+        "data_factory": True,
+        "p2": True,
+    },
+    "canonical_origins_verified": {
+        "benchmark": True,
+        "data_factory": True,
+        "p2": True,
+    },
+    "p2_formal_reproducibility_paths": list(P2_FORMAL_REPRODUCIBILITY_PATHS),
 }
 
 
@@ -160,6 +204,8 @@ def _formal_args(
         benchmark_formal_run_stamp=stamp,
         benchmark_control_protocol_id=ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
         benchmark_control_profile_id=ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+        benchmark_control_unit_root=None,
+        protocol="/fixture/benchmark/dataset_protocol.yaml",
     )
 
 
@@ -234,22 +280,27 @@ def _write_index(output: Path, rows: list[dict], *, status: str) -> None:
 class GraphRunnerBundleTest(unittest.TestCase):
     @staticmethod
     def _formal_contract(args: SimpleNamespace):
-        return _active_cohort_contract(
-            args,
-            _formal_protocol(),
-            FORMAL_INFERENCE,
-            core_budget=Budget(),
-            monitoring_budget=Budget(
-                max_tool_calls=72,
-                max_window_reads=3,
-                max_operator_calls=50,
-                max_model_calls=3,
-                max_llm_turns=72,
-            ),
-            test_samples_per_bearing=1,
-            matches_formal_sampling=True,
-            model_profile=None,
-        )
+        with patch.object(
+            RUNNER,
+            "_formal_execution_topology",
+            return_value=P2_FORMAL_EXECUTION_TOPOLOGY,
+        ):
+            return _active_cohort_contract(
+                args,
+                _formal_protocol(),
+                FORMAL_INFERENCE,
+                core_budget=Budget(),
+                monitoring_budget=Budget(
+                    max_tool_calls=72,
+                    max_window_reads=3,
+                    max_operator_calls=50,
+                    max_model_calls=3,
+                    max_llm_turns=72,
+                ),
+                test_samples_per_bearing=1,
+                matches_formal_sampling=True,
+                model_profile=None,
+            )
 
     def test_formal_graph_output_is_isolated_by_benchmark_run_stamp(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -345,6 +396,16 @@ class GraphRunnerBundleTest(unittest.TestCase):
                 ],
                 expected_source,
             )
+            self.assertEqual(
+                run["metadata"]["formal_execution_topology"],
+                P2_FORMAL_EXECUTION_TOPOLOGY,
+            )
+            self.assertEqual(
+                run["metadata"]["cohort_resume_identity"][
+                    "formal_execution_topology"
+                ],
+                P2_FORMAL_EXECUTION_TOPOLOGY,
+            )
             self.assertNotIn(str(root), run_path.read_text(encoding="utf-8"))
 
             output_b = _formal_output(root, stamp_b)
@@ -354,6 +415,112 @@ class GraphRunnerBundleTest(unittest.TestCase):
             _manifest_b, _identity_b, profile_b = self._formal_contract(args_b)
             with self.assertRaisesRegex(ValueError, "cohort_identity"):
                 _resume_context(args_b, profile_b)
+
+    def test_completed_benchmark_unit_supplies_exact_formal_topology(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            stamp = "20260901T010203Z"
+            control = (
+                root
+                / ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID
+                / "b3_generic_core"
+                / ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
+                / f"run_{stamp}"
+                / "seed_20260808"
+                / "rotation_0"
+            )
+            control.mkdir(parents=True)
+            (control / "cohort_index.json").write_text("{}\n", encoding="utf-8")
+            args = _formal_args(_formal_output(root, stamp), stamp)
+            args.benchmark_control_unit_root = control
+            profile = {
+                "seed": args.seed,
+                "rotation": args.rotation,
+                "tasks": args.tasks,
+                "agent_id": "generic-llm-tool-agent",
+                "registered_evidence_class": "formal",
+                "result_role": "confirmatory",
+                "experiment_profile_id": ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+                "formal_execution_topology": BENCHMARK_FORMAL_EXECUTION_TOPOLOGY,
+            }
+            source = {
+                "formal_run_stamp": stamp,
+                "protocol_id": ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
+                "profile_id": ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+            }
+            with patch.object(
+                RUNNER,
+                "validate_cohort_index",
+                return_value={"status": "complete", "profile": profile},
+            ):
+                observed = _benchmark_control_unit_topology(args, source)
+            self.assertEqual(observed, BENCHMARK_FORMAL_EXECUTION_TOPOLOGY)
+
+            profile["formal_execution_topology"] = {
+                **BENCHMARK_FORMAL_EXECUTION_TOPOLOGY,
+                "benchmark_revision": "d" * 40,
+            }
+            with patch.object(
+                RUNNER,
+                "validate_cohort_index",
+                return_value={"status": "complete", "profile": profile},
+            ):
+                self.assertEqual(
+                    _benchmark_control_unit_topology(args, source)[
+                        "benchmark_revision"
+                    ],
+                    "d" * 40,
+                )
+
+    def test_formal_topology_failure_precedes_provider_factory(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            stamp = "20260901T010203Z"
+            output = _formal_output(root, stamp)
+            args = RUNNER.build_parser().parse_args(
+                [
+                    "--arm",
+                    "graph",
+                    "--runtime",
+                    "openai",
+                    "--tasks",
+                    "cold_start_fault_diagnosis",
+                    "unsupervised_anomaly_detection",
+                    "--benchmark-formal-run-stamp",
+                    stamp,
+                    "--benchmark-control-protocol-id",
+                    ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
+                    "--benchmark-control-profile-id",
+                    ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+                    "--benchmark-control-unit-root",
+                    str(root / "missing-control-unit"),
+                    "--output",
+                    str(output),
+                ]
+            )
+            factory = Mock()
+            with (
+                patch.object(
+                    RUNNER,
+                    "load_dataset_protocol",
+                    return_value=_formal_protocol(),
+                ),
+                patch.object(
+                    RUNNER,
+                    "_runtime_identity",
+                    return_value=(FORMAL_INFERENCE, PROFILE, None),
+                ),
+                patch.object(
+                    RUNNER,
+                    "_formal_execution_topology",
+                    side_effect=RuntimeError("formal topology rejected"),
+                ),
+                patch.object(RUNNER, "_factory", factory),
+            ):
+                with self.assertRaisesRegex(RuntimeError, "formal topology rejected"):
+                    asyncio.run(RUNNER._run(args))
+            factory.assert_not_called()
+            self.assertFalse(output.exists())
 
     def test_sink_writes_six_file_attempts_without_root_rollout(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

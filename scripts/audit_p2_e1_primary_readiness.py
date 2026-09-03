@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 from collections import Counter
 from dataclasses import dataclass
@@ -211,13 +212,16 @@ def _assert_public(
 
 
 def _display_path(path: Path) -> str:
+    logical = Path(os.path.abspath(path))
+    p02_root = Path(os.path.abspath(P02_ROOT))
+    workspace_root = Path(os.path.abspath(WORKSPACE_ROOT))
     try:
-        return path.resolve().relative_to(P02_ROOT.resolve()).as_posix()
+        return logical.relative_to(p02_root).as_posix()
     except ValueError:
         try:
-            return "../" + path.resolve().relative_to(WORKSPACE_ROOT.resolve()).as_posix()
+            return "../" + logical.relative_to(workspace_root).as_posix()
         except ValueError:
-            return path.as_posix()
+            return logical.as_posix()
 
 
 def _reject_generic_control(spec: ArmSpec) -> None:

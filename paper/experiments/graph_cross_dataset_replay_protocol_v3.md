@@ -82,7 +82,8 @@ arm, retained failures, target-adverse accounting, all five displayed
 Graph-minus-Reactive task deltas, and the 2,000-resample bootstrap metadata. It
 then updates `paper/assets/tables/p2_e8_ottawa_results.md`,
 `paper/assets/figures/p2_e8_ottawa_primary.svg`, and the unique
-`P2_E8_OTTAWA` manuscript marker as one write group. The 9/9 focused checks
+`P2_E8_OTTAWA` manuscript marker as one write group with exception rollback.
+The 9/9 focused checks
 include direct analyzer-to-consumer integration and rejected, drifted, marker,
 and no-write cases.
 

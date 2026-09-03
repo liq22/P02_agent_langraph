@@ -98,9 +98,24 @@ replay analysis to `phase1_replay_target_adverse_missing_score_v1`, retains all
 assigned windows in the replay task population, and registers replay
 `task.average_precision` as the study primary. Once all four arm gates and both
 pairing gates accept, it emits four absolute arm summaries and two paired
-bearing-bootstrap results in the single combined result file. The
-`--combined-result` mode of `scripts/render_graph_manuscript_table.py` consumes
-that file directly while preserving the legacy multi-file renderer path. The
+bearing-bootstrap results in the single combined result file. That accepted
+result also carries the validated protocol identity, resolved Benchmark control
+stamp, frozen model profile, registered design, analysis contract, and exact
+canonical Benchmark/Data Factory/P2 Git topology. The
+finalizer publishes readiness and result together with exception rollback.
+The `--combined-result` mode of
+`scripts/render_graph_manuscript_table.py` requires the frozen protocol and an
+explicit expected formal stamp, rejects external state overrides, recomputes
+every displayed Graph-minus-Generic point and replay assigned-window identity,
+and deterministically produces the primary table, core SVG, canonical Graph
+state JSON/Markdown, and marked manuscript blocks as one group with exception
+rollback.
+The active publication path rejects legacy multi-file inputs and writes only the
+paths declared by the protocol. Descriptive mechanism inputs remain omitted
+until their extractor binds the same accepted combined-result identity and
+pairing membership; their absence cannot block the primary figure. Finalizer
+checks pass 13/13 and consumer checks pass 18/18, including a
+complete 192-core/24-replay-per-arm analyzer-to-publication fixture. The
 checked-in readiness snapshot records that no external-root audit was performed
 and therefore contains no effect estimate. Historical PHMskills-derived and
 retired-layout roots are excluded from the active comparison.
@@ -138,7 +153,9 @@ The extension studies remain at provider-free readiness:
 - P2-E9 reliability-v2 registers 80 matched pairs/160 episode bundles. Its
   dedicated runner contract is ready and the validate-only dry schedule emits
   160/160 inert commands, invokes none of them, makes zero provider calls and
-  zero writes, has zero results, and passes 7/7 focused tests. The pre-result
+  zero writes, has zero results, and passes 12/12 focused tests. The wrapper
+  serializes provider execution across the reliability profile, uses unique
+  temporary files, and leaves already stamped attempt records unchanged. The pre-result
   analyzer correction makes target-adverse `task.average_precision` primary,
   recomputes it over all 24 assigned windows within each repeat, requires
   registered private DataPort targets through `--private-metadata-env` and
@@ -168,7 +185,8 @@ The consumer reads only the protocol, accepted `formal_result.json`, and active
 manuscript. It does not inspect the 72 raw bundles, private DataPort inputs, or
 provider environment. It rechecks the embedded arm acceptances, 36 exact
 pairs, 108 assigned windows per arm, target-adverse accounting, five displayed
-task deltas, and physical-bearing bootstrap metadata before atomically updating
+task deltas, and physical-bearing bootstrap metadata before grouped replacement
+with exception rollback of
 `paper/assets/tables/p2_e8_ottawa_results.md`,
 `paper/assets/figures/p2_e8_ottawa_primary.svg`, and the unique
 `P2_E8_OTTAWA` marker. Its 9/9 focused checks include direct real-analyzer
@@ -190,8 +208,8 @@ pairs, ten repeat rows, target-adverse task-primary deltas, pass@1 and
 pass-all-10 projections, selected rollout/cost deltas, and primary-cohort
 isolation before updating `paper/assets/tables/p2_e9_reliability_results.md`,
 `paper/assets/figures/p2_e9_reliability_primary.svg`, and the unique
-`P2_E9_RELIABILITY` marker as one write group. Its 9/9 focused checks include a
-direct 160-bundle analyzer-to-consumer integration plus rejected-input,
+`P2_E9_RELIABILITY` marker as one exception-rollback write group. Its 10/10
+focused checks include a direct 160-bundle analyzer-to-consumer integration plus rejected-input,
 arithmetic, denominator, identity, N/A, marker, and no-write cases. With 0/160
 formal coverage, the result assets remain absent and the manuscript block stays
 Pending.
@@ -217,18 +235,15 @@ failure, Agent-decision error, reference validity, repeated errors, bounded data
 and operator/model calls, and LLM turns. There is no separate cycle-ratio
 endpoint.
 
-The formal long-horizon mechanism products are
-`paper/experiments/results/graph_monitor_mechanism_case.json` and
-`paper/assets/figures/graph_monitor_mechanism_case.svg`. The registered command
-uses the default semantic-divergence selector without evaluation inputs. It can
-therefore support only descriptive claims about semantic action sequences,
-decision states, errors, usage, and first divergence. A completion or recovery
-case requires both matched evaluation inputs and the corresponding evaluator-gated
-selector. Undefined metrics remain N/A rather than zero, every reported bootstrap
-interval includes its valid-replicate count, and provider latency remains
-descriptive.
+The historical long-horizon extractor does not bind the active combined-result
+identity or exact paired-cohort membership, so its JSON and SVG are not accepted
+publication inputs. The active P2-E1 consumer omits that optional descriptive
+case until a bound extractor exists. Completion or recovery cases still require
+matched evaluator gating. Undefined metrics remain N/A rather than zero, every
+reported bootstrap interval includes its valid-replicate count, and provider
+latency remains descriptive.
 
-The current provider-free P02 test suite passes 163/163, covering executable
+The current provider-free P02 test suite passes 185/185, covering executable
 contracts, assigned-window denominators, cluster inference, document-linked
 mechanics, task/mechanism separation, and accepted-result manuscript consumers.
 

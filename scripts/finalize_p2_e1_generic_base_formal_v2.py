@@ -13,9 +13,11 @@ import argparse
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 import json
+import os
 from pathlib import Path
 import re
 import sys
+import tempfile
 from typing import Any, Iterable, Mapping, Sequence
 
 import yaml
@@ -103,11 +105,24 @@ PRIMARY_ENDPOINT = {
 EVIDENCE_CLASS = "real_data_formal_candidate"
 EXPECTED_SCHEMA = "p2_e1_generic_base_formal_v2"
 BENCHMARK_CONTROL_SOURCE_CONTRACT = "benchmark_active_v0_2_control_source_v1"
+BENCHMARK_FORMAL_EXECUTION_TOPOLOGY_CONTRACT = (
+    "benchmark_formal_gitlink_topology_v1"
+)
+P2_FORMAL_EXECUTION_TOPOLOGY_CONTRACT = "p2_e1_formal_execution_topology_v1"
+BENCHMARK_REPOSITORY = "https://github.com/liq22/phm-agent-benchmark.git"
+DATA_FACTORY_REPOSITORY = "https://github.com/PHMbench/phm-data-factory.git"
+P2_REPOSITORY = "https://github.com/liq22/P02_agent_langraph.git"
+P2_FORMAL_REPRODUCIBILITY_PATHS = (
+    "CORE.md",
+    "scripts/run_graph_experiment.py",
+    "src/phm_graph_agent",
+)
 ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID = (
     "benchmark_v0_2_0--paderborn_phase1_v1--runtime_v6--window_v3"
 )
 ACTIVE_BENCHMARK_CONTROL_PROFILE_ID = "paper0-paderborn-primary-v1"
 FORMAL_RUN_STAMP_PATTERN = re.compile(r"^[0-9]{8}T[0-9]{6}Z$")
+REVISION_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 
 
 class FinalizationError(RuntimeError):
@@ -162,6 +177,7 @@ class ArmAudit:
     action_rows: int
     accepted: bool
     blockers: tuple[str, ...]
+    execution_topology: Mapping[str, Any] | None = None
 
 
 def _require(condition: bool, message: str) -> None:
@@ -196,6 +212,124 @@ def _json_view(value: Any) -> Any:
     """Normalize YAML/JSON mapping keys before persisted-contract comparison."""
 
     return json.loads(json.dumps(value, sort_keys=True))
+
+
+def _benchmark_execution_topology(value: Any, label: str) -> dict[str, Any]:
+    _require(isinstance(value, Mapping), f"{label} must be a mapping")
+    topology = _json_view(value)
+    base_fields = {
+        "contract",
+        "benchmark_repository",
+        "benchmark_revision",
+        "data_factory_repository",
+        "data_factory_revision",
+        "data_factory_distribution_version",
+        "data_factory_lock_version",
+    }
+    allowed_fields = base_fields | {"formal_reproducibility_paths"}
+    _require(
+        set(topology) in (base_fields, allowed_fields),
+        f"{label} fields drifted",
+    )
+    _require(
+        topology.get("contract") == BENCHMARK_FORMAL_EXECUTION_TOPOLOGY_CONTRACT,
+        f"{label} contract drifted",
+    )
+    _require(
+        topology.get("benchmark_repository") == BENCHMARK_REPOSITORY,
+        f"{label} Benchmark repository drifted",
+    )
+    _require(
+        topology.get("data_factory_repository") == DATA_FACTORY_REPOSITORY,
+        f"{label} Data Factory repository drifted",
+    )
+    for field in ("benchmark_revision", "data_factory_revision"):
+        revision = topology.get(field)
+        _require(
+            isinstance(revision, str)
+            and REVISION_PATTERN.fullmatch(revision) is not None,
+            f"{label} has invalid {field}",
+        )
+    distribution = topology.get("data_factory_distribution_version")
+    _require(
+        isinstance(distribution, str)
+        and bool(distribution)
+        and topology.get("data_factory_lock_version") == distribution,
+        f"{label} Data Factory distribution/lock versions drifted",
+    )
+    if "formal_reproducibility_paths" in topology:
+        paths = topology["formal_reproducibility_paths"]
+        _require(
+            isinstance(paths, list)
+            and all(isinstance(path, str) and path for path in paths)
+            and len(paths) == len(set(paths)),
+            f"{label} formal reproducibility paths drifted",
+        )
+    return topology
+
+
+def _graph_execution_topology(value: Any, label: str) -> dict[str, Any]:
+    _require(isinstance(value, Mapping), f"{label} must be a mapping")
+    topology = _json_view(value)
+    expected_fields = {
+        "contract",
+        "benchmark_formal_execution_topology",
+        "source_repositories",
+        "source_revisions",
+        "formal_sources_clean",
+        "canonical_origins_verified",
+        "p2_formal_reproducibility_paths",
+    }
+    _require(set(topology) == expected_fields, f"{label} fields drifted")
+    _require(
+        topology.get("contract") == P2_FORMAL_EXECUTION_TOPOLOGY_CONTRACT,
+        f"{label} contract drifted",
+    )
+    benchmark = _benchmark_execution_topology(
+        topology.get("benchmark_formal_execution_topology"),
+        f"{label}.benchmark_formal_execution_topology",
+    )
+    expected_repositories = {
+        "benchmark": BENCHMARK_REPOSITORY,
+        "data_factory": DATA_FACTORY_REPOSITORY,
+        "p2": P2_REPOSITORY,
+    }
+    _require(
+        topology.get("source_repositories") == expected_repositories,
+        f"{label} source repositories drifted",
+    )
+    revisions = topology.get("source_revisions")
+    _require(
+        isinstance(revisions, Mapping)
+        and set(revisions) == set(expected_repositories),
+        f"{label} source revisions are incomplete",
+    )
+    for source, revision in revisions.items():
+        _require(
+            isinstance(revision, str)
+            and REVISION_PATTERN.fullmatch(revision) is not None,
+            f"{label} has invalid {source} revision",
+        )
+    _require(
+        revisions["benchmark"] == benchmark["benchmark_revision"]
+        and revisions["data_factory"] == benchmark["data_factory_revision"],
+        f"{label} source revisions differ from Benchmark topology",
+    )
+    expected_verified = {source: True for source in expected_repositories}
+    _require(
+        topology.get("formal_sources_clean") == expected_verified,
+        f"{label} does not prove clean formal sources",
+    )
+    _require(
+        topology.get("canonical_origins_verified") == expected_verified,
+        f"{label} does not prove canonical origins",
+    )
+    _require(
+        topology.get("p2_formal_reproducibility_paths")
+        == list(P2_FORMAL_REPRODUCIBILITY_PATHS),
+        f"{label} P02 formal reproducibility paths drifted",
+    )
+    return topology
 
 
 def _walk(value: Any) -> Iterable[tuple[str | None, Any]]:
@@ -377,6 +511,7 @@ def _validate_protocol(protocol: Mapping[str, Any], dataset: Mapping[str, Any]) 
     _require(bootstrap.get("method") == "paired_bearing_cluster_percentile_bootstrap", "bootstrap method drift")
     _require(bootstrap.get("cluster_unit") == "physical_bearing", "bootstrap cluster must be physical bearing")
     _require(bootstrap.get("iterations") == 2000, "P2-E1 requires exactly 2,000 bootstrap resamples")
+    _require(bootstrap.get("seed") == 20260820, "P2-E1 bootstrap seed must be exactly 20260820")
     _require(analysis.get("direction") == "treatment_minus_control", "contrast direction drift")
     _require(
         analysis.get("task_endpoints")
@@ -512,7 +647,7 @@ def _validate_manifest(
     protocol: Mapping[str, Any],
     dataset: Mapping[str, Any],
     control_source: Mapping[str, str],
-) -> None:
+) -> dict[str, Any]:
     seed, rotation = unit
     frozen = protocol["frozen_profile"]
     sampling = dataset["episode_sampling"]
@@ -591,6 +726,10 @@ def _validate_manifest(
             )
         for field in ("p2_experiment_id", "matched_control_id", "agent_control_id", "agent_implementation_id", "runtime_source"):
             _require(field not in manifest, f"Generic control unexpectedly carries downstream field {field}")
+        topology = _benchmark_execution_topology(
+            manifest.get("formal_execution_topology"),
+            f"{spec.name} manifest formal_execution_topology at {unit}",
+        )
     else:
         _require(manifest.get("agent_id") == protocol["authority"]["treatment"]["agent_id"], f"Graph manifest agent drift at {unit}")
         _require(manifest.get("arm") == "graph", f"Graph manifest arm drift at {unit}")
@@ -601,6 +740,11 @@ def _validate_manifest(
         )
         for field, expected_value in protocol["authority"]["treatment"]["identity"].items():
             _require(manifest.get(field) == expected_value, f"Graph manifest {field} drift at {unit}")
+        topology = _graph_execution_topology(
+            manifest.get("formal_execution_topology"),
+            f"{spec.name} manifest formal_execution_topology at {unit}",
+        )
+    return topology
 
 
 def _attempt_pair_contract(attempt: Attempt, expected_budget: Mapping[str, Any]) -> dict[str, Any]:
@@ -700,6 +844,16 @@ def _read_attempt(
         and resume_identity.get("replay_missing_score_policy_id")
         == expected_metadata["replay_missing_score_policy_id"],
         f"{spec.name} attempt resume replay missing-score policy drift at {path}",
+    )
+    expected_topology = manifest.get("formal_execution_topology")
+    _require(
+        metadata.get("formal_execution_topology") == expected_topology,
+        f"{spec.name} attempt formal_execution_topology drift at {path}",
+    )
+    _require(
+        isinstance(resume_identity, Mapping)
+        and resume_identity.get("formal_execution_topology") == expected_topology,
+        f"{spec.name} attempt resume formal_execution_topology drift at {path}",
     )
     expected_budget = dataset["budgets"]["core" if spec.scope == "core" else "monitoring"]
     _budget_view(run.get("budget"), expected_budget)
@@ -813,7 +967,7 @@ def _audit_arm(
             ) from exc
         manifest = cohort.get("profile")
         _require(isinstance(manifest, Mapping), f"manifest is not a mapping: {unit_dir}")
-        _validate_manifest(
+        topology = _validate_manifest(
             manifest,
             spec,
             unit,
@@ -822,6 +976,13 @@ def _audit_arm(
             control_source,
         )
         manifests[unit] = manifest
+        if manifests and len(manifests) > 1:
+            first_unit = next(iter(manifests))
+            first_topology = manifests[first_unit].get("formal_execution_topology")
+            _require(
+                _json_view(first_topology) == _json_view(topology),
+                f"{spec.name} formal_execution_topology differs across units",
+            )
         evaluation_files[unit] = index_path
         raw_attempts = cohort.get("attempts")
         _require(isinstance(raw_attempts, list), f"cohort attempts are missing: {index_path}")
@@ -904,10 +1065,16 @@ def _audit_arm(
     if non_candidate:
         blockers.append(f"units not registered as formal confirmatory evidence: {len(non_candidate)}")
     accepted = not blockers
+    execution_topology = (
+        None
+        if not manifests
+        else _json_view(next(iter(manifests.values()))["formal_execution_topology"])
+    )
     return ArmAudit(
         spec, tuple(attempts), statistical, manifests, evaluation_files,
         dict(sorted(terminal_counts.items())), provider_errors, nonprovider_failures,
         tuple(sorted(unresolved)), retry_chains, action_rows, accepted, tuple(blockers),
+        execution_topology=execution_topology,
     )
 
 
@@ -924,6 +1091,19 @@ def _pair_gate(control: ArmAudit, treatment: ArmAudit, dataset: Mapping[str, Any
     common_units = set(control.manifests) & set(treatment.manifests)
     for unit in sorted(common_units):
         _require(_manifest_pair_contract(control.manifests[unit], expected_budget) == _manifest_pair_contract(treatment.manifests[unit], expected_budget), f"paired unit manifest contract differs for {unit}")
+        control_topology = _benchmark_execution_topology(
+            control.manifests[unit].get("formal_execution_topology"),
+            f"control formal_execution_topology at {unit}",
+        )
+        treatment_topology = _graph_execution_topology(
+            treatment.manifests[unit].get("formal_execution_topology"),
+            f"treatment formal_execution_topology at {unit}",
+        )
+        _require(
+            treatment_topology["benchmark_formal_execution_topology"]
+            == control_topology,
+            f"paired Benchmark/Data Factory formal_execution_topology differs for {unit}",
+        )
     exact_keys = control_keys == treatment_keys and len(control_keys) == control.spec.expected
     accepted = control.accepted and treatment.accepted and exact_keys
     blockers: list[str] = []
@@ -939,8 +1119,47 @@ def _pair_gate(control: ArmAudit, treatment: ArmAudit, dataset: Mapping[str, Any
         "matched_statistical_keys": len(matched),
         "control_only_keys": len(control_keys - treatment_keys),
         "treatment_only_keys": len(treatment_keys - control_keys),
-        "matched_unit_contracts": len(common_units),
         "blockers": blockers,
+    }
+
+
+def _execution_topology_binding(
+    audits: Mapping[str, ArmAudit],
+) -> dict[str, Any]:
+    generic = [
+        audits[name].execution_topology
+        for name in ("generic_core", "generic_replay")
+        if audits[name].execution_topology is not None
+    ]
+    graph = [
+        audits[name].execution_topology
+        for name in ("graph_core", "graph_replay")
+        if audits[name].execution_topology is not None
+    ]
+    if generic:
+        _require(
+            all(value == generic[0] for value in generic[1:]),
+            "Generic formal_execution_topology differs across core/replay arms",
+        )
+    if graph:
+        _require(
+            all(value == graph[0] for value in graph[1:]),
+            "Graph formal_execution_topology differs across core/replay arms",
+        )
+    benchmark_topology = None if not generic else generic[0]
+    graph_topology = None if not graph else graph[0]
+    shared = None
+    if benchmark_topology is not None and graph_topology is not None:
+        _require(
+            graph_topology["benchmark_formal_execution_topology"]
+            == benchmark_topology,
+            "Generic/Graph shared Benchmark/Data Factory formal_execution_topology differs",
+        )
+        shared = benchmark_topology
+    return {
+        "benchmark_control": _json_view(benchmark_topology),
+        "graph_treatment": _json_view(graph_topology),
+        "shared_benchmark_data_factory": _json_view(shared),
     }
 
 
@@ -1290,6 +1509,7 @@ def build_documents(
         name: _audit_arm(spec, protocol, dataset, control_source)
         for name, spec in specs.items()
     }
+    execution_topology = _execution_topology_binding(audits)
     pair_gates = {
         "core": _pair_gate(audits["generic_core"], audits["graph_core"], dataset),
         "replay": _pair_gate(audits["generic_replay"], audits["graph_replay"], dataset),
@@ -1331,6 +1551,12 @@ def build_documents(
         )
 
     views = {name: _arm_view(audit) for name, audit in audits.items()}
+    protocol_identity = _json_view(
+        {
+            "schema_version": protocol["schema_version"],
+            "experiment_id": protocol["experiment_id"],
+        }
+    )
     readiness = {
         "schema_version": "p2_e1_primary_readiness_v2",
         "gate_id": "P2-E1-GENERIC-BASE-FORMAL-V2",
@@ -1342,6 +1568,7 @@ def build_documents(
             "replay_missing_score_policy_id"
         ],
         "benchmark_control_source": dict(control_source),
+        "formal_execution_topology": execution_topology,
         "evaluator_private_views_read": private_rows,
         "effect_estimates_emitted": effect_count,
         "protocol": _display(protocol_path),
@@ -1381,7 +1608,12 @@ def build_documents(
         "accepted": accepted,
         "status": "accepted_paired_result" if accepted else "deferred_until_complete_accepted_gates",
         "provider_calls": 0,
-        "benchmark_control_source": dict(control_source),
+        "frozen_profile": _json_view(protocol["frozen_profile"]),
+        "benchmark_control_source": _json_view(control_source),
+        "formal_execution_topology": execution_topology,
+        "protocol_identity": protocol_identity,
+        "registered_design": _json_view(protocol["registered_design"]),
+        "analysis": _json_view(protocol["analysis"]),
         "evaluator_private_views_read": private_rows,
         "effect_estimates_emitted": effect_count,
         "registered_denominators": {"core_per_arm": 192, "replay_per_arm": 24},
@@ -1442,8 +1674,100 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _restore_output(path: Path, original: bytes | None) -> None:
+    if original is None:
+        if path.exists():
+            path.unlink()
+        return
+    path.write_bytes(original)
+
+
+def _atomic_write_group(contents: Mapping[Path, str]) -> None:
+    originals = {
+        path: path.read_bytes() if path.exists() else None for path in contents
+    }
+    temporary: dict[Path, Path] = {}
+    replaced: list[Path] = []
+    try:
+        for path, content in contents.items():
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with tempfile.NamedTemporaryFile(
+                mode="w",
+                encoding="utf-8",
+                dir=path.parent,
+                prefix=f".{path.name}.",
+                suffix=".tmp",
+                delete=False,
+            ) as handle:
+                handle.write(content)
+                handle.flush()
+                os.fsync(handle.fileno())
+                temporary[path] = Path(handle.name)
+        for path, temporary_path in temporary.items():
+            os.replace(temporary_path, path)
+            replaced.append(path)
+    except Exception:
+        for path in reversed(replaced):
+            _restore_output(path, originals[path])
+        raise
+    finally:
+        for temporary_path in temporary.values():
+            if temporary_path.exists():
+                temporary_path.unlink()
+
+
+def _same_existing_file(left: Path, right: Path) -> bool:
+    try:
+        return os.path.samefile(left, right)
+    except (FileNotFoundError, OSError):
+        return False
+
+
+def _validate_publication_output_paths(
+    args: argparse.Namespace,
+    *,
+    dataset_path: Path,
+) -> None:
+    outputs = (args.readiness_output, args.result_output)
+    resolved_outputs = tuple(path.resolve() for path in outputs)
+    _require(
+        resolved_outputs[0] != resolved_outputs[1]
+        and not _same_existing_file(outputs[0], outputs[1]),
+        "readiness and result outputs must be distinct non-hardlinked paths",
+    )
+
+    roots = tuple(
+        Path(root).resolve()
+        for root in (
+            args.generic_core_root,
+            args.generic_replay_root,
+            args.graph_core_root,
+            args.graph_replay_root,
+        )
+    )
+    protected = {args.protocol.resolve(), dataset_path.resolve()}
+    for root in roots:
+        if root.exists():
+            protected.update(path.resolve() for path in root.rglob("cohort_index.json"))
+    for output, resolved in zip(outputs, resolved_outputs):
+        _require(
+            not any(resolved.is_relative_to(root) for root in roots),
+            "publication outputs must remain outside all four external immutable roots",
+        )
+        _require(
+            resolved not in protected
+            and not any(_same_existing_file(output, path) for path in protected),
+            "publication outputs must not overwrite protocol, dataset, or cohort_index inputs",
+        )
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    loaded_protocol, _dataset = _load_protocol(args.protocol)
+    _validate_publication_output_paths(
+        args,
+        dataset_path=Path(loaded_protocol["_dataset_path"]),
+    )
     readiness, result = build_documents(
         protocol_path=args.protocol,
         benchmark_formal_run_stamp=args.benchmark_formal_run_stamp,
@@ -1454,9 +1778,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         graph_core_root=args.graph_core_root,
         graph_replay_root=args.graph_replay_root,
     )
-    for path, document in ((args.readiness_output, readiness), (args.result_output, result)):
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    _atomic_write_group(
+        {
+            args.readiness_output: json.dumps(readiness, indent=2, sort_keys=True)
+            + "\n",
+            args.result_output: json.dumps(result, indent=2, sort_keys=True) + "\n",
+        }
+    )
     print(
         json.dumps(
             {

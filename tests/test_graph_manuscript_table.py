@@ -2,10 +2,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import tempfile
 import unittest
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from unittest.mock import patch
+
+import yaml
 
 from phm_graph_agent import STATES as EXECUTABLE_STATES
 from phm_graph_agent.state import ALLOWED_TRANSITIONS, DYNAMIC_LEGAL_TRANSITIONS
@@ -20,7 +24,15 @@ from scripts.render_graph_manuscript_table import (
     CORE_EPISODES_PER_TASK,
     CORE_ROTATIONS,
     CORE_TASKS,
+    BENCHMARK_FORMAL_EXECUTION_TOPOLOGY_CONTRACT,
+    BENCHMARK_REPOSITORY,
+    DATA_FACTORY_REPOSITORY,
+    DEFAULT_PROTOCOL,
+    EXPECTED_BENCHMARK_CONTROL_SOURCE,
     PRIMARY_ENDPOINT,
+    P2_FORMAL_EXECUTION_TOPOLOGY_CONTRACT,
+    P2_FORMAL_REPRODUCIBILITY_PATHS,
+    P2_REPOSITORY,
     REGISTERED_ENDPOINTS,
     REPLAY_EPISODES,
     REPLAY_MISSING_SCORE_POLICY_ID,
@@ -139,6 +151,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
             "bearing_bootstrap_95ci": intervals,
             "bearing_bootstrap_valid_replicates": counts,
             "bootstrap_iterations": 2000,
+            "seed": 20260820,
             "evidence_class": "real_data_formal_candidate",
         }
 
@@ -148,19 +161,35 @@ class GraphManuscriptTableTest(unittest.TestCase):
         for task in tasks:
             values = source["summary"][task]  # type: ignore[index]
             estimates[task] = {
-                **{f"task.{name}": value for name, value in values["task"].items()},
                 **{
-                    f"rollout.{name}": value
+                    f"task.{name}": None if value is None else 0.1
+                    for name, value in values["task"].items()
+                },
+                **{
+                    f"rollout.{name}": None if value is None else 0.1
                     for name, value in values["rollout"].items()
                 },
             }
+        intervals = {
+            task: {
+                metric: None if value is None else [0.09, 0.11]
+                for metric, value in estimates[task].items()
+            }
+            for task in tasks
+        }
+        counts = {
+            task: {
+                metric: 0 if value is None else 1999
+                for metric, value in estimates[task].items()
+            }
+            for task in tasks
+        }
         return {
             "estimate": estimates,
-            "bearing_bootstrap_95ci": source["bearing_bootstrap_95ci"],
-            "bearing_bootstrap_valid_replicates": source[
-                "bearing_bootstrap_valid_replicates"
-            ],
+            "bearing_bootstrap_95ci": intervals,
+            "bearing_bootstrap_valid_replicates": counts,
             "bootstrap_iterations": 2000,
+            "seed": 20260820,
             "direction": "treatment_minus_control",
             "evidence_class": "real_data_formal_candidate",
         }
@@ -256,6 +285,20 @@ class GraphManuscriptTableTest(unittest.TestCase):
         monitor_case = {
             "case_kind": "semantic-divergence",
             "task_id": REPLAY_TASK,
+            "protocol_identity": {
+                "schema_version": "p2_e1_generic_base_formal_v2",
+                "experiment_id": "P2-E1",
+            },
+            "benchmark_control_source": {
+                **EXPECTED_BENCHMARK_CONTROL_SOURCE,
+                "formal_run_stamp": "20260901T010203Z",
+            },
+            "matched_statistical_key": {
+                "seed": 20260808,
+                "rotation": "rotation_0",
+                "sample_id": "sequence-0001",
+                "task_id": REPLAY_TASK,
+            },
             "control": {"semantic_sequence": ["data.read_window", "submit"]},
             "treatment": {
                 "semantic_sequence": ["data.read_window", "op.list", "submit"],
@@ -290,6 +333,11 @@ class GraphManuscriptTableTest(unittest.TestCase):
             graph_acceptance=graph_acceptance,
             output=root / "graph_manuscript_results.md",
             manuscript=manuscript,
+            protocol=DEFAULT_PROTOCOL,
+            expected_benchmark_formal_run_stamp="20260901T010203Z",
+            core_figure_output=root / "p2_e1_core_primary.svg",
+            state_json_output=root / "p2_e1_graph_state_summary_v2.json",
+            state_table_output=root / "p2_e1_graph_state_summary.md",
         )
 
     def _combined_result(self, args: argparse.Namespace) -> dict[str, object]:
@@ -310,6 +358,11 @@ class GraphManuscriptTableTest(unittest.TestCase):
                     "replay_missing_score_policy_id": None,
                 }
             )
+        for summary in (core_control, core_treatment):
+            for task in CORE_TASKS:
+                summary["summary"][task].update(  # type: ignore[index]
+                    {"episodes": CORE_EPISODES_PER_TASK, "bearings": 32}
+                )
         for value in (replay_control, replay_treatment, replay_paired):
             value.update(
                 {
@@ -337,12 +390,71 @@ class GraphManuscriptTableTest(unittest.TestCase):
                     "score_coverage": 1.0,
                 }
             )
+        protocol = yaml.safe_load(DEFAULT_PROTOCOL.read_text(encoding="utf-8"))
+        benchmark_topology = {
+            "contract": BENCHMARK_FORMAL_EXECUTION_TOPOLOGY_CONTRACT,
+            "benchmark_repository": BENCHMARK_REPOSITORY,
+            "benchmark_revision": "a" * 40,
+            "data_factory_repository": DATA_FACTORY_REPOSITORY,
+            "data_factory_revision": "b" * 40,
+            "data_factory_distribution_version": "0.2.1",
+            "data_factory_lock_version": "0.2.1",
+        }
+        graph_topology = {
+            "contract": P2_FORMAL_EXECUTION_TOPOLOGY_CONTRACT,
+            "benchmark_formal_execution_topology": json.loads(
+                json.dumps(benchmark_topology)
+            ),
+            "source_repositories": {
+                "benchmark": BENCHMARK_REPOSITORY,
+                "data_factory": DATA_FACTORY_REPOSITORY,
+                "p2": P2_REPOSITORY,
+            },
+            "source_revisions": {
+                "benchmark": "a" * 40,
+                "data_factory": "b" * 40,
+                "p2": "c" * 40,
+            },
+            "formal_sources_clean": {
+                "benchmark": True,
+                "data_factory": True,
+                "p2": True,
+            },
+            "canonical_origins_verified": {
+                "benchmark": True,
+                "data_factory": True,
+                "p2": True,
+            },
+            "p2_formal_reproducibility_paths": list(
+                P2_FORMAL_REPRODUCIBILITY_PATHS
+            ),
+        }
         return {
             "schema_version": "p2_e1_generic_base_formal_v2_result",
             "gate_id": "P2-E1",
             "accepted": True,
             "status": "accepted_paired_result",
             "provider_calls": 0,
+            "benchmark_control_source": {
+                **EXPECTED_BENCHMARK_CONTROL_SOURCE,
+                "formal_run_stamp": args.expected_benchmark_formal_run_stamp,
+            },
+            "formal_execution_topology": {
+                "benchmark_control": benchmark_topology,
+                "graph_treatment": graph_topology,
+                "shared_benchmark_data_factory": json.loads(
+                    json.dumps(benchmark_topology)
+                ),
+            },
+            "protocol_identity": {
+                "schema_version": protocol["schema_version"],
+                "experiment_id": protocol["experiment_id"],
+            },
+            "frozen_profile": protocol["frozen_profile"],
+            "registered_design": protocol["registered_design"],
+            "analysis": protocol["analysis"],
+            "evaluator_private_views_read": 2 * (192 + REPLAY_EPISODES),
+            "effect_estimates_emitted": 45,
             "registered_denominators": {
                 "core_per_arm": 192,
                 "replay_per_arm": REPLAY_EPISODES,
@@ -402,92 +514,69 @@ class GraphManuscriptTableTest(unittest.TestCase):
                 "both_exact_pairing_gates_accepted": True,
             },
             "blockers": [],
+            "claim_boundary": (
+                "Accepted absolute and paired estimates are available only when accepted=true. "
+                "When false, arm_summaries and paired_bearing_bootstrap are null and no "
+                "partial-prefix estimate exists."
+            ),
         }
 
-    def test_accepted_contract_renders_core_replay_states_and_figures(self) -> None:
+    def _activate_combined(
+        self,
+        root: Path,
+        args: argparse.Namespace,
+        result: dict[str, object] | None = None,
+    ) -> dict[str, object]:
+        value = self._combined_result(args) if result is None else result
+        args.combined_result = self._write(root, "combined_result.json", value)
+        protocol = yaml.safe_load(DEFAULT_PROTOCOL.read_text(encoding="utf-8"))
+        protocol["outputs"]["readiness"] = str(root / "readiness.json")
+        protocol["outputs"]["result"] = str(args.combined_result)
+        publication = protocol["outputs"]["accepted_publication"]
+        publication["table"] = str(args.output)
+        publication["core_figure"] = str(args.core_figure_output)
+        publication["state_json"] = str(args.state_json_output)
+        publication["state_table"] = str(args.state_table_output)
+        publication["manuscript"] = str(args.manuscript)
+        args.protocol = root / "active_protocol.yaml"
+        args.protocol.write_text(
+            yaml.safe_dump(protocol, sort_keys=False), encoding="utf-8"
+        )
+        args.core_control_summary = None
+        args.core_graph_summary = None
+        args.core_paired_delta = None
+        args.core_control_acceptance = None
+        args.core_graph_acceptance = None
+        args.core_state_summary = None
+        args.state_summary = None
+        args.core_comparison_figure = None
+        args.monitor_mechanism_json = None
+        args.monitor_mechanism_figure = None
+        return value
+
+    def test_legacy_publication_is_forbidden_without_combined_result(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             args = self._args(Path(temporary))
-            write_table(args)
-            rendered = args.output.read_text(encoding="utf-8")
-            self.assertEqual(tuple(STATES), tuple(EXECUTABLE_STATES))
-            self.assertEqual(
-                tuple(STATES),
-                (
-                    "Inspect",
-                    "Hypothesize",
-                    "Analyze",
-                    "Check",
-                    "Monitor",
-                    "Revise",
-                    "Recover",
-                    "Submit",
-                ),
-            )
-            self.assertIn(
-                "| cold_start_fault_diagnosis | Task primary | Diagnosis Macro-F1 |",
-                rendered,
-            )
-            self.assertIn(
-                "| unsupervised_anomaly_detection | Task primary | Anomaly completion-adjusted AP |",
-                rendered,
-            )
-            self.assertIn("| Tool | Valid tool-call rate |", rendered)
-            self.assertIn(
-                "| online_replay_monitoring | Primary | Monitoring Average Precision |",
-                rendered,
-            )
-            self.assertIn(
-                "| online_replay_monitoring | Rollout | Grounded completion |",
-                rendered,
-            )
-            self.assertIn("p95 step latency (seconds)", rendered)
-            self.assertIn("N/A [CI N/A]; 0/2000", rendered)
-            self.assertIn("1999/2000", rendered)
-            for task in CORE_TASKS:
-                self.assertEqual(rendered.count(f"| {task} | Recover |"), 1)
-                self.assertEqual(rendered.count(f"| {task} | Monitor | 0.0000 | 0.0000 |"), 1)
-                self.assertEqual(rendered.count(f"| {task} | Revise | 0.0000 | 0.0000 |"), 1)
-            self.assertEqual(rendered.count(f"| {REPLAY_TASK} | Recovery |"), 3)
-            self.assertEqual(
-                rendered.count(f"| {REPLAY_TASK} | Monitor | 0.0000 | 0.0000 |"),
-                1,
-            )
-            self.assertEqual(
-                rendered.count(f"| {REPLAY_TASK} | Revise | 0.0000 | 0.0000 |"),
-                1,
-            )
-            self.assertIn("defines no `public_condition_event`", rendered)
-            self.assertIn("supports no dynamic-revision claim", rendered)
-            self.assertIn("`graph_dynamic_ablation_protocol_v3`", rendered)
-            self.assertIn("accepted provider-free mechanics", rendered)
-            self.assertIn("0/240 formal coverage", rendered)
-            manuscript = args.manuscript.read_text(encoding="utf-8")
-            self.assertIn("../assets/figures/graph_core_comparison.svg", manuscript)
-            self.assertIn(
-                "../assets/figures/graph_monitor_mechanism_case.svg", manuscript
-            )
-            self.assertIn(
-                "| cold_start_fault_diagnosis | Task primary | Diagnosis Macro-F1 |",
-                manuscript,
-            )
+            before = args.manuscript.read_bytes()
+            with self.assertRaisesRegex(ResultsPending, "legacy publication is forbidden"):
+                write_table(args)
+            self.assertFalse(args.output.exists())
+            self.assertEqual(before, args.manuscript.read_bytes())
 
     def test_combined_finalizer_result_renders_without_legacy_gate_inputs(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             args = self._args(root)
-            args.combined_result = self._write(
-                root, "combined_result.json", self._combined_result(args)
-            )
-            args.core_control_summary = None
-            args.core_graph_summary = None
-            args.core_paired_delta = None
-            args.core_control_acceptance = None
-            args.core_graph_acceptance = None
+            self._activate_combined(root, args)
             write_table(args)
             rendered = args.output.read_text(encoding="utf-8")
             self.assertIn("# Accepted replay task-primary comparison", rendered)
             self.assertIn("| Primary | Monitoring Average Precision |", rendered)
             self.assertIn("| Task primary | Diagnosis Macro-F1 |", rendered)
+            self.assertTrue(args.core_figure_output.is_file())
+            self.assertTrue(args.state_json_output.is_file())
+            self.assertTrue(args.state_table_output.is_file())
+            ET.fromstring(args.core_figure_output.read_text(encoding="utf-8"))
 
     def test_combined_primary_endpoint_drift_leaves_manuscript_unchanged(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -499,7 +588,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
                 "task": REPLAY_TASK,
                 "metric": "rollout.grounded_completion",
             }
-            args.combined_result = self._write(root, "combined_result.json", result)
+            self._activate_combined(root, args, result)
             before = args.manuscript.read_bytes()
             with self.assertRaisesRegex(ResultsPending, "primary_endpoint"):
                 write_table(args)
@@ -510,69 +599,277 @@ class GraphManuscriptTableTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             args = self._args(root)
-            args.combined_result = self._write(
-                root, "combined_result.json", self._combined_result(args)
-            )
-            args.core_comparison_figure = None
+            self._activate_combined(root, args)
             args.monitor_mechanism_json = None
             args.monitor_mechanism_figure = None
             write_table(args)
             manuscript = args.manuscript.read_text(encoding="utf-8")
             self.assertIn("| Primary | Monitoring Average Precision |", manuscript)
             self.assertIn("| Task primary | Diagnosis Macro-F1 |", manuscript)
-            self.assertIn("figures pending", manuscript)
-            self.assertNotIn("graph_core_comparison.svg", manuscript)
+            self.assertNotIn("figures pending", manuscript)
+            self.assertIn("p2_e1_core_primary.svg", manuscript)
+            self.assertIn("No descriptive replay mechanism case is admitted", manuscript)
+            self.assertTrue(args.core_figure_output.is_file())
 
-    def test_rejected_core_gate_leaves_manuscript_unchanged(self) -> None:
+    def test_combined_result_rejects_external_state_override_without_writes(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
-            args = self._args(Path(temporary), reject_core=True)
+            root = Path(temporary)
+            args = self._args(root)
+            self._activate_combined(root, args)
+            args.core_state_summary = self._write(root, "override.json", {})
             before = args.manuscript.read_bytes()
-            with self.assertRaisesRegex(ResultsPending, "accepted"):
+            with self.assertRaisesRegex(ResultsPending, "forbids external Graph state"):
+                write_table(args)
+            self.assertFalse(args.output.exists())
+            self.assertFalse(args.core_figure_output.exists())
+            self.assertFalse(args.state_json_output.exists())
+            self.assertFalse(args.state_table_output.exists())
+            self.assertEqual(before, args.manuscript.read_bytes())
+
+    def test_combined_identity_drift_fails_closed(self) -> None:
+        mutations = {
+            "frozen profile": lambda result: result["frozen_profile"].__setitem__(
+                "model", "wrong/model"
+            ),
+            "formal stamp": lambda result: result[
+                "benchmark_control_source"
+            ].__setitem__("formal_run_stamp", "20260902T010203Z"),
+            "control profile": lambda result: result[
+                "benchmark_control_source"
+            ].__setitem__("profile_id", "wrong-profile"),
+        }
+        for label, mutate in mutations.items():
+            with self.subTest(label=label), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                args = self._args(root)
+                result = self._combined_result(args)
+                mutate(result)
+                self._activate_combined(root, args, result)
+                before = args.manuscript.read_bytes()
+                with self.assertRaises(ResultsPending):
+                    write_table(args)
+                self.assertFalse(args.output.exists())
+                self.assertFalse(args.core_figure_output.exists())
+                self.assertEqual(before, args.manuscript.read_bytes())
+
+    def test_combined_paired_delta_tamper_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            args = self._args(root)
+            result = self._combined_result(args)
+            result["paired_bearing_bootstrap"]["replay"]["estimate"][REPLAY_TASK][
+                "task.average_precision"
+            ] = 0.25
+            self._activate_combined(root, args, result)
+            before = args.manuscript.read_bytes()
+            with self.assertRaisesRegex(ResultsPending, "paired point arithmetic drift"):
+                write_table(args)
+            self.assertFalse(args.output.exists())
+            self.assertFalse(args.core_figure_output.exists())
+            self.assertEqual(before, args.manuscript.read_bytes())
+
+    def test_combined_replay_accounting_tamper_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            args = self._args(root)
+            result = self._combined_result(args)
+            task = result["arm_summaries"]["replay"]["control"]["summary"][
+                REPLAY_TASK
+            ]["task"]
+            task["missing_assigned_scores"] = 1
+            self._activate_combined(root, args, result)
+            before = args.manuscript.read_bytes()
+            with self.assertRaisesRegex(ResultsPending, "replay score accounting"):
                 write_table(args)
             self.assertFalse(args.output.exists())
             self.assertEqual(before, args.manuscript.read_bytes())
 
-    def test_rejected_replay_gate_leaves_manuscript_unchanged(self) -> None:
+    def test_combined_second_replace_failure_restores_every_output(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
-            args = self._args(Path(temporary), reject_replay=True)
+            root = Path(temporary)
+            args = self._args(root)
+            self._activate_combined(root, args)
+            args.monitor_mechanism_json = None
+            args.monitor_mechanism_figure = None
+            targets = (
+                args.output,
+                args.core_figure_output,
+                args.state_json_output,
+                args.state_table_output,
+                args.manuscript,
+            )
+            for index, target in enumerate(targets):
+                target.write_bytes(f"original-{index}".encode("utf-8"))
+            # Restore a valid marked manuscript after seeding the other targets.
+            args.manuscript.write_text(
+                "Before\n"
+                "<!-- GRAPH_CORE_PRIMARY_COMPACT:BEGIN -->\n\ncore pending\n\n"
+                "<!-- GRAPH_CORE_PRIMARY_COMPACT:END -->\n"
+                "<!-- GRAPH_MONITOR_PRIMARY_COMPACT:BEGIN -->\n\nreplay pending\n\n"
+                "<!-- GRAPH_MONITOR_PRIMARY_COMPACT:END -->\n"
+                "<!-- GRAPH_FORMAL_FIGURES:BEGIN -->\n\nfigures pending\n\n"
+                "<!-- GRAPH_FORMAL_FIGURES:END -->\nAfter\n",
+                encoding="utf-8",
+            )
+            originals = {target: target.read_bytes() for target in targets}
+            real_replace = os.replace
+            replacement_count = 0
+
+            def fail_second_replace(source: Path, destination: Path) -> None:
+                nonlocal replacement_count
+                replacement_count += 1
+                if replacement_count == 2:
+                    raise OSError("simulated second replace failure")
+                real_replace(source, destination)
+
+            with patch(
+                "scripts.render_graph_manuscript_table._replace_path",
+                side_effect=fail_second_replace,
+            ):
+                with self.assertRaisesRegex(OSError, "simulated second replace failure"):
+                    write_table(args)
+            self.assertEqual(replacement_count, 2)
+            for target, original in originals.items():
+                self.assertEqual(target.read_bytes(), original)
+            self.assertEqual(list(root.glob(".*.tmp")), [])
+
+    def test_combined_output_alias_is_rejected_before_writes(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            args = self._args(root)
+            self._activate_combined(root, args)
+            args.monitor_mechanism_json = None
+            args.monitor_mechanism_figure = None
+            args.core_figure_output = args.output
+            protocol = yaml.safe_load(args.protocol.read_text(encoding="utf-8"))
+            protocol["outputs"]["accepted_publication"]["core_figure"] = str(
+                args.output
+            )
+            args.protocol.write_text(
+                yaml.safe_dump(protocol, sort_keys=False), encoding="utf-8"
+            )
             before = args.manuscript.read_bytes()
-            with self.assertRaisesRegex(ResultsPending, "accepted"):
+            with self.assertRaisesRegex(ResultsPending, "outputs must be distinct"):
                 write_table(args)
             self.assertFalse(args.output.exists())
             self.assertEqual(before, args.manuscript.read_bytes())
 
-    def test_contract_mismatch_leaves_manuscript_unchanged(self) -> None:
+    def test_combined_result_requires_finalizer_counters(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
-            args = self._args(Path(temporary))
-            gate = json.loads(args.core_graph_acceptance.read_text(encoding="utf-8"))
-            gate["run_contracts"]["20260808:rotation_0"] = {
-                "selected_diagnosis_model_id": "different-model"
-            }
-            args.core_graph_acceptance.write_text(json.dumps(gate), encoding="utf-8")
+            root = Path(temporary)
+            args = self._args(root)
+            result = self._combined_result(args)
+            del result["evaluator_private_views_read"]
+            self._activate_combined(root, args, result)
             before = args.manuscript.read_bytes()
-            with self.assertRaisesRegex(ResultsPending, "numerical run contracts"):
+            with self.assertRaisesRegex(ResultsPending, "finalizer output schema"):
                 write_table(args)
             self.assertFalse(args.output.exists())
             self.assertEqual(before, args.manuscript.read_bytes())
 
-    def test_missing_figure_leaves_manuscript_unchanged(self) -> None:
+    def test_combined_result_requires_exact_formal_execution_topology(self) -> None:
+        for mutation, message in (
+            ("missing", "finalizer output schema"),
+            ("shared_drift", "shared Benchmark/Data Factory topology drifted"),
+            ("p2_revision", "invalid p2 revision"),
+        ):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                args = self._args(root)
+                result = self._combined_result(args)
+                if mutation == "missing":
+                    del result["formal_execution_topology"]
+                elif mutation == "shared_drift":
+                    result["formal_execution_topology"][  # type: ignore[index]
+                        "shared_benchmark_data_factory"
+                    ]["benchmark_revision"] = "d" * 40
+                else:
+                    result["formal_execution_topology"]["graph_treatment"][  # type: ignore[index]
+                        "source_revisions"
+                    ]["p2"] = "not-a-revision"
+                self._activate_combined(root, args, result)
+                before = args.manuscript.read_bytes()
+                with self.assertRaisesRegex(ResultsPending, message):
+                    write_table(args)
+                self.assertFalse(args.output.exists())
+                self.assertEqual(before, args.manuscript.read_bytes())
+
+    def test_combined_core_episode_and_bearing_counts_are_bound(self) -> None:
+        for field, value in (("episodes", 95), ("bearings", 31)):
+            with self.subTest(field=field), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                args = self._args(root)
+                result = self._combined_result(args)
+                result["arm_summaries"]["core"]["control"]["summary"][  # type: ignore[index]
+                    ANOMALY_TASK
+                ][field] = value
+                self._activate_combined(root, args, result)
+                before = args.manuscript.read_bytes()
+                with self.assertRaisesRegex(ResultsPending, "episode/bearing counts"):
+                    write_table(args)
+                self.assertFalse(args.output.exists())
+                self.assertEqual(before, args.manuscript.read_bytes())
+
+    def test_combined_bootstrap_seed_and_interval_count_are_bound(self) -> None:
+        for mutation, message in (
+            ("seed", "bootstrap seed"),
+            ("interval_count", "interval/count availability"),
+        ):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                args = self._args(root)
+                result = self._combined_result(args)
+                paired = result["paired_bearing_bootstrap"]["replay"]
+                if mutation == "seed":
+                    paired["seed"] = 7
+                else:
+                    paired["bearing_bootstrap_valid_replicates"][REPLAY_TASK][
+                        "task.average_precision"
+                    ] = 0
+                self._activate_combined(root, args, result)
+                before = args.manuscript.read_bytes()
+                with self.assertRaisesRegex(ResultsPending, message):
+                    write_table(args)
+                self.assertFalse(args.output.exists())
+                self.assertEqual(before, args.manuscript.read_bytes())
+
+    def test_combined_state_summary_rejects_unexpected_fields(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
-            args = self._args(Path(temporary))
-            args.core_comparison_figure.unlink()
+            root = Path(temporary)
+            args = self._args(root)
+            result = self._combined_result(args)
+            result["graph_state_summaries"]["core"][ANOMALY_TASK][
+                "evaluator_private_target"
+            ] = "must-not-publish"
+            self._activate_combined(root, args, result)
             before = args.manuscript.read_bytes()
-            with self.assertRaisesRegex(ResultsPending, "core comparison figure"):
+            with self.assertRaisesRegex(ResultsPending, "unexpected or missing fields"):
                 write_table(args)
             self.assertFalse(args.output.exists())
+            self.assertFalse(args.state_json_output.exists())
             self.assertEqual(before, args.manuscript.read_bytes())
 
-    def test_invalid_core_state_contract_leaves_manuscript_unchanged(self) -> None:
+    def test_combined_publication_path_must_match_protocol(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
-            args = self._args(Path(temporary))
-            states = json.loads(args.core_state_summary.read_text(encoding="utf-8"))
-            del states[ANOMALY_TASK]["state_episode_visitation_rate"]["Monitor"]
-            args.core_state_summary.write_text(json.dumps(states), encoding="utf-8")
+            root = Path(temporary)
+            args = self._args(root)
+            self._activate_combined(root, args)
+            args.state_json_output = root / "undeclared-state.json"
             before = args.manuscript.read_bytes()
-            with self.assertRaisesRegex(ResultsPending, "eight executable states"):
+            with self.assertRaisesRegex(ResultsPending, "differs from protocol"):
+                write_table(args)
+            self.assertFalse(args.output.exists())
+            self.assertFalse(args.state_json_output.exists())
+            self.assertEqual(before, args.manuscript.read_bytes())
+
+    def test_combined_mechanism_input_is_omitted_until_bound_extractor(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            args = self._args(root)
+            self._activate_combined(root, args)
+            args.monitor_mechanism_json = root / "unbound-case.json"
+            before = args.manuscript.read_bytes()
+            with self.assertRaisesRegex(ResultsPending, "until a bound extractor exists"):
                 write_table(args)
             self.assertFalse(args.output.exists())
             self.assertEqual(before, args.manuscript.read_bytes())

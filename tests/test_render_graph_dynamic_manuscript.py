@@ -635,7 +635,10 @@ class DynamicManuscriptRendererTest(unittest.TestCase):
         self.assertIs(consumer["displayed_mechanism_arithmetic_recomputed"], True)
         self.assertIs(consumer["displayed_holm_adjustment_recomputed"], True)
         self.assertIs(consumer["task_primary_and_mechanism_sections_separate"], True)
-        self.assertIs(consumer["atomic_outputs"], True)
+        self.assertEqual(
+            consumer["write_contract"],
+            "grouped_replace_with_exception_rollback",
+        )
         self.assertEqual(consumer["task_primary_rows_after_acceptance"], 8)
         self.assertEqual(consumer["secondary_mechanism_rows_after_acceptance"], 26)
         mechanism = consumer["mechanism_reporting"]

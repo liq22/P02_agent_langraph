@@ -133,6 +133,19 @@ analysis:
 outputs:
   readiness: paper/experiments/results/p2_e1_primary_readiness_v2.json
   result: paper/experiments/results/p2_e1_generic_base_formal_v2_result.json
+  accepted_publication:
+    consumer: scripts/render_graph_manuscript_table.py
+    expected_formal_run_stamp_cli_flag: --expected-benchmark-formal-run-stamp
+    table: paper/assets/tables/graph_monitor_manuscript_results.md
+    core_figure: paper/assets/figures/p2_e1_core_primary.svg
+    state_json: paper/experiments/results/p2_e1_graph_state_summary_v2.json
+    state_table: paper/assets/tables/p2_e1_graph_state_summary.md
+    manuscript: paper/draft/main.md
+    source: accepted_combined_result_only
+    external_state_override: forbidden
+    core_figure_generation: deterministic_from_accepted_result
+    mechanism_case: omitted_until_bound_extractor
+    write_contract: grouped_replace_with_exception_rollback
 
 claim_boundary: >-
   No P2-E1 effect is estimated until all four complete arm gates and both exact

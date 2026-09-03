@@ -192,7 +192,7 @@ def _validate_consumer_registration(protocol: Mapping[str, Any]) -> None:
         "provider_calls": False,
         "displayed_paired_arithmetic_recomputed": True,
         "bootstrap_metadata_rechecked": True,
-        "atomic_outputs": True,
+        "write_contract": "grouped_replace_with_exception_rollback",
         "focused_tests": "tests/test_render_graph_cross_dataset_manuscript.py",
     }
     if consumer != expected:
@@ -657,7 +657,7 @@ def _restore(path: Path, original: bytes | None) -> None:
     path.write_bytes(original)
 
 
-def _atomic_write_group(contents: Mapping[Path, str]) -> None:
+def _write_group_with_exception_rollback(contents: Mapping[Path, str]) -> None:
     originals = {path: path.read_bytes() if path.exists() else None for path in contents}
     temporary: dict[Path, Path] = {}
     replaced: list[Path] = []
@@ -712,7 +712,7 @@ def write_cross_dataset_manuscript(
         source,
         render_manuscript_block(rows, figure_name=figure_path.name),
     )
-    _atomic_write_group(
+    _write_group_with_exception_rollback(
         {table_path: table, figure_path: figure, manuscript_path: manuscript}
     )
     return {

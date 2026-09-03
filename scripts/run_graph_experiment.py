@@ -5,9 +5,11 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+from importlib import metadata as importlib_metadata
 import json
 import os
 import re
+import subprocess
 from collections.abc import Mapping
 from datetime import datetime, timezone
 from pathlib import Path
@@ -15,6 +17,8 @@ from typing import Any
 
 import yaml
 
+import phm_agent_benchmark
+import phm_data_factory
 from phm_agent_benchmark import EvaluatorResult, write_episode_bundle, write_run_bundle
 from phm_agent_benchmark.protocol import (
     PROTOCOL_VERSION,
@@ -90,6 +94,36 @@ P2_E8_DATA_BACKEND = "csv_directory"
 P2_E8_RUNTIME_CONTRACT = "phase1_opaque_sample_vibration_feature_schema_v6"
 _SAFE_ENVIRONMENT_NAME = re.compile(r"^[A-Z][A-Z0-9_]*$")
 BENCHMARK_CONTROL_SOURCE_CONTRACT = "benchmark_active_v0_2_control_source_v1"
+BENCHMARK_FORMAL_EXECUTION_TOPOLOGY_CONTRACT = (
+    "benchmark_formal_gitlink_topology_v1"
+)
+P2_FORMAL_EXECUTION_TOPOLOGY_CONTRACT = "p2_e1_formal_execution_topology_v1"
+BENCHMARK_REPOSITORY = "https://github.com/liq22/phm-agent-benchmark.git"
+DATA_FACTORY_REPOSITORY = "https://github.com/PHMbench/phm-data-factory.git"
+P2_REPOSITORY = "https://github.com/liq22/P02_agent_langraph.git"
+P2_FORMAL_REPRODUCIBILITY_PATHS = (
+    "CORE.md",
+    "scripts/run_graph_experiment.py",
+    "src/phm_graph_agent",
+)
+_CANONICAL_ORIGINS = {
+    "benchmark": {
+        BENCHMARK_REPOSITORY,
+        "git@github.com:liq22/phm-agent-benchmark.git",
+        "ssh://git@github.com/liq22/phm-agent-benchmark.git",
+    },
+    "data_factory": {
+        DATA_FACTORY_REPOSITORY,
+        "git@github.com:PHMbench/phm-data-factory.git",
+        "ssh://git@github.com/PHMbench/phm-data-factory.git",
+    },
+    "p2": {
+        P2_REPOSITORY,
+        "git@github.com:liq22/P02_agent_langraph.git",
+        "ssh://git@github.com/liq22/P02_agent_langraph.git",
+    },
+}
+_REVISION_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID = (
     "benchmark_v0_2_0--paderborn_phase1_v1--runtime_v6--window_v3"
 )
@@ -105,6 +139,324 @@ if GRAPH_DYNAMIC_RUNTIME_CONTRACT != ACTIVE_GRAPH_DYNAMIC_RUNTIME_CONTRACT:
     raise RuntimeError("active Graph dynamic runtime identity drifted")
 if LEGACY_GRAPH_DYNAMIC_RUNTIME_CONTRACT not in GRAPH_DYNAMIC_RUNTIME_CONTRACTS:
     raise RuntimeError("retained Graph dynamic-v2 runtime compatibility drifted")
+
+
+def _git_text(repository: Path, *arguments: str) -> str:
+    try:
+        completed = subprocess.run(
+            ["git", "-C", str(repository), *arguments],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise RuntimeError("formal Graph execution cannot verify Git sources") from exc
+    return completed.stdout.strip()
+
+
+def _require_canonical_origin(repository: Path, source: str) -> None:
+    if _git_text(repository, "remote", "get-url", "origin") not in _CANONICAL_ORIGINS[
+        source
+    ]:
+        raise RuntimeError(
+            f"formal Graph execution requires the canonical {source} origin"
+        )
+
+
+def _require_remote_reachable(repository: Path, revision: str, source: str) -> None:
+    branches = _git_text(
+        repository,
+        "for-each-ref",
+        "--format=%(refname:short)",
+        "--contains",
+        revision,
+        "refs/remotes/origin",
+    )
+    if not branches:
+        raise RuntimeError(
+            f"formal Graph execution requires origin to contain the {source} revision"
+        )
+
+
+def _require_tracked_path(repository: Path, relative: str, source: str) -> None:
+    target = repository / relative
+    if not target.exists():
+        raise RuntimeError(
+            f"formal Graph execution source path is missing from {source}: {relative}"
+        )
+    tracked = _git_text(repository, "ls-files", "--", relative)
+    if not tracked:
+        raise RuntimeError(
+            f"formal Graph execution requires a Git-tracked {source} path: {relative}"
+        )
+
+
+def _require_clean_paths(
+    repository: Path,
+    paths: tuple[str, ...],
+    source: str,
+) -> None:
+    for relative in paths:
+        _require_tracked_path(repository, relative, source)
+    if _git_text(
+        repository,
+        "status",
+        "--porcelain",
+        "--untracked-files=all",
+        "--",
+        *paths,
+    ):
+        raise RuntimeError(
+            f"formal Graph execution requires committed {source} formal sources"
+        )
+
+
+def _validate_benchmark_formal_execution_topology(
+    value: Any,
+    *,
+    label: str,
+) -> dict[str, Any]:
+    if not isinstance(value, Mapping):
+        raise RuntimeError(f"{label} must be a mapping")
+    topology = dict(value)
+    base_fields = {
+        "contract",
+        "benchmark_repository",
+        "benchmark_revision",
+        "data_factory_repository",
+        "data_factory_revision",
+        "data_factory_distribution_version",
+        "data_factory_lock_version",
+    }
+    allowed_fields = base_fields | {"formal_reproducibility_paths"}
+    if set(topology) not in (base_fields, allowed_fields):
+        raise RuntimeError(f"{label} fields drifted")
+    if (
+        topology.get("contract") != BENCHMARK_FORMAL_EXECUTION_TOPOLOGY_CONTRACT
+        or topology.get("benchmark_repository") != BENCHMARK_REPOSITORY
+        or topology.get("data_factory_repository") != DATA_FACTORY_REPOSITORY
+    ):
+        raise RuntimeError(f"{label} repository contract drifted")
+    for field in ("benchmark_revision", "data_factory_revision"):
+        revision = topology.get(field)
+        if not isinstance(revision, str) or _REVISION_PATTERN.fullmatch(revision) is None:
+            raise RuntimeError(f"{label} has invalid {field}")
+    distribution = topology.get("data_factory_distribution_version")
+    if (
+        not isinstance(distribution, str)
+        or not distribution
+        or topology.get("data_factory_lock_version") != distribution
+    ):
+        raise RuntimeError(f"{label} Data Factory distribution/lock versions drifted")
+    if "formal_reproducibility_paths" in topology:
+        paths = topology["formal_reproducibility_paths"]
+        if (
+            not isinstance(paths, list)
+            or any(not isinstance(path, str) or not path for path in paths)
+            or len(paths) != len(set(paths))
+        ):
+            raise RuntimeError(f"{label} formal reproducibility paths drifted")
+    return topology
+
+
+def _benchmark_control_unit_topology(
+    args: argparse.Namespace,
+    control_source: Mapping[str, str],
+) -> dict[str, Any]:
+    raw_root = getattr(args, "benchmark_control_unit_root", None)
+    if raw_root is None:
+        raise ValueError(
+            "formal Graph execution requires --benchmark-control-unit-root"
+        )
+    requested = Path(raw_root).expanduser()
+    if not requested.is_absolute():
+        raise ValueError("Benchmark control unit root must be an absolute frozen path")
+    if any("latest" in part.lower() for part in requested.parts):
+        raise ValueError("Benchmark control unit root must not select a latest alias")
+    try:
+        root = requested.resolve(strict=True)
+    except OSError as exc:
+        raise ValueError("Benchmark control unit root does not exist") from exc
+    if not root.is_dir():
+        raise ValueError("Benchmark control unit root must be a directory")
+
+    tasks = list(args.tasks)
+    if tasks == ["online_replay_monitoring"]:
+        expected_arm_scope = "b3_generic_replay"
+    elif tasks == [
+        "cold_start_fault_diagnosis",
+        "unsupervised_anomaly_detection",
+    ]:
+        expected_arm_scope = "b3_generic_core"
+    else:
+        raise ValueError("formal P2-E1 Graph tasks do not match a registered control scope")
+    expected_parts = (
+        f"seed_{args.seed}",
+        f"run_{control_source['formal_run_stamp']}",
+        control_source["profile_id"],
+        expected_arm_scope,
+        control_source["protocol_id"],
+    )
+    observed_parts = (
+        root.parent.name,
+        root.parents[1].name,
+        root.parents[2].name,
+        root.parents[3].name,
+        root.parents[4].name if len(root.parents) > 4 else "",
+    )
+    if root.name != str(args.rotation) or observed_parts != expected_parts:
+        raise ValueError(
+            "Benchmark control unit root differs from the registered seed/rotation/"
+            "scope/run identity"
+        )
+    index_path = root / "cohort_index.json"
+    try:
+        cohort = validate_cohort_index(index_path)
+    except (OSError, ValueError) as exc:
+        raise ValueError("Benchmark control unit failed canonical cohort validation") from exc
+    if cohort.get("status") != "complete":
+        raise ValueError("Benchmark control unit must be complete before Graph execution")
+    profile = cohort.get("profile")
+    if not isinstance(profile, Mapping):
+        raise ValueError("Benchmark control unit profile is missing")
+    expected_profile = {
+        "seed": args.seed,
+        "rotation": args.rotation,
+        "tasks": tasks,
+        "agent_id": "generic-llm-tool-agent",
+        "registered_evidence_class": "formal",
+        "result_role": "confirmatory",
+        "experiment_profile_id": control_source["profile_id"],
+    }
+    drift = [
+        field
+        for field, expected in expected_profile.items()
+        if profile.get(field) != expected
+    ]
+    if drift:
+        raise ValueError(
+            "Benchmark control unit profile drifted: " + ", ".join(drift)
+        )
+    return _validate_benchmark_formal_execution_topology(
+        profile.get("formal_execution_topology"),
+        label="Benchmark control formal_execution_topology",
+    )
+
+
+def _local_formal_execution_topology(
+    benchmark_topology: Mapping[str, Any],
+    *,
+    protocol_path: str | Path,
+) -> dict[str, Any]:
+    benchmark_root = Path(phm_agent_benchmark.__file__).resolve().parents[2]
+    data_factory_root = Path(phm_data_factory.__file__).resolve().parents[2]
+    p2_root = Path(__file__).resolve().parents[1]
+    expected_data_factory_root = (benchmark_root / "src/phm_data_factory").resolve()
+    if data_factory_root != expected_data_factory_root:
+        raise RuntimeError(
+            "formal Graph execution requires phm_data_factory from the Benchmark gitlink"
+        )
+
+    source_roots = {
+        "benchmark": benchmark_root,
+        "data_factory": data_factory_root,
+        "p2": p2_root,
+    }
+    for source, repository in source_roots.items():
+        _require_canonical_origin(repository, source)
+
+    revisions = {
+        source: _git_text(repository, "rev-parse", "HEAD")
+        for source, repository in source_roots.items()
+    }
+    for source, revision in revisions.items():
+        if _REVISION_PATTERN.fullmatch(revision) is None:
+            raise RuntimeError(f"formal Graph execution has an invalid {source} revision")
+        _require_remote_reachable(source_roots[source], revision, source)
+    if revisions["benchmark"] != benchmark_topology["benchmark_revision"]:
+        raise RuntimeError(
+            "local Benchmark revision differs from the matched control topology"
+        )
+    if revisions["data_factory"] != benchmark_topology["data_factory_revision"]:
+        raise RuntimeError(
+            "local Data Factory revision differs from the matched control topology"
+        )
+    gitlink_revision = _git_text(
+        benchmark_root,
+        "rev-parse",
+        "HEAD:src/phm_data_factory",
+    )
+    if revisions["data_factory"] != gitlink_revision:
+        raise RuntimeError(
+            "formal Graph execution requires the Data Factory checkout to equal the "
+            "Benchmark gitlink"
+        )
+    try:
+        installed_version = importlib_metadata.version("phm-data-factory")
+    except importlib_metadata.PackageNotFoundError as exc:
+        raise RuntimeError(
+            "formal Graph execution requires installed phm-data-factory metadata"
+        ) from exc
+    if installed_version != benchmark_topology["data_factory_distribution_version"]:
+        raise RuntimeError(
+            "local Data Factory distribution version differs from the matched control topology"
+        )
+
+    try:
+        resolved_protocol = Path(protocol_path).expanduser().resolve(strict=True)
+        protocol_relative = resolved_protocol.relative_to(benchmark_root).as_posix()
+    except (OSError, ValueError) as exc:
+        raise RuntimeError(
+            "formal Graph execution requires a checked-in Benchmark protocol"
+        ) from exc
+    benchmark_paths = (
+        ".gitmodules",
+        "uv.lock",
+        protocol_relative,
+        "src/phm_agent_benchmark",
+        "src/phm_data_factory",
+    )
+    _require_clean_paths(benchmark_root, benchmark_paths, "benchmark")
+    if _git_text(data_factory_root, "status", "--porcelain", "--untracked-files=all"):
+        raise RuntimeError(
+            "formal Graph execution requires a clean Data Factory checkout"
+        )
+    _require_clean_paths(p2_root, P2_FORMAL_REPRODUCIBILITY_PATHS, "p2")
+
+    return {
+        "contract": P2_FORMAL_EXECUTION_TOPOLOGY_CONTRACT,
+        "benchmark_formal_execution_topology": dict(benchmark_topology),
+        "source_repositories": {
+            "benchmark": BENCHMARK_REPOSITORY,
+            "data_factory": DATA_FACTORY_REPOSITORY,
+            "p2": P2_REPOSITORY,
+        },
+        "source_revisions": revisions,
+        "formal_sources_clean": {
+            "benchmark": True,
+            "data_factory": True,
+            "p2": True,
+        },
+        "canonical_origins_verified": {
+            "benchmark": True,
+            "data_factory": True,
+            "p2": True,
+        },
+        "p2_formal_reproducibility_paths": list(
+            P2_FORMAL_REPRODUCIBILITY_PATHS
+        ),
+    }
+
+
+def _formal_execution_topology(
+    args: argparse.Namespace,
+    control_source: Mapping[str, str],
+) -> dict[str, Any]:
+    benchmark_topology = _benchmark_control_unit_topology(args, control_source)
+    return _local_formal_execution_topology(
+        benchmark_topology,
+        protocol_path=args.protocol,
+    )
 
 
 def _benchmark_control_source(
@@ -808,6 +1160,16 @@ def _active_cohort_contract(
             and args.arm == "graph"
         ),
     )
+    formal_execution_topology = None
+    if benchmark_control_source is not None:
+        formal_execution_topology = _formal_execution_topology(
+            args,
+            benchmark_control_source,
+        )
+    elif getattr(args, "benchmark_control_unit_root", None) is not None:
+        raise ValueError(
+            "--benchmark-control-unit-root is valid only for formal P2-E1 Graph execution"
+        )
     scope = "replay" if monitoring else "core"
     budget = monitoring_budget if monitoring else core_budget
     sampling = protocol["episode_sampling"]
@@ -891,6 +1253,8 @@ def _active_cohort_contract(
         identity["inference_route"] = inference_route
     if benchmark_control_source is not None:
         identity["benchmark_control_source"] = dict(benchmark_control_source)
+    if formal_execution_topology is not None:
+        identity["formal_execution_topology"] = dict(formal_execution_topology)
     if cross_dataset is not None:
         identity.update(
             {
@@ -957,6 +1321,8 @@ def _active_cohort_contract(
         profile["inference_route"] = inference_route
     if benchmark_control_source is not None:
         profile["benchmark_control_source"] = dict(benchmark_control_source)
+    if formal_execution_topology is not None:
+        profile["formal_execution_topology"] = dict(formal_execution_topology)
     if cross_dataset is not None:
         profile.update(
             {
@@ -1707,6 +2073,14 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--benchmark-control-profile-id",
         help="Active Benchmark control experiment profile paired with this Graph run.",
+    )
+    parser.add_argument(
+        "--benchmark-control-unit-root",
+        type=Path,
+        help=(
+            "Absolute completed Benchmark Generic control unit paired with this "
+            "Graph seed/rotation; required for formal P2-E1 Graph execution."
+        ),
     )
     parser.add_argument("--seed", type=int, default=20260808)
     parser.add_argument("--provider-label", default="configured_gateway")

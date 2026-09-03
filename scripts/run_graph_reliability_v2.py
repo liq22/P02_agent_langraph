@@ -13,12 +13,15 @@ from __future__ import annotations
 import argparse
 import asyncio
 import copy
+import fcntl
 import json
 import math
 import os
+import tempfile
+from contextlib import contextmanager
 from collections.abc import Mapping, Sequence
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
 import yaml
 
@@ -307,12 +310,45 @@ def build_reliability_unit_contract(args: argparse.Namespace) -> dict[str, Any]:
 
 
 def _write_json(path: Path, value: Mapping[str, Any]) -> None:
-    temporary = path.with_name(path.name + ".tmp")
-    temporary.write_text(
-        json.dumps(value, indent=2, sort_keys=True, allow_nan=False) + "\n",
-        encoding="utf-8",
-    )
-    temporary.replace(path)
+    content = json.dumps(value, indent=2, sort_keys=True, allow_nan=False) + "\n"
+    if path.is_file() and path.read_text(encoding="utf-8") == content:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=path.parent,
+            prefix=f".{path.name}.",
+            suffix=".tmp",
+            delete=False,
+        ) as handle:
+            handle.write(content)
+            handle.flush()
+            os.fsync(handle.fileno())
+            temporary = Path(handle.name)
+        os.replace(temporary, path)
+        temporary = None
+    finally:
+        if temporary is not None and temporary.exists():
+            temporary.unlink()
+
+
+@contextmanager
+def _exclusive_profile_lock(path: Path) -> Iterator[None]:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a+", encoding="utf-8") as handle:
+        try:
+            fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as exc:
+            raise GraphReliabilityRunnerError(
+                "another reliability-v2 provider runner holds the profile lock"
+            ) from exc
+        try:
+            yield
+        finally:
+            fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
 
 
 def _stamp_attempts(
@@ -358,32 +394,46 @@ def _stamp_attempts(
             )
         if run.get("budget") != profile["budget"]:
             raise GraphReliabilityRunnerError("underlying dynamic unit budget drift")
-        metadata.update(
-            {
-                "reliability_profile_id": contract["reliability_profile_id"],
-                "reliability_execution_contract": RELIABILITY_EXECUTION_CONTRACT,
-                "dataset_protocol_id": shared["dataset_protocol_id"],
-                "dataset_protocol_schema": shared["dataset_protocol_schema"],
-                "dataset_id": shared["dataset_id"],
-                "evaluator_assignment_contract": shared[
-                    "evaluator_assignment_contract"
-                ],
-                "dynamic_protocol_id": DYNAMIC_PROTOCOL_ID,
-                "repeat_id": contract["repeat_id"],
-                "temperature": profile["temperature"],
-                "max_output_tokens_per_turn": profile[
-                    "max_output_tokens_per_turn"
-                ],
-                "input_usd_per_million": float(
-                    profile["input_usd_per_million"]
-                ),
-                "output_usd_per_million": float(
-                    profile["output_usd_per_million"]
-                ),
+        reliability_stamp = {
+            "reliability_profile_id": contract["reliability_profile_id"],
+            "reliability_execution_contract": RELIABILITY_EXECUTION_CONTRACT,
+            "dataset_protocol_id": shared["dataset_protocol_id"],
+            "dataset_protocol_schema": shared["dataset_protocol_schema"],
+            "dataset_id": shared["dataset_id"],
+            "evaluator_assignment_contract": shared[
+                "evaluator_assignment_contract"
+            ],
+            "dynamic_protocol_id": DYNAMIC_PROTOCOL_ID,
+            "repeat_id": contract["repeat_id"],
+            "temperature": profile["temperature"],
+            "max_output_tokens_per_turn": profile["max_output_tokens_per_turn"],
+            "input_usd_per_million": float(profile["input_usd_per_million"]),
+            "output_usd_per_million": float(profile["output_usd_per_million"]),
+        }
+        marker_fields = {
+            "reliability_profile_id",
+            "reliability_execution_contract",
+            "repeat_id",
+        }
+        present_markers = marker_fields.intersection(metadata)
+        if present_markers and present_markers != marker_fields:
+            raise GraphReliabilityRunnerError(
+                f"partial reliability provenance stamp at {run_path}"
+            )
+        if present_markers:
+            stamp_drift = {
+                name: (metadata.get(name), expected)
+                for name, expected in reliability_stamp.items()
+                if metadata.get(name) != expected
             }
-        )
-        run["metadata"] = metadata
-        _write_json(run_path, run)
+            if stamp_drift:
+                raise GraphReliabilityRunnerError(
+                    f"reliability provenance stamp drift at {run_path}: {stamp_drift}"
+                )
+        else:
+            metadata.update(reliability_stamp)
+            run["metadata"] = metadata
+            _write_json(run_path, run)
 
     all_runs = sorted((run_directory / "episodes").rglob("run.json"))
     non_provider_terminals = 0
@@ -533,12 +583,18 @@ def execute_reliability_unit(
         int(item["seed"]) for item in protocol["cohort"]["repeats"]
     ]
     _validate_dynamic_arguments(dynamic_args, dynamic_projection)
+    profile_lock = (
+        Path(contract["output_root"])
+        / str(contract["reliability_profile_id"])
+        / ".provider.lock"
+    )
     provider_terminal: SystemExit | None = None
-    try:
-        asyncio.run(_run_dynamic(dynamic_args, dataset_protocol, dynamic_projection))
-    except SystemExit as exc:
-        provider_terminal = exc
-    _stamp_attempts(contract, protocol)
+    with _exclusive_profile_lock(profile_lock):
+        try:
+            asyncio.run(_run_dynamic(dynamic_args, dataset_protocol, dynamic_projection))
+        except SystemExit as exc:
+            provider_terminal = exc
+        _stamp_attempts(contract, protocol)
     if provider_terminal is not None:
         raise provider_terminal
 

@@ -365,7 +365,10 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
         self.assertIs(consumer["raw_run_or_private_data_reads"], False)
         self.assertIs(consumer["provider_calls"], False)
         self.assertIs(consumer["displayed_repeat_arithmetic_recomputed"], True)
-        self.assertIs(consumer["atomic_outputs"], True)
+        self.assertEqual(
+            consumer["write_contract"],
+            "grouped_replace_with_exception_rollback",
+        )
 
     def test_accepted_result_writes_table_svg_and_unique_manuscript_block(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -450,6 +453,11 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
             wrong_pool = copy.deepcopy(result)
             wrong_pool["cohort"]["pooling_with_three_seed_primary"] = "allowed"
             cases.append(wrong_pool)
+            incomplete_grounded = copy.deepcopy(result)
+            incomplete_grounded["arms"]["graph"]["metrics"][
+                "rollout.grounded_completion"
+            ]["defined_episode_numerator"] = 79
+            cases.append(incomplete_grounded)
             for index, candidate in enumerate(cases):
                 with self.subTest(case=index):
                     with self.assertRaises(ReliabilityResultsPending):
@@ -458,6 +466,29 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
                             acceptance=acceptance,
                             result=candidate,
                         )
+
+    def test_synchronized_pass_numerator_and_estimate_tamper_writes_nothing(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            pass_at_1 = result["arms"]["graph"]["reliability"]["pass_at_1"]
+            pass_at_1["numerator"] = 69
+            pass_at_1["estimate"] = 69 / 80
+            paths = self._paths(root, acceptance, result)
+            paths["table_path"].write_text("old table", encoding="utf-8")
+            paths["figure_path"].write_text("old figure", encoding="utf-8")
+            originals = {
+                key: paths[key].read_bytes()
+                for key in ("table_path", "figure_path", "manuscript_path")
+            }
+
+            with self.assertRaisesRegex(
+                ReliabilityResultsPending, "grounded repeat mean"
+            ):
+                write_reliability_manuscript(**paths)
+
+            for key, original in originals.items():
+                self.assertEqual(paths[key].read_bytes(), original)
 
     def test_provider_or_profile_identity_drift_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

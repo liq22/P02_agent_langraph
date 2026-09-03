@@ -221,7 +221,7 @@ analysis_gate:
     provider_calls: false
     displayed_paired_arithmetic_recomputed: true
     bootstrap_metadata_rechecked: true
-    atomic_outputs: true
+    write_contract: grouped_replace_with_exception_rollback
     focused_tests: tests/test_render_graph_cross_dataset_manuscript.py
   current_blocker: null
 
