@@ -1,0 +1,156 @@
+{
+  "agent_id": "graph-guided-phm-agent",
+  "budget": {
+    "max_data_bytes": 393216,
+    "max_data_points": 49152,
+    "max_llm_turns": 144,
+    "max_model_calls": 6,
+    "max_operator_calls": 100,
+    "max_tool_calls": 144,
+    "max_wall_clock_seconds": null,
+    "max_window_reads": 6
+  },
+  "failure_kind": null,
+  "metadata": {
+    "agent_profile_id": "graph_dynamic_full_v1",
+    "arm": "graph",
+    "attempt_index": 0,
+    "dataset_protocol": "phm_agent_dataset_protocol_v1",
+    "ended_at": "2026-08-20T11:27:53.055082+00:00",
+    "episode_key": [
+      "rotation_0",
+      "sequence-0001",
+      "online_replay_monitoring"
+    ],
+    "evidence_class": "mechanics_only_not_performance_evidence",
+    "graph_policy_profile": "full",
+    "horizon": 6,
+    "inference_protocol": "mock-tools",
+    "model": "deterministic-mock-llm",
+    "provider": "benchmark-local",
+    "public_sequence_id": "sequence-0001",
+    "rotation": "rotation_0",
+    "runtime": "mock",
+    "runtime_contract": "phase1_graph_dynamic_ablation_v1",
+    "sample_id": "sequence-0001",
+    "seed": 20260808,
+    "selected_diagnosis_model_id": "ridge-ovr-v1",
+    "started_at": "2026-08-20T11:27:52.898255+00:00",
+    "task_id": "online_replay_monitoring",
+    "thinking_mode": "not_applicable"
+  },
+  "protocol_version": "0.1.0",
+  "raw_terminal_status": null,
+  "run_id": "graph_dynamic_full_v1-20260808-rotation_0-h6-sequence-0001-attempt-000",
+  "task": {
+    "allowed_actions": [
+      "data.search",
+      "data.describe",
+      "data.read_window",
+      "data.summarize",
+      "op.list",
+      "op.schema",
+      "op.run",
+      "model.list",
+      "model.schema",
+      "model.predict",
+      "artifact.describe",
+      "submit",
+      "stop"
+    ],
+    "budget": {
+      "max_data_bytes": 393216,
+      "max_data_points": 49152,
+      "max_llm_turns": 144,
+      "max_model_calls": 6,
+      "max_operator_calls": 100,
+      "max_tool_calls": 144,
+      "max_wall_clock_seconds": null,
+      "max_window_reads": 6
+    },
+    "evaluator_id": "monitoring-v0",
+    "instruction": "Process released replay windows in order without reading future windows. Submit one ordered prediction record per released window.",
+    "primary_metrics": [
+      "average_precision",
+      "auroc",
+      "false_alarm_rate"
+    ],
+    "protocol_version": "0.1.0",
+    "public_context": {
+      "channels": [
+        2
+      ],
+      "evaluation_unit": "released_window",
+      "event_metrics": "requires_verified_event_onset_annotations",
+      "future_access": "forbidden",
+      "max_points": 8192,
+      "replay_length": 6,
+      "replay_sample_ids": [
+        "sample-000198"
+      ],
+      "sample_id": "sequence-0001",
+      "time_order": "monotonic",
+      "window_end": 8192,
+      "window_start": 0
+    },
+    "submission_schema": {
+      "properties": {
+        "alarms": {
+          "items": {
+            "properties": {
+              "predicted_class": {
+                "enum": [
+                  "normal",
+                  "anomaly"
+                ],
+                "type": "string"
+              },
+              "sample_id": {
+                "type": "string"
+              },
+              "score": {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              "supporting_refs": {
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "sample_id",
+              "score",
+              "predicted_class",
+              "supporting_refs"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "alarms"
+      ],
+      "type": "object"
+    },
+    "task_id": "online_replay_monitoring",
+    "task_type": "online_replay_monitoring"
+  },
+  "terminal_status": "submitted",
+  "usage": {
+    "data_bytes_read": 393216,
+    "data_points_read": 49152,
+    "input_tokens": 851307,
+    "llm_turns": 88,
+    "model_calls": 6,
+    "operator_calls": 67,
+    "output_tokens": 3837,
+    "tool_calls": 88,
+    "wall_clock_seconds": 0.15357271900211344,
+    "window_reads": 6
+  }
+}

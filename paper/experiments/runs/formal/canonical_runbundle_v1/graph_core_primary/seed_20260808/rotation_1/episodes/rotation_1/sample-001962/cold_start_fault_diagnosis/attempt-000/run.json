@@ -1,0 +1,131 @@
+{
+  "agent_id": "graph-guided-phm-agent",
+  "budget": {
+    "max_data_bytes": null,
+    "max_data_points": null,
+    "max_llm_turns": 33,
+    "max_model_calls": 2,
+    "max_operator_calls": 17,
+    "max_tool_calls": 33,
+    "max_wall_clock_seconds": null,
+    "max_window_reads": 3
+  },
+  "failure_kind": null,
+  "metadata": {
+    "arm": "graph",
+    "attempt_index": 0,
+    "dataset_protocol": "phm_agent_dataset_protocol_v1",
+    "ended_at": "2026-08-16T15:50:39.465014+00:00",
+    "episode_key": [
+      "rotation_1",
+      "sample-001962",
+      "cold_start_fault_diagnosis"
+    ],
+    "graph_policy_profile": "full",
+    "inference_protocol": "openai_chat_completions",
+    "model": "cohere/north-mini-code:free",
+    "provider": "openrouter-free",
+    "reference_baseline": null,
+    "rotation": "rotation_1",
+    "runtime": "openai",
+    "runtime_contract": "phase1_opaque_sample_vibration_feature_schema_v6",
+    "sample_id": "sample-001962",
+    "seed": 20260808,
+    "selected_diagnosis_model_id": "nearest-centroid-v1",
+    "started_at": "2026-08-16T15:46:32.202908+00:00",
+    "task_id": "cold_start_fault_diagnosis",
+    "thinking_mode": "not_requested"
+  },
+  "protocol_version": "0.1.0",
+  "raw_terminal_status": null,
+  "run_id": "graph-rotation_1-cold_start_fault_diagnosis-sample-001962-attempt-000",
+  "task": {
+    "allowed_actions": [
+      "data.search",
+      "data.describe",
+      "data.read_window",
+      "data.summarize",
+      "op.list",
+      "op.schema",
+      "op.run",
+      "model.list",
+      "model.schema",
+      "model.predict",
+      "artifact.describe",
+      "submit",
+      "stop"
+    ],
+    "budget": {
+      "max_data_bytes": null,
+      "max_data_points": null,
+      "max_llm_turns": 33,
+      "max_model_calls": 2,
+      "max_operator_calls": 17,
+      "max_tool_calls": 33,
+      "max_wall_clock_seconds": null,
+      "max_window_reads": 3
+    },
+    "evaluator_id": "diagnosis-v0",
+    "instruction": "Diagnose the target asset from bounded vibration windows without accessing hidden labels. Submit one class and the artifact references that grounded the prediction.",
+    "primary_metrics": [
+      "macro_f1",
+      "balanced_accuracy",
+      "accuracy"
+    ],
+    "protocol_version": "0.1.0",
+    "public_context": {
+      "channels": [
+        2
+      ],
+      "max_points": 8192,
+      "sample_id": "sample-001962",
+      "split_constraint": "asset_disjoint",
+      "window_end": 8192,
+      "window_start": 0
+    },
+    "submission_schema": {
+      "properties": {
+        "confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "label": {
+          "enum": [
+            "healthy",
+            "inner_ring",
+            "outer_ring"
+          ],
+          "type": "string"
+        },
+        "supporting_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "label",
+        "supporting_refs"
+      ],
+      "type": "object"
+    },
+    "task_id": "cold_start_fault_diagnosis",
+    "task_type": "cold_start_fault_diagnosis"
+  },
+  "terminal_status": "submitted",
+  "usage": {
+    "data_bytes_read": 65536,
+    "data_points_read": 8192,
+    "input_tokens": 35259,
+    "llm_turns": 17,
+    "model_calls": 1,
+    "operator_calls": 11,
+    "output_tokens": 6052,
+    "tool_calls": 17,
+    "wall_clock_seconds": 261.93558891129214,
+    "window_reads": 1
+  }
+}

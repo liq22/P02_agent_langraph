@@ -1,0 +1,242 @@
+{
+  "accepted": true,
+  "checks": {
+    "all_attempt_leaves_exact_six": true,
+    "both_arms_16_of_16_statistical": true,
+    "budgets_windows_sampling_evaluators_identical": true,
+    "generic_actions_do_not_carry_decision_state": true,
+    "generic_natural_failures_retained_in_denominator": true,
+    "global_tool_surface_unchanged": true,
+    "graph_actions_carry_registered_decision_state": true,
+    "graph_agent_failure_retained_in_denominator": true,
+    "model_provider_and_numerical_profiles_identical": true,
+    "public_bundles_exclude_private_targets_and_bearings": true,
+    "statistical_episode_keys_identical": true,
+    "taskspecs_identical": true,
+    "treatment_only_tools_empty": true,
+    "validation_scores_identical": true
+  },
+  "claim_boundary": "Closes P2-E0 Graph adapter/world-equivalence mechanics for the fixed real-data seed-20260808 rotation-0 slice only. Generic is a world reference, not the Paper-2 Reactive control. This gate does not estimate P2-E1, Graph performance, reliability, dynamic behavior, or transfer.",
+  "counts": {
+    "canonical_action_rows": {
+      "generic": 315,
+      "graph": 269
+    },
+    "expected_episode_keys_per_arm": 16,
+    "generic": {
+      "attempt_leaves": 16,
+      "exact_six_attempt_leaves": 16,
+      "non_submitted_statistical_outcomes_retained": 5,
+      "statistical_episode_keys": 16,
+      "terminal_outcomes": {
+        "budget_exhausted": 4,
+        "failed:agent_decision_error": 1,
+        "submitted": 11
+      }
+    },
+    "graph": {
+      "agent_decision_error_outcomes_retained": 1,
+      "attempt_leaves": 16,
+      "exact_six_attempt_leaves": 16,
+      "statistical_episode_keys": 16,
+      "terminal_outcomes": {
+        "failed:agent_decision_error": 1,
+        "submitted": 15
+      }
+    },
+    "matched_statistical_episode_keys": 16
+  },
+  "evidence_class": "real_data_graph_adapter_world_equivalence_mechanics",
+  "gate_id": "P2-E0",
+  "inputs": {
+    "dataset_protocol": "../p01-phm-agent-benchmark/paper/experiments/datasets/dataset_protocol.yaml",
+    "generic_root": "../p01-phm-agent-benchmark/paper/experiments/runs/formal/canonical_runbundle_v1/generic_primary/seed_20260808/rotation_0",
+    "graph_root": "paper/experiments/runs/formal/canonical_runbundle_v1/graph_core_primary/seed_20260808/rotation_0",
+    "rotation": "rotation_0",
+    "seed": 20260808
+  },
+  "intervention_boundary": {
+    "global_tool_surface": "benchmark_phase1_task_allowed_actions_unchanged",
+    "graph_policy_profile": "full",
+    "observed_graph_states": [
+      "Analyze",
+      "Check",
+      "Hypothesize",
+      "Inspect",
+      "Recover",
+      "Submit"
+    ],
+    "only_varied_benchmark_interface_factor": "agent_side_decision_state_prompt_and_policy",
+    "treatment_only_tools": []
+  },
+  "matched_episode_keys": [
+    [
+      "rotation_0",
+      "sample-000111",
+      "cold_start_fault_diagnosis"
+    ],
+    [
+      "rotation_0",
+      "sample-000111",
+      "unsupervised_anomaly_detection"
+    ],
+    [
+      "rotation_0",
+      "sample-000273",
+      "cold_start_fault_diagnosis"
+    ],
+    [
+      "rotation_0",
+      "sample-000273",
+      "unsupervised_anomaly_detection"
+    ],
+    [
+      "rotation_0",
+      "sample-000369",
+      "cold_start_fault_diagnosis"
+    ],
+    [
+      "rotation_0",
+      "sample-000369",
+      "unsupervised_anomaly_detection"
+    ],
+    [
+      "rotation_0",
+      "sample-000796",
+      "cold_start_fault_diagnosis"
+    ],
+    [
+      "rotation_0",
+      "sample-000796",
+      "unsupervised_anomaly_detection"
+    ],
+    [
+      "rotation_0",
+      "sample-000983",
+      "cold_start_fault_diagnosis"
+    ],
+    [
+      "rotation_0",
+      "sample-000983",
+      "unsupervised_anomaly_detection"
+    ],
+    [
+      "rotation_0",
+      "sample-001126",
+      "cold_start_fault_diagnosis"
+    ],
+    [
+      "rotation_0",
+      "sample-001126",
+      "unsupervised_anomaly_detection"
+    ],
+    [
+      "rotation_0",
+      "sample-001730",
+      "cold_start_fault_diagnosis"
+    ],
+    [
+      "rotation_0",
+      "sample-001730",
+      "unsupervised_anomaly_detection"
+    ],
+    [
+      "rotation_0",
+      "sample-002511",
+      "cold_start_fault_diagnosis"
+    ],
+    [
+      "rotation_0",
+      "sample-002511",
+      "unsupervised_anomaly_detection"
+    ]
+  ],
+  "provider_calls": 0,
+  "schema_version": "p2_e0_adapter_equivalence_acceptance_v1",
+  "shared_contract": {
+    "budget": {
+      "max_data_bytes": null,
+      "max_data_points": null,
+      "max_llm_turns": 33,
+      "max_model_calls": 2,
+      "max_operator_calls": 17,
+      "max_tool_calls": 33,
+      "max_wall_clock_seconds": null,
+      "max_window_reads": 3
+    },
+    "dataset_protocol_id": "phm_agent_dataset_protocol_v1",
+    "evaluator_ids": {
+      "cold_start_fault_diagnosis": "diagnosis-v0",
+      "unsupervised_anomaly_detection": "anomaly-v0"
+    },
+    "global_allowed_actions": [
+      "data.search",
+      "data.describe",
+      "data.read_window",
+      "data.summarize",
+      "op.list",
+      "op.schema",
+      "op.run",
+      "model.list",
+      "model.schema",
+      "model.predict",
+      "artifact.describe",
+      "submit",
+      "stop"
+    ],
+    "model_profile": {
+      "input_usd_per_million": 0.0,
+      "model_id": "cohere/north-mini-code:free",
+      "output_usd_per_million": 0.0,
+      "protocol": "openai_chat_completions",
+      "provider": "openrouter-free"
+    },
+    "runtime_contract": "phase1_opaque_sample_vibration_feature_schema_v6",
+    "sampling": {
+      "resolved_test_samples_per_bearing": 1,
+      "rotation": "rotation_0",
+      "sample_handle": {
+        "purpose": "remove_provider_row_order_from_the_public_identifier",
+        "scheme": "seeded_permutation_v1",
+        "seed": 20260808
+      },
+      "sampling_task_family": "core",
+      "seed": 20260808,
+      "test_sample_selection": "metadata_order_floor_two_thirds",
+      "test_samples_per_bearing": 1,
+      "train_samples_per_bearing": 8,
+      "validation_samples_per_bearing": 8
+    },
+    "selected_diagnosis_model_id": "ridge-ovr-v1",
+    "tasks": [
+      "cold_start_fault_diagnosis",
+      "unsupervised_anomaly_detection"
+    ],
+    "validation_model_macro_f1": {
+      "knn-v1": 0.5756252321717218,
+      "nearest-centroid-v1": 0.36003325942350334,
+      "ridge-ovr-v1": 0.6177404295051354
+    },
+    "window_protocol": {
+      "bounded_read": true,
+      "channel_indices": [
+        2
+      ],
+      "channel_semantics": "bearing_housing_acceleration",
+      "contract": "phase1_single_vibration_full_rate_v3",
+      "end_point": 8192,
+      "mapping_source": "PHMbench/PHM-Vibench/src/data_factory/reader/RM_027_PU.py",
+      "mapping_source_url": "https://github.com/PHMbench/PHM-Vibench/blob/main/src/data_factory/reader/RM_027_PU.py",
+      "max_returned_points": 8192,
+      "sampling_mode": "full_rate_no_decimation",
+      "selection_evidence": "paper/experiments/datasets/window_sampling_audit.md",
+      "start_point": 0,
+      "upstream_column_mapping": {
+        "0": "motor_phase_current_1",
+        "1": "motor_phase_current_2",
+        "2": "bearing_housing_acceleration"
+      }
+    }
+  },
+  "status": "accepted"
+}

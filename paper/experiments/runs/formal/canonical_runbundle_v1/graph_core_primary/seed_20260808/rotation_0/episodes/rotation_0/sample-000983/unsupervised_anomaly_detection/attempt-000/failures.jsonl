@@ -1,0 +1,1 @@
+{"error": "unknown parameters for band_power: ['noverlap', 'nperseg']", "kind": "tool_error", "step": 7, "tool_name": "op.run"}

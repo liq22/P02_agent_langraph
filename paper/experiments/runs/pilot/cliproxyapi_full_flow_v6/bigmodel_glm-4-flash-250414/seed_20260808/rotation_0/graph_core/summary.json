@@ -1,0 +1,97 @@
+{
+  "cold_start_fault_diagnosis": {
+    "bearings": 1,
+    "episodes": 1,
+    "rollout": {
+      "agent_decision_error_rate": 1.0,
+      "artifact_lineage_completeness": 0.0,
+      "budget_exhaustion": 0.0,
+      "data_bytes_read": 65536.0,
+      "data_points_read": 8192.0,
+      "estimated_model_cost_usd": 0.0,
+      "failure_count": 1.0,
+      "grounded_completion": 0.0,
+      "grounded_recovery_success": 0.0,
+      "input_tokens": 2520.0,
+      "llm_turns": 2.0,
+      "model_calls": 0.0,
+      "operator_calls": 0.0,
+      "output_tokens": 62.0,
+      "p95_step_latency_seconds": 1.9395396080217324,
+      "recovery_coverage": 0.0,
+      "recovery_success": 0.0,
+      "repeated_action_ratio": 0.0,
+      "repeated_error_rate": 0.0,
+      "steps": 1.0,
+      "steps_to_next_success_after_failure": null,
+      "steps_to_recovery": null,
+      "submission_grounding": 0.0,
+      "submission_rate": 0.0,
+      "submitted_after_failure": 0.0,
+      "supporting_reference_validity": 0.0,
+      "tool_execution_failure_rate": 0.0,
+      "valid_tool_call_rate": 1.0,
+      "wall_clock_seconds": 2.4029044180060737,
+      "window_reads": 1.0
+    },
+    "task": {
+      "accuracy": 0.0,
+      "calibration_coverage": 0.0,
+      "calibration_error": null,
+      "macro_f1": 0.0
+    }
+  },
+  "graph": {
+    "recover_state_count": 0,
+    "state_coverage": [
+      "Inspect"
+    ],
+    "transition_validity": 1.0
+  },
+  "unsupervised_anomaly_detection": {
+    "bearings": 1,
+    "episodes": 1,
+    "rollout": {
+      "agent_decision_error_rate": 1.0,
+      "artifact_lineage_completeness": 0.0,
+      "budget_exhaustion": 0.0,
+      "data_bytes_read": 65536.0,
+      "data_points_read": 8192.0,
+      "estimated_model_cost_usd": 0.0,
+      "failure_count": 1.0,
+      "grounded_completion": 0.0,
+      "grounded_recovery_success": 0.0,
+      "input_tokens": 2329.0,
+      "llm_turns": 2.0,
+      "model_calls": 0.0,
+      "operator_calls": 0.0,
+      "output_tokens": 63.0,
+      "p95_step_latency_seconds": 0.9165068480069749,
+      "recovery_coverage": 0.0,
+      "recovery_success": 0.0,
+      "repeated_action_ratio": 0.0,
+      "repeated_error_rate": 0.0,
+      "steps": 1.0,
+      "steps_to_next_success_after_failure": null,
+      "steps_to_recovery": null,
+      "submission_grounding": 0.0,
+      "submission_rate": 0.0,
+      "submitted_after_failure": 0.0,
+      "supporting_reference_validity": 0.0,
+      "tool_execution_failure_rate": 0.0,
+      "valid_tool_call_rate": 1.0,
+      "wall_clock_seconds": 1.3739209070336074,
+      "window_reads": 1.0
+    },
+    "task": {
+      "auroc": null,
+      "average_precision": null,
+      "average_precision_lift": null,
+      "cohort_prevalence": 0.0,
+      "completion_adjusted_average_precision": null,
+      "false_alarm_rate": null,
+      "submitted_prevalence": null,
+      "true_positive_rate": null
+    }
+  }
+}

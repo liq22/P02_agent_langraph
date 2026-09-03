@@ -1,0 +1,12 @@
+{
+  "artifact://window/000236": {
+    "artifact_ref": "artifact://window/000236",
+    "channels": [
+      "ch2"
+    ],
+    "effective_sample_rate_hz": 64000.0,
+    "kind": "continuous_series",
+    "producer_action": "data.read_window",
+    "sample_count": 8192
+  }
+}

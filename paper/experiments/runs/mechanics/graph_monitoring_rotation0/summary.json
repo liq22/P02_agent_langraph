@@ -1,0 +1,38 @@
+{
+  "graph": {
+    "recover_state_count": 0,
+    "state_coverage": [
+      "Analyze",
+      "Check",
+      "Hypothesize",
+      "Inspect",
+      "Submit"
+    ],
+    "transition_validity": 1.0
+  },
+  "online_replay_monitoring": {
+    "bearings": 8,
+    "episodes": 8,
+    "rollout": {
+      "completion": 1.0,
+      "failure_count": 0.0,
+      "llm_turns": 48.0,
+      "model_calls": 3.0,
+      "operator_calls": 33.0,
+      "p95_step_latency_seconds": 0.003112153737129116,
+      "recovery_success": 0.0,
+      "repeated_action_ratio": 0.0,
+      "steps": 48.0,
+      "valid_tool_call_rate": 1.0,
+      "wall_clock_seconds": 0.04312095249406411,
+      "window_reads": 3.0
+    },
+    "task": {
+      "auroc": 0.9259259259259259,
+      "average_precision": 0.9773108406041844,
+      "false_alarm_rate": 0.6666666666666666,
+      "submission": 1.0,
+      "true_positive_rate": 0.9444444444444444
+    }
+  }
+}

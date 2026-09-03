@@ -1,0 +1,250 @@
+extends_protocol: graph_dynamic_ablation_protocol_v1.yaml
+schema_version: graph_dynamic_ablation_protocol_v2
+protocol_id: paderborn_graph_dynamic_ablation_v2
+status: preregistered_generic_base_provider_free_mock_accepted_formal_not_run
+frozen_date: "2026-08-20"
+
+authority:
+  scope_note: >-
+    This version replaces the historical PHMskills-base dynamic mechanics
+    profile with the P2 CORE-authorized Generic LLM control and Generic-derived
+    GraphDecision treatment. It remains isolated from active v6 and from every
+    v1 output root.
+
+implementation_status:
+  benchmark_event_contract: phase1_public_condition_event_v1
+  event_payload_key: public_condition_event
+  event_emitter_implemented: true
+  dynamic_runtime_profile_implemented: true
+  ablation_conversation_profiles_implemented: true
+  single_unit_runner_implemented: true
+  formal_runner_implemented: true
+  formal_acceptance_analyzer_implemented: true
+  provider_free_registered_cells_exercised: 10
+  provider_free_exact_six_acceptance_gate_passed: true
+  formal_matrix_scheduler_implemented: true
+  formal_provider_execution_started: false
+  formal_results_exist: false
+  allowed_current_evidence:
+    - protocol_parse_and_cross_field_tests
+    - generic_public_condition_event_environment_tests
+    - generic_base_graph_profile_and_conversation_tests
+    - provider_free_single_unit_runner_contract_tests
+    - materialized_ten_cell_exact_six_generic_base_v2_mock_acceptance
+    - provider_free_240_unit_formal_schedule_and_dedicated_runner_validation
+  prohibited_current_claims:
+    - completed_ablation
+    - graph_performance_effect
+    - completed_formal_cohort
+
+treatment_construction:
+  base_agent_class: phm_agent_benchmark.phase1.GenericLLMToolAgent
+  reactive_agent_class: phm_graph_agent.ReactiveSequentialAgent
+  graph_agent_class: phm_graph_agent.GraphDecisionAgent
+  reactive_agent_id: reactive-sequential-agent
+  graph_agent_id: graph-decision-agent
+  legacy_phmskills_superclass_allowed: false
+  p2_experiment_id: p2_graph_vs_generic_llm_v1
+  matched_control_id: benchmark_generic_llm_tool_agent_v1
+  reactive_agent_control_id: benchmark_generic_llm_tool_agent_v1
+  graph_agent_control_id: graph_decision_control_v1
+  reactive_implementation_id: reactive_sequential_agent_v1
+  graph_implementation_id: graph_decision_agent_v1
+  prompt_contract: >-
+    Reactive uses the Benchmark Generic prompt and behavior unchanged. Graph
+    starts with the exact Generic prompt and adds only registered current-state
+    guidance and state-specific visibility over the same global tool catalog.
+
+shared_agent_contract:
+  control: reactive_sequential_generic_v2
+  treatment: graph_dynamic_full_generic_v2
+  treatment_only_difference: >-
+    Graph selects a registered current decision state, appends the registered
+    state-control suffix to the unchanged Generic base prompt, and exposes only
+    that state's legal subset of the otherwise shared global tools.
+
+graph_profiles:
+  full:
+    agent_profile_id: graph_dynamic_full_generic_v2
+  no_recovery_revision_edge:
+    agent_profile_id: graph_dynamic_no_recovery_revision_edge_generic_v2
+  no_observation_conditioned_branching:
+    agent_profile_id: graph_dynamic_no_observation_conditioned_branching_generic_v2
+  no_persistent_graph_state:
+    agent_profile_id: graph_dynamic_no_persistent_graph_state_generic_v2
+  no_replanning:
+    agent_profile_id: graph_dynamic_no_replanning_generic_v2
+
+runtime_and_provider_profile:
+  effective_runtime_contract: phase1_graph_dynamic_generic_ablation_v2
+  formal_provider_profile_id: openrouter_north_graph_dynamic_generic_ablation_v2
+
+output_contract:
+  mechanics_root: paper/experiments/runs/mechanics/graph_dynamic_ablation_v2/mock_acceptance
+  mechanics_gate: paper/experiments/runs/mechanics/graph_dynamic_ablation_v2/mock_acceptance/gate.json
+  formal_root: paper/experiments/runs/formal/graph_dynamic_ablation_v2/openrouter_north_graph_dynamic_generic_ablation_v2
+  results_root: paper/experiments/results/graph_dynamic_ablation_v2/openrouter_north_graph_dynamic_generic_ablation_v2
+  event_catalog: paper/experiments/results/graph_dynamic_ablation_v2/openrouter_north_graph_dynamic_generic_ablation_v2/public_event_catalog.json
+
+acceptance_gates:
+  provider_free_mock:
+    acceptance_gate_passed: true
+    current_implementation_evidence: materialized_ten_cell_exact_six_generic_base_v2_mock_acceptance
+    gate: paper/experiments/runs/mechanics/graph_dynamic_ablation_v2/mock_acceptance/gate.json
+
+formal_analysis:
+  event_catalog_schema: graph_dynamic_public_event_catalog_v2
+  acceptance_schema: graph_dynamic_formal_acceptance_v2
+  result_schema: graph_dynamic_formal_result_v2
+  agent_identity:
+    reactive_agent_id: reactive-sequential-agent
+    graph_agent_id: graph-decision-agent
+    reactive_agent_profile_id: reactive_sequential_generic_v2
+  manifest_proof_fields:
+    - provider_profile_id
+    - provider
+    - model
+    - inference_protocol
+    - thinking_mode
+    - temperature
+    - max_output_tokens_per_turn
+    - input_usd_per_million
+    - output_usd_per_million
+    - p2_experiment_id
+    - matched_control_id
+    - agent_control_id
+    - agent_implementation_id
+
+formal_scheduler:
+  schema_version: graph_dynamic_formal_schedule_v2
+  entrypoint: scripts/schedule_graph_dynamic_formal_v2.py
+  mode: provider_free_dry_run_only
+  provider_calls_allowed: false
+  runner_invocation_allowed: false
+  environment_value_reads_allowed: false
+  filesystem_writes_allowed: false
+  schedule_order:
+    - seed
+    - rotation
+    - public_sequence_id
+    - horizon
+    - cell
+  unit_id_format: "p2-dynamic-v2-%04d"
+  public_sequence_id_format: "sequence-%04d"
+  expected_unique_units: 240
+  output_pattern: >-
+    {formal_root}/{agent_profile_id}/seed_{seed}/{rotation}/horizon_{horizon}/episodes/{public_sequence_id}
+  runner:
+    python_command: python
+    path: scripts/run_graph_dynamic_formal_v2.py
+    underlying_path: scripts/run_graph_experiment.py
+    execution_contract: phase1_graph_dynamic_formal_generic_v2
+    dynamic_protocol_argument: paper/experiments/graph_dynamic_ablation_protocol_v2.yaml
+    dataset_protocol_argument: ../P01-phm-agent-benchmark/paper/experiments/datasets/dataset_protocol.yaml
+    runtime: openai
+    train_samples_per_bearing: 8
+    validation_samples_per_bearing: 8
+    base_url_expected: https://openrouter.ai/api/v1
+    probe_evidence_default: /tmp/openrouter_north_graph_dynamic_v2_two_turn_probe.json
+    probe_max_age_hours: 24
+    lock_file_default: /tmp/p2_graph_dynamic_v2_formal.lock
+    identity_proof_files:
+      - scripts/run_graph_dynamic_formal_v2.py
+      - scripts/run_graph_experiment.py
+      - src/phm_graph_agent/agent.py
+      - src/phm_graph_agent/state.py
+    required_flags:
+      - --arm
+      - --runtime
+      - --graph-profile
+      - --runtime-contract
+      - --dynamic-protocol
+      - --protocol
+      - --public-sequence-id
+      - --horizon
+      - --tasks
+      - --seed
+      - --rotation
+      - --temperature
+      - --max-output-tokens-per-turn
+      - --provider-label
+      - --input-usd-per-million
+      - --output-usd-per-million
+      - --base-url-env
+      - --api-key-env
+      - --model-env
+      - --resume-provider-partial
+      - --train-samples-per-bearing
+      - --validation-samples-per-bearing
+      - --probe-evidence
+      - --validate-only
+      - --output
+    required_identity_literals:
+      - phase1_graph_dynamic_formal_generic_v2
+      - p2_graph_vs_generic_llm_v1
+      - benchmark_generic_llm_tool_agent_v1
+      - graph_decision_control_v1
+      - reactive_sequential_agent_v1
+      - graph_decision_agent_v1
+      - reactive-sequential-agent
+      - graph-decision-agent
+      - phase1_graph_dynamic_generic_ablation_v2
+    environment_variable_names:
+      base_url: OPENROUTER_BASE_URL
+      api_key: OPENROUTER_API_KEY
+      model: OPENROUTER_MODEL
+    explicit_zero_price_arguments_required: true
+  readiness_gate:
+    required_implementation_flags:
+      - event_emitter_implemented
+      - dynamic_runtime_profile_implemented
+      - single_unit_runner_implemented
+      - formal_runner_implemented
+    command_projection_policy: >-
+      Always emit the complete planned argv as inert schedule data. Expose no
+      executable argv or command unless all implementation flags, runner flags,
+      and cross-file Generic-base identity proofs are present.
+    current_expected_state: ready_for_provider_free_validation_formal_not_started
+  cell_assignments:
+    reactive:
+      arm: reactive
+      graph_profile: full
+      agent_id: reactive-sequential-agent
+      agent_profile_id: reactive_sequential_generic_v2
+      agent_control_id: benchmark_generic_llm_tool_agent_v1
+      agent_implementation_id: reactive_sequential_agent_v1
+    graph_full:
+      arm: graph
+      graph_profile: full
+      agent_id: graph-decision-agent
+      agent_profile_id: graph_dynamic_full_generic_v2
+      agent_control_id: graph_decision_control_v1
+      agent_implementation_id: graph_decision_agent_v1
+    graph_no_recovery_revision_edge:
+      arm: graph
+      graph_profile: no_recovery_revision_edge
+      agent_id: graph-decision-agent
+      agent_profile_id: graph_dynamic_no_recovery_revision_edge_generic_v2
+      agent_control_id: graph_decision_control_v1
+      agent_implementation_id: graph_decision_agent_v1
+    graph_no_observation_conditioned_branching:
+      arm: graph
+      graph_profile: no_observation_conditioned_branching
+      agent_id: graph-decision-agent
+      agent_profile_id: graph_dynamic_no_observation_conditioned_branching_generic_v2
+      agent_control_id: graph_decision_control_v1
+      agent_implementation_id: graph_decision_agent_v1
+    graph_no_persistent_graph_state:
+      arm: graph
+      graph_profile: no_persistent_graph_state
+      agent_id: graph-decision-agent
+      agent_profile_id: graph_dynamic_no_persistent_graph_state_generic_v2
+      agent_control_id: graph_decision_control_v1
+      agent_implementation_id: graph_decision_agent_v1
+    graph_no_replanning:
+      arm: graph
+      graph_profile: no_replanning
+      agent_id: graph-decision-agent
+      agent_profile_id: graph_dynamic_no_replanning_generic_v2
+      agent_control_id: graph_decision_control_v1
+      agent_implementation_id: graph_decision_agent_v1

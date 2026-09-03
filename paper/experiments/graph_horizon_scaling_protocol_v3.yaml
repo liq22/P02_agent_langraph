@@ -1,0 +1,111 @@
+extends_protocol: graph_horizon_scaling_protocol_v2.yaml
+schema_version: graph_horizon_scaling_protocol_v3
+protocol_id: paderborn_graph_horizon_scaling_p2e2_generic_v3
+status: preregistered_task_primary_metric_amendment_scheduler_ready_formal_not_run
+frozen_date: "2026-09-01"
+supersedes: graph_horizon_scaling_protocol_v2.yaml
+formal_launch: gated
+
+authority:
+  source_dynamic_protocol: paper/experiments/graph_dynamic_ablation_protocol_v3.yaml
+  projection_rule: >-
+    This is the P2-E2 horizon projection of the task-primary dynamic-v3
+    protocol. It cannot change its data, sequence, event, identity, provider,
+    runtime, budget, assigned-window metric, missing-score policy, or matched
+    bearing-cluster inference semantics.
+  legacy_boundary: >-
+    Horizon v1 and v2 are superseded, unexecuted formal profiles. They cannot
+    be launched, resumed, accepted, or pooled with v3.
+
+matched_cells:
+  shared:
+    provider_profile_id: openrouter_north_graph_dynamic_generic_ablation_v3
+    runtime_contract: phase1_graph_dynamic_generic_ablation_v3
+
+schedule:
+  unit_id_format: "p2e2-v3-%04d"
+
+runtime_projection:
+  dynamic_protocol_argument: paper/experiments/graph_dynamic_ablation_protocol_v3.yaml
+  required_runner_identity_literals:
+    - p2_graph_vs_generic_llm_v1
+    - benchmark_generic_llm_tool_agent_v1
+    - reactive-sequential-agent
+    - graph-decision-agent
+    - phase1_graph_dynamic_generic_ablation_v3
+
+output_contract:
+  schedule_view_root: paper/experiments/schedules/graph_horizon_scaling_v3
+  formal_root: paper/experiments/runs/formal/graph_dynamic_ablation_v3/openrouter_north_graph_dynamic_generic_ablation_v3
+  results_root: paper/experiments/results/graph_dynamic_ablation_v3/openrouter_north_graph_dynamic_generic_ablation_v3
+  v2_root_reuse: forbidden
+
+failure_and_denominator_contract:
+  episode_denominator: every_one_of_144_scheduled_episode_bundles
+  task_window_denominator: every_protocol_assigned_window_including_failed_partial_timeout_budget_exhausted_and_invalid_submission_episodes
+  missing_score_policy_id: phase1_replay_target_adverse_missing_score_v1
+  non_provider_failure_policy: retain_episode_and_all_assigned_windows_in_denominator
+  undefined_metric_policy: target_adverse_missing_score_for_task_metrics_otherwise_report_undefined
+
+metrics:
+  primary:
+    name: target_adverse_window_average_precision
+    unit: protocol_assigned_replay_window
+    missing_score_policy_id: phase1_replay_target_adverse_missing_score_v1
+    report_by: horizon_and_cell
+    paired_contrast: graph_full_minus_reactive_within_seed_and_horizon
+    seed_level_population: all_eight_matched_heldout_bearing_sequences
+  task_outcomes:
+    - target_adverse_window_average_precision
+    - target_adverse_window_auroc
+    - target_adverse_false_alarm_rate
+    - target_adverse_true_positive_rate
+    - replay_score_coverage
+  general_rollout_role: secondary
+  general_rollout:
+    - grounded_completion_rate
+    - valid_tool_call_rate
+    - invalid_action_rate
+    - valid_state_transition_rate
+    - grounded_recovery_success
+    - steps
+    - llm_turns
+    - input_tokens
+    - output_tokens
+    - wall_clock_latency
+    - estimated_model_cost_usd
+  forbidden: [event_f1, detection_delay, time_to_fault_detection]
+
+statistics:
+  paired_unit: [seed, rotation, public_sequence_id, horizon]
+  seed_level_task_metric: recompute_over_all_eight_assigned_bearing_sequences
+  horizon_reports: separate
+  pool_episode_rows_across_horizons: false
+  pooled_headline_graph_effect_across_horizons: forbidden
+  pool_across_provider_model_or_runtime_profiles: false
+  treat_nested_horizons_as_independent_samples: false
+  horizon_interaction: >-
+    The seed-level Graph-full-minus-Reactive target-adverse AP difference at
+    horizon 12 minus the matched difference at horizon 3, with the endpoint
+    recomputed after every cluster resample or swap.
+  exact_paired_permutation: all_256_matched_bearing_cluster_arm_swaps_with_metric_recomputation
+  interval_method: paired_bearing_cluster_bootstrap_with_metric_recomputation
+  bearing_cluster_handling: resample_or_swap_all_eight_matched_sequences_jointly_then_recompute_nonlinear_metric
+  per_bearing_average_precision: forbidden
+  paired_cluster_bootstrap_iterations: 10000
+  paired_cluster_bootstrap_seed: 20260813
+  confidence_level: 0.95
+  report_regardless_of_direction: true
+
+amendment:
+  supersedes_unexecuted_protocol: paderborn_graph_horizon_scaling_p2e2_generic_v2
+  affected_v2_formal_episode_bundles_observed: 0
+  provider_calls_performed_for_this_amendment: 0
+  unchanged:
+    - data_split_sequences_horizons_and_cells
+    - seeds_budgets_agents_provider_model_and_tools
+  changed:
+    - task_primary_endpoint
+    - missing_assigned_window_denominator
+    - nonlinear_metric_aggregation_and_cluster_inference
+    - runtime_identity_and_output_root

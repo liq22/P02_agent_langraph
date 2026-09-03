@@ -1,0 +1,65 @@
+| Task | Metric | Estimate | Bearing bootstrap 95% CI |
+|---|---:|---:|---:|
+| cold_start_fault_diagnosis | task.accuracy | 0.0000 | [0.0000, 0.0000] |
+| cold_start_fault_diagnosis | task.macro_f1 | 0.0000 | [0.0000, 0.0000] |
+| cold_start_fault_diagnosis | task.calibration_coverage | 0.0000 | [0.0000, 0.0000] |
+| cold_start_fault_diagnosis | task.calibration_error | n/a | n/a |
+| cold_start_fault_diagnosis | rollout.artifact_lineage_completeness | 0.0000 | [0.0000, 0.0000] |
+| cold_start_fault_diagnosis | rollout.budget_exhaustion | 1.0000 | [1.0000, 1.0000] |
+| cold_start_fault_diagnosis | rollout.estimated_model_cost_usd | 0.0000 | [0.0000, 0.0000] |
+| cold_start_fault_diagnosis | rollout.failure_count | 3.5000 | [2.0000, 6.5000] |
+| cold_start_fault_diagnosis | rollout.grounded_completion | 0.0000 | [0.0000, 0.0000] |
+| cold_start_fault_diagnosis | rollout.grounded_recovery_success | 0.0000 | [0.0000, 0.0000] |
+| cold_start_fault_diagnosis | rollout.input_tokens | 39914.5000 | [34914.0000, 46787.2500] |
+| cold_start_fault_diagnosis | rollout.llm_turns | 14.2500 | [13.0000, 16.0000] |
+| cold_start_fault_diagnosis | rollout.model_calls | 2.0000 | [2.0000, 2.0000] |
+| cold_start_fault_diagnosis | rollout.operator_calls | 4.7500 | [4.0000, 6.2500] |
+| cold_start_fault_diagnosis | rollout.output_tokens | 789.0000 | [741.5000, 872.7500] |
+| cold_start_fault_diagnosis | rollout.p95_step_latency_seconds | 4.3520 | [4.1829, 4.5210] |
+| cold_start_fault_diagnosis | rollout.recovery_coverage | 0.0000 | [0.0000, 0.0000] |
+| cold_start_fault_diagnosis | rollout.recovery_success | 0.0000 | [0.0000, 0.0000] |
+| cold_start_fault_diagnosis | rollout.repeated_action_ratio | 0.0885 | [0.0208, 0.1615] |
+| cold_start_fault_diagnosis | rollout.repeated_error_rate | 0.1875 | [0.0000, 0.5625] |
+| cold_start_fault_diagnosis | rollout.steps | 13.2500 | [12.0000, 15.0000] |
+| cold_start_fault_diagnosis | rollout.steps_to_next_success_after_failure | 1.5000 | [1.0000, 2.5000] |
+| cold_start_fault_diagnosis | rollout.steps_to_recovery | n/a | n/a |
+| cold_start_fault_diagnosis | rollout.submission_grounding | 0.0000 | [0.0000, 0.0000] |
+| cold_start_fault_diagnosis | rollout.submission_rate | 0.0000 | [0.0000, 0.0000] |
+| cold_start_fault_diagnosis | rollout.submitted_after_failure | 0.0000 | [0.0000, 0.0000] |
+| cold_start_fault_diagnosis | rollout.supporting_reference_validity | 0.0000 | [0.0000, 0.0000] |
+| cold_start_fault_diagnosis | rollout.valid_tool_call_rate | 0.7532 | [0.5833, 0.8429] |
+| cold_start_fault_diagnosis | rollout.wall_clock_seconds | 20.8298 | [18.8978, 24.2140] |
+| cold_start_fault_diagnosis | rollout.window_reads | 1.0000 | [1.0000, 1.0000] |
+| unsupervised_anomaly_detection | task.average_precision | 0.0000 | [0.0000, 0.0000] |
+| unsupervised_anomaly_detection | task.completion_adjusted_average_precision | 0.0000 | [0.0000, 0.0000] |
+| unsupervised_anomaly_detection | task.auroc | 0.0000 | [0.0000, 0.0000] |
+| unsupervised_anomaly_detection | task.prevalence | 0.0000 | [0.0000, 0.0000] |
+| unsupervised_anomaly_detection | task.average_precision_lift | 0.0000 | [0.0000, 0.0000] |
+| unsupervised_anomaly_detection | task.false_alarm_rate | 1.0000 | [0.0000, 1.0000] |
+| unsupervised_anomaly_detection | task.true_positive_rate | 0.0000 | [0.0000, 0.0000] |
+| unsupervised_anomaly_detection | rollout.artifact_lineage_completeness | 0.2500 | [0.0000, 0.7500] |
+| unsupervised_anomaly_detection | rollout.budget_exhaustion | 0.7500 | [0.2500, 1.0000] |
+| unsupervised_anomaly_detection | rollout.estimated_model_cost_usd | 0.0000 | [0.0000, 0.0000] |
+| unsupervised_anomaly_detection | rollout.failure_count | 3.0000 | [3.0000, 3.0000] |
+| unsupervised_anomaly_detection | rollout.grounded_completion | 0.2500 | [0.0000, 0.7500] |
+| unsupervised_anomaly_detection | rollout.grounded_recovery_success | 0.2500 | [0.0000, 0.7500] |
+| unsupervised_anomaly_detection | rollout.input_tokens | 42019.2500 | [36927.5000, 52190.7500] |
+| unsupervised_anomaly_detection | rollout.llm_turns | 15.2500 | [14.0000, 17.7500] |
+| unsupervised_anomaly_detection | rollout.model_calls | 2.0000 | [2.0000, 2.0000] |
+| unsupervised_anomaly_detection | rollout.operator_calls | 6.2500 | [5.0000, 8.7500] |
+| unsupervised_anomaly_detection | rollout.output_tokens | 798.0000 | [780.2500, 832.7500] |
+| unsupervised_anomaly_detection | rollout.p95_step_latency_seconds | 4.4629 | [4.4198, 4.5451] |
+| unsupervised_anomaly_detection | rollout.recovery_coverage | 0.2500 | [0.0000, 0.7500] |
+| unsupervised_anomaly_detection | rollout.recovery_success | 0.2500 | [0.0000, 0.7500] |
+| unsupervised_anomaly_detection | rollout.repeated_action_ratio | 0.1154 | [0.0385, 0.1538] |
+| unsupervised_anomaly_detection | rollout.repeated_error_rate | 0.0000 | [0.0000, 0.0000] |
+| unsupervised_anomaly_detection | rollout.steps | 14.5000 | [13.0000, 17.5000] |
+| unsupervised_anomaly_detection | rollout.steps_to_next_success_after_failure | 1.0000 | [1.0000, 1.0000] |
+| unsupervised_anomaly_detection | rollout.steps_to_recovery | n/a | n/a |
+| unsupervised_anomaly_detection | rollout.submission_grounding | 0.2500 | [0.0000, 0.7500] |
+| unsupervised_anomaly_detection | rollout.submission_rate | 0.2500 | [0.0000, 0.7500] |
+| unsupervised_anomaly_detection | rollout.submitted_after_failure | 0.2500 | [0.0000, 0.7500] |
+| unsupervised_anomaly_detection | rollout.supporting_reference_validity | 0.2500 | [0.0000, 0.7500] |
+| unsupervised_anomaly_detection | rollout.valid_tool_call_rate | 0.7874 | [0.7692, 0.8239] |
+| unsupervised_anomaly_detection | rollout.wall_clock_seconds | 24.2590 | [21.1837, 29.7325] |
+| unsupervised_anomaly_detection | rollout.window_reads | 1.0000 | [1.0000, 1.0000] |

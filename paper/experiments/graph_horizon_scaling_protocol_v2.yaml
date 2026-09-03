@@ -1,0 +1,298 @@
+schema_version: graph_horizon_scaling_protocol_v2
+protocol_id: paderborn_graph_horizon_scaling_p2e2_generic_v2
+status: preregistered_generic_base_scheduler_ready_formal_launch_gated
+frozen_date: "2026-08-20"
+supersedes: graph_horizon_scaling_protocol_v1.yaml
+formal_launch: gated
+
+authority:
+  benchmark_core: ../p01-phm-agent-benchmark/CORE.md
+  source_dynamic_protocol: paper/experiments/graph_dynamic_ablation_protocol_v2.yaml
+  experiment_matrix: ../p01-phm-agent-benchmark/obsidian/goal/8-12/phm_agent_three_paper_goal_pack_20260812_v1/experiments/PAPER2_MATRIX.md
+  projection_rule: >-
+    This is the P2-E2 schedule projection of the Generic-base dynamic-v2
+    protocol. It cannot change its data, sequence, event, identity, provider,
+    runtime, budget, metric, or statistical semantics.
+  legacy_boundary: >-
+    graph_horizon_scaling_protocol_v1 is a superseded PHMskills-base profile.
+    It cannot be loaded, launched, resumed, accepted, or pooled with v2.
+
+identity_contract:
+  p2_experiment_id: p2_graph_vs_generic_llm_v1
+  matched_control_id: benchmark_generic_llm_tool_agent_v1
+  control_agent_id: reactive-sequential-agent
+  treatment_agent_id: graph-decision-agent
+  control_implementation_id: reactive_sequential_agent_v1
+  treatment_implementation_id: graph_decision_agent_v1
+  phmskills_runtime_or_catalog_allowed: false
+
+scope:
+  matrix_id: P2-E2
+  task_id: online_replay_monitoring
+  question: >-
+    Whether the matched GraphDecision-minus-Generic-sequential difference
+    changes over nested offline replay horizons.
+  control_cell: reactive
+  treatment_cell: graph_full
+  excluded_cells:
+    - graph_no_recovery_revision_edge
+    - graph_no_observation_conditioned_branching
+    - graph_no_persistent_graph_state
+    - graph_no_replanning
+  excluded_claims:
+    - physical_time_scaling
+    - fault_onset_detection
+    - event_f1
+    - detection_delay
+    - live_streaming
+    - cross_dataset_validity
+
+sequence_contract:
+  dataset_id: paderborn-bearing-datacenter
+  rotation: rotation_0
+  public_sequence_ids:
+    - sequence-0001
+    - sequence-0002
+    - sequence-0003
+    - sequence-0004
+    - sequence-0005
+    - sequence-0006
+    - sequence-0007
+    - sequence-0008
+  master_sequence_key: [rotation, public_sequence_id]
+  deliberately_excluded_master_key_fields: [seed, horizon, cell, provider, model]
+  master_horizon: 12
+  horizons: [3, 6, 12]
+  construction: "sequence_h = master_sequence[0:h]"
+  one_master_sequence_per_public_sequence: true
+  independently_resample_each_horizon: false
+  independently_resample_each_seed_or_cell: false
+  expected_public_domain_schedule: [1, 1, 1, 2, 2, 2, 3, 3, 3, 0, 0, 0]
+  expected_change_release_indices_zero_based: [3, 6, 9]
+  claim_boundary: >-
+    Horizon is released-window count in one nested metadata-ordered offline
+    sequence, not elapsed time, time to failure, or a fault-onset endpoint.
+
+matched_cells:
+  order: [reactive, graph_full]
+  reactive:
+    runner_arm: reactive
+    runner_graph_profile: full
+    agent_id: reactive-sequential-agent
+    agent_control_id: benchmark_generic_llm_tool_agent_v1
+    agent_implementation_id: reactive_sequential_agent_v1
+    agent_profile_id: reactive_sequential_generic_v2
+    state_router_enabled: false
+  graph_full:
+    runner_arm: graph
+    runner_graph_profile: full
+    agent_id: graph-decision-agent
+    agent_control_id: graph_decision_control_v1
+    agent_implementation_id: graph_decision_agent_v1
+    agent_profile_id: graph_dynamic_full_generic_v2
+    state_router_enabled: true
+  shared:
+    p2_experiment_id: p2_graph_vs_generic_llm_v1
+    matched_control_id: benchmark_generic_llm_tool_agent_v1
+    backbone_model: cohere/north-mini-code:free
+    provider_profile_id: openrouter_north_graph_dynamic_generic_ablation_v2
+    provider: openrouter-free
+    inference_protocol: openai_chat_completions
+    runtime_contract: phase1_graph_dynamic_generic_ablation_v2
+    temperature: 0.2
+    max_output_tokens_per_turn: 2048
+    input_usd_per_million: 0.0
+    output_usd_per_million: 0.0
+    prompt_information: identical_generic_base_before_graph_suffix
+    public_event_payload: identical
+    tools_before_graph_filtering: identical
+    numerical_experts: identical
+    evaluator: identical
+    episode_order: identical
+  only_treatment_difference: >-
+    GraphDecision selects a registered public decision state, appends only the
+    registered current-state suffix to the unchanged Generic base prompt, and
+    filters the otherwise shared tool catalog.
+
+schedule:
+  seeds: [20260808, 20260809, 20260810]
+  rotations: [rotation_0]
+  order: [seed, rotation, public_sequence_id, horizon, cell]
+  expected_public_sequences: 8
+  expected_horizons: 3
+  expected_cells: 2
+  expected_matched_pairs: 72
+  expected_episode_bundles: 144
+  expected_bundles_per_horizon: 48
+  expected_bundles_per_cell: 72
+  unit_id_format: "p2e2-v2-%04d"
+
+budgets:
+  source: source_dynamic_protocol.budgets.by_horizon
+  by_horizon:
+    3:
+      max_tool_calls: 72
+      max_window_reads: 3
+      max_operator_calls: 50
+      max_model_calls: 3
+      max_llm_turns: 72
+      max_data_points: 24576
+      max_data_bytes: 196608
+      max_wall_clock_seconds: null
+    6:
+      max_tool_calls: 144
+      max_window_reads: 6
+      max_operator_calls: 100
+      max_model_calls: 6
+      max_llm_turns: 144
+      max_data_points: 49152
+      max_data_bytes: 393216
+      max_wall_clock_seconds: null
+    12:
+      max_tool_calls: 288
+      max_window_reads: 12
+      max_operator_calls: 200
+      max_model_calls: 12
+      max_llm_turns: 288
+      max_data_points: 98304
+      max_data_bytes: 786432
+      max_wall_clock_seconds: null
+
+runtime_projection:
+  runner: scripts/run_graph_dynamic_formal_v2.py
+  python_command: python
+  dynamic_protocol_argument: paper/experiments/graph_dynamic_ablation_protocol_v2.yaml
+  runtime: openai
+  required_runner_flags:
+    - --arm
+    - --runtime
+    - --graph-profile
+    - --runtime-contract
+    - --dynamic-protocol
+    - --public-sequence-id
+    - --horizon
+    - --tasks
+    - --seed
+    - --rotation
+    - --temperature
+    - --max-output-tokens-per-turn
+    - --provider-label
+    - --input-usd-per-million
+    - --output-usd-per-million
+    - --base-url-env
+    - --api-key-env
+    - --model-env
+    - --resume-provider-partial
+    - --output
+  required_runner_identity_literals:
+    - p2_graph_vs_generic_llm_v1
+    - benchmark_generic_llm_tool_agent_v1
+    - reactive-sequential-agent
+    - graph-decision-agent
+    - phase1_graph_dynamic_generic_ablation_v2
+  environment_variable_names:
+    base_url: OPENROUTER_BASE_URL
+    api_key: OPENROUTER_API_KEY
+    model: OPENROUTER_MODEL
+  environment_values_must_not_be_read_by_scheduler: true
+  zero_price_arguments_required: true
+  command_emission_policy: >-
+    Emit argv and shell command fields only when every required runner flag,
+    identity literal, and source implementation declaration is present.
+    Otherwise retain unit metadata with argv and command set to null.
+
+output_contract:
+  schedule_view_root: paper/experiments/schedules/graph_horizon_scaling_v2
+  formal_root: paper/experiments/runs/formal/graph_dynamic_ablation_v2/openrouter_north_graph_dynamic_generic_ablation_v2
+  results_root: paper/experiments/results/graph_dynamic_ablation_v2/openrouter_north_graph_dynamic_generic_ablation_v2
+  v1_root_reuse: forbidden
+  unit_output_pattern: >-
+    {formal_root}/{agent_profile_id}/seed_{seed}/{rotation}/horizon_{horizon}/episodes/{public_sequence_id}
+  unit_output_roots_must_be_unique: true
+  canonical_episode_files:
+    - run.json
+    - rollout.jsonl
+    - submission.json
+    - metrics.json
+    - failures.jsonl
+    - artifacts.json
+  root_rollout_jsonl_forbidden: true
+  generated_schedule_is_performance_evidence: false
+
+failure_and_denominator_contract:
+  retain_terminal_statuses:
+    - submitted
+    - stopped
+    - partial
+    - timeout
+    - failed
+    - invalid_submission
+    - budget_exhausted
+  retain_failure_kinds:
+    - provider_error
+    - agent_decision_error
+    - invalid_action
+    - tool_error
+    - timeout
+    - budget_exhausted
+    - invalid_submission
+  denominator: every_one_of_144_scheduled_episode_bundles
+  provider_failure_resolution: retain_then_same_profile_retry
+  non_provider_failure_policy: retain_in_denominator
+  undefined_metric_policy: report_undefined_not_zero
+  non_provider_terminal_retry_within_cohort: forbidden
+
+metrics:
+  primary:
+    - grounded_completion_rate_by_horizon_and_cell
+    - paired_graph_full_minus_reactive_grounded_completion_by_horizon
+  forbidden: [event_f1, detection_delay, time_to_fault_detection]
+
+statistics:
+  paired_unit: [seed, rotation, public_sequence_id, horizon]
+  horizon_reports: separate
+  pool_episode_rows_across_horizons: false
+  pooled_headline_graph_effect_across_horizons: forbidden
+  pool_across_provider_model_or_runtime_profiles: false
+  treat_nested_horizons_as_independent_samples: false
+  horizon_interaction: >-
+    (Graph-full minus Reactive at horizon 12) minus the matched difference at
+    horizon 3, preserving within-sequence pairing.
+  exact_paired_permutation: all_256_sign_assignments_for_8_rotation_0_bearings
+  paired_cluster_bootstrap_iterations: 10000
+  paired_cluster_bootstrap_seed: 20260813
+  confidence_level: 0.95
+  report_regardless_of_direction: true
+
+gates:
+  runtime_integration:
+    required_source_implementation_flags:
+      - event_emitter_implemented
+      - dynamic_runtime_profile_implemented
+      - formal_runner_implemented
+    requirements:
+      - runner_exposes_every_required_flag
+      - runner_contains_every_required_generic_base_identity
+      - emitted_openai_commands_explicitly_freeze_zero_price
+      - missing_capability_suppresses_all_executable_commands
+  provider_free_mechanics:
+    gate: paper/experiments/runs/mechanics/graph_dynamic_ablation_v2/mock_acceptance/gate.json
+    required_accepted: true
+  formal_launch:
+    - runtime_integration_gate_passed
+    - provider_free_generic_base_mechanics_gate_passed
+    - same_profile_two_turn_tool_probe_passed
+    - one_provider_bound_runner_only
+  cohort_acceptance:
+    - all_144_scheduled_units_have_one_effective_terminal_attempt
+    - identities_match_p2_graph_vs_generic_llm_v1
+    - failures_remain_in_denominators
+    - no_cross_horizon_profile_or_v1_pooling
+
+scheduler_cli:
+  command: python scripts/schedule_graph_horizon_scaling.py --dry-run
+  provider_calls_allowed: false
+  runner_invocation_allowed: false
+  environment_value_reads_allowed: false
+  filesystem_writes_allowed_in_dry_run: false
+  legacy_v1_selection: rejected

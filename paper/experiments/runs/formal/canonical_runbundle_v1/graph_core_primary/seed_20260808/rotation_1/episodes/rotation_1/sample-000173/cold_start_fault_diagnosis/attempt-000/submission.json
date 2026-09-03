@@ -1,0 +1,7 @@
+{
+  "failure_kind": "agent_decision_error",
+  "message": null,
+  "payload": null,
+  "status": "missing",
+  "terminal_status": "failed"
+}

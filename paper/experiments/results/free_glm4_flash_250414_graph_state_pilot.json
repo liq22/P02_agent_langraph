@@ -1,0 +1,31 @@
+{
+  "cold_start_fault_diagnosis": {
+    "all_transitions_valid_rate": 1.0,
+    "episodes": 4,
+    "mean_recover_visits": 3.25,
+    "mean_transition_validity": 1.0,
+    "recover_episode_rate": 1.0,
+    "state_coverage": [
+      "Analyze",
+      "Check",
+      "Hypothesize",
+      "Inspect",
+      "Recover"
+    ]
+  },
+  "unsupervised_anomaly_detection": {
+    "all_transitions_valid_rate": 1.0,
+    "episodes": 4,
+    "mean_recover_visits": 3.0,
+    "mean_transition_validity": 1.0,
+    "recover_episode_rate": 1.0,
+    "state_coverage": [
+      "Analyze",
+      "Check",
+      "Hypothesize",
+      "Inspect",
+      "Recover",
+      "Submit"
+    ]
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "cold_start_fault_diagnosis": {
+    "bearings": 1,
+    "episodes": 1,
+    "rollout": {
+      "artifact_lineage_completeness": 0.0,
+      "budget_exhaustion": 1.0,
+      "completion": 0.0,
+      "estimated_model_cost_usd": 0.0,
+      "failure_count": 2.0,
+      "input_tokens": 34917.0,
+      "llm_turns": 13.0,
+      "model_calls": 2.0,
+      "operator_calls": 4.0,
+      "output_tokens": 743.0,
+      "p95_step_latency_seconds": 4.139887323790753,
+      "recovery_success": 0.0,
+      "repeated_action_ratio": 0.08333333333333333,
+      "repeated_error_rate": 0.0,
+      "steps": 12.0,
+      "steps_to_recovery": 1.0,
+      "submission_grounding": 0.0,
+      "supporting_reference_validity": 0.0,
+      "valid_tool_call_rate": 0.8333333333333334,
+      "wall_clock_seconds": 18.706360793003114,
+      "window_reads": 1.0
+    },
+    "task": {
+      "accuracy": 0.0,
+      "calibration_error": 0.0,
+      "macro_f1": 0.0
+    }
+  },
+  "graph": {
+    "recover_state_count": 5,
+    "state_coverage": [
+      "Analyze",
+      "Check",
+      "Hypothesize",
+      "Inspect",
+      "Recover"
+    ],
+    "transition_validity": 0.9128787878787878
+  },
+  "unsupervised_anomaly_detection": {
+    "bearings": 1,
+    "episodes": 1,
+    "rollout": {
+      "artifact_lineage_completeness": 0.0,
+      "budget_exhaustion": 1.0,
+      "completion": 0.0,
+      "estimated_model_cost_usd": 0.0,
+      "failure_count": 3.0,
+      "input_tokens": 36941.0,
+      "llm_turns": 14.0,
+      "model_calls": 2.0,
+      "operator_calls": 5.0,
+      "output_tokens": 781.0,
+      "p95_step_latency_seconds": 4.418398859206354,
+      "recovery_success": 0.0,
+      "repeated_action_ratio": 0.15384615384615385,
+      "repeated_error_rate": 0.0,
+      "steps": 13.0,
+      "steps_to_recovery": 1.0,
+      "submission_grounding": 0.0,
+      "supporting_reference_validity": 0.0,
+      "valid_tool_call_rate": 0.7692307692307693,
+      "wall_clock_seconds": 21.9082934120961,
+      "window_reads": 1.0
+    },
+    "task": {
+      "auroc": 0.0,
+      "average_precision": 0.0,
+      "average_precision_lift": 0.0,
+      "completion_adjusted_average_precision": 0.0,
+      "false_alarm_rate": 0.0,
+      "prevalence": 0.0,
+      "true_positive_rate": 0.0
+    }
+  }
+}
