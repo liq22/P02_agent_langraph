@@ -1,10 +1,13 @@
 # Graph cross-dataset replay protocol v3
 
 **Status:** Ottawa source, runtime, dry schedule, accepted-only analyzer, and
-accepted-result manuscript consumer are provider-free ready; formal inference
-has not run and the 2026-09-02 same-day North retry is blocked after HTTP 429.
+accepted-result manuscript consumer are provider-free ready. Formal inference
+awaits explicit provider-destination and payload-egress authorization; accepted
+analysis and publication then require the complete 72-bundle cohort.
 
 **Frozen:** 2026-09-02
+
+**Status updated:** 2026-09-04
 
 **Machine-readable authority:** `graph_cross_dataset_replay_protocol_v3.yaml`
 
@@ -51,8 +54,8 @@ The scheduler audits source protocols, runner flags/source, analyzer source,
 and emits 18 command arrays. It reads no raw signals, private targets,
 credentials, or environment values; invokes no runner; performs no provider
 call; and writes no output. The current manifest reports
-`provider_free_preflight_ready=true` while retaining the same-day HTTP-429
-retry blocker.
+`provider_free_preflight_ready=true` while keeping provider execution closed
+until its destination and outbound payload are explicitly authorized.
 
 ## Accepted-only analysis
 
@@ -62,7 +65,9 @@ the registered DataPort. It rejects partial cohorts, unresolved provider
 errors, identity/world drift, non-exact episode keys, or any denominator other
 than 36 episodes and 108 windows per arm. Only then does it recompute the
 target-adverse metrics and the 2,000-resample physical-bearing-clustered
-Graph-minus-Reactive bootstrap.
+Graph-minus-Reactive bootstrap. Result schema
+`p2_e8_ottawa_generic_base_result_v2` records the canonical `formal_run_root`;
+the analyzer requires it to equal `current_schedule.output_root/run_<stamp>`.
 
 ## Accepted-result manuscript consumer
 
@@ -80,12 +85,17 @@ environment, or credentials. Before any write, it rechecks the embedded 9-run
 and 36-episode acceptance per arm, 36 exact pairs, 108 assigned windows per
 arm, retained failures, target-adverse accounting, all five displayed
 Graph-minus-Reactive task deltas, and the 2,000-resample bootstrap metadata. It
-then updates `paper/assets/tables/p2_e8_ottawa_results.md`,
-`paper/assets/figures/p2_e8_ottawa_primary.svg`, and the unique
-`P2_E8_OTTAWA` manuscript marker as one write group with exception rollback.
-The 9/9 focused checks
-include direct analyzer-to-consumer integration and rejected, drifted, marker,
-and no-write cases.
+also binds the result's canonical run root to the scheduled base and stamp. The
+protocol fixes the accepted result, table, figure, and manuscript paths. The
+consumer requires lexical and resolved source containment, rejects authority
+or output aliases and publication under raw/result roots, and accepts an
+existing output only as an ordinary single-link regular file. Its production
+CLI accepts only this protocol, and every resolved output remains inside the
+repository. It fully stages and fsyncs the table, figure, and unique
+`P2_E8_OTTAWA` manuscript update before grouped replacement, preserving modes
+and restoring replaced files in reverse order on failure. The 18/18 focused
+checks cover analyzer integration, provenance, fail-closed validation, path
+identity and containment, staging cleanup, rollback, and idempotence.
 
 No accepted P2-E8 cohort or result exists, so the dedicated table and figure
 remain absent and the manuscript marker stays Pending. A dry schedule, runtime

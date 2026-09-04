@@ -16,11 +16,14 @@ import json
 import math
 import os
 import re
+import stat
 import sys
 import tempfile
 from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any
+
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -63,6 +66,9 @@ EXPECTED_EPISODES = 72
 EXPECTED_PAIRS = 36
 EXPECTED_WINDOWS_PER_ARM = 108
 EXPECTED_BEARINGS = 12
+PUBLICATION_WRITE_CONTRACT = (
+    "fully_staged_mode_preserving_grouped_replace_with_reverse_rollback"
+)
 
 DISPLAY_METRICS = (
     ("task.average_precision", "Target-adverse Average Precision", "Task primary"),
@@ -181,10 +187,8 @@ def _validate_consumer_registration(protocol: Mapping[str, Any]) -> None:
     )
     expected = {
         "entrypoint": "scripts/render_graph_cross_dataset_manuscript.py",
-        "accepted_result": (
-            "paper/experiments/results/graph_cross_dataset_replay_v3/"
-            "paper2-cross-dataset-ottawa-generic-v1/formal_result.json"
-        ),
+        "accepted_result": analysis_gate.get("formal_result"),
+        "acceptance_source": "embedded_in_accepted_result",
         "complete_episode_bundles_required": EXPECTED_EPISODES,
         "matched_pairs_required": EXPECTED_PAIRS,
         "assigned_windows_per_arm_required": EXPECTED_WINDOWS_PER_ARM,
@@ -192,7 +196,9 @@ def _validate_consumer_registration(protocol: Mapping[str, Any]) -> None:
         "provider_calls": False,
         "displayed_paired_arithmetic_recomputed": True,
         "bootstrap_metadata_rechecked": True,
-        "write_contract": "grouped_replace_with_exception_rollback",
+        "existing_output_contract": "absent_or_ordinary_single_link_regular_file",
+        "production_cli_protocol": "graph_cross_dataset_replay_protocol_v3.yaml",
+        "write_contract": PUBLICATION_WRITE_CONTRACT,
         "focused_tests": "tests/test_render_graph_cross_dataset_manuscript.py",
     }
     if consumer != expected:
@@ -439,6 +445,7 @@ def validate_cross_dataset_inputs(
                 "dataset_protocol_id",
                 "experiment_profile_id",
                 "formal_run_stamp",
+                "formal_run_root",
                 "provider_calls_made_by_analyzer",
                 "private_assignment_validation",
                 "acceptance",
@@ -464,6 +471,23 @@ def validate_cross_dataset_inputs(
         stamp = result.get("formal_run_stamp")
         if not isinstance(stamp, str) or FORMAL_STAMP.fullmatch(stamp) is None:
             raise CrossDatasetResultsPending("P2-E8 formal run stamp drifted")
+        current = _mapping(protocol.get("current_schedule"), "current_schedule")
+        expected_run_root = (
+            _declared_protocol_path(
+                current.get("output_root"), "current_schedule.output_root"
+            )
+            / f"run_{stamp}"
+        ).resolve(strict=False)
+        run_root = result.get("formal_run_root")
+        if (
+            not isinstance(run_root, str)
+            or not run_root
+            or run_root != str(Path(run_root).resolve(strict=False))
+            or Path(run_root) != expected_run_root
+        ):
+            raise CrossDatasetResultsPending(
+                "P2-E8 formal_run_root differs from current_schedule.output_root and stamp"
+            )
         if type(result.get("provider_calls_made_by_analyzer")) is not int or result["provider_calls_made_by_analyzer"] != 0:
             raise CrossDatasetResultsPending("P2-E8 analyzer provider-call boundary drifted")
         _validate_acceptance(result["acceptance"])
@@ -635,7 +659,7 @@ def _replace_block(source: str, content: str) -> str:
 
 
 def render_manuscript_block(
-    rows: Sequence[Mapping[str, Any]], *, figure_name: str
+    rows: Sequence[Mapping[str, Any]], *, figure_reference: str
 ) -> str:
     table_body = render_table(rows).split("\n", 2)[2]
     return "\n".join(
@@ -644,47 +668,339 @@ def render_manuscript_block(
             "",
             table_body.rstrip(),
             "",
-            f"![Accepted P2-E8 Ottawa task contrasts](../assets/figures/{figure_name})",
+            f"![Accepted P2-E8 Ottawa task contrasts]({figure_reference})",
         ]
     ) + "\n"
 
 
-def _restore(path: Path, original: bytes | None) -> None:
-    if original is None:
-        if path.exists():
-            path.unlink()
+_replace_path = os.replace
+_NEW_FILE_MODE = 0o644
+
+
+def _lexical_path(path: Path) -> Path:
+    """Normalize a path without following its final symlink identity."""
+
+    return Path(os.path.abspath(os.fspath(path)))
+
+
+def _declared_protocol_path(value: Any, label: str) -> Path:
+    if not isinstance(value, str) or not value:
+        raise CrossDatasetResultsPending(f"P2-E8 protocol lacks {label}")
+    path = Path(value)
+    return _lexical_path(path if path.is_absolute() else ROOT / path)
+
+
+def _paths_alias(left: Path, right: Path) -> bool:
+    if _lexical_path(left) == _lexical_path(right):
+        return True
+    if left.exists() and right.exists():
+        try:
+            return os.path.samefile(left, right)
+        except OSError:
+            return False
+    return False
+
+
+def _protocol_source_paths(protocol_path: Path) -> list[Path]:
+    sources: list[Path] = []
+    current = _lexical_path(protocol_path)
+    seen: set[Path] = set()
+    while True:
+        if current in seen:
+            raise CrossDatasetResultsPending(
+                "P2-E8 protocol authority chain contains a cycle"
+            )
+        seen.add(current)
+        _require_ordinary_single_link(
+            current,
+            label="P2-E8 protocol authority source",
+            required=True,
+        )
+        sources.append(current)
+        try:
+            payload = yaml.safe_load(current.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, yaml.YAMLError) as exc:
+            raise CrossDatasetResultsPending(
+                f"cannot inspect P2-E8 protocol authority chain: {current}"
+            ) from exc
+        if not isinstance(payload, Mapping):
+            return sources
+        extension = payload.get("extends_protocol")
+        if extension is None:
+            return sources
+        if (
+            not isinstance(extension, str)
+            or not extension
+            or Path(extension).name != extension
+        ):
+            raise CrossDatasetResultsPending(
+                "P2-E8 protocol extension must name one sibling authority"
+            )
+        current = _lexical_path(current.parent / extension)
+
+
+def _path_is_within(path: Path, root: Path) -> bool:
+    variants: list[tuple[Path, Path]] = [
+        (_lexical_path(path), _lexical_path(root))
+    ]
+    try:
+        variants.append((path.resolve(strict=False), root.resolve(strict=False)))
+    except (OSError, RuntimeError) as exc:
+        raise CrossDatasetResultsPending(
+            f"cannot resolve publication path boundary for {path}"
+        ) from exc
+    for candidate, boundary in variants:
+        try:
+            candidate.relative_to(boundary)
+        except ValueError:
+            continue
+        return True
+    return False
+
+
+def _path_is_strictly_within(path: Path, root: Path) -> bool:
+    """Require both lexical and resolved containment for trusted sources."""
+
+    try:
+        lexical = _lexical_path(path).relative_to(_lexical_path(root))
+        resolved = path.resolve(strict=False).relative_to(root.resolve(strict=False))
+    except ValueError:
+        return False
+    except (OSError, RuntimeError) as exc:
+        raise CrossDatasetResultsPending(
+            f"cannot resolve trusted path boundary for {path}"
+        ) from exc
+    return lexical is not None and resolved is not None
+
+
+def _require_ordinary_single_link(path: Path, *, label: str, required: bool) -> None:
+    """Reject file identities that byte backups cannot faithfully restore."""
+
+    try:
+        metadata = path.lstat()
+    except FileNotFoundError:
+        if required:
+            raise CrossDatasetResultsPending(f"missing {label}: {path}")
         return
-    path.write_bytes(original)
+    except OSError as exc:
+        raise CrossDatasetResultsPending(f"cannot inspect {label}: {path}") from exc
+    if not stat.S_ISREG(metadata.st_mode) or metadata.st_nlink != 1:
+        raise CrossDatasetResultsPending(
+            f"{label} must be an ordinary single-link regular file: {path}"
+        )
+
+
+def _require_publication_boundary(
+    *,
+    protocol_path: Path,
+    sources: Sequence[Path],
+    targets: Sequence[Path],
+    protected_roots: Sequence[Path],
+) -> None:
+    lexical_paths = [
+        _lexical_path(path)
+        for path in [protocol_path, *sources, *targets, *protected_roots]
+    ]
+    try:
+        boundary = Path(os.path.commonpath([os.fspath(path) for path in lexical_paths]))
+    except ValueError as exc:
+        raise CrossDatasetResultsPending(
+            "publication paths do not share one authority root"
+        ) from exc
+    for path in [*targets, *protected_roots]:
+        if not _path_is_strictly_within(path, boundary):
+            raise CrossDatasetResultsPending(
+                f"publication path resolves outside its authority root: {path}"
+            )
+
+
+def _require_production_cli_paths(
+    *,
+    protocol_path: Path,
+    sources: Sequence[Path],
+    targets: Sequence[Path],
+) -> None:
+    if _lexical_path(protocol_path) != _lexical_path(DEFAULT_PROTOCOL):
+        raise CrossDatasetResultsPending(
+            "production CLI requires the registered P2-E8 protocol"
+        )
+    for source in [protocol_path, *sources]:
+        if not _path_is_strictly_within(source, ROOT):
+            raise CrossDatasetResultsPending(
+                f"production publication input resolves outside the repository: {source}"
+            )
+    for target in targets:
+        if not _path_is_strictly_within(target, ROOT):
+            raise CrossDatasetResultsPending(
+                f"production publication output resolves outside the repository: {target}"
+            )
+
+
+def _require_declared_publication_paths(
+    *,
+    protocol: Mapping[str, Any],
+    result_path: Path,
+    table_path: Path,
+    figure_path: Path,
+    manuscript_path: Path,
+) -> tuple[list[Path], list[Path]]:
+    analysis = _mapping(protocol.get("analysis_gate"), "analysis_gate")
+    consumer = _mapping(
+        analysis.get("accepted_manuscript_consumer"),
+        "analysis_gate.accepted_manuscript_consumer",
+    )
+    result_declaration = _declared_protocol_path(
+        analysis.get("formal_result"), "analysis_gate.formal_result"
+    )
+    if result_declaration != _declared_protocol_path(
+        consumer.get("accepted_result"),
+        "analysis_gate.accepted_manuscript_consumer.accepted_result",
+    ):
+        raise CrossDatasetResultsPending(
+            "P2-E8 accepted-result declarations disagree"
+        )
+    supplied = {
+        "analysis_gate.formal_result": result_path,
+        "analysis_gate.accepted_manuscript_table": table_path,
+        "analysis_gate.accepted_manuscript_figure": figure_path,
+        "analysis_gate.accepted_manuscript": manuscript_path,
+    }
+    for label, path in supplied.items():
+        key = label.rsplit(".", 1)[1]
+        if _lexical_path(path) != _declared_protocol_path(analysis.get(key), label):
+            raise CrossDatasetResultsPending(
+                f"publication path differs from P2-E8 protocol {label}"
+            )
+    current = _mapping(protocol.get("current_schedule"), "current_schedule")
+    raw_root = _declared_protocol_path(
+        current.get("output_root"), "current_schedule.output_root"
+    )
+    results_root = _declared_protocol_path(
+        analysis.get("results_root"), "analysis_gate.results_root"
+    )
+    if not _path_is_strictly_within(result_declaration, results_root):
+        raise CrossDatasetResultsPending(
+            "P2-E8 formal_result must be inside analysis_gate.results_root"
+        )
+    protected_roots = [raw_root, results_root]
+    return [table_path, figure_path, manuscript_path], protected_roots
+
+
+def _require_safe_publication_paths(
+    targets: Sequence[Path],
+    *,
+    sources: Sequence[Path],
+    protected_roots: Sequence[Path],
+) -> None:
+    for index, target in enumerate(targets):
+        for other in targets[index + 1 :]:
+            if _paths_alias(target, other):
+                raise CrossDatasetResultsPending(
+                    f"publication outputs must be distinct: {target} aliases {other}"
+                )
+        for source in sources:
+            if _paths_alias(target, source):
+                raise CrossDatasetResultsPending(
+                    f"publication output must not overwrite an input authority: {target}"
+                )
+    for source in sources:
+        _require_ordinary_single_link(
+            source, label="publication input authority", required=True
+        )
+    for target in targets:
+        for root in protected_roots:
+            if _path_is_within(target, root):
+                raise CrossDatasetResultsPending(
+                    f"publication output must not be inside an input root: {target}"
+                )
+        _require_ordinary_single_link(
+            target, label="existing publication output", required=False
+        )
+
+
+def _manuscript_reference(target: Path, manuscript: Path) -> str:
+    return Path(
+        os.path.relpath(_lexical_path(target), start=_lexical_path(manuscript).parent)
+    ).as_posix()
+
+
+def _stage_bytes(path: Path, payload: bytes, mode: int) -> Path:
+    handle = tempfile.NamedTemporaryFile(
+        mode="wb",
+        dir=path.parent,
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+        delete=False,
+    )
+    temporary_path = Path(handle.name)
+    try:
+        handle.write(payload)
+        handle.flush()
+        os.fchmod(handle.fileno(), mode)
+        os.fsync(handle.fileno())
+    except Exception:
+        handle.close()
+        if temporary_path.exists():
+            temporary_path.unlink()
+        raise
+    handle.close()
+    return temporary_path
 
 
 def _write_group_with_exception_rollback(contents: Mapping[Path, str]) -> None:
-    originals = {path: path.read_bytes() if path.exists() else None for path in contents}
-    temporary: dict[Path, Path] = {}
+    for path in contents:
+        if not path.parent.is_dir():
+            raise CrossDatasetResultsPending(
+                f"publication parent directory does not exist: {path.parent}"
+            )
+    originals: dict[Path, tuple[bytes | None, int]] = {}
+    for path in contents:
+        _require_ordinary_single_link(
+            path, label="existing publication output", required=False
+        )
+        if path.exists():
+            originals[path] = (
+                path.read_bytes(),
+                stat.S_IMODE(path.stat().st_mode),
+            )
+        else:
+            originals[path] = (None, _NEW_FILE_MODE)
+
+    staged: dict[Path, Path] = {}
+    backups: dict[Path, Path] = {}
     replaced: list[Path] = []
     try:
         for path, content in contents.items():
-            path.parent.mkdir(parents=True, exist_ok=True)
-            with tempfile.NamedTemporaryFile(
-                mode="w",
-                encoding="utf-8",
-                dir=path.parent,
-                prefix=f".{path.name}.",
-                suffix=".tmp",
-                delete=False,
-            ) as handle:
-                handle.write(content)
-                handle.flush()
-                os.fsync(handle.fileno())
-                temporary[path] = Path(handle.name)
-        for path, temporary_path in temporary.items():
-            os.replace(temporary_path, path)
+            staged[path] = _stage_bytes(
+                path,
+                content.encode("utf-8"),
+                originals[path][1],
+            )
+        for path, (payload, mode) in originals.items():
+            if payload is not None:
+                backups[path] = _stage_bytes(path, payload, mode)
+        for path in contents:
+            _replace_path(staged[path], path)
             replaced.append(path)
-    except Exception:
+    except Exception as exc:
+        rollback_errors: list[Exception] = []
         for path in reversed(replaced):
-            _restore(path, originals[path])
+            try:
+                backup = backups.get(path)
+                if backup is None:
+                    if path.exists():
+                        path.unlink()
+                else:
+                    _replace_path(backup, path)
+            except Exception as rollback_exc:  # pragma: no cover - catastrophic I/O
+                rollback_errors.append(rollback_exc)
+        if rollback_errors:
+            raise RuntimeError(
+                "P2-E8 publication replacement failed and rollback was incomplete"
+            ) from exc
         raise
     finally:
-        for temporary_path in temporary.values():
+        for temporary_path in [*staged.values(), *backups.values()]:
             if temporary_path.exists():
                 temporary_path.unlink()
 
@@ -697,10 +1013,30 @@ def write_cross_dataset_manuscript(
     figure_path: Path,
     manuscript_path: Path,
 ) -> dict[str, Any]:
+    protocol_sources = _protocol_source_paths(protocol_path)
     try:
         protocol = load_protocol(protocol_path)
     except ContractError as exc:
         raise CrossDatasetResultsPending("cannot load P2-E8 protocol") from exc
+    targets, protected_roots = _require_declared_publication_paths(
+        protocol=protocol,
+        result_path=result_path,
+        table_path=table_path,
+        figure_path=figure_path,
+        manuscript_path=manuscript_path,
+    )
+    sources = [*protocol_sources, result_path]
+    _require_publication_boundary(
+        protocol_path=protocol_path,
+        sources=sources,
+        targets=targets,
+        protected_roots=protected_roots,
+    )
+    _require_safe_publication_paths(
+        targets,
+        sources=sources,
+        protected_roots=protected_roots,
+    )
     result = _load_json(result_path, "P2-E8 result")
     rows = validate_cross_dataset_inputs(protocol=protocol, result=result)
     if not manuscript_path.is_file():
@@ -710,7 +1046,10 @@ def write_cross_dataset_manuscript(
     figure = render_svg(rows)
     manuscript = _replace_block(
         source,
-        render_manuscript_block(rows, figure_name=figure_path.name),
+        render_manuscript_block(
+            rows,
+            figure_reference=_manuscript_reference(figure_path, manuscript_path),
+        ),
     )
     _write_group_with_exception_rollback(
         {table_path: table, figure_path: figure, manuscript_path: manuscript}
@@ -740,6 +1079,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--figure", type=Path, default=DEFAULT_FIGURE)
     parser.add_argument("--manuscript", type=Path, default=DEFAULT_MANUSCRIPT)
     args = parser.parse_args(argv)
+    _require_production_cli_paths(
+        protocol_path=args.protocol,
+        sources=[],
+        targets=[],
+    )
+    production_sources = [*_protocol_source_paths(args.protocol), args.result]
+    _require_production_cli_paths(
+        protocol_path=args.protocol,
+        sources=production_sources,
+        targets=[args.table, args.figure, args.manuscript],
+    )
     summary = write_cross_dataset_manuscript(
         protocol_path=args.protocol,
         result_path=args.result,

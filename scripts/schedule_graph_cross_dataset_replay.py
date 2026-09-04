@@ -31,8 +31,16 @@ SCHEDULE_SCHEMA = "graph_cross_dataset_replay_schedule_v3"
 PROTOCOL_ID = "phm_graph_cross_dataset_replay_ottawa_generic_base_p2e8_v3"
 DATASET_ID = "university-of-ottawa-uored-vafcls-v5"
 DATASET_PROTOCOL_ID = "ottawa_uored_v5_ordered_state_replay_v1"
+DATASET_PROTOCOL_PATH = (
+    "../p01-phm-agent-benchmark/paper/experiments/datasets/"
+    "ottawa_uored_v5/phase1_monitoring_protocol_v1.yaml"
+)
 PROFILE_ID = "paper2-cross-dataset-ottawa-generic-v1"
 RUNTIME_CONTRACT = "phase1_opaque_sample_vibration_feature_schema_v6"
+FORMAL_OUTPUT_ROOT = (
+    "paper/experiments/runs/formal/graph_cross_dataset_replay_v3/"
+    "paper2-cross-dataset-ottawa-generic-v1"
+)
 SAFE_RUN_STAMP = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 _MISSING = object()
 
@@ -157,6 +165,12 @@ def validate_protocol(protocol: Mapping[str, Any]) -> None:
     _require(schema == PROTOCOL_SCHEMA, f"schema must be {PROTOCOL_SCHEMA}")
     _require(protocol.get("protocol_id") == PROTOCOL_ID, "P2-E8 protocol identity drifted")
     _require(
+        protocol.get("status")
+        == "preregistered_provider_free_ready_provider_authorization_and_complete_cohort_pending",
+        "P2-E8 current status drifted",
+    )
+    _require(protocol.get("status_updated") == "2026-09-04", "P2-E8 status date drifted")
+    _require(
         protocol.get("extends_protocol") == "graph_cross_dataset_replay_protocol_v2.yaml",
         "v3 must extend the frozen v2 record",
     )
@@ -234,6 +248,10 @@ def validate_protocol(protocol: Mapping[str, Any]) -> None:
     _require(len(candidates) == 1, "v3 must select exactly one Ottawa candidate")
     candidate = _mapping(candidates[0], "candidate")
     _require(candidate.get("expected_dataset_id") == DATASET_ID, "Ottawa candidate identity drifted")
+    _require(
+        candidate.get("protocol_path") == DATASET_PROTOCOL_PATH,
+        "Ottawa candidate protocol path drifted",
+    )
     _require(candidate.get("external_to_reference") is True, "Ottawa must be external to Paderborn")
     _require(bool(_list(candidate.get("required_all"), "candidate.required_all")), "Ottawa source checks are required")
     _require(bool(_list(candidate.get("outcome_target_any"), "candidate.outcome_target_any")), "Ottawa outcome-target check is required")
@@ -242,6 +260,7 @@ def validate_protocol(protocol: Mapping[str, Any]) -> None:
     expected_registration = {
         "dataset_id": DATASET_ID,
         "dataset_protocol_id": DATASET_PROTOCOL_ID,
+        "protocol_path": DATASET_PROTOCOL_PATH,
         "data_backend": "csv_directory",
         "task": "online_replay_monitoring",
         "rotations": ["rotation_0", "rotation_1", "rotation_2"],
@@ -294,6 +313,10 @@ def validate_protocol(protocol: Mapping[str, Any]) -> None:
     _require(current.get("expected_episode_bundles") == bundles == 72, "episode-bundle count drifted")
     _require(current.get("expected_matched_episode_pairs") == pairs == 36, "matched-pair count drifted")
     _require(current.get("expected_assigned_windows_across_arms") == windows == 216, "assigned-window count drifted")
+    _require(
+        current.get("output_root") == FORMAL_OUTPUT_ROOT,
+        "current_schedule.output_root drifted",
+    )
     _require(current.get("formal_launch_allowed") is False, "v3 cannot claim formal launch before analysis")
     _require(_list(current.get("units"), "current_schedule.units") == [], "protocol records no executed units")
 
@@ -312,13 +335,28 @@ def validate_protocol(protocol: Mapping[str, Any]) -> None:
         analysis.get("accepted_only_cross_dataset_analyzer_implemented") is True,
         "accepted-only analyzer must be implemented",
     )
+    _require(
+        analysis.get("formal_result_state")
+        == "complete_72_bundle_cohort_pending",
+        "P2-E8 formal-result state drifted",
+    )
+    _require(
+        analysis.get("result_schema")
+        == "p2_e8_ottawa_generic_base_result_v2",
+        "P2-E8 result schema drifted",
+    )
     _require(bool(_list(analysis.get("required_before_formal_launch"), "analysis_gate.required_before_formal_launch")), "analysis requirements are required")
     _require(analysis.get("current_blocker") is None, "implemented analyzer cannot retain an analysis blocker")
     activation = _mapping(protocol.get("activation_gate"), "activation_gate")
     _require(
         _list(activation.get("current_blockers"), "activation_gate.current_blockers")
-        == ["same_day_north_retry_forbidden_after_http_429_20260902"],
-        "the current no-same-day-retry blocker drifted",
+        == ["explicit_provider_destination_and_payload_egress_authorization_required"],
+        "the current provider-authorization blocker drifted",
+    )
+    _require(
+        activation.get("post_authorization_requirement")
+        == "complete_72_bundle_cohort_before_analysis_or_publication",
+        "the post-authorization complete-cohort gate drifted",
     )
 
 

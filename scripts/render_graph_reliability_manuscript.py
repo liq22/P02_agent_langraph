@@ -14,6 +14,7 @@ import html
 import json
 import math
 import os
+import stat
 import statistics
 import sys
 import tempfile
@@ -60,6 +61,9 @@ EXPECTED_EPISODES_PER_ARM = 80
 EXPECTED_EPISODES = 160
 EXPECTED_PAIRS = 80
 EXPECTED_WINDOWS_PER_ARM = 240
+PUBLICATION_WRITE_CONTRACT = (
+    "fully_staged_mode_preserving_grouped_replace_with_reverse_rollback"
+)
 
 SELECTED_METRICS = (
     "rollout.repeated_action_ratio",
@@ -890,11 +894,18 @@ def validate_reliability_inputs(
             protocol.get("execution", {}).get("accepted_manuscript_consumer"),
             "P2-E9 accepted manuscript consumer",
         )
-        if (
-            consumer.get("write_contract")
-            != "grouped_replace_with_exception_rollback"
-        ):
+        if consumer.get("write_contract") != PUBLICATION_WRITE_CONTRACT:
             raise ReliabilityResultsPending("P2-E9 manuscript write contract drifted")
+        if consumer.get("valid_bootstrap_replicates_reported") is not True:
+            raise ReliabilityResultsPending("P2-E9 bootstrap reporting contract drifted")
+        if consumer.get("existing_output_contract") != (
+            "absent_or_ordinary_single_link_regular_file"
+        ):
+            raise ReliabilityResultsPending("P2-E9 output identity contract drifted")
+        if consumer.get("production_cli_protocol") != (
+            "graph_reliability_protocol_v2.yaml"
+        ):
+            raise ReliabilityResultsPending("P2-E9 CLI protocol contract drifted")
         _exact_keys(
             result,
             {
@@ -934,6 +945,16 @@ def validate_reliability_inputs(
         output_root = result.get("output_root")
         if not isinstance(output_root, str) or not output_root or not Path(output_root).is_absolute():
             raise ReliabilityResultsPending("P2-E9 output_root must be absolute")
+        declared_formal_root = _declared_protocol_path(
+            protocol.get("execution", {}).get("formal_root"),
+            "execution.formal_root",
+        ).resolve(strict=False)
+        if output_root != str(Path(output_root).resolve(strict=False)) or Path(
+            output_root
+        ) != declared_formal_root:
+            raise ReliabilityResultsPending(
+                "P2-E9 output_root differs from the protocol formal_root"
+            )
         _validate_acceptance(acceptance, protocol=protocol, output_root=output_root)
         if result.get("canonical_inclusion") != acceptance.get("canonical_inclusion"):
             raise ReliabilityResultsPending("P2-E9 result and acceptance inclusion differ")
@@ -1004,6 +1025,8 @@ def validate_reliability_inputs(
             "graph": graph["mean_across_registered_repeats"],
             "delta": delta["mean_across_registered_repeats"],
             "interval": delta["crossed_repeat_sequence_bootstrap_95ci"],
+            "valid_replicates": delta["bootstrap_valid_replicates"],
+            "bootstrap_replicates": delta["bootstrap_replicate_denominator"],
             "variance": delta["between_repeat_variance"],
             "defined": f"{delta['defined_repeat_numerator']}/10 repeats",
         }
@@ -1019,6 +1042,12 @@ def validate_reliability_inputs(
             "interval": paired["pass_at_1_delta"][
                 "crossed_repeat_sequence_bootstrap_95ci"
             ],
+            "valid_replicates": paired["pass_at_1_delta"][
+                "bootstrap_valid_replicates"
+            ],
+            "bootstrap_replicates": paired["pass_at_1_delta"][
+                "bootstrap_replicate_denominator"
+            ],
             "variance": paired["pass_at_1_delta"]["between_repeat_variance"],
             "defined": f"{paired['pass_at_1_delta']['defined_pair_numerator']}/80 pairs",
         }
@@ -1032,6 +1061,12 @@ def validate_reliability_inputs(
             "delta": paired["pass_all_10_delta"]["estimate"],
             "interval": paired["pass_all_10_delta"][
                 "sequence_cluster_bootstrap_95ci"
+            ],
+            "valid_replicates": paired["pass_all_10_delta"][
+                "bootstrap_valid_replicates"
+            ],
+            "bootstrap_replicates": paired["pass_all_10_delta"][
+                "bootstrap_replicate_denominator"
             ],
             "variance": None,
             "defined": "8/8 sequences",
@@ -1071,6 +1106,8 @@ def _format_effect(row: Mapping[str, Any]) -> str:
     if row["delta"] is None:
         return "N/A [N/A, N/A]"
     interval = row["interval"]
+    if interval is None:
+        return f"{_format_number(row['delta'], signed=True)} [N/A, N/A]"
     if not isinstance(interval, list) or len(interval) != 2:
         raise ReliabilityResultsPending("defined display delta lacks its interval")
     return (
@@ -1084,17 +1121,19 @@ def render_table(rows: Sequence[Mapping[str, Any]]) -> str:
     lines = [
         "# Accepted P2-E9 reliability results",
         "",
-        "| Endpoint | Role | Reactive | Graph | Graph - Reactive [95% bootstrap CI] | Between-repeat variance of delta | Defined population |",
-        "|---|---|---:|---:|---:|---:|---:|",
+        "| Endpoint | Role | Reactive | Graph | Graph - Reactive [95% bootstrap CI] | Valid bootstrap replicates | Between-repeat variance of delta | Defined population |",
+        "|---|---|---:|---:|---:|---:|---:|---:|",
     ]
     for row in rows:
         lines.append(
-            "| {label} | {role} | {reactive} | {graph} | {effect} | {variance} | {defined} |".format(
+            "| {label} | {role} | {reactive} | {graph} | {effect} | {valid}/{total} | {variance} | {defined} |".format(
                 label=row["label"],
                 role=row["role"],
                 reactive=_format_number(row["reactive"]),
                 graph=_format_number(row["graph"]),
                 effect=_format_effect(row),
+                valid=row["valid_replicates"],
+                total=row["bootstrap_replicates"],
                 variance=_format_number(row["variance"]),
                 defined=row["defined"],
             )
@@ -1149,6 +1188,11 @@ def render_svg(rows: Sequence[Mapping[str, Any]]) -> str:
             parts.append(f'<text class="na" x="{left + 8}" y="{y + 5}">N/A</text>')
             continue
         interval = row["interval"]
+        if interval is None:
+            parts.append(
+                f'<circle class="point" cx="{x(float(row["delta"])):.2f}" cy="{y}" r="5.5"/>'
+            )
+            continue
         parts.append(
             f'<line class="ci" x1="{x(float(interval[0])):.2f}" y1="{y}" x2="{x(float(interval[1])):.2f}" y2="{y}"/>'
         )
@@ -1173,7 +1217,7 @@ def _replace_block(source: str, content: str) -> str:
 
 
 def render_manuscript_block(
-    rows: Sequence[Mapping[str, Any]], *, figure_name: str
+    rows: Sequence[Mapping[str, Any]], *, figure_reference: str
 ) -> str:
     table_body = render_table(rows).split("\n", 2)[2]
     return "\n".join(
@@ -1182,49 +1226,284 @@ def render_manuscript_block(
             "",
             table_body.rstrip(),
             "",
-            f"![Accepted P2-E9 bounded reliability contrasts](../assets/figures/{figure_name})",
+            f"![Accepted P2-E9 bounded reliability contrasts]({figure_reference})",
         ]
     ) + "\n"
 
 
-def _restore(path: Path, original: bytes | None) -> None:
-    if original is None:
-        if path.exists():
-            path.unlink()
+_replace_path = os.replace
+_NEW_FILE_MODE = 0o644
+
+
+def _lexical_path(path: Path) -> Path:
+    """Normalize a path without following its final symlink identity."""
+
+    return Path(os.path.abspath(os.fspath(path)))
+
+
+def _declared_protocol_path(value: Any, label: str) -> Path:
+    if not isinstance(value, str) or not value:
+        raise ReliabilityResultsPending(f"P2-E9 protocol lacks {label}")
+    path = Path(value)
+    return _lexical_path(path if path.is_absolute() else ROOT / path)
+
+
+def _paths_alias(left: Path, right: Path) -> bool:
+    if _lexical_path(left) == _lexical_path(right):
+        return True
+    if left.exists() and right.exists():
+        try:
+            return os.path.samefile(left, right)
+        except OSError:
+            return False
+    return False
+
+
+def _path_is_within(path: Path, root: Path) -> bool:
+    variants: list[tuple[Path, Path]] = [
+        (_lexical_path(path), _lexical_path(root))
+    ]
+    try:
+        variants.append((path.resolve(strict=False), root.resolve(strict=False)))
+    except (OSError, RuntimeError) as exc:
+        raise ReliabilityResultsPending(
+            f"cannot resolve publication path boundary for {path}"
+        ) from exc
+    for candidate, boundary in variants:
+        try:
+            candidate.relative_to(boundary)
+        except ValueError:
+            continue
+        return True
+    return False
+
+
+def _path_is_strictly_within(path: Path, root: Path) -> bool:
+    """Require both lexical and resolved containment for trusted sources."""
+
+    try:
+        lexical = _lexical_path(path).relative_to(_lexical_path(root))
+        resolved = path.resolve(strict=False).relative_to(root.resolve(strict=False))
+    except ValueError:
+        return False
+    except (OSError, RuntimeError) as exc:
+        raise ReliabilityResultsPending(
+            f"cannot resolve trusted path boundary for {path}"
+        ) from exc
+    return lexical is not None and resolved is not None
+
+
+def _require_ordinary_single_link(path: Path, *, label: str, required: bool) -> None:
+    """Reject file identities that byte backups cannot faithfully restore."""
+
+    try:
+        metadata = path.lstat()
+    except FileNotFoundError:
+        if required:
+            raise ReliabilityResultsPending(f"missing {label}: {path}")
         return
-    path.write_bytes(original)
+    except OSError as exc:
+        raise ReliabilityResultsPending(f"cannot inspect {label}: {path}") from exc
+    if not stat.S_ISREG(metadata.st_mode) or metadata.st_nlink != 1:
+        raise ReliabilityResultsPending(
+            f"{label} must be an ordinary single-link regular file: {path}"
+        )
+
+
+def _require_publication_boundary(
+    *,
+    protocol_path: Path,
+    sources: Sequence[Path],
+    targets: Sequence[Path],
+    protected_roots: Sequence[Path],
+) -> None:
+    lexical_paths = [
+        _lexical_path(path)
+        for path in [protocol_path, *sources, *targets, *protected_roots]
+    ]
+    try:
+        boundary = Path(os.path.commonpath([os.fspath(path) for path in lexical_paths]))
+    except ValueError as exc:
+        raise ReliabilityResultsPending(
+            "publication paths do not share one authority root"
+        ) from exc
+    for path in [*targets, *protected_roots]:
+        if not _path_is_strictly_within(path, boundary):
+            raise ReliabilityResultsPending(
+                f"publication path resolves outside its authority root: {path}"
+            )
+
+
+def _require_production_cli_paths(
+    *, protocol_path: Path, targets: Sequence[Path]
+) -> None:
+    if _lexical_path(protocol_path) != _lexical_path(DEFAULT_PROTOCOL):
+        raise ReliabilityResultsPending(
+            "production CLI requires the registered P2-E9 protocol"
+        )
+    for target in targets:
+        if not _path_is_strictly_within(target, ROOT):
+            raise ReliabilityResultsPending(
+                f"production publication output resolves outside the repository: {target}"
+            )
+
+
+def _require_declared_publication_paths(
+    *,
+    protocol: Mapping[str, Any],
+    result_path: Path,
+    acceptance_path: Path,
+    table_path: Path,
+    figure_path: Path,
+    manuscript_path: Path,
+) -> tuple[list[Path], list[Path]]:
+    execution = _mapping(protocol.get("execution"), "execution")
+    supplied = {
+        "execution.formal_result": result_path,
+        "execution.formal_acceptance": acceptance_path,
+        "execution.accepted_manuscript_table": table_path,
+        "execution.accepted_manuscript_figure": figure_path,
+        "execution.accepted_manuscript": manuscript_path,
+    }
+    for label, path in supplied.items():
+        key = label.rsplit(".", 1)[1]
+        if _lexical_path(path) != _declared_protocol_path(execution.get(key), label):
+            raise ReliabilityResultsPending(
+                f"publication path differs from P2-E9 protocol {label}"
+            )
+    formal_root = _declared_protocol_path(
+        execution.get("formal_parent_root"), "execution.formal_parent_root"
+    )
+    results_root = _declared_protocol_path(
+        execution.get("results_root"), "execution.results_root"
+    )
+    for key in ("formal_result", "formal_acceptance"):
+        if not _path_is_strictly_within(
+            _declared_protocol_path(execution.get(key), f"execution.{key}"),
+            results_root,
+        ):
+            raise ReliabilityResultsPending(
+                f"P2-E9 {key} must be inside execution.results_root"
+            )
+    protected_roots = [formal_root, results_root]
+    return [table_path, figure_path, manuscript_path], protected_roots
+
+
+def _require_safe_publication_paths(
+    targets: Sequence[Path],
+    *,
+    sources: Sequence[Path],
+    protected_roots: Sequence[Path],
+) -> None:
+    for index, target in enumerate(targets):
+        for other in targets[index + 1 :]:
+            if _paths_alias(target, other):
+                raise ReliabilityResultsPending(
+                    f"publication outputs must be distinct: {target} aliases {other}"
+                )
+        for source in sources:
+            if _paths_alias(target, source):
+                raise ReliabilityResultsPending(
+                    f"publication output must not overwrite an input authority: {target}"
+                )
+    for source in sources:
+        _require_ordinary_single_link(
+            source, label="publication input authority", required=True
+        )
+    for target in targets:
+        for root in protected_roots:
+            if _path_is_within(target, root):
+                raise ReliabilityResultsPending(
+                    f"publication output must not be inside an input root: {target}"
+                )
+        _require_ordinary_single_link(
+            target, label="existing publication output", required=False
+        )
+
+
+def _manuscript_reference(target: Path, manuscript: Path) -> str:
+    return Path(
+        os.path.relpath(_lexical_path(target), start=_lexical_path(manuscript).parent)
+    ).as_posix()
+
+
+def _stage_bytes(path: Path, payload: bytes, mode: int) -> Path:
+    handle = tempfile.NamedTemporaryFile(
+        mode="wb",
+        dir=path.parent,
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+        delete=False,
+    )
+    temporary_path = Path(handle.name)
+    try:
+        handle.write(payload)
+        handle.flush()
+        os.fchmod(handle.fileno(), mode)
+        os.fsync(handle.fileno())
+    except Exception:
+        handle.close()
+        if temporary_path.exists():
+            temporary_path.unlink()
+        raise
+    handle.close()
+    return temporary_path
 
 
 def _write_group_with_exception_rollback(contents: Mapping[Path, str]) -> None:
-    originals = {
-        path: path.read_bytes() if path.exists() else None for path in contents
-    }
-    temporary: dict[Path, Path] = {}
+    for path in contents:
+        if not path.parent.is_dir():
+            raise ReliabilityResultsPending(
+                f"publication parent directory does not exist: {path.parent}"
+            )
+    originals: dict[Path, tuple[bytes | None, int]] = {}
+    for path in contents:
+        _require_ordinary_single_link(
+            path, label="existing publication output", required=False
+        )
+        if path.exists():
+            originals[path] = (
+                path.read_bytes(),
+                stat.S_IMODE(path.stat().st_mode),
+            )
+        else:
+            originals[path] = (None, _NEW_FILE_MODE)
+
+    staged: dict[Path, Path] = {}
+    backups: dict[Path, Path] = {}
     replaced: list[Path] = []
     try:
         for path, content in contents.items():
-            path.parent.mkdir(parents=True, exist_ok=True)
-            with tempfile.NamedTemporaryFile(
-                mode="w",
-                encoding="utf-8",
-                dir=path.parent,
-                prefix=f".{path.name}.",
-                suffix=".tmp",
-                delete=False,
-            ) as handle:
-                handle.write(content)
-                handle.flush()
-                os.fsync(handle.fileno())
-                temporary[path] = Path(handle.name)
-        for path, temporary_path in temporary.items():
-            os.replace(temporary_path, path)
+            staged[path] = _stage_bytes(
+                path,
+                content.encode("utf-8"),
+                originals[path][1],
+            )
+        for path, (payload, mode) in originals.items():
+            if payload is not None:
+                backups[path] = _stage_bytes(path, payload, mode)
+        for path in contents:
+            _replace_path(staged[path], path)
             replaced.append(path)
-    except Exception:
+    except Exception as exc:
+        rollback_errors: list[Exception] = []
         for path in reversed(replaced):
-            _restore(path, originals[path])
+            try:
+                backup = backups.get(path)
+                if backup is None:
+                    if path.exists():
+                        path.unlink()
+                else:
+                    _replace_path(backup, path)
+            except Exception as rollback_exc:  # pragma: no cover - catastrophic I/O
+                rollback_errors.append(rollback_exc)
+        if rollback_errors:
+            raise RuntimeError(
+                "P2-E9 publication replacement failed and rollback was incomplete"
+            ) from exc
         raise
     finally:
-        for temporary_path in temporary.values():
+        for temporary_path in [*staged.values(), *backups.values()]:
             if temporary_path.exists():
                 temporary_path.unlink()
 
@@ -1239,6 +1518,26 @@ def write_reliability_manuscript(
     manuscript_path: Path,
 ) -> dict[str, Any]:
     protocol = load_graph_reliability_protocol(protocol_path)
+    targets, protected_roots = _require_declared_publication_paths(
+        protocol=protocol,
+        result_path=result_path,
+        acceptance_path=acceptance_path,
+        table_path=table_path,
+        figure_path=figure_path,
+        manuscript_path=manuscript_path,
+    )
+    sources = [protocol_path, result_path, acceptance_path]
+    _require_publication_boundary(
+        protocol_path=protocol_path,
+        sources=sources,
+        targets=targets,
+        protected_roots=protected_roots,
+    )
+    _require_safe_publication_paths(
+        targets,
+        sources=sources,
+        protected_roots=protected_roots,
+    )
     result = _load_json(result_path, "P2-E9 result")
     acceptance = _load_json(acceptance_path, "P2-E9 acceptance")
     rows = validate_reliability_inputs(
@@ -1250,7 +1549,11 @@ def write_reliability_manuscript(
     table = render_table(rows)
     figure = render_svg(rows)
     manuscript = _replace_block(
-        source, render_manuscript_block(rows, figure_name=figure_path.name)
+        source,
+        render_manuscript_block(
+            rows,
+            figure_reference=_manuscript_reference(figure_path, manuscript_path),
+        ),
     )
     _write_group_with_exception_rollback(
         {
@@ -1284,6 +1587,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--figure", type=Path, default=DEFAULT_FIGURE)
     parser.add_argument("--manuscript", type=Path, default=DEFAULT_MANUSCRIPT)
     args = parser.parse_args(argv)
+    _require_production_cli_paths(
+        protocol_path=args.protocol,
+        targets=[args.table, args.figure, args.manuscript],
+    )
     summary = write_reliability_manuscript(
         protocol_path=args.protocol,
         result_path=args.result,

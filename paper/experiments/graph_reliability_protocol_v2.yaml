@@ -265,6 +265,7 @@ execution:
   formal_result: paper/experiments/results/graph_reliability_v2/graph_reliability_generic_n10_v2/formal_result.json
   accepted_manuscript_table: paper/assets/tables/p2_e9_reliability_results.md
   accepted_manuscript_figure: paper/assets/figures/p2_e9_reliability_primary.svg
+  accepted_manuscript: paper/draft/main.md
   accepted_manuscript_consumer:
     entrypoint: scripts/render_graph_reliability_manuscript.py
     acceptance_required: true
@@ -274,7 +275,10 @@ execution:
     provider_calls: false
     displayed_repeat_arithmetic_recomputed: true
     displayed_pass_and_cost_projections_recomputed: true
-    write_contract: grouped_replace_with_exception_rollback
+    valid_bootstrap_replicates_reported: true
+    existing_output_contract: absent_or_ordinary_single_link_regular_file
+    production_cli_protocol: graph_reliability_protocol_v2.yaml
+    write_contract: fully_staged_mode_preserving_grouped_replace_with_reverse_rollback
     focused_tests: tests/test_render_graph_reliability_manuscript.py
   forbidden_primary_roots:
     - paper/experiments/runs/formal/p2_graph_vs_generic_llm_v1/graph_core_primary

@@ -48,7 +48,13 @@ separate task-primary dynamic-v3 profile.
   canonical rollout submit prefixes; derived `evaluation.jsonl` rows are not
   target or prediction authority. Its accepted-result consumer recomputes and
   separately labels eight task-primary and 26 P2-E3--P2-E7 mechanism rows; a
-  real 240-unit provider-free analyzer fixture reaches the consumer.
+  real 240-unit provider-free analyzer fixture reaches the consumer. The
+  consumer binds every input/output path to the protocol, rejects filesystem
+  aliases, nonordinary or multiply linked existing outputs, source/parent
+  symlink escapes, and raw/result-root publication. It binds the accepted root
+  to the protocol formal root, reports valid bootstrap counts, fixes the
+  production CLI protocol, and passes 20/20 focused checks for full staging,
+  cleanup, mode preservation, rollback, and idempotence.
 - Horizon-v3 projects the same endpoint and matched bearing-cluster inference
   over 144 registered units. Its provider-free dry schedule emits 144/144
   commands; none has been invoked and no formal result exists.
@@ -57,16 +63,23 @@ separate task-primary dynamic-v3 profile.
   and zero writes, has zero formal results, and passes 12/12 focused checks. Its
   accepted-only analyzer now uses private DataPort targets plus canonical
   rollout submit prefixes to recompute target-adverse AP over all 24 assigned
-  windows per repeat; grounded completion remains explanatory.
+  windows per repeat; grounded completion remains explanatory. Its accepted
+  consumer applies the same protocol-bound publication contract and passes
+  20/20 focused checks, including formal-root provenance, valid bootstrap
+  counts, and path-identity containment.
 - Cross-dataset-v3 registers the accepted Ottawa ordered-state target and its
   CSV DataPort. The provider-free preflight emits 18/18 commands for 72 episode
   bundles, 36 matched pairs, and 216 assigned windows; the accepted-only
   analyzer is implemented. Its accepted-result consumer rechecks the exact
   cohort, target-adverse accounting, displayed task deltas, and bootstrap
-  metadata before a grouped replacement with exception rollback. The E8 chain passes
-  30/30 provider-free checks. No command has run, no formal result or result row
-  exists, and external provider execution remains unauthorized.
-- The provider-free repository suite passes 185/185. Tests and mechanics gates
+  metadata before a fully staged, mode-preserving grouped replacement with
+  reverse rollback. Its result schema binds the accepted stamped run root to
+  the scheduled base, and the consumer rejects nonordinary output identities
+  plus source/parent symlink escapes. The E8 chain passes 40/40 provider-free
+  checks. No command
+  has run, no formal result or result row exists, and external provider
+  execution remains unauthorized.
+- The provider-free repository suite passes 214/214. Tests and mechanics gates
   are implementation evidence, not task-performance or treatment-effect
   evidence.
 

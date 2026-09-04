@@ -1072,19 +1072,39 @@ class GraphDynamicFormalAnalysisTests(unittest.TestCase):
                     acceptance,
                     private_dynamic_assignments=assignments,
                 )
-            acceptance_path = root / "formal_acceptance.json"
-            result_path = root / "formal_result.json"
+            results_root = root / "results"
+            publication_root = root / "publication"
+            manuscript_root = root / "paper"
+            for directory in (results_root, publication_root, manuscript_root):
+                directory.mkdir(parents=True, exist_ok=True)
+            acceptance_path = results_root / "formal_acceptance.json"
+            result_path = results_root / "formal_result.json"
             _json(acceptance_path, acceptance)
             _json(result_path, result)
-            manuscript_path = root / "main.md"
+            manuscript_path = manuscript_root / "main.md"
             manuscript_path.write_text(
                 f"Before\n{MANUSCRIPT_BEGIN}\npending\n{MANUSCRIPT_END}\nAfter\n",
                 encoding="utf-8",
             )
-            table_path = root / "table.md"
-            figure_path = root / "figure.svg"
+            table_path = publication_root / "table.md"
+            figure_path = publication_root / "figure.svg"
+            consumer_protocol = copy.deepcopy(self.protocol)
+            consumer_protocol["output_contract"].update(
+                {
+                    "formal_root": str(formal_root),
+                    "results_root": str(results_root),
+                    "event_catalog": str(results_root / "public_event_catalog.json"),
+                    "formal_acceptance": str(acceptance_path),
+                    "formal_result": str(result_path),
+                    "accepted_manuscript_table": str(table_path),
+                    "accepted_manuscript_figure": str(figure_path),
+                    "accepted_manuscript": str(manuscript_path),
+                }
+            )
+            consumer_protocol_path = root / "consumer_protocol.yaml"
+            _json(consumer_protocol_path, consumer_protocol)
             summary = write_dynamic_manuscript(
-                protocol_path=PROTOCOL_PATH,
+                protocol_path=consumer_protocol_path,
                 result_path=result_path,
                 acceptance_path=acceptance_path,
                 table_path=table_path,

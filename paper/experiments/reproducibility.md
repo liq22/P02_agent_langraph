@@ -137,7 +137,7 @@ zero provider calls. Dynamic-v3 uses the isolated runtime identity
 `phase1_graph_dynamic_generic_ablation_v3` and new formal roots. Its scheduler
 emits 240/240 dry commands and invokes none; validate-only reads no provider
 environment or probe evidence and writes no result. Runner checks pass 17/17,
-dynamic-focused checks pass 46/46, and formal coverage is 0/240. The
+dynamic-focused checks pass 50/50, and formal coverage is 0/240. The
 accepted-only analyzer rebuilds all eight private 12-window masters through
 the registered Paderborn DataPort using `--private-metadata-env` and
 `--private-signal-env`, uses canonical rollout successful-submit prefixes as
@@ -167,7 +167,7 @@ The extension studies remain at provider-free readiness:
   bundles, 36 exact matched pairs, and 216 assigned windows. The accepted-only
   analyzer independently reconstructs private assignments and refuses any
   partial cohort before the 2,000-resample bearing-clustered analysis. The
-  analyzer/scheduler/runtime checks pass 21/21, but no command has run and no
+  analyzer/scheduler/runtime checks pass 22/22, but no command has run and no
   result exists; the external provider execution remains unauthorized.
 
 Accepted complete cohorts are required for the registered horizon, ablation,
@@ -185,13 +185,18 @@ The consumer reads only the protocol, accepted `formal_result.json`, and active
 manuscript. It does not inspect the 72 raw bundles, private DataPort inputs, or
 provider environment. It rechecks the embedded arm acceptances, 36 exact
 pairs, 108 assigned windows per arm, target-adverse accounting, five displayed
-task deltas, and physical-bearing bootstrap metadata before grouped replacement
-with exception rollback of
-`paper/assets/tables/p2_e8_ottawa_results.md`,
-`paper/assets/figures/p2_e8_ottawa_primary.svg`, and the unique
-`P2_E8_OTTAWA` marker. Its 9/9 focused checks include direct real-analyzer
-output integration. With formal coverage 0/72, it has emitted zero rows and the
-result assets remain absent.
+task deltas, and physical-bearing bootstrap metadata. The protocol fixes the
+result, table, SVG, and manuscript paths. Result schema v2 records a canonical
+run root equal to the scheduled base plus formal stamp. The consumer requires
+lexical and resolved source containment, rejects aliases and publication under
+raw/result roots, and accepts existing targets only as ordinary single-link
+regular files. Its production CLI accepts only the registered protocol and
+keeps resolved outputs in the repository. It stages and fsyncs all three
+outputs, preserves existing modes, and restores replaced files in reverse
+order after a failure. Its 18/18 focused checks include direct analyzer
+integration, provenance, staging cleanup, rollback, and idempotence. With
+formal coverage 0/72, it has emitted zero rows and the result assets remain
+absent.
 
 After the isolated P2-E9 gate accepts all 160 bundles and the analyzer writes a
 matching result, its provider-free manuscript consumer is:
@@ -208,11 +213,17 @@ pairs, ten repeat rows, target-adverse task-primary deltas, pass@1 and
 pass-all-10 projections, selected rollout/cost deltas, and primary-cohort
 isolation before updating `paper/assets/tables/p2_e9_reliability_results.md`,
 `paper/assets/figures/p2_e9_reliability_primary.svg`, and the unique
-`P2_E9_RELIABILITY` marker as one exception-rollback write group. Its 10/10
-focused checks include a direct 160-bundle analyzer-to-consumer integration plus rejected-input,
+`P2_E9_RELIABILITY` marker under the same protocol-bound, fully staged,
+mode-preserving publication contract. The result root must equal the protocol
+formal root; every table interval includes its valid/2,000 bootstrap count.
+Existing targets must be ordinary single-link regular files, source
+containment is both lexical and resolved, the production CLI fixes the active
+protocol, and resolved outputs stay in the repository. Its 20/20 focused
+checks include direct 160-bundle analyzer integration, provenance, path and
+protected-root rejection, staging cleanup, reverse rollback, idempotence,
 arithmetic, denominator, identity, N/A, marker, and no-write cases. With 0/160
-formal coverage, the result assets remain absent and the manuscript block stays
-Pending.
+formal coverage, the result assets remain absent and the manuscript block
+stays Pending.
 
 The primary estimand is Graph-minus-Generic target-adverse replay Average
 Precision over 24 exact episode pairs and 72 assigned windows per arm, at JSON
@@ -243,9 +254,10 @@ matched evaluator gating. Undefined metrics remain N/A rather than zero, every
 reported bootstrap interval includes its valid-replicate count, and provider
 latency remains descriptive.
 
-The current provider-free P02 test suite passes 185/185, covering executable
+The current provider-free P02 test suite passes 214/214, covering executable
 contracts, assigned-window denominators, cluster inference, document-linked
-mechanics, task/mechanism separation, and accepted-result manuscript consumers.
+mechanics, task/mechanism separation, and protocol-bound accepted-result
+publication.
 
 The current mechanics-only manuscript assets are regenerated directly from the
 retained P2-E0-v2 and dynamic-v2 Mock gates plus the dynamic-v3 formal schedule:
@@ -280,13 +292,20 @@ full-versus-no-branching comparison without duplicating an episode denominator.
 It then updates
 `paper/assets/tables/p2_dynamic_formal_results.md`,
 `paper/assets/figures/p2_dynamic_formal_primary.svg`, and the unique
-`P2_DYNAMIC_FORMAL` manuscript block as one write group. Its 11/11 focused
-tests cover acceptance rejection, denominator and missing-policy drift,
-task/mechanism arithmetic, bootstrap metadata, Holm adjustment, P2-E7 source
-reuse, N/A rendering, marker uniqueness, and rollback after a simulated second
-replacement failure. A real 240-unit provider-free analyzer fixture also feeds
-the consumer directly. The current 0/240 state leaves all accepted-result
-outputs absent and the manuscript block Pending.
+`P2_DYNAMIC_FORMAL` manuscript block through the protocol-bound, fully staged,
+mode-preserving publication contract. The result and acceptance roots must
+equal the protocol formal root, every displayed interval includes its valid
+bootstrap count, source containment is lexical and resolved, existing outputs
+must be ordinary single-link regular files, and the production CLI fixes the
+active protocol while keeping resolved outputs inside the repository. Its
+20/20 focused tests cover acceptance rejection, declared-path and alias
+boundaries, protected roots, staging cleanup, idempotence, task/mechanism
+arithmetic, bootstrap metadata, Holm adjustment, P2-E7 source reuse, N/A
+rendering, marker uniqueness, and reverse rollback after a simulated third
+replacement failure. A real 240-unit
+provider-free analyzer fixture also feeds the consumer directly. The current
+0/240 state leaves all accepted-result outputs absent and the manuscript block
+Pending.
 
 The final ten-lens review is not started while formal results, final tables and
 figures, or the result-grounded conclusion remain pending. It starts only after

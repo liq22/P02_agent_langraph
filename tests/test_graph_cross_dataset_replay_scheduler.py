@@ -56,6 +56,11 @@ class GraphCrossDatasetReplaySchedulerTests(unittest.TestCase):
             "graph_cross_dataset_replay_protocol_v3",
         )
         self.assertEqual(
+            self.protocol["status"],
+            "preregistered_provider_free_ready_provider_authorization_and_complete_cohort_pending",
+        )
+        self.assertEqual(self.protocol["status_updated"], "2026-09-04")
+        self.assertEqual(
             self.protocol["extends_protocol"],
             "graph_cross_dataset_replay_protocol_v2.yaml",
         )
@@ -83,9 +88,35 @@ class GraphCrossDatasetReplaySchedulerTests(unittest.TestCase):
         self.assertFalse(
             self.protocol["scope"]["monitor_or_revise_event_branch_estimand"]
         )
+        self.assertEqual(
+            self.protocol["analysis_gate"]["formal_result_state"],
+            "complete_72_bundle_cohort_pending",
+        )
+        self.assertEqual(
+            self.protocol["activation_gate"]["post_authorization_requirement"],
+            "complete_72_bundle_cohort_before_analysis_or_publication",
+        )
         self.assertFalse(
             self.protocol["scope"]["event_f1_or_detection_delay_estimand"]
         )
+
+        for field, value, message in (
+            (
+                ("dataset_registration", "protocol_path"),
+                "../unregistered/ottawa.yaml",
+                "dataset_registration.protocol_path drifted",
+            ),
+            (
+                ("current_schedule", "output_root"),
+                "paper/experiments/runs/formal/unregistered",
+                "current_schedule.output_root drifted",
+            ),
+        ):
+            with self.subTest(field=".".join(field)):
+                drifted = copy.deepcopy(self.protocol)
+                drifted[field[0]][field[1]] = value
+                with self.assertRaisesRegex(ContractError, message):
+                    validate_protocol(drifted)
 
     def test_v1_and_v2_are_non_executable_records(self) -> None:
         legacy = _load(LEGACY_PROTOCOL)
@@ -123,7 +154,7 @@ class GraphCrossDatasetReplaySchedulerTests(unittest.TestCase):
         self.assertTrue(audit["outcome_target_available"])
         self.assertTrue(all(row["passed"] for row in audit["required_checks"]))
 
-    def test_provider_free_preflight_is_ready_but_same_day_retry_gate_stays_closed(self) -> None:
+    def test_provider_free_preflight_is_ready_but_authorization_gate_stays_closed(self) -> None:
         manifest = build_manifest(DEFAULT_PROTOCOL)
         self.assertTrue(manifest["analysis_readiness"]["ready"])
         self.assertEqual(
@@ -139,7 +170,7 @@ class GraphCrossDatasetReplaySchedulerTests(unittest.TestCase):
         self.assertFalse(manifest["formal_launch_allowed_by_this_scheduler"])
         self.assertEqual(
             manifest["activation_blocked_reasons"],
-            ["same_day_north_retry_forbidden_after_http_429_20260902"],
+            ["explicit_provider_destination_and_payload_egress_authorization_required"],
         )
         self.assertEqual(manifest["unit_count"], 18)
 

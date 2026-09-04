@@ -17,6 +17,7 @@ import json
 import os
 from pathlib import Path
 import re
+import stat
 import sys
 from typing import Any
 
@@ -79,7 +80,7 @@ except ModuleNotFoundError:  # pragma: no cover - import route only
     )
 
 
-RESULT_SCHEMA = "p2_e8_ottawa_generic_base_result_v1"
+RESULT_SCHEMA = "p2_e8_ottawa_generic_base_result_v2"
 TASK_ID = "online_replay_monitoring"
 REPLAY_POLICY_ID = "phase1_replay_target_adverse_missing_score_v1"
 FORMAL_STAMP = re.compile(r"^[0-9]{8}T[0-9]{6}Z$")
@@ -132,8 +133,175 @@ def _load_yaml(path: Path, label: str) -> dict[str, Any]:
     return value
 
 
+def _lexical_path(path: Path) -> Path:
+    """Normalize without discarding the final path-component identity."""
+
+    return Path(os.path.abspath(os.fspath(path)))
+
+
+def _path_is_strictly_within(path: Path, root: Path) -> bool:
+    """Require both lexical and resolved containment."""
+
+    try:
+        _lexical_path(path).relative_to(_lexical_path(root))
+        path.resolve(strict=False).relative_to(root.resolve(strict=False))
+    except ValueError:
+        return False
+    except (OSError, RuntimeError) as exc:
+        raise CrossDatasetAnalysisError(
+            f"cannot resolve production path boundary for {path}"
+        ) from exc
+    return True
+
+
+def _require_exact_path(observed: Path, expected: Path, label: str) -> None:
+    try:
+        resolved_equal = observed.resolve(strict=False) == expected.resolve(
+            strict=False
+        )
+    except (OSError, RuntimeError) as exc:
+        raise CrossDatasetAnalysisError(f"cannot resolve {label}: {observed}") from exc
+    _require(
+        _lexical_path(observed) == _lexical_path(expected) and resolved_equal,
+        f"{label} must match the registered path exactly",
+    )
+
+
+def _require_ordinary_single_link(
+    path: Path, *, label: str, required: bool
+) -> None:
+    try:
+        metadata = path.lstat()
+    except FileNotFoundError:
+        _require(not required, f"missing {label}: {path}")
+        return
+    except OSError as exc:
+        raise CrossDatasetAnalysisError(f"cannot inspect {label}: {path}") from exc
+    _require(
+        stat.S_ISREG(metadata.st_mode) and metadata.st_nlink == 1,
+        f"{label} must be an ordinary single-link regular file: {path}",
+    )
+
+
+def _protocol_source_paths(protocol_path: Path) -> list[Path]:
+    """Return every lexical sibling in the protocol extension chain."""
+
+    sources: list[Path] = []
+    current = _lexical_path(protocol_path)
+    seen: set[Path] = set()
+    while True:
+        _require(
+            current not in seen,
+            "P2-E8 protocol authority chain contains a cycle",
+        )
+        seen.add(current)
+        _require_ordinary_single_link(
+            current,
+            label="P2-E8 protocol authority source",
+            required=True,
+        )
+        sources.append(current)
+        try:
+            payload = yaml.safe_load(current.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, yaml.YAMLError) as exc:
+            raise CrossDatasetAnalysisError(
+                f"cannot inspect P2-E8 protocol authority chain: {current}"
+            ) from exc
+        _require(isinstance(payload, Mapping), f"protocol must be a mapping: {current}")
+        extension = payload.get("extends_protocol")
+        if extension is None:
+            return sources
+        _require(
+            isinstance(extension, str)
+            and bool(extension)
+            and Path(extension).name == extension,
+            "P2-E8 protocol extension must name one sibling authority",
+        )
+        current = _lexical_path(current.parent / extension)
+
+
+def _registered_path(value: object, label: str) -> Path:
+    _require(isinstance(value, str) and bool(value), f"{label} is required")
+    relative = Path(value)
+    _require(not relative.is_absolute(), f"{label} must be repository-relative")
+    return _lexical_path(ROOT / relative)
+
+
+def _validate_production_cli_paths(
+    *,
+    protocol_path: Path,
+    dataset_protocol_path: Path | None,
+    output_path: Path,
+) -> Path:
+    """Bind the production CLI to registered authorities before private reads."""
+
+    _require_exact_path(protocol_path, DEFAULT_PROTOCOL, "P2-E8 protocol")
+    protocol_sources = _protocol_source_paths(protocol_path)
+    for source in protocol_sources:
+        _require(
+            _path_is_strictly_within(source, ROOT),
+            f"P2-E8 protocol source resolves outside the repository: {source}",
+        )
+
+    cross = load_protocol(protocol_path)
+    validate_protocol(cross)
+    analysis = _validate_analysis_registration(cross)
+
+    registered_dataset = _registered_path(
+        _mapping(cross.get("dataset_registration"), "dataset_registration").get(
+            "protocol_path"
+        ),
+        "dataset_registration.protocol_path",
+    )
+    _require(
+        _path_is_strictly_within(registered_dataset, BENCHMARK_ROOT),
+        "registered Ottawa dataset protocol must remain inside the Benchmark root",
+    )
+    supplied_dataset = dataset_protocol_path or registered_dataset
+    _require_exact_path(
+        supplied_dataset,
+        registered_dataset,
+        "Ottawa dataset protocol",
+    )
+    _require_ordinary_single_link(
+        registered_dataset,
+        label="registered Ottawa dataset protocol",
+        required=True,
+    )
+
+    results_root = _registered_path(
+        analysis.get("results_root"), "analysis_gate.results_root"
+    )
+    formal_result = _registered_path(
+        analysis.get("formal_result"), "analysis_gate.formal_result"
+    )
+    _require(
+        _path_is_strictly_within(results_root, ROOT),
+        "registered P2-E8 results root resolves outside the repository",
+    )
+    _require(
+        _path_is_strictly_within(formal_result, results_root),
+        "registered P2-E8 formal result must remain inside results_root",
+    )
+    _require_exact_path(output_path, formal_result, "P2-E8 output")
+    _require(
+        _path_is_strictly_within(output_path.parent, results_root),
+        "P2-E8 output parent resolves outside results_root",
+    )
+    _require_ordinary_single_link(
+        output_path,
+        label="existing P2-E8 output",
+        required=False,
+    )
+    return registered_dataset
+
+
 def _validate_analysis_registration(cross: Mapping[str, Any]) -> Mapping[str, Any]:
     analysis = _mapping(cross.get("analysis_gate"), "analysis_gate")
+    _require(
+        analysis.get("result_schema") == RESULT_SCHEMA,
+        "P2-E8 result schema registration drifted",
+    )
     accepted = _mapping(
         analysis.get("accepted_input_contract"),
         "analysis_gate.accepted_input_contract",
@@ -275,6 +443,30 @@ def _validate_root_layout(reactive_root: Path, graph_root: Path) -> str:
     stamp = run_name.removeprefix("run_")
     _require(FORMAL_STAMP.fullmatch(stamp) is not None, "formal run stamp must match YYYYMMDDTHHMMSSZ")
     return stamp
+
+
+def _validate_registered_root_layout(
+    reactive_root: Path,
+    graph_root: Path,
+    cross: Mapping[str, Any],
+) -> tuple[str, Path]:
+    """Bind the accepted arm roots to the protocol base and stamped run root."""
+
+    stamp = _validate_root_layout(reactive_root, graph_root)
+    current = _mapping(cross.get("current_schedule"), "current_schedule")
+    declared_output_root = Path(str(current.get("output_root", "")))
+    _require(str(declared_output_root) not in {"", "."}, "P2-E8 output root is required")
+    if not declared_output_root.is_absolute():
+        declared_output_root = ROOT / declared_output_root
+    expected_run_root = (
+        declared_output_root / f"run_{stamp}"
+    ).resolve(strict=False)
+    formal_run_root = reactive_root.resolve().parent
+    _require(
+        formal_run_root == expected_run_root,
+        "P2-E8 accepted cohort root differs from current_schedule.output_root and stamp",
+    )
+    return stamp, formal_run_root
 
 
 def _expected_run_dirs(
@@ -576,7 +768,9 @@ def build_report(
     dataset = _load_yaml(dataset_path.resolve(), "Ottawa dataset protocol")
     _require(dataset.get("protocol_id") == cross["dataset_registration"]["dataset_protocol_id"], "Ottawa dataset protocol identity drifted")
     _require(dataset.get("dataset", {}).get("dataset_id") == DATASET_ID, "Ottawa dataset identity drifted")
-    run_stamp = _validate_root_layout(reactive_root, graph_root)
+    run_stamp, formal_run_root = _validate_registered_root_layout(
+        reactive_root, graph_root, cross
+    )
     seeds = [int(value) for value in cross["current_schedule"]["seeds"]]
     rotations = [str(value) for value in cross["dataset_registration"]["rotations"]]
     reactive_dirs = _expected_run_dirs(reactive_root, seeds=seeds, rotations=rotations)
@@ -645,6 +839,7 @@ def build_report(
         "dataset_protocol_id": dataset["protocol_id"],
         "experiment_profile_id": PROFILE_ID,
         "formal_run_stamp": run_stamp,
+        "formal_run_root": str(formal_run_root),
         "provider_calls_made_by_analyzer": 0,
         "private_assignment_validation": dataset["dataset"]["evaluator_assignment_contract"],
         "acceptance": {
@@ -689,20 +884,30 @@ def _parser() -> argparse.ArgumentParser:
 def main(argv: Sequence[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
+        dataset_protocol_path = _validate_production_cli_paths(
+            protocol_path=args.protocol,
+            dataset_protocol_path=args.dataset_protocol,
+            output_path=args.output,
+        )
         report = build_report(
             reactive_root=args.reactive_root,
             graph_root=args.graph_root,
             protocol_path=args.protocol,
-            dataset_protocol_path=args.dataset_protocol,
+            dataset_protocol_path=dataset_protocol_path,
+        )
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        _validate_production_cli_paths(
+            protocol_path=args.protocol,
+            dataset_protocol_path=dataset_protocol_path,
+            output_path=args.output,
+        )
+        args.output.write_text(
+            json.dumps(report, indent=2, sort_keys=True, allow_nan=False) + "\n",
+            encoding="utf-8",
         )
     except (CrossDatasetAnalysisError, KeyError, OSError, TypeError, ValueError) as exc:
         print(f"P2-E8 analysis blocked: {exc}", file=sys.stderr)
         return 2
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(
-        json.dumps(report, indent=2, sort_keys=True, allow_nan=False) + "\n",
-        encoding="utf-8",
-    )
     print(json.dumps(report, indent=2, sort_keys=True, allow_nan=False))
     return 0
 

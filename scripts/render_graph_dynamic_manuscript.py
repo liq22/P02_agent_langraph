@@ -14,12 +14,15 @@ import html
 import json
 import math
 import os
+import stat
 import statistics
 import sys
 import tempfile
 from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any
+
+import yaml
 
 _REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 if str(_REPOSITORY_ROOT) not in sys.path:
@@ -63,6 +66,9 @@ EXPECTED_PUBLIC_SEQUENCES = tuple(
 BOOTSTRAP_ITERATIONS = 10000
 EXPECTED_EPISODES_PER_CELL = 24
 EXPECTED_FORMAL_UNITS = 240
+PUBLICATION_WRITE_CONTRACT = (
+    "fully_staged_mode_preserving_grouped_replace_with_reverse_rollback"
+)
 
 MANUSCRIPT_BEGIN = "<!-- P2_DYNAMIC_FORMAL:BEGIN -->"
 MANUSCRIPT_END = "<!-- P2_DYNAMIC_FORMAL:END -->"
@@ -484,7 +490,10 @@ def _validate_mechanism_reporting_contract(
         "render_schema": "p2_dynamic_formal_manuscript_render_v2",
         "task_primary_rows_after_acceptance": 8,
         "secondary_mechanism_rows_after_acceptance": 26,
-        "write_contract": "grouped_replace_with_exception_rollback",
+        "valid_bootstrap_replicates_reported": True,
+        "existing_output_contract": "absent_or_ordinary_single_link_regular_file",
+        "production_cli_protocol": "graph_dynamic_ablation_protocol_v3.yaml",
+        "write_contract": PUBLICATION_WRITE_CONTRACT,
     }
     for key, expected in expected_scalars.items():
         if consumer.get(key) != expected:
@@ -982,6 +991,16 @@ def _validate_result(
     output_root = result.get("output_root")
     if not isinstance(output_root, str) or not output_root or not Path(output_root).is_absolute():
         raise DynamicResultsPending("dynamic result output_root must be absolute")
+    declared_formal_root = _declared_protocol_path(
+        protocol.get("output_contract", {}).get("formal_root"),
+        "output_contract.formal_root",
+    ).resolve(strict=False)
+    if output_root != str(Path(output_root).resolve(strict=False)) or Path(
+        output_root
+    ) != declared_formal_root:
+        raise DynamicResultsPending(
+            "dynamic result output_root differs from the protocol formal_root"
+        )
     try:
         validate_acceptance(output_root, protocol, acceptance)
     except (TypeError, ValueError, KeyError) as exc:
@@ -1235,6 +1254,10 @@ def _validate_result(
                 "control": _primary_cell(by_cell, horizon, "reactive")["estimate"],
                 "estimate": report["estimate"],
                 "interval": report["paired_cluster_bootstrap_95ci"],
+                "valid_replicates": report[
+                    "paired_cluster_bootstrap_valid_replicates"
+                ],
+                "bootstrap_replicates": BOOTSTRAP_ITERATIONS,
                 "p": report["exact_two_sided_cluster_swap_p"],
                 "holm": None,
                 "holm_registered": False,
@@ -1252,6 +1275,10 @@ def _validate_result(
             "control": None,
             "estimate": interaction["estimate"],
             "interval": interaction["paired_cluster_bootstrap_95ci"],
+            "valid_replicates": interaction[
+                "paired_cluster_bootstrap_valid_replicates"
+            ],
+            "bootstrap_replicates": BOOTSTRAP_ITERATIONS,
             "p": interaction["exact_two_sided_cluster_swap_p"],
             "holm": interaction["holm_adjusted_p"],
             "holm_registered": True,
@@ -1271,6 +1298,10 @@ def _validate_result(
                 "control": _primary_cell(by_cell, 12, control)["estimate"],
                 "estimate": report["estimate"],
                 "interval": report["paired_cluster_bootstrap_95ci"],
+                "valid_replicates": report[
+                    "paired_cluster_bootstrap_valid_replicates"
+                ],
+                "bootstrap_replicates": BOOTSTRAP_ITERATIONS,
                 "p": report["exact_two_sided_cluster_swap_p"],
                 "holm": report["holm_adjusted_p"],
                 "holm_registered": True,
@@ -1301,6 +1332,12 @@ def _validate_result(
                     "control": control_cell["estimate"],
                     "estimate": report["estimate"],
                     "interval": report["paired_cluster_bootstrap_95ci"],
+                    "valid_replicates": report[
+                        "paired_cluster_bootstrap_valid_replicates"
+                    ],
+                    "bootstrap_replicates": report[
+                        "paired_cluster_bootstrap_iterations"
+                    ],
                     "p": report["exact_two_sided_sign_permutation_p"],
                     "holm": report["holm_adjusted_p"],
                     "holm_registered": True,
@@ -1329,6 +1366,12 @@ def _validate_result(
                 "control": control_cell["estimate"],
                 "estimate": report["estimate"],
                 "interval": report["paired_cluster_bootstrap_95ci"],
+                "valid_replicates": report[
+                    "paired_cluster_bootstrap_valid_replicates"
+                ],
+                "bootstrap_replicates": report[
+                    "paired_cluster_bootstrap_iterations"
+                ],
                 "p": report["exact_two_sided_sign_permutation_p"],
                 "holm": None,
                 "holm_registered": False,
@@ -1388,8 +1431,8 @@ def render_table(rows: Sequence[Mapping[str, Any]]) -> str:
     lines = [
         "# Accepted dynamic-v3 task-primary results",
         "",
-        "| ID | Registered contrast | Horizon | Treatment AP | Control AP | Delta AP [95% paired cluster bootstrap CI] | Exact p | Holm p | Assigned windows T/C |",
-        "|---|---|---:|---:|---:|---:|---:|---:|---:|",
+        "| ID | Registered contrast | Horizon | Treatment AP | Control AP | Delta AP [95% paired cluster bootstrap CI] | Valid bootstrap replicates | Exact p | Holm p | Assigned windows T/C |",
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for row in task_rows:
         holm = (
@@ -1399,13 +1442,15 @@ def render_table(rows: Sequence[Mapping[str, Any]]) -> str:
         )
         lines.append(
             "| {id} | {label} | {horizon} | {treatment} | {control} | "
-            "{effect} | {p} | {holm} | {windows} |".format(
+            "{effect} | {valid}/{total} | {p} | {holm} | {windows} |".format(
                 id=row["id"],
                 label=row["label"],
                 horizon=row["horizon"],
                 treatment=_format_number(row["treatment"]),
                 control=_format_number(row["control"]),
                 effect=_format_effect(row),
+                valid=row["valid_replicates"],
+                total=row["bootstrap_replicates"],
                 p=_format_number(row["p"]),
                 holm=holm,
                 windows=row["windows"],
@@ -1418,8 +1463,8 @@ def render_table(rows: Sequence[Mapping[str, Any]]) -> str:
             "",
             "## Registered secondary mechanism outcomes",
             "",
-            "| ID | Registered contrast | Metric | Horizon | Treatment | Control | Delta [95% paired cluster bootstrap CI] | Exact p | Holm p | Defined evidence |",
-            "|---|---|---|---:|---:|---:|---:|---:|---:|---:|",
+            "| ID | Registered contrast | Metric | Horizon | Treatment | Control | Delta [95% paired cluster bootstrap CI] | Valid bootstrap replicates | Exact p | Holm p | Defined evidence |",
+            "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
         ]
     )
     for row in mechanism_rows:
@@ -1430,7 +1475,7 @@ def render_table(rows: Sequence[Mapping[str, Any]]) -> str:
         )
         lines.append(
             "| {id} | {label} | `{metric}` | {horizon} | {treatment} | "
-            "{control} | {effect} | {p} | {holm} | {defined} |".format(
+            "{control} | {effect} | {valid}/{total} | {p} | {holm} | {defined} |".format(
                 id=row["id"],
                 label=row["label"],
                 metric=row["metric"],
@@ -1438,6 +1483,8 @@ def render_table(rows: Sequence[Mapping[str, Any]]) -> str:
                 treatment=_format_number(row["treatment"]),
                 control=_format_number(row["control"]),
                 effect=_format_effect(row),
+                valid=row["valid_replicates"],
+                total=row["bootstrap_replicates"],
                 p=_format_number(row["p"]),
                 holm=holm,
                 defined=row["defined"],
@@ -1522,7 +1569,7 @@ def _replace_block(source: str, content: str) -> str:
 
 
 def render_manuscript_block(
-    rows: Sequence[Mapping[str, Any]], *, figure_name: str
+    rows: Sequence[Mapping[str, Any]], *, figure_reference: str
 ) -> str:
     table = render_table(rows)
     table_body = table.split("\n", 2)[2]
@@ -1532,51 +1579,330 @@ def render_manuscript_block(
             "",
             table_body.rstrip(),
             "",
-            f"![Accepted dynamic-v3 task-primary contrasts](../assets/figures/{figure_name})",
+            f"![Accepted dynamic-v3 task-primary contrasts]({figure_reference})",
         ]
     ) + "\n"
 
 
-def _restore(path: Path, original: bytes | None) -> None:
-    if original is None:
-        if path.exists():
-            path.unlink()
+_replace_path = os.replace
+_NEW_FILE_MODE = 0o644
+
+
+def _lexical_path(path: Path) -> Path:
+    """Normalize a path without following its final symlink identity."""
+
+    return Path(os.path.abspath(os.fspath(path)))
+
+
+def _declared_protocol_path(value: Any, label: str) -> Path:
+    if not isinstance(value, str) or not value:
+        raise DynamicResultsPending(f"dynamic protocol lacks {label}")
+    path = Path(value)
+    return _lexical_path(path if path.is_absolute() else ROOT / path)
+
+
+def _paths_alias(left: Path, right: Path) -> bool:
+    if _lexical_path(left) == _lexical_path(right):
+        return True
+    if left.exists() and right.exists():
+        try:
+            return os.path.samefile(left, right)
+        except OSError:
+            return False
+    return False
+
+
+def _protocol_source_paths(protocol_path: Path) -> list[Path]:
+    sources: list[Path] = []
+    current = _lexical_path(protocol_path)
+    seen: set[Path] = set()
+    while True:
+        if current in seen:
+            raise DynamicResultsPending(
+                "dynamic protocol authority chain contains a cycle"
+            )
+        seen.add(current)
+        _require_ordinary_single_link(
+            current,
+            label="dynamic protocol authority source",
+            required=True,
+        )
+        sources.append(current)
+        try:
+            payload = yaml.safe_load(current.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, yaml.YAMLError) as exc:
+            raise DynamicResultsPending(
+                f"cannot inspect dynamic protocol authority chain: {current}"
+            ) from exc
+        if not isinstance(payload, Mapping):
+            return sources
+        extension = payload.get("extends_protocol")
+        if extension is None:
+            return sources
+        if (
+            not isinstance(extension, str)
+            or not extension
+            or Path(extension).name != extension
+        ):
+            raise DynamicResultsPending(
+                "dynamic protocol extension must name one sibling authority"
+            )
+        current = _lexical_path(current.parent / extension)
+
+
+def _path_is_within(path: Path, root: Path) -> bool:
+    variants: list[tuple[Path, Path]] = [
+        (_lexical_path(path), _lexical_path(root))
+    ]
+    try:
+        variants.append((path.resolve(strict=False), root.resolve(strict=False)))
+    except (OSError, RuntimeError) as exc:
+        raise DynamicResultsPending(
+            f"cannot resolve publication path boundary for {path}"
+        ) from exc
+    for candidate, boundary in variants:
+        try:
+            candidate.relative_to(boundary)
+        except ValueError:
+            continue
+        return True
+    return False
+
+
+def _path_is_strictly_within(path: Path, root: Path) -> bool:
+    """Require both lexical and resolved containment for trusted sources."""
+
+    try:
+        lexical = _lexical_path(path).relative_to(_lexical_path(root))
+        resolved = path.resolve(strict=False).relative_to(root.resolve(strict=False))
+    except ValueError:
+        return False
+    except (OSError, RuntimeError) as exc:
+        raise DynamicResultsPending(
+            f"cannot resolve trusted path boundary for {path}"
+        ) from exc
+    return lexical is not None and resolved is not None
+
+
+def _require_ordinary_single_link(path: Path, *, label: str, required: bool) -> None:
+    """Reject file identities that byte backups cannot faithfully restore."""
+
+    try:
+        metadata = path.lstat()
+    except FileNotFoundError:
+        if required:
+            raise DynamicResultsPending(f"missing {label}: {path}")
         return
-    path.write_bytes(original)
+    except OSError as exc:
+        raise DynamicResultsPending(f"cannot inspect {label}: {path}") from exc
+    if not stat.S_ISREG(metadata.st_mode) or metadata.st_nlink != 1:
+        raise DynamicResultsPending(
+            f"{label} must be an ordinary single-link regular file: {path}"
+        )
+
+
+def _require_publication_boundary(
+    *,
+    protocol_path: Path,
+    sources: Sequence[Path],
+    targets: Sequence[Path],
+    protected_roots: Sequence[Path],
+) -> None:
+    lexical_paths = [
+        _lexical_path(path)
+        for path in [protocol_path, *sources, *targets, *protected_roots]
+    ]
+    try:
+        boundary = Path(os.path.commonpath([os.fspath(path) for path in lexical_paths]))
+    except ValueError as exc:
+        raise DynamicResultsPending("publication paths do not share one authority root") from exc
+    for path in [*targets, *protected_roots]:
+        if not _path_is_strictly_within(path, boundary):
+            raise DynamicResultsPending(
+                f"publication path resolves outside its authority root: {path}"
+            )
+
+
+def _require_production_cli_paths(
+    *,
+    protocol_path: Path,
+    sources: Sequence[Path],
+    targets: Sequence[Path],
+) -> None:
+    if _lexical_path(protocol_path) != _lexical_path(DEFAULT_PROTOCOL):
+        raise DynamicResultsPending(
+            "production CLI requires the registered dynamic-v3 protocol"
+        )
+    for source in [protocol_path, *sources]:
+        if not _path_is_strictly_within(source, ROOT):
+            raise DynamicResultsPending(
+                f"production publication input resolves outside the repository: {source}"
+            )
+    for target in targets:
+        if not _path_is_strictly_within(target, ROOT):
+            raise DynamicResultsPending(
+                f"production publication output resolves outside the repository: {target}"
+            )
+
+
+def _require_declared_publication_paths(
+    *,
+    protocol: Mapping[str, Any],
+    result_path: Path,
+    acceptance_path: Path,
+    table_path: Path,
+    figure_path: Path,
+    manuscript_path: Path,
+) -> tuple[list[Path], list[Path]]:
+    outputs = _mapping(protocol.get("output_contract"), "output_contract")
+    supplied = {
+        "output_contract.formal_result": result_path,
+        "output_contract.formal_acceptance": acceptance_path,
+        "output_contract.accepted_manuscript_table": table_path,
+        "output_contract.accepted_manuscript_figure": figure_path,
+        "output_contract.accepted_manuscript": manuscript_path,
+    }
+    for label, path in supplied.items():
+        key = label.rsplit(".", 1)[1]
+        if _lexical_path(path) != _declared_protocol_path(outputs.get(key), label):
+            raise DynamicResultsPending(
+                f"publication path differs from dynamic protocol {label}"
+            )
+    formal_root = _declared_protocol_path(
+        outputs.get("formal_root"), "output_contract.formal_root"
+    )
+    results_root = _declared_protocol_path(
+        outputs.get("results_root"), "output_contract.results_root"
+    )
+    for key in ("formal_result", "formal_acceptance"):
+        if not _path_is_strictly_within(
+            _declared_protocol_path(outputs.get(key), f"output_contract.{key}"),
+            results_root,
+        ):
+            raise DynamicResultsPending(
+                f"dynamic protocol {key} must be inside output_contract.results_root"
+            )
+    protected_roots = [formal_root, results_root]
+    return [table_path, figure_path, manuscript_path], protected_roots
+
+
+def _require_safe_publication_paths(
+    targets: Sequence[Path],
+    *,
+    sources: Sequence[Path],
+    protected_roots: Sequence[Path],
+) -> None:
+    for index, target in enumerate(targets):
+        for other in targets[index + 1 :]:
+            if _paths_alias(target, other):
+                raise DynamicResultsPending(
+                    f"publication outputs must be distinct: {target} aliases {other}"
+                )
+        for source in sources:
+            if _paths_alias(target, source):
+                raise DynamicResultsPending(
+                    f"publication output must not overwrite an input authority: {target}"
+                )
+    for source in sources:
+        _require_ordinary_single_link(
+            source, label="publication input authority", required=True
+        )
+    for target in targets:
+        for root in protected_roots:
+            if _path_is_within(target, root):
+                raise DynamicResultsPending(
+                    f"publication output must not be inside an input root: {target}"
+                )
+        _require_ordinary_single_link(
+            target, label="existing publication output", required=False
+        )
+
+
+def _manuscript_reference(target: Path, manuscript: Path) -> str:
+    return Path(
+        os.path.relpath(_lexical_path(target), start=_lexical_path(manuscript).parent)
+    ).as_posix()
+
+
+def _stage_bytes(path: Path, payload: bytes, mode: int) -> Path:
+    handle = tempfile.NamedTemporaryFile(
+        mode="wb",
+        dir=path.parent,
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+        delete=False,
+    )
+    temporary_path = Path(handle.name)
+    try:
+        handle.write(payload)
+        handle.flush()
+        os.fchmod(handle.fileno(), mode)
+        os.fsync(handle.fileno())
+    except Exception:
+        handle.close()
+        if temporary_path.exists():
+            temporary_path.unlink()
+        raise
+    handle.close()
+    return temporary_path
 
 
 def _write_group_with_exception_rollback(contents: Mapping[Path, str]) -> None:
-    originals = {
-        path: path.read_bytes() if path.exists() else None for path in contents
-    }
-    temporary: dict[Path, Path] = {}
+    for path in contents:
+        if not path.parent.is_dir():
+            raise DynamicResultsPending(
+                f"publication parent directory does not exist: {path.parent}"
+            )
+    originals: dict[Path, tuple[bytes | None, int]] = {}
+    for path in contents:
+        _require_ordinary_single_link(
+            path, label="existing publication output", required=False
+        )
+        if path.exists():
+            originals[path] = (
+                path.read_bytes(),
+                stat.S_IMODE(path.stat().st_mode),
+            )
+        else:
+            originals[path] = (None, _NEW_FILE_MODE)
+
+    staged: dict[Path, Path] = {}
+    backups: dict[Path, Path] = {}
     replaced: list[Path] = []
     try:
         for path, content in contents.items():
-            path.parent.mkdir(parents=True, exist_ok=True)
-            with tempfile.NamedTemporaryFile(
-                mode="w",
-                encoding="utf-8",
-                dir=path.parent,
-                prefix=f".{path.name}.",
-                suffix=".tmp",
-                delete=False,
-            ) as handle:
-                handle.write(content)
-                handle.flush()
-                os.fsync(handle.fileno())
-                temporary[path] = Path(handle.name)
-        for path, temp_path in temporary.items():
-            os.replace(temp_path, path)
+            staged[path] = _stage_bytes(
+                path,
+                content.encode("utf-8"),
+                originals[path][1],
+            )
+        for path, (payload, mode) in originals.items():
+            if payload is not None:
+                backups[path] = _stage_bytes(path, payload, mode)
+        for path in contents:
+            _replace_path(staged[path], path)
             replaced.append(path)
-    except Exception:
+    except Exception as exc:
+        rollback_errors: list[Exception] = []
         for path in reversed(replaced):
-            _restore(path, originals[path])
+            try:
+                backup = backups.get(path)
+                if backup is None:
+                    if path.exists():
+                        path.unlink()
+                else:
+                    _replace_path(backup, path)
+            except Exception as rollback_exc:  # pragma: no cover - catastrophic I/O
+                rollback_errors.append(rollback_exc)
+        if rollback_errors:
+            raise RuntimeError(
+                "dynamic publication replacement failed and rollback was incomplete"
+            ) from exc
         raise
     finally:
-        for temp_path in temporary.values():
-            if temp_path.exists():
-                temp_path.unlink()
+        for temporary_path in [*staged.values(), *backups.values()]:
+            if temporary_path.exists():
+                temporary_path.unlink()
 
 
 def write_dynamic_manuscript(
@@ -1590,7 +1916,32 @@ def write_dynamic_manuscript(
 ) -> dict[str, Any]:
     """Validate all inputs, then update all three manuscript products."""
 
+    protocol_sources = _protocol_source_paths(protocol_path)
     protocol = load_protocol(protocol_path)
+    targets, protected_roots = _require_declared_publication_paths(
+        protocol=protocol,
+        result_path=result_path,
+        acceptance_path=acceptance_path,
+        table_path=table_path,
+        figure_path=figure_path,
+        manuscript_path=manuscript_path,
+    )
+    sources = [
+        *protocol_sources,
+        result_path,
+        acceptance_path,
+    ]
+    _require_publication_boundary(
+        protocol_path=protocol_path,
+        sources=sources,
+        targets=targets,
+        protected_roots=protected_roots,
+    )
+    _require_safe_publication_paths(
+        targets,
+        sources=sources,
+        protected_roots=protected_roots,
+    )
     result = _load_json(result_path, "dynamic formal result")
     acceptance = _load_json(acceptance_path, "dynamic formal acceptance")
     rows = validate_dynamic_inputs(
@@ -1603,7 +1954,10 @@ def write_dynamic_manuscript(
     figure = render_svg(rows)
     manuscript = _replace_block(
         source,
-        render_manuscript_block(rows, figure_name=figure_path.name),
+        render_manuscript_block(
+            rows,
+            figure_reference=_manuscript_reference(figure_path, manuscript_path),
+        ),
     )
     _write_group_with_exception_rollback(
         {
@@ -1642,6 +1996,21 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--figure", type=Path, default=DEFAULT_FIGURE)
     parser.add_argument("--manuscript", type=Path, default=DEFAULT_MANUSCRIPT)
     args = parser.parse_args(argv)
+    _require_production_cli_paths(
+        protocol_path=args.protocol,
+        sources=[],
+        targets=[],
+    )
+    production_sources = [
+        *_protocol_source_paths(args.protocol),
+        args.result,
+        args.acceptance,
+    ]
+    _require_production_cli_paths(
+        protocol_path=args.protocol,
+        sources=production_sources,
+        targets=[args.table, args.figure, args.manuscript],
+    )
     summary = write_dynamic_manuscript(
         protocol_path=args.protocol,
         result_path=args.result,

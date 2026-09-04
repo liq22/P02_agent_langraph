@@ -943,7 +943,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
         self.assertIn("10/10 exact-six Mock cells", current_table)
         self.assertIn("runner ready; 240/240 dry-run commands emitted, 0 invoked", current_table)
         self.assertIn("runner 17/17", current_table)
-        self.assertIn("dynamic-focused 46/46", current_table)
+        self.assertIn("dynamic-focused 50/50", current_table)
         self.assertIn("0/240 formal units", current_table)
         self.assertIn("a Graph treatment effect", current_table)
         dynamic_status = status["dynamic_v3"]
@@ -979,7 +979,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
             for element in dynamic_group.iter()
             if element.attrib.get("data-formal-runner-tests") == "17"
         )
-        self.assertEqual(evidence_text.attrib.get("data-dynamic-tests"), "46")
+        self.assertEqual(evidence_text.attrib.get("data-dynamic-tests"), "50")
         self.assertEqual(evidence_text.attrib.get("data-provider-calls"), "0")
         self.assertIn(
             "../assets/figures/p2_current_mechanics_status.svg", manuscript
@@ -988,7 +988,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
         self.assertIn("zero environment reads, zero probe reads", manuscript)
         self.assertIn("240/240 dry-run commands", manuscript)
         self.assertIn("17/17", manuscript)
-        self.assertIn("46/46", manuscript)
+        self.assertIn("50/50", manuscript)
         self.assertIn("0/240 formal units", manuscript)
 
 

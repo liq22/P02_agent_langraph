@@ -98,13 +98,18 @@ observation_conditioning:
     accepted_manuscript_consumer: scripts/render_graph_dynamic_manuscript.py
     accepted_manuscript_table: paper/assets/tables/p2_dynamic_formal_results.md
     accepted_manuscript_figure: paper/assets/figures/p2_dynamic_formal_primary.svg
+    accepted_manuscript: paper/draft/main.md
     accepted_manuscript_marker: P2_DYNAMIC_FORMAL
     accepted_manuscript_consumer_ready: true
     accepted_manuscript_rows_emitted: 0
     accepted_manuscript_consumer_provider_calls: 0
     accepted_manuscript_consumer_raw_private_reads: 0
-    accepted_manuscript_consumer_focused_tests_passed: 11
-    accepted_manuscript_consumer_focused_tests_total: 11
+    accepted_manuscript_consumer_focused_tests_passed: 20
+    accepted_manuscript_consumer_focused_tests_total: 20
+    accepted_result_root_bound_to_protocol_formal_root: true
+    accepted_manuscript_valid_bootstrap_replicates_reported: true
+    accepted_manuscript_existing_output_contract: absent_or_ordinary_single_link_regular_file
+    accepted_manuscript_production_cli_protocol_fixed: true
     accepted_manuscript_task_primary_rows_after_acceptance: 8
     accepted_manuscript_secondary_mechanism_rows_after_acceptance: 26
     formal_registered_units: 240
@@ -115,8 +120,8 @@ observation_conditioning:
     formal_launch_allowed: false
     focused_formal_runner_tests_passed: 17
     focused_formal_runner_tests_total: 17
-    dynamic_focused_tests_passed: 46
-    dynamic_focused_tests_total: 46
+    dynamic_focused_tests_passed: 50
+    dynamic_focused_tests_total: 50
     task_primary_metric: target_adverse_window_average_precision
     missing_score_policy_id: phase1_replay_target_adverse_missing_score_v1
     private_target_authority: registered_private_data_port_assignment
@@ -293,12 +298,16 @@ provider_free_execution_readiness:
     accepted_manuscript_consumer: scripts/render_graph_dynamic_manuscript.py
     accepted_manuscript_consumer_ready: true
     accepted_manuscript_rows_emitted: 0
-    accepted_manuscript_consumer_focused_tests_passed: 11
-    accepted_manuscript_consumer_focused_tests_total: 11
+    accepted_manuscript_consumer_focused_tests_passed: 20
+    accepted_manuscript_consumer_focused_tests_total: 20
+    accepted_result_root_bound_to_protocol_formal_root: true
+    accepted_manuscript_valid_bootstrap_replicates_reported: true
+    accepted_manuscript_existing_output_contract: absent_or_ordinary_single_link_regular_file
+    accepted_manuscript_production_cli_protocol_fixed: true
     focused_formal_runner_tests_passed: 17
     focused_formal_runner_tests_total: 17
-    dynamic_focused_tests_passed: 46
-    dynamic_focused_tests_total: 46
+    dynamic_focused_tests_passed: 50
+    dynamic_focused_tests_total: 50
     private_target_authority: registered_private_data_port_assignment
     prediction_authority: canonical_rollout_successful_submit_prefix
     derived_evaluation_jsonl_ingested: false
@@ -349,6 +358,7 @@ provider_free_execution_readiness:
     accepted_manuscript_consumer: scripts/render_graph_reliability_manuscript.py
     accepted_manuscript_table: paper/assets/tables/p2_e9_reliability_results.md
     accepted_manuscript_figure: paper/assets/figures/p2_e9_reliability_primary.svg
+    accepted_manuscript: paper/draft/main.md
     accepted_manuscript_marker: P2_E9_RELIABILITY
     accepted_manuscript_consumer_ready: true
     accepted_manuscript_rows_emitted: 0
@@ -356,8 +366,12 @@ provider_free_execution_readiness:
     accepted_manuscript_consumer_raw_private_reads: 0
     runner_analyzer_scheduler_focused_tests_passed: 12
     runner_analyzer_scheduler_focused_tests_total: 12
-    accepted_manuscript_consumer_focused_tests_passed: 10
-    accepted_manuscript_consumer_focused_tests_total: 10
+    accepted_manuscript_consumer_focused_tests_passed: 20
+    accepted_manuscript_consumer_focused_tests_total: 20
+    accepted_result_root_bound_to_protocol_formal_root: true
+    accepted_manuscript_valid_bootstrap_replicates_reported: true
+    accepted_manuscript_existing_output_contract: absent_or_ordinary_single_link_regular_file
+    accepted_manuscript_production_cli_protocol_fixed: true
     primary_metric: task.average_precision
     primary_missing_score_policy: phase1_replay_target_adverse_missing_score_v1
     primary_repeat_population: 24_assigned_windows_recomputed_within_each_repeat
@@ -392,9 +406,11 @@ provider_free_execution_readiness:
     runner: scripts/run_graph_experiment.py
     analyzer: scripts/analyze_graph_cross_dataset_replay.py
     accepted_result_consumer: scripts/render_graph_cross_dataset_manuscript.py
+    accepted_result_schema: p2_e8_ottawa_generic_base_result_v2
     accepted_result: paper/experiments/results/graph_cross_dataset_replay_v3/paper2-cross-dataset-ottawa-generic-v1/formal_result.json
     accepted_manuscript_table: paper/assets/tables/p2_e8_ottawa_results.md
     accepted_manuscript_figure: paper/assets/figures/p2_e8_ottawa_primary.svg
+    accepted_manuscript: paper/draft/main.md
     manuscript_marker: P2_E8_OTTAWA
     status: provider_free_analyzer_and_accepted_consumer_ready_external_execution_not_authorized_formal_not_run
     current_authority: true
@@ -407,15 +423,19 @@ provider_free_execution_readiness:
     provider_free_preflight_ready: true
     formal_launch: false
     current_blocker: explicit_provider_destination_and_payload_egress_authorization_required
+    post_authorization_requirement: complete_72_bundle_cohort_before_analysis_or_publication
     commands_executed: 0
     formal_results_exist: false
     consumer_rows_emitted: 0
-    analyzer_scheduler_runtime_tests_passed: 21
-    analyzer_scheduler_runtime_tests_total: 21
-    consumer_focused_tests_passed: 9
-    consumer_focused_tests_total: 9
-    cross_dataset_focused_tests_passed: 30
-    cross_dataset_focused_tests_total: 30
+    accepted_result_root_bound_to_scheduled_stamp: true
+    accepted_manuscript_existing_output_contract: absent_or_ordinary_single_link_regular_file
+    accepted_manuscript_production_cli_protocol_fixed: true
+    analyzer_scheduler_runtime_tests_passed: 22
+    analyzer_scheduler_runtime_tests_total: 22
+    consumer_focused_tests_passed: 18
+    consumer_focused_tests_total: 18
+    cross_dataset_focused_tests_passed: 40
+    cross_dataset_focused_tests_total: 40
   generic_base_extensions:
     horizon_scaling: preregistered_runner_ready_144_dry_commands_zero_executions_zero_results
     reliability: preregistered_runner_ready_160_inert_commands_zero_executions_zero_results
@@ -435,8 +455,8 @@ current_mechanics_assets:
   performance_claims_allowed: false
 
 implementation_validation:
-  provider_free_tests: 185
-  provider_free_tests_passed: 185
+  provider_free_tests: 214
+  provider_free_tests_passed: 214
   provider_calls: 0
 
 result_reporting:
@@ -454,16 +474,19 @@ result_reporting:
   dynamic_v3_registered_rows_after_acceptance: 34
   dynamic_v3_current_rows_emitted: 0
   dynamic_v3_grouped_replace_with_exception_rollback: true
+  dynamic_v3_protocol_bound_mode_preserving_publication: true
   cross_dataset_v3_consumer: scripts/render_graph_cross_dataset_manuscript.py
   cross_dataset_v3_acceptance_required: true
   cross_dataset_v3_registered_rows_after_acceptance: 5
   cross_dataset_v3_current_rows_emitted: 0
   cross_dataset_v3_grouped_replace_with_exception_rollback: true
+  cross_dataset_v3_protocol_bound_mode_preserving_publication: true
   reliability_v2_consumer: scripts/render_graph_reliability_manuscript.py
   reliability_v2_acceptance_required: true
   reliability_v2_registered_rows_after_acceptance: 8
   reliability_v2_current_rows_emitted: 0
   reliability_v2_grouped_replace_with_exception_rollback: true
+  reliability_v2_protocol_bound_mode_preserving_publication: true
 
 review_readiness:
   shared_deterministic_v6_accepted: true

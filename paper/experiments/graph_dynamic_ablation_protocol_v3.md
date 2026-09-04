@@ -52,9 +52,15 @@ and loop behavior; P2-E6 reports revision, post-event action/prediction steps,
 repetition, and budget exhaustion. Seven additional P2-E7 rows compare full
 Graph with Reactive on the same horizon-12 condition events. This produces no
 fault-onset, event-F1, detection-delay, or physical-time claim and never
-duplicates an episode denominator. The consumer updates the standalone table,
-task-primary SVG, and one marked manuscript block as a group with exception
-rollback. Rejected,
-partial, identity-drifted, or arithmetically inconsistent inputs leave all
-three outputs unchanged. With formal coverage at 0/240, the manuscript block
-remains Pending.
+duplicates an episode denominator. The protocol fixes the accepted result,
+acceptance, table, SVG, and manuscript paths, and the result `output_root` must
+equal the canonical protocol `formal_root`. Every displayed interval reports
+its valid/10,000 bootstrap count. The consumer requires lexical and resolved
+source containment, rejects source/output aliases and publication under input
+roots, and accepts an existing output only as an ordinary single-link regular
+file. Its production CLI accepts only this protocol, and every resolved output
+remains inside the repository. All three outputs are staged and fsynced before
+grouped replacement; existing modes are preserved and a failed replacement is
+rolled back in reverse order. Its 20/20 focused checks cover these boundaries,
+staging cleanup, idempotence, and the scientific validation cases. With formal
+coverage at 0/240, the manuscript block remains Pending.

@@ -2,10 +2,13 @@ from __future__ import annotations
 
 import copy
 import json
+import os
+import stat
 import tempfile
 import unittest
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from unittest import mock
 
 from scripts.analyze_graph_reliability import (
     ACCEPTANCE_SCHEMA_VERSION,
@@ -18,9 +21,9 @@ from scripts.analyze_graph_reliability import (
 from scripts.render_graph_reliability_manuscript import (
     MANUSCRIPT_BEGIN,
     MANUSCRIPT_END,
+    PUBLICATION_WRITE_CONTRACT,
     ReliabilityResultsPending,
     validate_reliability_inputs,
-    write_reliability_manuscript,
 )
 from scripts.schedule_graph_reliability import (
     _shared_contract,
@@ -41,10 +44,21 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
         )
         return path
 
+    def _protocol_json(self, path: Path, value: object) -> Path:
+        path.write_text(
+            json.dumps(value, indent=2, allow_nan=False) + "\n",
+            encoding="utf-8",
+        )
+        return path
+
     def _fixture(
         self, output_root: Path, *, undefined_primary: bool = False
     ) -> tuple[dict, dict, dict]:
         protocol = load_graph_reliability_protocol(PROTOCOL)
+        fixture_root = output_root.resolve().parent
+        output_root = (
+            fixture_root / "repository" / protocol["execution"]["formal_root"]
+        ).resolve()
         repeat_ids = [item["repeat_id"] for item in protocol["cohort"]["repeats"]]
         iterations = protocol["statistics"]["bootstrap"]["iterations"]
         metrics = [*protocol["metrics"]["task"], *protocol["metrics"]["rollout"]]
@@ -337,7 +351,22 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
         return protocol, acceptance, result
 
     def _paths(self, root: Path, acceptance: dict, result: dict) -> dict[str, Path]:
-        manuscript = root / "main.md"
+        repository_root = root / "repository"
+        results_root = (
+            repository_root
+            / "paper/experiments/results/graph_reliability_v2"
+            / "graph_reliability_generic_n10_v2"
+        )
+        table = repository_root / "paper/assets/tables/p2_e9_reliability_results.md"
+        figure = repository_root / "paper/assets/figures/p2_e9_reliability_primary.svg"
+        manuscript = repository_root / "paper/draft/main.md"
+        for directory in (
+            results_root,
+            table.parent,
+            figure.parent,
+            manuscript.parent,
+        ):
+            directory.mkdir(parents=True, exist_ok=True)
         manuscript.write_text(
             "Before\n"
             f"{MANUSCRIPT_BEGIN}\n\npending\n\n{MANUSCRIPT_END}\n"
@@ -345,13 +374,37 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
             encoding="utf-8",
         )
         return {
-            "protocol_path": PROTOCOL,
-            "result_path": self._json(root / "result.json", result),
-            "acceptance_path": self._json(root / "acceptance.json", acceptance),
-            "table_path": root / "table.md",
-            "figure_path": root / "figure.svg",
+            "protocol_path": self._protocol_json(
+                root / "protocol.yaml", load_graph_reliability_protocol(PROTOCOL)
+            ),
+            "result_path": self._json(results_root / "formal_result.json", result),
+            "acceptance_path": self._json(
+                results_root / "formal_acceptance.json", acceptance
+            ),
+            "table_path": table,
+            "figure_path": figure,
             "manuscript_path": manuscript,
         }
+
+    def _write(self, paths: dict[str, Path]) -> dict:
+        from scripts import render_graph_reliability_manuscript as renderer
+
+        repository_root = paths["manuscript_path"].parents[2]
+        with mock.patch.object(renderer, "ROOT", repository_root):
+            return renderer.write_reliability_manuscript(**paths)
+
+    def _validate(self, *, protocol: dict, acceptance: dict, result: dict) -> list[dict]:
+        from scripts import render_graph_reliability_manuscript as renderer
+
+        repository_root = Path(result["output_root"])
+        for _part in Path(protocol["execution"]["formal_root"]).parts:
+            repository_root = repository_root.parent
+        with mock.patch.object(renderer, "ROOT", repository_root):
+            return validate_reliability_inputs(
+                protocol=protocol,
+                acceptance=acceptance,
+                result=result,
+            )
 
     def test_protocol_registers_the_accepted_only_consumer(self) -> None:
         protocol = load_graph_reliability_protocol(PROTOCOL)
@@ -365,9 +418,9 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
         self.assertIs(consumer["raw_run_or_private_data_reads"], False)
         self.assertIs(consumer["provider_calls"], False)
         self.assertIs(consumer["displayed_repeat_arithmetic_recomputed"], True)
+        self.assertEqual(consumer["write_contract"], PUBLICATION_WRITE_CONTRACT)
         self.assertEqual(
-            consumer["write_contract"],
-            "grouped_replace_with_exception_rollback",
+            protocol["execution"]["accepted_manuscript"], "paper/draft/main.md"
         )
 
     def test_accepted_result_writes_table_svg_and_unique_manuscript_block(self) -> None:
@@ -375,14 +428,20 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
             root = Path(directory)
             _, acceptance, result = self._fixture(root / "formal")
             paths = self._paths(root, acceptance, result)
-            summary = write_reliability_manuscript(**paths)
+            summary = self._write(paths)
             self.assertEqual(summary["registered_rows"], 8)
             self.assertEqual(summary["formal_episode_bundles"], 160)
             table = paths["table_path"].read_text(encoding="utf-8")
             manuscript = paths["manuscript_path"].read_text(encoding="utf-8")
             self.assertIn("Target-adverse Average Precision", table)
             self.assertIn("+0.0500", table)
+            self.assertIn("Valid bootstrap replicates", table)
+            self.assertIn("2000/2000", table)
             self.assertIn("accepted all 160 registered episode bundles", manuscript)
+            self.assertIn(
+                "![Accepted P2-E9 bounded reliability contrasts](../assets/figures/p2_e9_reliability_primary.svg)",
+                manuscript,
+            )
             self.assertEqual(manuscript.count(MANUSCRIPT_BEGIN), 1)
             self.assertEqual(manuscript.count(MANUSCRIPT_END), 1)
             self.assertNotIn(str(root / "formal"), table + manuscript)
@@ -394,15 +453,17 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            protocol = _build_fixture(root)
-            acceptance = accept_graph_reliability_cohort(root, protocol)
+            protocol = load_graph_reliability_protocol(PROTOCOL)
+            formal_root = root / "repository" / protocol["execution"]["formal_root"]
+            protocol = _build_fixture(formal_root)
+            acceptance = accept_graph_reliability_cohort(formal_root, protocol)
             result = analyze_graph_reliability(
-                root,
+                formal_root,
                 protocol,
                 acceptance,
                 private_replay_assignments=_private_assignments(protocol),
             )
-            rows = validate_reliability_inputs(
+            rows = self._validate(
                 protocol=protocol, acceptance=acceptance, result=result
             )
             self.assertEqual(len(rows), 8)
@@ -421,7 +482,7 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
                 for key in ("table_path", "figure_path", "manuscript_path")
             }
             with self.assertRaises(ReliabilityResultsPending):
-                write_reliability_manuscript(**paths)
+                self._write(paths)
             for key, original in originals.items():
                 self.assertEqual(paths[key].read_bytes(), original)
 
@@ -433,7 +494,7 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
             repeat_id = protocol["cohort"]["repeats"][0]["repeat_id"]
             paired["repeat_estimates"][repeat_id] += 0.01
             with self.assertRaisesRegex(ReliabilityResultsPending, "arithmetic drifted"):
-                validate_reliability_inputs(
+                self._validate(
                     protocol=protocol, acceptance=acceptance, result=result
                 )
 
@@ -458,10 +519,15 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
                 "rollout.grounded_completion"
             ]["defined_episode_numerator"] = 79
             cases.append(incomplete_grounded)
+            wrong_bootstrap = copy.deepcopy(result)
+            wrong_bootstrap["paired_graph_minus_reactive"]["metrics"][
+                PRIMARY_METRIC
+            ]["bootstrap_valid_replicates"] = 2001
+            cases.append(wrong_bootstrap)
             for index, candidate in enumerate(cases):
                 with self.subTest(case=index):
                     with self.assertRaises(ReliabilityResultsPending):
-                        validate_reliability_inputs(
+                        self._validate(
                             protocol=protocol,
                             acceptance=acceptance,
                             result=candidate,
@@ -485,7 +551,7 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
             with self.assertRaisesRegex(
                 ReliabilityResultsPending, "grounded repeat mean"
             ):
-                write_reliability_manuscript(**paths)
+                self._write(paths)
 
             for key, original in originals.items():
                 self.assertEqual(paths[key].read_bytes(), original)
@@ -496,8 +562,22 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
             protocol, acceptance, result = self._fixture(root / "formal")
             acceptance["contract"]["model"] = "replacement-model"
             with self.assertRaises(ReliabilityResultsPending):
-                validate_reliability_inputs(
+                self._validate(
                     protocol=protocol, acceptance=acceptance, result=result
+                )
+
+    def test_result_output_root_is_bound_to_protocol_formal_root(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol, acceptance, result = self._fixture(root / "formal")
+            replacement = str((root / "different-formal-root").resolve())
+            result["output_root"] = replacement
+            acceptance["output_root"] = replacement
+            with self.assertRaisesRegex(ReliabilityResultsPending, "formal_root"):
+                self._validate(
+                    protocol=protocol,
+                    acceptance=acceptance,
+                    result=result,
                 )
 
     def test_undefined_primary_renders_na_without_directional_prose(self) -> None:
@@ -507,10 +587,11 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
                 root / "formal", undefined_primary=True
             )
             paths = self._paths(root, acceptance, result)
-            write_reliability_manuscript(**paths)
+            self._write(paths)
             table = paths["table_path"].read_text(encoding="utf-8")
             manuscript = paths["manuscript_path"].read_text(encoding="utf-8")
             self.assertIn("N/A [N/A, N/A]", table)
+            self.assertIn("0/2000", table)
             lowered = manuscript.lower()
             self.assertNotIn("improved", lowered)
             self.assertNotIn("worsened", lowered)
@@ -529,9 +610,254 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
             paths["table_path"].write_text("old table", encoding="utf-8")
             paths["figure_path"].write_text("old figure", encoding="utf-8")
             with self.assertRaises(ReliabilityResultsPending):
-                write_reliability_manuscript(**paths)
+                self._write(paths)
             self.assertEqual(paths["table_path"].read_text(encoding="utf-8"), "old table")
             self.assertEqual(paths["figure_path"].read_text(encoding="utf-8"), "old figure")
+
+    def test_equal_output_paths_are_rejected_before_writes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            protocol = json.loads(paths["protocol_path"].read_text(encoding="utf-8"))
+            protocol["execution"]["accepted_manuscript_figure"] = protocol[
+                "execution"
+            ]["accepted_manuscript_table"]
+            self._protocol_json(paths["protocol_path"], protocol)
+            paths["figure_path"] = paths["table_path"]
+
+            with self.assertRaisesRegex(ReliabilityResultsPending, "must be distinct"):
+                self._write(paths)
+            self.assertFalse(paths["table_path"].exists())
+            self.assertIn("pending", paths["manuscript_path"].read_text(encoding="utf-8"))
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            paths["table_path"].write_text("shared inode", encoding="utf-8")
+            os.link(paths["table_path"], paths["figure_path"])
+            with self.assertRaisesRegex(ReliabilityResultsPending, "must be distinct"):
+                self._write(paths)
+            self.assertEqual(paths["table_path"].read_text(encoding="utf-8"), "shared inode")
+
+    def test_symlink_and_hardlink_input_aliases_are_rejected(self) -> None:
+        for kind in ("symlink", "hardlink"):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                _, acceptance, result = self._fixture(root / "formal")
+                paths = self._paths(root, acceptance, result)
+                source = (
+                    paths["result_path"]
+                    if kind == "symlink"
+                    else paths["protocol_path"]
+                )
+                if kind == "symlink":
+                    paths["table_path"].symlink_to(source)
+                else:
+                    os.link(source, paths["table_path"])
+                original = source.read_bytes()
+
+                with self.assertRaisesRegex(
+                    ReliabilityResultsPending,
+                    "must not overwrite an input authority",
+                ):
+                    self._write(paths)
+                self.assertEqual(source.read_bytes(), original)
+
+    def test_nonordinary_existing_outputs_are_rejected_before_staging(self) -> None:
+        from scripts import render_graph_reliability_manuscript as renderer
+
+        for kind in ("external_symlink", "dangling_symlink", "unrelated_hardlink"):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                _, acceptance, result = self._fixture(root / "formal")
+                paths = self._paths(root, acceptance, result)
+                external = root / "unrelated.txt"
+                if kind == "external_symlink":
+                    external.write_text("external sentinel", encoding="utf-8")
+                    paths["table_path"].symlink_to(external)
+                elif kind == "dangling_symlink":
+                    paths["table_path"].symlink_to(external)
+                else:
+                    external.write_text("external sentinel", encoding="utf-8")
+                    os.link(external, paths["table_path"])
+                manuscript = paths["manuscript_path"].read_bytes()
+                with mock.patch.object(renderer, "_stage_bytes") as stage:
+                    with self.assertRaisesRegex(
+                        ReliabilityResultsPending,
+                        "ordinary single-link regular file",
+                    ):
+                        self._write(paths)
+                    stage.assert_not_called()
+                self.assertEqual(paths["manuscript_path"].read_bytes(), manuscript)
+                if external.exists():
+                    self.assertEqual(
+                        external.read_text(encoding="utf-8"), "external sentinel"
+                    )
+                if "symlink" in kind:
+                    self.assertTrue(paths["table_path"].is_symlink())
+                else:
+                    self.assertTrue(os.path.samefile(external, paths["table_path"]))
+
+    def test_source_symlink_escape_and_output_parent_escape_fail_before_staging(self) -> None:
+        from scripts import render_graph_reliability_manuscript as renderer
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            external = root / "outside-result.json"
+            original = paths["result_path"].read_bytes()
+            external.write_bytes(original)
+            paths["result_path"].unlink()
+            paths["result_path"].symlink_to(external)
+            with mock.patch.object(renderer, "_stage_bytes") as stage:
+                with self.assertRaisesRegex(ReliabilityResultsPending, "results_root"):
+                    self._write(paths)
+                stage.assert_not_called()
+            self.assertEqual(external.read_bytes(), original)
+            self.assertTrue(paths["result_path"].is_symlink())
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            publication = paths["table_path"].parent
+            publication.rmdir()
+            outside = root.parent / f"{root.name}-outside"
+            outside.mkdir()
+            publication.symlink_to(outside, target_is_directory=True)
+            try:
+                with mock.patch.object(renderer, "_stage_bytes") as stage:
+                    with self.assertRaisesRegex(
+                        ReliabilityResultsPending,
+                        "resolves outside its authority root",
+                    ):
+                        self._write(paths)
+                    stage.assert_not_called()
+                self.assertEqual(list(outside.iterdir()), [])
+            finally:
+                outside.rmdir()
+
+    def test_cli_requires_registered_protocol(self) -> None:
+        from scripts import render_graph_reliability_manuscript as renderer
+
+        with tempfile.TemporaryDirectory() as directory:
+            alternate = Path(directory) / "alternate.yaml"
+            alternate.write_text("{}\n", encoding="utf-8")
+            with self.assertRaisesRegex(ReliabilityResultsPending, "registered P2-E9"):
+                renderer.main(["--protocol", str(alternate)])
+
+    def test_undeclared_and_input_root_output_paths_are_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            paths["table_path"] = paths["table_path"].with_name("undeclared.md")
+            with self.assertRaisesRegex(ReliabilityResultsPending, "differs from"):
+                self._write(paths)
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            protocol = json.loads(paths["protocol_path"].read_text(encoding="utf-8"))
+            repository_root = paths["manuscript_path"].parents[2]
+            unsafe_relative = Path(protocol["execution"]["results_root"]) / "unsafe.md"
+            unsafe = repository_root / unsafe_relative
+            protocol["execution"]["accepted_manuscript_table"] = unsafe_relative.as_posix()
+            self._protocol_json(paths["protocol_path"], protocol)
+            paths["table_path"] = unsafe
+            with self.assertRaisesRegex(
+                ReliabilityResultsPending, "inside an input root"
+            ):
+                self._write(paths)
+
+    def test_staging_failure_writes_nothing_and_cleans_temporaries(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            paths["table_path"].write_text("old table", encoding="utf-8")
+            paths["figure_path"].write_text("old figure", encoding="utf-8")
+            originals = {
+                key: paths[key].read_bytes()
+                for key in ("table_path", "figure_path", "manuscript_path")
+            }
+            from scripts import render_graph_reliability_manuscript as renderer
+
+            real_stage = renderer._stage_bytes
+            stage_count = 0
+
+            def fail_second_stage(path: Path, payload: bytes, mode: int) -> Path:
+                nonlocal stage_count
+                stage_count += 1
+                if stage_count == 2:
+                    raise OSError("simulated staging failure")
+                return real_stage(path, payload, mode)
+
+            with mock.patch.object(renderer, "_stage_bytes", side_effect=fail_second_stage):
+                with self.assertRaisesRegex(OSError, "simulated staging failure"):
+                    self._write(paths)
+            for key, original in originals.items():
+                self.assertEqual(paths[key].read_bytes(), original)
+            self.assertEqual(list(root.rglob(".*.tmp")), [])
+
+    def test_third_replace_failure_rolls_back_all_outputs(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            paths["table_path"].write_text("old table", encoding="utf-8")
+            paths["figure_path"].write_text("old figure", encoding="utf-8")
+            originals = {
+                key: paths[key].read_bytes()
+                for key in ("table_path", "figure_path", "manuscript_path")
+            }
+            real_replace = os.replace
+            replacement_count = 0
+
+            def fail_third_replace(source: object, destination: object) -> None:
+                nonlocal replacement_count
+                replacement_count += 1
+                if replacement_count == 3:
+                    raise OSError("simulated third replace failure")
+                real_replace(source, destination)
+
+            with mock.patch(
+                "scripts.render_graph_reliability_manuscript._replace_path",
+                side_effect=fail_third_replace,
+            ):
+                with self.assertRaisesRegex(OSError, "simulated third"):
+                    self._write(paths)
+            for key, original in originals.items():
+                self.assertEqual(paths[key].read_bytes(), original)
+
+    def test_repeated_publication_is_byte_identical_and_preserves_modes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            paths["table_path"].write_text("old table", encoding="utf-8")
+            paths["figure_path"].write_text("old figure", encoding="utf-8")
+            modes = {
+                "table_path": 0o640,
+                "figure_path": 0o600,
+                "manuscript_path": 0o644,
+            }
+            for key, mode in modes.items():
+                paths[key].chmod(mode)
+
+            self._write(paths)
+            first = {
+                key: paths[key].read_bytes()
+                for key in ("table_path", "figure_path", "manuscript_path")
+            }
+            self._write(paths)
+            for key, payload in first.items():
+                self.assertEqual(paths[key].read_bytes(), payload)
+                self.assertEqual(stat.S_IMODE(paths[key].stat().st_mode), modes[key])
 
 
 if __name__ == "__main__":

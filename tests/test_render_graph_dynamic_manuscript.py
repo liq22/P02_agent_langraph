@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import json
 import os
+import stat
 import tempfile
 import unittest
 import xml.etree.ElementTree as ET
@@ -24,6 +25,7 @@ from scripts.render_graph_dynamic_manuscript import (
     MANUSCRIPT_BEGIN,
     MANUSCRIPT_END,
     PRIMARY_METRIC,
+    PUBLICATION_WRITE_CONTRACT,
     DynamicResultsPending,
     validate_dynamic_inputs,
     write_dynamic_manuscript,
@@ -47,6 +49,7 @@ class DynamicManuscriptRendererTest(unittest.TestCase):
         self, output_root: Path, *, undefined_h3: bool = False
     ) -> tuple[dict, dict, dict]:
         protocol = load_protocol(PROTOCOL)
+        protocol["output_contract"]["formal_root"] = str(output_root.resolve())
         metrics = _registered_metrics(protocol)
         values: dict[tuple[int, str], list[float | None]] = {
             (3, "reactive"): [0.40, 0.45, 0.50],
@@ -601,23 +604,46 @@ class DynamicManuscriptRendererTest(unittest.TestCase):
         return protocol, acceptance, result
 
     def _paths(self, root: Path, acceptance: dict, result: dict) -> dict[str, Path]:
-        manuscript = root / "main.md"
+        formal_root = root / "formal"
+        results_root = root / "results"
+        publication_root = root / "publication"
+        manuscript_root = root / "paper"
+        for directory in (formal_root, results_root, publication_root, manuscript_root):
+            directory.mkdir(parents=True, exist_ok=True)
+        manuscript = manuscript_root / "main.md"
         manuscript.write_text(
             "Before\n"
             f"{MANUSCRIPT_BEGIN}\n\npending\n\n{MANUSCRIPT_END}\n"
             "After\n",
             encoding="utf-8",
         )
+        protocol = load_protocol(PROTOCOL)
+        protocol["output_contract"].update(
+            {
+                "formal_root": str(formal_root),
+                "results_root": str(results_root),
+                "event_catalog": str(results_root / "public_event_catalog.json"),
+                "formal_result": str(results_root / "formal_result.json"),
+                "formal_acceptance": str(results_root / "formal_acceptance.json"),
+                "accepted_manuscript_table": str(publication_root / "table.md"),
+                "accepted_manuscript_figure": str(publication_root / "figure.svg"),
+                "accepted_manuscript": str(manuscript),
+            }
+        )
         return {
-            "protocol_path": PROTOCOL,
-            "result_path": self._json(root / "result.json", result),
-            "acceptance_path": self._json(root / "acceptance.json", acceptance),
-            "table_path": root / "table.md",
-            "figure_path": root / "figure.svg",
+            "protocol_path": self._json(root / "protocol.yaml", protocol),
+            "result_path": self._json(results_root / "formal_result.json", result),
+            "acceptance_path": self._json(
+                results_root / "formal_acceptance.json", acceptance
+            ),
+            "table_path": publication_root / "table.md",
+            "figure_path": publication_root / "figure.svg",
             "manuscript_path": manuscript,
         }
 
     def test_protocol_registers_the_accepted_only_consumer(self) -> None:
+        from scripts import render_graph_dynamic_manuscript as renderer
+
         protocol = load_protocol(PROTOCOL)
         consumer = protocol["formal_analysis"]["accepted_manuscript_consumer"]
         self.assertEqual(
@@ -635,9 +661,10 @@ class DynamicManuscriptRendererTest(unittest.TestCase):
         self.assertIs(consumer["displayed_mechanism_arithmetic_recomputed"], True)
         self.assertIs(consumer["displayed_holm_adjustment_recomputed"], True)
         self.assertIs(consumer["task_primary_and_mechanism_sections_separate"], True)
+        self.assertEqual(consumer["write_contract"], PUBLICATION_WRITE_CONTRACT)
         self.assertEqual(
-            consumer["write_contract"],
-            "grouped_replace_with_exception_rollback",
+            protocol["output_contract"]["accepted_manuscript"],
+            "paper/draft/main.md",
         )
         self.assertEqual(consumer["task_primary_rows_after_acceptance"], 8)
         self.assertEqual(consumer["secondary_mechanism_rows_after_acceptance"], 26)
@@ -652,6 +679,14 @@ class DynamicManuscriptRendererTest(unittest.TestCase):
                 "duplicate_no_branching_rows"
             ],
             False,
+        )
+        self.assertEqual(
+            renderer._protocol_source_paths(PROTOCOL),
+            [
+                PROTOCOL,
+                PROTOCOL.with_name("graph_dynamic_ablation_protocol_v2.yaml"),
+                PROTOCOL.with_name("graph_dynamic_ablation_protocol_v1.yaml"),
+            ],
         )
 
     def test_accepted_result_writes_table_svg_and_unique_manuscript_block(self) -> None:
@@ -675,8 +710,14 @@ class DynamicManuscriptRendererTest(unittest.TestCase):
             self.assertIn("Registered secondary mechanism outcomes", table)
             self.assertIn("`event_to_Monitor_transition_rate`", table)
             self.assertIn("+0.1800", table)
+            self.assertIn("Valid bootstrap replicates", table)
+            self.assertIn("10000/10000", table)
             self.assertIn("accepted all 240 registered episode bundles", manuscript)
             self.assertIn("26 prespecified secondary mechanism rows", manuscript)
+            self.assertIn(
+                "![Accepted dynamic-v3 task-primary contrasts](../publication/figure.svg)",
+                manuscript,
+            )
             self.assertEqual(manuscript.count(MANUSCRIPT_BEGIN), 1)
             self.assertEqual(manuscript.count(MANUSCRIPT_END), 1)
             self.assertNotIn(str(root / "formal"), table + manuscript)
@@ -730,6 +771,20 @@ class DynamicManuscriptRendererTest(unittest.TestCase):
                             result=candidate,
                             acceptance=acceptance,
                         )
+
+    def test_result_output_root_is_bound_to_protocol_formal_root(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol, acceptance, result = self._fixture(root / "formal")
+            replacement = str((root / "different-formal-root").resolve())
+            result["output_root"] = replacement
+            acceptance["output_root"] = replacement
+            with self.assertRaisesRegex(DynamicResultsPending, "formal_root"):
+                validate_dynamic_inputs(
+                    protocol=protocol,
+                    result=result,
+                    acceptance=acceptance,
+                )
 
     def test_displayed_delta_is_recomputed_from_seed_level_cells(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -831,6 +886,7 @@ class DynamicManuscriptRendererTest(unittest.TestCase):
             table = paths["table_path"].read_text(encoding="utf-8")
             manuscript = paths["manuscript_path"].read_text(encoding="utf-8")
             self.assertIn("N/A [N/A, N/A]", table)
+            self.assertIn("0/10000", table)
             self.assertIn("0/24 pairs; 0/8 clusters", table)
             lowered = manuscript.lower()
             self.assertNotIn("improved", lowered)
@@ -854,7 +910,7 @@ class DynamicManuscriptRendererTest(unittest.TestCase):
             self.assertEqual(paths["table_path"].read_text(encoding="utf-8"), "old table")
             self.assertEqual(paths["figure_path"].read_text(encoding="utf-8"), "old figure")
 
-    def test_second_replace_failure_rolls_back_all_outputs(self) -> None:
+    def test_third_replace_failure_rolls_back_all_outputs(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             _, acceptance, result = self._fixture(root / "formal")
@@ -868,21 +924,287 @@ class DynamicManuscriptRendererTest(unittest.TestCase):
             real_replace = os.replace
             replacement_count = 0
 
-            def fail_second_replace(source: object, destination: object) -> None:
+            def fail_third_replace(source: object, destination: object) -> None:
                 nonlocal replacement_count
                 replacement_count += 1
-                if replacement_count == 2:
-                    raise OSError("simulated second replace failure")
+                if replacement_count == 3:
+                    raise OSError("simulated third replace failure")
                 real_replace(source, destination)
 
             with mock.patch(
-                "scripts.render_graph_dynamic_manuscript.os.replace",
-                side_effect=fail_second_replace,
+                "scripts.render_graph_dynamic_manuscript._replace_path",
+                side_effect=fail_third_replace,
             ):
-                with self.assertRaisesRegex(OSError, "simulated second"):
+                with self.assertRaisesRegex(OSError, "simulated third"):
                     write_dynamic_manuscript(**paths)
             for key, original in originals.items():
                 self.assertEqual(paths[key].read_bytes(), original)
+
+    def test_equal_output_paths_are_rejected_before_writes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            protocol = json.loads(paths["protocol_path"].read_text(encoding="utf-8"))
+            protocol["output_contract"]["accepted_manuscript_figure"] = str(
+                paths["table_path"]
+            )
+            self._json(paths["protocol_path"], protocol)
+            paths["figure_path"] = paths["table_path"]
+
+            with self.assertRaisesRegex(DynamicResultsPending, "must be distinct"):
+                write_dynamic_manuscript(**paths)
+            self.assertFalse(paths["table_path"].exists())
+            self.assertIn("pending", paths["manuscript_path"].read_text(encoding="utf-8"))
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            paths["table_path"].write_text("shared inode", encoding="utf-8")
+            os.link(paths["table_path"], paths["figure_path"])
+            with self.assertRaisesRegex(DynamicResultsPending, "must be distinct"):
+                write_dynamic_manuscript(**paths)
+            self.assertEqual(paths["table_path"].read_text(encoding="utf-8"), "shared inode")
+
+    def test_symlink_and_hardlink_input_aliases_are_rejected(self) -> None:
+        for kind in ("symlink", "hardlink"):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                _, acceptance, result = self._fixture(root / "formal")
+                paths = self._paths(root, acceptance, result)
+                source = (
+                    paths["result_path"]
+                    if kind == "symlink"
+                    else paths["protocol_path"]
+                )
+                if kind == "symlink":
+                    paths["table_path"].symlink_to(source)
+                else:
+                    os.link(source, paths["table_path"])
+                original = source.read_bytes()
+
+                with self.assertRaisesRegex(
+                    DynamicResultsPending,
+                    (
+                        "must not overwrite an input authority"
+                        if kind == "symlink"
+                        else "ordinary single-link regular file"
+                    ),
+                ):
+                    write_dynamic_manuscript(**paths)
+                self.assertEqual(source.read_bytes(), original)
+
+    def test_nonordinary_existing_outputs_are_rejected_before_staging(self) -> None:
+        from scripts import render_graph_dynamic_manuscript as renderer
+
+        for kind in ("external_symlink", "dangling_symlink", "unrelated_hardlink"):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                _, acceptance, result = self._fixture(root / "formal")
+                paths = self._paths(root, acceptance, result)
+                external = root / "unrelated.txt"
+                if kind == "external_symlink":
+                    external.write_text("external sentinel", encoding="utf-8")
+                    paths["table_path"].symlink_to(external)
+                elif kind == "dangling_symlink":
+                    paths["table_path"].symlink_to(external)
+                else:
+                    external.write_text("external sentinel", encoding="utf-8")
+                    os.link(external, paths["table_path"])
+                manuscript = paths["manuscript_path"].read_bytes()
+                with mock.patch.object(renderer, "_stage_bytes") as stage:
+                    with self.assertRaisesRegex(
+                        DynamicResultsPending, "ordinary single-link regular file"
+                    ):
+                        write_dynamic_manuscript(**paths)
+                    stage.assert_not_called()
+                self.assertEqual(paths["manuscript_path"].read_bytes(), manuscript)
+                if external.exists():
+                    self.assertEqual(
+                        external.read_text(encoding="utf-8"), "external sentinel"
+                    )
+                if "symlink" in kind:
+                    self.assertTrue(paths["table_path"].is_symlink())
+                else:
+                    self.assertTrue(os.path.samefile(external, paths["table_path"]))
+
+    def test_source_extension_and_output_parent_symlink_escapes_fail_before_staging(self) -> None:
+        from scripts import render_graph_dynamic_manuscript as renderer
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            external = root / "outside-result.json"
+            external.write_bytes(paths["result_path"].read_bytes())
+            paths["result_path"].unlink()
+            paths["result_path"].symlink_to(external)
+            with mock.patch.object(renderer, "_stage_bytes") as stage:
+                with self.assertRaisesRegex(DynamicResultsPending, "results_root"):
+                    write_dynamic_manuscript(**paths)
+                stage.assert_not_called()
+            self.assertTrue(paths["result_path"].is_symlink())
+
+        with tempfile.TemporaryDirectory() as directory, tempfile.TemporaryDirectory() as external_directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            protocol = json.loads(
+                paths["protocol_path"].read_text(encoding="utf-8")
+            )
+            protocol["extends_protocol"] = (
+                "graph_dynamic_ablation_protocol_v2.yaml"
+            )
+            self._json(paths["protocol_path"], protocol)
+            external = Path(external_directory) / "dynamic-v2.yaml"
+            external.write_text("external protocol sentinel\n", encoding="utf-8")
+            sibling = paths["protocol_path"].with_name(
+                "graph_dynamic_ablation_protocol_v2.yaml"
+            )
+            sibling.symlink_to(external)
+            original = external.read_bytes()
+            with mock.patch.object(renderer, "load_protocol") as load, mock.patch.object(
+                renderer, "_stage_bytes"
+            ) as stage:
+                with self.assertRaisesRegex(
+                    DynamicResultsPending,
+                    "dynamic protocol authority source.*ordinary single-link",
+                ):
+                    write_dynamic_manuscript(**paths)
+                load.assert_not_called()
+                stage.assert_not_called()
+            self.assertTrue(sibling.is_symlink())
+            self.assertEqual(external.read_bytes(), original)
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            publication = paths["table_path"].parent
+            publication.rmdir()
+            outside = root.parent / f"{root.name}-outside"
+            outside.mkdir()
+            publication.symlink_to(outside, target_is_directory=True)
+            try:
+                with mock.patch.object(renderer, "_stage_bytes") as stage:
+                    with self.assertRaisesRegex(
+                        DynamicResultsPending, "resolves outside its authority root"
+                    ):
+                        write_dynamic_manuscript(**paths)
+                    stage.assert_not_called()
+                self.assertEqual(list(outside.iterdir()), [])
+            finally:
+                outside.rmdir()
+
+    def test_cli_requires_registered_protocol(self) -> None:
+        from scripts import render_graph_dynamic_manuscript as renderer
+
+        with tempfile.TemporaryDirectory() as directory:
+            alternate = Path(directory) / "alternate.yaml"
+            alternate.write_text("{}\n", encoding="utf-8")
+            with self.assertRaisesRegex(DynamicResultsPending, "registered dynamic-v3"):
+                renderer.main(["--protocol", str(alternate)])
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "repo"
+            outside = Path(directory) / "outside"
+            root.mkdir()
+            outside.mkdir()
+            protocol = root / "active.yaml"
+            protocol.write_text("{}\n", encoding="utf-8")
+            target = root / "table.md"
+            escaped_parent = root / "inputs"
+            escaped_parent.symlink_to(outside, target_is_directory=True)
+            escaped_source = escaped_parent / "formal_result.json"
+            with mock.patch.object(renderer, "ROOT", root), mock.patch.object(
+                renderer, "DEFAULT_PROTOCOL", protocol
+            ):
+                with self.assertRaisesRegex(
+                    DynamicResultsPending,
+                    "production publication input resolves outside",
+                ):
+                    renderer._require_production_cli_paths(
+                        protocol_path=protocol,
+                        sources=[protocol, escaped_source],
+                        targets=[target],
+                    )
+
+    def test_undeclared_and_input_root_output_paths_are_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            paths["table_path"] = paths["table_path"].with_name("undeclared.md")
+            with self.assertRaisesRegex(DynamicResultsPending, "differs from"):
+                write_dynamic_manuscript(**paths)
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            unsafe = paths["result_path"].parent / "unsafe-table.md"
+            protocol = json.loads(paths["protocol_path"].read_text(encoding="utf-8"))
+            protocol["output_contract"]["accepted_manuscript_table"] = str(unsafe)
+            self._json(paths["protocol_path"], protocol)
+            paths["table_path"] = unsafe
+            with self.assertRaisesRegex(DynamicResultsPending, "inside an input root"):
+                write_dynamic_manuscript(**paths)
+
+    def test_staging_failure_writes_nothing_and_cleans_temporaries(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            paths["table_path"].write_text("old table", encoding="utf-8")
+            paths["figure_path"].write_text("old figure", encoding="utf-8")
+            originals = {
+                key: paths[key].read_bytes()
+                for key in ("table_path", "figure_path", "manuscript_path")
+            }
+            from scripts import render_graph_dynamic_manuscript as renderer
+
+            real_stage = renderer._stage_bytes
+            stage_count = 0
+
+            def fail_second_stage(path: Path, payload: bytes, mode: int) -> Path:
+                nonlocal stage_count
+                stage_count += 1
+                if stage_count == 2:
+                    raise OSError("simulated staging failure")
+                return real_stage(path, payload, mode)
+
+            with mock.patch.object(renderer, "_stage_bytes", side_effect=fail_second_stage):
+                with self.assertRaisesRegex(OSError, "simulated staging failure"):
+                    write_dynamic_manuscript(**paths)
+            for key, original in originals.items():
+                self.assertEqual(paths[key].read_bytes(), original)
+            self.assertEqual(list(root.rglob(".*.tmp")), [])
+
+    def test_repeated_publication_is_byte_identical_and_preserves_modes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, acceptance, result = self._fixture(root / "formal")
+            paths = self._paths(root, acceptance, result)
+            paths["table_path"].write_text("old table", encoding="utf-8")
+            paths["figure_path"].write_text("old figure", encoding="utf-8")
+            modes = {
+                "table_path": 0o640,
+                "figure_path": 0o600,
+                "manuscript_path": 0o644,
+            }
+            for key, mode in modes.items():
+                paths[key].chmod(mode)
+
+            write_dynamic_manuscript(**paths)
+            first = {
+                key: paths[key].read_bytes()
+                for key in ("table_path", "figure_path", "manuscript_path")
+            }
+            write_dynamic_manuscript(**paths)
+            for key, payload in first.items():
+                self.assertEqual(paths[key].read_bytes(), payload)
+                self.assertEqual(stat.S_IMODE(paths[key].stat().st_mode), modes[key])
 
 
 if __name__ == "__main__":

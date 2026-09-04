@@ -66,3 +66,17 @@ through the registered Paderborn DataPort and never treats derived
 `evaluation.jsonl` rows as target or prediction authority. The superseded v1
 protocol and every v1 run root are rejected. No reliability, cost, or
 Graph-effect claim exists from the schedule or gate mechanics alone.
+
+The accepted-result consumer binds `formal_acceptance.json`,
+`formal_result.json`, its table, SVG, and active manuscript to the paths in the
+machine-readable protocol. The result `output_root` must equal the canonical
+protocol `formal_root`, and every displayed interval reports its valid/2,000
+bootstrap count. The consumer requires lexical and resolved source
+containment, rejects input/output aliases and publication under input roots,
+and accepts an existing output only as an ordinary single-link regular file.
+Its production CLI accepts only this protocol, and every resolved output
+remains inside the repository. After complete accepted evidence passes its
+independent arithmetic checks, it stages and fsyncs all three outputs,
+preserves file modes, and reverse-rolls back replacement failures. Its 20/20
+focused checks cover provenance, path identity and containment, staging
+cleanup, rollback, idempotence, and the registered reliability calculations.

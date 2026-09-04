@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import copy
+import os
+import tempfile
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -59,6 +61,125 @@ class GraphCrossDatasetAnalysisTests(unittest.TestCase):
         cls.cross = load_protocol(DEFAULT_PROTOCOL)
         cls.dataset = yaml.safe_load(DATASET_PROTOCOL.read_text(encoding="utf-8"))
 
+    def _blocked_main(self, argv: list[str]) -> None:
+        with mock.patch.object(analyzer, "build_report") as build, mock.patch(
+            "builtins.print"
+        ):
+            self.assertEqual(analyzer.main(argv), 2)
+        build.assert_not_called()
+
+    def _assert_production_cli_path_gates(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            alternate_protocol = root / "alternate.yaml"
+            alternate_protocol.write_text("{}\n", encoding="utf-8")
+            alternate_dataset = root / "dataset.yaml"
+            alternate_dataset.write_text("{}\n", encoding="utf-8")
+            output = root / "formal_result.json"
+            common = [
+                "--reactive-root",
+                str(root / "reactive"),
+                "--graph-root",
+                str(root / "graph"),
+                "--output",
+                str(output),
+            ]
+            self._blocked_main(
+                [*common, "--protocol", str(alternate_protocol)]
+            )
+            self._blocked_main(
+                [*common, "--dataset-protocol", str(alternate_dataset)]
+            )
+            self._blocked_main(common)
+            self.assertFalse(output.exists())
+
+        for kind in (
+            "protocol_extension_symlink",
+            "output_symlink",
+            "output_dangling_symlink",
+            "output_hardlink",
+            "output_parent_escape",
+        ):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as directory:
+                authority = Path(directory)
+                p2_root = authority / "P02_agent_langraph"
+                benchmark_root = authority / "p01-phm-agent-benchmark"
+                p2_root.mkdir()
+                protocol = p2_root / "active.yaml"
+                protocol.write_text("{}\n", encoding="utf-8")
+                dataset = (
+                    benchmark_root
+                    / "paper/experiments/datasets/ottawa_uored_v5/"
+                    "phase1_monitoring_protocol_v1.yaml"
+                )
+                dataset.parent.mkdir(parents=True)
+                dataset.write_text("registered dataset\n", encoding="utf-8")
+                results_root = p2_root / str(
+                    self.cross["analysis_gate"]["results_root"]
+                )
+                output = p2_root / str(
+                    self.cross["analysis_gate"]["formal_result"]
+                )
+                external = results_root / "external.json"
+
+                if kind == "protocol_extension_symlink":
+                    protocol.write_text(
+                        "extends_protocol: graph_cross_dataset_replay_protocol_v2.yaml\n",
+                        encoding="utf-8",
+                    )
+                    external_protocol = authority / "external-v2.yaml"
+                    external_protocol.write_text("external sentinel\n", encoding="utf-8")
+                    protocol.with_name(
+                        "graph_cross_dataset_replay_protocol_v2.yaml"
+                    ).symlink_to(external_protocol)
+                elif kind == "output_parent_escape":
+                    results_root.parent.mkdir(parents=True)
+                    escaped = authority / "escaped-results"
+                    escaped.mkdir()
+                    results_root.symlink_to(escaped, target_is_directory=True)
+                else:
+                    results_root.mkdir(parents=True)
+                    if kind == "output_symlink":
+                        external.write_text("external sentinel", encoding="utf-8")
+                        output.symlink_to(external)
+                    elif kind == "output_dangling_symlink":
+                        output.symlink_to(external)
+                    else:
+                        external.write_text("external sentinel", encoding="utf-8")
+                        os.link(external, output)
+
+                argv = [
+                    "--reactive-root",
+                    str(p2_root / "reactive"),
+                    "--graph-root",
+                    str(p2_root / "graph"),
+                    "--protocol",
+                    str(protocol),
+                    "--dataset-protocol",
+                    str(dataset),
+                    "--output",
+                    str(output),
+                ]
+                with mock.patch.object(analyzer, "ROOT", p2_root), mock.patch.object(
+                    analyzer, "BENCHMARK_ROOT", benchmark_root
+                ), mock.patch.object(
+                    analyzer, "DEFAULT_PROTOCOL", protocol
+                ), mock.patch.object(
+                    analyzer, "load_protocol", return_value=copy.deepcopy(self.cross)
+                ) as load, mock.patch.object(
+                    analyzer, "build_report"
+                ) as build, mock.patch(
+                    "builtins.print"
+                ):
+                    self.assertEqual(analyzer.main(argv), 2)
+                build.assert_not_called()
+                if kind == "protocol_extension_symlink":
+                    load.assert_not_called()
+                if external.exists():
+                    self.assertEqual(
+                        external.read_text(encoding="utf-8"), "external sentinel"
+                    )
+
     def test_analysis_registration_freezes_accepted_denominator_and_statistics(
         self,
     ) -> None:
@@ -77,6 +198,37 @@ class GraphCrossDatasetAnalysisTests(unittest.TestCase):
         self.assertEqual(analysis["statistics"]["iterations"], 2000)
         self.assertEqual(analysis["statistics"]["cluster_unit"], "physical_bearing")
         self.assertEqual(analysis["statistics"]["direction"], "graph_minus_reactive")
+        self.assertEqual(analysis["result_schema"], analyzer.RESULT_SCHEMA)
+        self._assert_production_cli_path_gates()
+
+    def test_accepted_arm_roots_are_bound_to_registered_stamped_root(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory) / "registered"
+            run_root = base / "run_20260903T010203Z"
+            reactive = run_root / "reactive"
+            graph = run_root / "graph"
+            reactive.mkdir(parents=True)
+            graph.mkdir()
+            protocol = copy.deepcopy(self.cross)
+            protocol["current_schedule"]["output_root"] = str(base)
+            stamp, observed_root = analyzer._validate_registered_root_layout(
+                reactive, graph, protocol
+            )
+            self.assertEqual(stamp, "20260903T010203Z")
+            self.assertEqual(observed_root, run_root.resolve())
+
+            other = Path(directory) / "other" / "run_20260903T010203Z"
+            other_reactive = other / "reactive"
+            other_graph = other / "graph"
+            other_reactive.mkdir(parents=True)
+            other_graph.mkdir()
+            with self.assertRaisesRegex(
+                analyzer.CrossDatasetAnalysisError,
+                "current_schedule.output_root",
+            ):
+                analyzer._validate_registered_root_layout(
+                    other_reactive, other_graph, protocol
+                )
 
     def test_exact_36_pairs_retain_failures_and_108_windows_per_arm(self) -> None:
         reactive = _records()

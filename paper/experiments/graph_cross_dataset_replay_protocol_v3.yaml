@@ -1,8 +1,9 @@
 extends_protocol: graph_cross_dataset_replay_protocol_v2.yaml
 schema_version: graph_cross_dataset_replay_protocol_v3
 protocol_id: phm_graph_cross_dataset_replay_ottawa_generic_base_p2e8_v3
-status: preregistered_provider_free_preflight_ready_formal_launch_temporally_blocked_not_run
+status: preregistered_provider_free_ready_provider_authorization_and_complete_cohort_pending
 frozen_date: "2026-09-02"
+status_updated: "2026-09-04"
 supersedes_protocol: paper/experiments/graph_cross_dataset_replay_protocol_v2.yaml
 
 authority:
@@ -133,7 +134,7 @@ current_schedule:
   provider_calls: 0
   runner_invocations: 0
   formal_launch_allowed: false
-  reason: provider_free_preflight_ready_same_day_north_retry_forbidden_after_http_429
+  reason: provider_execution_authorization_pending
 
 runtime_gate:
   runner: scripts/run_graph_experiment.py
@@ -168,11 +169,15 @@ runtime_gate:
 
 analysis_gate:
   current_state: implemented_and_tested
+  formal_result_state: complete_72_bundle_cohort_pending
+  result_schema: p2_e8_ottawa_generic_base_result_v2
   accepted_only_cross_dataset_analyzer_implemented: true
   analyzer: scripts/analyze_graph_cross_dataset_replay.py
+  results_root: paper/experiments/results/graph_cross_dataset_replay_v3/paper2-cross-dataset-ottawa-generic-v1
   formal_result: paper/experiments/results/graph_cross_dataset_replay_v3/paper2-cross-dataset-ottawa-generic-v1/formal_result.json
   accepted_manuscript_table: paper/assets/tables/p2_e8_ottawa_results.md
   accepted_manuscript_figure: paper/assets/figures/p2_e8_ottawa_primary.svg
+  accepted_manuscript: paper/draft/main.md
   manuscript_marker: P2_E8_OTTAWA
   required_source_fragments:
     - validate_formal_cohort
@@ -214,6 +219,7 @@ analysis_gate:
   accepted_manuscript_consumer:
     entrypoint: scripts/render_graph_cross_dataset_manuscript.py
     accepted_result: paper/experiments/results/graph_cross_dataset_replay_v3/paper2-cross-dataset-ottawa-generic-v1/formal_result.json
+    acceptance_source: embedded_in_accepted_result
     complete_episode_bundles_required: 72
     matched_pairs_required: 36
     assigned_windows_per_arm_required: 108
@@ -221,12 +227,14 @@ analysis_gate:
     provider_calls: false
     displayed_paired_arithmetic_recomputed: true
     bootstrap_metadata_rechecked: true
-    write_contract: grouped_replace_with_exception_rollback
+    existing_output_contract: absent_or_ordinary_single_link_regular_file
+    production_cli_protocol: graph_cross_dataset_replay_protocol_v3.yaml
+    write_contract: fully_staged_mode_preserving_grouped_replace_with_reverse_rollback
     focused_tests: tests/test_render_graph_cross_dataset_manuscript.py
   current_blocker: null
 
 activation_gate:
-  current_state: provider_free_ready_same_day_provider_retry_blocked_formal_not_run
+  current_state: provider_free_ready_provider_execution_authorization_pending
   all_required:
     - accepted_ottawa_source_protocol_and_window_target
     - evaluator_private_target_not_exposed_to_agent
@@ -237,7 +245,8 @@ activation_gate:
     - exact_formal_profile_and_isolated_schedule
     - accepted_only_paired_result_analyzer
   current_blockers:
-    - same_day_north_retry_forbidden_after_http_429_20260902
+    - explicit_provider_destination_and_payload_egress_authorization_required
+  post_authorization_requirement: complete_72_bundle_cohort_before_analysis_or_publication
 
 reporting_boundary:
   allowed_now:
@@ -246,7 +255,7 @@ reporting_boundary:
     - deterministic_18_command_dry_schedule
     - accepted_only_analyzer_implementation_and_tests
     - accepted_only_manuscript_consumer_implementation_and_tests
-    - statement_that_formal_execution_is_temporally_blocked_and_has_not_run
+    - statement_that_provider_execution_is_unauthorized_and_formal_cohort_has_not_run
   forbidden_now:
     - any_cross_dataset_graph_effect
     - any_reactive_or_graph_task_score

@@ -2,10 +2,13 @@ from __future__ import annotations
 
 import copy
 import json
+import os
+import stat
 import tempfile
 import unittest
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from unittest import mock
 
 import yaml
 
@@ -14,6 +17,7 @@ from scripts.render_graph_cross_dataset_manuscript import (
     DISPLAY_METRICS,
     MANUSCRIPT_BEGIN,
     MANUSCRIPT_END,
+    PUBLICATION_WRITE_CONTRACT,
     CrossDatasetResultsPending,
     validate_cross_dataset_inputs,
     write_cross_dataset_manuscript,
@@ -161,6 +165,10 @@ class CrossDatasetManuscriptRendererTest(unittest.TestCase):
         }
 
     def _result(self, protocol: dict, *, analysis: dict | None = None) -> dict:
+        run_stamp = "20260903T010203Z"
+        run_base = Path(protocol["current_schedule"]["output_root"])
+        if not run_base.is_absolute():
+            run_base = ROOT / run_base
         return {
             "schema_version": analyzer.RESULT_SCHEMA,
             "status": "accepted",
@@ -174,7 +182,8 @@ class CrossDatasetManuscriptRendererTest(unittest.TestCase):
             "experiment_profile_id": protocol["formal_execution"][
                 "experiment_profile_id"
             ],
-            "formal_run_stamp": "20260903T010203Z",
+            "formal_run_stamp": run_stamp,
+            "formal_run_root": str((run_base / f"run_{run_stamp}").resolve()),
             "provider_calls_made_by_analyzer": 0,
             "private_assignment_validation": (
                 "phase1_registered_data_port_assignment_v1"
@@ -206,22 +215,52 @@ class CrossDatasetManuscriptRendererTest(unittest.TestCase):
         }
 
     def _paths(self, root: Path, result: dict) -> dict[str, Path]:
-        manuscript = root / "main.md"
+        results_root = root / "results"
+        publication_root = root / "publication"
+        manuscript_root = root / "paper"
+        for directory in (results_root, publication_root, manuscript_root):
+            directory.mkdir(parents=True, exist_ok=True)
+        manuscript = manuscript_root / "main.md"
         manuscript.write_text(
             "Before\n"
             f"{MANUSCRIPT_BEGIN}\n\npending\n\n{MANUSCRIPT_END}\n"
             "After\n",
             encoding="utf-8",
         )
+        protocol = load_protocol(PROTOCOL)
+        formal_root = Path(str(protocol["current_schedule"]["output_root"]))
+        if not formal_root.is_absolute():
+            formal_root = ROOT / formal_root
+        result["formal_run_root"] = str(
+            (formal_root / f"run_{result['formal_run_stamp']}").resolve()
+        )
+        protocol["analysis_gate"].update(
+            {
+                "results_root": str(results_root),
+                "formal_result": str(results_root / "formal_result.json"),
+                "accepted_manuscript_table": str(publication_root / "table.md"),
+                "accepted_manuscript_figure": str(publication_root / "figure.svg"),
+                "accepted_manuscript": str(manuscript),
+            }
+        )
+        protocol["analysis_gate"]["accepted_manuscript_consumer"][
+            "accepted_result"
+        ] = str(results_root / "formal_result.json")
+        self._json(root / "graph_cross_dataset_replay_protocol_v2.yaml", {})
+        protocol_path = self._json(
+            root / "graph_cross_dataset_replay_protocol_v3.yaml", protocol
+        )
         return {
-            "protocol_path": PROTOCOL,
-            "result_path": self._json(root / "result.json", result),
-            "table_path": root / "table.md",
-            "figure_path": root / "figure.svg",
+            "protocol_path": protocol_path,
+            "result_path": self._json(results_root / "formal_result.json", result),
+            "table_path": publication_root / "table.md",
+            "figure_path": publication_root / "figure.svg",
             "manuscript_path": manuscript,
         }
 
     def test_protocol_registers_the_accepted_only_consumer(self) -> None:
+        from scripts import render_graph_cross_dataset_manuscript as renderer
+
         protocol = load_protocol(PROTOCOL)
         consumer = protocol["analysis_gate"]["accepted_manuscript_consumer"]
         self.assertEqual(
@@ -233,10 +272,21 @@ class CrossDatasetManuscriptRendererTest(unittest.TestCase):
         self.assertEqual(consumer["assigned_windows_per_arm_required"], 108)
         self.assertIs(consumer["raw_run_or_private_data_reads"], False)
         self.assertIs(consumer["provider_calls"], False)
+        self.assertEqual(consumer["acceptance_source"], "embedded_in_accepted_result")
         self.assertIs(consumer["displayed_paired_arithmetic_recomputed"], True)
+        self.assertEqual(consumer["write_contract"], PUBLICATION_WRITE_CONTRACT)
         self.assertEqual(
-            consumer["write_contract"],
-            "grouped_replace_with_exception_rollback",
+            protocol["analysis_gate"]["accepted_manuscript"],
+            "paper/draft/main.md",
+        )
+        self.assertEqual(
+            renderer._protocol_source_paths(PROTOCOL),
+            [
+                PROTOCOL,
+                PROTOCOL.with_name(
+                    "graph_cross_dataset_replay_protocol_v2.yaml"
+                ),
+            ],
         )
 
     def test_accepted_result_writes_table_svg_and_unique_marker(self) -> None:
@@ -252,6 +302,10 @@ class CrossDatasetManuscriptRendererTest(unittest.TestCase):
             self.assertIn("Target-adverse Average Precision", table)
             self.assertIn("+0.1000", table)
             self.assertIn("accepted all 72 registered Ottawa episode bundles", manuscript)
+            self.assertIn(
+                "![Accepted P2-E8 Ottawa task contrasts](../publication/figure.svg)",
+                manuscript,
+            )
             self.assertEqual(manuscript.count(MANUSCRIPT_BEGIN), 1)
             self.assertEqual(manuscript.count(MANUSCRIPT_END), 1)
             self.assertNotIn(str(root), table + manuscript)
@@ -328,6 +382,16 @@ class CrossDatasetManuscriptRendererTest(unittest.TestCase):
         with self.assertRaises(CrossDatasetResultsPending):
             validate_cross_dataset_inputs(protocol=protocol, result=wrong_event)
 
+        wrong_root = self._result(protocol)
+        wrong_root["formal_run_root"] = str(
+            (
+                Path(protocol["current_schedule"]["output_root"])
+                / "run_20260904T010203Z"
+            ).resolve()
+        )
+        with self.assertRaisesRegex(CrossDatasetResultsPending, "formal_run_root"):
+            validate_cross_dataset_inputs(protocol=protocol, result=wrong_root)
+
     def test_duplicate_markers_fail_before_output_writes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -397,6 +461,308 @@ class CrossDatasetManuscriptRendererTest(unittest.TestCase):
         self.assertEqual(len(rows), 5)
         self.assertEqual(rows[0]["label"], "Target-adverse Average Precision")
         self.assertEqual(rows[0]["delta"], 0.0)
+
+    def test_equal_output_paths_are_rejected_before_writes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol = load_protocol(PROTOCOL)
+            paths = self._paths(root, self._result(protocol))
+            payload = json.loads(paths["protocol_path"].read_text(encoding="utf-8"))
+            payload["analysis_gate"]["accepted_manuscript_figure"] = str(
+                paths["table_path"]
+            )
+            self._json(paths["protocol_path"], payload)
+            paths["figure_path"] = paths["table_path"]
+
+            with self.assertRaisesRegex(CrossDatasetResultsPending, "must be distinct"):
+                write_cross_dataset_manuscript(**paths)
+            self.assertFalse(paths["table_path"].exists())
+            self.assertIn("pending", paths["manuscript_path"].read_text(encoding="utf-8"))
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol = load_protocol(PROTOCOL)
+            paths = self._paths(root, self._result(protocol))
+            paths["table_path"].write_text("shared inode", encoding="utf-8")
+            os.link(paths["table_path"], paths["figure_path"])
+            with self.assertRaisesRegex(CrossDatasetResultsPending, "must be distinct"):
+                write_cross_dataset_manuscript(**paths)
+            self.assertEqual(paths["table_path"].read_text(encoding="utf-8"), "shared inode")
+
+    def test_symlink_and_hardlink_input_aliases_are_rejected(self) -> None:
+        for kind in ("symlink", "hardlink"):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                protocol = load_protocol(PROTOCOL)
+                paths = self._paths(root, self._result(protocol))
+                source = (
+                    paths["result_path"]
+                    if kind == "symlink"
+                    else paths["protocol_path"].with_name(
+                        "graph_cross_dataset_replay_protocol_v2.yaml"
+                    )
+                )
+                if kind == "symlink":
+                    paths["table_path"].symlink_to(source)
+                else:
+                    os.link(source, paths["table_path"])
+                original = source.read_bytes()
+
+                with self.assertRaisesRegex(
+                    CrossDatasetResultsPending,
+                    (
+                        "must not overwrite an input authority"
+                        if kind == "symlink"
+                        else "ordinary single-link regular file"
+                    ),
+                ):
+                    write_cross_dataset_manuscript(**paths)
+                self.assertEqual(source.read_bytes(), original)
+
+    def test_nonordinary_existing_outputs_are_rejected_before_staging(self) -> None:
+        from scripts import render_graph_cross_dataset_manuscript as renderer
+
+        for kind in ("external_symlink", "dangling_symlink", "unrelated_hardlink"):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                protocol = load_protocol(PROTOCOL)
+                paths = self._paths(root, self._result(protocol))
+                external = root / "unrelated.txt"
+                if kind == "external_symlink":
+                    external.write_text("external sentinel", encoding="utf-8")
+                    paths["table_path"].symlink_to(external)
+                elif kind == "dangling_symlink":
+                    paths["table_path"].symlink_to(external)
+                else:
+                    external.write_text("external sentinel", encoding="utf-8")
+                    os.link(external, paths["table_path"])
+                manuscript = paths["manuscript_path"].read_bytes()
+                with mock.patch.object(renderer, "_stage_bytes") as stage:
+                    with self.assertRaisesRegex(
+                        CrossDatasetResultsPending,
+                        "ordinary single-link regular file",
+                    ):
+                        write_cross_dataset_manuscript(**paths)
+                    stage.assert_not_called()
+                self.assertEqual(paths["manuscript_path"].read_bytes(), manuscript)
+                if external.exists():
+                    self.assertEqual(
+                        external.read_text(encoding="utf-8"), "external sentinel"
+                    )
+                if "symlink" in kind:
+                    self.assertTrue(paths["table_path"].is_symlink())
+                else:
+                    self.assertTrue(os.path.samefile(external, paths["table_path"]))
+
+    def test_source_extension_and_output_parent_symlink_escapes_fail_before_staging(self) -> None:
+        from scripts import render_graph_cross_dataset_manuscript as renderer
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol = load_protocol(PROTOCOL)
+            paths = self._paths(root, self._result(protocol))
+            external = root / "outside-result.json"
+            original = paths["result_path"].read_bytes()
+            external.write_bytes(original)
+            paths["result_path"].unlink()
+            paths["result_path"].symlink_to(external)
+            with mock.patch.object(renderer, "_stage_bytes") as stage:
+                with self.assertRaisesRegex(
+                    CrossDatasetResultsPending, "results_root"
+                ):
+                    write_cross_dataset_manuscript(**paths)
+                stage.assert_not_called()
+            self.assertEqual(external.read_bytes(), original)
+            self.assertTrue(paths["result_path"].is_symlink())
+
+        with tempfile.TemporaryDirectory() as directory, tempfile.TemporaryDirectory() as external_directory:
+            root = Path(directory)
+            protocol = load_protocol(PROTOCOL)
+            paths = self._paths(root, self._result(protocol))
+            sibling = paths["protocol_path"].with_name(
+                "graph_cross_dataset_replay_protocol_v2.yaml"
+            )
+            sibling.unlink()
+            external = Path(external_directory) / "cross-dataset-v2.yaml"
+            external.write_text("external protocol sentinel\n", encoding="utf-8")
+            sibling.symlink_to(external)
+            original = external.read_bytes()
+            with mock.patch.object(renderer, "load_protocol") as load, mock.patch.object(
+                renderer, "_stage_bytes"
+            ) as stage:
+                with self.assertRaisesRegex(
+                    CrossDatasetResultsPending,
+                    "P2-E8 protocol authority source.*ordinary single-link",
+                ):
+                    write_cross_dataset_manuscript(**paths)
+                load.assert_not_called()
+                stage.assert_not_called()
+            self.assertTrue(sibling.is_symlink())
+            self.assertEqual(external.read_bytes(), original)
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol = load_protocol(PROTOCOL)
+            paths = self._paths(root, self._result(protocol))
+            publication = paths["table_path"].parent
+            publication.rmdir()
+            outside = root.parent / f"{root.name}-outside"
+            outside.mkdir()
+            publication.symlink_to(outside, target_is_directory=True)
+            try:
+                with mock.patch.object(renderer, "ROOT", root), mock.patch.object(
+                    renderer, "_stage_bytes"
+                ) as stage:
+                    with self.assertRaisesRegex(
+                        CrossDatasetResultsPending,
+                        "resolves outside its authority root",
+                    ):
+                        write_cross_dataset_manuscript(**paths)
+                    stage.assert_not_called()
+                self.assertEqual(list(outside.iterdir()), [])
+            finally:
+                outside.rmdir()
+
+    def test_cli_requires_registered_protocol(self) -> None:
+        from scripts import render_graph_cross_dataset_manuscript as renderer
+
+        with tempfile.TemporaryDirectory() as directory:
+            alternate = Path(directory) / "alternate.yaml"
+            alternate.write_text("{}\n", encoding="utf-8")
+            with self.assertRaisesRegex(CrossDatasetResultsPending, "registered P2-E8"):
+                renderer.main(["--protocol", str(alternate)])
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "repo"
+            outside = Path(directory) / "outside"
+            root.mkdir()
+            outside.mkdir()
+            protocol = root / "active.yaml"
+            protocol.write_text("{}\n", encoding="utf-8")
+            target = root / "table.md"
+            escaped_parent = root / "inputs"
+            escaped_parent.symlink_to(outside, target_is_directory=True)
+            escaped_source = escaped_parent / "formal_result.json"
+            with mock.patch.object(renderer, "ROOT", root), mock.patch.object(
+                renderer, "DEFAULT_PROTOCOL", protocol
+            ):
+                with self.assertRaisesRegex(
+                    CrossDatasetResultsPending,
+                    "production publication input resolves outside",
+                ):
+                    renderer._require_production_cli_paths(
+                        protocol_path=protocol,
+                        sources=[protocol, escaped_source],
+                        targets=[target],
+                    )
+
+    def test_undeclared_and_input_root_output_paths_are_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol = load_protocol(PROTOCOL)
+            paths = self._paths(root, self._result(protocol))
+            paths["table_path"] = paths["table_path"].with_name("undeclared.md")
+            with self.assertRaisesRegex(CrossDatasetResultsPending, "differs from"):
+                write_cross_dataset_manuscript(**paths)
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol = load_protocol(PROTOCOL)
+            paths = self._paths(root, self._result(protocol))
+            unsafe = paths["result_path"].parent / "unsafe-table.md"
+            payload = json.loads(paths["protocol_path"].read_text(encoding="utf-8"))
+            payload["analysis_gate"]["accepted_manuscript_table"] = str(unsafe)
+            self._json(paths["protocol_path"], payload)
+            paths["table_path"] = unsafe
+            with self.assertRaisesRegex(
+                CrossDatasetResultsPending, "inside an input root"
+            ):
+                write_cross_dataset_manuscript(**paths)
+
+    def test_staging_failure_writes_nothing_and_cleans_temporaries(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol = load_protocol(PROTOCOL)
+            paths = self._paths(root, self._result(protocol))
+            paths["table_path"].write_text("old table", encoding="utf-8")
+            paths["figure_path"].write_text("old figure", encoding="utf-8")
+            originals = {
+                key: paths[key].read_bytes()
+                for key in ("table_path", "figure_path", "manuscript_path")
+            }
+            from scripts import render_graph_cross_dataset_manuscript as renderer
+
+            real_stage = renderer._stage_bytes
+            stage_count = 0
+
+            def fail_second_stage(path: Path, payload: bytes, mode: int) -> Path:
+                nonlocal stage_count
+                stage_count += 1
+                if stage_count == 2:
+                    raise OSError("simulated staging failure")
+                return real_stage(path, payload, mode)
+
+            with mock.patch.object(renderer, "_stage_bytes", side_effect=fail_second_stage):
+                with self.assertRaisesRegex(OSError, "simulated staging failure"):
+                    write_cross_dataset_manuscript(**paths)
+            for key, original in originals.items():
+                self.assertEqual(paths[key].read_bytes(), original)
+            self.assertEqual(list(root.rglob(".*.tmp")), [])
+
+    def test_third_replace_failure_rolls_back_all_outputs(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol = load_protocol(PROTOCOL)
+            paths = self._paths(root, self._result(protocol))
+            paths["table_path"].write_text("old table", encoding="utf-8")
+            paths["figure_path"].write_text("old figure", encoding="utf-8")
+            originals = {
+                key: paths[key].read_bytes()
+                for key in ("table_path", "figure_path", "manuscript_path")
+            }
+            real_replace = os.replace
+            replacement_count = 0
+
+            def fail_third_replace(source: object, destination: object) -> None:
+                nonlocal replacement_count
+                replacement_count += 1
+                if replacement_count == 3:
+                    raise OSError("simulated third replace failure")
+                real_replace(source, destination)
+
+            with mock.patch(
+                "scripts.render_graph_cross_dataset_manuscript._replace_path",
+                side_effect=fail_third_replace,
+            ):
+                with self.assertRaisesRegex(OSError, "simulated third"):
+                    write_cross_dataset_manuscript(**paths)
+            for key, original in originals.items():
+                self.assertEqual(paths[key].read_bytes(), original)
+
+    def test_repeated_publication_is_byte_identical_and_preserves_modes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol = load_protocol(PROTOCOL)
+            paths = self._paths(root, self._result(protocol))
+            paths["table_path"].write_text("old table", encoding="utf-8")
+            paths["figure_path"].write_text("old figure", encoding="utf-8")
+            modes = {
+                "table_path": 0o640,
+                "figure_path": 0o600,
+                "manuscript_path": 0o644,
+            }
+            for key, mode in modes.items():
+                paths[key].chmod(mode)
+
+            write_cross_dataset_manuscript(**paths)
+            first = {
+                key: paths[key].read_bytes()
+                for key in ("table_path", "figure_path", "manuscript_path")
+            }
+            write_cross_dataset_manuscript(**paths)
+            for key, payload in first.items():
+                self.assertEqual(paths[key].read_bytes(), payload)
+                self.assertEqual(stat.S_IMODE(paths[key].stat().st_mode), modes[key])
 
 
 if __name__ == "__main__":

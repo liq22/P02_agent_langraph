@@ -346,7 +346,7 @@ class GraphCrossDatasetRuntimeTests(unittest.TestCase):
             with mock.patch.dict(os.environ, environment, clear=False):
                 with self.assertRaisesRegex(
                     RuntimeError,
-                    "same_day_north_retry_forbidden_after_http_429_20260902",
+                    "explicit_provider_destination_and_payload_egress_authorization_required",
                 ):
                     asyncio.run(_run(args))
             self.assertFalse(output.exists())

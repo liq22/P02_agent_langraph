@@ -20,7 +20,7 @@
 <text data-mechanics-observed="10" x="655" y="226" font-family="sans-serif" font-size="36" font-weight="700" fill="#6d28d9">10/10 Mock</text>
 <text data-formal-observed="0" data-formal-expected="240" x="655" y="270" font-family="sans-serif" font-size="31" font-weight="700" fill="#be123c">0/240 formal</text>
 <text data-formal-runner-ready="true" data-planned-commands="240" data-emitted-commands="240" data-invoked-commands="0" x="655" y="303" font-family="sans-serif" font-size="14" fill="#64748b">Runner ready · 240/240 dry-run commands · 0 invoked</text>
-<text data-provider-calls="0" data-formal-runner-tests="17" data-dynamic-tests="46" x="655" y="329" font-family="sans-serif" font-size="14" font-weight="700" fill="#b45309">17/17 runner · 46/46 dynamic checks · no formal result</text>
+<text data-provider-calls="0" data-formal-runner-tests="17" data-dynamic-tests="50" x="655" y="329" font-family="sans-serif" font-size="14" font-weight="700" fill="#b45309">17/17 runner · 50/50 dynamic checks · no formal result</text>
 </g>
 <rect x="55" y="382" width="1090" height="54" rx="12" fill="#fff7ed" stroke="#fb923c"/>
 <text x="600" y="415" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#9a3412">Evidence boundary: executable mechanics only — no task score and no Graph treatment effect</text>

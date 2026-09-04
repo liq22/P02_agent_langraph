@@ -119,6 +119,7 @@ output_contract:
   formal_result: paper/experiments/results/graph_dynamic_ablation_v3/openrouter_north_graph_dynamic_generic_ablation_v3/formal_result.json
   accepted_manuscript_table: paper/assets/tables/p2_dynamic_formal_results.md
   accepted_manuscript_figure: paper/assets/figures/p2_dynamic_formal_primary.svg
+  accepted_manuscript: paper/draft/main.md
 
 formal_analysis:
   event_catalog_schema: graph_dynamic_public_event_catalog_v3
@@ -137,7 +138,10 @@ formal_analysis:
     displayed_mechanism_arithmetic_recomputed: true
     displayed_holm_adjustment_recomputed: true
     task_primary_and_mechanism_sections_separate: true
-    write_contract: grouped_replace_with_exception_rollback
+    valid_bootstrap_replicates_reported: true
+    existing_output_contract: absent_or_ordinary_single_link_regular_file
+    production_cli_protocol: graph_dynamic_ablation_protocol_v3.yaml
+    write_contract: fully_staged_mode_preserving_grouped_replace_with_reverse_rollback
     focused_tests: tests/test_render_graph_dynamic_manuscript.py
     mechanism_reporting:
       role: secondary_explanatory_not_task_performance

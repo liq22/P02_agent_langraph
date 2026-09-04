@@ -55,7 +55,7 @@ DYNAMIC_FORMAL_ACCEPTANCE = (
 CONTROL_LABEL = "Benchmark Generic (Reactive-equivalent)"
 TREATMENT_LABEL = "GraphDecisionAgent over the same Generic base"
 FORMAL_RUNNER_FOCUSED_TESTS = 17
-DYNAMIC_FOCUSED_TESTS = 46
+DYNAMIC_FOCUSED_TESTS = 50
 
 
 class CurrentMechanicsError(RuntimeError):
