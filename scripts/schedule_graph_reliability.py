@@ -183,7 +183,10 @@ def _runner_argv(
         str(float(profile["output_usd_per_million"])),
         "--output-root",
         str(output_root),
+        "--formal-provider-admission-report",
+        str(execution["formal_provider_admission"]["default_report_path"]),
         "--resume-provider-partial",
+        "--execute",
     ]
 
 

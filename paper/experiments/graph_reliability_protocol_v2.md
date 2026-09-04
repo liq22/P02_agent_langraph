@@ -38,12 +38,18 @@ environment values, or authorizes execution. Each command goes through
 `run_graph_reliability_v2.py`, which binds the registered repeat seed, Generic
 control/treatment identity, active dynamic protocol, public sequence, horizon
 3, explicit token prices, and isolated profile root before delegating one unit
-to the shared dynamic runner.
+to the shared dynamic runner. Every scheduled execution command carries
+`--execute` and the registered admission-report path.
 
 One emitted unit can be checked without provider access or filesystem writes by
-appending `--validate-only`. Normal wrapper execution is provider-bound and is
-therefore still subject to the Root-owned probe/quota gate; scheduler output by
-itself is not launch authorization.
+replacing `--execute` with `--validate-only`. Validation ignores authorization,
+credential, and admission-report values. Formal execution begins only when
+`PHM_EXTERNAL_INFERENCE_AUTHORIZED=1` and
+`PHM_P2_E9_EXTERNAL_INFERENCE_AUTHORIZED=1`, the configured route and model
+match the frozen OpenRouter profile, both token prices are exactly zero, and
+the Benchmark official validator accepts the fresh two-turn admission report.
+These checks run before the wrapper creates output or lock paths, loads data
+through DataPort, or invokes the provider.
 
 Acceptance and analysis remain independently provider-free and fail closed:
 

@@ -238,6 +238,16 @@ execution:
   runner_runtime_contract: phase1_graph_dynamic_generic_ablation_v2
   dedicated_runner_contract: phase1_graph_reliability_generic_n10_v2
   dedicated_runner_contract_implemented: true
+  formal_provider_admission:
+    authorization_env:
+      - PHM_EXTERNAL_INFERENCE_AUTHORIZED
+      - PHM_P2_E9_EXTERNAL_INFERENCE_AUTHORIZED
+    route_name: openrouter-free
+    base_url: https://openrouter.ai/api/v1
+    model: cohere/north-mini-code:free
+    exact_zero_price_required: true
+    probe_max_age_hours: 24.0
+    default_report_path: /tmp/openrouter_north_graph_reliability_v2_two_turn_probe.json
   required_runner_flags:
     - --reliability-protocol
     - --reliability-profile-id
@@ -251,12 +261,19 @@ execution:
     - --input-usd-per-million
     - --output-usd-per-million
     - --output-root
+    - --formal-provider-admission-report
+    - --validate-only
+    - --execute
   required_runner_identity_literals:
     - phase1_graph_reliability_generic_n10_v2
     - phase1_graph_dynamic_generic_ablation_v2
     - p2_graph_vs_generic_llm_v1
     - benchmark_generic_llm_tool_agent_v1
     - graph_reliability_generic_n10_v2
+    - PHM_EXTERNAL_INFERENCE_AUTHORIZED
+    - PHM_P2_E9_EXTERNAL_INFERENCE_AUTHORIZED
+    - validate_execution_probe_report
+    - https://openrouter.ai/api/v1
   output_layout: <output_root>/<reliability_profile_id>/<repeat_id>/<arm>/<rotation>
   formal_parent_root: paper/experiments/runs/formal/graph_reliability_v2
   formal_root: paper/experiments/runs/formal/graph_reliability_v2/graph_reliability_generic_n10_v2
@@ -296,8 +313,11 @@ claim_boundary:
   - The v2 scheduler and acceptance gate are provider-free and fail closed.
   - The dedicated reliability-v2 wrapper validates every frozen repeat, arm,
     sequence, horizon, price, profile, and output-root identity before it calls
-    the shared Generic-base dynamic unit implementation. The scheduler only
-    emits commands and never invokes them or reads provider environment values.
+    the shared Generic-base dynamic unit implementation. Formal execution also
+    requires both registered authorization variables and a fresh official
+    exact-route, exact-model, exact-zero-price two-turn admission report. The
+    scheduler emits explicit `--execute` commands and never invokes them or
+    reads provider environment values.
   - No P2-E9 result exists until all 160 registered non-provider terminal
     bundles pass v2 acceptance and the provider-free analyzer runs.
   - The task-primary endpoint is target-adverse replay Average Precision,

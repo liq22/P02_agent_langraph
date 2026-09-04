@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -647,74 +648,178 @@ class GraphReliabilityV2Tests(unittest.TestCase):
             "paper/experiments/results/graph_reliability_v2/"
             "graph_reliability_generic_n10_v2",
         )
+        admission = protocol["execution"]["formal_provider_admission"]
+        self.assertEqual(
+            admission["authorization_env"],
+            [
+                "PHM_EXTERNAL_INFERENCE_AUTHORIZED",
+                "PHM_P2_E9_EXTERNAL_INFERENCE_AUTHORIZED",
+            ],
+        )
+        self.assertEqual(admission["base_url"], "https://openrouter.ai/api/v1")
+        self.assertEqual(admission["model"], "cohere/north-mini-code:free")
+        self.assertTrue(admission["exact_zero_price_required"])
+        self.assertEqual(admission["probe_max_age_hours"], 24.0)
+        self.assertTrue(Path(admission["default_report_path"]).is_absolute())
+        for flag in (
+            "--formal-provider-admission-report",
+            "--validate-only",
+            "--execute",
+        ):
+            self.assertIn(flag, protocol["execution"]["required_runner_flags"])
 
     def test_dry_schedule_is_deterministic_counterbalanced_and_provider_free(self) -> None:
         protocol = _fixture_protocol()
-        first = build_graph_reliability_schedule(protocol, "/tmp/p2-e9")
-        second = build_graph_reliability_schedule(protocol, "/tmp/p2-e9")
-        self.assertEqual(first, second)
-        self.assertEqual(first["run_assignment_count"], 20)
-        self.assertEqual(first["paired_unit_count"], 80)
-        self.assertEqual(first["episode_assignment_count"], 160)
-        self.assertFalse(first["provider_calls_performed"])
-        self.assertFalse(first["provider_execution_authorized_by_schedule"])
-        self.assertTrue(first["runner_readiness"]["ready"])
-        self.assertEqual(first["runner_readiness"]["blocked_reasons"], [])
-        self.assertEqual(first["runner_commands_emitted"], 160)
-        self.assertEqual(len(first["runner_commands"]), 160)
-        first_positions = [item["arm_order"][0] for item in first["paired_units"]]
-        self.assertEqual(first_positions.count("reactive"), 40)
-        self.assertEqual(first_positions.count("graph"), 40)
-        self.assertEqual(
-            {tuple(item["arm_order"]) for item in first["paired_units"]},
-            {("reactive", "graph"), ("graph", "reactive")},
-        )
-        readiness = graph_reliability_runner_readiness(protocol)
-        self.assertTrue(readiness["ready"])
-        self.assertEqual(readiness["missing_runner_flags"], [])
-        self.assertEqual(readiness["missing_runner_identity_literals"], [])
+        with tempfile.TemporaryDirectory() as temporary:
+            output_root = Path(temporary) / "p2-e9"
+            first = build_graph_reliability_schedule(protocol, output_root)
+            second = build_graph_reliability_schedule(protocol, output_root)
+            self.assertEqual(first, second)
+            self.assertEqual(first["run_assignment_count"], 20)
+            self.assertEqual(first["paired_unit_count"], 80)
+            self.assertEqual(first["episode_assignment_count"], 160)
+            self.assertFalse(first["provider_calls_performed"])
+            self.assertFalse(first["provider_execution_authorized_by_schedule"])
+            self.assertTrue(first["runner_readiness"]["ready"])
+            self.assertEqual(first["runner_readiness"]["blocked_reasons"], [])
+            self.assertEqual(first["runner_commands_emitted"], 160)
+            self.assertEqual(len(first["runner_commands"]), 160)
+            self.assertFalse(output_root.exists())
+            first_positions = [
+                item["arm_order"][0] for item in first["paired_units"]
+            ]
+            self.assertEqual(first_positions.count("reactive"), 40)
+            self.assertEqual(first_positions.count("graph"), 40)
+            self.assertEqual(
+                {tuple(item["arm_order"]) for item in first["paired_units"]},
+                {("reactive", "graph"), ("graph", "reactive")},
+            )
+            readiness = graph_reliability_runner_readiness(protocol)
+            self.assertTrue(readiness["ready"])
+            self.assertEqual(readiness["missing_runner_flags"], [])
+            self.assertEqual(readiness["missing_runner_identity_literals"], [])
 
-        argv = first["runner_commands"][0]["argv"]
-        for flag in (
-            "--reliability-protocol",
-            "--reliability-profile-id",
-            "--repeat-id",
-            "--dynamic-protocol",
-            "--public-sequence-id",
-            "--horizon",
-            "--input-usd-per-million",
-            "--output-usd-per-million",
-            "--output-root",
-        ):
-            self.assertIn(flag, argv)
-        self.assertEqual(argv[argv.index("--horizon") + 1], "3")
-        self.assertEqual(argv[argv.index("--input-usd-per-million") + 1], "0.0")
-        self.assertEqual(argv[argv.index("--output-usd-per-million") + 1], "0.0")
-        self.assertEqual(
-            argv[argv.index("--reliability-profile-id") + 1],
-            "graph_reliability_generic_n10_v2",
-        )
-        self.assertEqual(
-            argv[argv.index("--dynamic-protocol") + 1],
-            "paper/experiments/graph_dynamic_ablation_protocol_v2.yaml",
-        )
-        validation = subprocess.run(
-            [sys.executable, *argv[1:], "--validate-only"],
-            cwd=ROOT,
-            check=False,
-            capture_output=True,
-            text=True,
-        )
-        self.assertEqual(validation.returncode, 0, validation.stderr)
-        validated = json.loads(validation.stdout)
-        self.assertFalse(validated["provider_calls_performed"])
-        self.assertFalse(validated["filesystem_writes_performed"])
-        self.assertEqual(validated["seed"], 20260828)
-        self.assertEqual(
-            validated["run_directory"],
-            "/tmp/p2-e9/graph_reliability_generic_n10_v2/"
-            "graph_reliability_repeat_01/reactive/rotation_0",
-        )
+            argv = first["runner_commands"][0]["argv"]
+            for flag in (
+                "--reliability-protocol",
+                "--reliability-profile-id",
+                "--repeat-id",
+                "--dynamic-protocol",
+                "--public-sequence-id",
+                "--horizon",
+                "--input-usd-per-million",
+                "--output-usd-per-million",
+                "--output-root",
+                "--formal-provider-admission-report",
+                "--execute",
+            ):
+                self.assertIn(flag, argv)
+            self.assertEqual(argv[argv.index("--horizon") + 1], "3")
+            self.assertEqual(argv[argv.index("--input-usd-per-million") + 1], "0.0")
+            self.assertEqual(argv[argv.index("--output-usd-per-million") + 1], "0.0")
+            self.assertEqual(
+                argv[argv.index("--reliability-profile-id") + 1],
+                "graph_reliability_generic_n10_v2",
+            )
+            self.assertEqual(
+                argv[argv.index("--dynamic-protocol") + 1],
+                "paper/experiments/graph_dynamic_ablation_protocol_v2.yaml",
+            )
+            self.assertEqual(
+                argv[argv.index("--formal-provider-admission-report") + 1],
+                protocol["execution"]["formal_provider_admission"][
+                    "default_report_path"
+                ],
+            )
+
+            provider_free_env = dict(os.environ)
+            for name in (
+                "PHM_EXTERNAL_INFERENCE_AUTHORIZED",
+                "PHM_P2_E9_EXTERNAL_INFERENCE_AUTHORIZED",
+                "LLM_BASE_URL",
+                "LLM_API_KEY",
+                "LLM_MODEL",
+            ):
+                provider_free_env.pop(name, None)
+            validation_argv = list(argv)
+            validation_argv[validation_argv.index("--execute")] = "--validate-only"
+            validation = subprocess.run(
+                [sys.executable, *validation_argv[1:]],
+                cwd=ROOT,
+                env=provider_free_env,
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(validation.returncode, 0, validation.stderr)
+            validated = json.loads(validation.stdout)
+            self.assertFalse(validated["provider_calls_performed"])
+            self.assertFalse(validated["filesystem_writes_performed"])
+            self.assertEqual(validated["seed"], 20260828)
+            self.assertEqual(
+                validated["run_directory"],
+                str(
+                    output_root
+                    / "graph_reliability_generic_n10_v2"
+                    / "graph_reliability_repeat_01"
+                    / "reactive"
+                    / "rotation_0"
+                ),
+            )
+            self.assertFalse(output_root.exists())
+
+            missing_mode_argv = [item for item in argv if item != "--execute"]
+            missing_mode = subprocess.run(
+                [sys.executable, *missing_mode_argv[1:]],
+                cwd=ROOT,
+                env=provider_free_env,
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(missing_mode.returncode, 2)
+            self.assertIn("one of the arguments", missing_mode.stderr)
+            self.assertFalse(output_root.exists())
+
+            unauthorized = subprocess.run(
+                [sys.executable, *argv[1:]],
+                cwd=ROOT,
+                env=provider_free_env,
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(unauthorized.returncode, 2)
+            self.assertIn("authorization gates", unauthorized.stderr)
+            self.assertFalse(output_root.exists())
+
+            admission_path = Path(temporary) / "invalid-admission.json"
+            admission_path.write_text("{}\n", encoding="utf-8")
+            gated_argv = list(argv)
+            report_index = gated_argv.index("--formal-provider-admission-report") + 1
+            gated_argv[report_index] = str(admission_path)
+            gated_env = dict(provider_free_env)
+            gated_env.update(
+                {
+                    "PHM_EXTERNAL_INFERENCE_AUTHORIZED": "1",
+                    "PHM_P2_E9_EXTERNAL_INFERENCE_AUTHORIZED": "1",
+                    "LLM_BASE_URL": "https://openrouter.ai/api/v1",
+                    "LLM_API_KEY": "test-only-placeholder",
+                    "LLM_MODEL": "cohere/north-mini-code:free",
+                }
+            )
+            rejected_probe = subprocess.run(
+                [sys.executable, *gated_argv[1:]],
+                cwd=ROOT,
+                env=gated_env,
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(rejected_probe.returncode, 2)
+            self.assertIn("provider-admission report was rejected", rejected_probe.stderr)
+            self.assertIn("header drifted", rejected_probe.stderr)
+            self.assertFalse(output_root.exists())
 
     def test_complete_canonical_cohort_retains_failure_and_reports_reliability(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

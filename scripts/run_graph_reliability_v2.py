@@ -4,8 +4,8 @@
 The dedicated wrapper owns only the reliability cohort projection: repeat
 identity, isolated output layout, exact provider profile, and canonical
 provenance fields.  The underlying Generic-base Reactive/Graph implementation
-remains ``run_graph_experiment.py``.  ``--validate-only`` is provider-free and
-performs no filesystem writes; normal execution is provider-bound.
+remains ``run_graph_experiment.py``.  The required ``--validate-only`` and
+``--execute`` modes keep contract inspection separate from provider execution.
 """
 
 from __future__ import annotations
@@ -17,6 +17,7 @@ import fcntl
 import json
 import math
 import os
+import sys
 import tempfile
 from contextlib import contextmanager
 from collections.abc import Mapping, Sequence
@@ -54,6 +55,11 @@ P2_EXPERIMENT_ID = "p2_graph_vs_generic_llm_v1"
 MATCHED_CONTROL_ID = "benchmark_generic_llm_tool_agent_v1"
 RELIABILITY_PROFILE_ID = "graph_reliability_generic_n10_v2"
 DYNAMIC_PROTOCOL_ID = "paderborn_graph_dynamic_ablation_v2"
+FORMAL_OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+FORMAL_AUTHORIZATION_ENV = (
+    "PHM_EXTERNAL_INFERENCE_AUTHORIZED",
+    "PHM_P2_E9_EXTERNAL_INFERENCE_AUTHORIZED",
+)
 
 
 class GraphReliabilityRunnerError(ValueError):
@@ -117,6 +123,47 @@ def _same_number(observed: Any, expected: Any) -> bool:
     )
 
 
+def _formal_admission_contract(
+    execution: Mapping[str, Any], profile: Mapping[str, Any]
+) -> dict[str, Any]:
+    admission = _mapping(
+        execution.get("formal_provider_admission"),
+        "execution.formal_provider_admission",
+    )
+    expected = {
+        "authorization_env": list(FORMAL_AUTHORIZATION_ENV),
+        "route_name": "openrouter-free",
+        "base_url": FORMAL_OPENROUTER_BASE_URL,
+        "model": profile["model"],
+        "exact_zero_price_required": True,
+        "probe_max_age_hours": 24.0,
+    }
+    drift = {
+        name: (admission.get(name), value)
+        for name, value in expected.items()
+        if admission.get(name) != value
+    }
+    report_path = admission.get("default_report_path")
+    if drift:
+        raise GraphReliabilityRunnerError(
+            f"formal provider-admission contract drifted: {drift}"
+        )
+    if not isinstance(report_path, str) or not Path(report_path).is_absolute():
+        raise GraphReliabilityRunnerError(
+            "formal provider-admission default report path must be absolute"
+        )
+    if (
+        profile.get("provider") != "openrouter-free"
+        or profile.get("inference_protocol") != "openai_chat_completions"
+        or not _same_number(profile.get("input_usd_per_million"), 0.0)
+        or not _same_number(profile.get("output_usd_per_million"), 0.0)
+    ):
+        raise GraphReliabilityRunnerError(
+            "formal reliability execution requires the exact-zero OpenRouter profile"
+        )
+    return admission
+
+
 def _validate_output_root(root: Path, protocol: Mapping[str, Any]) -> None:
     execution = protocol["execution"]
     formal_parent = _repo_path(execution["formal_parent_root"])
@@ -146,6 +193,7 @@ def build_reliability_unit_contract(args: argparse.Namespace) -> dict[str, Any]:
     profile = protocol["profile"]
     execution = protocol["execution"]
     scope = protocol["scope"]
+    admission = _formal_admission_contract(execution, profile)
 
     if args.reliability_profile_id != RELIABILITY_PROFILE_ID or (
         args.reliability_profile_id != profile["reliability_profile_id"]
@@ -299,6 +347,14 @@ def build_reliability_unit_contract(args: argparse.Namespace) -> dict[str, Any]:
         "max_output_tokens_per_turn": profile["max_output_tokens_per_turn"],
         "input_usd_per_million": float(profile["input_usd_per_million"]),
         "output_usd_per_million": float(profile["output_usd_per_million"]),
+        "formal_provider_admission": {
+            "route_name": admission["route_name"],
+            "base_url": admission["base_url"],
+            "model": admission["model"],
+            "exact_zero_price_required": admission["exact_zero_price_required"],
+            "probe_max_age_hours": float(admission["probe_max_age_hours"]),
+            "authorization_env": list(admission["authorization_env"]),
+        },
         "budget": dict(profile["budget"]),
         "output_root": str(output_root),
         "run_directory": str(run_directory),
@@ -487,7 +543,21 @@ def _stamp_attempts(
     _write_json(run_directory / "run_manifest.json", manifest)
 
 
-def _check_execution_environment(args: argparse.Namespace, profile: Mapping[str, Any]) -> None:
+def _check_execution_environment(
+    args: argparse.Namespace,
+    profile: Mapping[str, Any],
+    admission: Mapping[str, Any],
+) -> None:
+    missing_authorization = [
+        name
+        for name in admission["authorization_env"]
+        if os.environ.get(name) != "1"
+    ]
+    if missing_authorization:
+        raise GraphReliabilityRunnerError(
+            "formal reliability execution requires both external-inference "
+            "authorization gates: " + ", ".join(missing_authorization)
+        )
     missing = [
         name
         for name in (args.base_url_env, args.api_key_env, args.model_env)
@@ -500,6 +570,65 @@ def _check_execution_environment(args: argparse.Namespace, profile: Mapping[str,
         )
     if os.environ.get(args.model_env) != profile["model"]:
         raise GraphReliabilityRunnerError("configured model identity drifted")
+    if os.environ.get(args.base_url_env) != admission["base_url"]:
+        raise GraphReliabilityRunnerError("configured provider route identity drifted")
+
+
+def _official_validate_execution_probe_report(
+    value: Any,
+    *,
+    base_url: str,
+    model_id: str,
+    max_age_hours: float,
+    label: str,
+) -> dict[str, Any]:
+    benchmark_src = ROOT.parent / "p01-phm-agent-benchmark" / "src"
+    if benchmark_src.is_dir() and str(benchmark_src) not in sys.path:
+        sys.path.insert(0, str(benchmark_src))
+    try:
+        from S03_Scripts.run_openai_compatible_probe import (
+            validate_execution_probe_report,
+        )
+    except ModuleNotFoundError as exc:
+        raise GraphReliabilityRunnerError(
+            "Benchmark official provider-admission validator is unavailable"
+        ) from exc
+    return validate_execution_probe_report(
+        value,
+        base_url=base_url,
+        model_id=model_id,
+        max_age_hours=max_age_hours,
+        label=label,
+    )
+
+
+def _validate_formal_provider_admission_report(
+    args: argparse.Namespace, admission: Mapping[str, Any]
+) -> dict[str, Any]:
+    value = args.formal_provider_admission_report
+    if value is None:
+        raise GraphReliabilityRunnerError(
+            "formal reliability execution requires "
+            "--formal-provider-admission-report"
+        )
+    path = Path(value).expanduser()
+    if not path.is_absolute() or not path.is_file():
+        raise GraphReliabilityRunnerError(
+            "formal provider-admission report must be an absolute existing file"
+        )
+    try:
+        report = json.loads(path.resolve(strict=True).read_text(encoding="utf-8"))
+        return _official_validate_execution_probe_report(
+            report,
+            base_url=str(admission["base_url"]),
+            model_id=str(admission["model"]),
+            max_age_hours=float(admission["probe_max_age_hours"]),
+            label="P2-E9 formal provider admission",
+        )
+    except (OSError, json.JSONDecodeError, RuntimeError, TypeError, ValueError) as exc:
+        raise GraphReliabilityRunnerError(
+            f"formal provider-admission report was rejected: {exc}"
+        ) from None
 
 
 def execute_reliability_unit(
@@ -508,7 +637,9 @@ def execute_reliability_unit(
     """Execute one already-validated provider unit and stamp reliability provenance."""
 
     protocol = load_graph_reliability_protocol(_repo_path(args.reliability_protocol))
-    _check_execution_environment(args, protocol["profile"])
+    admission = _formal_admission_contract(protocol["execution"], protocol["profile"])
+    _check_execution_environment(args, protocol["profile"], admission)
+    _validate_formal_provider_admission_report(args, admission)
     dynamic = _load_dynamic_protocol(_repo_path(args.dynamic_protocol))
     try:
         from run_graph_experiment import _run_dynamic, _validate_dynamic_arguments
@@ -628,10 +759,17 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--api-key-env", default="LLM_API_KEY")
     parser.add_argument("--model-env", default="LLM_MODEL")
     parser.add_argument("--resume-provider-partial", action="store_true")
-    parser.add_argument(
+    parser.add_argument("--formal-provider-admission-report", type=Path)
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument(
         "--validate-only",
         action="store_true",
         help="Validate and print the unit contract without env reads or filesystem writes.",
+    )
+    mode.add_argument(
+        "--execute",
+        action="store_true",
+        help="Execute one unit after authorization and formal provider admission pass.",
     )
     return parser
 
