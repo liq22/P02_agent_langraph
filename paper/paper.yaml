@@ -155,14 +155,42 @@ runtime:
   mock_results_support_performance_claims: false
 
 formal_orchestration:
-  benchmark_generic_launcher: ../p01-phm-agent-benchmark/paper/experiments/run_formal_paper0_v6.sh
+  p0_only_benchmark_launcher: ../p01-phm-agent-benchmark/paper/experiments/run_formal_paper0_v6.sh
+  p0_only_scope: separate_from_p1_p2_joint_primary
   downstream_provider_free_scheduler: ../p01-phm-agent-benchmark/paper/experiments/schedule_downstream_formal_v2.py
-  downstream_schedule_schema: downstream_formal_schedule_v2
-  downstream_jobs_total: 27
-  p1_jobs: 12
-  p2_graph_core_jobs: 12
-  p2_graph_monitor_jobs: 3
-  p2_control_policy: reuse_Benchmark_Generic_roots_no_duplicate_Reactive_execution
+  downstream_schedule_schema: joint_primary_counterbalance_schedule_v1
+  downstream_schedule_id: p1_p2_joint_primary_counterbalance_v1
+  joint_profile_id: p1-p2-joint-primary-v1
+  joint_units_total: 15
+  arms_per_unit: 3
+  arm_members: [Generic, PHMskills, Graph]
+  downstream_jobs_total: 45
+  core_units: 12
+  core_jobs: 36
+  monitoring_units: 3
+  monitoring_jobs: 9
+  generic_execution_policy: once_per_unit_shared_as_p1_and_p2_control
+  p0_b3_profile_or_root_eligible_as_joint_control: false
+  pool_p0_b3_with_joint_generic: false
+  joint_executor:
+    owner_repository: liq22/phm-agent-benchmark
+    entrypoint: ../p01-phm-agent-benchmark/paper/experiments/execute_joint_primary_schedule_v1.py
+    check_mode: --check
+    execute_one_mode: --execute-next
+    status: locally_implemented_execution_blocked
+    focused_scheduler_acceptance_executor_tests: "43/43"
+    completed_prefix_authority: canonical_joint_artifacts
+    maximum_provider_jobs_per_execute_next: 1
+    schedule_serializes_private_paths: false
+  required_authorization_environment:
+    base_external_inference_and_egress: PHM_EXTERNAL_INFERENCE_AUTHORIZED=1
+    p1_p2_joint_external_inference_and_egress: PHM_JOINT_EXTERNAL_INFERENCE_AUTHORIZED=1
+  formal_source_revision_status: local_dirty_or_unpublished_not_remote_contained
+  joint_egress_authorization_status: not_separately_authorized
+  fresh_provider_admission_status: required_not_bound
+  joint_jobs_executed: 0
+  joint_jobs_remaining: 45
+  execution_ready: false
   scheduler_provider_calls: 0
   scheduler_is_result_evidence: false
 
@@ -241,11 +269,31 @@ shared_provider_free_reference:
   supports_graph_treatment_effect: false
 
 provider_bound_generic_base_primary:
-  frozen_as_of: "2026-09-03"
-  status: external_roots_required_no_audit_no_effect_estimate
+  frozen_as_of: "2026-09-04"
+  status: joint_runner_and_accepted_only_contract_ready_execution_blocked_no_effect_estimate
+  schedule_id: p1_p2_joint_primary_counterbalance_v1
+  profile_id: p1-p2-joint-primary-v1
+  resume_identity_contract: joint_primary_schedule_resume_identity_v1
+  schedule_acceptance_contract: joint_primary_schedule_acceptance_v1
+  p0_b3_eligible_as_control: false
+  execution_ready: false
+  execution_blockers:
+    - committed_clean_remote_contained_formal_source_revisions
+    - "base external inference/egress authorization: PHM_EXTERNAL_INFERENCE_AUTHORIZED=1"
+    - "separate P1/P2 joint inference/egress authorization not granted: PHM_JOINT_EXTERNAL_INFERENCE_AUTHORIZED=1"
+    - fresh_exact_route_model_zero_price_two_turn_provider_admission_report
+    - zero_of_45_joint_jobs_executed
+    - real_joint_schedule_acceptance_artifact
+  joint_executor_status: locally_implemented_43_of_43_focused_contract_tests_pass
+  joint_executor_check_is_provider_free: true
+  joint_executor_maximum_jobs_per_execute_next: 1
+  joint_jobs_executed: 0
+  joint_jobs_total: 45
   readiness_artifact: paper/experiments/results/p2_e1_primary_readiness_v2.json
   finalizer: scripts/finalize_p2_e1_generic_base_formal_v2.py
   accepted_result_consumer: scripts/render_graph_manuscript_table.py
+  focused_joint_runner_tests_passed: 13
+  focused_joint_runner_tests_total: 13
   control: Benchmark_GenericLLMToolAgent
   treatment: P02_GraphDecisionAgent_over_same_Generic_base
   duplicate_reactive_provider_execution_required: false
@@ -269,10 +317,10 @@ provider_bound_generic_base_primary:
   matched_core_statistical_keys: null
   matched_monitor_statistical_keys: null
   effect_estimates_emitted: 0
-  focused_finalizer_tests_passed: 13
-  focused_finalizer_tests_total: 13
-  focused_consumer_tests_passed: 18
-  focused_consumer_tests_total: 18
+  focused_finalizer_tests_passed: 16
+  focused_finalizer_tests_total: 16
+  focused_consumer_tests_passed: 20
+  focused_consumer_tests_total: 20
   complete_fixture_core_per_arm: 192
   complete_fixture_replay_per_arm: 24
   accepted_publication_outputs:
@@ -280,11 +328,14 @@ provider_bound_generic_base_primary:
     core_figure: paper/assets/figures/p2_e1_core_primary.svg
     graph_state_json: paper/experiments/results/p2_e1_graph_state_summary_v2.json
     graph_state_table: paper/assets/tables/p2_e1_graph_state_summary.md
+    replay_mechanism_json: paper/experiments/results/p2_e1_replay_mechanism_v1.json
     manuscript: paper/draft/main.md
   accepted_publication_grouped_replace_with_exception_rollback: true
   accepted_publication_external_state_override_allowed: false
   optional_mechanism_case_blocks_primary_figure: false
-  optional_mechanism_case_status: omitted_until_bound_extractor
+  optional_mechanism_case_status: omitted_by_design_full_cohort_projection_registered
+  replay_mechanism_projection_status: accepted_only_consumer_ready_formal_result_pending
+  replay_mechanism_case_selection: none_full_cohort_only
   legacy_multifile_publication_allowed: false
   legacy_phmskills_derived_graph_leaves: historical_non_authoritative_excluded
   accepted_provider_bound_cohort_gates: false
@@ -463,8 +514,7 @@ current_mechanics_assets:
   performance_claims_allowed: false
 
 implementation_validation:
-  provider_free_tests: 214
-  provider_free_tests_passed: 214
+  provider_free_suite_status: passing
   provider_calls: 0
 
 result_reporting:
@@ -472,7 +522,7 @@ result_reporting:
   require_accepted_cohort_gates: true
   undefined_metrics: N/A
   report_bootstrap_valid_replicates: true
-  default_mechanism_case: omitted_until_bound_extractor
+  default_mechanism_case: omitted_by_design_full_cohort_projection_registered
   recovery_case_requires_matched_evaluator_gating: true
   no_eligible_recovery_case: N/A
   dynamic_v3_consumer: scripts/render_graph_dynamic_manuscript.py
@@ -495,6 +545,71 @@ result_reporting:
   reliability_v2_current_rows_emitted: 0
   reliability_v2_grouped_replace_with_exception_rollback: true
   reliability_v2_protocol_bound_mode_preserving_publication: true
+
+availability:
+  status_as_of: 2026-09-04
+  status: repository_assets_available_formal_graph_results_pending
+  p2_repository:
+    url: https://github.com/liq22/P02_agent_langraph
+    visibility: public
+    license: Apache-2.0
+    artifact_hosting_state: draft_pr_head_and_local_working_snapshot_not_stable_default_branch_archive
+    implementation: src/phm_graph_agent
+    registered_protocols: paper/experiments
+    accepted_provider_free_mechanics_artifacts:
+      - paper/experiments/results/p2_e0_generic_base_adapter_equivalence_v2.json
+      - paper/experiments/runs/mechanics/graph_dynamic_ablation_v2/mock_acceptance/gate.json
+      - paper/assets/tables/p2_current_mechanics_status.md
+      - paper/assets/figures/p2_current_mechanics_status.svg
+    archival_release: null
+    doi: null
+  upstream_repositories:
+    benchmark:
+      url: https://github.com/liq22/phm-agent-benchmark
+      visibility: private
+      access_state: authorized_repository_access_required
+      role: task_evaluator_and_joint_schedule_authority
+    data_factory:
+      url: https://github.com/PHMbench/phm-data-factory
+      visibility: public
+      role: licensed_local_data_access
+  raw_data:
+    redistributed_by_p2: false
+    paderborn:
+      source_citekey: paderbornBearingDataCenter
+      source_url: https://mb.uni-paderborn.de/en/kat/research/bearing-datacenter
+      license: CC_BY_NC_4_0
+    ottawa_uored_vafcls_v5:
+      source_citekey: sehri2023uoredVafclsV5
+      source_url: https://data.mendeley.com/datasets/y2px5tg92h/5
+      license: CC_BY_4_0
+  private_evaluation_material:
+    local_source_paths_serialized: false
+    public_rollout_includes: [opaque_sample_handles]
+    public_rollout_excludes:
+      - local_source_paths
+      - evaluator_private_targets
+      - source_to_opaque_handle_crosswalks
+    reconstruction_authority: registered_protocols_and_protocol_bound_preparation_analysis_code
+  formal_results:
+    accepted_provider_bound_graph_results: false
+    accepted_generic_graph_treatment_estimate: false
+    joint_primary:
+      registered_jobs: 45
+      executed_jobs: 0
+      accepted_result: false
+    dynamic_v3:
+      registered_units: 240
+      observed_units: 0
+      accepted_result: false
+    ottawa_p2e8_v3:
+      registered_episode_bundles: 72
+      executed_episode_bundles: 0
+      accepted_result: false
+    reliability_p2e9_v2:
+      registered_episode_bundles: 160
+      executed_episode_bundles: 0
+      accepted_result: false
 
 review_readiness:
   shared_provider_free_reference_subset_accepted: true

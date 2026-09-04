@@ -11,19 +11,49 @@ Graph script is a single-arm implementation entry point; it must not replace
 the Benchmark launcher, the provider-free downstream schedule, or the cohort
 gates. P1/P2 execution is projected separately by
 `../p01-phm-agent-benchmark/paper/experiments/schedule_downstream_formal_v2.py`.
-Its registered order can be inspected without credentials, environment-value
-reads, or provider calls:
+Given its public schedule JSON, the Benchmark-owned executor derives the exact
+completed prefix from canonical artifacts without credentials, private-path
+arguments, authorization flags, or provider calls:
 
 ```bash
-python ../p01-phm-agent-benchmark/paper/experiments/schedule_downstream_formal_v2.py \
-  --dry-run
+python ../p01-phm-agent-benchmark/paper/experiments/execute_joint_primary_schedule_v1.py \
+  --schedule '<ABSOLUTE_PUBLIC_JOINT_SCHEDULE_JSON>' \
+  --check
 ```
 
-The schedule contains 27 inert commands: 12 P1 Stage-A-v2 jobs, 12 P2 Graph
-core jobs, and three P2 Graph monitoring jobs. The P2 control is the existing
-Benchmark Generic P0 root—Reactive-equivalent because `ReactiveSequentialAgent`
-has zero behavior overrides—so no duplicate provider-bound Reactive execution
-is scheduled. The schedule itself is not inference or result evidence.
+The required P0-only stamp records the separately excluded P0 authority; it does
+not make that profile or its roots eligible for joint control or pooling. The
+fresh schedule contains 45 inert commands over 15 units and three arms:
+Benchmark Generic, PHMskills, and Graph. Twelve core units contribute 36 jobs
+and three monitoring units contribute nine jobs. Generic executes once per unit
+and supplies the common P1 and P2 control. The emitted plan remains
+`execution_ready=false`, reports `provider_calls=0`, and is neither inference
+nor result evidence. Benchmark has locally implemented the serialized
+exact-prefix inspector/executor; the joint scheduler, acceptance producer, and
+executor contract suite passes 43/43. The current formal source revisions are
+dirty or unpublished and therefore fail the committed-clean, remote-contained
+gate. In addition, P1/P2 joint provider/public-context egress has not been
+separately authorized, a fresh exact-route/model zero-price two-turn admission
+report is not bound, and 0/45 jobs have executed.
+
+For clarity, the following is the gated command shape, not an authorization or
+a command to run in the current state. Both authorization variables require
+explicit approval, and the three execution-only private paths are deliberately
+nonexistent placeholders:
+
+```bash
+PHM_EXTERNAL_INFERENCE_AUTHORIZED=1 \
+PHM_JOINT_EXTERNAL_INFERENCE_AUTHORIZED=1 \
+python ../p01-phm-agent-benchmark/paper/experiments/execute_joint_primary_schedule_v1.py \
+  --schedule '<ABSOLUTE_PUBLIC_JOINT_SCHEDULE_JSON>' \
+  --execute-next \
+  --formal-provider-admission-report '<ABSOLUTE_PRIVATE_FRESH_ADMISSION_REPORT_JSON>' \
+  --metadata '<ABSOLUTE_PRIVATE_PADERBORN_METADATA_PATH>' \
+  --signal '<ABSOLUTE_PRIVATE_PADERBORN_SIGNAL_PATH>'
+```
+
+Even after those gates are separately satisfied, one `--execute-next`
+invocation may start at most the single canonical next job.
 
 Paper 2 uses runtime contract
 `phase1_opaque_sample_vibration_feature_schema_v6`. Public task observations and
@@ -89,15 +119,43 @@ P2-E1, performance, reliability, dynamic, horizon, ablation, or transfer result.
 The earlier PHMskills-derived E0 artifact is historical and non-authoritative.
 
 The P2-E1 authority is `paper/experiments/p2_e1_generic_base_formal_v2.yaml`.
-Its four active-v0.2 timestamped roots are external inputs supplied through the
-required Generic-core, Generic-replay, Graph-core, and Graph-replay CLI flags.
+Its four joint-primary timestamped roots are explicit Generic-core,
+Generic-replay, Graph-core, and Graph-replay finalizer inputs. The provider
+execution path is the Benchmark-owned 45-job schedule
+`p1_p2_joint_primary_counterbalance_v1` under profile
+`p1-p2-joint-primary-v1`; the P0 B3 profile is rejected. Each Graph command
+carries the scheduler's exact 13-field identity, and the runner independently
+reconstructs seed, rotation, scope, unit, position, ordinal, predecessor, and
+output before persisting both that object and the derived
+`joint_graph_core|joint_graph_replay` scope. Graph-first execution validates the
+committed local Benchmark/Data-Factory topology without requiring its later
+same-unit Generic comparison to exist. Supplying that Generic unit later causes
+an additional schedule-identity, completion, and topology cross-check.
+
+Formal joint OpenAI execution requires both
+`PHM_EXTERNAL_INFERENCE_AUTHORIZED=1` and the separate
+`PHM_JOINT_EXTERNAL_INFERENCE_AUTHORIZED=1`, the exact registered OpenRouter
+route/model, explicit zero input/output prices, and a fresh official two-turn
+provider-admission report. Benchmark's locally implemented exact-prefix
+executor injects the report, metadata, and signal paths only at execution and
+starts at most one canonical next job. Its focused scheduler, acceptance, and
+executor contract suite passes 43/43. The current dirty or unpublished formal
+source revisions, absent separate joint authorization, absent fresh report,
+and 0/45 execution state keep `execution_ready=false`; no joint provider call
+or outcome exists.
+
 `scripts/finalize_p2_e1_generic_base_formal_v2.py` validates every cohort index
 against its canonical exact-six leaves and preserves provider attempts outside
 the statistical denominator until a same-profile retry terminates. It binds the
 replay analysis to `phase1_replay_target_adverse_missing_score_v1`, retains all
 assigned windows in the replay task population, and registers replay
-`task.average_precision` as the study primary. Once all four arm gates and both
-pairing gates accept, it emits four absolute arm summaries and two paired
+`task.average_precision` as the study primary. Its 2,000-resample absolute and
+paired bearing bootstraps use the shared Benchmark analysis seed `20260808`;
+the earlier local `20260820` registration was corrected before any accepted
+P2-E1 result existed. It first requires an accepted
+`joint_primary_schedule_acceptance_v1` artifact and exact five-field pairing
+over `seed`, `rotation`, `bearing_id`, `sample_id`, and `task_id`. Once that
+schedule gate, all four arm gates, and both pairing gates accept, it emits four absolute arm summaries and two paired
 bearing-bootstrap results in the single combined result file. That accepted
 result also carries the validated protocol identity, resolved Benchmark control
 stamp, frozen model profile, registered design, analysis contract, and exact
@@ -108,13 +166,13 @@ The `--combined-result` mode of
 explicit expected formal stamp, rejects external state overrides, recomputes
 every displayed Graph-minus-Generic point and replay assigned-window identity,
 and deterministically produces the primary table, core SVG, canonical Graph
-state JSON/Markdown, and marked manuscript blocks as one group with exception
-rollback.
+state JSON/Markdown, full-cohort replay-mechanism JSON, and marked manuscript
+blocks as one group with exception rollback.
 The active publication path rejects legacy multi-file inputs and writes only the
-paths declared by the protocol. Descriptive mechanism inputs remain omitted
-until their extractor binds the same accepted combined-result identity and
-pairing membership; their absence cannot block the primary figure. Finalizer
-checks pass 13/13 and consumer checks pass 18/18, including a
+paths declared by the protocol. The replay mechanism projection is generated
+only from the accepted combined result, binds all 24 exact replay pairs, and
+forbids external case overrides, hidden-target selection, and reasoning-trace
+inputs. Finalizer checks pass 16/16 and consumer checks pass 20/20, including a
 complete 192-core/24-replay-per-arm analyzer-to-publication fixture. The
 checked-in readiness snapshot records that no external-root audit was performed
 and therefore contains no effect estimate. Historical PHMskills-derived and
@@ -136,8 +194,9 @@ release-bounded events, profile legality, no-persistent state stripping, and
 zero provider calls. Dynamic-v3 uses the isolated runtime identity
 `phase1_graph_dynamic_generic_ablation_v3` and new formal roots. Its scheduler
 emits 240/240 dry commands and invokes none; validate-only reads no provider
-environment or probe evidence and writes no result. Runner checks pass 17/17,
-dynamic-focused checks pass 50/50, and formal coverage is 0/240. The
+environment or probe evidence and writes no result. Runner checks pass 19/19,
+the current dynamic-related aggregate passes 57/57, and formal coverage is
+0/240. The
 accepted-only analyzer rebuilds all eight private 12-window masters through
 the registered Paderborn DataPort using `--private-metadata-env` and
 `--private-signal-env`, uses canonical rollout successful-submit prefixes as
@@ -246,15 +305,20 @@ failure, Agent-decision error, reference validity, repeated errors, bounded data
 and operator/model calls, and LLM turns. There is no separate cycle-ratio
 endpoint.
 
-The historical long-horizon extractor does not bind the active combined-result
-identity or exact paired-cohort membership, so its JSON and SVG are not accepted
-publication inputs. The active P2-E1 consumer omits that optional descriptive
-case until a bound extractor exists. Completion or recovery cases still require
-matched evaluator gating. Undefined metrics remain N/A rather than zero, every
-reported bootstrap interval includes its valid-replicate count, and provider
-latency remains descriptive.
+The historical single-case extractor does not bind the active combined-result
+identity or exact paired-cohort membership and is not an accepted publication
+input. The active finalizer instead embeds a complete-cohort mechanism
+projection after all four arm gates and both pairing gates accept. The
+accepted-only consumer independently reconciles public canonical actions and
+evaluator rollout endpoints across all 24 replay pairs, checks Graph state and
+transition counts, and writes `p2_e1_replay_mechanism_v1.json` with no hidden
+targets, reasoning traces, or post-hoc case selection. These diagnostics remain
+explanatory; task-primary effects require the matched evaluator gates.
+Undefined metrics remain N/A rather than zero, every reported bootstrap
+interval includes its valid-replicate count, and provider latency remains
+descriptive.
 
-The current provider-free P02 test suite passes 214/214, covering executable
+The current provider-free P02 test suite passes, covering executable
 contracts, assigned-window denominators, cluster inference, document-linked
 mechanics, task/mechanism separation, and protocol-bound accepted-result
 publication.
