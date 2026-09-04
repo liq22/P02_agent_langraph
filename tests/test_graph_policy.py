@@ -11,6 +11,7 @@ from phm_agent_benchmark.phase1 import (
     TrajectoryStep,
 )
 from phm_graph_agent import (
+    ALLOWED_TRANSITIONS,
     GraphDecisionAgent,
     GraphGuidedPHMAgent,
     ReactiveSequentialAgent,
@@ -205,6 +206,37 @@ class GraphPolicyTest(unittest.TestCase):
             )
         )
         self.assertEqual(decision_state(trajectory, replay_ids), "Submit")
+
+    def test_nonterminal_replay_submit_legally_reenters_inspect(self) -> None:
+        trajectory = EpisodeTrajectory("online_replay_monitoring", "graph")
+        trajectory.steps.extend(
+            [
+                _step(
+                    0,
+                    "model.predict",
+                    "Check",
+                    tool_result={"source_sample_id": "sample-a"},
+                ),
+                _step(1, "submit", "Submit"),
+            ]
+        )
+        self.assertEqual(
+            decision_state(trajectory, ("sample-a", "sample-b")), "Inspect"
+        )
+        trajectory.steps.append(
+            _step(
+                2,
+                "data.read_window",
+                "Inspect",
+                tool_args={"sample_id": "sample-b"},
+            )
+        )
+        self.assertEqual(transition_validity(trajectory), 1.0)
+        self.assertEqual(
+            ALLOWED_TRANSITIONS["Submit"],
+            {"Inspect", "Monitor", "Revise", "Recover"},
+        )
+        self.assertEqual(sum(map(len, ALLOWED_TRANSITIONS.values())), 51)
 
     def test_replay_analysis_counts_only_current_sample_operators(self) -> None:
         replay_ids = ("sample-a", "sample-b")

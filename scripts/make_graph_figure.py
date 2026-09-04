@@ -169,7 +169,7 @@ def render_svg() -> str:
     lines.extend(
         _render_matrix(
             relation_id="base-v6",
-            title="Base-v6 declared relation (50 edges)",
+            title="Base-v6 declared relation (51 edges)",
             subtitle="Monitor/Revise remain declared but unreachable without an event",
             transitions=ALLOWED_TRANSITIONS,
             matrix_x=180,

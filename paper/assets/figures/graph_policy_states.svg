@@ -33,7 +33,7 @@
 <text x="750" y="294" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#334155">Active v6 registers no public_condition_event: Monitor and Revise are unreachable in that primary cohort.</text>
 <text x="750" y="315" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">The separate dynamic-full mechanics gate is accepted; its provider-bound formal cohort has not run.</text>
 <g data-transition-relation="base-v6">
-<text x="348.0" y="352" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#0f172a">Base-v6 declared relation (50 edges)</text>
+<text x="348.0" y="352" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#0f172a">Base-v6 declared relation (51 edges)</text>
 <text x="348.0" y="374" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">Monitor/Revise remain declared but unreachable without an event</text>
 <text x="201.0" y="424" text-anchor="end" transform="rotate(-45 201.0 424)" font-family="sans-serif" font-size="10">Inspect</text>
 <text x="243.0" y="424" text-anchor="end" transform="rotate(-45 243.0 424)" font-family="sans-serif" font-size="10">Hypothesize</text>
@@ -154,7 +154,8 @@
 <rect data-edge="base-v6:Recover-to-Submit" data-relation="base-v6" data-legal="true" x="474" y="692" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
 <circle cx="495.0" cy="713.0" r="6" fill="white"/>
 <text x="166" y="761" text-anchor="end" font-family="sans-serif" font-size="11">Submit</text>
-<rect data-edge="base-v6:Submit-to-Inspect" data-relation="base-v6" data-legal="false" x="180" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="base-v6:Submit-to-Inspect" data-relation="base-v6" data-legal="true" x="180" y="734" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="201.0" cy="755.0" r="6" fill="white"/>
 <rect data-edge="base-v6:Submit-to-Hypothesize" data-relation="base-v6" data-legal="false" x="222" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
 <rect data-edge="base-v6:Submit-to-Analyze" data-relation="base-v6" data-legal="false" x="264" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
 <rect data-edge="base-v6:Submit-to-Check" data-relation="base-v6" data-legal="false" x="306" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
@@ -165,7 +166,7 @@
 <rect data-edge="base-v6:Submit-to-Recover" data-relation="base-v6" data-legal="true" x="432" y="734" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
 <circle cx="453.0" cy="755.0" r="6" fill="white"/>
 <rect data-edge="base-v6:Submit-to-Submit" data-relation="base-v6" data-legal="false" x="474" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
-<text x="348.0" y="810" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#334155">50 declared legal transitions imported from state.py</text>
+<text x="348.0" y="810" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#334155">51 declared legal transitions imported from state.py</text>
 </g>
 <g data-transition-relation="dynamic-full">
 <text x="1098.0" y="352" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#0f172a">Dynamic-full profile relation (33 edges)</text>

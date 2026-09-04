@@ -3,7 +3,7 @@
 **Status:** active authority
 **Repository:** `liq22/P02_agent_langraph`
 **Shared benchmark:** `liq22/phm-agent-benchmark`
-**Updated:** 2026-09-03
+**Updated:** 2026-09-04
 
 ## 1. Authority
 
@@ -79,7 +79,7 @@ where:
 
 LangGraph may implement this object, but the paper contribution is not “using LangGraph.”
 
-Explicit state machines and state-conditioned LLM control are established prior work, including StateFlow. Paper 2 therefore does not claim novelty for representing an agent as a graph. Its testable contribution is the matched PHM intervention that jointly adds a current-state policy suffix and state-specific filtering of the same global Benchmark tool schemas, together with task-primary and mechanism-focused evaluation.
+StateAct establishes explicit state tracking; StateFlow, graph/state-machine workflows; HyperAgent, state-conditioned tool-schema support; and STAR, failure-aware multi-agent specialist routing. Paper 2 tests a matched PHM intervention that jointly adds a current-state policy suffix and state-specific filtering of the same global Benchmark tool schemas, together with independent task-primary and mechanism-focused evaluation.
 
 ## 6. Registered task scope
 
@@ -106,7 +106,7 @@ Recover
 Submit
 ```
 
-The base-v6 profile uses the registered 50-edge relation while omitting public condition events, so only Inspect, Hypothesize, Analyze, Check, Recover, and Submit are reachable. The separate dynamic-full profile uses its registered 33-edge observation-conditioned relation. Recover follows a recorded action failure; Monitor and Revise respond only to an explicitly released public event, never to a hidden target or an event inferred from signal values. Keep the graph small; do not create one node per function, schema field, or hypothetical exception.
+The base-v6 profile uses the registered 51-edge relation while omitting public condition events, so only Inspect, Hypothesize, Analyze, Check, Recover, and Submit are reachable. A successful nonterminal replay submission releases the next opaque sample and follows `Submit -> Inspect`; this ordinary replay boundary is not a Monitor/Revise event. The separate dynamic-full profile uses its registered 33-edge observation-conditioned relation. Recover follows a recorded action failure; Monitor and Revise respond only to an explicitly released public event, never to a hidden target or an event inferred from signal values. Keep the graph small; do not create one node per function, schema field, or hypothetical exception.
 
 ## 8. State and transition contract
 

@@ -72,7 +72,10 @@ ALLOWED_TRANSITIONS = {
         "Submit",
         "Recover",
     },
-    "Submit": {"Monitor", "Revise", "Recover"},
+    # A successful nonterminal replay submission releases the next opaque
+    # sample and re-enters inspection. Monitor/Revise remain reserved for an
+    # explicit public event, and Recover remains tied to a recorded failure.
+    "Submit": {"Inspect", "Monitor", "Revise", "Recover"},
 }
 
 GRAPH_POLICY_PROFILES = (
