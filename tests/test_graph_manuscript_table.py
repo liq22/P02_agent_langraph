@@ -21,6 +21,7 @@ from scripts.render_current_mechanics_evidence import (
 )
 from scripts.render_graph_manuscript_table import (
     ANOMALY_TASK,
+    CORE_MANUSCRIPT_HEADING,
     CORE_EPISODES_PER_TASK,
     CORE_ROTATIONS,
     CORE_TASKS,
@@ -33,11 +34,13 @@ from scripts.render_graph_manuscript_table import (
     P2_FORMAL_EXECUTION_TOPOLOGY_CONTRACT,
     P2_FORMAL_REPRODUCIBILITY_PATHS,
     P2_REPOSITORY,
+    REPLAY_MANUSCRIPT_HEADING,
     REGISTERED_ENDPOINTS,
     REPLAY_EPISODES,
     REPLAY_MISSING_SCORE_POLICY_ID,
     REPLAY_TASK,
     RUNTIME_CONTRACT,
+    FIGURES_MANUSCRIPT_HEADING,
     ResultsPending,
     SEEDS,
     STATES,
@@ -606,6 +609,9 @@ class GraphManuscriptTableTest(unittest.TestCase):
             manuscript = args.manuscript.read_text(encoding="utf-8")
             self.assertIn("| Primary | Monitoring Average Precision |", manuscript)
             self.assertIn("| Task primary | Diagnosis Macro-F1 |", manuscript)
+            self.assertEqual(manuscript.count(CORE_MANUSCRIPT_HEADING), 1)
+            self.assertEqual(manuscript.count(REPLAY_MANUSCRIPT_HEADING), 1)
+            self.assertEqual(manuscript.count(FIGURES_MANUSCRIPT_HEADING), 1)
             self.assertNotIn("figures pending", manuscript)
             self.assertIn("p2_e1_core_primary.svg", manuscript)
             self.assertIn("No descriptive replay mechanism case is admitted", manuscript)
@@ -923,6 +929,69 @@ class GraphManuscriptTableTest(unittest.TestCase):
         self.assertIn("target-adverse assigned-window Average Precision", abstract)
         self.assertIn("50-edge base-v6", manuscript)
         self.assertIn("33-edge dynamic-full", manuscript)
+        self.assertIn("### 1.1 Contributions", manuscript)
+        self.assertNotIn("*Pending:", manuscript)
+        for false_heading in (
+            "#### Accepted dynamic-v3 horizon and ablation comparisons",
+            "#### Accepted P2-E8 Ottawa cross-dataset comparison",
+            "#### Accepted P2-E9 reliability comparison",
+            "#### Accepted replay task-primary comparison",
+            "#### Accepted core comparison",
+            "#### Accepted formal figures",
+        ):
+            self.assertNotIn(false_heading, manuscript)
+        for marker in (
+            "P2_DYNAMIC_FORMAL",
+            "P2_E8_OTTAWA",
+            "P2_E9_RELIABILITY",
+            "GRAPH_MONITOR_PRIMARY_COMPACT",
+            "GRAPH_CORE_PRIMARY_COMPACT",
+            "GRAPH_FORMAL_FIGURES",
+        ):
+            self.assertEqual(manuscript.count(f"<!-- {marker}:BEGIN -->"), 1)
+            self.assertEqual(manuscript.count(f"<!-- {marker}:END -->"), 1)
+
+        paper_yaml_text = (ROOT / "paper/paper.yaml").read_text(encoding="utf-8")
+        evidence = (ROOT / "paper/experiments/evidence_matrix.md").read_text(
+            encoding="utf-8"
+        )
+        paper = yaml.safe_load(paper_yaml_text)
+        reference = paper["shared_provider_free_reference"]
+        self.assertEqual(
+            reference["aggregate"],
+            "../p01-phm-agent-benchmark/paper/experiments/results/"
+            "p0_active_v02_provider_free_reference_subset_v1.json",
+        )
+        self.assertEqual(reference["benchmark_revision_short"], "b6cf5796")
+        self.assertEqual(reference["data_factory_revision_short"], "5805071")
+        self.assertEqual(reference["formal_run_stamp"], "20260903T080515Z")
+        self.assertEqual(reference["core_episodes"], 64)
+        self.assertEqual(reference["replay_episodes"], 8)
+        aggregate = json.loads(
+            (ROOT / reference["aggregate"]).read_text(encoding="utf-8")
+        )
+        self.assertIs(aggregate["accepted"], True)
+        self.assertEqual(
+            aggregate["accepted_scope"],
+            "B0_B1_B2_active_v0_2_provider_free_reference_subset_only",
+        )
+        self.assertEqual(
+            aggregate["execution"]["benchmark_execution_revision"],
+            reference["benchmark_revision"],
+        )
+        self.assertEqual(
+            aggregate["execution"]["data_factory_revision"],
+            reference["data_factory_revision"],
+        )
+        self.assertEqual(
+            aggregate["execution"]["formal_run_stamp"],
+            reference["formal_run_stamp"],
+        )
+        self.assertEqual(aggregate["inputs"]["B2_core"]["observed_unique_episodes"], 64)
+        self.assertEqual(aggregate["inputs"]["B2_replay"]["observed_unique_episodes"], 8)
+        self.assertNotIn(
+            "deterministic_runbundle_v1", manuscript + paper_yaml_text + evidence
+        )
 
         status = load_current_mechanics()
         current_table = render_current_mechanics_table(status)

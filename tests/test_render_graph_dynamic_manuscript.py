@@ -24,6 +24,7 @@ from scripts.analyze_graph_dynamic_formal import (
 from scripts.render_graph_dynamic_manuscript import (
     MANUSCRIPT_BEGIN,
     MANUSCRIPT_END,
+    MANUSCRIPT_HEADING,
     PRIMARY_METRIC,
     PUBLICATION_WRITE_CONTRACT,
     DynamicResultsPending,
@@ -713,6 +714,7 @@ class DynamicManuscriptRendererTest(unittest.TestCase):
             self.assertIn("Valid bootstrap replicates", table)
             self.assertIn("10000/10000", table)
             self.assertIn("accepted all 240 registered episode bundles", manuscript)
+            self.assertEqual(manuscript.count(MANUSCRIPT_HEADING), 1)
             self.assertIn("26 prespecified secondary mechanism rows", manuscript)
             self.assertIn(
                 "![Accepted dynamic-v3 task-primary contrasts](../publication/figure.svg)",

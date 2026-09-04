@@ -58,6 +58,7 @@ DEFAULT_MANUSCRIPT = ROOT / "paper/draft/main.md"
 
 MANUSCRIPT_BEGIN = "<!-- P2_E8_OTTAWA:BEGIN -->"
 MANUSCRIPT_END = "<!-- P2_E8_OTTAWA:END -->"
+MANUSCRIPT_HEADING = "#### P2-E8 Ottawa cross-dataset results"
 FORMAL_STAMP = re.compile(r"^[0-9]{8}T[0-9]{6}Z$")
 
 EXPECTED_RUNS_PER_ARM = 9
@@ -664,6 +665,8 @@ def render_manuscript_block(
     table_body = render_table(rows).split("\n", 2)[2]
     return "\n".join(
         [
+            MANUSCRIPT_HEADING,
+            "",
             "The P2-E8 gate accepted all 72 registered Ottawa episode bundles and 36 exact Graph--Reactive pairs, retaining 108 assigned windows per arm across 12 physical-bearing clusters. The table reports the registered task-primary and secondary window-level outcomes without pooling Ottawa with Paderborn or interpreting evaluator-private source states as a public condition event. All estimates are retained regardless of direction.",
             "",
             table_body.rstrip(),

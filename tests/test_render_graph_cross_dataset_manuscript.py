@@ -17,6 +17,7 @@ from scripts.render_graph_cross_dataset_manuscript import (
     DISPLAY_METRICS,
     MANUSCRIPT_BEGIN,
     MANUSCRIPT_END,
+    MANUSCRIPT_HEADING,
     PUBLICATION_WRITE_CONTRACT,
     CrossDatasetResultsPending,
     validate_cross_dataset_inputs,
@@ -302,6 +303,7 @@ class CrossDatasetManuscriptRendererTest(unittest.TestCase):
             self.assertIn("Target-adverse Average Precision", table)
             self.assertIn("+0.1000", table)
             self.assertIn("accepted all 72 registered Ottawa episode bundles", manuscript)
+            self.assertEqual(manuscript.count(MANUSCRIPT_HEADING), 1)
             self.assertIn(
                 "![Accepted P2-E8 Ottawa task contrasts](../publication/figure.svg)",
                 manuscript,

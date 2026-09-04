@@ -21,6 +21,7 @@ from scripts.analyze_graph_reliability import (
 from scripts.render_graph_reliability_manuscript import (
     MANUSCRIPT_BEGIN,
     MANUSCRIPT_END,
+    MANUSCRIPT_HEADING,
     PUBLICATION_WRITE_CONTRACT,
     ReliabilityResultsPending,
     validate_reliability_inputs,
@@ -438,6 +439,7 @@ class ReliabilityManuscriptRendererTest(unittest.TestCase):
             self.assertIn("Valid bootstrap replicates", table)
             self.assertIn("2000/2000", table)
             self.assertIn("accepted all 160 registered episode bundles", manuscript)
+            self.assertEqual(manuscript.count(MANUSCRIPT_HEADING), 1)
             self.assertIn(
                 "![Accepted P2-E9 bounded reliability contrasts](../assets/figures/p2_e9_reliability_primary.svg)",
                 manuscript,

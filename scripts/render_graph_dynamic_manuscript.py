@@ -72,6 +72,7 @@ PUBLICATION_WRITE_CONTRACT = (
 
 MANUSCRIPT_BEGIN = "<!-- P2_DYNAMIC_FORMAL:BEGIN -->"
 MANUSCRIPT_END = "<!-- P2_DYNAMIC_FORMAL:END -->"
+MANUSCRIPT_HEADING = "#### Dynamic-v3 horizon and ablation results"
 
 ABLATION_CONTROLS = {
     "P2-E3": "graph_no_recovery_revision_edge",
@@ -1575,6 +1576,8 @@ def render_manuscript_block(
     table_body = table.split("\n", 2)[2]
     return "\n".join(
         [
+            MANUSCRIPT_HEADING,
+            "",
             "The dynamic-v3 gate accepted all 240 registered episode bundles: 24 episodes in each of ten horizon/profile cells across three seeds and eight held-out bearing sequences. The first table section reports eight preregistered target-adverse assigned-window Average Precision rows, including the horizon interaction and four ablation task effects. The second section reports 26 prespecified secondary mechanism rows for P2-E3--P2-E7 without pooling them with task performance. P2-E4 also supplies the single reused full-versus-no-observation-branching P2-E7 comparison; no episode denominator is duplicated. All estimates are retained regardless of direction, and P2-E7 is limited to public operating-condition identifier changes rather than fault onset, event-F1, detection delay, or physical time.",
             "",
             table_body.rstrip(),

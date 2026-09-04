@@ -222,14 +222,22 @@ outcomes:
     - state_step_occupancy_proportion
     - state_episode_visitation_rate
 
-shared_deterministic_reference:
-  status: accepted_v6
+shared_provider_free_reference:
+  status: accepted_active_v0_2_reference_subset
+  aggregate: ../p01-phm-agent-benchmark/paper/experiments/results/p0_active_v02_provider_free_reference_subset_v1.json
+  schema_version: paper0_active_v0_2_provider_free_reference_subset_v1
+  evidence_class: formal
+  result_role: reference
+  accepted_scope: B0_B1_B2_active_v0_2_provider_free_reference_subset_only
+  formal_run_stamp: 20260903T080515Z
+  benchmark_revision: b6cf5796b7e07c20866fd1bfda743f51ee4ea940
+  benchmark_revision_short: b6cf5796
+  data_factory_revision: 58050716383e32ca79fdad0d9a45ad96a19eb838
+  data_factory_revision_short: "5805071"
+  provider_calls: 0
+  scripted_arm: B2
   core_episodes: 64
-  core_acceptance: ../p01-phm-agent-benchmark/paper/experiments/results/deterministic_runbundle_v1/scripted_matched_cohort_acceptance.json
-  core_summary: ../p01-phm-agent-benchmark/paper/experiments/results/deterministic_runbundle_v1/scripted_matched.json
   replay_episodes: 8
-  replay_acceptance: ../p01-phm-agent-benchmark/paper/experiments/results/deterministic_runbundle_v1/scripted_monitoring_cohort_acceptance.json
-  replay_summary: ../p01-phm-agent-benchmark/paper/experiments/results/deterministic_runbundle_v1/scripted_monitor_matched.json
   supports_graph_treatment_effect: false
 
 provider_bound_generic_base_primary:
@@ -489,7 +497,7 @@ result_reporting:
   reliability_v2_protocol_bound_mode_preserving_publication: true
 
 review_readiness:
-  shared_deterministic_v6_accepted: true
+  shared_provider_free_reference_subset_accepted: true
   generic_graph_llm_results_accepted: false
   formal_real_data_results_accepted: false
   final_tables_and_figures_ready: false

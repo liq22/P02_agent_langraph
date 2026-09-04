@@ -54,6 +54,7 @@ DEFAULT_MANUSCRIPT = ROOT / "paper/draft/main.md"
 
 MANUSCRIPT_BEGIN = "<!-- P2_E9_RELIABILITY:BEGIN -->"
 MANUSCRIPT_END = "<!-- P2_E9_RELIABILITY:END -->"
+MANUSCRIPT_HEADING = "#### P2-E9 reliability results"
 
 EXPECTED_REPEATS = 10
 EXPECTED_SEQUENCES = 8
@@ -1222,6 +1223,8 @@ def render_manuscript_block(
     table_body = render_table(rows).split("\n", 2)[2]
     return "\n".join(
         [
+            MANUSCRIPT_HEADING,
+            "",
             "The P2-E9 gate accepted all 160 registered episode bundles and 80 matched Graph--Reactive pairs across ten independent repeats. The table reports the target-adverse task-primary endpoint alongside the preregistered explanatory reliability, rollout, and cost outcomes. P2-E9 remains separate from the three-seed primary cohort, and all estimates are retained regardless of direction.",
             "",
             table_body.rstrip(),

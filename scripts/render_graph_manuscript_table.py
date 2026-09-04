@@ -76,6 +76,9 @@ REPLAY_TABLE_BEGIN = "<!-- GRAPH_MONITOR_PRIMARY_COMPACT:BEGIN -->"
 REPLAY_TABLE_END = "<!-- GRAPH_MONITOR_PRIMARY_COMPACT:END -->"
 FIGURES_BEGIN = "<!-- GRAPH_FORMAL_FIGURES:BEGIN -->"
 FIGURES_END = "<!-- GRAPH_FORMAL_FIGURES:END -->"
+CORE_MANUSCRIPT_HEADING = "#### Core comparison"
+REPLAY_MANUSCRIPT_HEADING = "#### Replay task-primary comparison"
+FIGURES_MANUSCRIPT_HEADING = "#### Formal figures"
 
 REGISTERED_ROLLOUT_ENDPOINTS = (
     "rollout.grounded_completion",
@@ -1521,19 +1524,28 @@ def insert_results(
     if not manuscript.is_file():
         raise ResultsPending(f"missing active manuscript: {manuscript}")
     source = manuscript.read_text(encoding="utf-8")
+    core_block = f"{CORE_MANUSCRIPT_HEADING}\n\n{core_table.rstrip()}"
+    replay_block = f"{REPLAY_MANUSCRIPT_HEADING}\n\n{replay_table.rstrip()}"
     source = _replace_block(
-        source, CORE_TABLE_BEGIN, CORE_TABLE_END, core_table, "Paper 2 core-result"
+        source, CORE_TABLE_BEGIN, CORE_TABLE_END, core_block, "Paper 2 core-result"
     )
     source = _replace_block(
         source,
         REPLAY_TABLE_BEGIN,
         REPLAY_TABLE_END,
-        replay_table,
+        replay_block,
         "Paper 2 replay-result",
     )
     if figures is None:
         return source
-    return _replace_block(source, FIGURES_BEGIN, FIGURES_END, figures, "Paper 2 formal-figure")
+    figure_block = f"{FIGURES_MANUSCRIPT_HEADING}\n\n{figures.rstrip()}"
+    return _replace_block(
+        source,
+        FIGURES_BEGIN,
+        FIGURES_END,
+        figure_block,
+        "Paper 2 formal-figure",
+    )
 
 
 def _require_result_sources(
