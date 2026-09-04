@@ -38,9 +38,26 @@ class GraphDynamicProtocolTests(unittest.TestCase):
         self.assertIs(implementation["task_primary_metric_contract_implemented"], True)
         self.assertIs(implementation["provider_free_metric_regression_passed"], True)
         self.assertIs(implementation["accepted_mechanism_reporting_implemented"], True)
+        self.assertIs(implementation["formal_fail_closed_admission_implemented"], True)
+        self.assertIs(implementation["official_execution_probe_validator_bound"], True)
         self.assertEqual(
             implementation["event_payload_key"], "public_condition_event"
         )
+        runner = protocol["formal_scheduler"]["runner"]
+        self.assertEqual(
+            runner["authorization_environment"],
+            {
+                "external_inference": "PHM_EXTERNAL_INFERENCE_AUTHORIZED",
+                "dynamic_cohort": "PHM_P2_DYNAMIC_EXTERNAL_INFERENCE_AUTHORIZED",
+                "required_value": "1",
+            },
+        )
+        for flag in (
+            "--validate-only",
+            "--execute",
+            "--formal-provider-admission-report",
+        ):
+            self.assertIn(flag, runner["required_flags"])
         narrative = NARRATIVE_PATH.read_text(encoding="utf-8")
         self.assertIn(
             "Task performance is primary",

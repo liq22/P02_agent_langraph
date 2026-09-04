@@ -16,7 +16,7 @@ from typing import Any, Iterable
 
 import yaml
 
-from phm_graph_agent import STATES as EXECUTABLE_STATES
+from phm_graph_agent import ALLOWED_TRANSITIONS, STATES as EXECUTABLE_STATES
 
 
 class ResultsPending(RuntimeError):
@@ -31,6 +31,9 @@ DEFAULT_STATE_JSON = (
     ROOT / "paper/experiments/results/p2_e1_graph_state_summary_v2.json"
 )
 DEFAULT_STATE_TABLE = ROOT / "paper/assets/tables/p2_e1_graph_state_summary.md"
+DEFAULT_MECHANISM_JSON = (
+    ROOT / "paper/experiments/results/p2_e1_replay_mechanism_v1.json"
+)
 DEFAULT_MANUSCRIPT = ROOT / "paper/draft/main.md"
 FORMAL_RUN_STAMP_PATTERN = re.compile(r"^[0-9]{8}T[0-9]{6}Z$")
 REVISION_PATTERN = re.compile(r"^[0-9a-f]{40}$")
@@ -105,6 +108,17 @@ REGISTERED_ENDPOINTS = {
     ),
     REPLAY_TASK: ("task.average_precision", *REGISTERED_ROLLOUT_ENDPOINTS),
 }
+REPLAY_MECHANISM_ENDPOINTS = (
+    "rollout.grounded_completion",
+    "rollout.submission_rate",
+    "rollout.budget_exhaustion",
+    "rollout.valid_tool_call_rate",
+    "rollout.repeated_action_ratio",
+    "rollout.grounded_recovery_success",
+    "rollout.recovery_coverage",
+    "rollout.steps_to_recovery",
+    "rollout.steps",
+)
 PRIMARY_ENDPOINT = {
     "cohort": "replay",
     "task": REPLAY_TASK,
@@ -119,6 +133,7 @@ DATA_FACTORY_REPOSITORY = "https://github.com/PHMbench/phm-data-factory.git"
 P2_REPOSITORY = "https://github.com/liq22/P02_agent_langraph.git"
 P2_FORMAL_REPRODUCIBILITY_PATHS = (
     "CORE.md",
+    "paper/experiments/p2_e1_generic_base_formal_v2.yaml",
     "scripts/run_graph_experiment.py",
     "src/phm_graph_agent",
 )
@@ -128,9 +143,10 @@ EXPECTED_PROTOCOL_IDENTITY = {
     "experiment_id": "P2-E1",
 }
 EXPECTED_BENCHMARK_CONTROL_SOURCE = {
-    "contract": "benchmark_active_v0_2_control_source_v1",
+    "contract": "p1_p2_joint_generic_control_source_v1",
+    "schedule_id": "p1_p2_joint_primary_counterbalance_v1",
     "protocol_id": "benchmark_v0_2_0--paderborn_phase1_v1--runtime_v6--window_v3",
-    "profile_id": "paper0-paderborn-primary-v1",
+    "profile_id": "p1-p2-joint-primary-v1",
 }
 EXPECTED_FROZEN_PROFILE = {
     "runtime": "openai",
@@ -163,7 +179,7 @@ EXPECTED_ANALYSIS = {
         "method": "paired_bearing_cluster_percentile_bootstrap",
         "cluster_unit": "physical_bearing",
         "iterations": BOOTSTRAP_ITERATIONS,
-        "seed": 20260820,
+        "seed": 20260808,
     },
     "task_endpoints": {
         DIAGNOSIS_TASK: ["task.macro_f1"],
@@ -171,6 +187,22 @@ EXPECTED_ANALYSIS = {
         REPLAY_TASK: ["task.average_precision"],
     },
     "rollout_endpoints": list(REGISTERED_ROLLOUT_ENDPOINTS),
+    "replay_mechanism": {
+        "role": "secondary_explanatory_not_task_performance",
+        "task": REPLAY_TASK,
+        "source": "accepted_exact_six_public_rollout_and_evaluator_views",
+        "pairing_key": ["seed", "rotation", "bearing_id", "sample_id", "task_id"],
+        "expected_pairs": REPLAY_EPISODES,
+        "endpoints": list(REPLAY_MECHANISM_ENDPOINTS),
+        "graph_projection": {
+            "states": list(STATES),
+            "transition_relation": "base_v6_51_edge",
+            "monitor_and_revise_reachable": False,
+        },
+        "case_selection": "none_full_cohort_only",
+        "evaluator_private_targets_used": False,
+        "reasoning_traces_used": False,
+    },
     "replay_missing_score_policy_id": REPLAY_MISSING_SCORE_POLICY_ID,
     "primary_endpoint": PRIMARY_ENDPOINT,
 }
@@ -188,6 +220,7 @@ RESULT_TOP_LEVEL_FIELDS = frozenset(
         "provider_calls",
         "frozen_profile",
         "benchmark_control_source",
+        "joint_schedule_acceptance",
         "formal_execution_topology",
         "protocol_identity",
         "registered_design",
@@ -200,6 +233,7 @@ RESULT_TOP_LEVEL_FIELDS = frozenset(
         "direction",
         "arm_summaries",
         "graph_state_summaries",
+        "replay_mechanism",
         "paired_bearing_bootstrap",
         "primary_endpoint",
         "gates",
@@ -451,11 +485,19 @@ def _load_active_protocol(path: Path) -> dict[str, Any]:
     source = protocol.get("benchmark_control_source")
     expected_source = {
         **EXPECTED_BENCHMARK_CONTROL_SOURCE,
-        "formal_run_stamp": "explicit_cli_required",
+        "formal_run_stamp": "from_joint_schedule_acceptance",
         "public_leaf_root_path": "forbidden",
     }
     if _json_view(source) != _json_view(expected_source):
         raise ResultsPending("active P2-E1 protocol has drifted benchmark_control_source")
+    joint = protocol.get("joint_schedule")
+    if (
+        not isinstance(joint, dict)
+        or joint.get("schedule_id") != "p1_p2_joint_primary_counterbalance_v1"
+        or joint.get("profile_id") != "p1-p2-joint-primary-v1"
+        or joint.get("p0_b3_eligible_as_control") is not False
+    ):
+        raise ResultsPending("active P2-E1 protocol has drifted joint schedule authority")
     outputs = protocol.get("outputs")
     if not isinstance(outputs, dict) or set(outputs) != {
         "readiness",
@@ -473,7 +515,8 @@ def _load_active_protocol(path: Path) -> dict[str, Any]:
         "source": "accepted_combined_result_only",
         "external_state_override": "forbidden",
         "core_figure_generation": "deterministic_from_accepted_result",
-        "mechanism_case": "omitted_until_bound_extractor",
+        "mechanism_projection": "embedded_accepted_full_cohort_only",
+        "mechanism_case": "omitted_by_design_no_post_hoc_case",
         "write_contract": "grouped_replace_with_exception_rollback",
     }
     if not isinstance(publication, dict) or set(publication) != {
@@ -482,6 +525,7 @@ def _load_active_protocol(path: Path) -> dict[str, Any]:
         "core_figure",
         "state_json",
         "state_table",
+        "mechanism_json",
         "manuscript",
     }:
         raise ResultsPending("active P2-E1 protocol has drifted publication outputs")
@@ -490,7 +534,14 @@ def _load_active_protocol(path: Path) -> dict[str, Any]:
             raise ResultsPending(
                 f"active P2-E1 protocol has drifted accepted_publication.{key}"
             )
-    for name in ("table", "core_figure", "state_json", "state_table", "manuscript"):
+    for name in (
+        "table",
+        "core_figure",
+        "state_json",
+        "state_table",
+        "mechanism_json",
+        "manuscript",
+    ):
         if not isinstance(publication.get(name), str) or not publication[name]:
             raise ResultsPending(
                 f"active P2-E1 protocol lacks accepted_publication.{name}"
@@ -526,6 +577,23 @@ def _require_protocol_binding(
         raise ResultsPending(
             "combined P2-E1 result has a Benchmark control-source or formal-stamp mismatch"
         )
+    acceptance = result.get("joint_schedule_acceptance")
+    if (
+        not isinstance(acceptance, Mapping)
+        or acceptance.get("schema_version") != "joint_primary_schedule_acceptance_v1"
+        or acceptance.get("accepted") is not True
+        or acceptance.get("schedule_id") != EXPECTED_BENCHMARK_CONTROL_SOURCE["schedule_id"]
+        or acceptance.get("joint_profile_id") != EXPECTED_BENCHMARK_CONTROL_SOURCE["profile_id"]
+        or acceptance.get("joint_formal_run_stamp") != expected_formal_run_stamp
+        or acceptance.get("completed_prefix_length") != 45
+        or acceptance.get("order_validated") is not True
+        or acceptance.get("runner_contracts_accepted") is not True
+        or acceptance.get("duplicate_provider_execution") is not False
+        or acceptance.get("p0_b3_control_reuse") is not False
+        or acceptance.get("pair_key_fields")
+        != ["seed", "rotation", "bearing_id", "sample_id", "task_id"]
+    ):
+        raise ResultsPending("combined P2-E1 result lacks an accepted joint schedule gate")
 
 
 def _require_gate(
@@ -1051,6 +1119,7 @@ def _require_combined_result(
             or set(gate)
             != {
                 "accepted",
+                "pairing_key",
                 "expected_pairs",
                 "matched_statistical_keys",
                 "control_only_keys",
@@ -1058,6 +1127,8 @@ def _require_combined_result(
                 "blockers",
             }
             or gate.get("accepted") is not True
+            or gate.get("pairing_key")
+            != ["seed", "rotation", "bearing_id", "sample_id", "task_id"]
             or gate.get("expected_pairs") != expected
             or gate.get("matched_statistical_keys") != expected
             or gate.get("control_only_keys") != 0
@@ -1195,6 +1266,7 @@ def _require_combined_result(
             graph_states["replay"], (REPLAY_TASK,), episodes_per_task=REPLAY_EPISODES
         ),
     }
+    _require_replay_mechanism(result, arm_summaries, paired, validated_states)
     return arm_summaries, paired, validated_states
 
 
@@ -1266,6 +1338,324 @@ def _require_combined_arithmetic(
                         f"paired point arithmetic drift for {task}.{endpoint}: "
                         f"expected {expected!r}, observed {observed!r}"
                     )
+
+
+def _mechanism_number(value: Any, label: str, *, nullable: bool = False) -> float | None:
+    if value is None and nullable:
+        return None
+    if (
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not math.isfinite(float(value))
+    ):
+        raise ResultsPending(
+            f"{label} must be a finite number" + (" or null" if nullable else "")
+        )
+    return float(value)
+
+
+def _require_replay_mechanism(
+    result: Mapping[str, Any],
+    arm_summaries: Mapping[str, Any],
+    paired: Mapping[str, Any],
+    graph_states: Mapping[str, Any],
+) -> dict[str, Any]:
+    mechanism = _normalized_mapping(
+        result.get("replay_mechanism"), "combined P2-E1 replay mechanism"
+    )
+    expected_fields = {
+        "schema_version",
+        "accepted",
+        "role",
+        "task",
+        "source",
+        "protocol_identity",
+        "benchmark_control_source",
+        "formal_execution_topology",
+        "pairing",
+        "denominators",
+        "metric_projection",
+        "graph_state_projection",
+        "case_selection",
+        "evaluator_private_targets_used",
+        "reasoning_traces_used",
+    }
+    if set(mechanism) != expected_fields:
+        raise ResultsPending("combined P2-E1 replay mechanism fields drifted")
+    expected_scalars = {
+        "schema_version": "p2_e1_replay_mechanism_v1",
+        "accepted": True,
+        "role": "secondary_explanatory_not_task_performance",
+        "task": REPLAY_TASK,
+        "source": "accepted_exact_six_public_rollout_and_evaluator_views",
+        "case_selection": "none_full_cohort_only",
+        "evaluator_private_targets_used": False,
+        "reasoning_traces_used": False,
+    }
+    for field, expected in expected_scalars.items():
+        if mechanism.get(field) != expected:
+            raise ResultsPending(
+                f"combined P2-E1 replay mechanism has invalid {field}"
+            )
+    for field in (
+        "protocol_identity",
+        "benchmark_control_source",
+        "formal_execution_topology",
+    ):
+        if mechanism.get(field) != result.get(field):
+            raise ResultsPending(
+                f"combined P2-E1 replay mechanism is not bound to {field}"
+            )
+    pairing = mechanism.get("pairing")
+    if pairing != {
+        "key": ["seed", "rotation", "bearing_id", "sample_id", "task_id"],
+        "expected_pairs": REPLAY_EPISODES,
+        "observed_pairs": REPLAY_EPISODES,
+        "control_only_keys": 0,
+        "treatment_only_keys": 0,
+    }:
+        raise ResultsPending(
+            "combined P2-E1 replay mechanism lacks exact 24-key pairing"
+        )
+
+    denominators = mechanism.get("denominators")
+    if not isinstance(denominators, dict) or set(denominators) != {
+        "control",
+        "treatment",
+    }:
+        raise ResultsPending("combined P2-E1 replay mechanism denominators drifted")
+    denominator_fields = {
+        "statistical_episodes",
+        "attempt_leaves",
+        "provider_error_history_attempts",
+        "nonsubmitted_or_partial_episodes",
+        "natural_nonprovider_terminal_failures",
+        "terminal_counts",
+    }
+    for arm in ("control", "treatment"):
+        values = denominators.get(arm)
+        if not isinstance(values, dict) or set(values) != denominator_fields:
+            raise ResultsPending(
+                f"combined P2-E1 replay mechanism {arm} denominator fields drifted"
+            )
+        integers = (
+            values.get("statistical_episodes"),
+            values.get("attempt_leaves"),
+            values.get("provider_error_history_attempts"),
+            values.get("nonsubmitted_or_partial_episodes"),
+            values.get("natural_nonprovider_terminal_failures"),
+        )
+        if any(type(value) is not int or value < 0 for value in integers):
+            raise ResultsPending(
+                f"combined P2-E1 replay mechanism {arm} denominator is invalid"
+            )
+        if (
+            values["statistical_episodes"] != REPLAY_EPISODES
+            or values["attempt_leaves"]
+            != REPLAY_EPISODES + values["provider_error_history_attempts"]
+            or values["nonsubmitted_or_partial_episodes"] > REPLAY_EPISODES
+            or values["natural_nonprovider_terminal_failures"] > REPLAY_EPISODES
+            or values["natural_nonprovider_terminal_failures"]
+            > values["nonsubmitted_or_partial_episodes"]
+        ):
+            raise ResultsPending(
+                f"combined P2-E1 replay mechanism {arm} denominator is incomplete"
+            )
+        terminal_counts = values.get("terminal_counts")
+        if (
+            not isinstance(terminal_counts, dict)
+            or any(
+                not isinstance(status, str)
+                or not status
+                or type(count) is not int
+                or count < 0
+                for status, count in terminal_counts.items()
+            )
+            or sum(terminal_counts.values()) != REPLAY_EPISODES
+        ):
+            raise ResultsPending(
+                f"combined P2-E1 replay mechanism {arm} terminal denominator is invalid"
+            )
+
+    metric_projection = mechanism.get("metric_projection")
+    if not isinstance(metric_projection, dict) or set(metric_projection) != set(
+        REPLAY_MECHANISM_ENDPOINTS
+    ):
+        raise ResultsPending("combined P2-E1 replay mechanism endpoints drifted")
+    replay_summaries = arm_summaries["replay"]
+    replay_paired = paired["replay"]
+    for endpoint in REPLAY_MECHANISM_ENDPOINTS:
+        row = metric_projection.get(endpoint)
+        if not isinstance(row, dict) or set(row) != {
+            "control",
+            "treatment",
+            "graph_minus_generic",
+        }:
+            raise ResultsPending(
+                f"combined P2-E1 replay mechanism row drifted for {endpoint}"
+            )
+        for arm in ("control", "treatment"):
+            values = row.get(arm)
+            if not isinstance(values, dict) or set(values) != {
+                "estimate",
+                "defined_episodes",
+                "registered_episodes",
+            }:
+                raise ResultsPending(
+                    f"combined P2-E1 replay mechanism {arm} row drifted for {endpoint}"
+                )
+            estimate = _mechanism_number(
+                values.get("estimate"),
+                f"combined P2-E1 replay mechanism {arm} {endpoint}",
+                nullable=values.get("estimate") is None,
+            )
+            if (
+                type(values.get("defined_episodes")) is not int
+                or not 0 <= values["defined_episodes"] <= REPLAY_EPISODES
+                or values.get("registered_episodes") != REPLAY_EPISODES
+                or (estimate is None) != (values["defined_episodes"] == 0)
+            ):
+                raise ResultsPending(
+                    f"combined P2-E1 replay mechanism {arm} support count is invalid for {endpoint}"
+                )
+            reported = _summary_point(replay_summaries[arm], REPLAY_TASK, endpoint)
+            if estimate is None or reported is None:
+                if estimate is not reported:
+                    raise ResultsPending(
+                        f"combined P2-E1 replay mechanism {arm} estimate differs for {endpoint}"
+                    )
+            elif not math.isclose(
+                estimate, reported, rel_tol=1e-12, abs_tol=1e-12
+            ):
+                raise ResultsPending(
+                    f"combined P2-E1 replay mechanism {arm} estimate differs for {endpoint}"
+                )
+        delta = _mechanism_number(
+            row.get("graph_minus_generic"),
+            f"combined P2-E1 replay mechanism delta {endpoint}",
+            nullable=row.get("graph_minus_generic") is None,
+        )
+        reported_delta = _paired_point(replay_paired, REPLAY_TASK, endpoint)
+        if delta is None or reported_delta is None:
+            if delta is not reported_delta:
+                raise ResultsPending(
+                    f"combined P2-E1 replay mechanism delta differs for {endpoint}"
+                )
+        elif not math.isclose(delta, reported_delta, rel_tol=1e-12, abs_tol=1e-12):
+            raise ResultsPending(
+                f"combined P2-E1 replay mechanism delta differs for {endpoint}"
+            )
+
+    graph = mechanism.get("graph_state_projection")
+    graph_fields = {
+        "episodes",
+        "action_steps",
+        "state_visit_counts",
+        "state_episode_counts",
+        "transition_opportunities",
+        "valid_transition_count",
+        "invalid_transition_count",
+        "observed_transition_counts",
+        "all_valid_episode_count",
+        "recover_after_failed_action_opportunities",
+        "recover_after_failed_action_count",
+        "monitor_and_revise_visits",
+    }
+    if not isinstance(graph, dict) or set(graph) != graph_fields:
+        raise ResultsPending(
+            "combined P2-E1 replay mechanism Graph projection fields drifted"
+        )
+    scalar_counts = {
+        field: graph.get(field)
+        for field in graph_fields
+        if field
+        not in {
+            "state_visit_counts",
+            "state_episode_counts",
+            "observed_transition_counts",
+        }
+    }
+    if any(type(value) is not int or value < 0 for value in scalar_counts.values()):
+        raise ResultsPending(
+            "combined P2-E1 replay mechanism Graph counts are invalid"
+        )
+    if graph["episodes"] != REPLAY_EPISODES or graph["monitor_and_revise_visits"] != 0:
+        raise ResultsPending(
+            "combined P2-E1 replay mechanism violates the base-v6 state boundary"
+        )
+    state_visits = graph.get("state_visit_counts")
+    state_episodes = graph.get("state_episode_counts")
+    if (
+        not isinstance(state_visits, dict)
+        or set(state_visits) != set(STATES)
+        or not isinstance(state_episodes, dict)
+        or set(state_episodes) != set(STATES)
+        or any(type(value) is not int or value < 0 for value in state_visits.values())
+        or any(
+            type(value) is not int or not 0 <= value <= REPLAY_EPISODES
+            for value in state_episodes.values()
+        )
+        or sum(state_visits.values()) != graph["action_steps"]
+        or state_visits["Monitor"] != 0
+        or state_visits["Revise"] != 0
+    ):
+        raise ResultsPending(
+            "combined P2-E1 replay mechanism Graph state counts are invalid"
+        )
+    transitions = graph.get("observed_transition_counts")
+    legal_count = 0
+    if not isinstance(transitions, dict):
+        raise ResultsPending(
+            "combined P2-E1 replay mechanism transition counts are invalid"
+        )
+    for edge, count in transitions.items():
+        if (
+            not isinstance(edge, str)
+            or edge.count("->") != 1
+            or type(count) is not int
+            or count < 0
+        ):
+            raise ResultsPending(
+                "combined P2-E1 replay mechanism transition counts are invalid"
+            )
+        source, target = edge.split("->")
+        if source not in STATES or target not in STATES:
+            raise ResultsPending(
+                "combined P2-E1 replay mechanism transition names are invalid"
+            )
+        legal_count += count if target in ALLOWED_TRANSITIONS[source] else 0
+    if (
+        sum(transitions.values()) != graph["transition_opportunities"]
+        or legal_count != graph["valid_transition_count"]
+        or graph["valid_transition_count"] + graph["invalid_transition_count"]
+        != graph["transition_opportunities"]
+        or graph["all_valid_episode_count"] > REPLAY_EPISODES
+        or graph["recover_after_failed_action_count"]
+        > graph["recover_after_failed_action_opportunities"]
+    ):
+        raise ResultsPending(
+            "combined P2-E1 replay mechanism transition arithmetic drifted"
+        )
+    accepted_states = graph_states["replay"][REPLAY_TASK]
+    total_steps = graph["action_steps"]
+    for state in STATES:
+        occupancy = state_visits[state] / total_steps if total_steps else 0.0
+        visitation = state_episodes[state] / REPLAY_EPISODES
+        if not math.isclose(
+            occupancy,
+            float(accepted_states["state_step_occupancy_proportion"][state]),
+            rel_tol=1e-12,
+            abs_tol=1e-12,
+        ) or not math.isclose(
+            visitation,
+            float(accepted_states["state_episode_visitation_rate"][state]),
+            rel_tol=1e-12,
+            abs_tol=1e-12,
+        ):
+            raise ResultsPending(
+                f"combined P2-E1 replay mechanism Graph state arithmetic drifted for {state}"
+            )
+    return mechanism
 
 
 def render_tables_from_combined_result(
@@ -1425,16 +1815,24 @@ def render_state_table(result: Mapping[str, Any]) -> str:
     )
 
 
+def render_mechanism_json(result: Mapping[str, Any]) -> str:
+    """Project the accepted full-cohort replay mechanism object verbatim."""
+
+    return json.dumps(result["replay_mechanism"], indent=2, sort_keys=True) + "\n"
+
+
 def render_active_figures(
     *,
     core_figure: Path,
     state_table: Path,
+    mechanism_json: Path,
     manuscript: Path,
     monitor_mechanism_json: Path | None,
     monitor_mechanism_figure: Path | None,
 ) -> str:
     core_reference = _manuscript_reference(core_figure, manuscript)
     state_reference = _manuscript_reference(state_table, manuscript)
+    mechanism_reference = _manuscript_reference(mechanism_json, manuscript)
     lines = [
         f"![Accepted matched task-primary comparison]({core_reference})",
         "",
@@ -1445,16 +1843,21 @@ def render_active_figures(
         "Graph-only state diagnostics are synchronized in "
         f"`{state_reference}` and are treatment-integrity "
         "descriptions rather than paired effects.",
+        "",
+        "The accepted full-cohort replay mechanism projection is synchronized in "
+        f"`{mechanism_reference}`. It binds all 24 exact pairs, retains natural "
+        "terminal failures, and reconciles public canonical actions with evaluator "
+        "rollout endpoints.",
     ]
     if monitor_mechanism_json is not None or monitor_mechanism_figure is not None:
         raise ResultsPending(
-            "active P2-E1 publication omits mechanism inputs until a bound extractor exists"
+            "active P2-E1 publication forbids external mechanism overrides"
         )
     lines.extend(
         [
             "",
-            "No descriptive replay mechanism case is admitted by the active publication "
-            "contract; this does not block the accepted task-primary figure.",
+            "No post-hoc descriptive replay case is selected; mechanism reporting uses "
+            "the complete accepted replay cohort.",
         ]
     )
     return "\n".join(lines) + "\n"
@@ -1613,6 +2016,7 @@ def _require_declared_publication_paths(
         "accepted_publication.core_figure": args.core_figure_output,
         "accepted_publication.state_json": args.state_json_output,
         "accepted_publication.state_table": args.state_table_output,
+        "accepted_publication.mechanism_json": args.mechanism_json_output,
         "accepted_publication.manuscript": args.manuscript,
     }
     declared = {
@@ -1621,6 +2025,7 @@ def _require_declared_publication_paths(
         "accepted_publication.core_figure": publication["core_figure"],
         "accepted_publication.state_json": publication["state_json"],
         "accepted_publication.state_table": publication["state_table"],
+        "accepted_publication.mechanism_json": publication["mechanism_json"],
         "accepted_publication.manuscript": publication["manuscript"],
     }
     for label, supplied_path in supplied.items():
@@ -1733,6 +2138,7 @@ def write_table(args: argparse.Namespace) -> None:
     figures = render_active_figures(
         core_figure=args.core_figure_output,
         state_table=args.state_table_output,
+        mechanism_json=args.mechanism_json_output,
         manuscript=args.manuscript,
         monitor_mechanism_json=monitor_json,
         monitor_mechanism_figure=monitor_figure,
@@ -1750,6 +2156,7 @@ def write_table(args: argparse.Namespace) -> None:
         args.core_figure_output,
         args.state_json_output,
         args.state_table_output,
+        args.mechanism_json_output,
         args.manuscript,
     ]
     _require_safe_publication_paths(targets, sources=[protocol_path, combined_result_path])
@@ -1759,6 +2166,7 @@ def write_table(args: argparse.Namespace) -> None:
             args.core_figure_output: render_core_figure(result),
             args.state_json_output: render_state_json(result),
             args.state_table_output: render_state_table(result),
+            args.mechanism_json_output: render_mechanism_json(result),
             args.manuscript: manuscript,
         }
     )
@@ -1779,6 +2187,9 @@ def main() -> None:
     )
     parser.add_argument("--state-json-output", type=Path, default=DEFAULT_STATE_JSON)
     parser.add_argument("--state-table-output", type=Path, default=DEFAULT_STATE_TABLE)
+    parser.add_argument(
+        "--mechanism-json-output", type=Path, default=DEFAULT_MECHANISM_JSON
+    )
     parser.add_argument("--manuscript", type=Path, default=DEFAULT_MANUSCRIPT)
     args = parser.parse_args()
     try:

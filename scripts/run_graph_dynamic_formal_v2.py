@@ -2,10 +2,11 @@
 """Validate or execute one registered Generic-base dynamic-v3 formal unit.
 
 ``--validate-only`` is strictly provider-free: it does not read provider
-environment values or probe evidence, invoke inference, acquire the execution
-lock, or write results.  Normal execution is provider-bound and is allowed only
-after exact unit, output-root, attempt-prefix, provider-profile, fresh two-turn
-probe, and single-process lock checks pass.  The shared dynamic engine remains
+environment values or an admission report, invoke inference, acquire the
+execution lock, or write results. ``--execute`` is provider-bound and is
+allowed only after dual authorization, exact unit, output-root, attempt-prefix,
+provider-profile, official fresh exact-route/zero-price admission, and
+single-process lock checks pass. The shared dynamic engine remains
 ``run_graph_experiment.py``; this wrapper owns the formal cohort boundary.
 """
 
@@ -18,13 +19,16 @@ import json
 import math
 import os
 import sys
-import time
 from collections.abc import Mapping, Sequence
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator
 
 import yaml
+
+from S03_Scripts.run_openai_compatible_probe import (
+    validate_execution_probe_report,
+)
 
 try:
     from analyze_graph_dynamic_formal import (
@@ -62,10 +66,16 @@ DEFAULT_DATASET_PROTOCOL = (
     ROOT.parent
     / "p01-phm-agent-benchmark/paper/experiments/datasets/dataset_protocol.yaml"
 )
-DEFAULT_PROBE_EVIDENCE = Path(
+DEFAULT_FORMAL_PROVIDER_ADMISSION_REPORT = Path(
     "/tmp/openrouter_north_graph_dynamic_v3_two_turn_probe.json"
 )
 DEFAULT_LOCK_FILE = Path("/tmp/p2_graph_dynamic_v3_formal.lock")
+
+BASE_EXTERNAL_INFERENCE_AUTHORIZATION_ENV = "PHM_EXTERNAL_INFERENCE_AUTHORIZED"
+DYNAMIC_EXTERNAL_INFERENCE_AUTHORIZATION_ENV = (
+    "PHM_P2_DYNAMIC_EXTERNAL_INFERENCE_AUTHORIZED"
+)
+AUTHORIZATION_REQUIRED_VALUE = "1"
 
 FORMAL_EXECUTION_CONTRACT = "phase1_graph_dynamic_formal_generic_v3"
 DYNAMIC_RUNTIME_CONTRACT = "phase1_graph_dynamic_generic_ablation_v3"
@@ -389,6 +399,15 @@ def build_dynamic_formal_unit_contract(args: argparse.Namespace) -> dict[str, An
     ):
         if getattr(args, argument) != expected_env_names[key]:
             raise GraphDynamicFormalRunnerError(f"{argument} identity drifted")
+    expected_authorization = {
+        "external_inference": BASE_EXTERNAL_INFERENCE_AUTHORIZATION_ENV,
+        "dynamic_cohort": DYNAMIC_EXTERNAL_INFERENCE_AUTHORIZATION_ENV,
+        "required_value": AUTHORIZATION_REQUIRED_VALUE,
+    }
+    if runner.get("authorization_environment") != expected_authorization:
+        raise GraphDynamicFormalRunnerError(
+            "formal dynamic execution authorization contract drifted"
+        )
 
     dataset_path = _repo_path(args.protocol)
     expected_dataset_path = _repo_path(runner["dataset_protocol_argument"])
@@ -473,11 +492,37 @@ def build_dynamic_formal_unit_contract(args: argparse.Namespace) -> dict[str, An
         "output": str(observed_output),
         "attempt_state": attempt_state,
         "analyzer_manifest_proof_fields": manifest_fields,
+        "required_authorization_environment_variable_names": [
+            BASE_EXTERNAL_INFERENCE_AUTHORIZATION_ENV,
+            DYNAMIC_EXTERNAL_INFERENCE_AUTHORIZATION_ENV,
+        ],
         "provider_calls_performed": False,
         "environment_values_read": False,
+        "formal_provider_admission_report_read": False,
         "probe_evidence_read": False,
         "filesystem_writes_performed": False,
     }
+
+
+def _check_execution_authorization() -> None:
+    """Require both user-controlled gates before reading provider settings."""
+
+    if (
+        os.environ.get(BASE_EXTERNAL_INFERENCE_AUTHORIZATION_ENV)
+        != AUTHORIZATION_REQUIRED_VALUE
+    ):
+        raise GraphDynamicFormalRunnerError(
+            "formal dynamic execution requires explicit external inference "
+            "and data-egress authorization"
+        )
+    if (
+        os.environ.get(DYNAMIC_EXTERNAL_INFERENCE_AUTHORIZATION_ENV)
+        != AUTHORIZATION_REQUIRED_VALUE
+    ):
+        raise GraphDynamicFormalRunnerError(
+            "formal dynamic execution requires explicit P2 dynamic-cohort "
+            "authorization"
+        )
 
 
 def _check_execution_environment(
@@ -501,29 +546,25 @@ def _check_execution_environment(
         raise GraphDynamicFormalRunnerError("configured provider base URL drifted")
 
 
-def _check_probe_evidence(
-    path: Path, *, model: str, max_age_hours: float
-) -> None:
-    probe = _read_json(path, "two-turn probe evidence")
-    models = probe.get("models")
-    if not isinstance(models, list) or len(models) != 1:
-        raise GraphDynamicFormalRunnerError("probe must contain exactly one model result")
-    result = _mapping(models[0], "probe model result")
-    if (
-        result.get("model_id") != model
-        or result.get("status") != "passed"
-        or result.get("completed_turns") != 2
-        or result.get("error") is not None
-    ):
-        raise GraphDynamicFormalRunnerError(
-            "fresh exact-profile two-turn probe has not passed"
-        )
+def _check_formal_provider_admission(
+    path: Path,
+    *,
+    contract: Mapping[str, Any],
+    max_age_hours: float,
+) -> dict[str, Any]:
+    """Validate one official exact-route, exact-model, zero-price report."""
+
+    report = _read_json(path, "formal provider admission report")
     try:
-        age_seconds = time.time() - path.stat().st_mtime
-    except OSError as exc:
-        raise GraphDynamicFormalRunnerError(f"cannot stat probe evidence: {exc}") from exc
-    if age_seconds < -300 or age_seconds > max_age_hours * 3600:
-        raise GraphDynamicFormalRunnerError("two-turn probe evidence is not fresh")
+        return validate_execution_probe_report(
+            report,
+            base_url=str(contract["base_url_expected"]),
+            model_id=str(contract["model"]),
+            max_age_hours=max_age_hours,
+            label="P2 dynamic formal provider admission report",
+        )
+    except RuntimeError as exc:
+        raise GraphDynamicFormalRunnerError(str(exc)) from exc
 
 
 @contextmanager
@@ -547,13 +588,14 @@ def execute_dynamic_formal_unit(
 ) -> dict[str, Any]:
     """Execute one pending/retry unit through the shared provider-bound engine."""
 
+    _check_execution_authorization()
     _check_execution_environment(args, contract)
     protocol = load_protocol(_repo_path(args.dynamic_protocol))
     runner = protocol["formal_scheduler"]["runner"]
-    _check_probe_evidence(
-        Path(args.probe_evidence),
-        model=str(contract["model"]),
-        max_age_hours=float(runner["probe_max_age_hours"]),
+    _check_formal_provider_admission(
+        Path(args.formal_provider_admission_report),
+        contract=contract,
+        max_age_hours=float(runner["formal_provider_admission_max_age_hours"]),
     )
     with _exclusive_profile_lock(Path(args.lock_file)):
         refreshed = build_dynamic_formal_unit_contract(args)
@@ -660,7 +702,11 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--api-key-env", required=True)
     parser.add_argument("--model-env", required=True)
     parser.add_argument("--resume-provider-partial", action="store_true")
-    parser.add_argument("--probe-evidence", type=Path, default=DEFAULT_PROBE_EVIDENCE)
+    parser.add_argument(
+        "--formal-provider-admission-report",
+        type=Path,
+        default=DEFAULT_FORMAL_PROVIDER_ADMISSION_REPORT,
+    )
     parser.add_argument("--lock-file", type=Path, default=DEFAULT_LOCK_FILE)
     parser.add_argument("--metadata", default="/mnt/e/D01_vibench/metadata.xlsx")
     parser.add_argument("--signal", default="/mnt/e/D01_vibench/RM_027_PU.h5")
@@ -668,12 +714,21 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--train-samples-per-bearing", type=int, default=8)
     parser.add_argument("--validation-samples-per-bearing", type=int, default=8)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument(
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument(
         "--validate-only",
         action="store_true",
         help=(
             "Validate and print the unit contract without env/probe reads, "
             "provider calls, locks, or filesystem writes."
+        ),
+    )
+    mode.add_argument(
+        "--execute",
+        action="store_true",
+        help=(
+            "Execute one unit after dual authorization and official formal "
+            "provider admission pass."
         ),
     )
     return parser
@@ -683,7 +738,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
         contract = build_dynamic_formal_unit_contract(args)
-        if args.validate_only or contract["attempt_state"]["complete"]:
+        if args.validate_only:
             print(json.dumps(contract, indent=2, sort_keys=True, allow_nan=False))
             return 0
         result = execute_dynamic_formal_unit(args, contract)

@@ -14,14 +14,17 @@ import yaml
 from phm_agent_benchmark.phase1 import Budget
 from phm_agent_benchmark.phase1.experiment import build_evaluator_assignments
 
+from scripts import run_graph_experiment as RUNNER
 from scripts.run_graph_experiment import (
     P2_E8_DATASET_ID,
+    P2_E8_EXTERNAL_INFERENCE_AUTHORIZATION_ENV,
     P2_E8_PROFILE_ID,
     P2_E8_RUNTIME_CONTRACT,
     _active_cohort_contract,
     _open_data_port,
     _run,
     _runtime_identity,
+    _validate_cross_dataset_inference,
     build_parser,
 )
 
@@ -194,7 +197,13 @@ def _write_fixture(root: Path) -> tuple[Path, Path, Path]:
     return protocol_path, metadata, signal_root
 
 
-def _args(protocol: Path, output: Path, *, runtime: str = "mock"):
+def _args(
+    protocol: Path,
+    output: Path,
+    *,
+    runtime: str = "mock",
+    cross_protocol: Path = CROSS_PROTOCOL,
+):
     values = [
         "--arm",
         "reactive",
@@ -203,7 +212,7 @@ def _args(protocol: Path, output: Path, *, runtime: str = "mock"):
         "--protocol",
         str(protocol),
         "--cross-dataset-protocol",
-        str(CROSS_PROTOCOL),
+        str(cross_protocol),
         "--dataset-id",
         P2_E8_DATASET_ID,
         "--data-backend",
@@ -245,6 +254,14 @@ def _args(protocol: Path, output: Path, *, runtime: str = "mock"):
             ]
         )
     return build_parser().parse_args(values)
+
+
+def _write_unblocked_cross_protocol(root: Path) -> tuple[Path, dict]:
+    contract = yaml.safe_load(CROSS_PROTOCOL.read_text(encoding="utf-8"))
+    contract["activation_gate"]["current_blockers"] = []
+    path = root / "graph_cross_dataset_replay_protocol_v3.yaml"
+    path.write_text(yaml.safe_dump(contract, sort_keys=False), encoding="utf-8")
+    return path, contract
 
 
 class GraphCrossDatasetRuntimeTests(unittest.TestCase):
@@ -343,12 +360,110 @@ class GraphCrossDatasetRuntimeTests(unittest.TestCase):
                 "LLM_API_KEY": "not-used",
                 "LLM_MODEL": "cohere/north-mini-code:free",
             }
-            with mock.patch.dict(os.environ, environment, clear=False):
+            with (
+                mock.patch.dict(os.environ, environment, clear=False),
+                mock.patch.object(
+                    RUNNER, "validate_execution_probe_report"
+                ) as validator,
+            ):
                 with self.assertRaisesRegex(
                     RuntimeError,
                     "explicit_provider_destination_and_payload_egress_authorization_required",
                 ):
                     asyncio.run(_run(args))
+            validator.assert_not_called()
+            self.assertFalse(output.exists())
+
+    def test_unblocked_p2_e8_requires_base_and_cohort_authorization(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol_path, _metadata, _signal_root = _write_fixture(root)
+            cross_path, cross_contract = _write_unblocked_cross_protocol(root)
+            args = _args(
+                protocol_path,
+                root / "output",
+                runtime="openai",
+                cross_protocol=cross_path,
+            )
+            inference = {
+                "model": "cohere/north-mini-code:free",
+                "provider": "openrouter-free",
+                "inference_protocol": "openai_chat_completions",
+                "thinking_mode": "not_requested",
+            }
+            base_environment = {
+                "LLM_BASE_URL": "https://openrouter.ai/api/v1",
+                "LLM_API_KEY": "not-used",
+                "LLM_MODEL": inference["model"],
+            }
+            with mock.patch.dict(os.environ, base_environment, clear=True):
+                with self.assertRaisesRegex(
+                    RuntimeError, "PHM_EXTERNAL_INFERENCE_AUTHORIZED=1"
+                ):
+                    _validate_cross_dataset_inference(
+                        args, cross_contract, inference
+                    )
+            with mock.patch.dict(
+                os.environ,
+                {
+                    **base_environment,
+                    "PHM_EXTERNAL_INFERENCE_AUTHORIZED": "1",
+                },
+                clear=True,
+            ):
+                with self.assertRaisesRegex(
+                    RuntimeError,
+                    f"{P2_E8_EXTERNAL_INFERENCE_AUTHORIZATION_ENV}=1",
+                ):
+                    _validate_cross_dataset_inference(
+                        args, cross_contract, inference
+                    )
+
+    def test_unblocked_p2_e8_uses_official_probe_before_side_effects(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            protocol_path, metadata, signal_root = _write_fixture(root)
+            cross_path, _cross_contract = _write_unblocked_cross_protocol(root)
+            output = root / "must-not-exist"
+            report = root / "probe.json"
+            report.write_text("{}\n", encoding="utf-8")
+            args = _args(
+                protocol_path,
+                output,
+                runtime="openai",
+                cross_protocol=cross_path,
+            )
+            args.formal_provider_admission_report = report
+            environment = {
+                "PHM_OTTAWA_METADATA": str(metadata),
+                "PHM_OTTAWA_SIGNAL_ROOT": str(signal_root),
+                "PHM_OTTAWA_READINESS": str(root / "private_readiness.json"),
+                "PHM_EXTERNAL_INFERENCE_AUTHORIZED": "1",
+                P2_E8_EXTERNAL_INFERENCE_AUTHORIZATION_ENV: "1",
+                "LLM_BASE_URL": "https://openrouter.ai/api/v1",
+                "LLM_API_KEY": "not-used",
+                "LLM_MODEL": "cohere/north-mini-code:free",
+            }
+            with (
+                mock.patch.dict(os.environ, environment, clear=True),
+                mock.patch.object(
+                    RUNNER,
+                    "validate_execution_probe_report",
+                    side_effect=RuntimeError("stale official probe"),
+                ) as validator,
+                mock.patch.object(RUNNER, "_open_data_port") as data_port,
+                mock.patch.object(RUNNER, "_factory") as provider_factory,
+            ):
+                with self.assertRaisesRegex(RuntimeError, "stale official probe"):
+                    asyncio.run(_run(args))
+            validator.assert_called_once_with(
+                {},
+                base_url="https://openrouter.ai/api/v1",
+                model_id="cohere/north-mini-code:free",
+                label="formal P2-E8 provider admission probe",
+            )
+            data_port.assert_not_called()
+            provider_factory.assert_not_called()
             self.assertFalse(output.exists())
 
 

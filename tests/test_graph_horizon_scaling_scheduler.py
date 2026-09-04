@@ -125,6 +125,9 @@ class GraphHorizonScalingSchedulerV2Tests(unittest.TestCase):
                 argv[argv.index("--dynamic-protocol") + 1],
                 "paper/experiments/graph_dynamic_ablation_protocol_v3.yaml",
             )
+            self.assertIn("--execute", argv)
+            self.assertNotIn("--validate-only", argv)
+            self.assertIn("--formal-provider-admission-report", argv)
             self.assertNotIn(".env", unit["command"])
             self.assertNotIn("bearing_id", unit["command"])
 
@@ -132,9 +135,11 @@ class GraphHorizonScalingSchedulerV2Tests(unittest.TestCase):
         manifest = build_manifest(DEFAULT_PROTOCOL)
         argv = manifest["units"][0]["argv"]
         self.assertIsInstance(argv, list)
+        validation_argv = list(argv[2:])
+        validation_argv[validation_argv.index("--execute")] = "--validate-only"
         stdout = io.StringIO()
         with contextlib.redirect_stdout(stdout):
-            self.assertEqual(formal_runner_main(argv[2:] + ["--validate-only"]), 0)
+            self.assertEqual(formal_runner_main(validation_argv), 0)
         contract = json.loads(stdout.getvalue())
         self.assertEqual(contract["registered_unit_count"], 240)
         self.assertFalse(contract["provider_calls_performed"])

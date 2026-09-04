@@ -248,6 +248,26 @@ def validate_protocol(protocol: Mapping[str, Any]) -> None:
         "schedule order",
     )
     _expect(scheduler.get("expected_unique_units"), 240, "scheduler unit count")
+    runner = _mapping(scheduler.get("runner"), "formal_scheduler.runner")
+    _expect(
+        runner.get("authorization_environment"),
+        {
+            "external_inference": "PHM_EXTERNAL_INFERENCE_AUTHORIZED",
+            "dynamic_cohort": "PHM_P2_DYNAMIC_EXTERNAL_INFERENCE_AUTHORIZED",
+            "required_value": "1",
+        },
+        "formal execution authorization",
+    )
+    admission_report = runner.get("formal_provider_admission_report_default")
+    if not isinstance(admission_report, str) or not admission_report:
+        raise ScheduleContractError(
+            "formal provider admission report path must be a nonempty string"
+        )
+    _expect(
+        runner.get("formal_provider_admission_max_age_hours"),
+        24,
+        "formal provider admission freshness",
+    )
 
     assignments = _mapping(scheduler.get("cell_assignments"), "cell_assignments")
     registered_cells = {name for names in EXPECTED_CELLS.values() for name in names}
@@ -339,6 +359,7 @@ def _unit_argv(
     return [
         str(runner["python_command"]),
         str(runner["path"]),
+        "--execute",
         "--arm",
         str(assignment["arm"]),
         "--runtime",
@@ -382,8 +403,8 @@ def _unit_argv(
         str(runner["train_samples_per_bearing"]),
         "--validation-samples-per-bearing",
         str(runner["validation_samples_per_bearing"]),
-        "--probe-evidence",
-        str(runner["probe_evidence_default"]),
+        "--formal-provider-admission-report",
+        str(runner["formal_provider_admission_report_default"]),
         "--output",
         output_root,
     ]

@@ -13,6 +13,7 @@ import argparse
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -24,7 +25,7 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BENCHMARK = ROOT.parent / "P01-phm-agent-benchmark"
+BENCHMARK = ROOT.parent / "p01-phm-agent-benchmark"
 BENCHMARK_SRC = BENCHMARK / "src"
 if str(BENCHMARK_SRC) not in sys.path:
     sys.path.insert(0, str(BENCHMARK_SRC))
@@ -97,6 +98,17 @@ ROLLOUT_ENDPOINTS = (
     "rollout.wall_clock_seconds",
     "rollout.estimated_model_cost_usd",
 )
+REPLAY_MECHANISM_ENDPOINTS = (
+    "rollout.grounded_completion",
+    "rollout.submission_rate",
+    "rollout.budget_exhaustion",
+    "rollout.valid_tool_call_rate",
+    "rollout.repeated_action_ratio",
+    "rollout.grounded_recovery_success",
+    "rollout.recovery_coverage",
+    "rollout.steps_to_recovery",
+    "rollout.steps",
+)
 PRIMARY_ENDPOINT = {
     "cohort": "replay",
     "task": "online_replay_monitoring",
@@ -104,7 +116,7 @@ PRIMARY_ENDPOINT = {
 }
 EVIDENCE_CLASS = "real_data_formal_candidate"
 EXPECTED_SCHEMA = "p2_e1_generic_base_formal_v2"
-BENCHMARK_CONTROL_SOURCE_CONTRACT = "benchmark_active_v0_2_control_source_v1"
+BENCHMARK_CONTROL_SOURCE_CONTRACT = "p1_p2_joint_generic_control_source_v1"
 BENCHMARK_FORMAL_EXECUTION_TOPOLOGY_CONTRACT = (
     "benchmark_formal_gitlink_topology_v1"
 )
@@ -114,13 +126,24 @@ DATA_FACTORY_REPOSITORY = "https://github.com/PHMbench/phm-data-factory.git"
 P2_REPOSITORY = "https://github.com/liq22/P02_agent_langraph.git"
 P2_FORMAL_REPRODUCIBILITY_PATHS = (
     "CORE.md",
+    "paper/experiments/p2_e1_generic_base_formal_v2.yaml",
     "scripts/run_graph_experiment.py",
     "src/phm_graph_agent",
 )
 ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID = (
     "benchmark_v0_2_0--paderborn_phase1_v1--runtime_v6--window_v3"
 )
-ACTIVE_BENCHMARK_CONTROL_PROFILE_ID = "paper0-paderborn-primary-v1"
+P0_ONLY_BENCHMARK_PROFILE_ID = "paper0-paderborn-primary-v1"
+ACTIVE_BENCHMARK_CONTROL_PROFILE_ID = "p1-p2-joint-primary-v1"
+JOINT_SCHEDULE_ID = "p1_p2_joint_primary_counterbalance_v1"
+JOINT_RESUME_IDENTITY_CONTRACT = "joint_primary_schedule_resume_identity_v1"
+JOINT_SCHEDULE_ACCEPTANCE_SCHEMA = "joint_primary_schedule_acceptance_v1"
+JOINT_RESUME_IDENTITY_FIELDS = (
+    "contract", "schedule_id", "joint_profile_id", "joint_formal_run_stamp",
+    "ordinal", "scope", "unit_index", "position", "arm", "seed", "rotation",
+    "predecessor_job_id", "output",
+)
+PAIRING_KEY_FIELDS = ("seed", "rotation", "bearing_id", "sample_id", "task_id")
 FORMAL_RUN_STAMP_PATTERN = re.compile(r"^[0-9]{8}T[0-9]{6}Z$")
 REVISION_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 
@@ -149,6 +172,8 @@ class Attempt:
     run: Mapping[str, Any]
     metrics: Mapping[str, Any]
     states: tuple[str, ...]
+    actions: tuple[Mapping[str, Any], ...]
+    failures: tuple[Mapping[str, Any], ...]
 
 
 @dataclass(frozen=True)
@@ -393,9 +418,10 @@ def _load_protocol(path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
 def _validate_protocol(protocol: Mapping[str, Any], dataset: Mapping[str, Any]) -> None:
     expected_control_source = {
         "contract": BENCHMARK_CONTROL_SOURCE_CONTRACT,
+        "schedule_id": JOINT_SCHEDULE_ID,
         "protocol_id": ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
         "profile_id": ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
-        "formal_run_stamp": "explicit_cli_required",
+        "formal_run_stamp": "from_joint_schedule_acceptance",
         "public_leaf_root_path": "forbidden",
     }
     _require(
@@ -408,16 +434,17 @@ def _validate_protocol(protocol: Mapping[str, Any], dataset: Mapping[str, Any]) 
     _require(control.get("repository") == "liq22/phm-agent-benchmark", "control repository drift")
     _require(control.get("policy") == "GenericLLMToolAgent", "control policy drift")
     _require(control.get("agent_id") == "generic-llm-tool-agent", "control agent drift")
-    _require(control.get("reuse_mode") == "external_immutable_read_only", "Generic root must be immutable")
-    _require(control.get("duplicate_provider_execution") == "forbidden", "duplicate Generic execution must be forbidden")
+    _require(control.get("reuse_mode") == "one_joint_generic_execution_shared_by_p1_and_p2", "Generic joint reuse policy drift")
+    _require(control.get("duplicate_provider_execution") == "forbidden_within_joint_cohort", "duplicate Generic execution must be forbidden")
+    _require(control.get("p0_b3_reuse") == "forbidden", "P0 B3 must not be reused as P2 control")
     expected_root_contract = {
-        "schema": "benchmark_active_v0_2_external_timestamped_root_v1",
+        "schema": "p1_p2_joint_external_timestamped_root_v1",
         "benchmark_protocol_version": PROTOCOL_VERSION,
         "root_layout": (
             "protocol_id/arm_scope/profile_id/run_{formal_run_stamp}/"
             "seed_{seed}/{rotation}/cohort_index.json"
         ),
-        "root_resolution": "explicit_cli_root_required",
+        "root_resolution": "explicit_cli_root_and_joint_acceptance_required",
     }
     for arm, expected_flags in (
         (control, ("--generic-core-root", "--generic-replay-root")),
@@ -435,6 +462,16 @@ def _validate_protocol(protocol: Mapping[str, Any], dataset: Mapping[str, Any]) 
             arm.get("core_root") is None and arm.get("replay_root") is None,
             "active-v0.2 roots must be supplied explicitly",
         )
+    _require(
+        (control["external_root_contract"].get("core_scope"), control["external_root_contract"].get("replay_scope"))
+        == ("joint_generic_core", "joint_generic_replay"),
+        "joint Generic root scopes drift",
+    )
+    _require(
+        (treatment["external_root_contract"].get("core_scope"), treatment["external_root_contract"].get("replay_scope"))
+        == ("joint_graph_core", "joint_graph_replay"),
+        "joint Graph root scopes drift",
+    )
     _require(treatment.get("repository") == "liq22/P02_agent_langraph", "treatment repository drift")
     _require(treatment.get("policy") == "GraphDecisionAgent", "treatment policy drift")
     _require(treatment.get("agent_id") == "graph-decision-agent", "treatment agent drift")
@@ -473,6 +510,10 @@ def _validate_protocol(protocol: Mapping[str, Any], dataset: Mapping[str, Any]) 
             "basis": "CORE.md_task_performance_primary_rollout_diagnostics_secondary",
             "superseded_primary_endpoint": "rollout.grounded_completion",
             "corrected_primary_endpoint": "task.average_precision",
+            "bootstrap_seed_status": "aligned_before_any_accepted_p2_e1_result",
+            "bootstrap_seed_basis": "benchmark_statistics_shared_analysis_rules",
+            "superseded_bootstrap_seed": 20260820,
+            "corrected_bootstrap_seed": 20260808,
             "graph_treatment_formal_outcomes_observed_at_correction": 0,
         },
         "P2-E1 pre-result task-primary authority correction drift",
@@ -506,12 +547,39 @@ def _validate_protocol(protocol: Mapping[str, Any], dataset: Mapping[str, Any]) 
     _require(failure.get("non_provider_terminal_failure") == "retain_in_denominator", "failure denominator policy drift")
     _require(failure.get("unresolved_provider_error") == "blocks_arm_acceptance", "unresolved provider policy drift")
     _require(failure.get("partial_prefix_aggregation") == "forbidden", "partial aggregation must be forbidden")
+    _require(
+        protocol.get("pairing")
+        == {
+            "key": list(PAIRING_KEY_FIELDS),
+            "require_exact_key_equality": True,
+            "require_identical_task_spec": True,
+            "require_identical_budget": True,
+            "require_identical_world_and_inference_contract": True,
+        },
+        "joint bearing-level pairing contract drift",
+    )
+    joint = protocol.get("joint_schedule", {})
+    _require(
+        joint.get("schedule_id") == JOINT_SCHEDULE_ID
+        and joint.get("profile_id") == ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
+        and joint.get("resume_identity_contract") == JOINT_RESUME_IDENTITY_CONTRACT
+        and joint.get("resume_identity_fields") == list(JOINT_RESUME_IDENTITY_FIELDS),
+        "joint schedule identity registration drift",
+    )
+    _require(
+        joint.get("scheduler_scopes") == ["core", "monitoring"]
+        and joint.get("graph_execution_scopes") == ["joint_graph_core", "joint_graph_replay"]
+        and joint.get("generic_control_scopes") == ["joint_generic_core", "joint_generic_replay"]
+        and joint.get("p0_b3_profile_id") == P0_ONLY_BENCHMARK_PROFILE_ID
+        and joint.get("p0_b3_eligible_as_control") is False,
+        "joint/P0 authority boundary drift",
+    )
     analysis = protocol.get("analysis", {})
     bootstrap = analysis.get("bootstrap", {})
     _require(bootstrap.get("method") == "paired_bearing_cluster_percentile_bootstrap", "bootstrap method drift")
     _require(bootstrap.get("cluster_unit") == "physical_bearing", "bootstrap cluster must be physical bearing")
     _require(bootstrap.get("iterations") == 2000, "P2-E1 requires exactly 2,000 bootstrap resamples")
-    _require(bootstrap.get("seed") == 20260820, "P2-E1 bootstrap seed must be exactly 20260820")
+    _require(bootstrap.get("seed") == 20260808, "P2-E1 bootstrap seed must match the shared Benchmark seed 20260808")
     _require(analysis.get("direction") == "treatment_minus_control", "contrast direction drift")
     _require(
         analysis.get("task_endpoints")
@@ -521,6 +589,26 @@ def _validate_protocol(protocol: Mapping[str, Any], dataset: Mapping[str, Any]) 
     _require(
         analysis.get("rollout_endpoints") == list(ROLLOUT_ENDPOINTS),
         "registered rollout endpoints drift",
+    )
+    _require(
+        analysis.get("replay_mechanism")
+        == {
+            "role": "secondary_explanatory_not_task_performance",
+            "task": REPLAY_TASKS[0],
+            "source": "accepted_exact_six_public_rollout_and_evaluator_views",
+            "pairing_key": list(PAIRING_KEY_FIELDS),
+            "expected_pairs": 24,
+            "endpoints": list(REPLAY_MECHANISM_ENDPOINTS),
+            "graph_projection": {
+                "states": list(GRAPH_STATE_ORDER),
+                "transition_relation": "base_v6_51_edge",
+                "monitor_and_revise_reachable": False,
+            },
+            "case_selection": "none_full_cohort_only",
+            "evaluator_private_targets_used": False,
+            "reasoning_traces_used": False,
+        },
+        "registered replay mechanism projection drift",
     )
     _require(
         analysis.get("primary_endpoint") == PRIMARY_ENDPOINT,
@@ -536,48 +624,125 @@ def _validate_protocol(protocol: Mapping[str, Any], dataset: Mapping[str, Any]) 
     )
 
 
+def _joint_schedule_acceptance(path: Path | None) -> dict[str, Any]:
+    _require(
+        path is not None,
+        "P2-E1 result is blocked without --joint-schedule-acceptance",
+    )
+    value = _load_json(Path(path))
+    _require(isinstance(value, Mapping), "joint schedule acceptance must be a mapping")
+    acceptance = dict(value)
+    expected_fields = {
+        "schema_version", "accepted", "schedule_id", "joint_profile_id",
+        "joint_formal_run_stamp", "resume_identity_contract", "job_count",
+        "completed_prefix_length", "order_validated", "runner_contracts_accepted",
+        "duplicate_provider_execution", "p0_b3_control_reuse", "pair_key_fields",
+        "resume_identities",
+    }
+    _require(set(acceptance) == expected_fields, "joint schedule acceptance fields drift")
+    _require(
+        acceptance.get("schema_version") == JOINT_SCHEDULE_ACCEPTANCE_SCHEMA
+        and acceptance.get("accepted") is True
+        and acceptance.get("schedule_id") == JOINT_SCHEDULE_ID
+        and acceptance.get("joint_profile_id") == ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
+        and acceptance.get("resume_identity_contract") == JOINT_RESUME_IDENTITY_CONTRACT,
+        "joint schedule acceptance identity drift",
+    )
+    stamp = acceptance.get("joint_formal_run_stamp")
+    _require(
+        isinstance(stamp, str) and FORMAL_RUN_STAMP_PATTERN.fullmatch(stamp) is not None,
+        "joint schedule acceptance run stamp must match YYYYMMDDTHHMMSSZ",
+    )
+    _require(
+        acceptance.get("job_count") == 45
+        and acceptance.get("completed_prefix_length") == 45
+        and acceptance.get("order_validated") is True
+        and acceptance.get("runner_contracts_accepted") is True
+        and acceptance.get("duplicate_provider_execution") is False
+        and acceptance.get("p0_b3_control_reuse") is False
+        and acceptance.get("pair_key_fields") == list(PAIRING_KEY_FIELDS),
+        "joint schedule acceptance did not close all pre-result gates",
+    )
+    identities = acceptance.get("resume_identities")
+    _require(isinstance(identities, list) and len(identities) == 45, "joint schedule acceptance must contain 45 resume identities")
+    arms = ("Generic", "PHMskills", "Graph")
+    outputs: set[str] = set()
+    previous_id: str | None = None
+    for ordinal, raw in enumerate(identities):
+        _require(isinstance(raw, Mapping) and set(raw) == set(JOINT_RESUME_IDENTITY_FIELDS), f"joint resume identity {ordinal} fields drift")
+        identity = dict(raw)
+        if ordinal < 36:
+            scope = "core"
+            unit_index, position = divmod(ordinal, 3)
+        else:
+            scope = "monitoring"
+            unit_index, position = divmod(ordinal - 36, 3)
+        order = arms[unit_index % 3 :] + arms[: unit_index % 3]
+        arm = order[position]
+        expected_job_id = f"{scope}-{unit_index:02d}-position-{position}-{arm.lower()}"
+        seed = (20260808, 20260809, 20260810)[unit_index // 4] if scope == "core" else (20260808, 20260809, 20260810)[unit_index]
+        rotation = f"rotation_{unit_index % 4}" if scope == "core" else "rotation_0"
+        expected = {
+            "contract": JOINT_RESUME_IDENTITY_CONTRACT,
+            "schedule_id": JOINT_SCHEDULE_ID,
+            "joint_profile_id": ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+            "joint_formal_run_stamp": stamp,
+            "ordinal": ordinal,
+            "scope": scope,
+            "unit_index": unit_index,
+            "position": position,
+            "arm": arm,
+            "seed": seed,
+            "rotation": rotation,
+            "predecessor_job_id": previous_id,
+        }
+        _require(
+            all(identity.get(field) == expected_value for field, expected_value in expected.items()),
+            f"joint resume identity {ordinal} schedule semantics drift",
+        )
+        output = identity.get("output")
+        _require(type(output) is str and Path(output).is_absolute() and str(Path(output).resolve()) == output, f"joint resume identity {ordinal} output is not absolute and normalized")
+        _require(output not in outputs, f"joint resume identity {ordinal} duplicates an output")
+        if arm in {"Generic", "Graph"}:
+            arm_scope = (
+                f"joint_generic_{'core' if scope == 'core' else 'replay'}"
+                if arm == "Generic"
+                else f"joint_graph_{'core' if scope == 'core' else 'replay'}"
+            )
+            expected_tail = (
+                ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
+                arm_scope,
+                ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+                f"run_{stamp}",
+                f"seed_{seed}",
+                rotation,
+            )
+            _require(
+                Path(output).parts[-len(expected_tail) :] == expected_tail,
+                f"joint resume identity {ordinal} output scope/root drift",
+            )
+        _require(
+            P0_ONLY_BENCHMARK_PROFILE_ID not in Path(output).parts
+            and not any(part.startswith("b3_generic_") for part in Path(output).parts),
+            f"joint resume identity {ordinal} attempts P0 B3 reuse",
+        )
+        outputs.add(output)
+        previous_id = expected_job_id
+    return _json_view(acceptance)
+
+
 def _benchmark_control_source(
     protocol: Mapping[str, Any],
-    *,
-    formal_run_stamp: str | None,
-    protocol_id: str | None,
-    profile_id: str | None,
+    acceptance: Mapping[str, Any],
 ) -> dict[str, str]:
-    missing = [
-        name
-        for name, value in (
-            ("benchmark_formal_run_stamp", formal_run_stamp),
-            ("benchmark_control_protocol_id", protocol_id),
-            ("benchmark_control_profile_id", profile_id),
-        )
-        if value is None
-    ]
-    _require(
-        not missing,
-        "active-v0.2 finalization requires explicit Benchmark control identity: "
-        + ", ".join(missing),
-    )
-    stamp = str(formal_run_stamp)
-    observed_protocol = str(protocol_id)
-    observed_profile = str(profile_id)
+    stamp = str(acceptance["joint_formal_run_stamp"])
     registered = protocol["benchmark_control_source"]
-    _require(
-        FORMAL_RUN_STAMP_PATTERN.fullmatch(stamp) is not None,
-        "Benchmark formal run stamp must match YYYYMMDDTHHMMSSZ",
-    )
-    _require(
-        observed_protocol == registered["protocol_id"],
-        "Benchmark control protocol differs from the active P2-E1 registration",
-    )
-    _require(
-        observed_profile == registered["profile_id"],
-        "Benchmark control profile differs from the active P2-E1 registration",
-    )
     return {
         "contract": str(registered["contract"]),
+        "schedule_id": str(registered["schedule_id"]),
         "formal_run_stamp": stamp,
-        "protocol_id": observed_protocol,
-        "profile_id": observed_profile,
+        "protocol_id": str(registered["protocol_id"]),
+        "profile_id": str(registered["profile_id"]),
     }
 
 
@@ -586,6 +751,12 @@ def _validate_external_root_identity(
     root: Path,
     source: Mapping[str, str],
 ) -> None:
+    expected_scopes = {
+        "generic_core": "joint_generic_core",
+        "generic_replay": "joint_generic_replay",
+        "graph_core": "joint_graph_core",
+        "graph_replay": "joint_graph_replay",
+    }
     expected_run_name = f"run_{source['formal_run_stamp']}"
     _require(
         root.name == expected_run_name,
@@ -597,8 +768,17 @@ def _validate_external_root_identity(
         f"{name} root is outside the registered Benchmark control profile",
     )
     _require(
+        root.parents[1].name == expected_scopes[name],
+        f"{name} root is outside its registered joint arm scope",
+    )
+    _require(
         len(root.parents) >= 3 and root.parents[2].name == source["protocol_id"],
         f"{name} root is outside the registered Benchmark control protocol",
+    )
+    _require(
+        P0_ONLY_BENCHMARK_PROFILE_ID not in root.parts
+        and not any(part.startswith("b3_generic_") for part in root.parts),
+        f"{name} root attempts to reuse a P0-only B3 cohort",
     )
 
 
@@ -640,6 +820,25 @@ def _manifest_pair_contract(manifest: Mapping[str, Any], expected_budget: Mappin
     }
 
 
+def _accepted_resume_identity(
+    acceptance: Mapping[str, Any],
+    spec: ArmSpec,
+    unit: tuple[int, str],
+) -> dict[str, Any]:
+    scope = "monitoring" if spec.scope == "replay" else "core"
+    arm = "Generic" if spec.control else "Graph"
+    matches = [
+        dict(value)
+        for value in acceptance["resume_identities"]
+        if value.get("scope") == scope
+        and value.get("arm") == arm
+        and value.get("seed") == unit[0]
+        and value.get("rotation") == unit[1]
+    ]
+    _require(len(matches) == 1, f"joint acceptance lacks one {arm} identity for {unit}")
+    return matches[0]
+
+
 def _validate_manifest(
     manifest: Mapping[str, Any],
     spec: ArmSpec,
@@ -647,6 +846,7 @@ def _validate_manifest(
     protocol: Mapping[str, Any],
     dataset: Mapping[str, Any],
     control_source: Mapping[str, str],
+    schedule_acceptance: Mapping[str, Any],
 ) -> dict[str, Any]:
     seed, rotation = unit
     frozen = protocol["frozen_profile"]
@@ -713,6 +913,28 @@ def _validate_manifest(
     _require(manifest.get("registered_evidence_class") == "formal", f"{spec.name} evidence registration is not formal at {unit}")
     _require(manifest.get("result_role") == "confirmatory", f"{spec.name} result role is not confirmatory at {unit}")
     _require(manifest.get("usage_accounting_contract") == USAGE_ACCOUNTING_CONTRACT, f"{spec.name} usage contract drift at {unit}")
+    expected_joint_identity = _accepted_resume_identity(
+        schedule_acceptance, spec, unit
+    )
+    _require(
+        expected_joint_identity["output"]
+        == str((spec.root / f"seed_{seed}" / rotation).resolve()),
+        f"{spec.name} joint acceptance output differs from supplied root at {unit}",
+    )
+    _require(
+        manifest.get("joint_resume_identity") == expected_joint_identity,
+        f"{spec.name} manifest joint resume identity drift at {unit}",
+    )
+    expected_joint_scope = {
+        (True, "core"): "joint_generic_core",
+        (True, "replay"): "joint_generic_replay",
+        (False, "core"): "joint_graph_core",
+        (False, "replay"): "joint_graph_replay",
+    }[(spec.control, spec.scope)]
+    _require(
+        manifest.get("joint_execution_scope") == expected_joint_scope,
+        f"{spec.name} manifest joint execution scope drift at {unit}",
+    )
     if spec.control:
         _require(manifest.get("agent_id") == protocol["authority"]["control"]["agent_id"], f"Generic control manifest agent drift at {unit}")
         _require(
@@ -781,6 +1003,7 @@ def _read_attempt(
     dataset: Mapping[str, Any],
     bearings: frozenset[str],
     control_source: Mapping[str, str],
+    schedule_acceptance: Mapping[str, Any],
 ) -> Attempt:
     try:
         bundle = read_run_bundle(path)
@@ -838,6 +1061,23 @@ def _read_attempt(
             f"{spec.name} attempt {field} drift at {path}",
         )
     resume_identity = metadata.get("cohort_resume_identity")
+    expected_joint_identity = _accepted_resume_identity(
+        schedule_acceptance, spec, unit
+    )
+    expected_joint_scope = {
+        (True, "core"): "joint_generic_core",
+        (True, "replay"): "joint_generic_replay",
+        (False, "core"): "joint_graph_core",
+        (False, "replay"): "joint_graph_replay",
+    }[(spec.control, spec.scope)]
+    _require(
+        metadata.get("joint_resume_identity") == expected_joint_identity
+        and metadata.get("joint_execution_scope") == expected_joint_scope
+        and isinstance(resume_identity, Mapping)
+        and resume_identity.get("joint_resume_identity") == expected_joint_identity
+        and resume_identity.get("joint_execution_scope") == expected_joint_scope,
+        f"{spec.name} attempt joint schedule identity drift at {path}",
+    )
     _require(
         isinstance(resume_identity, Mapping)
         and "replay_missing_score_policy_id" in resume_identity
@@ -891,17 +1131,57 @@ def _read_attempt(
         for field, expected_value in protocol["authority"]["treatment"]["identity"].items():
             _require(metadata.get(field) == expected_value, f"Graph attempt {field} drift: {path}")
     states: list[str] = []
-    for row in bundle.rollout_records:
+    public_actions: list[dict[str, Any]] = []
+    for position, row in enumerate(bundle.rollout_records[:-1]):
         if not isinstance(row, Mapping) or row.get("event_type") != "action":
-            continue
+            raise FinalizationError(f"malformed canonical action row: {path}")
+        _require(
+            row.get("index") == position,
+            f"canonical action indices are not contiguous at {path}",
+        )
         action = row.get("action", {})
         _require(isinstance(action, Mapping), f"malformed action row: {path}")
+        action_name = action.get("name")
+        arguments = action.get("arguments")
+        result = row.get("result")
+        usage_delta = row.get("usage_delta")
+        _require(
+            isinstance(action_name, str) and action_name,
+            f"canonical action name is missing: {path}",
+        )
+        _require(
+            isinstance(arguments, Mapping),
+            f"canonical action arguments are not a mapping: {path}",
+        )
+        _require(
+            isinstance(result, Mapping) and result.get("status") in {"ok", "error"},
+            f"canonical action result is invalid: {path}",
+        )
+        _require(
+            isinstance(usage_delta, Mapping),
+            f"canonical action usage_delta is invalid: {path}",
+        )
         state = action.get("decision_state")
         if spec.control:
             _require(state is None, f"Generic control carries Graph state {state!r}: {path}")
         else:
             _require(state in GRAPH_STATES, f"Graph action lacks a registered decision state: {path}")
+            _require(
+                state not in {"Monitor", "Revise"},
+                f"base-v6 Graph action entered unreachable state {state!r}: {path}",
+            )
             states.append(str(state))
+        public_actions.append(
+            {
+                "index": position,
+                "name": action_name,
+                "arguments": _json_view(arguments),
+                "status": result.get("status"),
+                "failure_kind": result.get("failure_kind"),
+                "decision_state": state,
+                "usage_delta": _json_view(usage_delta),
+            }
+        )
     terminal = run.get("terminal_status")
     failure_kind = run.get("failure_kind")
     if failure_kind == "provider_error":
@@ -910,7 +1190,17 @@ def _read_attempt(
     else:
         _require(terminal not in {None, "running"}, f"nonterminal attempt is not admissible: {path}")
         outcome = "statistical"
-    return Attempt(path, key, attempt_index, outcome, run, metrics, tuple(states))
+    return Attempt(
+        path,
+        key,
+        attempt_index,
+        outcome,
+        run,
+        metrics,
+        tuple(states),
+        tuple(public_actions),
+        tuple(_json_view(bundle.failures)),
+    )
 
 
 def _audit_arm(
@@ -918,6 +1208,7 @@ def _audit_arm(
     protocol: Mapping[str, Any],
     dataset: Mapping[str, Any],
     control_source: Mapping[str, str],
+    schedule_acceptance: Mapping[str, Any],
 ) -> ArmAudit:
     if not spec.root.exists():
         blocker = f"root missing: {_display(spec.root)}"
@@ -974,6 +1265,7 @@ def _audit_arm(
             protocol,
             dataset,
             control_source,
+            schedule_acceptance,
         )
         manifests[unit] = manifest
         if manifests and len(manifests) > 1:
@@ -1004,6 +1296,7 @@ def _audit_arm(
                 dataset,
                 bearings,
                 control_source,
+                schedule_acceptance,
             )
             attempts.append(attempt)
             action_rows += sum(
@@ -1105,6 +1398,33 @@ def _pair_gate(control: ArmAudit, treatment: ArmAudit, dataset: Mapping[str, Any
             f"paired Benchmark/Data Factory formal_execution_topology differs for {unit}",
         )
     exact_keys = control_keys == treatment_keys and len(control_keys) == control.spec.expected
+    matched_pairing_keys = len(matched)
+    control_only_pairing_keys = len(control_keys - treatment_keys)
+    treatment_only_pairing_keys = len(treatment_keys - control_keys)
+    if control.accepted and treatment.accepted and exact_keys:
+        def bearing_keys(audit: ArmAudit) -> set[tuple[Any, ...]]:
+            rows = _private_records(audit, dataset)
+            return {
+                (
+                    int(str(row["pair_run"]).split(":", 1)[0].removeprefix("seed_")),
+                    str(row["rotation"]),
+                    str(row["bearing_id"]),
+                    str(row["sample_id"]),
+                    str(row["task_id"]),
+                )
+                for row in rows
+            }
+
+        control_pairing = bearing_keys(control)
+        treatment_pairing = bearing_keys(treatment)
+        matched_pairing = control_pairing & treatment_pairing
+        exact_keys = (
+            control_pairing == treatment_pairing
+            and len(control_pairing) == control.spec.expected
+        )
+        matched_pairing_keys = len(matched_pairing)
+        control_only_pairing_keys = len(control_pairing - treatment_pairing)
+        treatment_only_pairing_keys = len(treatment_pairing - control_pairing)
     accepted = control.accepted and treatment.accepted and exact_keys
     blockers: list[str] = []
     if not control.accepted:
@@ -1112,13 +1432,17 @@ def _pair_gate(control: ArmAudit, treatment: ArmAudit, dataset: Mapping[str, Any
     if not treatment.accepted:
         blockers.append(f"{treatment.spec.name} arm gate unaccepted")
     if not exact_keys:
-        blockers.append(f"exact matched statistical keys {len(matched)}/{control.spec.expected}")
+        blockers.append(
+            f"exact matched bearing-level statistical keys "
+            f"{matched_pairing_keys}/{control.spec.expected}"
+        )
     return {
         "accepted": accepted,
+        "pairing_key": list(PAIRING_KEY_FIELDS),
         "expected_pairs": control.spec.expected,
-        "matched_statistical_keys": len(matched),
-        "control_only_keys": len(control_keys - treatment_keys),
-        "treatment_only_keys": len(treatment_keys - control_keys),
+        "matched_statistical_keys": matched_pairing_keys,
+        "control_only_keys": control_only_pairing_keys,
+        "treatment_only_keys": treatment_only_pairing_keys,
         "blockers": blockers,
     }
 
@@ -1243,6 +1567,418 @@ def _graph_state_summary(audit: ArmAudit) -> dict[str, Any]:
             },
         }
     return result
+
+
+def _finite_metric(value: Any, label: str, *, nullable: bool = False) -> float | None:
+    if value is None and nullable:
+        return None
+    _require(
+        not isinstance(value, bool)
+        and isinstance(value, (int, float))
+        and math.isfinite(float(value)),
+        f"{label} must be a finite number" + (" or null" if nullable else ""),
+    )
+    return float(value)
+
+
+def _same_metric(
+    observed: float | None, expected: float | None, label: str
+) -> None:
+    if observed is None or expected is None:
+        _require(observed is expected, f"{label} nullability differs from canonical rollout")
+        return
+    _require(
+        math.isclose(observed, expected, rel_tol=1e-12, abs_tol=1e-12),
+        f"{label} differs from canonical rollout: expected {expected}, observed {observed}",
+    )
+
+
+def _canonical_replay_mechanism_episode(attempt: Attempt) -> dict[str, Any]:
+    """Rebuild public replay diagnostics without targets or reasoning traces."""
+
+    _require(
+        attempt.key.task_id == REPLAY_TASKS[0],
+        "replay mechanism projection received a non-replay attempt",
+    )
+    raw_metrics = attempt.metrics.get("rollout_metrics")
+    _require(
+        isinstance(raw_metrics, Mapping),
+        f"replay attempt lacks evaluator rollout_metrics: {attempt.path}",
+    )
+    metrics = dict(raw_metrics)
+    _require(
+        "steps_to_next_success_after_failure" in metrics,
+        f"replay attempt lacks the active recovery metric schema: {attempt.path}",
+    )
+
+    signatures: set[str] = set()
+    repeated = 0
+    executed_actions: list[Mapping[str, Any]] = []
+    for action in attempt.actions:
+        try:
+            signature = json.dumps(
+                [action["name"], action["arguments"]],
+                sort_keys=True,
+                separators=(",", ":"),
+                allow_nan=False,
+            )
+        except (KeyError, TypeError, ValueError) as exc:
+            raise FinalizationError(
+                f"cannot build a canonical public action signature at {attempt.path}: {exc}"
+            ) from exc
+        repeated += signature in signatures
+        signatures.add(signature)
+        usage_delta = action["usage_delta"]
+        tool_calls = usage_delta.get("tool_calls")
+        if tool_calls is None or _finite_metric(
+            tool_calls, f"tool_calls usage at {attempt.path}"
+        ) > 0.0:
+            executed_actions.append(action)
+
+    action_count = len(attempt.actions)
+    valid_tool_calls = sum(action["status"] == "ok" for action in executed_actions)
+    terminal_status = str(attempt.run.get("terminal_status"))
+    submitted = float(terminal_status == "submitted")
+    budget_exhausted = float(terminal_status == "budget_exhausted")
+    repeated_ratio = repeated / action_count if action_count else 0.0
+    valid_tool_call_rate = (
+        valid_tool_calls / len(executed_actions) if executed_actions else 0.0
+    )
+
+    failure_count = len(attempt.failures)
+    first_failure_step: int | None = None
+    if failure_count:
+        raw_step = attempt.failures[0].get("step")
+        if raw_step is not None:
+            _require(
+                type(raw_step) is int and raw_step >= 0,
+                f"canonical failure has an invalid step at {attempt.path}",
+            )
+            first_failure_step = int(raw_step)
+    next_success = (
+        None
+        if first_failure_step is None
+        else next(
+            (
+                int(action["index"])
+                for action in attempt.actions
+                if int(action["index"]) > first_failure_step
+                and action["status"] == "ok"
+                and action["name"] != "submit"
+            ),
+            None,
+        )
+    )
+    corrected_after_failure = next_success is not None
+
+    grounding_axes = (
+        "submission_grounding",
+        "artifact_lineage_completeness",
+        "supporting_reference_validity",
+    )
+    grounded_completion = float(
+        submitted == 1.0
+        and all(
+            _finite_metric(metrics.get(axis), f"{axis} at {attempt.path}") == 1.0
+            for axis in grounding_axes
+        )
+    )
+    grounded_recovery = float(
+        failure_count > 0 and corrected_after_failure and grounded_completion == 1.0
+    )
+    recovery_coverage = grounded_recovery if failure_count else None
+    steps_to_recovery = (
+        float(int(attempt.actions[-1]["index"]) - first_failure_step)
+        if grounded_recovery == 1.0
+        and first_failure_step is not None
+        and attempt.actions
+        else None
+    )
+
+    canonical = {
+        "rollout.grounded_completion": grounded_completion,
+        "rollout.submission_rate": submitted,
+        "rollout.budget_exhaustion": budget_exhausted,
+        "rollout.valid_tool_call_rate": valid_tool_call_rate,
+        "rollout.repeated_action_ratio": repeated_ratio,
+        "rollout.grounded_recovery_success": grounded_recovery,
+        "rollout.recovery_coverage": recovery_coverage,
+        "rollout.steps_to_recovery": steps_to_recovery,
+        "rollout.steps": float(action_count),
+    }
+    for endpoint, expected in canonical.items():
+        name = endpoint.split(".", 1)[1]
+        observed = _finite_metric(
+            metrics.get(name),
+            f"evaluator {endpoint} at {attempt.path}",
+            nullable=expected is None,
+        )
+        _same_metric(observed, expected, f"evaluator {endpoint} at {attempt.path}")
+    observed_failures = _finite_metric(
+        metrics.get("failure_count"), f"evaluator failure_count at {attempt.path}"
+    )
+    _same_metric(
+        observed_failures,
+        float(failure_count),
+        f"evaluator failure_count at {attempt.path}",
+    )
+    expected_next_success = (
+        None
+        if first_failure_step is None or next_success is None
+        else float(next_success - first_failure_step)
+    )
+    observed_next_success = _finite_metric(
+        metrics.get("steps_to_next_success_after_failure"),
+        f"evaluator steps_to_next_success_after_failure at {attempt.path}",
+        nullable=expected_next_success is None,
+    )
+    _same_metric(
+        observed_next_success,
+        expected_next_success,
+        f"evaluator steps_to_next_success_after_failure at {attempt.path}",
+    )
+    return {
+        "metrics": canonical,
+        "action_count": action_count,
+        "executed_action_count": len(executed_actions),
+        "repeated_action_count": repeated,
+        "failure_count": failure_count,
+        "corrected_after_failure": corrected_after_failure,
+        "terminal_status": terminal_status,
+    }
+
+
+def _summary_metric(
+    summary: Mapping[str, Any], task: str, endpoint: str, label: str
+) -> float | None:
+    section, name = endpoint.split(".", 1)
+    try:
+        value = summary["summary"][task][section][name]
+    except (KeyError, TypeError) as exc:
+        raise FinalizationError(f"{label} lacks {task}.{endpoint}") from exc
+    return _finite_metric(value, f"{label} {task}.{endpoint}", nullable=value is None)
+
+
+def _paired_metric(
+    paired: Mapping[str, Any], task: str, endpoint: str
+) -> float | None:
+    try:
+        value = paired["estimate"][task][endpoint]
+    except (KeyError, TypeError) as exc:
+        raise FinalizationError(
+            f"paired replay result lacks {task}.{endpoint}"
+        ) from exc
+    return _finite_metric(
+        value, f"paired replay {task}.{endpoint}", nullable=value is None
+    )
+
+
+def _graph_replay_transition_projection(
+    audit: ArmAudit, state_summary: Mapping[str, Any]
+) -> dict[str, Any]:
+    _require(audit.accepted and not audit.spec.control, "Graph projection requires an accepted treatment arm")
+    attempts = [attempt for _, attempt in sorted(audit.statistical.items())]
+    state_counts: Counter[str] = Counter()
+    episode_counts: Counter[str] = Counter()
+    transition_counts: Counter[str] = Counter()
+    valid_transitions = 0
+    transition_opportunities = 0
+    all_valid_episodes = 0
+    recover_after_failure_opportunities = 0
+    recover_after_failure_count = 0
+    for attempt in attempts:
+        states = attempt.states
+        _require(
+            len(states) == len(attempt.actions),
+            f"Graph state/action cardinality differs at {attempt.path}",
+        )
+        state_counts.update(states)
+        episode_counts.update(set(states))
+        episode_valid = bool(states)
+        for left, right in zip(states, states[1:]):
+            transition_counts[f"{left}->{right}"] += 1
+            is_valid = right in ALLOWED_TRANSITIONS.get(left, set())
+            valid_transitions += is_valid
+            transition_opportunities += 1
+            episode_valid = episode_valid and is_valid
+        all_valid_episodes += episode_valid
+        for index, action in enumerate(attempt.actions[:-1]):
+            if action["status"] != "error":
+                continue
+            recover_after_failure_opportunities += 1
+            recover_after_failure_count += attempt.actions[index + 1][
+                "decision_state"
+            ] == "Recover"
+
+    _require(
+        state_counts["Monitor"] == 0 and state_counts["Revise"] == 0,
+        "base-v6 replay projection cannot contain Monitor or Revise visits",
+    )
+    task_summary = state_summary.get(REPLAY_TASKS[0])
+    _require(
+        isinstance(task_summary, Mapping),
+        "Graph replay state summary is missing from the accepted result",
+    )
+    total_steps = sum(state_counts.values())
+    expected_occupancy = {
+        state: state_counts[state] / total_steps if total_steps else 0.0
+        for state in GRAPH_STATE_ORDER
+    }
+    expected_visitation = {
+        state: episode_counts[state] / len(attempts) for state in GRAPH_STATE_ORDER
+    }
+    for state in GRAPH_STATE_ORDER:
+        _same_metric(
+            _finite_metric(
+                task_summary["state_step_occupancy_proportion"][state],
+                f"Graph replay state occupancy {state}",
+            ),
+            expected_occupancy[state],
+            f"Graph replay state occupancy {state}",
+        )
+        _same_metric(
+            _finite_metric(
+                task_summary["state_episode_visitation_rate"][state],
+                f"Graph replay state visitation {state}",
+            ),
+            expected_visitation[state],
+            f"Graph replay state visitation {state}",
+        )
+    return {
+        "episodes": len(attempts),
+        "action_steps": total_steps,
+        "state_visit_counts": {
+            state: state_counts[state] for state in GRAPH_STATE_ORDER
+        },
+        "state_episode_counts": {
+            state: episode_counts[state] for state in GRAPH_STATE_ORDER
+        },
+        "transition_opportunities": transition_opportunities,
+        "valid_transition_count": valid_transitions,
+        "invalid_transition_count": transition_opportunities - valid_transitions,
+        "observed_transition_counts": dict(sorted(transition_counts.items())),
+        "all_valid_episode_count": all_valid_episodes,
+        "recover_after_failed_action_opportunities": recover_after_failure_opportunities,
+        "recover_after_failed_action_count": recover_after_failure_count,
+        "monitor_and_revise_visits": 0,
+    }
+
+
+def _replay_mechanism_summary(
+    *,
+    control: ArmAudit,
+    treatment: ArmAudit,
+    control_summary: Mapping[str, Any],
+    treatment_summary: Mapping[str, Any],
+    paired: Mapping[str, Any],
+    graph_state_summary: Mapping[str, Any],
+    protocol: Mapping[str, Any],
+    protocol_identity: Mapping[str, Any],
+    benchmark_control_source: Mapping[str, Any],
+    formal_execution_topology: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Build the preregistered full-cohort replay mechanism projection."""
+
+    _require(control.accepted and treatment.accepted, "mechanism projection requires two accepted replay arms")
+    control_keys = set(control.statistical)
+    treatment_keys = set(treatment.statistical)
+    _require(
+        control_keys == treatment_keys and len(control_keys) == control.spec.expected == 24,
+        "mechanism projection requires the exact 24 paired replay keys",
+    )
+    episode_values: dict[str, dict[EpisodeKey, dict[str, Any]]] = {
+        "control": {
+            key: _canonical_replay_mechanism_episode(control.statistical[key])
+            for key in sorted(control_keys)
+        },
+        "treatment": {
+            key: _canonical_replay_mechanism_episode(treatment.statistical[key])
+            for key in sorted(treatment_keys)
+        },
+    }
+    source_summaries = {
+        "control": control_summary,
+        "treatment": treatment_summary,
+    }
+    metric_projection: dict[str, Any] = {}
+    for endpoint in REPLAY_MECHANISM_ENDPOINTS:
+        arms: dict[str, Any] = {}
+        for arm in ("control", "treatment"):
+            defined = [
+                episode["metrics"][endpoint]
+                for episode in episode_values[arm].values()
+                if episode["metrics"][endpoint] is not None
+            ]
+            estimate = sum(defined) / len(defined) if defined else None
+            reported = _summary_metric(
+                source_summaries[arm], REPLAY_TASKS[0], endpoint, arm
+            )
+            _same_metric(
+                reported,
+                estimate,
+                f"accepted replay {arm} mechanism {endpoint}",
+            )
+            arms[arm] = {
+                "estimate": estimate,
+                "defined_episodes": len(defined),
+                "registered_episodes": 24,
+            }
+        expected_delta = (
+            None
+            if arms["control"]["estimate"] is None
+            or arms["treatment"]["estimate"] is None
+            else arms["treatment"]["estimate"] - arms["control"]["estimate"]
+        )
+        observed_delta = _paired_metric(paired, REPLAY_TASKS[0], endpoint)
+        _same_metric(
+            observed_delta,
+            expected_delta,
+            f"accepted replay paired mechanism {endpoint}",
+        )
+        metric_projection[endpoint] = {
+            **arms,
+            "graph_minus_generic": observed_delta,
+        }
+
+    registration = protocol["analysis"]["replay_mechanism"]
+    denominator_view = {}
+    for arm, audit in (("control", control), ("treatment", treatment)):
+        denominator_view[arm] = {
+            "statistical_episodes": len(audit.statistical),
+            "attempt_leaves": len(audit.attempts),
+            "provider_error_history_attempts": audit.provider_errors,
+            "nonsubmitted_or_partial_episodes": audit.nonprovider_failures,
+            "natural_nonprovider_terminal_failures": sum(
+                attempt.run.get("failure_kind") is not None
+                for attempt in audit.statistical.values()
+            ),
+            "terminal_counts": dict(audit.terminal_counts),
+        }
+    return {
+        "schema_version": "p2_e1_replay_mechanism_v1",
+        "accepted": True,
+        "role": registration["role"],
+        "task": registration["task"],
+        "source": registration["source"],
+        "protocol_identity": _json_view(protocol_identity),
+        "benchmark_control_source": _json_view(benchmark_control_source),
+        "formal_execution_topology": _json_view(formal_execution_topology),
+        "pairing": {
+            "key": list(registration["pairing_key"]),
+            "expected_pairs": 24,
+            "observed_pairs": len(control_keys),
+            "control_only_keys": 0,
+            "treatment_only_keys": 0,
+        },
+        "denominators": denominator_view,
+        "metric_projection": metric_projection,
+        "graph_state_projection": _graph_replay_transition_projection(
+            treatment, graph_state_summary
+        ),
+        "case_selection": "none_full_cohort_only",
+        "evaluator_private_targets_used": False,
+        "reasoning_traces_used": False,
+    }
 
 
 def _private_records(audit: ArmAudit, dataset: Mapping[str, Any]) -> list[dict[str, Any]]:
@@ -1460,9 +2196,7 @@ def _analyze_scope(
 def build_documents(
     *,
     protocol_path: Path = DEFAULT_PROTOCOL,
-    benchmark_formal_run_stamp: str | None = None,
-    benchmark_control_protocol_id: str | None = None,
-    benchmark_control_profile_id: str | None = None,
+    joint_schedule_acceptance: Path | None = None,
     generic_core_root: Path | None = None,
     generic_replay_root: Path | None = None,
     graph_core_root: Path | None = None,
@@ -1470,11 +2204,10 @@ def build_documents(
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     protocol, dataset = _load_protocol(protocol_path)
     authority = protocol["authority"]
+    schedule_acceptance = _joint_schedule_acceptance(joint_schedule_acceptance)
     control_source = _benchmark_control_source(
         protocol,
-        formal_run_stamp=benchmark_formal_run_stamp,
-        protocol_id=benchmark_control_protocol_id,
-        profile_id=benchmark_control_profile_id,
+        schedule_acceptance,
     )
     supplied = {
         "generic_core": generic_core_root,
@@ -1506,7 +2239,9 @@ def build_documents(
         "graph_replay": ArmSpec("graph_replay", "replay", roots["graph_replay"], False, REPLAY_TASKS, replay_units, 24),
     }
     audits = {
-        name: _audit_arm(spec, protocol, dataset, control_source)
+        name: _audit_arm(
+            spec, protocol, dataset, control_source, schedule_acceptance
+        )
         for name, spec in specs.items()
     }
     execution_topology = _execution_topology_binding(audits)
@@ -1519,10 +2254,17 @@ def build_documents(
     accepted = all_arm_gates and all_pair_gates
     blockers = [f"{name}: {blocker}" for name, audit in audits.items() for blocker in audit.blockers]
     blockers.extend(f"{scope} pairing: {blocker}" for scope, gate in pair_gates.items() for blocker in gate["blockers"])
+    protocol_identity = _json_view(
+        {
+            "schema_version": protocol["schema_version"],
+            "experiment_id": protocol["experiment_id"],
+        }
+    )
 
     paired: dict[str, Any] | None = None
     arm_summaries: dict[str, Any] | None = None
     graph_state_summaries: dict[str, Any] | None = None
+    replay_mechanism: dict[str, Any] | None = None
     private_rows = 0
     effect_count = 0
     if accepted:
@@ -1542,6 +2284,18 @@ def build_documents(
             "core": _graph_state_summary(audits["graph_core"]),
             "replay": _graph_state_summary(audits["graph_replay"]),
         }
+        replay_mechanism = _replay_mechanism_summary(
+            control=audits["generic_replay"],
+            treatment=audits["graph_replay"],
+            control_summary=replay_summaries["control"],
+            treatment_summary=replay_summaries["treatment"],
+            paired=replay_result,
+            graph_state_summary=graph_state_summaries["replay"],
+            protocol=protocol,
+            protocol_identity=protocol_identity,
+            benchmark_control_source=control_source,
+            formal_execution_topology=execution_topology,
+        )
         private_rows = core_rows + replay_rows
         effect_count = sum(
             value is not None
@@ -1551,12 +2305,6 @@ def build_documents(
         )
 
     views = {name: _arm_view(audit) for name, audit in audits.items()}
-    protocol_identity = _json_view(
-        {
-            "schema_version": protocol["schema_version"],
-            "experiment_id": protocol["experiment_id"],
-        }
-    )
     readiness = {
         "schema_version": "p2_e1_primary_readiness_v2",
         "gate_id": "P2-E1-GENERIC-BASE-FORMAL-V2",
@@ -1568,6 +2316,7 @@ def build_documents(
             "replay_missing_score_policy_id"
         ],
         "benchmark_control_source": dict(control_source),
+        "joint_schedule_acceptance": schedule_acceptance,
         "formal_execution_topology": execution_topology,
         "evaluator_private_views_read": private_rows,
         "effect_estimates_emitted": effect_count,
@@ -1610,6 +2359,7 @@ def build_documents(
         "provider_calls": 0,
         "frozen_profile": _json_view(protocol["frozen_profile"]),
         "benchmark_control_source": _json_view(control_source),
+        "joint_schedule_acceptance": schedule_acceptance,
         "formal_execution_topology": execution_topology,
         "protocol_identity": protocol_identity,
         "registered_design": _json_view(protocol["registered_design"]),
@@ -1627,6 +2377,7 @@ def build_documents(
         "direction": "GraphDecisionAgent_minus_Benchmark_GenericLLMToolAgent",
         "arm_summaries": arm_summaries,
         "graph_state_summaries": graph_state_summaries,
+        "replay_mechanism": replay_mechanism,
         "paired_bearing_bootstrap": paired,
         "primary_endpoint": protocol["analysis"]["primary_endpoint"],
         "gates": {
@@ -1662,9 +2413,7 @@ def audit(**kwargs: Any) -> dict[str, Any]:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--protocol", type=Path, default=DEFAULT_PROTOCOL)
-    parser.add_argument("--benchmark-formal-run-stamp", required=True)
-    parser.add_argument("--benchmark-control-protocol-id", required=True)
-    parser.add_argument("--benchmark-control-profile-id", required=True)
+    parser.add_argument("--joint-schedule-acceptance", type=Path, required=True)
     parser.add_argument("--generic-core-root", type=Path, required=True)
     parser.add_argument("--generic-replay-root", type=Path, required=True)
     parser.add_argument("--graph-core-root", type=Path, required=True)
@@ -1745,7 +2494,11 @@ def _validate_publication_output_paths(
             args.graph_replay_root,
         )
     )
-    protected = {args.protocol.resolve(), dataset_path.resolve()}
+    protected = {
+        args.protocol.resolve(),
+        dataset_path.resolve(),
+        args.joint_schedule_acceptance.resolve(),
+    }
     for root in roots:
         if root.exists():
             protected.update(path.resolve() for path in root.rglob("cohort_index.json"))
@@ -1770,9 +2523,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     readiness, result = build_documents(
         protocol_path=args.protocol,
-        benchmark_formal_run_stamp=args.benchmark_formal_run_stamp,
-        benchmark_control_protocol_id=args.benchmark_control_protocol_id,
-        benchmark_control_profile_id=args.benchmark_control_profile_id,
+        joint_schedule_acceptance=args.joint_schedule_acceptance,
         generic_core_root=args.generic_core_root,
         generic_replay_root=args.generic_replay_root,
         graph_core_root=args.graph_core_root,

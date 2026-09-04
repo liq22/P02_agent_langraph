@@ -65,6 +65,10 @@ from phm_agent_benchmark.phase1.resume import (
     ResumeProfile,
     load_provider_partial,
 )
+from S03_Scripts.run_openai_compatible_probe import validate_execution_probe_report
+from S03_Scripts.run_phase1_experiment import (
+    _validate_formal_execution_topology as _benchmark_formal_execution_topology,
+)
 from phm_graph_agent import GraphDecisionAgent, ReactiveSequentialAgent
 from phm_graph_agent.dynamic_runtime import (
     build_master_sequences,
@@ -92,8 +96,11 @@ P2_E8_DATASET_ID = "university-of-ottawa-uored-vafcls-v5"
 P2_E8_DATASET_PROTOCOL_ID = "ottawa_uored_v5_ordered_state_replay_v1"
 P2_E8_DATA_BACKEND = "csv_directory"
 P2_E8_RUNTIME_CONTRACT = "phase1_opaque_sample_vibration_feature_schema_v6"
+P2_E8_EXTERNAL_INFERENCE_AUTHORIZATION_ENV = (
+    "PHM_P2_E8_EXTERNAL_INFERENCE_AUTHORIZED"
+)
 _SAFE_ENVIRONMENT_NAME = re.compile(r"^[A-Z][A-Z0-9_]*$")
-BENCHMARK_CONTROL_SOURCE_CONTRACT = "benchmark_active_v0_2_control_source_v1"
+BENCHMARK_CONTROL_SOURCE_CONTRACT = "p1_p2_joint_generic_control_source_v1"
 BENCHMARK_FORMAL_EXECUTION_TOPOLOGY_CONTRACT = (
     "benchmark_formal_gitlink_topology_v1"
 )
@@ -103,6 +110,7 @@ DATA_FACTORY_REPOSITORY = "https://github.com/PHMbench/phm-data-factory.git"
 P2_REPOSITORY = "https://github.com/liq22/P02_agent_langraph.git"
 P2_FORMAL_REPRODUCIBILITY_PATHS = (
     "CORE.md",
+    "paper/experiments/p2_e1_generic_base_formal_v2.yaml",
     "scripts/run_graph_experiment.py",
     "src/phm_graph_agent",
 )
@@ -127,7 +135,40 @@ _REVISION_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID = (
     "benchmark_v0_2_0--paderborn_phase1_v1--runtime_v6--window_v3"
 )
-ACTIVE_BENCHMARK_CONTROL_PROFILE_ID = "paper0-paderborn-primary-v1"
+P0_ONLY_BENCHMARK_PROFILE_ID = "paper0-paderborn-primary-v1"
+ACTIVE_BENCHMARK_CONTROL_PROFILE_ID = "p1-p2-joint-primary-v1"
+JOINT_SCHEDULE_ID = "p1_p2_joint_primary_counterbalance_v1"
+JOINT_RESUME_IDENTITY_CONTRACT = "joint_primary_schedule_resume_identity_v1"
+JOINT_RESUME_IDENTITY_FIELDS = (
+    "contract",
+    "schedule_id",
+    "joint_profile_id",
+    "joint_formal_run_stamp",
+    "ordinal",
+    "scope",
+    "unit_index",
+    "position",
+    "arm",
+    "seed",
+    "rotation",
+    "predecessor_job_id",
+    "output",
+)
+JOINT_ARMS = ("Generic", "PHMskills", "Graph")
+JOINT_GRAPH_SCOPE = {
+    "core": "joint_graph_core",
+    "monitoring": "joint_graph_replay",
+}
+JOINT_GENERIC_SCOPE = {
+    "core": "joint_generic_core",
+    "monitoring": "joint_generic_replay",
+}
+JOINT_SEEDS = (20260808, 20260809, 20260810)
+JOINT_ROTATIONS = ("rotation_0", "rotation_1", "rotation_2", "rotation_3")
+_JOINT_JOB_ID_PATTERN = re.compile(
+    r"^(?:core|monitoring)-[0-9]{2}-position-[0-2]-(?:generic|phmskills|graph)$"
+)
+_FORMAL_OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 FORMAL_RUN_STAMP_PATTERN = re.compile(r"^[0-9]{8}T[0-9]{6}Z$")
 ACTIVE_GRAPH_DYNAMIC_RUNTIME_CONTRACT = (
     "phase1_graph_dynamic_generic_ablation_v3"
@@ -259,15 +300,209 @@ def _validate_benchmark_formal_execution_topology(
     return topology
 
 
+def _joint_unit_index(scope: str, seed: int, rotation: str) -> int:
+    if seed not in JOINT_SEEDS:
+        raise ValueError("joint schedule seed is not registered")
+    seed_index = JOINT_SEEDS.index(seed)
+    if scope == "core":
+        if rotation not in JOINT_ROTATIONS:
+            raise ValueError("joint core rotation is not registered")
+        return 4 * seed_index + JOINT_ROTATIONS.index(rotation)
+    if scope == "monitoring":
+        if rotation != "rotation_0":
+            raise ValueError("joint monitoring is registered only for rotation_0")
+        return seed_index
+    raise ValueError("joint schedule scope must be core or monitoring")
+
+
+def _joint_order(unit_index: int) -> tuple[str, ...]:
+    offset = unit_index % len(JOINT_ARMS)
+    return JOINT_ARMS[offset:] + JOINT_ARMS[:offset]
+
+
+def _joint_job_id(scope: str, unit_index: int, position: int) -> str:
+    return (
+        f"{scope}-{unit_index:02d}-position-{position}-"
+        f"{_joint_order(unit_index)[position].lower()}"
+    )
+
+
+def _joint_predecessor_job_id(
+    scope: str,
+    unit_index: int,
+    position: int,
+) -> str | None:
+    if position > 0:
+        return _joint_job_id(scope, unit_index, position - 1)
+    if scope == "core":
+        if unit_index == 0:
+            return None
+        return _joint_job_id("core", unit_index - 1, 2)
+    if unit_index == 0:
+        return _joint_job_id("core", 11, 2)
+    return _joint_job_id("monitoring", unit_index - 1, 2)
+
+
+def _joint_execution_scope(scope: str, arm: str) -> str:
+    mapping = JOINT_GRAPH_SCOPE if arm == "Graph" else JOINT_GENERIC_SCOPE
+    try:
+        return mapping[scope]
+    except KeyError as exc:
+        raise ValueError(f"unsupported joint {arm} schedule scope: {scope!r}") from exc
+
+
+def _validate_joint_output_path(
+    output: Path,
+    *,
+    identity: Mapping[str, Any],
+    arm: str,
+) -> str:
+    resolved = output.expanduser().resolve()
+    if any("latest" in part.lower() for part in resolved.parts):
+        raise ValueError("joint output must not select a latest alias")
+    expected = (
+        str(identity["rotation"]),
+        f"seed_{identity['seed']}",
+        f"run_{identity['joint_formal_run_stamp']}",
+        str(identity["joint_profile_id"]),
+        _joint_execution_scope(str(identity["scope"]), arm),
+        ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
+    )
+    observed = (
+        resolved.name,
+        resolved.parent.name,
+        resolved.parents[1].name,
+        resolved.parents[2].name,
+        resolved.parents[3].name,
+        resolved.parents[4].name,
+    )
+    if observed != expected:
+        raise ValueError(
+            f"joint {arm} output differs from the registered protocol/scope/profile/"
+            "run/seed/rotation identity"
+        )
+    if arm == "Graph" and (
+        len(resolved.parents) < 7
+        or resolved.parents[5].name != "joint_primary"
+        or resolved.parents[6].name != P2_EXPERIMENT_ID
+    ):
+        raise ValueError("joint Graph output is outside the registered P2-E1 family")
+    return str(resolved)
+
+
+def _validate_joint_resume_identity_value(
+    value: Any,
+    *,
+    expected_arm: str,
+    expected_output: Path,
+    tasks: list[str],
+    seed: int,
+    rotation: str,
+) -> dict[str, Any]:
+    if not isinstance(value, Mapping):
+        raise ValueError("joint resume identity must be a JSON object")
+    identity = dict(value)
+    if tuple(identity) != JOINT_RESUME_IDENTITY_FIELDS:
+        if set(identity) != set(JOINT_RESUME_IDENTITY_FIELDS):
+            raise ValueError("joint resume identity fields drifted")
+        identity = {field: identity[field] for field in JOINT_RESUME_IDENTITY_FIELDS}
+    expected_header = {
+        "contract": JOINT_RESUME_IDENTITY_CONTRACT,
+        "schedule_id": JOINT_SCHEDULE_ID,
+        "joint_profile_id": ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+        "arm": expected_arm,
+        "seed": seed,
+        "rotation": rotation,
+    }
+    drift = [
+        field
+        for field, expected in expected_header.items()
+        if identity.get(field) != expected
+    ]
+    if drift:
+        raise ValueError("joint resume identity drifted: " + ", ".join(drift))
+    stamp = identity.get("joint_formal_run_stamp")
+    if not isinstance(stamp, str) or FORMAL_RUN_STAMP_PATTERN.fullmatch(stamp) is None:
+        raise ValueError("joint formal run stamp must match YYYYMMDDTHHMMSSZ")
+    scope = identity.get("scope")
+    expected_scope = (
+        "monitoring" if tasks == ["online_replay_monitoring"] else "core"
+        if tasks
+        == ["cold_start_fault_diagnosis", "unsupervised_anomaly_detection"]
+        else None
+    )
+    if expected_scope is None:
+        raise ValueError("formal P2-E1 tasks do not match a joint schedule scope")
+    if scope != expected_scope:
+        raise ValueError("joint resume identity scope/tasks drifted")
+    expected_unit = _joint_unit_index(expected_scope, seed, rotation)
+    expected_position = _joint_order(expected_unit).index(expected_arm)
+    expected_ordinal = (
+        expected_unit * 3 + expected_position
+        if expected_scope == "core"
+        else 36 + expected_unit * 3 + expected_position
+    )
+    if type(identity.get("unit_index")) is not int or identity["unit_index"] != expected_unit:
+        raise ValueError("joint resume identity unit_index drifted")
+    if type(identity.get("position")) is not int or identity["position"] != expected_position:
+        raise ValueError("joint resume identity position drifted")
+    if type(identity.get("ordinal")) is not int or identity["ordinal"] != expected_ordinal:
+        raise ValueError("joint resume identity ordinal drifted")
+    predecessor = identity.get("predecessor_job_id")
+    expected_predecessor = _joint_predecessor_job_id(
+        expected_scope,
+        expected_unit,
+        expected_position,
+    )
+    if predecessor != expected_predecessor or (
+        predecessor is not None
+        and _JOINT_JOB_ID_PATTERN.fullmatch(predecessor) is None
+    ):
+        raise ValueError("joint resume identity predecessor_job_id drifted")
+    raw_output = identity.get("output")
+    if not isinstance(raw_output, str) or not raw_output:
+        raise ValueError("joint resume identity output must be an absolute path")
+    normalized_output = _validate_joint_output_path(
+        Path(raw_output), identity=identity, arm=expected_arm
+    )
+    if raw_output != normalized_output or normalized_output != str(expected_output.resolve()):
+        raise ValueError("joint resume identity output differs from --output")
+    return identity
+
+
+def _joint_resume_identity(
+    args: argparse.Namespace,
+    *,
+    required: bool,
+) -> dict[str, Any] | None:
+    raw = getattr(args, "joint_resume_identity_json", None)
+    if raw is None:
+        if required:
+            raise ValueError(
+                "formal P2-E1 Graph execution requires --joint-resume-identity-json"
+            )
+        return None
+    try:
+        value = json.loads(raw)
+    except (TypeError, json.JSONDecodeError) as exc:
+        raise ValueError("--joint-resume-identity-json is not valid JSON") from exc
+    return _validate_joint_resume_identity_value(
+        value,
+        expected_arm="Graph",
+        expected_output=Path(args.output),
+        tasks=list(args.tasks),
+        seed=int(args.seed),
+        rotation=str(args.rotation),
+    )
+
+
 def _benchmark_control_unit_topology(
     args: argparse.Namespace,
     control_source: Mapping[str, str],
-) -> dict[str, Any]:
+) -> dict[str, Any] | None:
     raw_root = getattr(args, "benchmark_control_unit_root", None)
     if raw_root is None:
-        raise ValueError(
-            "formal Graph execution requires --benchmark-control-unit-root"
-        )
+        return None
     requested = Path(raw_root).expanduser()
     if not requested.is_absolute():
         raise ValueError("Benchmark control unit root must be an absolute frozen path")
@@ -281,15 +516,9 @@ def _benchmark_control_unit_topology(
         raise ValueError("Benchmark control unit root must be a directory")
 
     tasks = list(args.tasks)
-    if tasks == ["online_replay_monitoring"]:
-        expected_arm_scope = "b3_generic_replay"
-    elif tasks == [
-        "cold_start_fault_diagnosis",
-        "unsupervised_anomaly_detection",
-    ]:
-        expected_arm_scope = "b3_generic_core"
-    else:
-        raise ValueError("formal P2-E1 Graph tasks do not match a registered control scope")
+    joint_identity = _joint_resume_identity(args, required=True)
+    assert joint_identity is not None
+    expected_arm_scope = JOINT_GENERIC_SCOPE[str(joint_identity["scope"])]
     expected_parts = (
         f"seed_{args.seed}",
         f"run_{control_source['formal_run_stamp']}",
@@ -315,7 +544,7 @@ def _benchmark_control_unit_topology(
     except (OSError, ValueError) as exc:
         raise ValueError("Benchmark control unit failed canonical cohort validation") from exc
     if cohort.get("status") != "complete":
-        raise ValueError("Benchmark control unit must be complete before Graph execution")
+        raise ValueError("explicit joint Generic comparison unit is not complete")
     profile = cohort.get("profile")
     if not isinstance(profile, Mapping):
         raise ValueError("Benchmark control unit profile is missing")
@@ -337,6 +566,22 @@ def _benchmark_control_unit_topology(
         raise ValueError(
             "Benchmark control unit profile drifted: " + ", ".join(drift)
         )
+    generic_identity = _validate_joint_resume_identity_value(
+        profile.get("joint_resume_identity"),
+        expected_arm="Generic",
+        expected_output=root,
+        tasks=tasks,
+        seed=int(args.seed),
+        rotation=str(args.rotation),
+    )
+    if (
+        generic_identity["schedule_id"] != joint_identity["schedule_id"]
+        or generic_identity["joint_formal_run_stamp"]
+        != joint_identity["joint_formal_run_stamp"]
+        or generic_identity["unit_index"] != joint_identity["unit_index"]
+        or generic_identity["scope"] != joint_identity["scope"]
+    ):
+        raise ValueError("joint Generic and Graph schedule identities differ")
     return _validate_benchmark_formal_execution_topology(
         profile.get("formal_execution_topology"),
         label="Benchmark control formal_execution_topology",
@@ -450,9 +695,19 @@ def _local_formal_execution_topology(
 
 def _formal_execution_topology(
     args: argparse.Namespace,
+    protocol: Mapping[str, Any],
     control_source: Mapping[str, str],
 ) -> dict[str, Any]:
-    benchmark_topology = _benchmark_control_unit_topology(args, control_source)
+    benchmark_topology = _validate_benchmark_formal_execution_topology(
+        _benchmark_formal_execution_topology(protocol, args.protocol),
+        label="current Benchmark formal_execution_topology",
+    )
+    observed_control_topology = _benchmark_control_unit_topology(args, control_source)
+    if observed_control_topology is not None and observed_control_topology != benchmark_topology:
+        raise RuntimeError(
+            "joint Generic comparison topology differs from the current committed "
+            "Benchmark/Data Factory checkout"
+        )
     return _local_formal_execution_topology(
         benchmark_topology,
         protocol_path=args.protocol,
@@ -460,72 +715,91 @@ def _formal_execution_topology(
 
 
 def _benchmark_control_source(
-    args: argparse.Namespace,
-    *,
-    required: bool,
+    joint_identity: Mapping[str, Any] | None,
 ) -> dict[str, str] | None:
     """Return the public-safe identity of the matched Benchmark control run."""
 
-    raw = {
-        "formal_run_stamp": getattr(args, "benchmark_formal_run_stamp", None),
-        "protocol_id": getattr(args, "benchmark_control_protocol_id", None),
-        "profile_id": getattr(args, "benchmark_control_profile_id", None),
-    }
-    supplied = {name for name, value in raw.items() if value is not None}
-    if not supplied:
-        if required:
-            raise ValueError(
-                "formal Graph execution requires --benchmark-formal-run-stamp, "
-                "--benchmark-control-protocol-id, and "
-                "--benchmark-control-profile-id"
-            )
+    if joint_identity is None:
         return None
-    missing = sorted(set(raw) - supplied)
-    if missing:
-        raise ValueError(
-            "Benchmark control provenance must be supplied as one complete identity; "
-            f"missing {missing}"
-        )
-
-    source = {name: str(value) for name, value in raw.items()}
-    if not FORMAL_RUN_STAMP_PATTERN.fullmatch(source["formal_run_stamp"]):
-        raise ValueError("benchmark formal run stamp must match YYYYMMDDTHHMMSSZ")
-    if source["protocol_id"] != ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID:
-        raise ValueError(
-            "Benchmark control protocol is not the active P2-E1 control: "
-            f"{source['protocol_id']!r}"
-        )
-    if source["profile_id"] != ACTIVE_BENCHMARK_CONTROL_PROFILE_ID:
-        raise ValueError(
-            "Benchmark control profile is not the active P2-E1 control: "
-            f"{source['profile_id']!r}"
-        )
-
-    output = Path(args.output).resolve()
-    run_root = output.parent.parent
-    expected_run_name = f"run_{source['formal_run_stamp']}"
-    if output.name != str(args.rotation) or output.parent.name != f"seed_{args.seed}":
-        raise ValueError(
-            "formal Graph output must end in "
-            f"seed_{args.seed}/{args.rotation}"
-        )
-    if run_root.name != expected_run_name:
-        raise ValueError(
-            "formal Graph output belongs to a different Benchmark run stamp: "
-            f"expected {expected_run_name!r}, observed {run_root.name!r}"
-        )
-    if run_root.parent.name != source["profile_id"]:
-        raise ValueError(
-            "formal Graph output is outside the matched Benchmark control profile"
-        )
-    if len(run_root.parents) < 3 or run_root.parents[2].name != source["protocol_id"]:
-        raise ValueError(
-            "formal Graph output is outside the matched Benchmark control protocol"
-        )
     return {
         "contract": BENCHMARK_CONTROL_SOURCE_CONTRACT,
-        **source,
+        "schedule_id": JOINT_SCHEDULE_ID,
+        "formal_run_stamp": str(joint_identity["joint_formal_run_stamp"]),
+        "protocol_id": ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
+        "profile_id": ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
     }
+
+
+def _validate_formal_provider_admission(
+    args: argparse.Namespace,
+    protocol: Mapping[str, Any],
+    inference: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Admit one formal joint Graph job only after the official exact-route probe."""
+
+    if os.environ.get("PHM_EXTERNAL_INFERENCE_AUTHORIZED") != "1":
+        raise RuntimeError(
+            "formal joint Graph execution requires explicit external inference "
+            "and data-egress authorization"
+        )
+    if os.environ.get("PHM_JOINT_EXTERNAL_INFERENCE_AUTHORIZED") != "1":
+        raise RuntimeError(
+            "formal joint Graph execution requires "
+            "PHM_JOINT_EXTERNAL_INFERENCE_AUTHORIZED=1"
+        )
+    registered = protocol.get("inference")
+    route = registered.get("inference_route") if isinstance(registered, Mapping) else None
+    model_profile = registered.get("model_profile") if isinstance(registered, Mapping) else None
+    if (
+        not isinstance(route, Mapping)
+        or route.get("route_name") != "openrouter-free"
+        or route.get("base_url") != _FORMAL_OPENROUTER_BASE_URL
+        or not isinstance(model_profile, Mapping)
+    ):
+        raise RuntimeError(
+            "formal joint Graph execution requires the dataset-registered "
+            "openrouter-free route"
+        )
+    expected_inference = {
+        "model": model_profile.get("model_id"),
+        "provider": model_profile.get("provider"),
+        "inference_protocol": model_profile.get("protocol"),
+        "thinking_mode": registered.get("thinking_mode"),
+    }
+    if dict(inference) != expected_inference:
+        raise RuntimeError("formal joint Graph inference identity drifted")
+    if (
+        args.provider_label != "openrouter-free"
+        or os.environ.get(args.base_url_env) != _FORMAL_OPENROUTER_BASE_URL
+    ):
+        raise RuntimeError("formal joint Graph route differs from openrouter-free")
+    if (
+        args.input_usd_per_million != 0.0
+        or args.output_usd_per_million != 0.0
+        or model_profile.get("input_usd_per_million") != 0.0
+        or model_profile.get("output_usd_per_million") != 0.0
+    ):
+        raise RuntimeError(
+            "formal joint Graph openrouter-free execution requires exact zero prices"
+        )
+    report_path = getattr(args, "formal_provider_admission_report", None)
+    if report_path is None:
+        raise RuntimeError(
+            "formal joint Graph execution requires "
+            "--formal-provider-admission-report"
+        )
+    try:
+        report = json.loads(Path(report_path).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError(
+            f"cannot read formal provider admission probe: {report_path}"
+        ) from exc
+    return validate_execution_probe_report(
+        report,
+        base_url=_FORMAL_OPENROUTER_BASE_URL,
+        model_id=str(inference["model"]),
+        label="formal joint Graph provider admission probe",
+    )
 
 
 def _load_mapping(path: Path, label: str) -> dict[str, Any]:
@@ -646,9 +920,9 @@ def _validate_cross_dataset_inference(
     args: argparse.Namespace,
     contract: Mapping[str, Any] | None,
     inference: Mapping[str, Any],
-) -> None:
+) -> dict[str, Any] | None:
     if contract is None or args.runtime != "openai":
-        return
+        return None
     analysis = contract.get("analysis_gate")
     if (
         not isinstance(analysis, Mapping)
@@ -671,6 +945,30 @@ def _validate_cross_dataset_inference(
             + ", ".join(str(value) for value in current_blockers)
         )
     formal = contract["formal_execution"]
+    authorization_contract = {
+        "external_inference_authorization_environment": (
+            "PHM_EXTERNAL_INFERENCE_AUTHORIZED"
+        ),
+        "cohort_external_inference_authorization_environment": (
+            P2_E8_EXTERNAL_INFERENCE_AUTHORIZATION_ENV
+        ),
+        "provider_admission_report_flag": "--formal-provider-admission-report",
+    }
+    observed_authorization_contract = {
+        name: formal.get(name) for name in authorization_contract
+    }
+    if observed_authorization_contract != authorization_contract:
+        raise RuntimeError("formal P2-E8 provider authorization contract drifted")
+    if os.environ.get("PHM_EXTERNAL_INFERENCE_AUTHORIZED") != "1":
+        raise RuntimeError(
+            "formal P2-E8 execution requires "
+            "PHM_EXTERNAL_INFERENCE_AUTHORIZED=1"
+        )
+    if os.environ.get(P2_E8_EXTERNAL_INFERENCE_AUTHORIZATION_ENV) != "1":
+        raise RuntimeError(
+            "formal P2-E8 execution requires "
+            f"{P2_E8_EXTERNAL_INFERENCE_AUTHORIZATION_ENV}=1"
+        )
     expected_args = {
         "provider_label": formal["provider_label"],
         "runtime_contract": formal["runtime_contract"],
@@ -695,6 +993,28 @@ def _validate_cross_dataset_inference(
         raise RuntimeError("formal P2-E8 inference identity drifted")
     if os.environ.get(args.base_url_env) != formal["base_url"]:
         raise RuntimeError("formal P2-E8 base URL drifted")
+    if (
+        formal["input_usd_per_million"] != 0.0
+        or formal["output_usd_per_million"] != 0.0
+    ):
+        raise RuntimeError("formal P2-E8 provider prices must remain exactly zero")
+    report_path = getattr(args, "formal_provider_admission_report", None)
+    if report_path is None:
+        raise RuntimeError(
+            "formal P2-E8 execution requires --formal-provider-admission-report"
+        )
+    try:
+        report = json.loads(Path(report_path).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError(
+            f"cannot read formal P2-E8 provider admission probe: {report_path}"
+        ) from exc
+    return validate_execution_probe_report(
+        report,
+        base_url=str(formal["base_url"]),
+        model_id=str(formal["model_id"]),
+        label="formal P2-E8 provider admission probe",
+    )
 
 
 def _open_data_port(
@@ -1027,6 +1347,7 @@ def _episode_sink(
     resume_plan: ProviderResumePlan,
     model_profile: ModelProfile | None = None,
     cohort_resume_identity: Mapping[str, Any] | None = None,
+    provider_admission: Mapping[str, Any] | None = None,
 ):
     def write_episode(
         episode_key,
@@ -1078,6 +1399,11 @@ def _episode_sink(
                 "arm": args.arm,
                 "runtime": args.runtime,
                 "graph_policy_profile": _graph_policy_profile(args),
+                **(
+                    {"provider_admission": dict(provider_admission)}
+                    if provider_admission is not None
+                    else {}
+                ),
                 **(
                     {
                         **dict(cohort_resume_identity),
@@ -1143,6 +1469,11 @@ def _active_cohort_contract(
     """Build the active-v0.2 index profile and immutable resume identity."""
 
     cross_dataset = _cross_dataset_contract(args, protocol)
+    provider_admission = _validate_cross_dataset_inference(
+        args,
+        cross_dataset,
+        inference,
+    )
     monitoring = args.tasks == ["online_replay_monitoring"]
     registered_evidence_class = (
         "formal"
@@ -1152,19 +1483,32 @@ def _active_cohort_contract(
         else "pilot"
     )
     result_role = "confirmatory" if registered_evidence_class == "formal" else "none"
-    benchmark_control_source = _benchmark_control_source(
+    formal_p2_e1 = cross_dataset is None and registered_evidence_class == "formal"
+    if formal_p2_e1 and args.arm != "graph":
+        raise ValueError(
+            "formal P2-E1 executes only the Graph arm; the joint Benchmark Generic "
+            "job is the single shared control"
+        )
+    if not formal_p2_e1 and getattr(args, "joint_resume_identity_json", None) is not None:
+        raise ValueError(
+            "--joint-resume-identity-json is valid only for formal P2-E1 Graph execution"
+        )
+    joint_resume_identity = _joint_resume_identity(
         args,
-        required=(
-            cross_dataset is None
-            and registered_evidence_class == "formal"
-            and args.arm == "graph"
-        ),
+        required=formal_p2_e1,
     )
+    benchmark_control_source = _benchmark_control_source(joint_resume_identity)
     formal_execution_topology = None
     if benchmark_control_source is not None:
         formal_execution_topology = _formal_execution_topology(
             args,
+            protocol,
             benchmark_control_source,
+        )
+        provider_admission = _validate_formal_provider_admission(
+            args,
+            protocol,
+            inference,
         )
     elif getattr(args, "benchmark_control_unit_root", None) is not None:
         raise ValueError(
@@ -1189,6 +1533,8 @@ def _active_cohort_contract(
     experiment_profile_id = (
         str(cross_dataset["formal_execution"]["experiment_profile_id"])
         if cross_dataset is not None
+        else ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
+        if formal_p2_e1
         else f"p2-e1-{args.arm}-{scope}-active-v0.2"
     )
     requested_profile = getattr(args, "experiment_profile_id", None)
@@ -1253,6 +1599,11 @@ def _active_cohort_contract(
         identity["inference_route"] = inference_route
     if benchmark_control_source is not None:
         identity["benchmark_control_source"] = dict(benchmark_control_source)
+    if joint_resume_identity is not None:
+        identity["joint_resume_identity"] = dict(joint_resume_identity)
+        identity["joint_execution_scope"] = JOINT_GRAPH_SCOPE[
+            str(joint_resume_identity["scope"])
+        ]
     if formal_execution_topology is not None:
         identity["formal_execution_topology"] = dict(formal_execution_topology)
     if cross_dataset is not None:
@@ -1321,6 +1672,13 @@ def _active_cohort_contract(
         profile["inference_route"] = inference_route
     if benchmark_control_source is not None:
         profile["benchmark_control_source"] = dict(benchmark_control_source)
+    if joint_resume_identity is not None:
+        profile["joint_resume_identity"] = dict(joint_resume_identity)
+        profile["joint_execution_scope"] = JOINT_GRAPH_SCOPE[
+            str(joint_resume_identity["scope"])
+        ]
+    if provider_admission is not None:
+        profile["provider_admission"] = dict(provider_admission)
     if formal_execution_topology is not None:
         profile["formal_execution_topology"] = dict(formal_execution_topology)
     if cross_dataset is not None:
@@ -1830,7 +2188,6 @@ async def _run(args: argparse.Namespace) -> None:
         return
     _graph_policy_profile(args)
     inference, _base_resume_profile, model_profile = _runtime_identity(args)
-    _validate_cross_dataset_inference(args, cross_dataset, inference)
     test_samples_per_bearing = args.test_samples_per_bearing
     if test_samples_per_bearing is None:
         test_samples_per_bearing = (
@@ -1907,6 +2264,7 @@ async def _run(args: argparse.Namespace) -> None:
                 resume_plan,
                 model_profile,
                 cohort_identity,
+                manifest.get("provider_admission"),
             ),
         )
     records = previous_records + records
@@ -2063,23 +2421,19 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--runtime-contract", default=PHASE1_BASE_RUNTIME_CONTRACT)
     parser.add_argument("--resume-provider-partial", action="store_true")
     parser.add_argument(
-        "--benchmark-formal-run-stamp",
-        help="Matched Benchmark control run stamp (YYYYMMDDTHHMMSSZ).",
-    )
-    parser.add_argument(
-        "--benchmark-control-protocol-id",
-        help="Active Benchmark control protocol identity paired with this Graph run.",
-    )
-    parser.add_argument(
-        "--benchmark-control-profile-id",
-        help="Active Benchmark control experiment profile paired with this Graph run.",
+        "--joint-resume-identity-json",
+        help=(
+            "Exact 13-field identity emitted by the P1/P2 joint-primary scheduler. "
+            "Required for formal P2-E1 Graph execution."
+        ),
     )
     parser.add_argument(
         "--benchmark-control-unit-root",
         type=Path,
         help=(
-            "Absolute completed Benchmark Generic control unit paired with this "
-            "Graph seed/rotation; required for formal P2-E1 Graph execution."
+            "Optional absolute completed joint Benchmark Generic comparison unit. "
+            "When present it is cross-validated, but Graph-first execution does not "
+            "require it to exist."
         ),
     )
     parser.add_argument("--seed", type=int, default=20260808)
@@ -2089,6 +2443,14 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--base-url-env", default="LLM_BASE_URL")
     parser.add_argument("--api-key-env", default="LLM_API_KEY")
     parser.add_argument("--model-env", default="LLM_MODEL")
+    parser.add_argument(
+        "--formal-provider-admission-report",
+        type=Path,
+        help=(
+            "Fresh official exact-route, exact-model, zero-price two-turn probe "
+            "required for formal joint or P2-E8 OpenAI execution."
+        ),
+    )
     parser.add_argument("--output", type=Path, required=True)
     return parser
 

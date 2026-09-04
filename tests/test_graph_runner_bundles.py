@@ -171,13 +171,36 @@ def _args(output: Path, *, resume: bool = False) -> SimpleNamespace:
 def _formal_output(root: Path, stamp: str) -> Path:
     return (
         root
+        / RUNNER.P2_EXPERIMENT_ID
+        / "joint_primary"
         / ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID
-        / "graph_core_primary"
+        / "joint_graph_core"
         / ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
         / f"run_{stamp}"
         / "seed_20260808"
         / "rotation_0"
     )
+
+
+def _joint_identity(output: Path, stamp: str, *, arm: str = "Graph") -> dict:
+    position = {"Graph": 2, "Generic": 0}[arm]
+    return {
+        "contract": RUNNER.JOINT_RESUME_IDENTITY_CONTRACT,
+        "schedule_id": RUNNER.JOINT_SCHEDULE_ID,
+        "joint_profile_id": ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+        "joint_formal_run_stamp": stamp,
+        "ordinal": position,
+        "scope": "core",
+        "unit_index": 0,
+        "position": position,
+        "arm": arm,
+        "seed": 20260808,
+        "rotation": "rotation_0",
+        "predecessor_job_id": (
+            None if position == 0 else "core-00-position-1-phmskills"
+        ),
+        "output": str(output.resolve()),
+    }
 
 
 def _formal_args(
@@ -201,11 +224,14 @@ def _formal_args(
         output=output,
         resume_provider_partial=resume,
         graph_profile="full",
-        benchmark_formal_run_stamp=stamp,
-        benchmark_control_protocol_id=ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
-        benchmark_control_profile_id=ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+        joint_resume_identity_json=json.dumps(_joint_identity(output, stamp)),
         benchmark_control_unit_root=None,
         protocol="/fixture/benchmark/dataset_protocol.yaml",
+        provider_label="openrouter-free",
+        base_url_env="LLM_BASE_URL",
+        input_usd_per_million=0.0,
+        output_usd_per_million=0.0,
+        formal_provider_admission_report=Path("/fixture/probe.json"),
     )
 
 
@@ -239,6 +265,20 @@ def _formal_protocol() -> dict:
             "monitoring_windows_per_episode": 3,
             "agent_selection": "metadata_order_floor_two_thirds",
             "numerical_selection": "evenly_spaced_over_metadata_order",
+        },
+        "inference": {
+            "thinking_mode": "not_requested",
+            "inference_route": {
+                "route_name": "openrouter-free",
+                "base_url": "https://openrouter.ai/api/v1",
+            },
+            "model_profile": {
+                "provider": "openrouter-free",
+                "model_id": "cohere/north-mini-code:free",
+                "protocol": "openai_chat_completions",
+                "input_usd_per_million": 0.0,
+                "output_usd_per_million": 0.0,
+            },
         },
     }
 
@@ -280,10 +320,9 @@ def _write_index(output: Path, rows: list[dict], *, status: str) -> None:
 class GraphRunnerBundleTest(unittest.TestCase):
     @staticmethod
     def _formal_contract(args: SimpleNamespace):
-        with patch.object(
-            RUNNER,
-            "_formal_execution_topology",
-            return_value=P2_FORMAL_EXECUTION_TOPOLOGY,
+        with (
+            patch.object(RUNNER, "_formal_execution_topology", return_value=P2_FORMAL_EXECUTION_TOPOLOGY),
+            patch.object(RUNNER, "_validate_formal_provider_admission", return_value={"schema_version": "fixture"}),
         ):
             return _active_cohort_contract(
                 args,
@@ -309,10 +348,14 @@ class GraphRunnerBundleTest(unittest.TestCase):
             stamp_b = "20260902T010203Z"
             args_a = _formal_args(_formal_output(root, stamp_a), stamp_a)
             args_b = _formal_args(_formal_output(root, stamp_b), stamp_b)
-            _manifest_a, identity_a, _profile_a = self._formal_contract(args_a)
+            manifest_a, identity_a, _profile_a = self._formal_contract(args_a)
             _manifest_b, identity_b, _profile_b = self._formal_contract(args_b)
 
             self.assertNotEqual(args_a.output, args_b.output)
+            self.assertEqual(
+                manifest_a["provider_admission"], {"schema_version": "fixture"}
+            )
+            self.assertNotIn("provider_admission", identity_a)
             self.assertEqual(
                 identity_a["benchmark_control_source"]["formal_run_stamp"],
                 stamp_a,
@@ -322,8 +365,94 @@ class GraphRunnerBundleTest(unittest.TestCase):
                 stamp_b,
             )
             drifted = _formal_args(args_a.output, stamp_b)
-            with self.assertRaisesRegex(ValueError, "different Benchmark run stamp"):
+            with self.assertRaisesRegex(ValueError, "joint Graph output differs"):
                 self._formal_contract(drifted)
+
+    def test_formal_provider_admission_requires_authorization_and_report(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output = _formal_output(Path(directory), "20260901T010203Z")
+            args = _formal_args(output, "20260901T010203Z")
+            with patch.dict(RUNNER.os.environ, {}, clear=True):
+                with self.assertRaisesRegex(RuntimeError, "explicit external inference"):
+                    RUNNER._validate_formal_provider_admission(
+                        args, _formal_protocol(), FORMAL_INFERENCE
+                    )
+            args.formal_provider_admission_report = None
+            with patch.dict(
+                RUNNER.os.environ,
+                {
+                    "PHM_EXTERNAL_INFERENCE_AUTHORIZED": "1",
+                    "LLM_BASE_URL": "https://openrouter.ai/api/v1",
+                },
+                clear=True,
+            ):
+                with self.assertRaisesRegex(
+                    RuntimeError, "PHM_JOINT_EXTERNAL_INFERENCE_AUTHORIZED=1"
+                ):
+                    RUNNER._validate_formal_provider_admission(
+                        args, _formal_protocol(), FORMAL_INFERENCE
+                    )
+            with patch.dict(
+                RUNNER.os.environ,
+                {
+                    "PHM_EXTERNAL_INFERENCE_AUTHORIZED": "1",
+                    "PHM_JOINT_EXTERNAL_INFERENCE_AUTHORIZED": "1",
+                    "LLM_BASE_URL": "https://openrouter.ai/api/v1",
+                },
+                clear=True,
+            ):
+                with self.assertRaisesRegex(RuntimeError, "formal-provider-admission-report"):
+                    RUNNER._validate_formal_provider_admission(
+                        args, _formal_protocol(), FORMAL_INFERENCE
+                    )
+            report = Path(directory) / "probe.json"
+            report.write_text("{}\n", encoding="utf-8")
+            args.formal_provider_admission_report = report
+            normalized = {
+                "schema_version": "openai_compatible_tool_probe_v2",
+                "base_url": "https://openrouter.ai/api/v1",
+                "model": FORMAL_INFERENCE["model"],
+                "zero_price_confirmation_accepted": True,
+            }
+            with (
+                patch.dict(
+                    RUNNER.os.environ,
+                    {
+                        "PHM_EXTERNAL_INFERENCE_AUTHORIZED": "1",
+                        "PHM_JOINT_EXTERNAL_INFERENCE_AUTHORIZED": "1",
+                        "LLM_BASE_URL": "https://openrouter.ai/api/v1",
+                        "LLM_API_KEY": "fixture-secret-must-not-persist",
+                    },
+                    clear=True,
+                ),
+                patch.object(
+                    RUNNER,
+                    "validate_execution_probe_report",
+                    return_value=normalized,
+                ) as validator,
+            ):
+                observed = RUNNER._validate_formal_provider_admission(
+                    args, _formal_protocol(), FORMAL_INFERENCE
+                )
+            self.assertEqual(observed, normalized)
+            self.assertNotIn("api_key", json.dumps(observed).lower())
+            validator.assert_called_once_with(
+                {},
+                base_url="https://openrouter.ai/api/v1",
+                model_id=FORMAL_INFERENCE["model"],
+                label="formal joint Graph provider admission probe",
+            )
+
+    def test_graph_first_does_not_require_a_completed_generic_unit(self) -> None:
+        args = _formal_args(
+            _formal_output(Path("/tmp/p2-joint-runner-fixture"), "20260901T010203Z"),
+            "20260901T010203Z",
+        )
+        source = RUNNER._benchmark_control_source(
+            json.loads(args.joint_resume_identity_json)
+        )
+        assert source is not None
+        self.assertIsNone(_benchmark_control_unit_topology(args, source))
 
     def test_public_evaluation_preserves_identity_and_attaches_model_cost(self) -> None:
         private = EvaluatorResult(
@@ -362,7 +491,7 @@ class GraphRunnerBundleTest(unittest.TestCase):
             0.0,
         )
 
-    def test_formal_control_source_is_in_resume_identity_without_absolute_path(self) -> None:
+    def test_formal_joint_identity_and_control_source_are_persisted(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             stamp_a = "20260901T010203Z"
@@ -383,6 +512,7 @@ class GraphRunnerBundleTest(unittest.TestCase):
             run = json.loads(run_path.read_text(encoding="utf-8"))
             expected_source = {
                 "contract": BENCHMARK_CONTROL_SOURCE_CONTRACT,
+                "schedule_id": RUNNER.JOINT_SCHEDULE_ID,
                 "formal_run_stamp": stamp_a,
                 "protocol_id": ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
                 "profile_id": ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
@@ -406,7 +536,10 @@ class GraphRunnerBundleTest(unittest.TestCase):
                 ],
                 P2_FORMAL_EXECUTION_TOPOLOGY,
             )
-            self.assertNotIn(str(root), run_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                run["metadata"]["joint_resume_identity"]["output"],
+                str(args_a.output.resolve()),
+            )
 
             output_b = _formal_output(root, stamp_b)
             output_b.parent.mkdir(parents=True, exist_ok=True)
@@ -423,7 +556,7 @@ class GraphRunnerBundleTest(unittest.TestCase):
             control = (
                 root
                 / ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID
-                / "b3_generic_core"
+                / "joint_generic_core"
                 / ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
                 / f"run_{stamp}"
                 / "seed_20260808"
@@ -441,9 +574,12 @@ class GraphRunnerBundleTest(unittest.TestCase):
                 "registered_evidence_class": "formal",
                 "result_role": "confirmatory",
                 "experiment_profile_id": ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+                "joint_resume_identity": _joint_identity(control, stamp, arm="Generic"),
                 "formal_execution_topology": BENCHMARK_FORMAL_EXECUTION_TOPOLOGY,
             }
             source = {
+                "contract": BENCHMARK_CONTROL_SOURCE_CONTRACT,
+                "schedule_id": RUNNER.JOINT_SCHEDULE_ID,
                 "formal_run_stamp": stamp,
                 "protocol_id": ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
                 "profile_id": ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
@@ -486,12 +622,8 @@ class GraphRunnerBundleTest(unittest.TestCase):
                     "--tasks",
                     "cold_start_fault_diagnosis",
                     "unsupervised_anomaly_detection",
-                    "--benchmark-formal-run-stamp",
-                    stamp,
-                    "--benchmark-control-protocol-id",
-                    ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
-                    "--benchmark-control-profile-id",
-                    ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+                    "--joint-resume-identity-json",
+                    json.dumps(_joint_identity(output, stamp)),
                     "--benchmark-control-unit-root",
                     str(root / "missing-control-unit"),
                     "--output",

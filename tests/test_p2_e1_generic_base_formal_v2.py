@@ -75,6 +75,7 @@ P2_IDENTITY = {
 FORMAL_RUN_STAMP = "20260901T010203Z"
 BENCHMARK_CONTROL_SOURCE = {
     "contract": MODULE.BENCHMARK_CONTROL_SOURCE_CONTRACT,
+    "schedule_id": MODULE.JOINT_SCHEDULE_ID,
     "formal_run_stamp": FORMAL_RUN_STAMP,
     "protocol_id": MODULE.ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
     "profile_id": MODULE.ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
@@ -127,19 +128,19 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
         formal_family = self.root / MODULE.ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID
         self.roots = {
             "generic_core": formal_family
-            / "b3_generic_core"
+            / "joint_generic_core"
             / MODULE.ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
             / f"run_{self.formal_run_stamp}",
             "graph_core": formal_family
-            / "graph_core_primary"
+            / "joint_graph_core"
             / MODULE.ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
             / f"run_{self.formal_run_stamp}",
             "generic_replay": formal_family
-            / "b3_generic_replay"
+            / "joint_generic_replay"
             / MODULE.ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
             / f"run_{self.formal_run_stamp}",
             "graph_replay": formal_family
-            / "graph_replay_primary"
+            / "joint_graph_replay"
             / MODULE.ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
             / f"run_{self.formal_run_stamp}",
         }
@@ -148,6 +149,11 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
         protocol = yaml.safe_load(MODULE.DEFAULT_PROTOCOL.read_text(encoding="utf-8"))
         protocol["dataset_protocol"] = str(self.dataset_path)
         self.protocol_path.write_text(yaml.safe_dump(protocol, sort_keys=False), encoding="utf-8")
+        self.schedule_acceptance_path = self.root / "joint_schedule_acceptance.json"
+        self.schedule_acceptance = self._schedule_acceptance()
+        self.schedule_acceptance_path.write_text(
+            json.dumps(self.schedule_acceptance, indent=2) + "\n", encoding="utf-8"
+        )
 
     def tearDown(self) -> None:
         self.temporary.cleanup()
@@ -255,6 +261,14 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
                 if graph
                 else BENCHMARK_FORMAL_EXECUTION_TOPOLOGY
             ),
+            "joint_resume_identity": self._resume_identity(
+                graph=graph, scope=scope, seed=seed, rotation=rotation
+            ),
+            "joint_execution_scope": (
+                f"joint_graph_{'replay' if scope == 'replay' else 'core'}"
+                if graph
+                else f"joint_generic_{'replay' if scope == 'replay' else 'core'}"
+            ),
         }
         if graph:
             value.update(
@@ -271,14 +285,93 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
             )
         return value
 
+    def _schedule_acceptance(self) -> dict:
+        identities = []
+        previous = None
+        arms = ("Generic", "PHMskills", "Graph")
+        for ordinal in range(45):
+            if ordinal < 36:
+                schedule_scope = "core"
+                unit_index, position = divmod(ordinal, 3)
+                seed = (20260808, 20260809, 20260810)[unit_index // 4]
+                rotation = f"rotation_{unit_index % 4}"
+                root_scope = "core"
+            else:
+                schedule_scope = "monitoring"
+                unit_index, position = divmod(ordinal - 36, 3)
+                seed = (20260808, 20260809, 20260810)[unit_index]
+                rotation = "rotation_0"
+                root_scope = "replay"
+            order = arms[unit_index % 3 :] + arms[: unit_index % 3]
+            arm = order[position]
+            if arm == "Generic":
+                output = self.roots[f"generic_{root_scope}"] / f"seed_{seed}" / rotation
+            elif arm == "Graph":
+                output = self.roots[f"graph_{root_scope}"] / f"seed_{seed}" / rotation
+            else:
+                output = self.root / "p1_joint" / schedule_scope / f"seed_{seed}" / rotation
+            identity = {
+                "contract": MODULE.JOINT_RESUME_IDENTITY_CONTRACT,
+                "schedule_id": MODULE.JOINT_SCHEDULE_ID,
+                "joint_profile_id": MODULE.ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+                "joint_formal_run_stamp": self.formal_run_stamp,
+                "ordinal": ordinal,
+                "scope": schedule_scope,
+                "unit_index": unit_index,
+                "position": position,
+                "arm": arm,
+                "seed": seed,
+                "rotation": rotation,
+                "predecessor_job_id": previous,
+                "output": str(output.resolve()),
+            }
+            identities.append(identity)
+            previous = f"{schedule_scope}-{unit_index:02d}-position-{position}-{arm.lower()}"
+        return {
+            "schema_version": MODULE.JOINT_SCHEDULE_ACCEPTANCE_SCHEMA,
+            "accepted": True,
+            "schedule_id": MODULE.JOINT_SCHEDULE_ID,
+            "joint_profile_id": MODULE.ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+            "joint_formal_run_stamp": self.formal_run_stamp,
+            "resume_identity_contract": MODULE.JOINT_RESUME_IDENTITY_CONTRACT,
+            "job_count": 45,
+            "completed_prefix_length": 45,
+            "order_validated": True,
+            "runner_contracts_accepted": True,
+            "duplicate_provider_execution": False,
+            "p0_b3_control_reuse": False,
+            "pair_key_fields": list(MODULE.PAIRING_KEY_FIELDS),
+            "resume_identities": identities,
+        }
+
+    def _resume_identity(self, *, graph: bool, scope: str, seed: int, rotation: str) -> dict:
+        arm = "Graph" if graph else "Generic"
+        schedule_scope = "monitoring" if scope == "replay" else "core"
+        matches = [
+            value for value in self.schedule_acceptance["resume_identities"]
+            if value["arm"] == arm
+            and value["scope"] == schedule_scope
+            and value["seed"] == seed
+            and value["rotation"] == rotation
+        ]
+        self.assertEqual(len(matches), 1)
+        return dict(matches[0])
+
     @staticmethod
-    def _rollout_metrics(graph: bool) -> dict:
-        grounded = 1.0 if graph else 0.0
+    def _rollout_metrics(
+        graph: bool,
+        *,
+        terminal_status: str = "submitted",
+        steps: int = 1,
+        failure_count: int = 0,
+    ) -> dict:
+        submitted = float(terminal_status == "submitted")
+        grounded = float(graph and submitted == 1.0)
         return {
             "artifact_lineage_completeness": grounded,
-            "budget_exhaustion": 0.0,
+            "budget_exhaustion": float(terminal_status == "budget_exhausted"),
             "estimated_model_cost_usd": 0.0,
-            "failure_count": 0.0,
+            "failure_count": float(failure_count),
             "grounded_completion": grounded,
             "grounded_recovery_success": 0.0,
             "input_tokens": 10.0,
@@ -287,15 +380,15 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
             "operator_calls": 1.0,
             "output_tokens": 2.0,
             "repeated_action_ratio": 0.0,
-            "recovery_coverage": None,
+            "recovery_coverage": 0.0 if failure_count else None,
             "steps_to_recovery": None,
-            "steps": 1.0,
+            "steps": float(steps),
             "steps_to_next_success_after_failure": None,
             "submission_grounding": grounded,
-            "submission_rate": 1.0,
+            "submission_rate": submitted,
             "supporting_reference_validity": grounded,
             "tool_execution_failure_rate": 0.0,
-            "valid_tool_call_rate": 1.0,
+            "valid_tool_call_rate": 1.0 if steps else 0.0,
             "wall_clock_seconds": 1.0,
             "p95_step_latency_seconds": 0.1,
             "window_reads": 1.0,
@@ -390,6 +483,17 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
             rollout.mark_failed("budget_exhausted", "fixture budget exhausted")
             rollout.terminal_status = "budget_exhausted"
         elif task == "online_replay_monitoring":
+            rollout.steps.append(
+                RolloutEvent(
+                    index=0,
+                    observation_summary={"sample_id": sample_id},
+                    action="tool_call",
+                    tool_name="data.read_window",
+                    tool_args={"sample_id": sample_id},
+                    tool_result={"artifact_ref": "artifact://window/fixture"},
+                    decision_state="Inspect" if graph else None,
+                )
+            )
             rollout.terminal_status = "stopped"
         else:
             payload = dict(private_row["submission"])
@@ -417,7 +521,12 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
             task_type=task,
             episode_id=episode_id,
             task_metrics=task_metrics,
-            rollout_metrics=self._rollout_metrics(graph),
+            rollout_metrics=self._rollout_metrics(
+                graph,
+                terminal_status=terminal_status,
+                steps=len(rollout.steps),
+                failure_count=len(rollout.failures),
+            ),
             terminal_status=terminal_status,
             evaluator_id="phase1",
             evaluator_method="deterministic",
@@ -436,6 +545,8 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
             ),
             "monitoring_budget" if scope == "replay" else "core_budget": profile["budget_protocol"],
             "formal_execution_topology": profile["formal_execution_topology"],
+            "joint_resume_identity": profile["joint_resume_identity"],
+            "joint_execution_scope": profile["joint_execution_scope"],
         }
         if graph:
             resume_identity["benchmark_control_source"] = dict(
@@ -468,6 +579,8 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
             ),
             "cohort_resume_identity": resume_identity,
             "formal_execution_topology": profile["formal_execution_topology"],
+            "joint_resume_identity": profile["joint_resume_identity"],
+            "joint_execution_scope": profile["joint_execution_scope"],
         }
         if graph:
             metadata.update(
@@ -652,13 +765,7 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
     def _build(self):
         return MODULE.build_documents(
             protocol_path=self.protocol_path,
-            benchmark_formal_run_stamp=self.formal_run_stamp,
-            benchmark_control_protocol_id=(
-                MODULE.ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID
-            ),
-            benchmark_control_profile_id=(
-                MODULE.ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
-            ),
+            joint_schedule_acceptance=self.schedule_acceptance_path,
             generic_core_root=self.roots["generic_core"],
             generic_replay_root=self.roots["generic_replay"],
             graph_core_root=self.roots["graph_core"],
@@ -668,9 +775,7 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
     def test_stable_46_attempt_prefix_is_45_statistical_plus_one_provider_error(self) -> None:
         usage = MODULE.build_parser().format_usage()
         for flag in (
-            "--benchmark-formal-run-stamp",
-            "--benchmark-control-protocol-id",
-            "--benchmark-control-profile-id",
+            "--joint-schedule-acceptance",
             "--generic-core-root",
             "--generic-replay-root",
             "--graph-core-root",
@@ -687,6 +792,7 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
         self.assertFalse(readiness["gates"]["bootstrap_permitted"])
         self.assertIsNone(result["arm_summaries"])
         self.assertIsNone(result["graph_state_summaries"])
+        self.assertIsNone(result["replay_mechanism"])
         self.assertIsNone(result["paired_bearing_bootstrap"])
         generic = readiness["observed"]["generic_core"]
         self.assertEqual(generic["attempt_leaves"], 46)
@@ -695,10 +801,145 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
         self.assertEqual(generic["unresolved_provider_error_keys"], 1)
         self.assertEqual(readiness["observed"]["graph_core"]["statistical_outcomes"], 0)
 
+    def test_missing_joint_schedule_acceptance_is_fail_closed(self) -> None:
+        with self.assertRaisesRegex(
+            MODULE.FinalizationError, "blocked without --joint-schedule-acceptance"
+        ):
+            MODULE.build_documents(
+                protocol_path=self.protocol_path,
+                generic_core_root=self.roots["generic_core"],
+                generic_replay_root=self.roots["generic_replay"],
+                graph_core_root=self.roots["graph_core"],
+                graph_replay_root=self.roots["graph_replay"],
+            )
+
+    def test_pair_gate_includes_private_bearing_identity(self) -> None:
+        key = MODULE.EpisodeKey(
+            20260808, "rotation_0", "sample-0001", "online_replay_monitoring"
+        )
+        attempt = MODULE.Attempt(
+            Path("/fixture/attempt_000"), key, 0, "statistical", {}, {}, (), (), ()
+        )
+        control_spec = MODULE.ArmSpec(
+            "generic_replay", "replay", Path("/fixture/generic"), True,
+            MODULE.REPLAY_TASKS, ((20260808, "rotation_0"),), 1,
+        )
+        graph_spec = MODULE.ArmSpec(
+            "graph_replay", "replay", Path("/fixture/graph"), False,
+            MODULE.REPLAY_TASKS, ((20260808, "rotation_0"),), 1,
+        )
+        def audit(spec):
+            return MODULE.ArmAudit(
+                spec=spec,
+                attempts=(attempt,),
+                statistical={key: attempt},
+                manifests={},
+                evaluation_files={},
+                terminal_counts={"submitted": 1},
+                provider_errors=0,
+                nonprovider_failures=0,
+                unresolved_provider_keys=(),
+                retry_chains=0,
+                action_rows=0,
+                accepted=True,
+                blockers=(),
+            )
+        rows = [
+            [{"pair_run": "seed_20260808:rotation_0", "rotation": "rotation_0", "bearing_id": "B001", "sample_id": "sample-0001", "task_id": "online_replay_monitoring"}],
+            [{"pair_run": "seed_20260808:rotation_0", "rotation": "rotation_0", "bearing_id": "B002", "sample_id": "sample-0001", "task_id": "online_replay_monitoring"}],
+        ]
+        with (
+            patch.object(MODULE, "_attempt_pair_contract", return_value={}),
+            patch.object(MODULE, "_private_records", side_effect=rows),
+        ):
+            gate = MODULE._pair_gate(
+                audit(control_spec), audit(graph_spec), {"budgets": {"monitoring": {}}}
+            )
+        self.assertFalse(gate["accepted"])
+        self.assertEqual(gate["pairing_key"], list(MODULE.PAIRING_KEY_FIELDS))
+        self.assertEqual(gate["matched_statistical_keys"], 0)
+
+    def test_replay_mechanism_rebuilds_runtime_recovery_semantics(self) -> None:
+        actions = (
+            {
+                "index": 0,
+                "name": "data.read_window",
+                "arguments": {"sample_id": "sample-000001"},
+                "status": "error",
+                "failure_kind": "tool_error",
+                "decision_state": "Inspect",
+                "usage_delta": {"tool_calls": 1},
+            },
+            {
+                "index": 1,
+                "name": "signal.rms",
+                "arguments": {"artifact_ref": "artifact://window/fixture"},
+                "status": "ok",
+                "failure_kind": None,
+                "decision_state": "Recover",
+                "usage_delta": {"tool_calls": 1},
+            },
+            {
+                "index": 2,
+                "name": "submit",
+                "arguments": {"score": 0.8},
+                "status": "ok",
+                "failure_kind": None,
+                "decision_state": "Submit",
+                "usage_delta": {"tool_calls": 1},
+            },
+        )
+        expected = {
+            "grounded_completion": 1.0,
+            "submission_rate": 1.0,
+            "budget_exhaustion": 0.0,
+            "valid_tool_call_rate": 2.0 / 3.0,
+            "repeated_action_ratio": 0.0,
+            "grounded_recovery_success": 1.0,
+            "recovery_coverage": 1.0,
+            "steps_to_recovery": 2.0,
+            "steps": 3.0,
+            "failure_count": 1.0,
+            "steps_to_next_success_after_failure": 1.0,
+            "submission_grounding": 1.0,
+            "artifact_lineage_completeness": 1.0,
+            "supporting_reference_validity": 1.0,
+        }
+        attempt = MODULE.Attempt(
+            path=Path("/fixture/replay/attempt_000"),
+            key=MODULE.EpisodeKey(
+                seed=20260808,
+                rotation="rotation_0",
+                sample_id="sample-000001",
+                task_id="online_replay_monitoring",
+            ),
+            index=0,
+            outcome_class="statistical",
+            run={"terminal_status": "submitted", "failure_kind": None},
+            metrics={"rollout_metrics": expected},
+            states=("Inspect", "Recover", "Submit"),
+            actions=actions,
+            failures=({"step": 0, "tool_name": "data.read_window"},),
+        )
+
+        rebuilt = MODULE._canonical_replay_mechanism_episode(attempt)
+
+        self.assertEqual(rebuilt["action_count"], 3)
+        self.assertEqual(rebuilt["failure_count"], 1)
+        self.assertTrue(rebuilt["corrected_after_failure"])
+        self.assertEqual(
+            rebuilt["metrics"]["rollout.valid_tool_call_rate"], 2.0 / 3.0
+        )
+        self.assertEqual(
+            rebuilt["metrics"]["rollout.grounded_recovery_success"], 1.0
+        )
+        self.assertEqual(rebuilt["metrics"]["rollout.steps_to_recovery"], 2.0)
+
     def test_complete_192_and_24_per_arm_unlocks_exact_2000_bearing_bootstrap(self) -> None:
         self._populate_arm("generic_core", provider_retry=True)
-        for name in ("graph_core", "generic_replay", "graph_replay"):
-            self._populate_arm(name)
+        self._populate_arm("graph_core")
+        self._populate_arm("generic_replay", natural_failure=True)
+        self._populate_arm("graph_replay")
 
         paired_calls = []
         interval_calls = []
@@ -832,12 +1073,12 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
         self.assertEqual(
             paired_calls,
             [
-                (192, 192, 2000, 20260820, None),
+                (192, 192, 2000, 20260808, None),
                 (
                     24,
                     24,
                     2000,
-                    20260820,
+                    20260808,
                     IMPLEMENTED_FORMAL_REPLAY_MISSING_SCORE_POLICY_ID,
                 ),
             ],
@@ -845,18 +1086,18 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
         self.assertEqual(
             interval_calls,
             [
-                (192, 2000, 20260820, None),
-                (192, 2000, 20260820, None),
+                (192, 2000, 20260808, None),
+                (192, 2000, 20260808, None),
                 (
                     24,
                     2000,
-                    20260820,
+                    20260808,
                     IMPLEMENTED_FORMAL_REPLAY_MISSING_SCORE_POLICY_ID,
                 ),
                 (
                     24,
                     2000,
-                    20260820,
+                    20260808,
                     IMPLEMENTED_FORMAL_REPLAY_MISSING_SCORE_POLICY_ID,
                 ),
             ],
@@ -921,6 +1162,32 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
             ]["episodes"],
             24,
         )
+        mechanism = result["replay_mechanism"]
+        self.assertTrue(mechanism["accepted"])
+        self.assertEqual(mechanism["pairing"]["observed_pairs"], 24)
+        self.assertEqual(mechanism["case_selection"], "none_full_cohort_only")
+        self.assertFalse(mechanism["evaluator_private_targets_used"])
+        self.assertFalse(mechanism["reasoning_traces_used"])
+        self.assertEqual(
+            mechanism["denominators"]["control"]["statistical_episodes"], 24
+        )
+        self.assertEqual(
+            mechanism["denominators"]["control"][
+                "natural_nonprovider_terminal_failures"
+            ],
+            1,
+        )
+        self.assertEqual(
+            mechanism["denominators"]["treatment"]["statistical_episodes"], 24
+        )
+        self.assertEqual(
+            mechanism["graph_state_projection"]["state_visit_counts"]["Monitor"],
+            0,
+        )
+        self.assertEqual(
+            mechanism["graph_state_projection"]["state_visit_counts"]["Revise"],
+            0,
+        )
         self.assertIn("| Task primary | Diagnosis Macro-F1 |", core_table)
         self.assertIn("| Primary | Monitoring Average Precision |", replay_table)
         self.assertIn("| Rollout | Grounded completion |", replay_table)
@@ -952,6 +1219,7 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
             core_figure_output=self.root / "accepted_core.svg",
             state_json_output=self.root / "accepted_states.json",
             state_table_output=self.root / "accepted_states.md",
+            mechanism_json_output=self.root / "accepted_mechanism.json",
             manuscript=manuscript_path,
         )
         publication_protocol = yaml.safe_load(
@@ -967,6 +1235,7 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
                 "core_figure": str(publication.core_figure_output),
                 "state_json": str(publication.state_json_output),
                 "state_table": str(publication.state_table_output),
+                "mechanism_json": str(publication.mechanism_json_output),
                 "manuscript": str(publication.manuscript),
             }
         )
@@ -980,11 +1249,12 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
             publication.core_figure_output,
             publication.state_json_output,
             publication.state_table_output,
+            publication.mechanism_json_output,
             publication.manuscript,
         ):
             self.assertTrue(path.is_file())
         self.assertIn(
-            "No descriptive replay mechanism case is admitted",
+            "complete accepted replay cohort",
             publication.manuscript.read_text(encoding="utf-8"),
         )
 
@@ -1018,7 +1288,7 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
         ):
             with self.assertRaisesRegex(
                 MODULE.FinalizationError,
-                "bootstrap seed must be exactly 20260820",
+                "bootstrap seed must match the shared Benchmark seed 20260808",
             ):
                 self._build()
 
@@ -1027,7 +1297,7 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
         self.roots["graph_core"] = (
             self.root
             / MODULE.ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID
-            / "graph_core_primary"
+            / "joint_graph_core"
             / MODULE.ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
             / f"run_{other_stamp}"
         )
@@ -1147,12 +1417,8 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
             real_replace(source, destination)
 
         argv = [
-            "--benchmark-formal-run-stamp",
-            self.formal_run_stamp,
-            "--benchmark-control-protocol-id",
-            MODULE.ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
-            "--benchmark-control-profile-id",
-            MODULE.ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
+            "--joint-schedule-acceptance",
+            str(self.schedule_acceptance_path),
             "--generic-core-root",
             str(self.roots["generic_core"]),
             "--generic-replay-root",
@@ -1186,6 +1452,7 @@ class P2E1GenericBaseFormalV2Test(unittest.TestCase):
         def arguments(readiness: Path, result: Path) -> argparse.Namespace:
             return argparse.Namespace(
                 protocol=self.protocol_path,
+                joint_schedule_acceptance=self.schedule_acceptance_path,
                 generic_core_root=self.roots["generic_core"],
                 generic_replay_root=self.roots["generic_replay"],
                 graph_core_root=self.roots["graph_core"],

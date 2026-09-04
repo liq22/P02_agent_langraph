@@ -4,7 +4,9 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
+from scripts import audit_p2_e1_primary_readiness_v2 as READINESS
 from scripts.audit_p2_e1_primary_readiness_v2 import (
     OUTPUT,
     ReadinessError,
@@ -20,50 +22,84 @@ import yaml
 
 
 class P2E1PrimaryReadinessV2Test(unittest.TestCase):
+    def test_cli_passes_joint_schedule_acceptance_to_current_builder(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = {
+                "protocol": root / "protocol.yaml",
+                "joint_schedule_acceptance": root / "joint-acceptance.json",
+                "generic_core_root": root / "generic-core",
+                "generic_replay_root": root / "generic-replay",
+                "graph_core_root": root / "graph-core",
+                "graph_replay_root": root / "graph-replay",
+                "output": root / "readiness.json",
+                "result_output": root / "result.json",
+            }
+            readiness = {"accepted": False}
+            result = {"effect_estimates_emitted": 0}
+            argv = [
+                "--protocol", str(paths["protocol"]),
+                "--joint-schedule-acceptance", str(paths["joint_schedule_acceptance"]),
+                "--generic-core-root", str(paths["generic_core_root"]),
+                "--generic-replay-root", str(paths["generic_replay_root"]),
+                "--graph-core-root", str(paths["graph_core_root"]),
+                "--graph-replay-root", str(paths["graph_replay_root"]),
+                "--output", str(paths["output"]),
+                "--result-output", str(paths["result_output"]),
+            ]
+            with (
+                patch.object(
+                    READINESS,
+                    "build_documents",
+                    return_value=(readiness, result),
+                ) as builder,
+                patch("builtins.print"),
+            ):
+                self.assertEqual(READINESS.main(argv), 0)
+            builder.assert_called_once_with(
+                protocol_path=paths["protocol"],
+                joint_schedule_acceptance=paths["joint_schedule_acceptance"],
+                generic_core_root=paths["generic_core_root"],
+                generic_replay_root=paths["generic_replay_root"],
+                graph_core_root=paths["graph_core_root"],
+                graph_replay_root=paths["graph_replay_root"],
+            )
+            self.assertEqual(
+                json.loads(paths["output"].read_text(encoding="utf-8")),
+                readiness,
+            )
+            self.assertEqual(
+                json.loads(paths["result_output"].read_text(encoding="utf-8")),
+                result,
+            )
+
     def test_current_authority_correct_gate_is_fail_closed_and_provider_free(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             stamp = "20260901T010203Z"
             family = root / ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID
             kwargs = {
-                "benchmark_formal_run_stamp": stamp,
-                "benchmark_control_protocol_id": ACTIVE_BENCHMARK_CONTROL_PROTOCOL_ID,
-                "benchmark_control_profile_id": ACTIVE_BENCHMARK_CONTROL_PROFILE_ID,
                 "generic_core_root": family
-                / "b3_generic_core"
+                / "joint_generic_core"
                 / ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
                 / f"run_{stamp}",
                 "generic_replay_root": family
-                / "b3_generic_replay"
+                / "joint_generic_replay"
                 / ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
                 / f"run_{stamp}",
                 "graph_core_root": family
-                / "graph_core_primary"
+                / "joint_graph_core"
                 / ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
                 / f"run_{stamp}",
                 "graph_replay_root": family
-                / "graph_replay_primary"
+                / "joint_graph_replay"
                 / ACTIVE_BENCHMARK_CONTROL_PROFILE_ID
                 / f"run_{stamp}",
             }
-            report = audit(**kwargs)
-            kwargs["generic_core_root"].mkdir(parents=True)
-            (kwargs["generic_core_root"] / "retired-layout.txt").write_text(
-                "not canonical", encoding="utf-8"
-            )
             with self.assertRaisesRegex(
-                ReadinessError, "non-empty root contains zero active-v0.2"
+                ReadinessError, "blocked without --joint-schedule-acceptance"
             ):
                 audit(**kwargs)
-        self.assertFalse(report["accepted"])
-        self.assertEqual(report["provider_calls"], 0)
-        self.assertEqual(report["effect_estimates_emitted"], 0)
-        self.assertFalse(report["authority"]["legacy_phmskills_graph_roots_included"])
-        self.assertFalse(report["authority"]["duplicate_reactive_provider_execution_required"])
-        self.assertEqual(report["observed"]["generic_core"]["statistical_outcomes"], 0)
-        self.assertEqual(report["observed"]["graph_core"]["statistical_outcomes"], 0)
-        self.assertFalse(report["gates"]["bootstrap_permitted"])
-        self.assertEqual(report["evaluator_private_views_read"], 0)
 
     def test_roots_are_generic_control_and_new_graph_identity_only(self) -> None:
         protocol = yaml.safe_load(DEFAULT_PROTOCOL.read_text(encoding="utf-8"))
@@ -72,7 +108,7 @@ class P2E1PrimaryReadinessV2Test(unittest.TestCase):
             self.assertIsNone(arm["replay_root"])
             self.assertEqual(
                 arm["external_root_contract"]["schema"],
-                "benchmark_active_v0_2_external_timestamped_root_v1",
+                "p1_p2_joint_external_timestamped_root_v1",
             )
 
     def test_checked_in_readiness_and_result_match_current_fail_closed_audit(self) -> None:

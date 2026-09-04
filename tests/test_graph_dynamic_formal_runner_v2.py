@@ -17,12 +17,14 @@ from scripts.run_graph_dynamic_formal_v2 import (
     FORMAL_EXECUTION_CONTRACT,
     GraphDynamicFormalRunnerError,
     ROOT,
+    _check_execution_authorization,
     _check_execution_environment,
-    _check_probe_evidence,
+    _check_formal_provider_admission,
     _expected_manifest,
     _parser,
     _registered_unit,
     build_dynamic_formal_unit_contract,
+    execute_dynamic_formal_unit,
     inspect_attempt_prefix,
     main,
 )
@@ -63,8 +65,13 @@ class GraphDynamicFormalRunnerV2Tests(unittest.TestCase):
     def _args(self, index: int = 0, *, validate_only: bool = True):
         argv = list(self.schedule["units"][index]["argv"][2:])
         if validate_only:
-            argv.append("--validate-only")
+            argv[argv.index("--execute")] = "--validate-only"
         return _parser().parse_args(argv)
+
+    def _validation_argv(self, index: int = 0) -> list[str]:
+        argv = list(self.schedule["units"][index]["argv"][2:])
+        argv[argv.index("--execute")] = "--validate-only"
+        return argv
 
     def test_scheduler_is_ready_for_all_240_dedicated_wrapper_units(self) -> None:
         self.assertTrue(self.schedule["runtime_readiness"]["ready"])
@@ -103,6 +110,9 @@ class GraphDynamicFormalRunnerV2Tests(unittest.TestCase):
             self.assertEqual(
                 argv[:2], ["python", "scripts/run_graph_dynamic_formal_v2.py"]
             )
+            self.assertIn("--execute", argv)
+            self.assertNotIn("--validate-only", argv)
+            self.assertIn("--formal-provider-admission-report", argv)
             self.assertEqual(
                 argv[argv.index("--input-usd-per-million") + 1], "0.0"
             )
@@ -116,8 +126,8 @@ class GraphDynamicFormalRunnerV2Tests(unittest.TestCase):
             "scripts.run_graph_dynamic_formal_v2._check_execution_environment",
             side_effect=AssertionError("provider env was read"),
         ), mock.patch(
-            "scripts.run_graph_dynamic_formal_v2._check_probe_evidence",
-            side_effect=AssertionError("probe evidence was read"),
+            "scripts.run_graph_dynamic_formal_v2._check_formal_provider_admission",
+            side_effect=AssertionError("admission report was read"),
         ), mock.patch(
             "scripts.run_graph_dynamic_formal_v2.execute_dynamic_formal_unit",
             side_effect=AssertionError("provider execution was invoked"),
@@ -125,7 +135,7 @@ class GraphDynamicFormalRunnerV2Tests(unittest.TestCase):
             stdout = io.StringIO()
             with contextlib.redirect_stdout(stdout):
                 self.assertEqual(
-                    main(self.schedule["units"][0]["argv"][2:] + ["--validate-only"]),
+                    main(self._validation_argv()),
                     0,
                 )
         contract = json.loads(stdout.getvalue())
@@ -134,6 +144,7 @@ class GraphDynamicFormalRunnerV2Tests(unittest.TestCase):
         self.assertEqual(contract["attempt_state"]["state"], "pending")
         self.assertFalse(contract["provider_calls_performed"])
         self.assertFalse(contract["environment_values_read"])
+        self.assertFalse(contract["formal_provider_admission_report_read"])
         self.assertFalse(contract["probe_evidence_read"])
         self.assertFalse(contract["filesystem_writes_performed"])
         self.assertEqual(
@@ -268,15 +279,52 @@ class GraphDynamicFormalRunnerV2Tests(unittest.TestCase):
                 self.assertEqual(main(argv), 0)
         execute.assert_called_once()
 
-    def test_environment_and_fresh_two_turn_probe_are_exact_profile_checks(self) -> None:
+    def test_cli_mode_is_explicit_and_mutually_exclusive(self) -> None:
+        argv = list(self.schedule["units"][0]["argv"][2:])
+        without_mode = [value for value in argv if value != "--execute"]
+        with contextlib.redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit):
+                _parser().parse_args(without_mode)
+            with self.assertRaises(SystemExit):
+                _parser().parse_args([*argv, "--validate-only"])
+
+    def test_authorization_precedes_provider_settings_and_side_effects(self) -> None:
+        args = self._args(0, validate_only=False)
+        contract = build_dynamic_formal_unit_contract(args)
+        with mock.patch.dict(os.environ, {}, clear=True), mock.patch(
+            "scripts.run_graph_dynamic_formal_v2._check_execution_environment",
+            side_effect=AssertionError("provider settings were read"),
+        ), mock.patch(
+            "scripts.run_graph_dynamic_formal_v2._exclusive_profile_lock",
+            side_effect=AssertionError("execution lock was acquired"),
+        ):
+            with self.assertRaisesRegex(
+                GraphDynamicFormalRunnerError, "external inference"
+            ):
+                execute_dynamic_formal_unit(args, contract)
+
+        with mock.patch.dict(
+            os.environ,
+            {"PHM_EXTERNAL_INFERENCE_AUTHORIZED": "1"},
+            clear=True,
+        ):
+            with self.assertRaisesRegex(
+                GraphDynamicFormalRunnerError, "dynamic-cohort"
+            ):
+                _check_execution_authorization()
+
+    def test_environment_and_official_admission_are_exact_profile_checks(self) -> None:
         args = self._args(0)
         contract = build_dynamic_formal_unit_contract(args)
         env = {
+            "PHM_EXTERNAL_INFERENCE_AUTHORIZED": "1",
+            "PHM_P2_DYNAMIC_EXTERNAL_INFERENCE_AUTHORIZED": "1",
             args.base_url_env: "https://openrouter.ai/api/v1",
             args.api_key_env: "not-a-real-key",
             args.model_env: contract["model"],
         }
         with mock.patch.dict(os.environ, env, clear=True):
+            _check_execution_authorization()
             _check_execution_environment(args, contract)
         with mock.patch.dict(
             os.environ, {**env, args.model_env: "wrong/model"}, clear=True
@@ -299,12 +347,31 @@ class GraphDynamicFormalRunnerV2Tests(unittest.TestCase):
                     ]
                 },
             )
-            _check_probe_evidence(probe, model=contract["model"], max_age_hours=24)
-            value = json.loads(probe.read_text(encoding="utf-8"))
-            value["models"][0]["completed_turns"] = 1
-            _write_json(probe, value)
-            with self.assertRaisesRegex(GraphDynamicFormalRunnerError, "has not passed"):
-                _check_probe_evidence(probe, model=contract["model"], max_age_hours=24)
+            with self.assertRaisesRegex(GraphDynamicFormalRunnerError, "header drifted"):
+                _check_formal_provider_admission(
+                    probe,
+                    contract=contract,
+                    max_age_hours=24,
+                )
+            with mock.patch(
+                "scripts.run_graph_dynamic_formal_v2.validate_execution_probe_report",
+                return_value={"schema_version": "validated"},
+            ) as official_validator:
+                self.assertEqual(
+                    _check_formal_provider_admission(
+                        probe,
+                        contract=contract,
+                        max_age_hours=24,
+                    ),
+                    {"schema_version": "validated"},
+                )
+            official_validator.assert_called_once_with(
+                json.loads(probe.read_text(encoding="utf-8")),
+                base_url="https://openrouter.ai/api/v1",
+                model_id=contract["model"],
+                max_age_hours=24,
+                label="P2 dynamic formal provider admission report",
+            )
 
 
 if __name__ == "__main__":

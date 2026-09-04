@@ -30,9 +30,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--protocol", type=Path, default=DEFAULT_PROTOCOL)
     parser.add_argument("--output", type=Path, default=OUTPUT)
     parser.add_argument("--result-output", type=Path, default=DEFAULT_RESULT)
-    parser.add_argument("--benchmark-formal-run-stamp", required=True)
-    parser.add_argument("--benchmark-control-protocol-id", required=True)
-    parser.add_argument("--benchmark-control-profile-id", required=True)
+    parser.add_argument("--joint-schedule-acceptance", type=Path, required=True)
     parser.add_argument("--generic-core-root", type=Path, required=True)
     parser.add_argument("--generic-replay-root", type=Path, required=True)
     parser.add_argument("--graph-core-root", type=Path, required=True)
@@ -40,9 +38,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
     readiness, result = build_documents(
         protocol_path=args.protocol,
-        benchmark_formal_run_stamp=args.benchmark_formal_run_stamp,
-        benchmark_control_protocol_id=args.benchmark_control_protocol_id,
-        benchmark_control_profile_id=args.benchmark_control_profile_id,
+        joint_schedule_acceptance=args.joint_schedule_acceptance,
         generic_core_root=args.generic_core_root,
         generic_replay_root=args.generic_replay_root,
         graph_core_root=args.graph_core_root,

@@ -3,26 +3,49 @@ status: active
 experiment_id: P2-E1
 
 benchmark_control_source:
-  contract: benchmark_active_v0_2_control_source_v1
+  contract: p1_p2_joint_generic_control_source_v1
+  schedule_id: p1_p2_joint_primary_counterbalance_v1
   protocol_id: benchmark_v0_2_0--paderborn_phase1_v1--runtime_v6--window_v3
-  profile_id: paper0-paderborn-primary-v1
-  formal_run_stamp: explicit_cli_required
+  profile_id: p1-p2-joint-primary-v1
+  formal_run_stamp: from_joint_schedule_acceptance
   public_leaf_root_path: forbidden
+
+joint_schedule:
+  schedule_id: p1_p2_joint_primary_counterbalance_v1
+  profile_id: p1-p2-joint-primary-v1
+  resume_identity_contract: joint_primary_schedule_resume_identity_v1
+  resume_identity_fields: [contract, schedule_id, joint_profile_id, joint_formal_run_stamp, ordinal, scope, unit_index, position, arm, seed, rotation, predecessor_job_id, output]
+  scheduler_scopes: [core, monitoring]
+  graph_execution_scopes: [joint_graph_core, joint_graph_replay]
+  generic_control_scopes: [joint_generic_core, joint_generic_replay]
+  graph_scope_derivation: {core: joint_graph_core, monitoring: joint_graph_replay}
+  generic_scope_derivation: {core: joint_generic_core, monitoring: joint_generic_replay}
+  acceptance_gate:
+    schema_version: joint_primary_schedule_acceptance_v1
+    cli_flag: --joint-schedule-acceptance
+    required_before_result_acceptance: true
+    expected_jobs: 45
+    missing_gate_policy: fail_closed_no_effect_estimate
+  p0_b3_profile_id: paper0-paderborn-primary-v1
+  p0_b3_eligible_as_control: false
 
 authority:
   control:
     repository: liq22/phm-agent-benchmark
     policy: GenericLLMToolAgent
     agent_id: generic-llm-tool-agent
-    reuse_mode: external_immutable_read_only
-    duplicate_provider_execution: forbidden
+    reuse_mode: one_joint_generic_execution_shared_by_p1_and_p2
+    duplicate_provider_execution: forbidden_within_joint_cohort
+    p0_b3_reuse: forbidden
     core_root: null
     replay_root: null
     external_root_contract:
-      schema: benchmark_active_v0_2_external_timestamped_root_v1
+      schema: p1_p2_joint_external_timestamped_root_v1
       benchmark_protocol_version: 0.2.0
       root_layout: protocol_id/arm_scope/profile_id/run_{formal_run_stamp}/seed_{seed}/{rotation}/cohort_index.json
-      root_resolution: explicit_cli_root_required
+      root_resolution: explicit_cli_root_and_joint_acceptance_required
+      core_scope: joint_generic_core
+      replay_scope: joint_generic_replay
       core_cli_flag: --generic-core-root
       replay_cli_flag: --generic-replay-root
   treatment:
@@ -34,10 +57,12 @@ authority:
     core_root: null
     replay_root: null
     external_root_contract:
-      schema: benchmark_active_v0_2_external_timestamped_root_v1
+      schema: p1_p2_joint_external_timestamped_root_v1
       benchmark_protocol_version: 0.2.0
       root_layout: protocol_id/arm_scope/profile_id/run_{formal_run_stamp}/seed_{seed}/{rotation}/cohort_index.json
-      root_resolution: explicit_cli_root_required
+      root_resolution: explicit_cli_root_and_joint_acceptance_required
+      core_scope: joint_graph_core
+      replay_scope: joint_graph_replay
       core_cli_flag: --graph-core-root
       replay_cli_flag: --graph-replay-root
     identity:
@@ -46,7 +71,7 @@ authority:
       agent_control_id: graph_decision_control_v1
       agent_implementation_id: graph_decision_agent_v1
 
-dataset_protocol: ../P01-phm-agent-benchmark/paper/experiments/datasets/dataset_protocol.yaml
+dataset_protocol: ../p01-phm-agent-benchmark/paper/experiments/datasets/dataset_protocol.yaml
 
 registered_design:
   seeds: [20260808, 20260809, 20260810]
@@ -64,6 +89,10 @@ authority_correction:
   basis: CORE.md_task_performance_primary_rollout_diagnostics_secondary
   superseded_primary_endpoint: rollout.grounded_completion
   corrected_primary_endpoint: task.average_precision
+  bootstrap_seed_status: aligned_before_any_accepted_p2_e1_result
+  bootstrap_seed_basis: benchmark_statistics_shared_analysis_rules
+  superseded_bootstrap_seed: 20260820
+  corrected_bootstrap_seed: 20260808
   graph_treatment_formal_outcomes_observed_at_correction: 0
 
 frozen_profile:
@@ -79,7 +108,7 @@ frozen_profile:
   output_usd_per_million: 0.0
 
 pairing:
-  key: [seed, rotation, sample_id, task_id]
+  key: [seed, rotation, bearing_id, sample_id, task_id]
   require_exact_key_equality: true
   require_identical_task_spec: true
   require_identical_budget: true
@@ -100,7 +129,7 @@ analysis:
     method: paired_bearing_cluster_percentile_bootstrap
     cluster_unit: physical_bearing
     iterations: 2000
-    seed: 20260820
+    seed: 20260808
   task_endpoints:
     cold_start_fault_diagnosis:
       - task.macro_f1
@@ -124,6 +153,29 @@ analysis:
     - rollout.output_tokens
     - rollout.wall_clock_seconds
     - rollout.estimated_model_cost_usd
+  replay_mechanism:
+    role: secondary_explanatory_not_task_performance
+    task: online_replay_monitoring
+    source: accepted_exact_six_public_rollout_and_evaluator_views
+    pairing_key: [seed, rotation, bearing_id, sample_id, task_id]
+    expected_pairs: 24
+    endpoints:
+      - rollout.grounded_completion
+      - rollout.submission_rate
+      - rollout.budget_exhaustion
+      - rollout.valid_tool_call_rate
+      - rollout.repeated_action_ratio
+      - rollout.grounded_recovery_success
+      - rollout.recovery_coverage
+      - rollout.steps_to_recovery
+      - rollout.steps
+    graph_projection:
+      states: [Inspect, Hypothesize, Analyze, Check, Monitor, Revise, Recover, Submit]
+      transition_relation: base_v6_51_edge
+      monitor_and_revise_reachable: false
+    case_selection: none_full_cohort_only
+    evaluator_private_targets_used: false
+    reasoning_traces_used: false
   replay_missing_score_policy_id: phase1_replay_target_adverse_missing_score_v1
   primary_endpoint:
     cohort: replay
@@ -140,11 +192,13 @@ outputs:
     core_figure: paper/assets/figures/p2_e1_core_primary.svg
     state_json: paper/experiments/results/p2_e1_graph_state_summary_v2.json
     state_table: paper/assets/tables/p2_e1_graph_state_summary.md
+    mechanism_json: paper/experiments/results/p2_e1_replay_mechanism_v1.json
     manuscript: paper/draft/main.md
     source: accepted_combined_result_only
     external_state_override: forbidden
     core_figure_generation: deterministic_from_accepted_result
-    mechanism_case: omitted_until_bound_extractor
+    mechanism_projection: embedded_accepted_full_cohort_only
+    mechanism_case: omitted_by_design_no_post_hoc_case
     write_contract: grouped_replace_with_exception_rollback
 
 claim_boundary: >-

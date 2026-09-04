@@ -24,6 +24,8 @@ implementation_status:
   accepted_manuscript_consumer_implemented: true
   accepted_mechanism_reporting_implemented: true
   provider_free_manuscript_consumer_tests_passed: true
+  formal_fail_closed_admission_implemented: true
+  official_execution_probe_validator_bound: true
   allowed_current_evidence:
     - protocol_parse_and_cross_field_tests
     - generic_public_condition_event_environment_tests
@@ -35,6 +37,7 @@ implementation_status:
     - provider_free_private_assignment_and_derived_target_tamper_tests
     - provider_free_accepted_result_manuscript_consumer_tests
     - provider_free_240_unit_analyzer_to_mechanism_consumer_integration
+    - provider_free_fail_closed_formal_admission_tests
   prohibited_current_claims:
     - completed_ablation
     - graph_performance_effect
@@ -233,8 +236,40 @@ formal_scheduler:
     path: scripts/run_graph_dynamic_formal_v2.py
     execution_contract: phase1_graph_dynamic_formal_generic_v3
     dynamic_protocol_argument: paper/experiments/graph_dynamic_ablation_protocol_v3.yaml
-    probe_evidence_default: /tmp/openrouter_north_graph_dynamic_v3_two_turn_probe.json
+    formal_provider_admission_report_default: /tmp/openrouter_north_graph_dynamic_v3_two_turn_probe.json
+    formal_provider_admission_max_age_hours: 24
     lock_file_default: /tmp/p2_graph_dynamic_v3_formal.lock
+    authorization_environment:
+      external_inference: PHM_EXTERNAL_INFERENCE_AUTHORIZED
+      dynamic_cohort: PHM_P2_DYNAMIC_EXTERNAL_INFERENCE_AUTHORIZED
+      required_value: "1"
+    required_flags:
+      - --arm
+      - --runtime
+      - --graph-profile
+      - --runtime-contract
+      - --dynamic-protocol
+      - --protocol
+      - --public-sequence-id
+      - --horizon
+      - --tasks
+      - --seed
+      - --rotation
+      - --temperature
+      - --max-output-tokens-per-turn
+      - --provider-label
+      - --input-usd-per-million
+      - --output-usd-per-million
+      - --base-url-env
+      - --api-key-env
+      - --model-env
+      - --resume-provider-partial
+      - --train-samples-per-bearing
+      - --validation-samples-per-bearing
+      - --formal-provider-admission-report
+      - --validate-only
+      - --execute
+      - --output
     required_identity_literals:
       - phase1_graph_dynamic_formal_generic_v3
       - p2_graph_vs_generic_llm_v1
@@ -247,6 +282,17 @@ formal_scheduler:
       - phase1_graph_dynamic_generic_ablation_v3
   readiness_gate:
     current_expected_state: ready_for_provider_free_validation_formal_not_started
+
+acceptance_gates:
+  formal_preflight:
+    requirements:
+      - implementation_status_is_provider_free_ready_and_formal_not_run
+      - provider_free_mock_gate_passed
+      - explicit_external_inference_and_dynamic_cohort_authorizations
+      - official_fresh_exact_route_model_zero_price_admission_report_passed
+      - explicit_execute_mode_selected
+      - one_provider_bound_runner_only
+      - output_roots_are_empty_or_canonically_resumable
 
 amendment:
   supersedes_unexecuted_protocol: paderborn_graph_dynamic_ablation_v2

@@ -27,6 +27,38 @@ schedule:
 
 runtime_projection:
   dynamic_protocol_argument: paper/experiments/graph_dynamic_ablation_protocol_v3.yaml
+  formal_provider_admission_report: /tmp/openrouter_north_graph_dynamic_v3_two_turn_probe.json
+  authorization_environment:
+    external_inference: PHM_EXTERNAL_INFERENCE_AUTHORIZED
+    dynamic_cohort: PHM_P2_DYNAMIC_EXTERNAL_INFERENCE_AUTHORIZED
+    required_value: "1"
+  required_runner_flags:
+    - --arm
+    - --runtime
+    - --graph-profile
+    - --runtime-contract
+    - --dynamic-protocol
+    - --protocol
+    - --public-sequence-id
+    - --horizon
+    - --tasks
+    - --seed
+    - --rotation
+    - --temperature
+    - --max-output-tokens-per-turn
+    - --provider-label
+    - --input-usd-per-million
+    - --output-usd-per-million
+    - --base-url-env
+    - --api-key-env
+    - --model-env
+    - --resume-provider-partial
+    - --train-samples-per-bearing
+    - --validation-samples-per-bearing
+    - --formal-provider-admission-report
+    - --validate-only
+    - --execute
+    - --output
   required_runner_identity_literals:
     - p2_graph_vs_generic_llm_v1
     - benchmark_generic_llm_tool_agent_v1

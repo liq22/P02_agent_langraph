@@ -54,8 +54,8 @@ DYNAMIC_FORMAL_ACCEPTANCE = (
 
 CONTROL_LABEL = "Benchmark Generic (Reactive-equivalent)"
 TREATMENT_LABEL = "GraphDecisionAgent over the same Generic base"
-FORMAL_RUNNER_FOCUSED_TESTS = 17
-DYNAMIC_FOCUSED_TESTS = 50
+FORMAL_RUNNER_FOCUSED_TESTS = 19
+DYNAMIC_FOCUSED_TESTS = 57
 
 
 class CurrentMechanicsError(RuntimeError):
@@ -185,9 +185,9 @@ def load_current_mechanics(root: Path = ROOT) -> dict[str, Any]:
     first_argv = schedule["units"][0]["argv"]
     if not isinstance(first_argv, list) or len(first_argv) < 3:
         raise CurrentMechanicsError("dynamic-v3 dry schedule lacks its first argv")
-    validate_args = dynamic_runner_parser().parse_args(
-        [str(value) for value in first_argv[2:]] + ["--validate-only"]
-    )
+    validation_argv = [str(value) for value in first_argv[2:]]
+    validation_argv[validation_argv.index("--execute")] = "--validate-only"
+    validate_args = dynamic_runner_parser().parse_args(validation_argv)
     validate_contract = build_dynamic_formal_unit_contract(validate_args)
     expected_validate_only = {
         "provider_calls_performed": False,

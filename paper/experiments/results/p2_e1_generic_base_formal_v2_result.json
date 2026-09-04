@@ -16,6 +16,7 @@
     "paired_cohorts": null
   },
   "graph_state_summaries": null,
+  "replay_mechanism": null,
   "paired_bearing_bootstrap": null,
   "primary_endpoint": {
     "cohort": "replay",

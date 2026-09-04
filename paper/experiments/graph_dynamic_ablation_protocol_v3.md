@@ -8,6 +8,17 @@ Generic-derived agents, provider model, temperature, and tool surface are
 unchanged. V1 and v2 output roots remain historical and cannot be resumed or
 pooled into v3.
 
+The formal unit wrapper requires one explicit mode. `--validate-only` inspects
+the registered unit without reading authorization values, provider settings, or
+the admission report and without acquiring a lock or writing output. `--execute`
+requires `PHM_EXTERNAL_INFERENCE_AUTHORIZED=1` and
+`PHM_P2_DYNAMIC_EXTERNAL_INFERENCE_AUTHORIZED=1`, then applies the Benchmark
+official execution-probe validator to the registered OpenRouter route,
+`cohere/north-mini-code:free`, and exact-zero price evidence. These checks pass
+before the wrapper can acquire its execution lock, construct a DataPort, or
+call the provider. Scheduler command projections include `--execute`; the
+schedulers remain provider-free and never invoke those commands.
+
 Task performance is primary. The primary endpoint is target-adverse Average
 Precision recomputed over every protocol-assigned replay window in all eight
 matched held-out bearing sequences within a seed and condition. Failed,

@@ -73,7 +73,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
             "tasks": tasks,
             "budget": {"max_tool_calls": 72 if core else 120},
         }
-        return {
+        result = {
             "accepted": accepted,
             "mode": mode,
             "expected_episodes": episodes,
@@ -154,7 +154,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
             "bearing_bootstrap_95ci": intervals,
             "bearing_bootstrap_valid_replicates": counts,
             "bootstrap_iterations": 2000,
-            "seed": 20260820,
+            "seed": 20260808,
             "evidence_class": "real_data_formal_candidate",
         }
 
@@ -192,7 +192,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
             "bearing_bootstrap_95ci": intervals,
             "bearing_bootstrap_valid_replicates": counts,
             "bootstrap_iterations": 2000,
-            "seed": 20260820,
+            "seed": 20260808,
             "direction": "treatment_minus_control",
             "evidence_class": "real_data_formal_candidate",
         }
@@ -341,6 +341,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
             core_figure_output=root / "p2_e1_core_primary.svg",
             state_json_output=root / "p2_e1_graph_state_summary_v2.json",
             state_table_output=root / "p2_e1_graph_state_summary.md",
+            mechanism_json_output=root / "p2_e1_replay_mechanism_v1.json",
         )
 
     def _combined_result(self, args: argparse.Namespace) -> dict[str, object]:
@@ -432,7 +433,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
                 P2_FORMAL_REPRODUCIBILITY_PATHS
             ),
         }
-        return {
+        result = {
             "schema_version": "p2_e1_generic_base_formal_v2_result",
             "gate_id": "P2-E1",
             "accepted": True,
@@ -441,6 +442,24 @@ class GraphManuscriptTableTest(unittest.TestCase):
             "benchmark_control_source": {
                 **EXPECTED_BENCHMARK_CONTROL_SOURCE,
                 "formal_run_stamp": args.expected_benchmark_formal_run_stamp,
+            },
+            "joint_schedule_acceptance": {
+                "schema_version": "joint_primary_schedule_acceptance_v1",
+                "accepted": True,
+                "schedule_id": "p1_p2_joint_primary_counterbalance_v1",
+                "joint_profile_id": "p1-p2-joint-primary-v1",
+                "joint_formal_run_stamp": args.expected_benchmark_formal_run_stamp,
+                "resume_identity_contract": "joint_primary_schedule_resume_identity_v1",
+                "job_count": 45,
+                "completed_prefix_length": 45,
+                "order_validated": True,
+                "runner_contracts_accepted": True,
+                "duplicate_provider_execution": False,
+                "p0_b3_control_reuse": False,
+                "pair_key_fields": [
+                    "seed", "rotation", "bearing_id", "sample_id", "task_id"
+                ],
+                "resume_identities": [],
             },
             "formal_execution_topology": {
                 "benchmark_control": benchmark_topology,
@@ -502,6 +521,9 @@ class GraphManuscriptTableTest(unittest.TestCase):
                 "paired_cohorts": {
                     scope: {
                         "accepted": True,
+                        "pairing_key": [
+                            "seed", "rotation", "bearing_id", "sample_id", "task_id"
+                        ],
                         "expected_pairs": expected,
                         "matched_statistical_keys": expected,
                         "control_only_keys": 0,
@@ -523,6 +545,88 @@ class GraphManuscriptTableTest(unittest.TestCase):
                 "partial-prefix estimate exists."
             ),
         }
+        metric_projection = {}
+        for endpoint in result["analysis"]["replay_mechanism"]["endpoints"]:
+            section, name = endpoint.split(".", 1)
+            control_value = replay_control["summary"][REPLAY_TASK][section][name]
+            treatment_value = replay_treatment["summary"][REPLAY_TASK][section][name]
+            delta_value = replay_paired["estimate"][REPLAY_TASK][endpoint]
+            metric_projection[endpoint] = {
+                "control": {
+                    "estimate": control_value,
+                    "defined_episodes": 0 if control_value is None else REPLAY_EPISODES,
+                    "registered_episodes": REPLAY_EPISODES,
+                },
+                "treatment": {
+                    "estimate": treatment_value,
+                    "defined_episodes": 0 if treatment_value is None else REPLAY_EPISODES,
+                    "registered_episodes": REPLAY_EPISODES,
+                },
+                "graph_minus_generic": delta_value,
+            }
+        state_chain = ("Inspect", "Hypothesize", "Analyze", "Check", "Submit")
+        result["replay_mechanism"] = {
+            "schema_version": "p2_e1_replay_mechanism_v1",
+            "accepted": True,
+            "role": "secondary_explanatory_not_task_performance",
+            "task": REPLAY_TASK,
+            "source": "accepted_exact_six_public_rollout_and_evaluator_views",
+            "protocol_identity": json.loads(json.dumps(result["protocol_identity"])),
+            "benchmark_control_source": json.loads(
+                json.dumps(result["benchmark_control_source"])
+            ),
+            "formal_execution_topology": json.loads(
+                json.dumps(result["formal_execution_topology"])
+            ),
+            "pairing": {
+                "key": ["seed", "rotation", "bearing_id", "sample_id", "task_id"],
+                "expected_pairs": REPLAY_EPISODES,
+                "observed_pairs": REPLAY_EPISODES,
+                "control_only_keys": 0,
+                "treatment_only_keys": 0,
+            },
+            "denominators": {
+                arm: {
+                    "statistical_episodes": REPLAY_EPISODES,
+                    "attempt_leaves": REPLAY_EPISODES,
+                    "provider_error_history_attempts": 0,
+                    "nonsubmitted_or_partial_episodes": 0,
+                    "natural_nonprovider_terminal_failures": 0,
+                    "terminal_counts": {"submitted": REPLAY_EPISODES},
+                }
+                for arm in ("control", "treatment")
+            },
+            "metric_projection": metric_projection,
+            "graph_state_projection": {
+                "episodes": REPLAY_EPISODES,
+                "action_steps": len(state_chain) * REPLAY_EPISODES,
+                "state_visit_counts": {
+                    state: REPLAY_EPISODES if state in state_chain else 0
+                    for state in STATES
+                },
+                "state_episode_counts": {
+                    state: REPLAY_EPISODES if state in state_chain else 0
+                    for state in STATES
+                },
+                "transition_opportunities": (len(state_chain) - 1)
+                * REPLAY_EPISODES,
+                "valid_transition_count": (len(state_chain) - 1)
+                * REPLAY_EPISODES,
+                "invalid_transition_count": 0,
+                "observed_transition_counts": {
+                    f"{left}->{right}": REPLAY_EPISODES
+                    for left, right in zip(state_chain, state_chain[1:])
+                },
+                "all_valid_episode_count": REPLAY_EPISODES,
+                "recover_after_failed_action_opportunities": 0,
+                "recover_after_failed_action_count": 0,
+                "monitor_and_revise_visits": 0,
+            },
+            "case_selection": "none_full_cohort_only",
+            "evaluator_private_targets_used": False,
+            "reasoning_traces_used": False,
+        }
+        return result
 
     def _activate_combined(
         self,
@@ -540,6 +644,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
         publication["core_figure"] = str(args.core_figure_output)
         publication["state_json"] = str(args.state_json_output)
         publication["state_table"] = str(args.state_table_output)
+        publication["mechanism_json"] = str(args.mechanism_json_output)
         publication["manuscript"] = str(args.manuscript)
         args.protocol = root / "active_protocol.yaml"
         args.protocol.write_text(
@@ -579,6 +684,12 @@ class GraphManuscriptTableTest(unittest.TestCase):
             self.assertTrue(args.core_figure_output.is_file())
             self.assertTrue(args.state_json_output.is_file())
             self.assertTrue(args.state_table_output.is_file())
+            self.assertTrue(args.mechanism_json_output.is_file())
+            mechanism = json.loads(
+                args.mechanism_json_output.read_text(encoding="utf-8")
+            )
+            self.assertEqual(mechanism["pairing"]["observed_pairs"], 24)
+            self.assertEqual(mechanism["case_selection"], "none_full_cohort_only")
             ET.fromstring(args.core_figure_output.read_text(encoding="utf-8"))
 
     def test_combined_primary_endpoint_drift_leaves_manuscript_unchanged(self) -> None:
@@ -614,7 +725,8 @@ class GraphManuscriptTableTest(unittest.TestCase):
             self.assertEqual(manuscript.count(FIGURES_MANUSCRIPT_HEADING), 1)
             self.assertNotIn("figures pending", manuscript)
             self.assertIn("p2_e1_core_primary.svg", manuscript)
-            self.assertIn("No descriptive replay mechanism case is admitted", manuscript)
+            self.assertIn("complete accepted replay cohort", manuscript)
+            self.assertIn("No post-hoc descriptive replay case is selected", manuscript)
             self.assertTrue(args.core_figure_output.is_file())
 
     def test_combined_result_rejects_external_state_override_without_writes(self) -> None:
@@ -630,6 +742,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
             self.assertFalse(args.core_figure_output.exists())
             self.assertFalse(args.state_json_output.exists())
             self.assertFalse(args.state_table_output.exists())
+            self.assertFalse(args.mechanism_json_output.exists())
             self.assertEqual(before, args.manuscript.read_bytes())
 
     def test_combined_identity_drift_fails_closed(self) -> None:
@@ -657,6 +770,19 @@ class GraphManuscriptTableTest(unittest.TestCase):
                 self.assertFalse(args.output.exists())
                 self.assertFalse(args.core_figure_output.exists())
                 self.assertEqual(before, args.manuscript.read_bytes())
+
+    def test_combined_result_rejects_unaccepted_joint_schedule_gate(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            args = self._args(root)
+            result = self._combined_result(args)
+            result["joint_schedule_acceptance"]["accepted"] = False
+            self._activate_combined(root, args, result)
+            before = args.manuscript.read_bytes()
+            with self.assertRaisesRegex(ResultsPending, "accepted joint schedule gate"):
+                write_table(args)
+            self.assertFalse(args.output.exists())
+            self.assertEqual(before, args.manuscript.read_bytes())
 
     def test_combined_paired_delta_tamper_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -702,6 +828,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
                 args.core_figure_output,
                 args.state_json_output,
                 args.state_table_output,
+                args.mechanism_json_output,
                 args.manuscript,
             )
             for index, target in enumerate(targets):
@@ -868,16 +995,32 @@ class GraphManuscriptTableTest(unittest.TestCase):
             self.assertFalse(args.state_json_output.exists())
             self.assertEqual(before, args.manuscript.read_bytes())
 
-    def test_combined_mechanism_input_is_omitted_until_bound_extractor(self) -> None:
+    def test_combined_full_cohort_mechanism_forbids_external_case_override(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             args = self._args(root)
             self._activate_combined(root, args)
             args.monitor_mechanism_json = root / "unbound-case.json"
             before = args.manuscript.read_bytes()
-            with self.assertRaisesRegex(ResultsPending, "until a bound extractor exists"):
+            with self.assertRaisesRegex(ResultsPending, "forbids external mechanism overrides"):
                 write_table(args)
             self.assertFalse(args.output.exists())
+            self.assertEqual(before, args.manuscript.read_bytes())
+
+    def test_combined_full_cohort_mechanism_tamper_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            args = self._args(root)
+            result = self._combined_result(args)
+            result["replay_mechanism"]["metric_projection"][
+                "rollout.repeated_action_ratio"
+            ]["graph_minus_generic"] = 0.25
+            self._activate_combined(root, args, result)
+            before = args.manuscript.read_bytes()
+            with self.assertRaisesRegex(ResultsPending, "mechanism delta differs"):
+                write_table(args)
+            self.assertFalse(args.output.exists())
+            self.assertFalse(args.mechanism_json_output.exists())
             self.assertEqual(before, args.manuscript.read_bytes())
 
     def test_policy_figure_separates_base_and_dynamic_full_relations(self) -> None:
@@ -916,7 +1059,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
                 sum(len(targets) for targets in transitions.values()),
             )
 
-        self.assertIn("Base-v6 declared relation (50 edges)", svg)
+        self.assertIn("Base-v6 declared relation (51 edges)", svg)
         self.assertIn("Dynamic-full profile relation (33 edges)", svg)
         self.assertIn("Monitor and Revise are unreachable", svg)
         self.assertIn("provider-bound formal cohort has not run", svg)
@@ -927,7 +1070,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
         self.assertIn("Monitor and Revise are unreachable", abstract)
         self.assertIn("formal coverage is 0/240", abstract)
         self.assertIn("target-adverse assigned-window Average Precision", abstract)
-        self.assertIn("50-edge base-v6", manuscript)
+        self.assertIn("51-edge base-v6", manuscript)
         self.assertIn("33-edge dynamic-full", manuscript)
         self.assertIn("### 1.1 Contributions", manuscript)
         self.assertNotIn("*Pending:", manuscript)
@@ -1011,8 +1154,8 @@ class GraphManuscriptTableTest(unittest.TestCase):
         self.assertIn("Benchmark Generic (Reactive-equivalent)", current_table)
         self.assertIn("10/10 exact-six Mock cells", current_table)
         self.assertIn("runner ready; 240/240 dry-run commands emitted, 0 invoked", current_table)
-        self.assertIn("runner 17/17", current_table)
-        self.assertIn("dynamic-focused 50/50", current_table)
+        self.assertIn("runner 19/19", current_table)
+        self.assertIn("dynamic-focused 57/57", current_table)
         self.assertIn("0/240 formal units", current_table)
         self.assertIn("a Graph treatment effect", current_table)
         dynamic_status = status["dynamic_v3"]
@@ -1046,9 +1189,9 @@ class GraphManuscriptTableTest(unittest.TestCase):
         evidence_text = next(
             element
             for element in dynamic_group.iter()
-            if element.attrib.get("data-formal-runner-tests") == "17"
+            if element.attrib.get("data-formal-runner-tests") == "19"
         )
-        self.assertEqual(evidence_text.attrib.get("data-dynamic-tests"), "50")
+        self.assertEqual(evidence_text.attrib.get("data-dynamic-tests"), "57")
         self.assertEqual(evidence_text.attrib.get("data-provider-calls"), "0")
         self.assertIn(
             "../assets/figures/p2_current_mechanics_status.svg", manuscript
@@ -1056,8 +1199,8 @@ class GraphManuscriptTableTest(unittest.TestCase):
         self.assertIn("dedicated formal runner is implemented and ready", manuscript)
         self.assertIn("zero environment reads, zero probe reads", manuscript)
         self.assertIn("240/240 dry-run commands", manuscript)
-        self.assertIn("17/17", manuscript)
-        self.assertIn("50/50", manuscript)
+        self.assertIn("19/19", manuscript)
+        self.assertIn("57/57", manuscript)
         self.assertIn("0/240 formal units", manuscript)
 
 

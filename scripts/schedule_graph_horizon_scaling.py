@@ -243,6 +243,22 @@ def validate_projection(
         protocol["authority"]["source_dynamic_protocol"],
         "runtime_projection.dynamic_protocol_argument",
     )
+    source_runner = _mapping(
+        _mapping(source.get("formal_scheduler"), "source.formal_scheduler").get(
+            "runner"
+        ),
+        "source.formal_scheduler.runner",
+    )
+    _expect_equal(
+        runtime.get("formal_provider_admission_report"),
+        source_runner.get("formal_provider_admission_report_default"),
+        "runtime_projection.formal_provider_admission_report",
+    )
+    _expect_equal(
+        runtime.get("authorization_environment"),
+        source_runner.get("authorization_environment"),
+        "runtime_projection.authorization_environment",
+    )
     output = _mapping(protocol.get("output_contract"), "output_contract")
     source_output = _mapping(source.get("output_contract"), "source.output_contract")
     for key in ("formal_root", "results_root"):
@@ -373,12 +389,16 @@ def _command_for_unit(
         "base_url_env": env_names.get("base_url"),
         "api_key_env": env_names.get("api_key"),
         "model_env": env_names.get("model"),
+        "formal_provider_admission_report": runtime.get(
+            "formal_provider_admission_report"
+        ),
     }
     if any(not isinstance(value, str) or not value for value in values.values()):
         raise ContractError(f"invalid command contract for cell {cell_name}")
     return [
         values["python_command"],
         values["runner"],
+        "--execute",
         "--arm",
         values["runner_arm"],
         "--runtime",
@@ -416,6 +436,8 @@ def _command_for_unit(
         "--model-env",
         values["model_env"],
         "--resume-provider-partial",
+        "--formal-provider-admission-report",
+        values["formal_provider_admission_report"],
         "--output",
         output_root,
     ]

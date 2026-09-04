@@ -110,6 +110,10 @@ formal_execution:
   base_url_environment: LLM_BASE_URL
   api_key_environment: LLM_API_KEY
   model_environment: LLM_MODEL
+  external_inference_authorization_environment: PHM_EXTERNAL_INFERENCE_AUTHORIZED
+  cohort_external_inference_authorization_environment: PHM_P2_E8_EXTERNAL_INFERENCE_AUTHORIZED
+  provider_admission_report_flag: --formal-provider-admission-report
+  provider_admission_validator: benchmark_validate_execution_probe_report
   runtime_contract: phase1_opaque_sample_vibration_feature_schema_v6
   temperature: 0.2
   max_output_tokens_per_turn: 2048
@@ -149,6 +153,7 @@ runtime_gate:
     - --signal-env
     - --data-readiness-env
     - --experiment-profile-id
+    - --formal-provider-admission-report
     - --rotation
     - --tasks
   required_source_fragments:
@@ -156,6 +161,8 @@ runtime_gate:
     - require_formal_replay_metric_lock
     - _open_data_port
     - P2_E8_PROFILE_ID
+    - PHM_P2_E8_EXTERNAL_INFERENCE_AUTHORIZED
+    - validate_execution_probe_report
   required_implementation_flags:
     generic_base_identity_validation_implemented: true
     external_dataset_dataport_runtime_implemented: true
