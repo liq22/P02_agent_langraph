@@ -1,0 +1,1 @@
+{"error": "LLM must return exactly one tool call per turn", "kind": "agent_decision_error", "step": null, "tool_name": null}

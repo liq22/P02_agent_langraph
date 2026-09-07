@@ -1,0 +1,26 @@
+{
+  "failure_kind": null,
+  "message": null,
+  "payload": {
+    "accepted": true,
+    "artifact_lineage_completeness": 1.0,
+    "label": "healthy",
+    "submission_grounding": 1.0,
+    "supporting_reference_validity": 1.0,
+    "supporting_refs": [
+      "artifact://prediction/000001",
+      "artifact://op/000002",
+      "artifact://op/000003",
+      "artifact://op/000004",
+      "artifact://op/000005",
+      "artifact://op/000006",
+      "artifact://op/000007",
+      "artifact://op/000008",
+      "artifact://op/000009",
+      "artifact://op/000010",
+      "artifact://op/000011"
+    ]
+  },
+  "status": "submitted",
+  "terminal_status": "submitted"
+}

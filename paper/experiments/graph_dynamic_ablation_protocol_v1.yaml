@@ -1,0 +1,681 @@
+schema_version: graph_dynamic_ablation_protocol_v1
+protocol_id: paderborn_graph_dynamic_ablation_v1
+status: superseded_phmskills_base_mechanics_only
+frozen_date: "2026-08-13"
+implementation_updated: "2026-08-20"
+
+authority:
+  benchmark_core: ../p01-phm-agent-benchmark/CORE.md
+  dataset_protocol: ../p01-phm-agent-benchmark/paper/experiments/datasets/dataset_protocol.yaml
+  experiment_matrix: ../p01-phm-agent-benchmark/obsidian/goal/8-12/phm_agent_three_paper_goal_pack_20260812_v1/experiments/PAPER2_MATRIX.md
+  scope_note: >-
+    This historical file registered the pre-authority-correction PHMskills-base
+    Graph mechanics profile. It does not modify the active Paderborn v6 primary
+    profile, is not launchable for formal inference, and must not be pooled with
+    the Generic-base v2 profile.
+
+implementation_status:
+  benchmark_event_contract: phase1_public_condition_event_v1
+  event_payload_key: public_condition_event
+  event_emitter_implemented: true
+  dynamic_runtime_profile_implemented: true
+  ablation_conversation_profiles_implemented: true
+  single_unit_runner_implemented: true
+  formal_runner_implemented: false
+  formal_acceptance_analyzer_implemented: false
+  provider_free_registered_cells_exercised: 10
+  provider_free_exact_six_acceptance_gate_passed: true
+  formal_matrix_scheduler_implemented: false
+  formal_provider_execution_started: false
+  formal_results_exist: false
+  allowed_current_evidence:
+    - protocol_parse_and_cross_field_tests
+    - local_metadata_construction_audit
+    - generic_public_condition_event_environment_tests
+    - graph_profile_and_conversation_tests
+    - ten_cell_provider_free_in_memory_execution
+    - single_unit_runner_contract_tests
+    - materialized_ten_cell_exact_six_mock_acceptance
+  prohibited_current_claims:
+    - current_graph_treatment_authority
+    - formal_execution_eligibility
+    - completed_ablation
+    - graph_performance_effect
+    - completed_formal_cohort
+
+scope:
+  matrix_ids: [P2-E2, P2-E3, P2-E4, P2-E5, P2-E6, P2-E7]
+  primary_task: online_replay_monitoring
+  task_ids: [online_replay_monitoring]
+  excluded_tasks:
+    - cold_start_fault_diagnosis
+    - unsupervised_anomaly_detection
+    - rul
+    - maintenance_decision
+  excluded_claims:
+    - fault_onset_detection
+    - event_f1
+    - detection_delay
+    - live_streaming
+    - production_monitoring
+    - cross_dataset_validity
+
+dataset:
+  dataset_id: paderborn-bearing-datacenter
+  provider_name: RM_027_PU
+  dataset_protocol_schema: phm_agent_dataset_protocol_v1
+  dataset_protocol_status: active_phase1
+  split_strategy: bearing_grouped_cyclic_four_fold
+  rotation: rotation_0
+  held_out_bearings: 8
+  sample_handle_scheme: seeded_permutation_v1
+  sample_handle_seed: 20260808
+  public_condition_field: domain_id
+  domain_semantics: operating_condition_identifier
+  domain_value_contract:
+    accepted_type: finite_integral_number
+    normalization: exact_base10_integer
+    expected_values: [0, 1, 2, 3]
+    expected_records: 2559
+    expected_missing: 0
+    mismatch_policy: fail_profile_before_inference
+  private_fields_forbidden_from_agent_and_event:
+    - bearing_id
+    - label
+    - diagnosis_target
+    - anomaly_target
+    - fault_level
+    - file
+
+sequence_construction:
+  unit: one_evaluator_private_held_out_bearing
+  public_sequence_id_scheme: >-
+    Sort each rotation's 12-element tuple of opaque sample handles
+    lexicographically and assign sequence-0001 through sequence-0008.
+  record_order: ascending_data_port_metadata_order
+  master_horizon: 12
+  master_selection:
+    formula: "index_k = floor(k * (N - 1) / 11), k = 0,...,11"
+    duplicate_index_policy: fail_profile_before_inference
+    future_target_use: forbidden
+  horizons: [3, 6, 12]
+  horizon_sequence: "sequence_h = master_sequence[0:h]"
+  independently_resample_each_horizon: false
+  expected_public_domain_schedule: [1, 1, 1, 2, 2, 2, 3, 3, 3, 0, 0, 0]
+  expected_change_release_indices_zero_based: [3, 6, 9]
+  expected_change_count_by_horizon:
+    3: 0
+    6: 1
+    12: 3
+  claim_boundary: >-
+    Metadata order and domain changes define an offline operating-condition
+    stress sequence, not physical time, a fault onset, or a causal regime
+    transition.
+
+public_event_contract:
+  event_name: operating_condition_change
+  forbidden_event_names:
+    - fault_onset
+    - anomaly_onset
+    - failure_onset
+  release_index_base: 0
+  initial_release:
+    index: 0
+    event: null
+    reason: no_previous_released_sample
+  derivation:
+    current_value: >-
+      normalized public domain_id of the sample newly released at index i
+    previous_value: >-
+      normalized public domain_id of the sample released at index i-1
+    emit_if: "i > 0 and current_value != previous_value"
+    emit_if_equal: false
+    missing_or_invalid_value: fail_episode_construction
+    permitted_inputs:
+      - released_sample_id
+      - released_sample_public_domain_id
+      - previous_released_sample_id
+      - previous_released_sample_public_domain_id
+      - public_replay_index
+    forbidden_inputs:
+      - signal_values
+      - signal_features
+      - label
+      - anomaly_target
+      - diagnosis_target
+      - bearing_id
+      - evaluator_output
+  delivery:
+    timing: first_observation_after_current_index_is_released
+    duration: one_observation_pulse
+    before_release: forbidden
+    future_event_visibility: forbidden
+    payload:
+      public_condition_event:
+        event: operating_condition_change
+        event_id: opaque_catalog_reference
+        release_index: current_public_release_index
+    recipients:
+      - reactive
+      - graph_full
+      - graph_no_recovery_revision_edge
+      - graph_no_observation_conditioned_branching
+      - graph_no_persistent_graph_state
+      - graph_no_replanning
+    equality_rule: >-
+      For a matched logical event, every recipient receives byte-equivalent
+      public_condition_event content at the same released replay index.
+  event_id_catalog:
+    id_format: "occ-%08d"
+    logical_key_fields:
+      - seed
+      - rotation
+      - public_sequence_id
+      - release_index
+    deliberately_excluded_key_fields:
+      - horizon
+      - arm
+      - graph_profile
+      - provider
+      - model
+      - private_target
+      - bearing_id
+    assignment: >-
+      Before inference, sort logical keys by seed, rotation,
+      public_sequence_id, and release_index, then assign monotonically
+      numbered opaque IDs starting at occ-00000001. No hash is used.
+    uniqueness_scope: one_id_per_logical_event
+    reuse_rule: >-
+      The same logical event ID is referenced by every matched arm/profile and
+      every nested horizon that contains that release index; distinct logical
+      events must never share an ID.
+    expected_logical_events: 72
+
+shared_agent_contract:
+  control: reactive
+  treatment: graph_full
+  shared:
+    backbone_model: cohere/north-mini-code:free
+    provider: openrouter-free
+    inference_protocol: openai_chat_completions
+    temperature: 0.2
+    max_output_tokens_per_turn: 2048
+    base_prompt_information: identical
+    public_task_and_action_result_history: identical
+    public_event_payload: identical
+    tools: identical_before_graph_state_filtering
+    numerical_experts: identical
+    evaluator: identical
+    episode_order: identical
+  treatment_only_difference: >-
+    Graph profiles select a current decision state and expose only that
+    state's legal subset of the otherwise shared tools.
+  hidden_reasoning_required: false
+
+state_machine:
+  states:
+    - Inspect
+    - Hypothesize
+    - Analyze
+    - Check
+    - Monitor
+    - Revise
+    - Recover
+    - Submit
+  state_tools:
+    Inspect: [data.search, data.describe, data.read_window, data.summarize]
+    Hypothesize: [op.list, model.list, data.summarize]
+    Analyze: [data.summarize, op.list, op.schema, op.run, model.list, model.schema]
+    Check: [data.summarize, op.schema, op.run, model.list, model.schema, model.predict]
+    Monitor: [data.describe, data.read_window, data.summarize, op.list, op.schema, op.run, model.list, model.schema, model.predict]
+    Revise: [data.describe, data.read_window, data.summarize, op.list, op.schema, op.run, model.list, model.schema, model.predict]
+    Recover: [data.describe, data.read_window, data.summarize, op.list, op.schema, op.run, model.list, model.schema, model.predict]
+    Submit: [submit]
+  base_state_precedence:
+    - "if all horizon samples have a successful model prediction: Submit"
+    - "else if the current released unpredicted sample has no successful window read: Inspect"
+    - "else if neither op.list nor model.list has succeeded in the episode: Hypothesize"
+    - "else if fewer than 11 successful current-sample op.run calls exist: Analyze"
+    - "else: Check"
+  full_router_precedence:
+    - "if the immediately preceding action errored: Recover"
+    - "else if the current observation carries a new operating_condition_change pulse: Monitor"
+    - "else if previous_state is Monitor: Revise"
+    - "else: use base_state_precedence"
+
+graph_profiles:
+  full:
+    agent_profile_id: graph_dynamic_full_v1
+    toggles:
+      recovery_revision_edge: true
+      observation_conditioned_branching: true
+      persistent_graph_state: true
+      replanning: true
+    reachable_states: [Inspect, Hypothesize, Analyze, Check, Monitor, Revise, Recover, Submit]
+    error_rule: enter_Recover
+    event_rule: enter_Monitor
+    post_monitor_rule: enter_Revise_after_next_non_error_non_event_observation
+    router_previous_state: retained
+    model_conversation_previous_state: retained
+    legal_transitions:
+      Inspect: [Inspect, Hypothesize, Analyze, Monitor, Recover]
+      Hypothesize: [Hypothesize, Analyze, Recover]
+      Analyze: [Analyze, Check, Recover]
+      Check: [Inspect, Check, Submit, Recover]
+      Monitor: [Monitor, Revise, Recover]
+      Revise: [Inspect, Hypothesize, Analyze, Check, Monitor, Submit, Recover]
+      Recover: [Inspect, Hypothesize, Analyze, Check, Monitor, Recover, Submit]
+      Submit: [Recover]
+
+  no_recovery_revision_edge:
+    agent_profile_id: graph_dynamic_no_recovery_revision_edge_v1
+    toggles:
+      recovery_revision_edge: false
+      observation_conditioned_branching: true
+      persistent_graph_state: true
+      replanning: true
+    reachable_states: [Inspect, Hypothesize, Analyze, Check, Monitor, Submit]
+    error_rule: recompute_base_state_without_forced_recovery
+    event_rule: enter_Monitor
+    post_monitor_rule: recompute_base_state_without_revision
+    router_previous_state: retained_but_not_used_for_revision
+    model_conversation_previous_state: retained
+    legal_transitions:
+      Inspect: [Inspect, Hypothesize, Analyze, Monitor]
+      Hypothesize: [Hypothesize, Analyze]
+      Analyze: [Analyze, Check]
+      Check: [Inspect, Check, Submit]
+      Monitor: [Inspect, Hypothesize, Analyze, Check, Monitor, Submit]
+      Submit: [Submit]
+
+  no_observation_conditioned_branching:
+    agent_profile_id: graph_dynamic_no_observation_conditioned_branching_v1
+    toggles:
+      recovery_revision_edge: true
+      observation_conditioned_branching: false
+      persistent_graph_state: true
+      replanning: true
+    reachable_states: [Inspect, Hypothesize, Analyze, Check, Recover, Submit]
+    error_rule: enter_Recover
+    event_rule: event_visible_to_model_but_router_recomputes_base_state
+    post_monitor_rule: not_applicable_Monitor_is_unreachable
+    router_previous_state: retained
+    model_conversation_previous_state: retained
+    legal_transitions:
+      Inspect: [Inspect, Hypothesize, Analyze, Recover]
+      Hypothesize: [Hypothesize, Analyze, Recover]
+      Analyze: [Analyze, Check, Recover]
+      Check: [Inspect, Check, Submit, Recover]
+      Recover: [Inspect, Hypothesize, Analyze, Check, Recover, Submit]
+      Submit: [Recover]
+
+  no_persistent_graph_state:
+    agent_profile_id: graph_dynamic_no_persistent_graph_state_v1
+    toggles:
+      recovery_revision_edge: true
+      observation_conditioned_branching: true
+      persistent_graph_state: false
+      replanning: true
+    reachable_states: [Inspect, Hypothesize, Analyze, Check, Monitor, Recover, Submit]
+    error_rule: enter_Recover_from_current_public_result_only
+    event_rule: enter_Monitor_for_the_current_event_pulse_only
+    post_monitor_rule: recompute_base_state_without_previous_state
+    router_previous_state: forbidden
+    model_conversation_previous_state: forbidden
+    conversation_rebuild:
+      every_turn: true
+      retain_shared_public_action_result_history: true
+      retain_prior_public_event_observations: true
+      strip_prior_decision_state_fields: true
+      strip_prior_state_guidance_messages: true
+      include_current_state_guidance_once: true
+    legal_transitions:
+      Inspect: [Inspect, Hypothesize, Analyze, Monitor, Recover]
+      Hypothesize: [Hypothesize, Analyze, Recover]
+      Analyze: [Analyze, Check, Recover]
+      Check: [Inspect, Check, Submit, Recover]
+      Monitor: [Inspect, Hypothesize, Analyze, Check, Monitor, Recover, Submit]
+      Recover: [Inspect, Hypothesize, Analyze, Check, Monitor, Recover, Submit]
+      Submit: [Recover]
+
+  no_replanning:
+    agent_profile_id: graph_dynamic_no_replanning_v1
+    toggles:
+      recovery_revision_edge: true
+      observation_conditioned_branching: true
+      persistent_graph_state: true
+      replanning: false
+    reachable_states: [Inspect, Hypothesize, Analyze, Check, Monitor, Recover, Submit]
+    error_rule: enter_Recover
+    event_rule: enter_Monitor
+    post_monitor_rule: resume_base_state_without_Revise
+    router_previous_state: retained_but_not_used_for_replanning
+    model_conversation_previous_state: retained
+    legal_transitions:
+      Inspect: [Inspect, Hypothesize, Analyze, Monitor, Recover]
+      Hypothesize: [Hypothesize, Analyze, Recover]
+      Analyze: [Analyze, Check, Recover]
+      Check: [Inspect, Check, Submit, Recover]
+      Monitor: [Inspect, Hypothesize, Analyze, Check, Monitor, Recover, Submit]
+      Recover: [Inspect, Hypothesize, Analyze, Check, Monitor, Recover, Submit]
+      Submit: [Recover]
+
+experiment_design:
+  seeds: [20260808, 20260809, 20260810]
+  rotations: [rotation_0]
+  cells_per_seed_sequence:
+    horizon_3: [reactive, graph_full]
+    horizon_6: [reactive, graph_full]
+    horizon_12:
+      - reactive
+      - graph_full
+      - graph_no_recovery_revision_edge
+      - graph_no_observation_conditioned_branching
+      - graph_no_persistent_graph_state
+      - graph_no_replanning
+  total_cells_per_seed_sequence: 10
+  total_sequences_per_cell: 24
+  expected_formal_episode_bundles: 240
+  contrasts:
+    P2-E2:
+      cells: graph_full_minus_reactive_at_each_horizon
+      interaction: "(graph_full - reactive) at h=12 minus the same difference at h=3"
+    P2-E3:
+      cells: graph_full_minus_graph_no_recovery_revision_edge_at_horizon_12
+    P2-E4:
+      cells: graph_full_minus_graph_no_observation_conditioned_branching_at_horizon_12
+    P2-E5:
+      cells: graph_full_minus_graph_no_persistent_graph_state_at_horizon_12
+    P2-E6:
+      cells: graph_full_minus_graph_no_replanning_at_horizon_12
+    P2-E7:
+      cells: >-
+        graph_full, reactive, and graph_no_observation_conditioned_branching
+        at horizon 12, conditioned only on registered operating-condition
+        event deliveries
+  reuse_rule: >-
+    A frozen cell may serve multiple preregistered contrasts, but an episode is
+    stored once and never duplicated in a denominator.
+
+budgets:
+  scaling_rule:
+    max_tool_calls: "24 * horizon"
+    max_window_reads: horizon
+    max_operator_calls: "(50 * horizon) / 3"
+    max_model_calls: horizon
+    max_llm_turns: "24 * horizon"
+    max_data_points: "8192 * horizon"
+    max_data_bytes: "65536 * horizon"
+    max_wall_clock_seconds: null
+  by_horizon:
+    3:
+      max_tool_calls: 72
+      max_window_reads: 3
+      max_operator_calls: 50
+      max_model_calls: 3
+      max_llm_turns: 72
+      max_data_points: 24576
+      max_data_bytes: 196608
+      max_wall_clock_seconds: null
+    6:
+      max_tool_calls: 144
+      max_window_reads: 6
+      max_operator_calls: 100
+      max_model_calls: 6
+      max_llm_turns: 144
+      max_data_points: 49152
+      max_data_bytes: 393216
+      max_wall_clock_seconds: null
+    12:
+      max_tool_calls: 288
+      max_window_reads: 12
+      max_operator_calls: 200
+      max_model_calls: 12
+      max_llm_turns: 288
+      max_data_points: 98304
+      max_data_bytes: 786432
+      max_wall_clock_seconds: null
+
+runtime_and_provider_profile:
+  base_runtime_contract: phase1_opaque_sample_vibration_feature_schema_v6
+  event_extension_contract: phase1_public_condition_event_v1
+  effective_runtime_contract: phase1_graph_dynamic_ablation_v1
+  formal_provider_profile_id: openrouter_north_graph_dynamic_ablation_v1
+  provider: openrouter-free
+  model: cohere/north-mini-code:free
+  protocol: openai_chat_completions
+  input_usd_per_million: 0.0
+  output_usd_per_million: 0.0
+  route_switch_within_profile: forbidden
+  model_switch_within_profile: forbidden
+  resume_key:
+    - effective_runtime_contract
+    - provider
+    - model
+    - seed
+    - rotation
+    - public_sequence_id
+    - horizon
+    - agent_profile_id
+  separate_from_active_primary_profile: true
+  pool_with_active_paderborn_v6_primary: false
+  pool_across_provider_model_or_runtime_profiles: false
+  free_quota_failure_policy: >-
+    Retain the failed episode, stop the provider-bound process, and resume the
+    same frozen profile from the first incomplete unit only after a same-profile
+    two-turn tool probe passes. Never silently switch route or model.
+
+metrics:
+  primary:
+    name: grounded_completion_rate
+    unit: episode
+    denominator: every_scheduled_episode_including_failure_partial_timeout_and_budget_exhaustion
+  task_outcomes:
+    - window_average_precision_over_grounded_submissions
+    - completion_adjusted_window_average_precision
+    - window_auroc_over_grounded_submissions
+    - false_alarm_rate
+    - true_positive_rate
+  dynamic_behavior:
+    - operating_condition_event_delivery_count
+    - event_to_Monitor_transition_rate
+    - event_to_Revise_transition_rate
+    - steps_from_event_to_next_successful_action
+    - steps_from_event_to_next_model_prediction
+    - post_event_repeated_action_ratio
+    - post_event_budget_exhaustion_rate
+  general_rollout:
+    - valid_tool_call_rate
+    - invalid_action_rate
+    - valid_state_transition_rate
+    - grounded_recovery_success
+    - steps_to_next_success_after_failure
+    - repeated_action_ratio
+    - loop_incidence
+    - steps
+    - llm_turns
+    - input_tokens
+    - output_tokens
+    - wall_clock_latency
+    - estimated_model_cost_usd
+  forbidden_metrics:
+    - event_f1
+    - detection_delay
+    - time_to_fault_detection
+  missing_metric_policy: report_undefined_not_zero
+
+statistics:
+  paired_unit: [seed, rotation, public_sequence_id, horizon]
+  primary_direction: graph_or_full_profile_minus_control_or_ablation
+  bearing_cluster_handling: >-
+    Average repeated seeds within the evaluator-private bearing cluster before
+    exact paired permutation; use the same cluster in every matched arm.
+  exact_paired_permutation: all_256_sign_assignments_for_8_rotation_0_bearings
+  interval_method: paired_cluster_bootstrap
+  bootstrap_iterations: 10000
+  bootstrap_seed: 20260813
+  confidence_level: 0.95
+  multiplicity:
+    ablation_family: Holm
+    horizon_interaction_family: Holm
+  report_regardless_of_direction: true
+
+output_contract:
+  mechanics_root: paper/experiments/runs/mechanics/graph_dynamic_ablation_v1/mock_acceptance
+  mechanics_gate: paper/experiments/runs/mechanics/graph_dynamic_ablation_v1/mock_acceptance/gate.json
+  formal_root: paper/experiments/runs/formal/graph_dynamic_ablation_v1/openrouter_north_graph_dynamic_ablation_v1
+  results_root: paper/experiments/results/graph_dynamic_ablation_v1/openrouter_north_graph_dynamic_ablation_v1
+  event_catalog: paper/experiments/results/graph_dynamic_ablation_v1/openrouter_north_graph_dynamic_ablation_v1/public_event_catalog.json
+  episode_leaf_pattern: >-
+    {formal_root}/{agent_profile_id}/seed_{seed}/{rotation}/horizon_{horizon}/episodes/{public_sequence_id}/attempt_{attempt_index}
+  canonical_episode_files:
+    - run.json
+    - rollout.jsonl
+    - submission.json
+    - metrics.json
+    - failures.jsonl
+    - artifacts.json
+  root_rollout_jsonl_forbidden: true
+  evidence_classes:
+    mechanics: mechanics_only_not_performance_evidence
+    formal: real_data_formal_candidate
+
+acceptance_gates:
+  static_protocol:
+    required_test: tests/test_graph_dynamic_protocol.py
+    requirements:
+      - yaml_parses
+      - cross_field_counts_match
+      - legal_transition_targets_are_reachable
+      - no_fault_onset_event_is_registered
+      - no_persistent_profile_forbids_prior_state_in_model_conversation
+  construction:
+    requirements:
+      - eight_rotation_0_master_sequences
+      - every_horizon_is_an_exact_master_prefix
+      - expected_domain_schedule_matches_all_eight_sequences
+      - change_indices_are_exactly_3_6_9
+      - event_catalog_contains_72_unique_logical_events
+      - no_event_is_delivered_before_release
+  provider_free_mock:
+    acceptance_gate_passed: true
+    current_implementation_evidence: materialized_ten_cell_exact_six_mock_acceptance
+    gate: paper/experiments/runs/mechanics/graph_dynamic_ablation_v1/mock_acceptance/gate.json
+    runner: scripts/run_graph_dynamic_mock_acceptance.py
+    provider_calls_allowed: false
+    seed: 20260808
+    rotation: rotation_0
+    public_sequences: 1
+    matrix_cells: 10
+    expected_episode_bundles: 10
+    required_profiles:
+      - reactive
+      - graph_full
+      - graph_no_recovery_revision_edge
+      - graph_no_observation_conditioned_branching
+      - graph_no_persistent_graph_state
+      - graph_no_replanning
+    requirements:
+      - exact_six_file_canonical_bundle_per_episode
+      - matched_event_payloads_and_release_indices
+      - future_samples_and_events_are_inaccessible
+      - every_observed_transition_is_legal_for_its_profile
+      - no_persistent_outbound_requests_contain_prior_graph_state_or_guidance
+      - evidence_class_is_mechanics_only_not_performance_evidence
+    performance_claims_allowed: false
+  formal_preflight:
+    requirements:
+      - implementation_status_is_provider_free_ready_and_formal_not_run
+      - provider_free_mock_gate_passed
+      - same_profile_two_turn_tool_probe_passed
+      - one_provider_bound_runner_only
+      - output_roots_are_empty_or_canonically_resumable
+  formal_cohort:
+    expected_episode_bundles: 240
+    expected_episodes_per_cell: 24
+    failures_retained_in_denominator: true
+    requirements:
+      - no_duplicate_episode_keys
+      - no_cross_profile_pooling
+      - reactive_and_graph_event_schedules_match_exactly
+      - metrics_recompute_from_canonical_bundles
+      - all_profile_specific_transition_checks_pass
+      - claim_result_matrix_matches_observed_direction_and_uncertainty
+
+formal_analysis:
+  analyzer: scripts/analyze_graph_dynamic_formal.py
+  event_catalog_command: >-
+    python scripts/analyze_graph_dynamic_formal.py catalog
+  event_catalog_schema: graph_dynamic_public_event_catalog_v1
+  acceptance_schema: graph_dynamic_formal_acceptance_v1
+  result_schema: graph_dynamic_formal_result_v1
+  provider_calls_allowed: false
+  manifest_proof_fields:
+    - provider_profile_id
+    - provider
+    - model
+    - inference_protocol
+    - thinking_mode
+    - temperature
+    - max_output_tokens_per_turn
+    - input_usd_per_million
+    - output_usd_per_million
+  failure_and_attempt_contract:
+    canonical_terminal_statuses:
+      - submitted
+      - stopped
+      - partial
+      - failed
+      - timeout
+      - budget_exhausted
+      - invalid_submission
+    canonical_failure_kinds:
+      - provider_error
+      - agent_decision_error
+      - invalid_action
+      - tool_error
+      - timeout
+      - budget_exhausted
+      - invalid_submission
+    provider_failure_kind: provider_error
+    effective_non_provider_terminal_per_unit: exactly_one
+    provider_failures_before_effective_terminal: retained_as_immutable_attempts
+    unresolved_provider_failure: cohort_incomplete
+    non_provider_failure_policy: retain_in_denominator
+    attempt_indices: contiguous_zero_based
+    attempts_after_effective_terminal: forbidden
+  identity_and_grouping:
+    absolute_cell_key: [horizon, agent_profile_id]
+    paired_episode_key: [seed, rotation, public_sequence_id, horizon]
+    pool_episode_rows_across_horizons: false
+    pooled_headline_graph_effect_across_horizons: forbidden
+    pool_across_agent_profiles: false
+    pool_across_provider_model_or_runtime_profiles: false
+    p2_e7_reuses_registered_horizon_12_rows_without_duplication: true
+  statistical_clarifications:
+    seed_reduction: average_registered_seed_differences_within_public_sequence_cluster
+    incomplete_seed_cluster: report_undefined_unless_all_3_registered_seed_pairs_are_defined
+    exact_permutation_tail: two_sided_absolute_mean_cluster_difference
+    exact_permutation_assignments: enumerate_all_256_sign_assignments
+    bootstrap_unit: public_sequence_cluster
+    bootstrap_draw: sample_8_clusters_with_replacement
+    bootstrap_interval: percentile_2.5_97.5
+    undefined_metric_policy: report_null_and_defined_numerator_never_impute_zero
+    holm_unit: separately_within_each_registered_outcome
+    ablation_family: [P2-E3, P2-E4, P2-E5, P2-E6]
+    horizon_interaction_family: [P2-E2_h12_minus_h3]
+
+amendment_policy:
+  allowed_after_formal_results_observed: false
+  required_for_change: new_versioned_protocol_before_any_affected_formal_inference
+  changes_requiring_new_version:
+    - event_derivation
+    - event_id_semantics
+    - sequence_or_horizon_construction
+    - state_or_transition_semantics
+    - profile_toggle_semantics
+    - seeds
+    - budgets
+    - task
+    - metric_or_statistical_method
+    - provider_model_protocol_or_runtime_contract

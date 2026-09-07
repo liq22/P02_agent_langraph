@@ -23,6 +23,37 @@ Use these first unless you are debugging one lower layer on purpose.
 - `dev_start_agent_app.sh`: local agent UI startup entrypoint
 - `validate_research_truth.py`: final submission check, not a framework-health check
 
+### Active Paper experiment entrypoints
+
+- `run_graph_experiment.py`: matched Reactive/Graph single-arm runner
+- `analyze_graph_dynamic_formal.py`: accepted-only P2-E2--E7 analyzer; rebuilds
+  registered private DataPort assignments, uses canonical rollout submit
+  prefixes as prediction truth, and ignores derived `evaluation.jsonl`
+  authority
+- `render_graph_dynamic_manuscript.py`: provider-free dynamic-v3 accepted-result
+  consumer; revalidates the 240-unit gate and independently recomputes eight
+  task-primary plus 26 separately labeled P2-E3--P2-E7 mechanism rows,
+  including paired-cluster arithmetic, intervals, exact tests, and per-metric
+  Holm families, before updating the table, task-primary SVG, and marked
+  manuscript block as a group with exception rollback
+- `schedule_graph_cross_dataset_replay.py`: provider-free P2-E8 Ottawa source,
+  runtime, analyzer, and 18-command dry preflight
+- `analyze_graph_cross_dataset_replay.py`: accepted-only P2-E8 analyzer; no
+  metric is emitted before exact 36-pair private-assignment validation
+- `render_graph_cross_dataset_manuscript.py`: provider-free P2-E8 accepted-result
+  consumer; revalidates the 72-bundle/36-pair Ottawa-only gate, target-adverse
+  window accounting, displayed task deltas, and bootstrap metadata before an
+  grouped table, SVG, and manuscript-marker replacement with exception rollback
+- `schedule_graph_reliability.py`: provider-free P2-E9 dry schedule and
+  exact-160 acceptance gate
+- `analyze_graph_reliability.py`: accepted-only P2-E9 task-primary analyzer;
+  rebuilds private DataPort targets and recomputes repeat-level target-adverse
+  AP from canonical rollout submit prefixes
+- `render_graph_reliability_manuscript.py`: provider-free P2-E9 accepted-result
+  consumer; revalidates the isolated 160-bundle/80-pair cohort, repeat-level
+  task-primary deltas, pass projections, and selected cost outcomes before an
+  grouped table, SVG, and manuscript-marker replacement with exception rollback
+
 ### Projection pipeline
 
 These scripts build derived views and are normally called by `refresh_views.py`.

@@ -1,0 +1,267 @@
+extends_protocol: graph_dynamic_ablation_protocol_v2.yaml
+schema_version: graph_dynamic_ablation_protocol_v3
+protocol_id: paderborn_graph_dynamic_ablation_v3
+status: preregistered_task_primary_metric_amendment_formal_not_run
+frozen_date: "2026-09-01"
+
+authority:
+  scope_note: >-
+    Version 3 supersedes the unexecuted v2 formal profile before any affected
+    provider inference. It keeps the v2 Generic-derived agent construction,
+    event schedule, horizons, cells, seeds, budgets, and tool surface, but
+    repairs the primary estimand to the Benchmark-registered target-adverse
+    assigned-window replay metric required by CORE.md. V1 and v2 roots remain
+    historical and are never resumed or pooled into this profile.
+
+implementation_status:
+  formal_provider_execution_started: false
+  formal_results_exist: false
+  task_primary_metric_contract_implemented: true
+  provider_free_metric_regression_passed: true
+  private_data_port_assignment_authority_implemented: true
+  canonical_rollout_submit_prefix_prediction_authority_implemented: true
+  derived_evaluation_jsonl_is_target_or_prediction_authority: false
+  accepted_manuscript_consumer_implemented: true
+  accepted_mechanism_reporting_implemented: true
+  provider_free_manuscript_consumer_tests_passed: true
+  allowed_current_evidence:
+    - protocol_parse_and_cross_field_tests
+    - generic_public_condition_event_environment_tests
+    - generic_base_graph_profile_and_conversation_tests
+    - provider_free_single_unit_runner_contract_tests
+    - materialized_ten_cell_exact_six_generic_base_v2_mock_acceptance
+    - provider_free_240_unit_v3_formal_schedule_validation
+    - provider_free_assigned_window_metric_and_cluster_inference_tests
+    - provider_free_private_assignment_and_derived_target_tamper_tests
+    - provider_free_accepted_result_manuscript_consumer_tests
+    - provider_free_240_unit_analyzer_to_mechanism_consumer_integration
+  prohibited_current_claims:
+    - completed_ablation
+    - graph_performance_effect
+    - completed_formal_cohort
+
+runtime_and_provider_profile:
+  effective_runtime_contract: phase1_graph_dynamic_generic_ablation_v3
+  formal_provider_profile_id: openrouter_north_graph_dynamic_generic_ablation_v3
+  separate_from_active_primary_profile: true
+  pool_with_active_paderborn_v6_primary: false
+  pool_across_provider_model_or_runtime_profiles: false
+
+metrics:
+  primary:
+    name: target_adverse_window_average_precision
+    unit: protocol_assigned_replay_window
+    denominator: every_protocol_assigned_window_including_failed_partial_timeout_budget_exhausted_and_invalid_submission_episodes
+    missing_score_policy_id: phase1_replay_target_adverse_missing_score_v1
+    seed_level_population: all_eight_matched_heldout_bearing_sequences_within_one_seed_horizon_condition
+  task_outcomes:
+    - target_adverse_window_average_precision
+    - target_adverse_window_auroc
+    - target_adverse_false_alarm_rate
+    - target_adverse_true_positive_rate
+    - replay_score_coverage
+  dynamic_behavior:
+    - operating_condition_event_delivery_count
+    - event_to_Monitor_transition_rate
+    - event_to_Revise_transition_rate
+    - steps_from_event_to_next_successful_action
+    - steps_from_event_to_next_model_prediction
+    - post_event_repeated_action_ratio
+    - post_event_budget_exhaustion_rate
+  general_rollout:
+    - grounded_completion_rate
+    - valid_tool_call_rate
+    - invalid_action_rate
+    - valid_state_transition_rate
+    - grounded_recovery_success
+    - steps_to_next_success_after_failure
+    - repeated_action_ratio
+    - loop_incidence
+    - steps
+    - llm_turns
+    - input_tokens
+    - output_tokens
+    - wall_clock_latency
+    - estimated_model_cost_usd
+  forbidden_metrics:
+    - event_f1
+    - detection_delay
+    - time_to_fault_detection
+  missing_metric_policy: target_adverse_for_task_metrics_report_undefined_for_other_metrics
+
+statistics:
+  paired_unit: [seed, rotation, public_sequence_id, horizon]
+  primary_estimand: >-
+    Mean across the three registered seeds of the within-seed difference in
+    target-adverse Average Precision, where each condition's AP is recomputed
+    over all protocol-assigned windows from the same eight held-out bearing
+    sequences at one horizon.
+  primary_direction: graph_or_full_profile_minus_control_or_ablation
+  bearing_cluster_handling: >-
+    Resample or swap the eight matched evaluator-private bearing sequence
+    clusters jointly across arms and seeds, then recompute the nonlinear
+    assigned-window metric. Never average per-bearing AP values.
+  exact_paired_permutation: all_256_matched_bearing_cluster_arm_swaps_with_metric_recomputation
+  interval_method: paired_bearing_cluster_bootstrap_with_metric_recomputation
+  bootstrap_iterations: 10000
+  bootstrap_seed: 20260813
+  confidence_level: 0.95
+  multiplicity:
+    ablation_family: Holm
+    horizon_interaction_family: Holm
+  report_regardless_of_direction: true
+
+output_contract:
+  formal_root: paper/experiments/runs/formal/graph_dynamic_ablation_v3/openrouter_north_graph_dynamic_generic_ablation_v3
+  results_root: paper/experiments/results/graph_dynamic_ablation_v3/openrouter_north_graph_dynamic_generic_ablation_v3
+  event_catalog: paper/experiments/results/graph_dynamic_ablation_v3/openrouter_north_graph_dynamic_generic_ablation_v3/public_event_catalog.json
+  formal_acceptance: paper/experiments/results/graph_dynamic_ablation_v3/openrouter_north_graph_dynamic_generic_ablation_v3/formal_acceptance.json
+  formal_result: paper/experiments/results/graph_dynamic_ablation_v3/openrouter_north_graph_dynamic_generic_ablation_v3/formal_result.json
+  accepted_manuscript_table: paper/assets/tables/p2_dynamic_formal_results.md
+  accepted_manuscript_figure: paper/assets/figures/p2_dynamic_formal_primary.svg
+  accepted_manuscript: paper/draft/main.md
+
+formal_analysis:
+  event_catalog_schema: graph_dynamic_public_event_catalog_v3
+  acceptance_schema: graph_dynamic_formal_acceptance_v3
+  result_schema: graph_dynamic_formal_result_v3
+  accepted_manuscript_consumer:
+    entrypoint: scripts/render_graph_dynamic_manuscript.py
+    render_schema: p2_dynamic_formal_manuscript_render_v2
+    acceptance_required: true
+    complete_episode_bundles_required: 240
+    task_primary_rows_after_acceptance: 8
+    secondary_mechanism_rows_after_acceptance: 26
+    raw_run_or_private_data_reads: false
+    provider_calls: false
+    displayed_primary_arithmetic_recomputed: true
+    displayed_mechanism_arithmetic_recomputed: true
+    displayed_holm_adjustment_recomputed: true
+    task_primary_and_mechanism_sections_separate: true
+    valid_bootstrap_replicates_reported: true
+    existing_output_contract: absent_or_ordinary_single_link_regular_file
+    production_cli_protocol: graph_dynamic_ablation_protocol_v3.yaml
+    write_contract: fully_staged_mode_preserving_grouped_replace_with_reverse_rollback
+    focused_tests: tests/test_render_graph_dynamic_manuscript.py
+    mechanism_reporting:
+      role: secondary_explanatory_not_task_performance
+      horizon: 12
+      direction: graph_full_minus_control
+      ablation_rows:
+        P2-E3:
+          control: graph_no_recovery_revision_edge
+          metrics:
+            - event_to_Revise_transition_rate
+            - grounded_recovery_success
+            - steps_to_next_success_after_failure
+        P2-E4:
+          control: graph_no_observation_conditioned_branching
+          also_serves_p2_e7_no_branching_comparison: true
+          metrics:
+            - operating_condition_event_delivery_count
+            - event_to_Monitor_transition_rate
+            - event_to_Revise_transition_rate
+            - steps_from_event_to_next_successful_action
+            - steps_from_event_to_next_model_prediction
+            - post_event_repeated_action_ratio
+            - post_event_budget_exhaustion_rate
+        P2-E5:
+          control: graph_no_persistent_graph_state
+          metrics:
+            - event_to_Revise_transition_rate
+            - post_event_repeated_action_ratio
+            - repeated_action_ratio
+            - loop_incidence
+        P2-E6:
+          control: graph_no_replanning
+          metrics:
+            - event_to_Revise_transition_rate
+            - steps_from_event_to_next_successful_action
+            - steps_from_event_to_next_model_prediction
+            - post_event_repeated_action_ratio
+            - post_event_budget_exhaustion_rate
+      operating_condition_change_rows:
+        experiment_id: P2-E7
+        control: reactive
+        metrics:
+          - operating_condition_event_delivery_count
+          - event_to_Monitor_transition_rate
+          - event_to_Revise_transition_rate
+          - steps_from_event_to_next_successful_action
+          - steps_from_event_to_next_model_prediction
+          - post_event_repeated_action_ratio
+          - post_event_budget_exhaustion_rate
+        no_branching_source_reused_from: P2-E4
+        duplicate_no_branching_rows: false
+        forbidden_interpretations:
+          - fault_onset
+          - event_f1
+          - detection_delay
+          - physical_time
+  evaluator_authority:
+    dataset_protocol_id: paderborn_phase1_v1
+    dataset_protocol_schema: phm_agent_dataset_protocol_v1
+    dataset_id: paderborn-bearing-datacenter
+    provider_name: RM_027_PU
+    evaluator_assignment_contract: phase1_registered_data_port_assignment_v1
+    sample_handle_scheme: seeded_permutation_v1
+    sample_handle_seed: 20260808
+    split_strategy: bearing_grouped_cyclic_four_fold
+    monitoring_task_id: online_replay_monitoring
+    missing_score_policy_id: phase1_replay_target_adverse_missing_score_v1
+    target_source: registered_private_data_port_assignment
+    prediction_source: canonical_rollout_successful_submit_prefix
+    derived_evaluation_jsonl_ingested: false
+    private_paths_serialized: false
+  statistical_clarifications:
+    seed_level_task_metric: recompute_over_all_eight_assigned_bearing_sequences
+    primary_point_estimate: mean_of_three_seed_level_paired_differences
+    exact_permutation_unit: matched_bearing_sequence_cluster
+    exact_permutation_assignments: enumerate_all_256_joint_arm_swaps_and_recompute_metric
+    bootstrap_unit: matched_bearing_sequence_cluster
+    bootstrap_draw: sample_8_clusters_with_replacement_jointly_across_arms_and_seeds
+    bootstrap_interval: percentile_2.5_97.5_over_valid_metric_recomputations
+    failed_window_policy: phase1_replay_target_adverse_missing_score_v1
+    per_bearing_average_precision: forbidden
+    cross_horizon_pooling: forbidden
+
+formal_scheduler:
+  schema_version: graph_dynamic_formal_schedule_v3
+  entrypoint: scripts/schedule_graph_dynamic_formal_v2.py
+  unit_id_format: "p2-dynamic-v3-%04d"
+  runner:
+    path: scripts/run_graph_dynamic_formal_v2.py
+    execution_contract: phase1_graph_dynamic_formal_generic_v3
+    dynamic_protocol_argument: paper/experiments/graph_dynamic_ablation_protocol_v3.yaml
+    probe_evidence_default: /tmp/openrouter_north_graph_dynamic_v3_two_turn_probe.json
+    lock_file_default: /tmp/p2_graph_dynamic_v3_formal.lock
+    required_identity_literals:
+      - phase1_graph_dynamic_formal_generic_v3
+      - p2_graph_vs_generic_llm_v1
+      - benchmark_generic_llm_tool_agent_v1
+      - graph_decision_control_v1
+      - reactive_sequential_agent_v1
+      - graph_decision_agent_v1
+      - reactive-sequential-agent
+      - graph-decision-agent
+      - phase1_graph_dynamic_generic_ablation_v3
+  readiness_gate:
+    current_expected_state: ready_for_provider_free_validation_formal_not_started
+
+amendment:
+  supersedes_unexecuted_protocol: paderborn_graph_dynamic_ablation_v2
+  affected_v2_formal_episode_bundles_observed: 0
+  provider_calls_performed_for_this_amendment: 0
+  unchanged:
+    - dataset_and_split
+    - public_sequence_and_event_construction
+    - horizons_and_cells
+    - seeds_and_budgets
+    - control_and_treatment_agents
+    - provider_model_temperature_and_tool_surface
+  changed:
+    - task_primary_metric
+    - missing_window_denominator
+    - nonlinear_metric_aggregation
+    - paired_cluster_inference
+    - formal_identity_and_output_root

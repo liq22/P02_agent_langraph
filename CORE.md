@@ -3,297 +3,243 @@
 **Status:** active authority  
 **Repository:** `liq22/P02_agent_langraph`  
 **Shared benchmark:** `liq22/phm-agent-benchmark`  
-**Updated:** 2026-08-12
+**Current method profile:** persistent decision state + state-dependent tool visibility  
+**Updated:** 2026-09-07
 
-## 1. Authority
+## 1. Scientific position in the three-paper program
 
-```text
-CORE.md
-  > graph / experiment / model protocol files
-  > public method and adapter documents
-  > README.md
-  > AGENTS.md / CLAUDE.md
-  > Goal, generated graph, reviewer, handoff, UI, and historical manuscript files
-```
+Paper 0 fixes the PHM world and evaluator. Paper 2 changes the decision-control factor used by a matched Generic Agent.
 
-This document freezes the Paper 2 scientific object. Model names, dataset splits, graph hyperparameters, seeds, and run paths belong in protocol files.
+Let
 
-## 2. One-sentence definition
+$$
+\pi(a_t\mid o_{\le t};M,H,K,G)
+$$
 
-Paper 2 studies whether a compact, observation-conditioned PHM decision graph improves fault/anomaly decisions in long-horizon rollouts relative to a matched sequential or reactive agent.
+be the Agent policy. Paper 2 compares
 
-## 3. Scientific question
+$$
+\pi_{\mathrm{reactive}}(M,H,K=K_0,G=\varnothing)
+\quad\text{with}\quad
+\pi_{\mathrm{graph}}(M,H,K=K_0,G=\mathcal G),
+$$
 
-> Under matched PHM tasks, data, tools, model profile, budget, and evaluator, does graph-structured decision control improve task performance and produce more stable and efficient long-horizon PHM rollouts?
+under the same Benchmark task, data-release sequence, tools, model/provider condition, budget, run policy, and evaluator.
 
-The paper is not about AutoResearch node governance, manuscript scheduling, Canvas/UI systems, claim-evidence registries, or a general LangGraph platform.
+The benchmark must run without GraphDecisionAgent installed. Paper 2 does not redefine `TaskSpec`, DataPort semantics, `CanonicalAction`, Budget, Rollout, or task metrics.
 
-## 4. Repository responsibility
+## 2. Research question
 
-`P02_agent_langraph` owns both Paper 2 authority and the active GraphDecisionAgent implementation:
+> **Does explicit persistent graph control improve long-horizon PHM task performance or rollout stability relative to the same reactive Generic Agent under a matched benchmark condition?**
 
-```text
-GraphDecisionAgent adapter
-library-independent decision-graph representation
-state variables and transition semantics
-observation-conditioned branch policy
-decision revision and replanning
-method-specific operator or state extensions
-ablations
-experiments, analysis, figures, tables, and manuscript
-```
+The paper is not about using LangGraph as a software library. A workflow graph alone is not the contribution.
 
-The historical `PHMbench/PHMGA` submodule may remain as reference material during migration but is not the active Paper 2 authority or required runtime. Do not create a fifth repository merely for the first GraphDecisionAgent implementation.
+## 3. Scientific object
 
-Paper 2 imports, without redefining:
-
-```text
-TaskSpec
-DataPort boundary
-Observation
-CanonicalAction
-operator and numerical-expert contracts
-Budget
-RolloutEvent
-Submission
-Evaluator interface and task metrics
-```
-
-The benchmark must run without GraphDecisionAgent installed.
-
-## 5. Graph object
-
-The scientific object is library-independent:
+The method is library-independent:
 
 $$
 \mathcal G=(V,E,s_0,\phi,\psi),
 $$
 
-where:
+where
 
-- $V$ is a small set of PHM decision states;
-- $E$ is the legal transition relation;
+- $V$ is a compact PHM decision-state set;
+- $E$ is the legal state-transition relation;
 - $s_0$ is the initial state;
-- $\phi$ maps benchmark observations and current graph state to candidate transitions;
-- $\psi$ selects the next canonical action or terminal submission.
+- $\phi$ maps public observations and current state to the next state;
+- $\psi$ maps state and public context to a Benchmark `CanonicalAction`.
 
-LangGraph may implement this object, but the paper contribution is not “using LangGraph.”
-
-## 6. Primary task scope
+The current treatment jointly adds
 
 ```text
-primary: online/replay monitoring and streaming fault/anomaly diagnosis
+1. an explicit current-state policy suffix / persistent decision context;
+2. state-dependent visibility over the same global Benchmark tool schemas.
+```
+
+The main treatment must therefore be described as a **joint graph-control intervention**. It is not a pure topology effect unless a registered mechanism experiment separates state context from tool filtering.
+
+## 4. Base and dynamic profiles
+
+The declared graph contains eight named states:
+
+```text
+Inspect
+Hypothesize
+Analyze
+Check
+Monitor
+Revise
+Recover
+Submit
+```
+
+The current base-v6 formal profile reaches six states:
+
+```text
+Inspect
+Hypothesize
+Analyze
+Check
+Recover
+Submit
+```
+
+`Monitor` and `Revise` belong to a separate dynamic profile driven by a declared public operating-condition event. A base-v6 result must not be described as dynamic monitoring/replanning when those states are unreachable in that condition.
+
+The dynamic profile does not reveal a hidden fault label, onset, severity, or evaluator target. It tests response to a public condition change and observable action history.
+
+## 5. Primary comparison
+
+```text
+Control:   B3 matched Sequential/Reactive Generic Agent
+Treatment: M2 same Generic Agent + joint graph control
+```
+
+Fix:
+
+```text
+backbone model and provider/runtime condition
+generic prompt information outside graph state
+TaskSpec and dataset split
+released data sequence
+global tool and numerical-expert catalog
+budget
+temperature / seed / run policy
+evaluator and statistical unit
+```
+
+The graph may change current-state context and which existing tool schemas are visible at a step. It must not edit tool outputs, access private targets, add treatment-only numerical experts, or choose an action outside the Benchmark boundary.
+
+## 6. What Paper 2 must establish
+
+### P2-C1 — Persistent decision control
+
+**Claim.** Explicit state preserves useful PHM decision context across a long rollout.
+
+**Evidence.** Matched reactive/graph cohorts and a no-persistent-state condition. Task performance remains primary; state-transition traces explain the mechanism.
+
+### P2-C2 — Observation-conditioned revision
+
+**Claim.** Graph control can redirect an unproductive PHM decision path when a later public observation or declared condition contradicts the current working state.
+
+**Evidence.** Dynamic-profile runs and no-revision/no-replanning ablations. Natural public data/decision conditions are preferred over artificial software-error injection.
+
+### P2-C3 — Mechanism attribution
+
+**Claim.** Any graph-control effect is associated with persistent state, tool visibility, or their combination.
+
+**Evidence.** The full joint intervention is the main treatment. State-only and filtering-only conditions are required before attributing an effect specifically to topology or one component.
+
+### P2-C4 — Horizon-dependent utility
+
+**Claim.** Persistent control should matter more when the rollout is long enough for memory, revision, and repeated work to accumulate.
+
+**Evidence.** Short/medium/long replay analysis or an equivalent registered horizon experiment using the same task condition.
+
+## 7. Registered task scope
+
+```text
+primary setting: ordered replay / long-horizon monitoring
 auxiliary: cold-start fault diagnosis
 auxiliary: unsupervised anomaly detection
 ```
 
-The graph is expected to be most useful when the agent must retain state, revisit hypotheses, react to new data, and make a time-ordered sequence of decisions. RUL is excluded from the first paper.
+The current replay task uses the Benchmark's assigned-window metric contract. Event-F1 and detection delay are not claimed without a dataset protocol that supplies the required event-time annotations.
 
-## 7. Minimal decision graph
+RUL is outside the first paper.
 
-A compact Phase-1 topology is:
+## 8. State and transition record
 
-```text
-ORIENT
-→ QUERY
-→ ANALYZE
-→ DECIDE
-→ SUBMISSION_CHECK
-→ SUBMIT
-```
-
-Observation-conditioned edges may return to:
+The method may retain only public decision state:
 
 ```text
-QUERY
-ANALYZE
-DECIDE
+current state
+released sample/window handle
+selected public artifact references
+working public hypothesis summary
+last action/result status
+remaining budget
+public condition event when registered
 ```
 
-A dedicated `REVISE` or `RECOVER` state may be used when the current hypothesis or branch is contradicted by new data. Keep the graph small; do not create one node per function, schema field, or hypothetical exception.
-
-## 8. State and transition contract
-
-A graph state minimally contains:
-
-```yaml
-state_id:
-benchmark_observation_ref:
-selected_artifact_refs:
-working_hypotheses:
-last_action_status:
-remaining_budget:
-data_condition_summary:
-```
-
-A transition minimally records:
-
-```yaml
-from_state:
-to_state:
-trigger:
-selected_action:
-reason_code:
-```
-
-The agent may additionally emit a private or shareable `reasoning_trace` when the runtime explicitly provides it and storage is permitted. Hidden provider chain-of-thought is not required, reconstructed, or used as a mandatory benchmark field. Formal scoring relies on task outputs and observable state/action/result events; reasoning traces are optional qualitative material.
-
-## 9. Meaning of fault, anomaly, and recovery
-
-The primary “fault” in Paper 2 is an equipment or data condition represented through data-factory, not an artificially injected LLM action error.
-
-Primary conditions include:
+Each transition should be reconstructable from the canonical rollout through:
 
 ```text
-fault or anomaly onset in a replay stream
-changing fault signature
-operating-condition shift
-noisy, low-quality, or temporarily uninformative windows
-missing or delayed bounded windows when present in the data protocol
-new observations that contradict the current diagnosis hypothesis
+from_state
+to_state
+public trigger
+selected CanonicalAction
+transition validity / reason code
 ```
 
-Decision recovery means revising the graph state, data query, operator choice, or diagnosis hypothesis after the observed data make the current path unproductive.
+Hidden provider chain-of-thought is not required and is not an official metric.
 
-Natural tool or backend errors are retained in rollouts, but invalid-action injection, schema-breaking calls, and exhaustive software-failure catalogues are not the main Paper 2 experiment.
-
-## 10. Agent conditions
-
-Primary comparison:
+## 9. Main experiments
 
 ```text
-B2 ScriptedHeuristicAgent
-B3 Sequential/Reactive Generic LLM Agent
-M2 GraphDecisionAgent
+P2-E1  reactive Generic vs full graph-control treatment
+P2-E2  no persistent state
+P2-E3  no observation-conditioned branch/revision
+P2-E4  no replanning
+P2-E5  state-only / filtering-only mechanism separation when feasible
+P2-E6  replay-horizon analysis
+P2-E7  independent repeated reliability/cost cohort
 ```
 
-The strongest causal comparison is `B3` versus `M2`. Fix:
+Do not add new states merely because P2-E1 is incomplete.
+
+## 10. Metrics
+
+Use the Benchmark task-primary metric for each task. Paper-2 secondary diagnostics explain the control effect:
 
 ```text
-backbone model and provider profile
-prompt information content
-TaskSpec and data split
-tool and operator surface
-budget profile
-temperature and run policy
-evaluator methods
-```
-
-The principal varied factor is persistent graph-structured decision control.
-
-## 11. Primary hypotheses
-
-### H1 — task performance
-
-GraphDecisionAgent improves the task-appropriate primary metric, especially event-level streaming diagnosis, while respecting the same budget.
-
-### H2 — long-horizon completion
-
-The graph increases valid completion and submission rates on long replay episodes.
-
-### H3 — branch selection and decision revision
-
-Observation-conditioned transitions reduce unproductive branch persistence and improve recovery after new data contradict the current hypothesis.
-
-### H4 — stability and cost
-
-The graph reduces repeated work and improves repeated-run stability or the task-performance–cost Pareto frontier.
-
-Task accuracy, macro-F1, AUPRC, event-F1, false alarms, and detection delay are primary. Graph-state and rollout metrics are secondary explanatory outcomes rather than substitutes for PHM performance.
-
-## 12. Metrics
-
-### Primary task metrics
-
-```text
-diagnosis: accuracy / balanced accuracy / macro-F1
-anomaly: AUPRC / AUROC / false-alarm rate
-streaming: event-F1 / detection delay / false-alarm rate
-```
-
-### Secondary rollout diagnostics
-
-```text
-completion and submission
-state-transition validity
+grounded completion
+state-transition distribution
 branch revisitation
-repeated-action and loop incidence
+repeated actions / loops
+decision revision and recovery
 premature submission
-decision-revision success and steps
-budget used before and after revision
-trajectory length
-data, operator, model, token, latency, and cost use
+data/tool/model/LLM/time cost
+repeat-run variation
 ```
 
-Do not compare against a handcrafted gold path. Multiple graph paths can be valid.
+Graph-state metrics cannot replace PHM task performance.
 
-## 13. Ablation Track
+## 11. Current empirical boundary
 
-Use a small set of mechanism-focused ablations:
+As of 2026-09-07, the provider-free graph scaffold, base/dynamic profiles, and experiment machinery exist, but there is **no accepted provider-bound Graph-minus-Generic treatment-effect cohort** and no accepted reliability effect.
+
+The next scientific milestone is P2-E1 on the completed Generic baseline. Dynamic `Monitor`/`Revise` language must remain scoped to the dynamic experiment until formal runs actually exercise those states.
+
+## 12. Repository responsibility
+
+`P02_agent_langraph` owns:
 
 ```text
-A0 full GraphDecisionAgent
-A1 no explicit REVISE/RECOVER edge
-A2 fixed transitions without observation-conditioned branch selection
-A3 no replanning after contradictory or low-quality data
-A4 no persistent graph state
-A5 reactive agent with matched prompt content but no graph
+GraphDecisionAgent adapter
+graph state and transition policy
+state-conditioned tool visibility
+method-specific ablations
+Paper-2 experiments, analysis, figures, and manuscript
 ```
 
-Keep the benchmark task, tool surface, model, budget, typed guard, and evaluator fixed.
+It does not own the Benchmark Runner, DataPort, task definitions, numerical operators, or official evaluator.
 
-## 14. Run ladder
+The historical PHMGA/AutoResearch/Canvas/project-management material is reference-only and must not redefine the Paper-2 method.
 
-```text
-first: one-seed real-data end-to-end run
-then: small repeated pilot on the primary replay task
-finally: repeated formal comparison selected by the statistical plan
-```
-
-A one-seed run establishes the path only. It cannot support stability claims.
-
-## 15. Paper 2 contribution
-
-Paper 2 contributes:
-
-1. a compact, library-independent PHM decision-graph policy aligned with a canonical agent benchmark;
-2. observation-conditioned state transitions for long-horizon fault/anomaly diagnosis;
-3. explicit decision revision when data contradict the current branch;
-4. a matched comparison against sequential/reactive control using task performance as the primary outcome;
-5. secondary analysis of completion, branch behavior, stability, and cost.
-
-LangGraph, UI dashboards, graph databases, project schedulers, and review workflows are implementation choices rather than scientific contributions.
-
-## 16. Release gates
-
-Paper 2 results require:
-
-```text
-GraphDecisionAgent emits benchmark CanonicalAction values;
-graph state cannot access hidden targets or evaluator internals;
-sequential and graph conditions use matched model, data, tools, budget, and evaluator;
-the replay task preserves temporal order and prevents future-window access;
-state transitions are reconstructable from saved rollout events;
-formal recovery claims concern declared equipment/data conditions or hypothesis revision;
-task-performance claims use registered evaluators;
-failed and partial episodes remain in denominators;
-```
-
-## 17. Non-goals
+## 13. Non-goals
 
 ```text
 general-purpose LangGraph platform
-AutoResearch or manuscript-node governance
-Canvas, Web, Tauri, or dashboard contribution
+learned graph topology as the first-paper treatment
+new Benchmark Runner or Evaluator
 multi-agent scheduling
-full graph database
+graph database / UI contribution
 RUL in the first paper
-invalid-action injection as the main experiment
-exhaustive defensive state machines
-mandatory chain-of-thought capture
-hash/checksum/digest/receipt/ledger machinery
+artificial software-failure injection as the main experiment
+large defensive state machines
+mandatory hidden reasoning capture
 ```
 
-## 18. Conflict resolution
-
-This file supersedes P02 narratives centered on AutoResearch workflow governance, reviewer-response closure, PHMGA/Vibench provider gates, paper-node lifecycle, submission packaging, and UI/Canvas projections. Useful implementation may remain after direct review, but Paper 2's active object is the benchmark-facing GraphDecisionAgent and its effect on PHM task performance and observable rollout behavior.
+This file overrides historical Goal, UI, workflow, and review narratives when they conflict with the current Paper-2 question or treatment definition.

@@ -1,0 +1,265 @@
+extends_protocol: graph_cross_dataset_replay_protocol_v2.yaml
+schema_version: graph_cross_dataset_replay_protocol_v3
+protocol_id: phm_graph_cross_dataset_replay_ottawa_generic_base_p2e8_v3
+status: preregistered_provider_free_ready_provider_authorization_and_complete_cohort_pending
+frozen_date: "2026-09-02"
+status_updated: "2026-09-04"
+supersedes_protocol: paper/experiments/graph_cross_dataset_replay_protocol_v2.yaml
+
+authority:
+  generic_base_dynamic_protocol: paper/experiments/graph_dynamic_ablation_protocol_v3.yaml
+  projection_rule: >-
+    Version 3 registers the accepted Benchmark-owned Ottawa ordered-state
+    monitoring protocol as the sole external P2-E8 dataset. It reuses the
+    Benchmark v6 replay environment, evaluator, missing-score policy, and
+    Data Factory CSV-directory adapter. Paper 2 does not infer or publish a
+    condition event from evaluator-private source states.
+
+scope:
+  question: >-
+    Whether the matched Generic-base GraphDecision versus ReactiveSequential
+    replay difference is observed on the independently registered Ottawa
+    ordered-state monitoring task under the same v6 tool and evaluator world.
+  tested_graph_scope: base_replay_decision_state_and_tool_visibility_control
+  public_condition_event: absent
+  monitor_or_revise_event_branch_estimand: false
+  event_f1_or_detection_delay_estimand: false
+
+candidate_sources:
+  - candidate_id: ottawa_uored_v5_ordered_state_monitoring
+    expected_dataset_id: university-of-ottawa-uored-vafcls-v5
+    dataset_id_path: dataset.dataset_id
+    protocol_path: ../p01-phm-agent-benchmark/paper/experiments/datasets/ottawa_uored_v5/phase1_monitoring_protocol_v1.yaml
+    external_to_reference: true
+    current_role: accepted_ordered_state_window_target_and_runtime
+    required_all:
+      - id: status_active_phase1
+        path: status
+        operator: equals
+        expected: active_phase1
+      - id: formal_evidence_eligible
+        path: formal_evidence_eligible
+        operator: equals
+        expected: true
+      - id: csv_dataport_registered
+        path: dataset.data_backend
+        operator: equals
+        expected: csv_directory
+      - id: replay_task_registered
+        path: tasks.monitoring.task_id
+        operator: equals
+        expected: online_replay_monitoring
+      - id: evaluator_assignment_registered
+        path: dataset.evaluator_assignment_contract
+        operator: equals
+        expected: phase1_registered_data_port_assignment_v1
+      - id: missing_score_policy_frozen
+        path: tasks.monitoring.missing_assigned_score_policy.status
+        operator: equals
+        expected: frozen_and_implemented
+      - id: dataport_ready
+        path: activation_gate.required_report_values.data_port_ready
+        operator: equals
+        expected: true
+      - id: source_activation_accepted
+        path: activation_gate.current_state
+        operator: equals
+        expected: provider_free_formal_reference_accepted
+      - id: formal_reference_accepted
+        path: observed_formal_reference.status
+        operator: equals
+        expected: accepted
+      - id: runtime_contract_active_v6
+        path: formal_execution.runtime_contract
+        operator: equals
+        expected: phase1_opaque_sample_vibration_feature_schema_v6
+    outcome_target_any:
+      - id: source_authored_window_targets_registered
+        path: tasks.monitoring.labels
+        operator: equals
+        expected:
+          healthy: 0
+          developing_fault: 1
+          faulty: 1
+
+dataset_registration:
+  dataset_id: university-of-ottawa-uored-vafcls-v5
+  dataset_protocol_id: ottawa_uored_v5_ordered_state_replay_v1
+  protocol_path: ../p01-phm-agent-benchmark/paper/experiments/datasets/ottawa_uored_v5/phase1_monitoring_protocol_v1.yaml
+  data_backend: csv_directory
+  metadata_environment: PHM_OTTAWA_METADATA
+  signal_environment: PHM_OTTAWA_SIGNAL_ROOT
+  readiness_environment: PHM_OTTAWA_READINESS
+  task: online_replay_monitoring
+  rotations: [rotation_0, rotation_1, rotation_2]
+  train_samples_per_bearing: 1
+  validation_samples_per_bearing: 1
+  test_samples_per_bearing: 3
+  episodes_per_rotation: 4
+  windows_per_episode: 3
+  heldout_physical_bearings: 12
+
+formal_execution:
+  runtime: openai
+  experiment_profile_id: paper2-cross-dataset-ottawa-generic-v1
+  provider_label: openrouter-free
+  model_id: cohere/north-mini-code:free
+  inference_protocol: openai_chat_completions
+  thinking_mode: not_requested
+  base_url: https://openrouter.ai/api/v1
+  base_url_environment: LLM_BASE_URL
+  api_key_environment: LLM_API_KEY
+  model_environment: LLM_MODEL
+  runtime_contract: phase1_opaque_sample_vibration_feature_schema_v6
+  temperature: 0.2
+  max_output_tokens_per_turn: 2048
+  input_usd_per_million: 0.0
+  output_usd_per_million: 0.0
+  registered_evidence_class: formal
+  result_role: confirmatory
+  same_day_429_retry: forbidden
+  launch_state: not_run
+
+current_schedule:
+  authority_version: v3_ottawa_generic_base
+  expected_eligible_dataset_ids: [university-of-ottawa-uored-vafcls-v5]
+  expected_eligible_external_datasets: 1
+  seeds: [20260808, 20260809, 20260810]
+  arms: [reactive, graph]
+  expected_runner_commands: 18
+  expected_episode_bundles: 72
+  expected_matched_episode_pairs: 36
+  expected_assigned_windows_across_arms: 216
+  output_root: paper/experiments/runs/formal/graph_cross_dataset_replay_v3/paper2-cross-dataset-ottawa-generic-v1
+  provider_calls: 0
+  runner_invocations: 0
+  formal_launch_allowed: false
+  reason: provider_execution_authorization_pending
+
+runtime_gate:
+  runner: scripts/run_graph_experiment.py
+  dynamic_protocol: null
+  required_runtime_contract: phase1_opaque_sample_vibration_feature_schema_v6
+  required_runner_flags:
+    - --protocol
+    - --cross-dataset-protocol
+    - --dataset-id
+    - --data-backend
+    - --metadata-env
+    - --signal-env
+    - --data-readiness-env
+    - --experiment-profile-id
+    - --rotation
+    - --tasks
+  required_source_fragments:
+    - LocalCSVPhase1DataPort
+    - require_formal_replay_metric_lock
+    - _open_data_port
+    - P2_E8_PROFILE_ID
+  required_implementation_flags:
+    generic_base_identity_validation_implemented: true
+    external_dataset_dataport_runtime_implemented: true
+    external_dataset_sequence_builder_implemented: true
+    external_dataset_evaluator_target_binding_implemented: true
+    candidate_specific_horizon_budget_and_sequence_registered: true
+  rule: >-
+    Runtime readiness covers DataPort construction, ordered replay assignment,
+    evaluator-private target binding, formal identity, and isolated command
+    generation. It does not substitute for an accepted paired-result analyzer.
+
+analysis_gate:
+  current_state: implemented_and_tested
+  formal_result_state: complete_72_bundle_cohort_pending
+  result_schema: p2_e8_ottawa_generic_base_result_v2
+  accepted_only_cross_dataset_analyzer_implemented: true
+  analyzer: scripts/analyze_graph_cross_dataset_replay.py
+  results_root: paper/experiments/results/graph_cross_dataset_replay_v3/paper2-cross-dataset-ottawa-generic-v1
+  formal_result: paper/experiments/results/graph_cross_dataset_replay_v3/paper2-cross-dataset-ottawa-generic-v1/formal_result.json
+  accepted_manuscript_table: paper/assets/tables/p2_e8_ottawa_results.md
+  accepted_manuscript_figure: paper/assets/figures/p2_e8_ottawa_primary.svg
+  accepted_manuscript: paper/draft/main.md
+  manuscript_marker: P2_E8_OTTAWA
+  required_source_fragments:
+    - validate_formal_cohort
+    - validate_cohort_index
+    - build_evaluator_assignments
+    - aggregate_results
+    - paired_bearing_bootstrap_deltas
+    - bearing_bootstrap_intervals
+  required_before_formal_launch:
+    - exact_72_bundle_cohort_acceptance
+    - independent_private_assignment_reconstruction
+    - target_adverse_assigned_window_metric_recomputation
+    - exact_36_pair_reactive_graph_alignment
+    - bearing_clustered_paired_uncertainty
+    - separate_ottawa_only_reporting
+  accepted_input_contract:
+    runs_per_arm: 9
+    episode_bundles_per_arm: 36
+    assigned_windows_per_arm: 108
+    exact_matched_episode_pairs: 36
+    canonical_attempt_contract: exact_six
+    registered_evidence_class: formal
+    result_role: confirmatory
+    nonprovider_terminal_failures: retained_in_denominator
+    unresolved_provider_errors: reject_cohort
+    partial_prefix_aggregation: forbidden
+  statistics:
+    direction: graph_minus_reactive
+    primary_endpoint: online_replay_monitoring.task.average_precision
+    secondary_task_endpoints:
+      - online_replay_monitoring.task.auroc
+      - online_replay_monitoring.task.false_alarm_rate
+      - online_replay_monitoring.task.true_positive_rate
+      - online_replay_monitoring.task.score_coverage
+    interval_method: paired_bearing_cluster_percentile_bootstrap_with_metric_recomputation
+    cluster_unit: physical_bearing
+    iterations: 2000
+    seed: 20260902
+  accepted_manuscript_consumer:
+    entrypoint: scripts/render_graph_cross_dataset_manuscript.py
+    accepted_result: paper/experiments/results/graph_cross_dataset_replay_v3/paper2-cross-dataset-ottawa-generic-v1/formal_result.json
+    acceptance_source: embedded_in_accepted_result
+    complete_episode_bundles_required: 72
+    matched_pairs_required: 36
+    assigned_windows_per_arm_required: 108
+    raw_run_or_private_data_reads: false
+    provider_calls: false
+    displayed_paired_arithmetic_recomputed: true
+    bootstrap_metadata_rechecked: true
+    existing_output_contract: absent_or_ordinary_single_link_regular_file
+    production_cli_protocol: graph_cross_dataset_replay_protocol_v3.yaml
+    write_contract: fully_staged_mode_preserving_grouped_replace_with_reverse_rollback
+    focused_tests: tests/test_render_graph_cross_dataset_manuscript.py
+  current_blocker: null
+
+activation_gate:
+  current_state: provider_free_ready_provider_execution_authorization_pending
+  all_required:
+    - accepted_ottawa_source_protocol_and_window_target
+    - evaluator_private_target_not_exposed_to_agent
+    - asset_disjoint_cyclic_split_and_ordered_replay
+    - upstream_csv_dataport_and_private_readiness_validation
+    - generic_base_reactive_and_graph_identities
+    - active_v6_external_dataset_runtime
+    - exact_formal_profile_and_isolated_schedule
+    - accepted_only_paired_result_analyzer
+  current_blockers:
+    - explicit_provider_destination_and_payload_egress_authorization_required
+  post_authorization_requirement: complete_72_bundle_cohort_before_analysis_or_publication
+
+reporting_boundary:
+  allowed_now:
+    - accepted_ottawa_source_protocol_audit
+    - external_dataport_runtime_mechanics
+    - deterministic_18_command_dry_schedule
+    - accepted_only_analyzer_implementation_and_tests
+    - accepted_only_manuscript_consumer_implementation_and_tests
+    - statement_that_provider_execution_is_unauthorized_and_formal_cohort_has_not_run
+  forbidden_now:
+    - any_cross_dataset_graph_effect
+    - any_reactive_or_graph_task_score
+    - monitor_or_revise_event_branch_transfer
+    - event_f1
+    - detection_delay
+    - treating_a_dry_schedule_as_execution
