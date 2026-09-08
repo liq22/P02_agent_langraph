@@ -1,38 +1,42 @@
-# Agent Entry — GraphDecisionAgent Paper 2
+# Graph-Guided PHM Agent Entry
 
-Read `CORE.md` first. It overrides conflicting AutoResearch, scheduler, Canvas, Goal, review, submission, and historical manuscript narratives.
+This repository owns the graph-guided policy implementation and Paper 2 of the active three-paper PHM-Agent program.
 
-## Active objective
+## Primary products
 
-Advance the matched experiment:
+- an executable graph policy under `src/phm_graph_agent/`;
+- matched Reactive-vs-Graph experiments using the shared Benchmark Generic LLM base;
+- real state transitions, trajectories, metrics, tables, and figures;
+- the active manuscript at `paper/draft/main.md`.
+
+Legacy `research/`, scheduler, web, Canvas, historical PHMGA snapshots, and old Goal material is not the active execution authority for this paper. Read a legacy artifact only when a current code or manuscript claim explicitly requires it.
+
+## Default execution
 
 ```text
-Sequential/Reactive Agent
-versus
-GraphDecisionAgent
+identify the highest-impact graph/code/experiment/manuscript defect
+→ output a four-line dry-run
+→ modify one primary product
+→ run one direct test, matched episode, metric check, or manuscript check
+→ continue with the next research slice
 ```
 
-Use the shared benchmark's TaskSpec, actions, budget, rollout, and evaluator. Do not create a second benchmark or data layer.
+Local reversible edits and tests proceed without per-file approval. Ask once before private-data transfer, unbudgeted paid inference, remote Git writes, release, or submission.
 
-## Graph rules
+## Scientific constraints
 
-- Keep the graph small and library-independent.
-- Nodes represent decision states, not wrappers for every function.
-- The primary recovery object is decision revision under equipment/data changes, not a catalogue of injected LLM/action failures.
-- Preserve time order and prevent future-window access in replay tasks.
-- Formal scoring uses PHM task outputs and observable state/action/result events.
-- Optional agent-emitted reasoning traces may be retained when permitted; hidden chain-of-thought is not required or reconstructed.
-- The historical PHMGA submodule is reference material, not active runtime authority.
+- Control is `ReactiveSequentialAgent`, a zero-behavior-override subclass of the
+  shared Benchmark `GenericLLMToolAgent`.
+- Treatment is `GraphDecisionAgent`, derived from the same Generic base and
+  differing only by the registered graph decision control.
+- PHMskills is not part of the active Paper 2 control or treatment; historical
+  PHMskills-derived Graph leaves are retained only as non-authoritative records.
+- Model, runtime, data, split, tools, numerical experts, budget, evaluator, and episode order remain identical.
+- The graph states must affect actual next-action selection and appear in the shared trajectory.
+- The benchmark core must not depend on LangGraph or this repository.
+- Mock and synthetic runs prove mechanics only.
+- Do not fabricate citations, data, results, authors, or venue policy.
+- Do not build completion controllers, content-hash checks, approval workflows, review state machines, security platforms, UI DAGs, or speculative fallback frameworks.
+- Python is for graph policy, experiments, statistics, figures, and direct tests—not project-governance scripts.
 
-## Work priorities
-
-1. real replay/streaming task performance;
-2. GraphDecisionAgent state and transition correctness;
-3. matched sequential-versus-graph experiments;
-4. focused graph ablations;
-5. secondary branch, completion, stability, cost, and latency analysis;
-6. figures, tables, and manuscript claims.
-
-Do not add custom hash/checksum/digest/receipt/ledger systems, exhaustive defensive state machines, project-management graphs, or UI infrastructure unrelated to the scientific comparison.
-
-Use Python for actual experiments, analysis, plots, and focused tests. Fail fast on temporal leakage, hidden-target access, unmatched budgets, or evaluator ambiguity.
+Paper 2 is complete only when code, matched real-data results, figures/tables, a full manuscript, and the final ten-lens review are complete.

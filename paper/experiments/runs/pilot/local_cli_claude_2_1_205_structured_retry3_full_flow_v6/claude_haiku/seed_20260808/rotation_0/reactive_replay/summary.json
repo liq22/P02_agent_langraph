@@ -1,0 +1,47 @@
+{
+  "online_replay_monitoring": {
+    "bearings": 1,
+    "episodes": 1,
+    "rollout": {
+      "agent_decision_error_rate": 0.0,
+      "artifact_lineage_completeness": 1.0,
+      "budget_exhaustion": 0.0,
+      "data_bytes_read": 196608.0,
+      "data_points_read": 24576.0,
+      "estimated_model_cost_usd": null,
+      "failure_count": 0.0,
+      "grounded_completion": 1.0,
+      "grounded_recovery_success": 0.0,
+      "input_tokens": 369022.0,
+      "llm_turns": 44.0,
+      "model_calls": 3.0,
+      "operator_calls": 33.0,
+      "output_tokens": 6958.0,
+      "p95_step_latency_seconds": 10.750985228386709,
+      "recovery_coverage": null,
+      "recovery_success": 0.0,
+      "repeated_action_ratio": 0.0,
+      "repeated_error_rate": 0.0,
+      "steps": 44.0,
+      "steps_to_next_success_after_failure": null,
+      "steps_to_recovery": null,
+      "submission_grounding": 1.0,
+      "submission_rate": 1.0,
+      "submitted_after_failure": 0.0,
+      "supporting_reference_validity": 1.0,
+      "tool_execution_failure_rate": 0.0,
+      "valid_tool_call_rate": 1.0,
+      "wall_clock_seconds": 315.16631802904885,
+      "window_reads": 3.0
+    },
+    "task": {
+      "auroc": null,
+      "average_precision": null,
+      "cohort_prevalence": 0.0,
+      "false_alarm_rate": 0.0,
+      "submission": 1.0,
+      "submitted_prevalence": 0.0,
+      "true_positive_rate": null
+    }
+  }
+}

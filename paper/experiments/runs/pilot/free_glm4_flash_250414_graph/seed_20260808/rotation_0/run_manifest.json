@@ -1,0 +1,39 @@
+{
+  "arm": "graph",
+  "evidence_class": "real_data_pilot_not_main_result",
+  "inject_recoverable_error": false,
+  "max_test_bearings": 1,
+  "model_profile": {
+    "input_usd_per_million": 0.0,
+    "model_id": "glm-4-flash-250414",
+    "output_usd_per_million": 0.0,
+    "protocol": "openai_chat_completions",
+    "provider": "bigmodel-free"
+  },
+  "rotation": "rotation_0",
+  "runtime": "openai",
+  "seed": 20260808,
+  "selected_diagnosis_model_id": "ridge-ovr-v1",
+  "study": "graph_guided_phm",
+  "temperature": 0.2,
+  "test_samples_per_bearing": 1,
+  "train_samples_per_bearing": 8,
+  "validation_model_macro_f1": {
+    "knn-v1": 0.427831825681288,
+    "nearest-centroid-v1": 0.2725348725348726,
+    "ridge-ovr-v1": 0.6077754773406947
+  },
+  "validation_samples_per_bearing": 8,
+  "window_protocol": {
+    "bounded_read": true,
+    "channel_indices": [
+      0,
+      1,
+      2
+    ],
+    "channel_semantics": "provider_exposes_three_vibration_channels_without_axis_names",
+    "end_point": 8192,
+    "max_returned_points": 4096,
+    "start_point": 0
+  }
+}

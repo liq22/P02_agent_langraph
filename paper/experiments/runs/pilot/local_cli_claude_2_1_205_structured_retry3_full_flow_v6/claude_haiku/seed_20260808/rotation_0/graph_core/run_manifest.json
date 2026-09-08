@@ -1,0 +1,69 @@
+{
+  "arm": "graph",
+  "budget": {
+    "max_llm_turns": 33,
+    "max_model_calls": 2,
+    "max_operator_calls": 17,
+    "max_tool_calls": 33,
+    "max_window_reads": 3
+  },
+  "evidence_class": "real_data_pilot_not_main_result",
+  "inject_recoverable_error": false,
+  "max_output_tokens_per_turn": null,
+  "max_test_bearings": 1,
+  "model_cost_basis": "subscription_unpriced",
+  "model_profile": {
+    "input_usd_per_million": null,
+    "model_id": "haiku",
+    "output_usd_per_million": null,
+    "protocol": "claude_code_structured_output",
+    "provider": "local-cli-claude-development"
+  },
+  "protocol": "phm_agent_dataset_protocol_v1",
+  "resumed_episode_count": 0,
+  "rotation": "rotation_0",
+  "runtime": "claude",
+  "runtime_contract": "phase1_opaque_sample_vibration_feature_schema_v6",
+  "sample_handle": {
+    "purpose": "remove_provider_row_order_from_the_public_identifier",
+    "scheme": "seeded_permutation_v1",
+    "seed": 20260808
+  },
+  "seed": 20260808,
+  "selected_diagnosis_model_id": "ridge-ovr-v1",
+  "study": "graph_guided_phm",
+  "tasks": [
+    "cold_start_fault_diagnosis",
+    "unsupervised_anomaly_detection"
+  ],
+  "temperature": null,
+  "test_sample_selection": "metadata_order_floor_two_thirds",
+  "test_samples_per_bearing": 1,
+  "train_samples_per_bearing": 8,
+  "validation_model_macro_f1": {
+    "knn-v1": 0.5756252321717218,
+    "nearest-centroid-v1": 0.36003325942350334,
+    "ridge-ovr-v1": 0.6177404295051354
+  },
+  "validation_samples_per_bearing": 8,
+  "window_protocol": {
+    "bounded_read": true,
+    "channel_indices": [
+      2
+    ],
+    "channel_semantics": "bearing_housing_acceleration",
+    "contract": "phase1_single_vibration_full_rate_v3",
+    "end_point": 8192,
+    "mapping_source": "PHMbench/PHM-Vibench/src/data_factory/reader/RM_027_PU.py",
+    "mapping_source_url": "https://github.com/PHMbench/PHM-Vibench/blob/main/src/data_factory/reader/RM_027_PU.py",
+    "max_returned_points": 8192,
+    "sampling_mode": "full_rate_no_decimation",
+    "selection_evidence": "paper/experiments/datasets/window_sampling_audit.md",
+    "start_point": 0,
+    "upstream_column_mapping": {
+      "0": "motor_phase_current_1",
+      "1": "motor_phase_current_2",
+      "2": "bearing_housing_acceleration"
+    }
+  }
+}

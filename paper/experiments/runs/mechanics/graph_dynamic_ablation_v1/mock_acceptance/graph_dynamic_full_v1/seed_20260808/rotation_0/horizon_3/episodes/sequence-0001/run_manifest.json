@@ -1,0 +1,26 @@
+{
+  "agent_profile_id": "graph_dynamic_full_v1",
+  "arm": "graph",
+  "budget": {
+    "max_data_bytes": 196608,
+    "max_data_points": 24576,
+    "max_llm_turns": 72,
+    "max_model_calls": 3,
+    "max_operator_calls": 50,
+    "max_tool_calls": 72,
+    "max_wall_clock_seconds": null,
+    "max_window_reads": 3
+  },
+  "canonical_episode_count": 1,
+  "dataset_protocol": "phm_agent_dataset_protocol_v1",
+  "dynamic_protocol": "graph_dynamic_ablation_protocol_v1",
+  "evidence_class": "mechanics_only_not_performance_evidence",
+  "graph_policy_profile": "full",
+  "horizon": 3,
+  "public_sequence_id": "sequence-0001",
+  "rotation": "rotation_0",
+  "runtime": "mock",
+  "runtime_contract": "phase1_graph_dynamic_ablation_v1",
+  "seed": 20260808,
+  "study": "graph_dynamic_ablation_v1"
+}

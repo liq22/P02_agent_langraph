@@ -1,0 +1,26 @@
+{
+  "accepted": false,
+  "authority": {
+    "external_root_contract": "benchmark_active_v0_2_external_timestamped_root_v1",
+    "legacy_phmskills_graph_roots_included": false,
+    "root_resolution": "explicit_cli_root_required"
+  },
+  "blockers": [
+    "No active-v0.2 external timestamped roots were supplied for this checked-in snapshot; run the finalizer with all four required root flags."
+  ],
+  "effect_estimates_emitted": 0,
+  "evaluator_private_views_read": 0,
+  "gate_id": "P2-E1-GENERIC-BASE-FORMAL-V2",
+  "gates": {
+    "bootstrap_permitted": false
+  },
+  "primary_endpoint": {
+    "cohort": "replay",
+    "metric": "task.average_precision",
+    "task": "online_replay_monitoring"
+  },
+  "provider_calls": 0,
+  "replay_missing_score_policy_id": "phase1_replay_target_adverse_missing_score_v1",
+  "schema_version": "p2_e1_primary_readiness_v2",
+  "status": "external_roots_required_no_audit_performed"
+}

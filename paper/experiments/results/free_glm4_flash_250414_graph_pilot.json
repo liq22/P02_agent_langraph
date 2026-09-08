@@ -1,0 +1,333 @@
+{
+  "bearing_bootstrap_95ci": {
+    "cold_start_fault_diagnosis": {
+      "rollout.artifact_lineage_completeness": [
+        0.0,
+        0.0
+      ],
+      "rollout.budget_exhaustion": [
+        1.0,
+        1.0
+      ],
+      "rollout.estimated_model_cost_usd": [
+        0.0,
+        0.0
+      ],
+      "rollout.failure_count": [
+        2.0,
+        6.5
+      ],
+      "rollout.grounded_completion": [
+        0.0,
+        0.0
+      ],
+      "rollout.grounded_recovery_success": [
+        0.0,
+        0.0
+      ],
+      "rollout.input_tokens": [
+        34914.0,
+        46787.25
+      ],
+      "rollout.llm_turns": [
+        13.0,
+        16.0
+      ],
+      "rollout.model_calls": [
+        2.0,
+        2.0
+      ],
+      "rollout.operator_calls": [
+        4.0,
+        6.25
+      ],
+      "rollout.output_tokens": [
+        741.5,
+        872.75
+      ],
+      "rollout.p95_step_latency_seconds": [
+        4.182912141393897,
+        4.521034205863543
+      ],
+      "rollout.recovery_coverage": [
+        0.0,
+        0.0
+      ],
+      "rollout.recovery_success": [
+        0.0,
+        0.0
+      ],
+      "rollout.repeated_action_ratio": [
+        0.020833333333333332,
+        0.16145833333333331
+      ],
+      "rollout.repeated_error_rate": [
+        0.0,
+        0.5625
+      ],
+      "rollout.steps": [
+        12.0,
+        15.0
+      ],
+      "rollout.steps_to_next_success_after_failure": [
+        1.0,
+        2.5
+      ],
+      "rollout.submission_grounding": [
+        0.0,
+        0.0
+      ],
+      "rollout.submission_rate": [
+        0.0,
+        0.0
+      ],
+      "rollout.submitted_after_failure": [
+        0.0,
+        0.0
+      ],
+      "rollout.supporting_reference_validity": [
+        0.0,
+        0.0
+      ],
+      "rollout.valid_tool_call_rate": [
+        0.5833333333333334,
+        0.842948717948718
+      ],
+      "rollout.wall_clock_seconds": [
+        18.897807429500972,
+        24.214042197527306
+      ],
+      "rollout.window_reads": [
+        1.0,
+        1.0
+      ],
+      "task.accuracy": [
+        0.0,
+        0.0
+      ],
+      "task.calibration_coverage": [
+        0.0,
+        0.0
+      ],
+      "task.macro_f1": [
+        0.0,
+        0.0
+      ]
+    },
+    "unsupervised_anomaly_detection": {
+      "rollout.artifact_lineage_completeness": [
+        0.0,
+        0.75
+      ],
+      "rollout.budget_exhaustion": [
+        0.25,
+        1.0
+      ],
+      "rollout.estimated_model_cost_usd": [
+        0.0,
+        0.0
+      ],
+      "rollout.failure_count": [
+        3.0,
+        3.0
+      ],
+      "rollout.grounded_completion": [
+        0.0,
+        0.75
+      ],
+      "rollout.grounded_recovery_success": [
+        0.0,
+        0.75
+      ],
+      "rollout.input_tokens": [
+        36927.5,
+        52190.75
+      ],
+      "rollout.llm_turns": [
+        14.0,
+        17.75
+      ],
+      "rollout.model_calls": [
+        2.0,
+        2.0
+      ],
+      "rollout.operator_calls": [
+        5.0,
+        8.75
+      ],
+      "rollout.output_tokens": [
+        780.25,
+        832.75
+      ],
+      "rollout.p95_step_latency_seconds": [
+        4.41983305740141,
+        4.5450889530518905
+      ],
+      "rollout.recovery_coverage": [
+        0.0,
+        0.75
+      ],
+      "rollout.recovery_success": [
+        0.0,
+        0.75
+      ],
+      "rollout.repeated_action_ratio": [
+        0.038461538461538464,
+        0.15384615384615385
+      ],
+      "rollout.repeated_error_rate": [
+        0.0,
+        0.0
+      ],
+      "rollout.steps": [
+        13.0,
+        17.5
+      ],
+      "rollout.steps_to_next_success_after_failure": [
+        1.0,
+        1.0
+      ],
+      "rollout.submission_grounding": [
+        0.0,
+        0.75
+      ],
+      "rollout.submission_rate": [
+        0.0,
+        0.75
+      ],
+      "rollout.submitted_after_failure": [
+        0.0,
+        0.75
+      ],
+      "rollout.supporting_reference_validity": [
+        0.0,
+        0.75
+      ],
+      "rollout.valid_tool_call_rate": [
+        0.7692307692307693,
+        0.8238866396761133
+      ],
+      "rollout.wall_clock_seconds": [
+        21.183652661748056,
+        29.732503826227912
+      ],
+      "rollout.window_reads": [
+        1.0,
+        1.0
+      ],
+      "task.auroc": [
+        0.0,
+        0.0
+      ],
+      "task.average_precision": [
+        0.0,
+        0.0
+      ],
+      "task.average_precision_lift": [
+        0.0,
+        0.0
+      ],
+      "task.completion_adjusted_average_precision": [
+        0.0,
+        0.0
+      ],
+      "task.false_alarm_rate": [
+        0.0,
+        1.0
+      ],
+      "task.prevalence": [
+        0.0,
+        0.0
+      ],
+      "task.true_positive_rate": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "bootstrap_iterations": 2000,
+  "cohort_acceptance": null,
+  "evidence_class": "real_data_pilot_not_main_result",
+  "seed": 20260808,
+  "summary": {
+    "cold_start_fault_diagnosis": {
+      "bearings": 4,
+      "episodes": 4,
+      "rollout": {
+        "artifact_lineage_completeness": 0.0,
+        "budget_exhaustion": 1.0,
+        "estimated_model_cost_usd": 0.0,
+        "failure_count": 3.5,
+        "grounded_completion": 0.0,
+        "grounded_recovery_success": 0.0,
+        "input_tokens": 39914.5,
+        "llm_turns": 14.25,
+        "model_calls": 2.0,
+        "operator_calls": 4.75,
+        "output_tokens": 789.0,
+        "p95_step_latency_seconds": 4.35197317362872,
+        "recovery_coverage": 0.0,
+        "recovery_success": 0.0,
+        "repeated_action_ratio": 0.08854166666666666,
+        "repeated_error_rate": 0.1875,
+        "steps": 13.25,
+        "steps_to_next_success_after_failure": 1.5,
+        "steps_to_recovery": null,
+        "submission_grounding": 0.0,
+        "submission_rate": 0.0,
+        "submitted_after_failure": 0.0,
+        "supporting_reference_validity": 0.0,
+        "valid_tool_call_rate": 0.7532051282051283,
+        "wall_clock_seconds": 20.82980791900627,
+        "window_reads": 1.0
+      },
+      "task": {
+        "accuracy": 0.0,
+        "calibration_coverage": 0.0,
+        "calibration_error": null,
+        "macro_f1": 0.0
+      }
+    },
+    "unsupervised_anomaly_detection": {
+      "bearings": 4,
+      "episodes": 4,
+      "rollout": {
+        "artifact_lineage_completeness": 0.25,
+        "budget_exhaustion": 0.75,
+        "estimated_model_cost_usd": 0.0,
+        "failure_count": 3.0,
+        "grounded_completion": 0.25,
+        "grounded_recovery_success": 0.25,
+        "input_tokens": 42019.25,
+        "llm_turns": 15.25,
+        "model_calls": 2.0,
+        "operator_calls": 6.25,
+        "output_tokens": 798.0,
+        "p95_step_latency_seconds": 4.462878292749519,
+        "recovery_coverage": 0.25,
+        "recovery_success": 0.25,
+        "repeated_action_ratio": 0.11538461538461539,
+        "repeated_error_rate": 0.0,
+        "steps": 14.5,
+        "steps_to_next_success_after_failure": 1.0,
+        "steps_to_recovery": null,
+        "submission_grounding": 0.25,
+        "submission_rate": 0.25,
+        "submitted_after_failure": 0.25,
+        "supporting_reference_validity": 0.25,
+        "valid_tool_call_rate": 0.7874493927125505,
+        "wall_clock_seconds": 24.25904158350022,
+        "window_reads": 1.0
+      },
+      "task": {
+        "auroc": 0.0,
+        "average_precision": 0.0,
+        "average_precision_lift": 0.0,
+        "completion_adjusted_average_precision": 0.0,
+        "false_alarm_rate": 1.0,
+        "prevalence": 0.0,
+        "true_positive_rate": 0.0
+      }
+    }
+  }
+}

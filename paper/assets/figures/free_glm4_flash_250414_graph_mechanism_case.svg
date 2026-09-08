@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="430" viewBox="0 0 1000 430">
+<rect width="1000" height="430" fill="white"/>
+<text x="500" y="28" text-anchor="middle" font-family="sans-serif" font-size="18">Matched free-model graph-guidance pilot case</text>
+<text x="500" y="52" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">pair=2, rotation=rotation_2, sample=47927, task=unsupervised_anomaly_detection</text>
+<text x="120" y="130" text-anchor="end" font-family="sans-serif" font-size="13">Reactive-PHMskills</text>
+<rect x="140.0" y="105" width="16.0" height="45" fill="#60a5fa" stroke="#475569"/>
+<rect x="157.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="174.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="191.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="208.0" y="105" width="16.0" height="45" fill="#a78bfa" stroke="#475569"/>
+<rect x="225.0" y="105" width="16.0" height="45" fill="#a78bfa" stroke="#475569"/>
+<rect x="242.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="259.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="276.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="293.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="310.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="327.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#dc2626"/>
+<rect x="344.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="361.0" y="105" width="16.0" height="45" fill="#a78bfa" stroke="#dc2626"/>
+<rect x="378.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#dc2626"/>
+<rect x="395.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#dc2626"/>
+<rect x="412.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="429.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#dc2626"/>
+<rect x="446.0" y="105" width="16.0" height="45" fill="#fbbf24" stroke="#dc2626"/>
+<rect x="463.0" y="105" width="16.0" height="45" fill="#34d399" stroke="#475569"/>
+<text x="140" y="170" font-family="sans-serif" font-size="10">steps=20, failures=6, terminal=submitted</text>
+<text x="120" y="255" text-anchor="end" font-family="sans-serif" font-size="13">Graph-PHMskills</text>
+<rect x="140.0" y="230" width="16.0" height="45" fill="#60a5fa" stroke="#475569"/>
+<rect x="157.0" y="230" width="16.0" height="45" fill="#60a5fa" stroke="#475569"/>
+<rect x="174.0" y="230" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="191.0" y="230" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="208.0" y="230" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="225.0" y="230" width="16.0" height="45" fill="#a78bfa" stroke="#475569"/>
+<rect x="242.0" y="230" width="16.0" height="45" fill="#fbbf24" stroke="#dc2626"/>
+<rect x="259.0" y="230" width="16.0" height="45" fill="#a78bfa" stroke="#475569"/>
+<rect x="276.0" y="230" width="16.0" height="45" fill="#a78bfa" stroke="#dc2626"/>
+<rect x="293.0" y="230" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="310.0" y="230" width="16.0" height="45" fill="#a78bfa" stroke="#dc2626"/>
+<rect x="327.0" y="230" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<rect x="344.0" y="230" width="16.0" height="45" fill="#fbbf24" stroke="#475569"/>
+<text x="140" y="295" font-family="sans-serif" font-size="10">steps=13, failures=3, terminal=budget_exhausted</text>
+<line x1="157.0" y1="83" x2="157.0" y2="292" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="162.0" y="78" font-family="sans-serif" font-size="10" fill="#dc2626">first divergence</text>
+<rect x="230" y="355" width="15" height="12" fill="#60a5fa" stroke="#475569"/><text x="252" y="366" font-family="sans-serif" font-size="11">data.*</text>
+<rect x="355" y="355" width="15" height="12" fill="#fbbf24" stroke="#475569"/><text x="377" y="366" font-family="sans-serif" font-size="11">op.*</text>
+<rect x="480" y="355" width="15" height="12" fill="#a78bfa" stroke="#475569"/><text x="502" y="366" font-family="sans-serif" font-size="11">model.*</text>
+<rect x="605" y="355" width="15" height="12" fill="#34d399" stroke="#475569"/><text x="627" y="366" font-family="sans-serif" font-size="11">submit</text>
+<rect x="730" y="355" width="15" height="12" fill="white" stroke="#dc2626"/><text x="752" y="366" font-family="sans-serif" font-size="11">failed step</text>
+<text x="500" y="397" text-anchor="middle" font-family="sans-serif" font-size="11">Treatment state coverage: Analyze, Check, Hypothesize, Inspect, Recover</text>
+</svg>

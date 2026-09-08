@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="470" viewBox="0 0 1200 470" role="img" aria-labelledby="title desc">
+<title id="title">Current Paper-2 provider-free mechanics evidence</title>
+<desc id="desc">P2-E0-v2 adapter and world equivalence mechanics are accepted; dynamic-v3 retains ten of ten unchanged v2 Mock mechanics cells and has zero of 240 formal units. No performance claim is supported.</desc>
+<rect width="1200" height="470" fill="#f8fafc"/>
+<text x="600" y="42" text-anchor="middle" font-family="sans-serif" font-size="23" font-weight="700" fill="#0f172a">Current P2 evidence: mechanics, not performance</text>
+<text x="600" y="69" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#475569">Benchmark Generic (Reactive-equivalent) is the control; GraphDecisionAgent is the Generic-derived treatment.</text>
+<g data-gate="p2-e0-v2">
+<rect x="55" y="105" width="520" height="245" rx="18" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+<text x="85" y="143" font-family="sans-serif" font-size="20" font-weight="700" fill="#115e59">P2-E0-v2</text>
+<text x="85" y="172" font-family="sans-serif" font-size="14" fill="#334155">Generic-base adapter/world equivalence</text>
+<text data-e0-exact-six="32" x="85" y="226" font-family="sans-serif" font-size="36" font-weight="700" fill="#0f766e">32 exact-six</text>
+<text x="85" y="258" font-family="sans-serif" font-size="15" fill="#334155">16 matched keys · 352 actions · 16 submitted terminals per arm</text>
+<text x="85" y="298" font-family="sans-serif" font-size="14" fill="#64748b">Accepted provider-free mechanics gate</text>
+<text x="85" y="326" font-family="sans-serif" font-size="14" font-weight="700" fill="#b45309">No P2-E1 or performance estimate</text>
+</g>
+<g data-gate="dynamic-v3">
+<rect x="625" y="105" width="520" height="245" rx="18" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+<text x="655" y="143" font-family="sans-serif" font-size="20" font-weight="700" fill="#6d28d9">Dynamic-v3</text>
+<text x="655" y="172" font-family="sans-serif" font-size="14" fill="#334155">Public-event routing and five Graph profiles</text>
+<text data-mechanics-observed="10" x="655" y="226" font-family="sans-serif" font-size="36" font-weight="700" fill="#6d28d9">10/10 Mock</text>
+<text data-formal-observed="0" data-formal-expected="240" x="655" y="270" font-family="sans-serif" font-size="31" font-weight="700" fill="#be123c">0/240 formal</text>
+<text data-formal-runner-ready="true" data-planned-commands="240" data-emitted-commands="240" data-invoked-commands="0" x="655" y="303" font-family="sans-serif" font-size="14" fill="#64748b">Runner ready · 240/240 dry-run commands · 0 invoked</text>
+<text data-provider-calls="0" data-formal-runner-tests="17" data-dynamic-tests="50" x="655" y="329" font-family="sans-serif" font-size="14" font-weight="700" fill="#b45309">17/17 runner · 50/50 dynamic checks · no formal result</text>
+</g>
+<rect x="55" y="382" width="1090" height="54" rx="12" fill="#fff7ed" stroke="#fb923c"/>
+<text x="600" y="415" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#9a3412">Evidence boundary: executable mechanics only — no task score and no Graph treatment effect</text>
+</svg>

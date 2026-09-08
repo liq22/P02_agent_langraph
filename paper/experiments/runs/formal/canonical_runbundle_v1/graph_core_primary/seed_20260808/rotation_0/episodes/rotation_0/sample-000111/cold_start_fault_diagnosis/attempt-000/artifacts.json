@@ -1,0 +1,129 @@
+{
+  "artifact://op/000001": {
+    "artifact_ref": "artifact://op/000001",
+    "channels": [
+      "ch2"
+    ],
+    "kind": "spectrum",
+    "operator": "welch_psd",
+    "producer_action": "op.run",
+    "source_sample_id": "sample-000111"
+  },
+  "artifact://op/000002": {
+    "artifact_ref": "artifact://op/000002",
+    "channels": [
+      "ch2"
+    ],
+    "kind": "feature_vector",
+    "operator": "rms",
+    "producer_action": "op.run",
+    "source_sample_id": "sample-000111"
+  },
+  "artifact://op/000003": {
+    "artifact_ref": "artifact://op/000003",
+    "channels": [
+      "ch2"
+    ],
+    "kind": "feature_vector",
+    "operator": "standard_deviation",
+    "producer_action": "op.run",
+    "source_sample_id": "sample-000111"
+  },
+  "artifact://op/000004": {
+    "artifact_ref": "artifact://op/000004",
+    "channels": [
+      "ch2"
+    ],
+    "kind": "feature_vector",
+    "operator": "peak_to_peak",
+    "producer_action": "op.run",
+    "source_sample_id": "sample-000111"
+  },
+  "artifact://op/000005": {
+    "artifact_ref": "artifact://op/000005",
+    "channels": [
+      "ch2"
+    ],
+    "kind": "feature_vector",
+    "operator": "skewness",
+    "producer_action": "op.run",
+    "source_sample_id": "sample-000111"
+  },
+  "artifact://op/000006": {
+    "artifact_ref": "artifact://op/000006",
+    "channels": [
+      "ch2"
+    ],
+    "kind": "feature_vector",
+    "operator": "kurtosis",
+    "producer_action": "op.run",
+    "source_sample_id": "sample-000111"
+  },
+  "artifact://op/000007": {
+    "artifact_ref": "artifact://op/000007",
+    "channels": [
+      "ch2"
+    ],
+    "kind": "feature_vector",
+    "operator": "crest_factor",
+    "producer_action": "op.run",
+    "source_sample_id": "sample-000111"
+  },
+  "artifact://op/000008": {
+    "artifact_ref": "artifact://op/000008",
+    "channels": [
+      "ch2"
+    ],
+    "kind": "feature_vector",
+    "operator": "band_power",
+    "producer_action": "op.run",
+    "source_sample_id": "sample-000111"
+  },
+  "artifact://op/000009": {
+    "artifact_ref": "artifact://op/000009",
+    "channels": [
+      "ch2"
+    ],
+    "kind": "feature_vector",
+    "operator": "band_power",
+    "producer_action": "op.run",
+    "source_sample_id": "sample-000111"
+  },
+  "artifact://op/000010": {
+    "artifact_ref": "artifact://op/000010",
+    "channels": [
+      "ch2"
+    ],
+    "kind": "feature_vector",
+    "operator": "band_power",
+    "producer_action": "op.run",
+    "source_sample_id": "sample-000111"
+  },
+  "artifact://op/000011": {
+    "artifact_ref": "artifact://op/000011",
+    "channels": [
+      "ch2"
+    ],
+    "kind": "feature_vector",
+    "operator": "band_power",
+    "producer_action": "op.run",
+    "source_sample_id": "sample-000111"
+  },
+  "artifact://prediction/000001": {
+    "artifact_ref": "artifact://prediction/000001",
+    "kind": "prediction",
+    "model_id": "nearest-centroid-v1",
+    "producer_action": "model.predict",
+    "source_sample_id": "sample-000111"
+  },
+  "artifact://window/000235": {
+    "artifact_ref": "artifact://window/000235",
+    "channels": [
+      "ch2"
+    ],
+    "effective_sample_rate_hz": 64000.0,
+    "kind": "continuous_series",
+    "producer_action": "data.read_window",
+    "sample_count": 8192
+  }
+}

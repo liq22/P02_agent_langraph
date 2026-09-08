@@ -1,0 +1,290 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="920" viewBox="0 0 1500 920">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#475569"/></marker></defs>
+<rect width="1500" height="920" fill="white"/>
+<text x="750" y="32" text-anchor="middle" font-family="sans-serif" font-size="19">Eight-state PHM graph: shared topology, profile-specific relations</text>
+<text x="750" y="54" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">The base-v6 and dynamic-full legal-transition matrices are distinct experiment contracts.</text>
+<line x1="230" y1="107.0" x2="285" y2="107.0" stroke="#2563eb" stroke-width="3" marker-end="url(#a)"/>
+<line x1="435" y1="107.0" x2="490" y2="107.0" stroke="#2563eb" stroke-width="3" marker-end="url(#a)"/>
+<line x1="640" y1="107.0" x2="695" y2="107.0" stroke="#2563eb" stroke-width="3" marker-end="url(#a)"/>
+<line x1="845" y1="107.0" x2="1235" y2="107.0" stroke="#2563eb" stroke-width="3" marker-end="url(#a)"/>
+<path d="M 155 134 C 190 170, 300 178, 465 200" fill="none" stroke="#7c3aed" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#a)"/>
+<text x="315" y="166" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#6d28d9">released public_condition_event (dynamic profile only)</text>
+<line x1="540" y1="227" x2="620" y2="227" stroke="#7c3aed" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#a)"/>
+<path d="M 695 227 C 660 185, 610 165, 565 134" fill="none" stroke="#7c3aed" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#a)"/>
+<path d="M 770 134 C 790 166, 850 176, 925 200" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a)"/>
+<text x="900" y="163" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#b91c1c">recorded action error</text>
+<path d="M 850 227 C 760 278, 630 278, 565 134" fill="none" stroke="#dc2626" stroke-width="2" marker-end="url(#a)"/>
+<rect data-state="Inspect" x="80" y="80" width="150" height="54" rx="9" fill="#dbeafe" stroke="#334155"/>
+<text x="155.0" y="113" text-anchor="middle" font-family="sans-serif" font-size="14">Inspect</text>
+<rect data-state="Hypothesize" x="285" y="80" width="150" height="54" rx="9" fill="#dbeafe" stroke="#334155"/>
+<text x="360.0" y="113" text-anchor="middle" font-family="sans-serif" font-size="14">Hypothesize</text>
+<rect data-state="Analyze" x="490" y="80" width="150" height="54" rx="9" fill="#dbeafe" stroke="#334155"/>
+<text x="565.0" y="113" text-anchor="middle" font-family="sans-serif" font-size="14">Analyze</text>
+<rect data-state="Check" x="695" y="80" width="150" height="54" rx="9" fill="#dbeafe" stroke="#334155"/>
+<text x="770.0" y="113" text-anchor="middle" font-family="sans-serif" font-size="14">Check</text>
+<rect data-state="Monitor" x="390" y="200" width="150" height="54" rx="9" fill="#ede9fe" stroke="#334155"/>
+<text x="465.0" y="233" text-anchor="middle" font-family="sans-serif" font-size="14">Monitor</text>
+<rect data-state="Revise" x="620" y="200" width="150" height="54" rx="9" fill="#ede9fe" stroke="#334155"/>
+<text x="695.0" y="233" text-anchor="middle" font-family="sans-serif" font-size="14">Revise</text>
+<rect data-state="Recover" x="850" y="200" width="150" height="54" rx="9" fill="#fee2e2" stroke="#334155"/>
+<text x="925.0" y="233" text-anchor="middle" font-family="sans-serif" font-size="14">Recover</text>
+<rect data-state="Submit" x="1235" y="80" width="150" height="54" rx="9" fill="#dcfce7" stroke="#334155"/>
+<text x="1310.0" y="113" text-anchor="middle" font-family="sans-serif" font-size="14">Submit</text>
+<text x="750" y="294" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#334155">Active v6 registers no public_condition_event: Monitor and Revise are unreachable in that primary cohort.</text>
+<text x="750" y="315" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">The separate dynamic-full mechanics gate is accepted; its provider-bound formal cohort has not run.</text>
+<g data-transition-relation="base-v6">
+<text x="348.0" y="352" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#0f172a">Base-v6 declared relation (50 edges)</text>
+<text x="348.0" y="374" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">Monitor/Revise remain declared but unreachable without an event</text>
+<text x="201.0" y="424" text-anchor="end" transform="rotate(-45 201.0 424)" font-family="sans-serif" font-size="10">Inspect</text>
+<text x="243.0" y="424" text-anchor="end" transform="rotate(-45 243.0 424)" font-family="sans-serif" font-size="10">Hypothesize</text>
+<text x="285.0" y="424" text-anchor="end" transform="rotate(-45 285.0 424)" font-family="sans-serif" font-size="10">Analyze</text>
+<text x="327.0" y="424" text-anchor="end" transform="rotate(-45 327.0 424)" font-family="sans-serif" font-size="10">Check</text>
+<text x="369.0" y="424" text-anchor="end" transform="rotate(-45 369.0 424)" font-family="sans-serif" font-size="10">Monitor</text>
+<text x="411.0" y="424" text-anchor="end" transform="rotate(-45 411.0 424)" font-family="sans-serif" font-size="10">Revise</text>
+<text x="453.0" y="424" text-anchor="end" transform="rotate(-45 453.0 424)" font-family="sans-serif" font-size="10">Recover</text>
+<text x="495.0" y="424" text-anchor="end" transform="rotate(-45 495.0 424)" font-family="sans-serif" font-size="10">Submit</text>
+<text x="166" y="467" text-anchor="end" font-family="sans-serif" font-size="11">Inspect</text>
+<rect data-edge="base-v6:Inspect-to-Inspect" data-relation="base-v6" data-legal="true" x="180" y="440" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="201.0" cy="461.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Inspect-to-Hypothesize" data-relation="base-v6" data-legal="true" x="222" y="440" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="243.0" cy="461.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Inspect-to-Analyze" data-relation="base-v6" data-legal="true" x="264" y="440" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="285.0" cy="461.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Inspect-to-Check" data-relation="base-v6" data-legal="false" x="306" y="440" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="base-v6:Inspect-to-Monitor" data-relation="base-v6" data-legal="true" x="348" y="440" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="369.0" cy="461.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Inspect-to-Revise" data-relation="base-v6" data-legal="true" x="390" y="440" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="411.0" cy="461.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Inspect-to-Recover" data-relation="base-v6" data-legal="true" x="432" y="440" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="453.0" cy="461.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Inspect-to-Submit" data-relation="base-v6" data-legal="false" x="474" y="440" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="166" y="509" text-anchor="end" font-family="sans-serif" font-size="11">Hypothesize</text>
+<rect data-edge="base-v6:Hypothesize-to-Inspect" data-relation="base-v6" data-legal="false" x="180" y="482" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="base-v6:Hypothesize-to-Hypothesize" data-relation="base-v6" data-legal="true" x="222" y="482" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="243.0" cy="503.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Hypothesize-to-Analyze" data-relation="base-v6" data-legal="true" x="264" y="482" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="285.0" cy="503.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Hypothesize-to-Check" data-relation="base-v6" data-legal="false" x="306" y="482" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="base-v6:Hypothesize-to-Monitor" data-relation="base-v6" data-legal="true" x="348" y="482" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="369.0" cy="503.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Hypothesize-to-Revise" data-relation="base-v6" data-legal="true" x="390" y="482" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="411.0" cy="503.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Hypothesize-to-Recover" data-relation="base-v6" data-legal="true" x="432" y="482" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="453.0" cy="503.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Hypothesize-to-Submit" data-relation="base-v6" data-legal="false" x="474" y="482" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="166" y="551" text-anchor="end" font-family="sans-serif" font-size="11">Analyze</text>
+<rect data-edge="base-v6:Analyze-to-Inspect" data-relation="base-v6" data-legal="false" x="180" y="524" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="base-v6:Analyze-to-Hypothesize" data-relation="base-v6" data-legal="false" x="222" y="524" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="base-v6:Analyze-to-Analyze" data-relation="base-v6" data-legal="true" x="264" y="524" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="285.0" cy="545.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Analyze-to-Check" data-relation="base-v6" data-legal="true" x="306" y="524" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="327.0" cy="545.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Analyze-to-Monitor" data-relation="base-v6" data-legal="true" x="348" y="524" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="369.0" cy="545.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Analyze-to-Revise" data-relation="base-v6" data-legal="true" x="390" y="524" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="411.0" cy="545.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Analyze-to-Recover" data-relation="base-v6" data-legal="true" x="432" y="524" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="453.0" cy="545.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Analyze-to-Submit" data-relation="base-v6" data-legal="false" x="474" y="524" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="166" y="593" text-anchor="end" font-family="sans-serif" font-size="11">Check</text>
+<rect data-edge="base-v6:Check-to-Inspect" data-relation="base-v6" data-legal="true" x="180" y="566" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="201.0" cy="587.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Check-to-Hypothesize" data-relation="base-v6" data-legal="false" x="222" y="566" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="base-v6:Check-to-Analyze" data-relation="base-v6" data-legal="true" x="264" y="566" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="285.0" cy="587.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Check-to-Check" data-relation="base-v6" data-legal="true" x="306" y="566" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="327.0" cy="587.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Check-to-Monitor" data-relation="base-v6" data-legal="true" x="348" y="566" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="369.0" cy="587.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Check-to-Revise" data-relation="base-v6" data-legal="true" x="390" y="566" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="411.0" cy="587.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Check-to-Recover" data-relation="base-v6" data-legal="true" x="432" y="566" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="453.0" cy="587.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Check-to-Submit" data-relation="base-v6" data-legal="true" x="474" y="566" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="495.0" cy="587.0" r="6" fill="white"/>
+<text x="166" y="635" text-anchor="end" font-family="sans-serif" font-size="11">Monitor</text>
+<rect data-edge="base-v6:Monitor-to-Inspect" data-relation="base-v6" data-legal="true" x="180" y="608" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="201.0" cy="629.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Monitor-to-Hypothesize" data-relation="base-v6" data-legal="true" x="222" y="608" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="243.0" cy="629.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Monitor-to-Analyze" data-relation="base-v6" data-legal="true" x="264" y="608" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="285.0" cy="629.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Monitor-to-Check" data-relation="base-v6" data-legal="true" x="306" y="608" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="327.0" cy="629.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Monitor-to-Monitor" data-relation="base-v6" data-legal="true" x="348" y="608" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="369.0" cy="629.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Monitor-to-Revise" data-relation="base-v6" data-legal="true" x="390" y="608" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="411.0" cy="629.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Monitor-to-Recover" data-relation="base-v6" data-legal="true" x="432" y="608" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="453.0" cy="629.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Monitor-to-Submit" data-relation="base-v6" data-legal="true" x="474" y="608" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="495.0" cy="629.0" r="6" fill="white"/>
+<text x="166" y="677" text-anchor="end" font-family="sans-serif" font-size="11">Revise</text>
+<rect data-edge="base-v6:Revise-to-Inspect" data-relation="base-v6" data-legal="true" x="180" y="650" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="201.0" cy="671.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Revise-to-Hypothesize" data-relation="base-v6" data-legal="true" x="222" y="650" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="243.0" cy="671.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Revise-to-Analyze" data-relation="base-v6" data-legal="true" x="264" y="650" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="285.0" cy="671.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Revise-to-Check" data-relation="base-v6" data-legal="true" x="306" y="650" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="327.0" cy="671.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Revise-to-Monitor" data-relation="base-v6" data-legal="true" x="348" y="650" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="369.0" cy="671.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Revise-to-Revise" data-relation="base-v6" data-legal="true" x="390" y="650" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="411.0" cy="671.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Revise-to-Recover" data-relation="base-v6" data-legal="true" x="432" y="650" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="453.0" cy="671.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Revise-to-Submit" data-relation="base-v6" data-legal="true" x="474" y="650" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="495.0" cy="671.0" r="6" fill="white"/>
+<text x="166" y="719" text-anchor="end" font-family="sans-serif" font-size="11">Recover</text>
+<rect data-edge="base-v6:Recover-to-Inspect" data-relation="base-v6" data-legal="true" x="180" y="692" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="201.0" cy="713.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Recover-to-Hypothesize" data-relation="base-v6" data-legal="true" x="222" y="692" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="243.0" cy="713.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Recover-to-Analyze" data-relation="base-v6" data-legal="true" x="264" y="692" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="285.0" cy="713.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Recover-to-Check" data-relation="base-v6" data-legal="true" x="306" y="692" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="327.0" cy="713.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Recover-to-Monitor" data-relation="base-v6" data-legal="true" x="348" y="692" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="369.0" cy="713.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Recover-to-Revise" data-relation="base-v6" data-legal="true" x="390" y="692" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="411.0" cy="713.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Recover-to-Recover" data-relation="base-v6" data-legal="true" x="432" y="692" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="453.0" cy="713.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Recover-to-Submit" data-relation="base-v6" data-legal="true" x="474" y="692" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="495.0" cy="713.0" r="6" fill="white"/>
+<text x="166" y="761" text-anchor="end" font-family="sans-serif" font-size="11">Submit</text>
+<rect data-edge="base-v6:Submit-to-Inspect" data-relation="base-v6" data-legal="false" x="180" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="base-v6:Submit-to-Hypothesize" data-relation="base-v6" data-legal="false" x="222" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="base-v6:Submit-to-Analyze" data-relation="base-v6" data-legal="false" x="264" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="base-v6:Submit-to-Check" data-relation="base-v6" data-legal="false" x="306" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="base-v6:Submit-to-Monitor" data-relation="base-v6" data-legal="true" x="348" y="734" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="369.0" cy="755.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Submit-to-Revise" data-relation="base-v6" data-legal="true" x="390" y="734" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="411.0" cy="755.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Submit-to-Recover" data-relation="base-v6" data-legal="true" x="432" y="734" width="42" height="42" fill="#2563eb" stroke="#cbd5e1"/>
+<circle cx="453.0" cy="755.0" r="6" fill="white"/>
+<rect data-edge="base-v6:Submit-to-Submit" data-relation="base-v6" data-legal="false" x="474" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="348.0" y="810" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#334155">50 declared legal transitions imported from state.py</text>
+</g>
+<g data-transition-relation="dynamic-full">
+<text x="1098.0" y="352" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#0f172a">Dynamic-full profile relation (33 edges)</text>
+<text x="1098.0" y="374" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">Separate runtime identity; provider-bound formal cohort not run</text>
+<text x="951.0" y="424" text-anchor="end" transform="rotate(-45 951.0 424)" font-family="sans-serif" font-size="10">Inspect</text>
+<text x="993.0" y="424" text-anchor="end" transform="rotate(-45 993.0 424)" font-family="sans-serif" font-size="10">Hypothesize</text>
+<text x="1035.0" y="424" text-anchor="end" transform="rotate(-45 1035.0 424)" font-family="sans-serif" font-size="10">Analyze</text>
+<text x="1077.0" y="424" text-anchor="end" transform="rotate(-45 1077.0 424)" font-family="sans-serif" font-size="10">Check</text>
+<text x="1119.0" y="424" text-anchor="end" transform="rotate(-45 1119.0 424)" font-family="sans-serif" font-size="10">Monitor</text>
+<text x="1161.0" y="424" text-anchor="end" transform="rotate(-45 1161.0 424)" font-family="sans-serif" font-size="10">Revise</text>
+<text x="1203.0" y="424" text-anchor="end" transform="rotate(-45 1203.0 424)" font-family="sans-serif" font-size="10">Recover</text>
+<text x="1245.0" y="424" text-anchor="end" transform="rotate(-45 1245.0 424)" font-family="sans-serif" font-size="10">Submit</text>
+<text x="916" y="467" text-anchor="end" font-family="sans-serif" font-size="11">Inspect</text>
+<rect data-edge="dynamic-full:Inspect-to-Inspect" data-relation="dynamic-full" data-legal="true" x="930" y="440" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="951.0" cy="461.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Inspect-to-Hypothesize" data-relation="dynamic-full" data-legal="true" x="972" y="440" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="993.0" cy="461.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Inspect-to-Analyze" data-relation="dynamic-full" data-legal="true" x="1014" y="440" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1035.0" cy="461.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Inspect-to-Check" data-relation="dynamic-full" data-legal="false" x="1056" y="440" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Inspect-to-Monitor" data-relation="dynamic-full" data-legal="true" x="1098" y="440" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1119.0" cy="461.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Inspect-to-Revise" data-relation="dynamic-full" data-legal="false" x="1140" y="440" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Inspect-to-Recover" data-relation="dynamic-full" data-legal="true" x="1182" y="440" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1203.0" cy="461.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Inspect-to-Submit" data-relation="dynamic-full" data-legal="false" x="1224" y="440" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="916" y="509" text-anchor="end" font-family="sans-serif" font-size="11">Hypothesize</text>
+<rect data-edge="dynamic-full:Hypothesize-to-Inspect" data-relation="dynamic-full" data-legal="false" x="930" y="482" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Hypothesize-to-Hypothesize" data-relation="dynamic-full" data-legal="true" x="972" y="482" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="993.0" cy="503.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Hypothesize-to-Analyze" data-relation="dynamic-full" data-legal="true" x="1014" y="482" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1035.0" cy="503.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Hypothesize-to-Check" data-relation="dynamic-full" data-legal="false" x="1056" y="482" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Hypothesize-to-Monitor" data-relation="dynamic-full" data-legal="false" x="1098" y="482" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Hypothesize-to-Revise" data-relation="dynamic-full" data-legal="false" x="1140" y="482" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Hypothesize-to-Recover" data-relation="dynamic-full" data-legal="true" x="1182" y="482" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1203.0" cy="503.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Hypothesize-to-Submit" data-relation="dynamic-full" data-legal="false" x="1224" y="482" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="916" y="551" text-anchor="end" font-family="sans-serif" font-size="11">Analyze</text>
+<rect data-edge="dynamic-full:Analyze-to-Inspect" data-relation="dynamic-full" data-legal="false" x="930" y="524" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Analyze-to-Hypothesize" data-relation="dynamic-full" data-legal="false" x="972" y="524" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Analyze-to-Analyze" data-relation="dynamic-full" data-legal="true" x="1014" y="524" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1035.0" cy="545.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Analyze-to-Check" data-relation="dynamic-full" data-legal="true" x="1056" y="524" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1077.0" cy="545.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Analyze-to-Monitor" data-relation="dynamic-full" data-legal="false" x="1098" y="524" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Analyze-to-Revise" data-relation="dynamic-full" data-legal="false" x="1140" y="524" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Analyze-to-Recover" data-relation="dynamic-full" data-legal="true" x="1182" y="524" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1203.0" cy="545.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Analyze-to-Submit" data-relation="dynamic-full" data-legal="false" x="1224" y="524" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="916" y="593" text-anchor="end" font-family="sans-serif" font-size="11">Check</text>
+<rect data-edge="dynamic-full:Check-to-Inspect" data-relation="dynamic-full" data-legal="true" x="930" y="566" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="951.0" cy="587.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Check-to-Hypothesize" data-relation="dynamic-full" data-legal="false" x="972" y="566" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Check-to-Analyze" data-relation="dynamic-full" data-legal="false" x="1014" y="566" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Check-to-Check" data-relation="dynamic-full" data-legal="true" x="1056" y="566" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1077.0" cy="587.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Check-to-Monitor" data-relation="dynamic-full" data-legal="false" x="1098" y="566" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Check-to-Revise" data-relation="dynamic-full" data-legal="false" x="1140" y="566" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Check-to-Recover" data-relation="dynamic-full" data-legal="true" x="1182" y="566" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1203.0" cy="587.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Check-to-Submit" data-relation="dynamic-full" data-legal="true" x="1224" y="566" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1245.0" cy="587.0" r="6" fill="white"/>
+<text x="916" y="635" text-anchor="end" font-family="sans-serif" font-size="11">Monitor</text>
+<rect data-edge="dynamic-full:Monitor-to-Inspect" data-relation="dynamic-full" data-legal="false" x="930" y="608" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Monitor-to-Hypothesize" data-relation="dynamic-full" data-legal="false" x="972" y="608" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Monitor-to-Analyze" data-relation="dynamic-full" data-legal="false" x="1014" y="608" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Monitor-to-Check" data-relation="dynamic-full" data-legal="false" x="1056" y="608" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Monitor-to-Monitor" data-relation="dynamic-full" data-legal="true" x="1098" y="608" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1119.0" cy="629.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Monitor-to-Revise" data-relation="dynamic-full" data-legal="true" x="1140" y="608" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1161.0" cy="629.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Monitor-to-Recover" data-relation="dynamic-full" data-legal="true" x="1182" y="608" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1203.0" cy="629.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Monitor-to-Submit" data-relation="dynamic-full" data-legal="false" x="1224" y="608" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="916" y="677" text-anchor="end" font-family="sans-serif" font-size="11">Revise</text>
+<rect data-edge="dynamic-full:Revise-to-Inspect" data-relation="dynamic-full" data-legal="true" x="930" y="650" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="951.0" cy="671.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Revise-to-Hypothesize" data-relation="dynamic-full" data-legal="true" x="972" y="650" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="993.0" cy="671.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Revise-to-Analyze" data-relation="dynamic-full" data-legal="true" x="1014" y="650" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1035.0" cy="671.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Revise-to-Check" data-relation="dynamic-full" data-legal="true" x="1056" y="650" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1077.0" cy="671.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Revise-to-Monitor" data-relation="dynamic-full" data-legal="true" x="1098" y="650" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1119.0" cy="671.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Revise-to-Revise" data-relation="dynamic-full" data-legal="false" x="1140" y="650" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Revise-to-Recover" data-relation="dynamic-full" data-legal="true" x="1182" y="650" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1203.0" cy="671.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Revise-to-Submit" data-relation="dynamic-full" data-legal="true" x="1224" y="650" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1245.0" cy="671.0" r="6" fill="white"/>
+<text x="916" y="719" text-anchor="end" font-family="sans-serif" font-size="11">Recover</text>
+<rect data-edge="dynamic-full:Recover-to-Inspect" data-relation="dynamic-full" data-legal="true" x="930" y="692" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="951.0" cy="713.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Recover-to-Hypothesize" data-relation="dynamic-full" data-legal="true" x="972" y="692" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="993.0" cy="713.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Recover-to-Analyze" data-relation="dynamic-full" data-legal="true" x="1014" y="692" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1035.0" cy="713.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Recover-to-Check" data-relation="dynamic-full" data-legal="true" x="1056" y="692" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1077.0" cy="713.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Recover-to-Monitor" data-relation="dynamic-full" data-legal="true" x="1098" y="692" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1119.0" cy="713.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Recover-to-Revise" data-relation="dynamic-full" data-legal="false" x="1140" y="692" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Recover-to-Recover" data-relation="dynamic-full" data-legal="true" x="1182" y="692" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1203.0" cy="713.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Recover-to-Submit" data-relation="dynamic-full" data-legal="true" x="1224" y="692" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1245.0" cy="713.0" r="6" fill="white"/>
+<text x="916" y="761" text-anchor="end" font-family="sans-serif" font-size="11">Submit</text>
+<rect data-edge="dynamic-full:Submit-to-Inspect" data-relation="dynamic-full" data-legal="false" x="930" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Submit-to-Hypothesize" data-relation="dynamic-full" data-legal="false" x="972" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Submit-to-Analyze" data-relation="dynamic-full" data-legal="false" x="1014" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Submit-to-Check" data-relation="dynamic-full" data-legal="false" x="1056" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Submit-to-Monitor" data-relation="dynamic-full" data-legal="false" x="1098" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Submit-to-Revise" data-relation="dynamic-full" data-legal="false" x="1140" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<rect data-edge="dynamic-full:Submit-to-Recover" data-relation="dynamic-full" data-legal="true" x="1182" y="734" width="42" height="42" fill="#7c3aed" stroke="#cbd5e1"/>
+<circle cx="1203.0" cy="755.0" r="6" fill="white"/>
+<rect data-edge="dynamic-full:Submit-to-Submit" data-relation="dynamic-full" data-legal="false" x="1224" y="734" width="42" height="42" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="1098.0" y="810" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#334155">33 declared legal transitions imported from state.py</text>
+</g>
+<text x="750" y="852" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">Filled cells are legal transitions. The four preregistered dynamic ablations use their own profile-specific relations.</text>
+<text x="750" y="876" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">The active state restricts the visible subset of the unchanged shared tool surface before each LLM decision.</text>
+</svg>

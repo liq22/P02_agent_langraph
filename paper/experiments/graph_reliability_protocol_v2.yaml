@@ -1,0 +1,314 @@
+schema_version: graph_reliability_protocol_v2
+protocol_id: paderborn_graph_reliability_generic_v2
+status: preregistered_generic_base_runner_ready_formal_launch_gated
+experiment_id: P2-E9
+frozen_date: "2026-08-20"
+supersedes: graph_reliability_protocol_v1.yaml
+formal_launch: gated
+
+authority:
+  benchmark_core: ../p01-phm-agent-benchmark/CORE.md
+  statistics: ../p01-phm-agent-benchmark/paper/experiments/statistics.md
+  dataset_protocol: ../p01-phm-agent-benchmark/paper/experiments/datasets/dataset_protocol.yaml
+  experiment_matrix: ../p01-phm-agent-benchmark/obsidian/goal/8-12/phm_agent_three_paper_goal_pack_20260812_v1/experiments/PAPER2_MATRIX.md
+  legacy_boundary: >-
+    graph_reliability_protocol_v1 is a superseded PHMskills-base profile. It
+    cannot be scheduled, launched, accepted, analyzed, resumed, or pooled.
+
+identity_contract:
+  p2_experiment_id: p2_graph_vs_generic_llm_v1
+  matched_control_id: benchmark_generic_llm_tool_agent_v1
+  control_agent_id: reactive-sequential-agent
+  treatment_agent_id: graph-decision-agent
+  control_implementation_id: reactive_sequential_agent_v1
+  treatment_implementation_id: graph_decision_agent_v1
+  phmskills_runtime_or_catalog_allowed: false
+
+cohort:
+  cohort_id: p2_e9_generic_vs_graph_replay_reliability_n10_v2
+  role: separate_reliability_extension
+  repeat_count: 10
+  relationship_to_primary: report_alongside_never_replace_append_or_pool
+  pooling_with_three_seed_primary: forbidden
+  primary_cohort_seeds: [20260808, 20260809, 20260810]
+  repeats:
+    - {repeat_id: graph_reliability_repeat_01, seed: 20260828}
+    - {repeat_id: graph_reliability_repeat_02, seed: 20260829}
+    - {repeat_id: graph_reliability_repeat_03, seed: 20260830}
+    - {repeat_id: graph_reliability_repeat_04, seed: 20260831}
+    - {repeat_id: graph_reliability_repeat_05, seed: 20260901}
+    - {repeat_id: graph_reliability_repeat_06, seed: 20260902}
+    - {repeat_id: graph_reliability_repeat_07, seed: 20260903}
+    - {repeat_id: graph_reliability_repeat_08, seed: 20260904}
+    - {repeat_id: graph_reliability_repeat_09, seed: 20260905}
+    - {repeat_id: graph_reliability_repeat_10, seed: 20260906}
+
+scope:
+  task_id: online_replay_monitoring
+  rotation: rotation_0
+  windows_per_episode: 3
+  public_sequence_ids:
+    - sequence-0001
+    - sequence-0002
+    - sequence-0003
+    - sequence-0004
+    - sequence-0005
+    - sequence-0006
+    - sequence-0007
+    - sequence-0008
+  arms: [reactive, graph]
+  expected_pairs_per_repeat: 8
+  expected_pairs_total: 80
+  expected_episode_bundles_total: 160
+  evidence_class: real_data_formal_candidate
+  excluded_tasks:
+    - cold_start_fault_diagnosis
+    - unsupervised_anomaly_detection
+    - rul
+    - maintenance_decision
+
+matched_contract:
+  paired_unit: [repeat_id, seed, rotation, public_sequence_id]
+  arm_order_rule: alternate_by_repeat_plus_sequence_parity
+  shared:
+    dataset_protocol: phm_agent_dataset_protocol_v1
+    dataset_protocol_id: paderborn_phase1_v1
+    dataset_protocol_schema: phm_agent_dataset_protocol_v1
+    dataset_id: paderborn-bearing-datacenter
+    evaluator_assignment_contract: phase1_registered_data_port_assignment_v1
+    base_runtime_contract: phase1_opaque_sample_vibration_feature_schema_v6
+    p2_experiment_id: p2_graph_vs_generic_llm_v1
+    matched_control_id: benchmark_generic_llm_tool_agent_v1
+    backbone_model: cohere/north-mini-code:free
+    provider: openrouter-free
+    inference_protocol: openai_chat_completions
+    temperature: 0.2
+    max_output_tokens_per_turn: 2048
+    prompt_information: identical_generic_base_before_graph_suffix
+    tools: identical_before_graph_state_filtering
+    numerical_experts: identical
+    budget: identical
+    evaluator: identical
+    episode_order: identical
+    public_sequence: identical
+  treatment_only_difference: >-
+    GraphDecision adds the registered current-state suffix and state-specific
+    tool visibility to the same Generic LLM policy used by ReactiveSequential.
+
+profile:
+  reliability_profile_id: graph_reliability_generic_n10_v2
+  base_runtime_contract: phase1_opaque_sample_vibration_feature_schema_v6
+  effective_runtime_contract: phase1_graph_dynamic_generic_ablation_v2
+  separate_from_active_v6_primary_profile: true
+  separate_from_dynamic_ablation_profile: true
+  provider: openrouter-free
+  model: cohere/north-mini-code:free
+  inference_protocol: openai_chat_completions
+  thinking_mode: not_requested
+  temperature: 0.2
+  max_output_tokens_per_turn: 2048
+  input_usd_per_million: 0.0
+  output_usd_per_million: 0.0
+  p2_experiment_id: p2_graph_vs_generic_llm_v1
+  matched_control_id: benchmark_generic_llm_tool_agent_v1
+  budget:
+    max_tool_calls: 72
+    max_window_reads: 3
+    max_operator_calls: 50
+    max_model_calls: 3
+    max_llm_turns: 72
+    max_data_points: 24576
+    max_data_bytes: 196608
+    max_wall_clock_seconds: null
+  arms:
+    reactive:
+      agent_id: reactive-sequential-agent
+      agent_control_id: benchmark_generic_llm_tool_agent_v1
+      agent_implementation_id: reactive_sequential_agent_v1
+      graph_policy_profile: reactive
+    graph:
+      agent_id: graph-decision-agent
+      agent_control_id: graph_decision_control_v1
+      agent_implementation_id: graph_decision_agent_v1
+      graph_policy_profile: full
+  route_switch_within_profile: forbidden
+  model_switch_within_profile: forbidden
+
+attempt_policy:
+  canonical_episode_files:
+    - run.json
+    - rollout.jsonl
+    - submission.json
+    - metrics.json
+    - failures.jsonl
+    - artifacts.json
+  canonical_non_provider_terminal_per_episode_key: exactly_one
+  provider_failure_kind: provider_error
+  provider_interruption_policy: >-
+    Retain a provider-error attempt, stop execution, and require one later
+    same-profile non-provider terminal before cohort acceptance.
+  unresolved_provider_failure_policy: cohort_incomplete
+  non_provider_failure_policy: retain_in_denominator
+  post_assignment_exclusion: forbidden
+
+pass_rule:
+  role: explanatory_rollout_reliability_not_task_primary
+  source: canonical_metrics.rollout_metrics.grounded_completion
+  operator: equals
+  value: 1.0
+  pass_at_1:
+    denominator: every_assigned_arm_episode_including_non_provider_failure
+  pass_all_10:
+    unit: [arm, rotation, public_sequence_id]
+    numerator: all_10_registered_repeat_outcomes_pass
+    denominator: all_8_registered_base_sequences_per_arm
+
+metrics:
+  task:
+    - task.completion_adjusted_average_precision
+    - task.average_precision
+    - task.auroc
+    - task.false_alarm_rate
+    - task.true_positive_rate
+  rollout:
+    - rollout.grounded_completion
+    - rollout.submission_rate
+    - rollout.grounded_recovery_success
+    - rollout.repeated_action_ratio
+    - rollout.budget_exhaustion
+    - rollout.steps
+    - rollout.llm_turns
+    - rollout.tool_calls
+    - rollout.input_tokens
+    - rollout.output_tokens
+    - rollout.total_tokens
+    - rollout.estimated_model_cost_usd
+  primary: task.average_precision
+  primary_contract:
+    population: all_protocol_assigned_replay_windows
+    missing_score_policy_id: phase1_replay_target_adverse_missing_score_v1
+    repeat_aggregation: recompute_over_all_24_assigned_windows_then_equal_weight_10_repeats
+    private_target_authority: registered_private_data_port_assignment
+    prediction_authority: canonical_rollout_successful_submit_prefix
+    derived_evaluation_jsonl_allowed: false
+    per_sequence_average_precision_averaging: forbidden
+  cost_metrics:
+    - rollout.input_tokens
+    - rollout.output_tokens
+    - rollout.total_tokens
+    - rollout.llm_turns
+    - rollout.tool_calls
+    - rollout.estimated_model_cost_usd
+  missing_metric_policy: report_null_with_defined_numerator_never_impute_zero
+  forbidden_metrics: [event_f1, detection_delay, time_to_fault_detection]
+
+statistics:
+  repeat_estimand: equal_weight_mean_of_10_repeat_level_target_adverse_average_precision
+  paired_direction: graph_minus_reactive
+  between_repeat_variance: sample_variance_ddof_1
+  confidence_level: 0.95
+  bootstrap:
+    method: crossed_repeat_and_public_sequence_percentile
+    iterations: 2000
+    seed: 20260820
+    mean_pass_at_1_and_paired_delta:
+      repeat_draw: sample_10_registered_repeats_with_replacement
+      sequence_draw: sample_all_8_public_sequences_with_replacement
+      preservation: keep_reactive_and_graph_matched_within_each_draw
+    primary_task_average_precision:
+      repeat_draw: sample_10_registered_repeats_with_replacement
+      sequence_draw: sample_all_8_public_sequences_with_replacement
+      recomputation: recompute_each_arm_target_adverse_AP_over_the_drawn_assigned_windows
+      preservation: keep_reactive_and_graph_matched_within_each_draw
+    pass_all_10:
+      repeat_draw: keep_complete_10_repeat_vector_fixed
+      sequence_draw: sample_all_8_public_sequences_with_replacement
+
+execution:
+  schedule_schema_version: graph_reliability_schedule_v2
+  acceptance_schema_version: graph_reliability_acceptance_v2
+  result_schema_version: graph_reliability_result_v2
+  scheduler_entrypoint: scripts/schedule_graph_reliability.py
+  analyzer_entrypoint: scripts/analyze_graph_reliability.py
+  python_command: python
+  runner: scripts/run_graph_reliability_v2.py
+  underlying_dynamic_runner: scripts/run_graph_experiment.py
+  dynamic_protocol: paper/experiments/graph_dynamic_ablation_protocol_v2.yaml
+  dynamic_protocol_id: paderborn_graph_dynamic_ablation_v2
+  runner_runtime_contract: phase1_graph_dynamic_generic_ablation_v2
+  dedicated_runner_contract: phase1_graph_reliability_generic_n10_v2
+  dedicated_runner_contract_implemented: true
+  required_runner_flags:
+    - --reliability-protocol
+    - --reliability-profile-id
+    - --repeat-id
+    - --arm
+    - --runtime
+    - --dynamic-protocol
+    - --public-sequence-id
+    - --horizon
+    - --rotation
+    - --input-usd-per-million
+    - --output-usd-per-million
+    - --output-root
+  required_runner_identity_literals:
+    - phase1_graph_reliability_generic_n10_v2
+    - phase1_graph_dynamic_generic_ablation_v2
+    - p2_graph_vs_generic_llm_v1
+    - benchmark_generic_llm_tool_agent_v1
+    - graph_reliability_generic_n10_v2
+  output_layout: <output_root>/<reliability_profile_id>/<repeat_id>/<arm>/<rotation>
+  formal_parent_root: paper/experiments/runs/formal/graph_reliability_v2
+  formal_root: paper/experiments/runs/formal/graph_reliability_v2/graph_reliability_generic_n10_v2
+  results_root: paper/experiments/results/graph_reliability_v2/graph_reliability_generic_n10_v2
+  formal_acceptance: paper/experiments/results/graph_reliability_v2/graph_reliability_generic_n10_v2/formal_acceptance.json
+  formal_result: paper/experiments/results/graph_reliability_v2/graph_reliability_generic_n10_v2/formal_result.json
+  accepted_manuscript_table: paper/assets/tables/p2_e9_reliability_results.md
+  accepted_manuscript_figure: paper/assets/figures/p2_e9_reliability_primary.svg
+  accepted_manuscript: paper/draft/main.md
+  accepted_manuscript_consumer:
+    entrypoint: scripts/render_graph_reliability_manuscript.py
+    acceptance_required: true
+    complete_episode_bundles_required: 160
+    matched_pairs_required: 80
+    raw_run_or_private_data_reads: false
+    provider_calls: false
+    displayed_repeat_arithmetic_recomputed: true
+    displayed_pass_and_cost_projections_recomputed: true
+    valid_bootstrap_replicates_reported: true
+    existing_output_contract: absent_or_ordinary_single_link_regular_file
+    production_cli_protocol: graph_reliability_protocol_v2.yaml
+    write_contract: fully_staged_mode_preserving_grouped_replace_with_reverse_rollback
+    focused_tests: tests/test_render_graph_reliability_manuscript.py
+  forbidden_primary_roots:
+    - paper/experiments/runs/formal/p2_graph_vs_generic_llm_v1/graph_core_primary
+    - paper/experiments/runs/formal/p2_graph_vs_generic_llm_v1/graph_monitor_primary
+    - paper/experiments/runs/formal/p2_graph_vs_generic_llm_v1/reactive_monitor_primary
+  forbidden_legacy_roots:
+    - paper/experiments/runs/formal/graph_reliability_v1
+  dry_schedule_provider_calls: forbidden
+  provider_execution_authorized_by_schedule: false
+  runner_commands_emitted_by_schedule: true
+  analyzer_requires_accepted_complete_cohort: true
+  primary_run_directories_ingested: false
+
+claim_boundary:
+  - The v2 scheduler and acceptance gate are provider-free and fail closed.
+  - The dedicated reliability-v2 wrapper validates every frozen repeat, arm,
+    sequence, horizon, price, profile, and output-root identity before it calls
+    the shared Generic-base dynamic unit implementation. The scheduler only
+    emits commands and never invokes them or reads provider environment values.
+  - No P2-E9 result exists until all 160 registered non-provider terminal
+    bundles pass v2 acceptance and the provider-free analyzer runs.
+  - The task-primary endpoint is target-adverse replay Average Precision,
+    recomputed over all 24 assigned windows within each repeat from registered
+    private DataPort targets and canonical rollout submit prefixes. Grounded
+    pass@1 and pass-all-10 remain explanatory reliability diagnostics.
+  - The analyzer does not ingest derived evaluation.jsonl rows as target or
+    prediction authority, and per-sequence Average Precision averaging is
+    forbidden.
+  - Results are reported alongside, never appended to or pooled with, the
+    three-seed primary; v1 artifacts are forbidden inputs.
+  - The accepted manuscript consumer reads only the protocol, acceptance,
+    result, and active manuscript. It emits no row before 160/160 bundles and
+    80/80 pairs accept, and it does not read raw runs or private DataPort input.

@@ -1,0 +1,58 @@
+{
+  "graph": {
+    "recover_state_count": 1,
+    "state_coverage": [
+      "Analyze",
+      "Check",
+      "Hypothesize",
+      "Inspect",
+      "Recover"
+    ],
+    "transition_validity": 1.0
+  },
+  "online_replay_monitoring": {
+    "bearings": 1,
+    "episodes": 1,
+    "rollout": {
+      "agent_decision_error_rate": 0.0,
+      "artifact_lineage_completeness": 0.0,
+      "budget_exhaustion": 1.0,
+      "data_bytes_read": 131072.0,
+      "data_points_read": 16384.0,
+      "estimated_model_cost_usd": null,
+      "failure_count": 1.0,
+      "grounded_completion": 0.0,
+      "grounded_recovery_success": 0.0,
+      "input_tokens": 598906.0,
+      "llm_turns": 39.0,
+      "model_calls": 3.0,
+      "operator_calls": 22.0,
+      "output_tokens": 11051.0,
+      "p95_step_latency_seconds": 46.935411026747886,
+      "recovery_coverage": 0.0,
+      "recovery_success": 0.0,
+      "repeated_action_ratio": 0.15789473684210525,
+      "repeated_error_rate": 0.0,
+      "steps": 38.0,
+      "steps_to_next_success_after_failure": 1.0,
+      "steps_to_recovery": null,
+      "submission_grounding": 0.0,
+      "submission_rate": 0.0,
+      "submitted_after_failure": 0.0,
+      "supporting_reference_validity": 0.0,
+      "tool_execution_failure_rate": 0.02631578947368421,
+      "valid_tool_call_rate": 0.9736842105263158,
+      "wall_clock_seconds": 1220.8715297520394,
+      "window_reads": 2.0
+    },
+    "task": {
+      "auroc": null,
+      "average_precision": null,
+      "cohort_prevalence": 0.0,
+      "false_alarm_rate": null,
+      "submission": 0.0,
+      "submitted_prevalence": null,
+      "true_positive_rate": null
+    }
+  }
+}

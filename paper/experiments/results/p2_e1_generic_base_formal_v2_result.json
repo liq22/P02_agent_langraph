@@ -1,0 +1,89 @@
+{
+  "accepted": false,
+  "arm_summaries": null,
+  "blockers": [
+    "No active-v0.2 external timestamped roots were supplied; no cohort audit or effect estimation was performed."
+  ],
+  "claim_boundary": "Absolute arm summaries and paired estimates remain null until all four arm gates and both exact pairing gates accept; no partial-prefix estimate is eligible.",
+  "direction": "GraphDecisionAgent_minus_Benchmark_GenericLLMToolAgent",
+  "effect_estimates_emitted": 0,
+  "evaluator_private_views_read": 0,
+  "gate_id": "P2-E1",
+  "gates": {
+    "all_four_arm_gates_accepted": false,
+    "arms": null,
+    "both_exact_pairing_gates_accepted": false,
+    "paired_cohorts": null
+  },
+  "graph_state_summaries": null,
+  "paired_bearing_bootstrap": null,
+  "primary_endpoint": {
+    "cohort": "replay",
+    "metric": "task.average_precision",
+    "task": "online_replay_monitoring"
+  },
+  "provider_calls": 0,
+  "registered_denominators": {
+    "core_per_arm": 192,
+    "replay_per_arm": 24
+  },
+  "registered_endpoints": {
+    "cold_start_fault_diagnosis": [
+      "task.macro_f1",
+      "rollout.grounded_completion",
+      "rollout.submission_rate",
+      "rollout.budget_exhaustion",
+      "rollout.valid_tool_call_rate",
+      "rollout.repeated_action_ratio",
+      "rollout.grounded_recovery_success",
+      "rollout.recovery_coverage",
+      "rollout.steps_to_recovery",
+      "rollout.steps",
+      "rollout.p95_step_latency_seconds",
+      "rollout.llm_turns",
+      "rollout.input_tokens",
+      "rollout.output_tokens",
+      "rollout.wall_clock_seconds",
+      "rollout.estimated_model_cost_usd"
+    ],
+    "online_replay_monitoring": [
+      "task.average_precision",
+      "rollout.grounded_completion",
+      "rollout.submission_rate",
+      "rollout.budget_exhaustion",
+      "rollout.valid_tool_call_rate",
+      "rollout.repeated_action_ratio",
+      "rollout.grounded_recovery_success",
+      "rollout.recovery_coverage",
+      "rollout.steps_to_recovery",
+      "rollout.steps",
+      "rollout.p95_step_latency_seconds",
+      "rollout.llm_turns",
+      "rollout.input_tokens",
+      "rollout.output_tokens",
+      "rollout.wall_clock_seconds",
+      "rollout.estimated_model_cost_usd"
+    ],
+    "unsupervised_anomaly_detection": [
+      "task.completion_adjusted_average_precision",
+      "rollout.grounded_completion",
+      "rollout.submission_rate",
+      "rollout.budget_exhaustion",
+      "rollout.valid_tool_call_rate",
+      "rollout.repeated_action_ratio",
+      "rollout.grounded_recovery_success",
+      "rollout.recovery_coverage",
+      "rollout.steps_to_recovery",
+      "rollout.steps",
+      "rollout.p95_step_latency_seconds",
+      "rollout.llm_turns",
+      "rollout.input_tokens",
+      "rollout.output_tokens",
+      "rollout.wall_clock_seconds",
+      "rollout.estimated_model_cost_usd"
+    ]
+  },
+  "replay_missing_score_policy_id": "phase1_replay_target_adverse_missing_score_v1",
+  "schema_version": "p2_e1_generic_base_formal_v2_result",
+  "status": "external_roots_required_no_result"
+}

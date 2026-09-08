@@ -1,0 +1,242 @@
+{
+  "accepted": true,
+  "cells": [
+    {
+      "action_count": 49,
+      "agent_profile_id": "reactive",
+      "attempt_leaf": "paper/experiments/runs/mechanics/graph_dynamic_ablation_v1/mock_acceptance/reactive/seed_20260808/rotation_0/horizon_3/episodes/sequence-0001/attempt_000",
+      "cell": "h3:reactive",
+      "event_release_indices": [],
+      "exact_six": true,
+      "horizon": 3,
+      "observed_states": [],
+      "terminal_status": "submitted",
+      "transition_count": 0
+    },
+    {
+      "action_count": 49,
+      "agent_profile_id": "graph_dynamic_full_v1",
+      "attempt_leaf": "paper/experiments/runs/mechanics/graph_dynamic_ablation_v1/mock_acceptance/graph_dynamic_full_v1/seed_20260808/rotation_0/horizon_3/episodes/sequence-0001/attempt_000",
+      "cell": "h3:graph_full",
+      "event_release_indices": [],
+      "exact_six": true,
+      "horizon": 3,
+      "observed_states": [
+        "Analyze",
+        "Check",
+        "Hypothesize",
+        "Inspect",
+        "Recover",
+        "Submit"
+      ],
+      "terminal_status": "submitted",
+      "transition_count": 48
+    },
+    {
+      "action_count": 88,
+      "agent_profile_id": "reactive",
+      "attempt_leaf": "paper/experiments/runs/mechanics/graph_dynamic_ablation_v1/mock_acceptance/reactive/seed_20260808/rotation_0/horizon_6/episodes/sequence-0001/attempt_000",
+      "cell": "h6:reactive",
+      "event_release_indices": [
+        3
+      ],
+      "exact_six": true,
+      "horizon": 6,
+      "observed_states": [],
+      "terminal_status": "submitted",
+      "transition_count": 0
+    },
+    {
+      "action_count": 88,
+      "agent_profile_id": "graph_dynamic_full_v1",
+      "attempt_leaf": "paper/experiments/runs/mechanics/graph_dynamic_ablation_v1/mock_acceptance/graph_dynamic_full_v1/seed_20260808/rotation_0/horizon_6/episodes/sequence-0001/attempt_000",
+      "cell": "h6:graph_full",
+      "event_release_indices": [
+        3
+      ],
+      "exact_six": true,
+      "horizon": 6,
+      "observed_states": [
+        "Analyze",
+        "Check",
+        "Hypothesize",
+        "Inspect",
+        "Monitor",
+        "Recover",
+        "Revise",
+        "Submit"
+      ],
+      "terminal_status": "submitted",
+      "transition_count": 87
+    },
+    {
+      "action_count": 166,
+      "agent_profile_id": "reactive",
+      "attempt_leaf": "paper/experiments/runs/mechanics/graph_dynamic_ablation_v1/mock_acceptance/reactive/seed_20260808/rotation_0/horizon_12/episodes/sequence-0001/attempt_000",
+      "cell": "h12:reactive",
+      "event_release_indices": [
+        3,
+        6,
+        9
+      ],
+      "exact_six": true,
+      "horizon": 12,
+      "observed_states": [],
+      "terminal_status": "submitted",
+      "transition_count": 0
+    },
+    {
+      "action_count": 166,
+      "agent_profile_id": "graph_dynamic_full_v1",
+      "attempt_leaf": "paper/experiments/runs/mechanics/graph_dynamic_ablation_v1/mock_acceptance/graph_dynamic_full_v1/seed_20260808/rotation_0/horizon_12/episodes/sequence-0001/attempt_000",
+      "cell": "h12:graph_full",
+      "event_release_indices": [
+        3,
+        6,
+        9
+      ],
+      "exact_six": true,
+      "horizon": 12,
+      "observed_states": [
+        "Analyze",
+        "Check",
+        "Hypothesize",
+        "Inspect",
+        "Monitor",
+        "Recover",
+        "Revise",
+        "Submit"
+      ],
+      "terminal_status": "submitted",
+      "transition_count": 165
+    },
+    {
+      "action_count": 166,
+      "agent_profile_id": "graph_dynamic_no_recovery_revision_edge_v1",
+      "attempt_leaf": "paper/experiments/runs/mechanics/graph_dynamic_ablation_v1/mock_acceptance/graph_dynamic_no_recovery_revision_edge_v1/seed_20260808/rotation_0/horizon_12/episodes/sequence-0001/attempt_000",
+      "cell": "h12:graph_no_recovery_revision_edge",
+      "event_release_indices": [
+        3,
+        6,
+        9
+      ],
+      "exact_six": true,
+      "horizon": 12,
+      "observed_states": [
+        "Analyze",
+        "Check",
+        "Hypothesize",
+        "Inspect",
+        "Monitor",
+        "Submit"
+      ],
+      "terminal_status": "submitted",
+      "transition_count": 165
+    },
+    {
+      "action_count": 166,
+      "agent_profile_id": "graph_dynamic_no_observation_conditioned_branching_v1",
+      "attempt_leaf": "paper/experiments/runs/mechanics/graph_dynamic_ablation_v1/mock_acceptance/graph_dynamic_no_observation_conditioned_branching_v1/seed_20260808/rotation_0/horizon_12/episodes/sequence-0001/attempt_000",
+      "cell": "h12:graph_no_observation_conditioned_branching",
+      "event_release_indices": [
+        3,
+        6,
+        9
+      ],
+      "exact_six": true,
+      "horizon": 12,
+      "observed_states": [
+        "Analyze",
+        "Check",
+        "Hypothesize",
+        "Inspect",
+        "Recover",
+        "Submit"
+      ],
+      "terminal_status": "submitted",
+      "transition_count": 165
+    },
+    {
+      "action_count": 166,
+      "agent_profile_id": "graph_dynamic_no_persistent_graph_state_v1",
+      "attempt_leaf": "paper/experiments/runs/mechanics/graph_dynamic_ablation_v1/mock_acceptance/graph_dynamic_no_persistent_graph_state_v1/seed_20260808/rotation_0/horizon_12/episodes/sequence-0001/attempt_000",
+      "cell": "h12:graph_no_persistent_graph_state",
+      "event_release_indices": [
+        3,
+        6,
+        9
+      ],
+      "exact_six": true,
+      "horizon": 12,
+      "observed_states": [
+        "Analyze",
+        "Check",
+        "Hypothesize",
+        "Inspect",
+        "Monitor",
+        "Recover",
+        "Submit"
+      ],
+      "terminal_status": "submitted",
+      "transition_count": 165
+    },
+    {
+      "action_count": 166,
+      "agent_profile_id": "graph_dynamic_no_replanning_v1",
+      "attempt_leaf": "paper/experiments/runs/mechanics/graph_dynamic_ablation_v1/mock_acceptance/graph_dynamic_no_replanning_v1/seed_20260808/rotation_0/horizon_12/episodes/sequence-0001/attempt_000",
+      "cell": "h12:graph_no_replanning",
+      "event_release_indices": [
+        3,
+        6,
+        9
+      ],
+      "exact_six": true,
+      "horizon": 12,
+      "observed_states": [
+        "Analyze",
+        "Check",
+        "Hypothesize",
+        "Inspect",
+        "Monitor",
+        "Recover",
+        "Submit"
+      ],
+      "terminal_status": "submitted",
+      "transition_count": 165
+    }
+  ],
+  "checks": {
+    "exact_six_canonical_bundle_per_episode": true,
+    "future_samples_and_events_inaccessible": true,
+    "matched_public_events_and_release_indices": true,
+    "mechanics_only_evidence_class": true,
+    "no_persistent_outbound_history_stripped": true,
+    "profile_specific_legal_transitions": true,
+    "zero_provider_calls": true
+  },
+  "claim_boundary": "Accepted provider-free execution mechanics only. This gate contains no Graph performance estimate and does not complete the formal cohort.",
+  "evidence_class": "mechanics_only_not_performance_evidence",
+  "matrix": {
+    "expected_cells": 10,
+    "horizons": [
+      3,
+      6,
+      12
+    ],
+    "observed_exact_six_bundles": 10,
+    "public_sequence_id": "sequence-0001",
+    "rotation": "rotation_0",
+    "seed": 20260808
+  },
+  "no_persistent_outbound_request_audit": {
+    "current_state_guidance_once_per_request": true,
+    "historical_decision_state_key_messages": 0,
+    "prior_state_guidance_messages": 0,
+    "request_count": 166,
+    "requests_with_tool_history": 165
+  },
+  "performance_claims_allowed": false,
+  "protocol_id": "paderborn_graph_dynamic_ablation_v1",
+  "provider_calls_observed": 0,
+  "schema_version": "graph_dynamic_mock_acceptance_gate_v1"
+}

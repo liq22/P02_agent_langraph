@@ -1,0 +1,177 @@
+{
+  "acceptance_artifacts": {
+    "graph_core": {
+      "accepted": false,
+      "contract_valid": false,
+      "declared_accepted": false,
+      "path": "paper/experiments/results/graph_core_primary_cohort_acceptance.json",
+      "present": false,
+      "validation_errors": [
+        "acceptance artifact missing"
+      ]
+    },
+    "graph_replay": {
+      "accepted": false,
+      "contract_valid": false,
+      "declared_accepted": false,
+      "path": "paper/experiments/results/graph_monitor_primary_cohort_acceptance.json",
+      "present": false,
+      "validation_errors": [
+        "acceptance artifact missing"
+      ]
+    },
+    "reactive_core": {
+      "accepted": false,
+      "contract_valid": false,
+      "declared_accepted": false,
+      "path": "../P01-PHMskills/paper/experiments/results/phm_skills_primary_cohort_acceptance.json",
+      "present": false,
+      "validation_errors": [
+        "acceptance artifact missing"
+      ]
+    },
+    "reactive_replay": {
+      "accepted": false,
+      "contract_valid": false,
+      "declared_accepted": false,
+      "path": "paper/experiments/results/reactive_monitor_primary_cohort_acceptance.json",
+      "present": false,
+      "validation_errors": [
+        "acceptance artifact missing"
+      ]
+    }
+  },
+  "accepted": false,
+  "blockers": [
+    "core cohort incomplete: 32/192 exact matched statistical keys",
+    "replay cohort incomplete: 0/24 exact matched statistical keys",
+    "formal cohort gates not accepted: reactive_core, graph_core, reactive_replay, graph_replay"
+  ],
+  "checks": {
+    "all_existing_attempt_leaves_exact_six": true,
+    "all_existing_public_bundles_exclude_private_targets_and_bearings": true,
+    "all_four_formal_cohort_gates_accepted": false,
+    "at_most_one_statistical_attempt_per_episode_key": true,
+    "control_identity_is_reactive_not_generic": true,
+    "core_registered_coverage_complete": false,
+    "current_matched_core_contracts_identical": true,
+    "current_matched_replay_contracts_identical": true,
+    "formal_p2_e1_result_eligible": false,
+    "graph_actions_use_registered_full_profile_states": true,
+    "provider_errors_retained_as_nonstatistical_attempts": true,
+    "reactive_actions_exclude_graph_state": true,
+    "replay_registered_coverage_complete": false
+  },
+  "claim_boundary": "This artifact audits canonical prefix structure and formal acceptance readiness only. It contains no task-effect estimate and cannot support a Reactive-versus-Graph performance, completion, recovery, reliability, or dynamic-behavior claim while accepted=false. Generic is prohibited as a Reactive control; provider-error and other partial attempts remain retained but are never converted into results.",
+  "control_identity": {
+    "core": "PHMskills sequential policy (arm=phm-skills)",
+    "generic_is_control": false,
+    "replay": "PHMskills Reactive policy (arm=reactive)",
+    "treatment": "PHMskills plus full explicit decision graph (arm=graph)"
+  },
+  "counts": {
+    "graph_core": {
+      "attempt_leaves": 34,
+      "canonical_action_rows": 553,
+      "completed_fraction": 0.16666666666666666,
+      "exact_six_attempt_leaves": 34,
+      "incomplete_attempts": 0,
+      "missing_registered_statistical_outcomes": 160,
+      "provider_error_attempts": 2,
+      "registered_statistical_outcomes": 192,
+      "root": "paper/experiments/runs/formal/canonical_runbundle_v1/graph_core_primary",
+      "root_present": true,
+      "statistical_outcomes": 32,
+      "unit_manifests": 2
+    },
+    "graph_replay": {
+      "attempt_leaves": 0,
+      "canonical_action_rows": 0,
+      "completed_fraction": 0.0,
+      "exact_six_attempt_leaves": 0,
+      "incomplete_attempts": 0,
+      "missing_registered_statistical_outcomes": 24,
+      "provider_error_attempts": 0,
+      "registered_statistical_outcomes": 24,
+      "root": "paper/experiments/runs/formal/canonical_runbundle_v1/graph_monitor_primary",
+      "root_present": false,
+      "statistical_outcomes": 0,
+      "unit_manifests": 0
+    },
+    "matched_statistical_keys": {
+      "core": 32,
+      "replay": 0
+    },
+    "reactive_core": {
+      "attempt_leaves": 33,
+      "canonical_action_rows": 559,
+      "completed_fraction": 0.16666666666666666,
+      "exact_six_attempt_leaves": 33,
+      "incomplete_attempts": 0,
+      "missing_registered_statistical_outcomes": 160,
+      "provider_error_attempts": 1,
+      "registered_statistical_outcomes": 192,
+      "root": "../P01-PHMskills/paper/experiments/runs/formal/canonical_runbundle_v1/phm_skills_primary",
+      "root_present": true,
+      "statistical_outcomes": 32,
+      "unit_manifests": 2
+    },
+    "reactive_replay": {
+      "attempt_leaves": 0,
+      "canonical_action_rows": 0,
+      "completed_fraction": 0.0,
+      "exact_six_attempt_leaves": 0,
+      "incomplete_attempts": 0,
+      "missing_registered_statistical_outcomes": 24,
+      "provider_error_attempts": 0,
+      "registered_statistical_outcomes": 24,
+      "root": "paper/experiments/runs/formal/canonical_runbundle_v1/reactive_monitor_primary",
+      "root_present": false,
+      "statistical_outcomes": 0,
+      "unit_manifests": 0
+    },
+    "unmatched_current_statistical_keys": {
+      "graph_core_only": 0,
+      "graph_replay_only": 0,
+      "reactive_core_only": 0,
+      "reactive_replay_only": 0
+    }
+  },
+  "evidence_class": "provider_free_primary_readiness_audit_not_performance_result",
+  "gate_id": "P2-E1",
+  "partial_prefix_policy": {
+    "aggregate_performance": false,
+    "emit_effect_estimate": false,
+    "natural_nonprovider_terminal_is_retained_statistical_outcome": true,
+    "provider_error_is_statistical_outcome": false
+  },
+  "provider_calls": 0,
+  "registered_plan": {
+    "core_rotations": [
+      "rotation_0",
+      "rotation_1",
+      "rotation_2",
+      "rotation_3"
+    ],
+    "core_tasks": [
+      "cold_start_fault_diagnosis",
+      "unsupervised_anomaly_detection"
+    ],
+    "expected_core_statistical_outcomes_per_arm": 192,
+    "expected_replay_statistical_outcomes_per_arm": 24,
+    "replay_rotations": [
+      "rotation_0"
+    ],
+    "replay_tasks": [
+      "online_replay_monitoring"
+    ],
+    "runtime_contract": "phase1_opaque_sample_vibration_feature_schema_v6",
+    "seeds": [
+      20260808,
+      20260809,
+      20260810
+    ]
+  },
+  "schema_version": "p2_e1_primary_readiness_v1",
+  "status": "incomplete_prefix"
+}

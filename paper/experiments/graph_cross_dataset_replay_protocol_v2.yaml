@@ -1,0 +1,316 @@
+schema_version: graph_cross_dataset_replay_protocol_v2
+protocol_id: phm_graph_cross_dataset_replay_generic_base_p2e8_v2
+status: superseded_zero_eligible_snapshot_launch_forbidden
+frozen_date: "2026-08-20"
+supersedes_protocol: paper/experiments/graph_cross_dataset_replay_protocol_v1.yaml
+
+authority:
+  benchmark_core: ../p01-phm-agent-benchmark/CORE.md
+  experiment_matrix: ../p01-phm-agent-benchmark/obsidian/goal/8-12/phm_agent_three_paper_goal_pack_20260812_v1/experiments/PAPER2_MATRIX.md
+  benchmark_dataset_root: ../p01-phm-agent-benchmark/paper/experiments/datasets
+  upstream_data_authority: PHMbench/phm-data-factory
+  generic_base_dynamic_protocol: paper/experiments/graph_dynamic_ablation_protocol_v2.yaml
+  agent_identity_runtime: scripts/run_graph_experiment.py
+  projection_rule: >-
+    This superseded snapshot audited Benchmark-owned dataset
+    protocols and may schedule the corrected Generic-base comparison only
+    after at least one non-Paderborn dataset supplies an executable ordered
+    replay, evaluator-private outcome target, and registered DataPort/runtime
+    path. Paper 2 never creates a target or a second data backend.
+
+authority_audit:
+  paper2_matrix_declares_p2e8: true
+  central_experiment_matrix_config_currently_omits_p2e8: true
+  omission_waives_p2e8: false
+  v1_current_authority: false
+  v1_launch_allowed: false
+  v2_current_authority: false
+  v2_launch_allowed: false
+  v3_current_authority: true
+  resolution: >-
+    P2-E8 remains required by the Paper 2 matrix. Versions 1 and 2 are
+    superseded records; Generic-base v3 with the accepted Ottawa source is the
+    scheduling authority.
+
+scope:
+  matrix_id: P2-E8
+  question: >-
+    Whether the matched Generic-base GraphDecision versus ReactiveSequential
+    replay difference transfers from the registered Paderborn world to an
+    independently registered real dataset with a legitimate task outcome.
+  primary_task: online_replay_monitoring
+  reference_dataset_id: paderborn-bearing-datacenter
+  minimum_eligible_external_datasets: 1
+  targetless_mechanics_is_outcome_evidence: false
+  excluded_substitutions:
+    - superseded_phmskills_base_v1
+    - xjtu_targetless_mechanics_smoke_as_cross_dataset_result
+    - rollout_completion_as_task_performance
+    - terminal_record_relabelled_as_fault_onset
+    - fixed_lifecycle_fraction_relabelled_as_degradation_onset
+    - metadata_rul_label_reconstructed_as_onset
+    - operating_condition_change_relabelled_as_fault_onset
+  excluded_claims_until_formal_acceptance:
+    - cross_dataset_validity
+    - external_validity
+    - graph_transfer_effect
+    - event_f1
+    - detection_delay
+    - task_performance
+
+agent_identity:
+  scaffold:
+    class: phm_agent_benchmark.phase1.GenericLLMToolAgent
+    matched_control_id: benchmark_generic_llm_tool_agent_v1
+    p2_experiment_id: p2_graph_vs_generic_llm_v1
+    legacy_phmskills_superclass_allowed: false
+  control:
+    arm: reactive
+    class: phm_graph_agent.ReactiveSequentialAgent
+    direct_base_class: phm_agent_benchmark.phase1.GenericLLMToolAgent
+    behavior_overrides: []
+    agent_id: reactive-sequential-agent
+    agent_profile_id: reactive_sequential_generic_v2
+    agent_control_id: benchmark_generic_llm_tool_agent_v1
+    agent_implementation_id: reactive_sequential_agent_v1
+    graph_policy_profile: reactive
+  treatment:
+    arm: graph
+    class: phm_graph_agent.GraphDecisionAgent
+    direct_base_class: phm_agent_benchmark.phase1.GenericLLMToolAgent
+    agent_id: graph-decision-agent
+    agent_profile_id: graph_dynamic_full_generic_v2
+    matched_control_id: benchmark_generic_llm_tool_agent_v1
+    agent_control_id: graph_decision_control_v1
+    agent_implementation_id: graph_decision_agent_v1
+    graph_policy_profile: full
+  identity_invariant: >-
+    ReactiveSequential is a zero-behavior-override Generic identity. Graph is
+    derived directly from the same Generic class and adds only registered
+    decision-state guidance and state-specific visibility over the unchanged
+    global tool catalog. PHMskills-derived leaves are ineligible.
+
+matched_contract:
+  cells: [reactive_sequential_generic_v2, graph_dynamic_full_generic_v2]
+  shared:
+    - generic_base_scaffold
+    - backbone_model
+    - provider_model_protocol_and_runtime_profile
+    - prompt_information_before_registered_graph_state_suffix
+    - public_event_and_observation_history
+    - global_tools_before_graph_state_filtering
+    - numerical_experts
+    - dataset_protocol
+    - split_and_episode_order
+    - horizon_and_budget
+    - evaluator
+    - seeds
+  treatment_only_difference: >-
+    GraphDecision selects a registered public decision state, adds the
+    registered state-control suffix, and exposes that state's legal subset of
+    the otherwise shared Generic tool surface.
+  denominator: every_registered_episode_in_both_arms_including_failures
+  cross_dataset_pooling: forbidden
+  reporting: one matched effect and uncertainty interval per dataset
+
+candidate_sources:
+  - candidate_id: xjtu_sy_ordered_replay
+    expected_dataset_id: xjtu-sy-bearing-datasets
+    dataset_id_path: identity.dataset_id
+    protocol_path: ../p01-phm-agent-benchmark/paper/experiments/datasets/xjtu_v1/dataset_protocol.yaml
+    external_to_reference: true
+    current_role: ordered_replay_mechanics_available_outcome_target_pending
+    required_all:
+      - id: formal_evidence_eligible
+        path: formal_evidence_eligible
+        operator: equals
+        expected: true
+      - id: replay_task_registered
+        path: ordered_replay.task_id
+        operator: equals
+        expected: online_replay_monitoring
+      - id: dataport_binding_implemented
+        path: readiness_gate.data_port_binding_implemented
+        operator: equals
+        expected: true
+      - id: opaque_handle_audited
+        path: readiness_gate.opaque_handle_audit_complete
+        operator: equals
+        expected: true
+      - id: monotonic_bounded_stream_tested
+        path: readiness_gate.bounded_read_and_monotonic_stream_test_complete
+        operator: equals
+        expected: true
+      - id: outcome_target_protocol_complete
+        path: readiness_gate.task_outcome_target_protocol_complete
+        operator: equals
+        expected: true
+      - id: formal_runner_registered
+        path: readiness_gate.formal_runner_registered
+        operator: equals
+        expected: true
+    outcome_target_any:
+      - id: verified_degradation_onset
+        path: ordered_replay.target_contract.verified_degradation_onset_annotation
+        operator: equals
+        expected: true
+      - id: verified_event_interval
+        path: ordered_replay.target_contract.verified_event_interval_annotation
+        operator: equals
+        expected: true
+      - id: verified_window_level_anomaly_target
+        path: ordered_replay.target_contract.verified_window_level_anomaly_target
+        operator: equals
+        expected: true
+
+  - candidate_id: cwru_replay_candidate
+    expected_dataset_id: cwru-bearing-data-center
+    dataset_id_path: dataset.dataset_id
+    protocol_path: ../p01-phm-agent-benchmark/paper/experiments/datasets/cwru_v1/dataset_protocol.yaml
+    external_to_reference: true
+    current_role: blocked_diagnosis_only_candidate_not_replay
+    required_all:
+      - id: formal_evidence_eligible
+        path: formal_evidence_eligible
+        operator: equals
+        expected: true
+      - id: formal_execution_allowed
+        path: release_gate.formal_execution_allowed
+        operator: equals
+        expected: true
+      - id: replay_task_registered
+        path: ordered_replay.task_id
+        operator: equals
+        expected: online_replay_monitoring
+      - id: active_asset_disjoint_split
+        path: split.status
+        operator: equals
+        expected: active
+      - id: dataport_binding_implemented
+        path: readiness.dataport_integration_implemented
+        operator: equals
+        expected: true
+      - id: outcome_target_protocol_complete
+        path: ordered_replay.task_outcome_target_protocol_complete
+        operator: equals
+        expected: true
+      - id: formal_runner_registered
+        path: ordered_replay.formal_runner_registered
+        operator: equals
+        expected: true
+    outcome_target_any:
+      - id: verified_event_or_onset_target
+        path: ordered_replay.verified_event_or_onset_target
+        operator: equals
+        expected: true
+      - id: verified_window_level_anomaly_target
+        path: ordered_replay.verified_window_level_anomaly_target
+        operator: equals
+        expected: true
+
+  - candidate_id: hust24_replay_candidate
+    expected_dataset_id: hustbearing-zhao-2024
+    dataset_id_path: dataset.dataset_id
+    protocol_path: ../p01-phm-agent-benchmark/paper/experiments/datasets/hust24_v1/dataset_protocol.yaml
+    external_to_reference: true
+    current_role: blocked_operating_condition_candidate_not_replay
+    required_all:
+      - id: formal_evidence_eligible
+        path: formal_evidence_eligible
+        operator: equals
+        expected: true
+      - id: activation_gate_satisfied
+        path: activation_gate.current_state
+        operator: equals
+        expected: satisfied
+      - id: replay_task_executable
+        path: tasks.online_replay_monitoring.constructibility
+        operator: equals
+        expected: executable
+      - id: active_asset_disjoint_split
+        path: split_and_leakage.status
+        operator: equals
+        expected: active
+      - id: outcome_target_protocol_complete
+        path: tasks.online_replay_monitoring.task_outcome_target_protocol_complete
+        operator: equals
+        expected: true
+      - id: dataport_binding_implemented
+        path: tasks.online_replay_monitoring.dataport_binding_implemented
+        operator: equals
+        expected: true
+      - id: formal_runner_registered
+        path: tasks.online_replay_monitoring.formal_runner_registered
+        operator: equals
+        expected: true
+    outcome_target_any:
+      - id: verified_fault_or_anomaly_onset
+        path: tasks.online_replay_monitoring.verified_fault_or_anomaly_onset
+        operator: equals
+        expected: true
+      - id: verified_window_level_anomaly_target
+        path: tasks.online_replay_monitoring.verified_window_level_anomaly_target
+        operator: equals
+        expected: true
+
+current_schedule:
+  authority_version: v2_generic_base
+  expected_eligible_dataset_ids: []
+  expected_eligible_external_datasets: 0
+  expected_episode_bundles: 0
+  units: []
+  reason: no_candidate_has_a_registered_external_task_outcome_target_and_runtime
+  provider_calls: 0
+  runner_invocations: 0
+  formal_launch_allowed: false
+
+runtime_gate:
+  runner: scripts/run_graph_experiment.py
+  dynamic_protocol: paper/experiments/graph_dynamic_ablation_protocol_v2.yaml
+  required_runtime_contract: phase1_graph_dynamic_generic_ablation_v2
+  required_runner_flags:
+    - --protocol
+    - --dynamic-protocol
+    - --public-sequence-id
+    - --horizon
+  required_implementation_flags:
+    generic_base_identity_validation_implemented: true
+    external_dataset_dataport_runtime_implemented: false
+    external_dataset_sequence_builder_implemented: false
+    external_dataset_evaluator_target_binding_implemented: false
+    candidate_specific_horizon_budget_and_sequence_registered: false
+  rule: >-
+    Source eligibility, Generic-base identity, and external runtime readiness
+    must all pass in a newly frozen protocol version before commands or output
+    roots are generated. Current runner support for the Paderborn Generic-base
+    dynamic profile does not establish an external-dataset runtime.
+
+activation_gate:
+  current_state: blocked
+  all_required:
+    - at_least_one_eligible_external_dataset_protocol
+    - evaluator_private_outcome_target_registered_without_invention
+    - asset_disjoint_split_and_monotonic_replay_registered
+    - upstream_dataport_binding_implemented_and_tested
+    - generic_base_reactive_and_graph_identities_verified
+    - external_dataset_graph_runtime_implemented_and_tested
+    - candidate_specific_horizon_budget_and_sequence_frozen
+    - provider_profile_and_resume_contract_frozen
+  current_blockers:
+    - xjtu_has_real_targetless_mechanics_but_no_legal_outcome_target
+    - cwru_is_not_a_registered_replay_dataset_and_its_release_gate_is_closed
+    - hust24_has_no_accepted_asset_split_target_or_monotonic_replay
+    - graph_dynamic_runner_has_no_external_dataset_runtime
+
+reporting_boundary:
+  allowed_now:
+    - candidate_protocol_audit
+    - generic_base_identity_preregistration
+    - deterministic_zero_unit_schedule
+    - statement_that_p2e8_is_blocked
+    - xjtu_real_ordered_replay_mechanics_as_mechanics_only
+  forbidden_now:
+    - any_cross_dataset_graph_effect
+    - any_external_task_outcome
+    - treating_unavailable_metrics_as_zero
+    - treating_targetless_submission_as_correct_or_incorrect
