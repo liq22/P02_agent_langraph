@@ -1,7 +1,0 @@
-node_types:
-  - parent_node
-  - leaf_node
-  - repo_node
-  - review_round
-  - response_case
-  - reviewer_profile

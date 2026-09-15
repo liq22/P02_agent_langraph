@@ -1,6 +1,0 @@
-matrix:
-  - critique_id: ""
-    target_node: ""
-    response_item_ref: ""
-    evidence_ref: ""
-    status: uncovered
