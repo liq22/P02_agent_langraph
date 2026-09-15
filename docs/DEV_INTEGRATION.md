@@ -23,3 +23,7 @@
 `archive/2026-09-15/pre-convergence` 保存原 dev。被清理的分支尖端分别保存为 `archive/2026-09-15/remote/<branch>` 和 `archive/2026-09-15/local/<branch>`；云端标签核对成功后才删除分支。main/master 保留稳定快照。Benchmark 未完成 B3 使用的冻结分支、本地有结果或未提交内容的工作树继续保留；它们不作为新论文开发入口。
 
 新任务从最新 dev 建短分支，经相关检查后 PR 回 dev。
+
+## Completed synchronization — 2026-09-16
+
+GitHub 默认分支为 dev；已删除 3 个过时远端分支和 1 个已归档本地分支。保留的本地旧工作分支：`feat/paper2-active-formal-20260903`。这些分支只服务原工作树；后续开发从 dev 开始。
