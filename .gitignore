@@ -241,3 +241,6 @@ artifacts/agent_sessions/
 .claude/skills/
 .codex/skills/
 backend/graph/
+local_outputs/
+
+.deps/

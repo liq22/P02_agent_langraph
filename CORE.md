@@ -28,6 +28,12 @@ under the same Benchmark task, data-release sequence, tools, model/provider cond
 
 The benchmark must run without GraphDecisionAgent installed. Paper 2 does not redefine `TaskSpec`, DataPort semantics, `CanonicalAction`, Budget, Rollout, or task metrics.
 
+## Current development question
+
+The current component study separates state cues from tool filtering and interprets their task consequences through action-set and within-set selection losses. The original joint intervention, base and dynamic profiles remain distinct; no-memory and horizon comparisons require their actual intervention to be stated.
+
+This repository owns its paper Goal and method experiments. `dev` is the sole development and PR integration branch; completed results retain their recorded conditions.
+
 ## 2. Research question
 
 > **Does explicit persistent graph control improve long-horizon PHM task performance or rollout stability relative to the same reactive Generic Agent under a matched benchmark condition?**

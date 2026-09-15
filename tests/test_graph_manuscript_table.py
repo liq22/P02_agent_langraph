@@ -925,11 +925,11 @@ class GraphManuscriptTableTest(unittest.TestCase):
         manuscript = (ROOT / "paper/draft/main.md").read_text(encoding="utf-8")
         abstract = manuscript.split("## 1. Introduction", 1)[0]
         self.assertIn("Monitor and Revise are unreachable", abstract)
-        self.assertIn("formal coverage is 0/240", abstract)
+        self.assertIn("formal coverage of 0/240", abstract)
         self.assertIn("target-adverse assigned-window Average Precision", abstract)
         self.assertIn("50-edge base-v6", manuscript)
         self.assertIn("33-edge dynamic-full", manuscript)
-        self.assertIn("### 1.1 Contributions", manuscript)
+        self.assertIn("cue-by-filter experiment", abstract)
         self.assertNotIn("*Pending:", manuscript)
         for false_heading in (
             "#### Accepted dynamic-v3 horizon and ablation comparisons",
@@ -968,7 +968,7 @@ class GraphManuscriptTableTest(unittest.TestCase):
         self.assertEqual(reference["core_episodes"], 64)
         self.assertEqual(reference["replay_episodes"], 8)
         aggregate = json.loads(
-            (ROOT / reference["aggregate"]).read_text(encoding="utf-8")
+            (Path(os.environ.get("PHM_BENCHMARK_ROOT", ROOT.parent / "p01-phm-agent-benchmark")) / "paper/experiments/results/p0_active_v02_provider_free_reference_subset_v1.json").read_text(encoding="utf-8")
         )
         self.assertIs(aggregate["accepted"], True)
         self.assertEqual(

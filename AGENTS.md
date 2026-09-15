@@ -1,42 +1,13 @@
-# Graph-Guided PHM Agent Entry
+# Agent Entry — GraphDecisionAgent
 
-This repository owns the graph-guided policy implementation and Paper 2 of the active three-paper PHM-Agent program.
+Read DEV.md, CORE.md, paper/GOAL.md, paper/LOCAL_AGENT_PROMPT.md and obsidian/log/LOCAL_AGENT_STATE.md. This repository owns its paper and `src/phm_graph_agent`. The current source of truth is `dev`; short feature/review/figure/experiment/agent branches return through PRs to `dev`.
 
-## Primary products
+Review semantic changes against dev. Keep mature text, verified citations and figures serving an explicit argument; patch useful subsets; exclude duplicated plans, stale drafts and workflow infrastructure. Preserve necessary scientific limitations and every registered result under its original conditions. The manuscript is paper/draft/main.md.
 
-- an executable graph policy under `src/phm_graph_agent/`;
-- matched Reactive-vs-Graph experiments using the shared Benchmark Generic LLM base;
-- real state transitions, trajectories, metrics, tables, and figures;
-- the active manuscript at `paper/draft/main.md`.
+Reuse Benchmark TaskSpec, DataPort, run_rotation, Runner, evaluator and canonical rollout writer. Benchmark must run without downstream policies. Keep inference separate from evaluation; never expose private targets. RandomValid contains a planned-call candidate and is not a uniform random baseline.
 
-Legacy `research/`, scheduler, web, Canvas, historical PHMGA snapshots, and old Goal material is not the active execution authority for this paper. Read a legacy artifact only when a current code or manuscript claim explicitly requires it.
+Use experiments/run.sh for new studies. Preserve frozen formal scripts and source dependencies. A changed provider, model, prompt, visible tools, dataset or metric defines a new condition. Retain all attempts, failures and abstentions. Reuse existing environments and completed checks; run affected tests after relevant changes. Do not add hash/receipt/ledger mechanisms, duplicated factories or automatic backend switching.
 
-## Default execution
+Online inference requires current-task authorization and explicit request/token limits. Credentials remain environment variables; a request cap is not a monetary cap. No external inference is needed to inspect a plan.
 
-```text
-identify the highest-impact graph/code/experiment/manuscript defect
-→ output a four-line dry-run
-→ modify one primary product
-→ run one direct test, matched episode, metric check, or manuscript check
-→ continue with the next research slice
-```
-
-Local reversible edits and tests proceed without per-file approval. Ask once before private-data transfer, unbudgeted paid inference, remote Git writes, release, or submission.
-
-## Scientific constraints
-
-- Control is `ReactiveSequentialAgent`, a zero-behavior-override subclass of the
-  shared Benchmark `GenericLLMToolAgent`.
-- Treatment is `GraphDecisionAgent`, derived from the same Generic base and
-  differing only by the registered graph decision control.
-- PHMskills is not part of the active Paper 2 control or treatment; historical
-  PHMskills-derived Graph leaves are retained only as non-authoritative records.
-- Model, runtime, data, split, tools, numerical experts, budget, evaluator, and episode order remain identical.
-- The graph states must affect actual next-action selection and appear in the shared trajectory.
-- The benchmark core must not depend on LangGraph or this repository.
-- Mock and synthetic runs prove mechanics only.
-- Do not fabricate citations, data, results, authors, or venue policy.
-- Do not build completion controllers, content-hash checks, approval workflows, review state machines, security platforms, UI DAGs, or speculative fallback frameworks.
-- Python is for graph policy, experiments, statistics, figures, and direct tests—not project-governance scripts.
-
-Paper 2 is complete only when code, matched real-data results, figures/tables, a full manuscript, and the final ten-lens review are complete.
+End a bounded task by updating the rolling state with actual commands, reused cells, new outputs and one next step. A merge is not an empirical or publication claim.

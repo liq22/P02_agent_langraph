@@ -1,19 +1,13 @@
-# Paper 2 research on dev — 2026-09-08
+# GraphDecisionAgent — dev research
 
-The latest GraphDecisionAgent method branch was merged through PR #2. Continue new research on `dev`; keep `main` and frozen formal worktrees unchanged. A development merge is not a task-performance or reliability result.
+`dev` 是本仓库正文、文献、理论、图表、实验支撑及 PR 集成的唯一核心开发分支，也是 GitHub 默认入口。`main`/`master` 保留稳定快照。
 
-The shared specification is [Benchmark dev / paper/graph/RESEARCH.md](https://github.com/liq22/phm-agent-benchmark/blob/dev/paper/graph/RESEARCH.md), with filtering and state-sufficiency proofs in its `theory/` directory. See Benchmark `paper/DEV_RESEARCH.md`, `paper/EXPERIMENT_LIMITS.md` and `paper/LOCAL_AGENT_PROMPT.md` for execution.
+入口：[Goal](paper/GOAL.md) · [正文](paper/draft/main.md) · [研究规格](paper/RESEARCH.md) · [实验](experiments/README.md) · [当前状态](obsidian/log/LOCAL_AGENT_STATE.md)。
 
-This repository owns the graph method. Import its current `src/phm_graph_agent` policy; do not copy the Benchmark DataPort, Runner, numerical operators or evaluator. The research specification is not a second full manuscript.
+方法仓库只依赖 Benchmark，不要求安装另一方法仓库。通过 `PHM_BENCHMARK_ROOT` 显式指定兼容的 Benchmark checkout。
 
-```bash
-export PHM_GRAPH_SRC=/absolute/path/P02_agent_langraph/src
-cd /absolute/path/phm-agent-benchmark
-bash paper/run_study.sh plan --experiment graph-components --provider deepseek
-bash paper/run_study.sh run --experiment graph-components --provider deepseek \
-  --output local_outputs/graph-components-deepseek
-```
+从最新 `dev` 创建 `feature/*`、`review/*`、`figure/*`、`experiment/*` 或 `agent/*`，每次围绕一个可审阅改动，检查通过后 PR 回 `dev`。按科学逻辑和证据吸收增量，不按分支日期覆盖正文。
 
-The original graph profile remains unchanged. The new factorial study removes historical state labels from provider-visible messages in all four arms, then independently varies the current-state suffix and tool visibility. Its controls are not interchangeable with old Generic/Graph results. The no-memory comparison uses the existing profile and must report identical behavior honestly if that ablation is inactive in a given task.
+冻结协议、结果与工作树保留原条件。旧材料可从 `archive/2026-09-15/pre-convergence` 标签恢复。论文主入口保持 Markdown；Git 整合不代表完成尚缺的处理效应实验。
 
-Base and dynamic profiles remain separate. Public condition events are not signal-inferred fault onsets. The supplied horizon entry changes sampled windows and proportional budgets together; a pure nested-prefix horizon intervention needs a new explicit assignment binding. Reuse completed compatible cells. Reserve development assets before tuning. Credentials remain local environment variables.
+下一步：在相同历史上核对 cue/filter 四格的实际消息与工具集合，再选择保留开发资产的配对单元。

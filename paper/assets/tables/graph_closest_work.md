@@ -1,6 +1,4 @@
-# Closest-work comparison for GraphDecisionAgent
-
-This source-bounded structural comparison is not a numerical ranking. It states only decision and grounding surfaces documented by the cited primary sources and the current registered P2 protocol.
+# Closest work
 
 | Work | Documented decision structure | Documented state or grounding source | Relation to the registered P2 contrast |
 |---|---|---|---|
@@ -12,4 +10,4 @@ This source-bounded structural comparison is not a numerical ranking. It states 
 | PHMForge [@das2026phmforge] | PHM-oriented tool orchestration and execution traces | heterogeneous scenario-specific tools and data | P2 holds the Generic Benchmark world fixed and varies only graph control |
 | GraphDecisionAgent (this work) | eight deterministic states with declared legal transitions and state-specific views of the unchanged tool catalog | public actions, execution results, errors, budget, and optional public condition events in the canonical rollout | active v6 exposes six reachable base-route states; dynamic-v3 retains an accepted 10-cell Mock mechanics gate, a runner-ready provider-free schedule, and formal coverage 0/240 |
 
-StateFlow is the direct state-machine comparator; SPIRAL is the closest search-based planning comparator. GraphDecisionAgent is a finite-state control policy, while the P2 study object is the registered matched intervention over one shared PHM world: deterministic public-trajectory state, state-specific visibility over the unchanged tool catalog, a zero-override Generic control, and independent evaluation. No P2 effect is claimed before its matched provider cohorts pass acceptance.
+Source: [manuscript](../../draft/main.md), Table 1.
