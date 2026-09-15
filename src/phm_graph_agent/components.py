@@ -33,4 +33,3 @@ def make_component_agent(condition, client, model):
     agent = ComponentAgent(client, model=model)
     agent.agent_id = condition
     return agent
-
