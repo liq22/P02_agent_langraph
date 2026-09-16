@@ -1,38 +1,48 @@
-# Matched Agent and numerical experiments
+# Matched Graph experiments
 
-Scope: original Graph/Generic policies and independent cue/filter contrasts, first on reserved development assets and then on a frozen confirmatory cohort. Outputs: Benchmark six-file attempts, resolved configs, task metrics, paired effects and all-attempt costs. Acceptance: the same assigned assets/trials, numerical pool, observations and budgets across arms; all terminal outcomes retained.
+Scope: compare the original Graph/Generic policies, cue/filter components and a count-preserving tool-identity control. Outputs: native Benchmark attempts, frozen configs, assigned-cohort metrics/effects and all-attempt costs. Acceptance: shared assets/trials, numerical capability, observations, budget and evaluator; all terminal outcomes retained. P02 contains no executable implementation.
 
-## Executable contrasts
+## Completed source-level slice
 
-The component cells are reactive $(0,0)$, state $(1,0)$, filter $(0,1)$ and both $(1,1)$. Report cue effects at filter=0 and filter=1, filtering effects at cue=0 and cue=1, and their difference-of-differences. The direct memory contrast is `graph minus graph-no-memory`, not a subtraction involving an absent Generic arm. Benchmark `research/conditions.py` now defines these contrasts; its policy dispatch and the shared evaluator are unchanged.
+`factorial-cardinality` joins the existing component factory. Its matched comparator is cue-free `factorial-filter`; Analyze/Check nonterminal tool identities are replaced while count, submit/stop permissions, schema contents/order and all other state masks are preserved. The existing run seed fixes the subset across revisits. Coincident masks remain; do not redraw until the control looks different. Equal count does not imply equal prompt tokens or equal visited histories.
 
-Before spending on a memory cohort, show that the switch changes a reachable state or action distribution. If it is inactive in the base task, retain the null manipulation and do not present it as evidence that memory is useless. Do not introduce events or remove history merely to make the contrast nonzero.
+Seventeen new source tests passed and the exact counting experiment produced 63 subset rows plus six summaries. They test the implementation's local invariants and the mathematical alternative, not native episodes. The attempted native test import failed with `ModuleNotFoundError: phm_agent_benchmark.phase1`; its three test functions have not run.
 
-After installed migration/data validation, from Benchmark:
+## Installed gate before provider calls
+
+From the full Benchmark checkout, first reconcile local work and install its existing dependencies. Then:
+
+```bash
+PYTHONPATH=src python -m unittest discover -v -s experiments/tests -p 'test_consolidated_*.py'
+PYTHONPATH=src python -m unittest discover -v -s experiments/tests -p 'test_graph_cardinality_integration.py'
+bash experiments/graph_control/run.sh theory
+```
+
+These native interface tests check seed dispatch and old-cell preservation; they do not replace one real PHM episode. Do not satisfy an import failure with a fake package, substituted Runtime or stub Agent.
+
+## Real development cohort
+
+The added config is plan-first, with the existing model setting retained as an explicit request, not a claim of availability. Supply inspected metadata/signals, a reserved development protocol, endpoint/model and a permitted request budget through the existing options/environment. Then:
 
 ```bash
 : "${DEVELOPMENT_PROTOCOL:?Set the inspected development protocol path}"
-bash experiments/graph_control/run.sh phm \
-  --override command=plan protocol="$DEVELOPMENT_PROTOCOL" output=local_outputs/graph-dev
-bash experiments/graph_control/run.sh ablation \
-  --override command=probe protocol="$DEVELOPMENT_PROTOCOL" output=local_outputs/graph-probe
-bash experiments/graph_control/run.sh ablation \
-  --override command=run protocol="$DEVELOPMENT_PROTOCOL" output=local_outputs/graph-components
-# Run only after the persistence manipulation is shown to be active:
-python main.py --config configs/paper02_graph/memory.yaml \
-  --override command=run protocol="$DEVELOPMENT_PROTOCOL" output=local_outputs/graph-memory
+bash experiments/graph_control/run.sh relevance --override command=plan \
+  protocol="$DEVELOPMENT_PROTOCOL" output=local_outputs/graph-relevance-dev
+bash experiments/graph_control/run.sh relevance --override command=probe \
+  protocol="$DEVELOPMENT_PROTOCOL" output=local_outputs/graph-relevance-probe
+bash experiments/graph_control/run.sh relevance --override command=run \
+  protocol="$DEVELOPMENT_PROTOCOL" output=local_outputs/graph-relevance-dev
+bash experiments/graph_control/run.sh statistics local_outputs/graph-relevance-dev
 ```
 
-The commands above are real existing entrypoints but were not run in this continuation's partial source environment. Metadata/signals and provider configuration must be supplied through the existing options/environment. Use a named model/endpoint, explicit request/token caps and approved spending. A failed probe stops inference; do not change provider or silently retry.
+The plan/probe/run/statistics path requires full installation and actual data/settings; it was not completed in this source-only editing environment. A failed probe stops execution. No retry, alternate provider, automatic repair or replacement test set is permitted.
 
-## New completed CPU slice
+Primary effect: `state mask minus cardinality control` from the registered pooled cohort statistic. Recompute nonlinear F1/AP inside paired asset-block resamples; do not substitute mean per-seed scores. Also inspect whether the mask actually differs on reached Analyze/Check states, their allowed tools, missing prerequisites, repetition, completion, numerical grounding and all incurred cost. A nonpositive effect rejects benefit of the chosen stage identities under this protocol; preserve it.
 
-`run.sh counterexamples` evaluates covered-but-harmful expansion and unsupported logging. It is a separate exact-model experiment, not a PHM run or an implementation of a learned coverage estimator. Its nine CSV rows and manuscript Sections 4.3, 7.2–7.3 complete the analytical slice. Local validation and commands are recorded in Benchmark `results/graph_control/boundaries_20260916/README.md`.
+## Existing comparisons and remaining extensions
 
-## Remaining experiments
+Use `run.sh phm` for original Graph/Generic and `run.sh ablation` for the four cue/filter cells. Persistence uses the direct Graph-minus-no-memory contrast only after checking activation. An inactive base switch remains a null manipulation, not general evidence against memory.
 
-The five external families in DATA_DOWNLOAD_SOP still need task/DataPort/evaluator admission. `run.sh external` and `run.sh sota` explicitly exit 2; these are not completed experiment launchers. StateFlow and Reflexion require faithful shared-runtime reproductions, not renamed local methods. Do not repeatedly run unchanged blocked commands.
+The five external families in DATA_DOWNLOAD_SOP still need shared DataPort/task/evaluator bindings. `run.sh external` and `run.sh sota` explicitly stop with the missing implementations; those modes are not completed benchmark launchers. StateFlow/Reflexion need faithful mechanisms and complete call accounting. The numerical reference, best-single, static-fusion and dynamic-routing axis must expose identical admitted expert pools to all Agent arms. Graph-loss ablation is inapplicable to the frozen training-free policy. Nested-prefix horizon and dynamic public-condition profiles remain separate unfinished work.
 
-Best-single representation, static fusion and learned numerical routing are a secondary shared-expert-pool axis. A frozen graph has no trainable loss to ablate. Pure horizon requires nested prefixes; public operating-condition events are not inferred fault onset. Statistical and cost analyses use all assigned outcomes, not selected successful attempts. Negative outcomes remain in the declared comparison.
-
-Failure handling: preserve failed attempts and partial outputs; fix the first protocol/implementation failure without altering test assets or targets. If the necessary adapter or trainer does not exist, implement and test that explicit binding in Benchmark before launching it. Eight-card GPU execution follows Goal03 only after those CPU/data gates pass.
+Failure handling: retain partial attempts and actual errors; fix the smallest direct protocol or implementation cause. Missing CPU/data adapters are not GPU work. When training/local inference genuinely requires GPUs, follow Goal03 on eight RTX4090 cards; no two-card fallback or invented trainer command.

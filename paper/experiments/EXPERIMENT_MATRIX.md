@@ -1,46 +1,45 @@
-# Graph TII/MSSP experimental contract
+# Graph TII/MSSP experiment-to-claim map
 
-Existing historical P2 cohorts are not relabelled. P02 owns this scientific specification; Benchmark owns all executables. Use `experiments/graph_control` and `configs/paper02_graph` in Benchmark, not a second P02 runtime.
+P02 owns this specification. Benchmark owns executables, configs, data and results. Keep historical P2 cohorts under their original names and contracts. Every condition below addresses an explicit scientific question; an unimplemented binding is not a completed experiment.
 
-| ID | Hypothesis / competing explanation | Manipulation and estimand | Status / mapping |
+| ID | Hypothesis or competing explanation | Intervention / estimand | Current evidence or missing implementation |
 |---|---|---|---|
-| G-T1 | Simultaneous coverage bounds mask loss | Exact values and covering intervals; true loss versus C | Original 24 rows reproduced; `run.sh theory/toy` |
-| G-T2 | Narrow intervals alone provide coverage | Deliberately uncovered intervals; actual loss versus asserted bound | Bound 0, actual loss 0.85; retained negative example |
-| G-T3 | Lower exclusion bound implies policy improvement | Valid intervals; same uniform selector over progressively expanded masks | New 3 rows; C 0.2/0.1/0, return 0.8/0.4/0.5667; `run.sh counterexamples` |
-| G-T4 | More masked logs identify omitted action values | Two worlds with zero omitted-action probability; full logging-law enumeration | New 6 rows; total variation 0, mask loss 0/0.45; `run.sh counterexamples` |
-| G-P1 | Original Graph changes task performance | Same model/data/knowledge/tools/budget; Graph-minus-Generic task statistic | Shared main config exists; real integration/cohort pending |
-| G-P2 | Cue and filtering have distinct effects | Four cells; both simple effects for each factor and difference-of-differences | Complete contrast definitions; analytical algebra tested; no new PHM effects |
-| G-P3 | Relevant filtering matters beyond tool count | Correct versus equal-size irrelevant mask, without test-label access | Explicit condition still missing; compare task outcomes, not an asserted observed Q* |
-| G-P4 | Persistent state/revision changes behavior | Direct Graph-minus-no-memory, after reachable-behavior check | Direct contrast fixed; base may be inactive; dynamic dispatch missing |
-| G-P5 | Benefit depends on actual horizon | Nested prefixes; fixed-total and fixed-per-window budgets separately | Prefix binding pending; current horizon is mixed sensitivity |
-| G-N1 | Numerical capability, not controller, limits outcome | Same classifier on time/PSD/envelope; validation-selected best single | Graph expert-pool admission pending; original pool unchanged |
-| G-N2 | Static fusion or numeric routing explains gain | Frozen validation-fit fusion and train-only router; shared representation bank | Central numerical work remains a separate axis; not yet an admitted Graph PHM comparison |
-| G-N3 | Strong numerical reference removes Agent advantage | MOMENT, with appropriate MiniROCKET diagnosis / Deep SVDD anomaly controls | Faithful reproduction, checkpoints and Graph-pool admission pending |
-| G-A1 | Training loss changes the graph effect | Current graph is training-free | Graph-loss ablation N/A; a learned gate is a different method |
-| G-A2 | Structure, statistics, interpretation and cost explain effects | Cue/filter, relevant mask, budgets, retained failures and source-grounded calls | Reuse shared evaluator; grounding is not proof of physical causality |
-| G-X1..5 | Control transports beyond vibration | Five separately admitted domains and matched within-domain policies | Acquisition and binding pending; see below |
-| G-S1 | Effects repeat across physical units and trials | Paired asset-block uncertainty; all assigned outcomes and all-attempt expense | Requires real cohorts; no selected best attempt |
+| G-T1 | Simultaneous coverage bounds excluded value | Exact values/intervals; true loss versus bound | Existing 24 finite-model rows; not rerun in this continuation |
+| G-T2 | Narrow intervals alone certify coverage | Fixed false intervals | Existing bound 0 versus actual loss 0.85 retained |
+| G-T3 | Lower exclusion bound guarantees improved selection | Covered expansion with a fixed uniform-selector rule | Existing three rows: returns 0.8/0.4/0.5667 retained |
+| G-T4 | Repeated masked logs identify omitted value | Two worlds with identical logging laws | Existing six rows: loss 0/0.45 despite total variation 0 |
+| G-T5 | Fewer visible actions alone determine return | Exhaustive subsets of six fixed-value actions | New 63 masks/six summaries; k=3 best/mean/worst 0.8/0.5/0.2; `run.sh cardinality` |
+| G-P1 | Original Graph changes PHM outcomes | Graph-minus-Generic on identical assignments/capability/budget | Existing main config; real native cohort pending |
+| G-P2 | State cue and visibility have distinct effects | Four cells, simple/marginal effects and interaction | Existing shared contrasts; matched PHM effects pending |
+| G-P3 | Stage-specific identities matter beyond tool count | Cue-free filter versus seed-frozen cardinality control, Analyze/Check only | New helper/factory/config/contrast; 17 source tests pass; three native tests blocked at import; `run.sh relevance` |
+| G-P4 | Persistence/revision is an active intervention | Direct Graph-minus-no-memory with reachable-behavior check | Base may be inert; dynamic event dispatch pending |
+| G-P5 | Effect depends on actual horizon | Same longest sequence, nested prefixes; fixed-total/per-window budgets | Nested-prefix binding pending; existing horizon mixes sampling/resources |
+| G-N1 | Numerical capability, not control, limits outcome | Frozen reference versus validation-selected single representation | Admit identical numerical pool to every Graph arm; real fit/checkpoint checks pending |
+| G-N2 | Fusion or numerical routing explains the benefit | Validation-fixed static probability fusion and train-only routing | Separate capability axis, not a Graph-control effect |
+| G-N3 | Strong numerical methods remove apparent Agent benefit | Appropriate MOMENT/MiniROCKET diagnosis and anomaly references | Faithful training/checkpoint/runtime admission pending |
+| G-A1 | Optimizing a loss changes the Graph effect | Graph is currently training-free | Graph-loss ablation N/A; numerical-loss ablations need an explicitly learned model |
+| G-A2 | Structure, interpretation and resources explain the effect | Cue/filter/identity, active memory, budgets, source consistency and all-attempt costs | Direct policy outcomes; process statistics are not physical-causality proof |
+| G-X1..5 | Control transports beyond vibration | Five domain-specific matched policies | Official source specifications retained; task/evaluator adapters remain unadmitted |
+| G-S1 | Effects persist across independent assets and trials | Paired asset-block uncertainty and fixed cohort/metric | Real matched data/provider runs required; no selected best attempts |
 
-## Numerical capability versus control
+## Numerical reference and SOTA fidelity
 
-Reference models and Scripted establish the fixed numerical capability. Best-single representation is selected on validation, not per-test ground truth. Static-fusion weights and numerical routers are fitted without test access; their training and execution costs are included. Every admitted numerical capability is available to every compared Agent. The main cue/filter intervention changes only the policy.
+The numerical reference, validation-selected best single representation, static probability fusion and train-only dynamic numerical router form a separate capability axis. All compared Agent arms receive the same admitted expert pool. Fit normalization, thresholds, fusion weights and router parameters without test access. Reload checkpoints and reproduce predictions/metrics before attributing an effect to control. A task-appropriate learned-loss ablation changes only that objective, not the data split, model size and route simultaneously.
 
-The original toy's time/spectrum/envelope labels designate abstract actions with specified reward probabilities. Static uniform selection is not probability fusion; the oracle is analysis-only. The new exact counterexamples are not checkpointed predictors, Agent task results or sample-based confidence estimates.
+Use unchanged Generic, Scripted, original Graph, the four component cells and the new cardinality control first. StateFlow already provides state/prompt controls; reproduce its actual mechanisms and account for all calls. Reflexion requires the permitted feedback/memory loop, not a reflection suffix. PHMForge already studies distracting tools. Neither a newer backbone nor a renamed local controller is a faithful SOTA reproduction.
 
-## Five external domains
+## Five external families
 
-The current Graph-paper specification uses PTB-XL ECG (patient-disjoint multilabel targets), UCI HAR inertial signals (subject groups), SMAP/MSL spacecraft telemetry (ordered streams), SMD server telemetry (machine groups), and SWaT process instrumentation (one plant with ordered periods). These are five domain families, not five extra mechanical test sets. DATA_DOWNLOAD_SOP records primary sources, versions, licensing/access and conversion requirements. None is admitted into the shared Graph runtime in this continuation; public availability does not establish task/evaluator compatibility. Existing central single-label numerical consumers must not silently collapse PTB-XL targets or replace this protocol with another ECG dataset.
+PTB-XL ECG retains patient-disjoint multilabel targets; UCI HAR retains subject groups and its prewindowed acquisition semantics; SMAP/MSL retains ordered telemetry streams and records the legacy normalization caveat; SMD retains machine/temporal groups; SWaT retains one-plant ordered periods and granted usage terms. DATA_DOWNLOAD_SOP gives acquisition and admission requirements. They are five sensor domains, not additional independent mechanical datasets. No new external dataset was downloaded or admitted in this continuation. Do not silently replace the specified multilabel ECG task with a single-label dataset to reuse a numerical consumer.
 
-## Baseline fidelity and ablations
+## Cardinality contrast and statistics
 
-Start with unchanged Generic, Scripted, original Graph and four component cells. StateFlow needs its state/output/prompt mechanisms and refined-prompt control. Reflexion needs its permitted feedback/memory loop and all associated calls. A renamed local graph or an added reflection sentence is not faithful reproduction. Learned representation/loss, tool relevance, dynamic event structure, horizon, statistical units, explanatory measurements and costs are separate manipulations; do not change several to rescue a failed hypothesis.
+The added pair has state cue off and identical history sanitation. On the same history/catalog it preserves nonterminal count and submit/stop membership in Analyze/Check; other state masks remain unchanged. The seed fixes the subset on revisits. Accidental identical masks are retained, not redrawn. Equal count does not match prompt length, information content or the policies' visited-state distributions.
 
-## Estimation and claims
+The primary `state mask minus cardinality control` effect is a difference of cohort statistics after pooling the same frozen asset/trial assignments. For AP/Macro-F1 it is not the mean of per-seed differences. Recompute the metric inside paired, identically drawn asset-block resamples. Repeated seeds, neighboring windows and channels are not new independent machines. The finite seed schedule is not exhaustive integration over random masks. Report activation, undefined resamples, complete denominators, failures and all-attempt costs. A nonpositive primary contrast remains a result against this specific identity-selection benefit.
 
-Let theta_cf be the declared cohort statistic for cue c and filter f. Report theta_10-theta_00, theta_11-theta_01, theta_01-theta_00, theta_11-theta_10, and their common interaction theta_11-theta_10-theta_01+theta_00. Original Graph-minus-Generic is a different contrast because the factorial cells share history sanitation. Memory uses Graph-minus-no-memory on the same assignments; an inactive switch is reported as such.
+## Artifacts and claims
 
-Freeze task metric/cohort before test. Recompute Macro-F1/AP in paired, identically drawn asset-block resamples; do not average episode F1/AP or treat adjacent windows/channels as independent equipment. Report undefined resamples, failures and complete denominators. Primary task effects do not identify latent mask-loss mediation. Direct intervention results, numerical capability and logged process explanations stay distinct.
+Actual new exact data: Benchmark `results/graph_control/cardinality_20260916/{design.json,subsets.csv,summary.csv}`. Figure: `cardinality_control` from the summary CSV. P02 main Sections 4.4/5/6.3/7.3 connect the counting argument, named intervention, pooled estimand and exact result. A learned $Q^*$ estimator is not introduced. The exact enumeration explains the competing hypothesis but estimates no PHM superiority.
 
-## Artifact mapping
-
-Real runs use the existing six-file episode bundle and shared metrics/effects CSV. Exact G-T1/T2 use their original config/toy/counterexample files; G-T3/T4 use `results/graph_control/boundaries_20260916/{design.json,expansion.csv,support.csv}` in Benchmark. Main Sections 4.3 and 7.2–7.3 correspond to those new calculations. Figures read these CSVs directly. All failures and negative cases remain, and neither unimplemented adapters nor test counts support a PHM superiority claim.
+Real runs continue to use the sole six-file attempt contract and shared statistics. The native test import failure and absent real episodes block merging. Five external bindings, faithful SOTA, active dynamic/memory and pure horizon remain work to implement before claiming those experimental slices complete.

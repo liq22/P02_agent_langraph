@@ -1,33 +1,35 @@
 # Results, figures and merge
 
-Scope: derive figures and claims from their actual CSVs; keep exact-model calculations separate from PHM cohorts. Output: Benchmark source CSV/figures and P02 result paragraphs. Acceptance: declared units/denominators, paired resampling, SVG/PDF/PNG exports, no expected empirical curves or Monte Carlo intervals on exact expectations.
+Scope: map computed CSVs to manuscript claims, keeping exact models separate from PHM cohorts. Products: Benchmark source rows, SVG/PDF/PNG and corresponding P02 prose. Acceptance: declared units/denominators, consistent estimands, no fabricated empirical curves or confidence intervals on exact expectations.
 
-From Benchmark:
+## New executed figure
+
+The complete six-action experiment gives 63 detailed masks and six cardinality summaries. Its figure asks whether count alone determines selector value: best, uniform-subset mean and worst subset returns are shown together. All six summary rows are used; no convenient cardinality or subset is dropped.
+
+From Benchmark, with a new explicit output root:
 
 ```bash
-# Existing real completed study only; not executed in this continuation:
-bash experiments/graph_control/run.sh statistics "$RESULT_ROOT"
-# Recompute the original exact example without overwriting historical results:
-bash experiments/graph_control/run.sh toy --output local_outputs/toy_recheck
-bash experiments/graph_control/run.sh plot \
-  --csv local_outputs/toy_recheck/toy.csv --output local_outputs/toy_recheck/figures
-# New counterexamples; the output root must not already exist:
-bash experiments/graph_control/run.sh counterexamples \
-  --output results/graph_control/boundaries_20260916
-bash experiments/graph_control/run.sh plot --experiment expansion \
-  --csv results/graph_control/boundaries_20260916/expansion.csv \
-  --output results/graph_control/boundaries_20260916/figures/expansion
-bash experiments/graph_control/run.sh plot --experiment support \
-  --csv results/graph_control/boundaries_20260916/support.csv \
-  --output results/graph_control/boundaries_20260916/figures/support
+bash experiments/graph_control/run.sh cardinality --output local_outputs/cardinality-recheck
+bash experiments/graph_control/run.sh plot --experiment cardinality \
+  --csv local_outputs/cardinality-recheck/summary.csv \
+  --output local_outputs/cardinality-recheck/figures
 ```
 
-On a checkout containing the committed counterexample CSVs, inspect them rather than rerunning into the same root. For an independent recomputation, choose a new explicit output directory and compare parsed numerical rows. Do not delete the first results to make the command pass.
+The committed results are at `results/graph_control/cardinality_20260916/`. Do not rerun into that existing directory or delete it to make the command pass. Inspect it, or recompute into a new directory and compare parsed rows. The plot has one panel; no multi-panel alignment claim applies. Text is retained in SVG/PDF. The reference Nature-figure principles used are a single scientific question, actual source data, explicit exact-model semantics and editable export; the complete external audit-script suite was not run.
 
-Actual continuation: 20 dependency-free analytical/contrast tests passed. The original 24-row calculation reproduces maximum identity residual $1.6653345369377348\times10^{-16}$. Nine new rows give covered expansion returns 0.8, 0.4, 0.5666667 and identical logging distributions with mask losses 0/0.45. Nine single-panel figures (27 SVG/PDF/PNG exports) were rendered locally and inspected; the CSVs and plotting source reproduce them. No PHM or LLM effect was estimated.
+## Real cohort analysis
 
-The figure design follows the requested Nature-figure reference's data-to-claim and editable-export principles. This is not a claim of Nature acceptance, full external-skill automated QA, or multi-panel alignment validation. Figures contain exact expectations and clear source captions.
+```bash
+# Only after a genuine completed matched cohort exists:
+bash experiments/graph_control/run.sh statistics "$RESULT_ROOT"
+```
 
-Failure handling: stop on a mismatched CSV type, failed statistical pairing, undefined required metric or clipped figure; preserve the offending input. Do not select models or checkpoints using test plots. Historical mechanics/Mock counts and unrerun numerical references remain in source history, not as Graph effect estimates in the main Results.
+The cardinality effect is the difference of registered cohort statistics after pooling matched assignments. Do not replace it with an average of per-seed F1/AP. All-attempt cost remains distinct from outcome-conditioned cost. Undefined statistics, provider failures, stops and budget exhaustion are retained under the existing contract. Do not use test plots to choose models, checkpoints or the primary metric.
 
-Merge Benchmark before P02, into dev normally. Installed migration equivalence, one real shared PHM episode, numerical checkpoint/metric recomputation and document references must pass first. The current partial-source tests do not satisfy these gates. Keep both migration PRs Draft while they remain unmet. Do not update master, force-push or delete another branch.
+The previous finite-horizon and support/expansion examples remain in Results as historical calculations; this continuation did not rerun their tests or reinterpret them as PHM effects. The new 63 masks are one exhaustive finite model, not 63 independent datasets or Agent trials.
+
+## Failure handling and merge
+
+Stop on a mismatched CSV type, wrong count, failed pairing, undefined required statistic or clipped export; preserve the input and failure. Native integration failed at import in this environment, so neither this figure nor the 17 new source tests satisfies the real-entry gate.
+
+Keep Benchmark PR #20 and P02 PR #4 Draft until installed migration checks, one real matched PHM episode, numerical checkpoint reload/metric reproduction and document consistency pass. Then merge Benchmark normally into dev before P02. No master update, force push, Factory downgrade or deletion of another branch.

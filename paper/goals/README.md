@@ -1,25 +1,25 @@
-# Graph paper: TII / MSSP continuation
+# Graph paper: next executable slice
 
-P02 owns scientific formulation and manuscript; `liq22/phm-agent-benchmark` owns all implementations, data consumers, experiments, scoring and plotting. Continue the existing P02 PR #4 and Benchmark PR #20. Both remain Draft until real integration passes; merge Benchmark before the paper-only cleanup. Do not create another Runner or move executable work into P02.
+P02 owns manuscript, theory and experiment/claim mappings. Benchmark owns every method, data consumer, runtime, result and figure. Continue P02 PR #4 and Benchmark PR #20; merge Benchmark first, then P02 only after installed and real-data gates pass. Do not recreate a P02 Python package or a second Factory submodule.
 
-The current scientific question is when state cues and heuristic tool visibility improve PHM decisions, and when masking or selection instead causes harm. Read `paper/draft/main.md`, `paper/theory/04_value_coverage.md` and `paper/theory/05_support_and_policy_value.md`. The original interval bound is conditional, its expansion rule is not a policy-improvement guarantee, and unsupported masked logs cannot identify omitted action values.
+The scientific question remains when state cues and tool visibility improve PHM decisions and when they remove useful actions. Read `paper/draft/main.md` and theory04–06. The new cardinality control tests whether stage-specific tool identities matter beyond how many tools are exposed. The existing Graph and four component conditions remain distinct from this additional intervention.
 
-| Goal | Scope / deliverable | Acceptance and command location |
+| Goal | Scope and product | Acceptance / commands |
 |---|---|---|
-| Sync | Source branches, installed migration, Factory ancestry | `01_sync.md`; no pointer change before real validation |
-| Theory | Decomposition, coverage, selector and support boundaries | `02_theory.md`; supplementary commands in theory05; actual CPU results below |
-| Data / GPU | Real reads, labels/split, numerical checkpoint and metric reproduction | `03_data_and_gpu.md`; GPU work only on eight RTX4090 cards, never a two-card substitute |
-| Experiments | Graph/Generic, four component cells, active persistence, external/numerical axes | `04_experiments.md`; matched declared conditions and retained failures |
-| Results / merge | CSV-derived figures, effect estimates, source-to-claim mapping | `05_results.md`; integration gates before either migration merges |
+| Sync | Remote ancestry, full installed methods, Factory decision | `01_sync.md`; no pointer update before accepted-descendant and real-data checks |
+| Theory | Coverage, selection, support and count/identity separation | `02_theory.md` and `paper/theory/06_cardinality_control.md`; exact identities and retained counterexamples |
+| Data / GPU | Actual records, labels/splits, checkpoint and metric reproduction | `03_data_and_gpu.md`; eight RTX4090 devices for GPU work, never a two-card substitute |
+| Experiments | Graph/Generic, cue/filter, cardinality control, active persistence | `04_experiments.md`; matched cohorts with explicit failures |
+| Results / merge | CSV figures, cohort effects, paper interpretation | `05_results.md`; no merge on source-only tests |
 
-## Completed continuation
+## Completed in this continuation
 
-Benchmark fixes the missing direct Graph-minus-no-memory contrast, adds the two conditional cue/filter contrasts, and rejects nonfinite value intervals/tolerances. Twenty dependency-free tests pass. The original 24 exact-model rows are reproduced unchanged. Nine additional rows establish covered expansion with lower return and identical masked logs with different exclusion losses; main Sections 4.3, 6.3, 7.2 and 7.3 report the corresponding argument, estimands and values.
+Benchmark adds a seed-frozen, Analyze/Check-only cardinality control through the existing component factory. Seventeen new dependency-free tests pass. Complete enumeration produces 63 subset rows and six summaries: at three visible actions, best/mean/worst returns are 0.8/0.5/0.2. The new figure is derived from the summary CSV. These are exact finite-model quantities, not PHM or LLM measurements. Main Sections 4.4, 5, 6.3 and 7.3 contain the corresponding argument, method, estimand and result.
 
-Actual commands, negative prepatch observations and validation scope are in Benchmark `results/graph_control/boundaries_20260916/README.md`. Figures come from those CSVs. No Graph policy, Factory core, provider or evaluator was replaced. No new PHM/SOTA/GPU result was obtained.
+Actual commands and limitations are in Benchmark `results/graph_control/cardinality_20260916/README.md`. The native integration test invocation failed at import because the editing environment lacks the full Phase1 installation; its three test functions did not run. Do not count the earlier 20 tests again or call this full migration validation.
 
-## Still required before merge
+## Next gate and failure handling
 
-Full installed imports and original-versus-relocated behavior, a real PHM episode, numerical reload/recomputation, and active-ablation validation are pending. Factory main remains five commits behind the current gitlink at this inspection, not a fast-forward target. Five external bindings and faithful SOTA adapters remain implementation work; this is not yet a handoff with only GPU execution left.
+Run the native integration and existing migration tests in the full Benchmark checkout, then one real development episode using inspected data/provider settings. Stop at the first failed import, protocol, pairing or data check and retain its output. Five external Graph bindings, faithful SOTA reproduction, active dynamic/memory and nested-prefix horizon remain unfinished; this is not a GPU-only handoff.
 
-Preserve all existing raw runs and source history. Update the existing goals rather than generating a parallel reviewer/plan pack. In this architecture the generic names `experiments/p19` and `external/phmfactory` do not relocate Graph work: use Benchmark `experiments/graph_control` and its existing `src/phm_data_factory` submodule. Fix failed hypotheses by revising the claim, not by adding models or replacing the test population.
+Factory main was still five commits behind the existing pin at this inspection. No downgrade, core change or parent pointer update is warranted. Preserve all historical results. Graph code stays at Benchmark `experiments/graph_control` and the single Factory remains `src/phm_data_factory`; generic path names in a reused request do not relocate these components.

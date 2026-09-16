@@ -1,16 +1,17 @@
-# Paper 2 → Benchmark 映射
+# Paper 2 → Benchmark mapping
 
-所有命令在 liq22/phm-agent-benchmark 执行：`python main.py --config <path>`。默认 plan；--override command=run 执行，command=finish 统计绘图。下列 G-* 是本轮配置映射名，不重新编号或重标历史 P2-E* 实验。
+All executable work remains in `liq22/phm-agent-benchmark`. Its `python main.py --config <path>` defaults to plan; `--override command=run` performs the declared experiment and `command=finish` runs the shared statistics/plots. These mapping names do not relabel historical P2-E* experiments.
 
-| 映射 | 问题／estimand | 处理与控制 | Benchmark module/config | 证据／claim |
+| Mapping | Question / estimand | Compared conditions | Benchmark implementation / config | Evidence boundary |
 |---|---|---|---|---|
-| G-main | 联合 G 效应，逐任务Δ_G | Generic vs 原cue+filter | src/phm_graph_agent/{agent,state}.py；configs/paper02_graph/main.yaml | 同K/M/观测/工具/预算；不是纯topology效果 |
-| G-components | cue、filter及交互 | 四格，历史提示处理一致 | components.py；components.yaml | 四格matched结果；不用旧Generic代替组件control |
-| G-memory | persistence是否改变行为 | graph vs graph-no-memory | state.py；memory.yaml | 先确认可达状态下消融生效 |
-| G-horizon | 长度与资源联合敏感性 | 不同窗口数 | horizon.yaml | 当前选样与预算同时变化，非pure horizon |
-| G-dynamic | 显式工况变化后的修正 | 相同公开事件的匹配控制 | 状态规则已迁入；统一assignment/event/config dispatch尚缺 | 不复活旧dynamic_runtime独立Runner |
-| G-extension | nested-prefix/跨数据/reliability | 匹配条件与固定控制 | 部分公共统计可复用；正式整合未完成 | Mock状态覆盖不能替代任务结果 |
+| G-main | Joint Graph effect | Generic vs original cue+filter | `src/phm_graph_agent/{agent,state}.py`; `configs/paper02_graph/main.yaml` | Not a pure topology effect |
+| G-components | Cue, filtering, interaction | Four cells with identical history sanitation | `components.py`; `components.yaml` | Original Generic is not the factorial control |
+| G-relevance | Stage identities beyond tool count | `factorial-filter` vs `factorial-cardinality` | `cardinality_control.py`, existing component factory; `mask_relevance.yaml`; `run.sh relevance` | Count/termination match at a common history; native and real PHM validation pending |
+| G-memory | Persistence activation/effect | Graph vs Graph-no-memory | `state.py`; `memory.yaml` | Check reachable behavior; base may be a null manipulation |
+| G-horizon | Length/sampling/resource sensitivity | Window counts | `horizon.yaml` | Current selector is not nested-prefix pure horizon |
+| G-dynamic | Revision after public condition events | Matched policies with the same public events | Migrated state rules; unified event/assignment dispatch pending | No resurrection of the old independent Runner |
+| G-extension | External transport/reliability | Within-domain matched controls | Dataset/task/SOTA bindings pending | Mock state coverage is not real task evidence |
 
-Required artifacts：Benchmark六文件attempt、公共统计CSV、figure source。本仓只登记路径、实验解释和claim mapping。base六状态与dynamic Monitor/Revise分开；公共工况事件不是从信号推断的故障起始。
+Theory04–05 use the retained exact value/support calculations under Benchmark `experiments/graph_control`. Theory06 adds full subset enumeration through `run.sh cardinality`. These exact results are not Agent attempts or numerical classifier checkpoints. New 63-mask/six-summary data are in `results/graph_control/cardinality_20260916` and support main Section 7.3.
 
-迁移没有产生新处理效应。历史来源见SOURCE_HISTORY.md，不将旧结果重新标成新组件实验。
+Real episodes use the existing six-file attempt bundle, shared metrics/effects CSV and figure source. P02 stores scientific interpretation and locations, never a second raw-result tree. Preserve base versus dynamic, cue versus filtering, public condition changes versus inferred fault onset. No relocation or source test establishes a new task effect.
