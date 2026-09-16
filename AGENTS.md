@@ -1,13 +1,9 @@
-# Agent Entry — GraphDecisionAgent
+# Paper Agent — Graph-guided PHM Agent
 
-Read DEV.md, CORE.md, paper/GOAL.md, paper/LOCAL_AGENT_PROMPT.md and obsidian/log/LOCAL_AGENT_STATE.md. This repository owns its paper and `src/phm_graph_agent`. The current source of truth is `dev`; short feature/review/figure/experiment/agent branches return through PRs to `dev`.
+Read GOAL.md, experiment_spec/MAPPING.md, the existing manuscript and relevant theory. Work on dev. This is a paper repository, not a Python package.
 
-Review semantic changes against dev. Keep mature text, verified citations and figures serving an explicit argument; patch useful subsets; exclude duplicated plans, stale drafts and workflow infrastructure. Preserve necessary scientific limitations and every registered result under its original conditions. The manuscript is paper/draft/main.md.
+Edit scientific questions, state/control definitions, proofs, hypotheses, experiment specifications, manuscript, references and figure interpretation here. All executable work goes to liq22/phm-agent-benchmark, including the graph method, configs, tests, parsing and plotting. Do not recreate a graph framework or local runner/provider/evaluator.
 
-Reuse Benchmark TaskSpec, DataPort, run_rotation, Runner, evaluator and canonical rollout writer. Benchmark must run without downstream policies. Keep inference separate from evaluation; never expose private targets. RandomValid contains a planned-call candidate and is not a uniform random baseline.
+Use retained Benchmark artifacts and exact config mappings, not copied raw results. A valid transition is not proof of task performance. Preserve the distinction between base and dynamic, cue and filter, public condition events and inferred fault onset. Inactive ablations cannot support mechanism claims.
 
-Use experiments/run.sh for new studies. Preserve frozen formal scripts and source dependencies. A changed provider, model, prompt, visible tools, dataset or metric defines a new condition. Retain all attempts, failures and abstentions. Reuse existing environments and completed checks; run affected tests after relevant changes. Do not add hash/receipt/ledger mechanisms, duplicated factories or automatic backend switching.
-
-Online inference requires current-task authorization and explicit request/token limits. Credentials remain environment variables; a request cap is not a monetary cap. No external inference is needed to inspect a plan.
-
-End a bounded task by updating the rolling state with actual commands, reused cells, new outputs and one next step. A merge is not an empirical or publication claim.
+Advance the smallest missing argument or matched experiment; do not regenerate unchanged review packs or replay old setup gates. No hidden-target access, silent fallback, redundant hash/receipt/ledger governance or unsupported claims. Code relocation alone supports no empirical conclusion.

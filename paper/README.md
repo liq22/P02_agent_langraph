@@ -1,7 +1,5 @@
-# GraphDecisionAgent paper
+# Paper sources
 
-The sole manuscript source is [draft/main.md](draft/main.md). Edit its existing sections and preserve the registered result insertion markers. The active bibliography is [refs/references.bib](refs/references.bib); figure and table assets support that manuscript.
+`draft/main.md` is the sole full manuscript. Retain theory, verified references, review and publication figures. RESEARCH.md and theory notes are specifications, not a second manuscript.
 
-[Goal](GOAL.md) selects the next scientific task. [RESEARCH](RESEARCH.md) and [theory](theory/) document assumptions and controlled comparisons. [Experiments](../experiments/README.md) contains executable commands; `paper/experiments/` preserves registered protocols and results under their recorded conditions.
-
-Use `dev` for integration. Historical drafts and inactive templates are recoverable through the pre-convergence Git tag. Current results determine the abstract and conclusions; mechanics fixtures remain labeled as such.
+Current authority is root GOAL.md; execution/config/artifact mapping is ../experiment_spec/MAPPING.md. Old software paths in unchanged manuscript passages refer to historical source versions, not an active runtime. Update those location sentences when editing the relevant paragraphs without relabelling old results.
