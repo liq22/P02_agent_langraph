@@ -1,17 +1,19 @@
 # Paper 2 → Benchmark mapping
 
-All executable work remains in `liq22/phm-agent-benchmark`. Its `python main.py --config <path>` defaults to plan; `--override command=run` performs the declared experiment and `command=finish` runs the shared statistics/plots. These mapping names do not relabel historical P2-E* experiments.
+All execution remains in `liq22/phm-agent-benchmark`; configurations live in `configs/paper02_graph/`. Existing historical P2-E* results retain their identities. The next execution goal is Benchmark `paper/goals/P02_MATCHED_CONTROL.md`.
 
-| Mapping | Question / estimand | Compared conditions | Benchmark implementation / config | Evidence boundary |
-|---|---|---|---|---|
-| G-main | Joint Graph effect | Generic vs original cue+filter | `src/phm_graph_agent/{agent,state}.py`; `configs/paper02_graph/main.yaml` | Not a pure topology effect |
-| G-components | Cue, filtering, interaction | Four cells with identical history sanitation | `components.py`; `components.yaml` | Original Generic is not the factorial control |
-| G-relevance | Stage identities beyond tool count | `factorial-filter` vs `factorial-cardinality` | `cardinality_control.py`, existing component factory; `mask_relevance.yaml`; `run.sh relevance` | Count/termination match at a common history; native and real PHM validation pending |
-| G-memory | Persistence activation/effect | Graph vs Graph-no-memory | `state.py`; `memory.yaml` | Check reachable behavior; base may be a null manipulation |
-| G-horizon | Length/sampling/resource sensitivity | Window counts | `horizon.yaml` | Current selector is not nested-prefix pure horizon |
-| G-dynamic | Revision after public condition events | Matched policies with the same public events | Migrated state rules; unified event/assignment dispatch pending | No resurrection of the old independent Runner |
-| G-extension | External transport/reliability | Within-domain matched controls | Dataset/task/SOTA bindings pending | Mock state coverage is not real task evidence |
+| Mapping | Question / estimand | Conditions and config | Evidence boundary |
+|---|---|---|---|
+| G-main | Joint Graph control | Generic / original Graph; `main.yaml` | Not topology-only; no new real matched result in this slice |
+| G-components | Cue package, visibility, interaction | `factorial-reactive/state/filter/both`; `components.yaml` | Same historical-state rendering; fresh controls, not old Generic |
+| G-relevance | Analysis-stage identity beyond count | `factorial-filter` / `factorial-cardinality`; `mask_relevance.yaml` | Existing Analyze/Check control preserved, not replaced by the earlier local ZIP |
+| G-memory | Activation before efficacy | Graph / Graph-no-memory; `memory.yaml` | Event-free base is a null manipulation under theory07; retain as negative control |
+| G-horizon | Length/sampling/resource sensitivity | Existing `horizon.yaml` | Pure horizon requires fixed-longest nested prefixes and separate budget regimes |
+| G-dynamic | Recurrence and revision | Future `dynamic-history-matched` cohort; shared event/assignment dispatch pending | All dynamic profiles share history sanitation; legacy full-dynamic results are not equivalent |
+| G-extension | Repeated reliability / transport | Within-task matched studies, followed by admitted external bindings | Task outcomes primary; no state/Mock substitute |
 
-Theory04–05 use the retained exact value/support calculations under Benchmark `experiments/graph_control`. Theory06 adds full subset enumeration through `run.sh cardinality`. These exact results are not Agent attempts or numerical classifier checkpoints. New 63-mask/six-summary data are in `results/graph_control/cardinality_20260916` and support main Section 7.3.
+Implementation: `src/phm_graph_agent/{agent,state,components,cardinality_control}.py`, with the existing shared conditions, Runner and evaluator. The new `experiments/tests/test_graph_intervention_contract.py` captures model inputs and stops before generating a response. Its 24 public-history/factorial fixture rows are not Agent episodes or PHM results. The native suite passed in GitHub Actions run 35110539101: 83 research tests, including all eleven new Graph checks, after installing the real pinned Factory and Benchmark. This does not supply a real-data episode, exhaustive migration equivalence or a task effect. Reproduce the applicable checks on the local data host before inference.
 
-Real episodes use the existing six-file attempt bundle, shared metrics/effects CSV and figure source. P02 stores scientific interpretation and locations, never a second raw-result tree. Preserve base versus dynamic, cue versus filtering, public condition changes versus inferred fault onset. No relocation or source test establishes a new task effect.
+Theory04–06 retain the existing exact value, support and cardinality calculations. Theory07 adds the complete recursive state (including event token), the reachable-interface coupling argument, inactive base ablations and prospective dynamic-history matching. Main Sections 3–6 implement that interpretation; existing exact result paragraphs are retained, not rerun in this slice.
+
+All real outcomes still use the existing six-file attempt bundle and shared scorer. Task metrics/data protocols are unchanged. P02 stores scientific interpretation and locations, not a copied raw-result tree. Feed actual G findings, not test counts, to Benchmark Paper 0.

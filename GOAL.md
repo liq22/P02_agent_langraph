@@ -1,35 +1,19 @@
-# GOAL — 决策结构 G 的作用与失效边界
+# GOAL — persistent decision structure G
 
-## Scientific problem
-在相同 PHM 知识、模型、观测序列、全局工具、预算和评价下，显式控制何时改善长程任务，何时排除必要行动？本论文先于 Benchmark 综合论文收敛；使用共享环境，但不依赖 Skills 处理组。
+冻结 $G=\text{persistent decision structure}$。在相同模型、PHM 知识源 $K_0$、公开观测访问与释放规则、全局工具、预算和评价下，研究显式结构何时帮助长程 PHM 决策，何时限制必要行动。不同策略可以产生不同实际历史；不把观测权限匹配写成所有轨迹相同。
 
-## Research object
-研究公开历史导出的状态、当前状态提示和工具可见性约束如何改变轨迹与任务结果。当前状态主要表示分析进度，不等于故障信念推理。base 只有六个可达状态；Monitor/Revise 需要单独公开工况事件，不能表述为从信号自主检测故障起始。
+数学对象为 $G=(\mathcal M,m_{\mathrm{init}},\delta,c,\Gamma)$，其中 $m_t=(z_t,\nu_t)$ 同时包含分析进度和最近已消费事件标识。提示 $c$ 包含当前阶段标签与指令；$\Gamma$ 控制可见工具。它不是完整故障信念状态，也不是单独的 topology treatment。
 
-## Mathematical object
-$G=(V,E,s_0,\phi,\psi)$；比较 $\pi_{M,H,K_0,G_0}$ 与 $\pi_{M,H,K_0,G}$。当前联合干预包含 state cue 和 action visibility。四格实验分离二者的输出机制，不自动识别纯 topology 效果。
+保留 mask/select 损失及条件性价值分析。真实 PHM 的 $Q^*$ 未知，状态访问、transition validity、invalid-call rate、工具数均不能替代任务表现或真实 regret。本文不研究新的 LangGraph 平台、UI 或更多状态的系统。
 
-在有限时域、包含历史／时间／预算的状态下，令 $A_G(s)$ 为保留动作，
-$$
-\ell_t^{mask}(s)=V_t^*(s)-\max_{a\in A_G(s)}Q_t^*(s,a),\quad
-\ell_t^{select}(s,a)=\max_{u\in A_G(s)}Q_t^*(s,u)-Q_t^*(s,a).
-$$
-沿轨迹两项损失和刻画相对不受限最优策略的价值差。真实 PHM 的 $Q^*$ 未知，invalid-call rate 不能冒充 regret。
+执行全部位于 Benchmark `src/phm_graph_agent/` 和 `configs/paper02_graph/`，唯一 Runner、数据协议和指标不变。P02 只维护科学定义、正文、理论、参考文献、评审、出版图和 `experiment_spec`。继续当前 PR，不覆盖已提交的 Analyze/Check 同数量工具对照，也不应用较旧的本地整包。
 
-## Hypothesis
-有用控制应减少集合内错误选择，同时不大量删除必要行动。cue、filter 及其交互可能有益、无效或有害，必须用任务表现检验。若消融在可达历史上不改变动作分布，零差异不能解释为对应机制无用。
+优先级固定为 G-main → 新的 cue/filter 四格 → persistence 激活检查 → horizon/sampling/resource sensitivity → dynamic revision → repeated reliability。原 Generic 不能代替 factorial-reactive；四格历史 decision_state 处理必须一致。
 
-## Implementation mapping
-唯一代码在 `liq22/phm-agent-benchmark::src/phm_graph_agent/{agent,state,components}.py`，配置在 `configs/paper02_graph/`；共享执行、评价、解析和绘图均由 Benchmark 提供。本仓只维护数学定义、假设、正文、实验规范及 `experiment_spec/MAPPING.md`，不保留独立 graph runtime 或执行脚本。
+无事件 base 的 memory 和 replanning 开关是无效机制消融，保留为负控，不作为下一项效果实验。Monitor/Revise 仅属于 dynamic；base 事件输入直接拒绝。未来 dynamic-history-matched 队列对全部动态条件清理历史状态字段；旧 full-dynamic 输入不等价，不能重标或混用。
 
-## Estimand
-逐任务主对比 $\Delta_{G,q}=M_q(\{\tau^G_{i,r}\})-M_q(\{\tau^0_{i,r}\})$。组件实验另估计 cue、filter 和 $\mu_{11}-\mu_{10}-\mu_{01}+\mu_{00}$，四格采用相同历史状态字段可见性。资产为聚类单位，多次运行不等于新资产。
+当前切片在 theory07 和正文中完成递归 G 定义、无效消融证明、输入干预边界。Benchmark 中修复 base 事件越界和动态历史提示不对称，并增加原生输入合同测试。本轮已由 GitHub Actions run 35110539101 完成真实依赖安装、pip check 和 83 项原生研究测试，其中包含全部 11 项新增 Graph 检查。未产生新的 PHM matched result；83 项不是完整仓库测试或迁移行为的穷尽验收。
 
-## Experiment
-先整理控制 Method、原 Generic 对照与 cue/filter 四格，检查 no-memory 是否改变行为，再研究长度、成本和公开工况修正。当前 horizon 同时改变选样与比例预算，只支持联合敏感性；嵌套前缀和 dynamic 正式执行须在 Benchmark 接入同一 Runner，不在本仓恢复旧链。
+本地唯一下一入口：Benchmark `paper/goals/P02_MATCHED_CONTROL.md`。复用已通过的原生 CI 证据，确认本地环境后，用真实开发 assignment 和批准的 provider/model 运行 G-main 与四格。任务指标是 primary，过程与成本是 secondary。八卡仅用于实际训练或本地大模型，不把 API rollout 写成 GPU 实验。
 
-## Evidence
-Benchmark 六文件 attempt 是唯一运行事实来源；状态统计、CSV、图表均为派生结果。本仓登记 experiment ID、config、artifact location、图表与主张。没有可靠事件标注时不报告 event-F1／detection delay；Mock 状态覆盖不支持真实任务收益。
-
-## Claim
-贡献是控制的任务后果、cue/filter 区分与适用条件，不是用了 LangGraph、更多状态或更高 transition validity。未有匹配结果时不声明收益；正、零、负结论都限定到实际干预。唯一正文为 `paper/draft/main.md`；Benchmark 随后综合 G 与 K 干预的测量含义。
+正文唯一入口 `paper/draft/main.md`；真实结果进入 7.4，之后再将 G 的任务、可靠性与成本发现反馈给 Paper 0。两个迁移 PR 在真实入口验收前保持 Draft；先 Benchmark 后 P02 正常合入 dev，不修改 master，不强推。
