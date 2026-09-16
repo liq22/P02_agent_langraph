@@ -1,32 +1,50 @@
-# P2 Goal — 分离状态提示与工具过滤
+# Paper 2 Goal — 分离状态提示与工具过滤的真实作用
 
-主要产物：cue/filter 四格的真实任务后果、成本，以及有效／有害控制的具体证据。方法属于 P02_agent_langraph。读取 [RESEARCH](RESEARCH.md) 与[控制损失推导](theory/03_control_loss.md)。
+当前目标不是增加 graph 节点，而是回答：**在相同模型、PHM 知识、观测序列、全局工具和预算下，状态提示与工具可见性约束分别何时有益、何时会删掉必要分析。**
 
-## 干预检查
+先读 [THEORY_CONTRIBUTION_PLAN.md](THEORY_CONTRIBUTION_PLAN.md)、[FIGURE_PLAN.md](FIGURE_PLAN.md)、[RESEARCH.md](RESEARCH.md) 和 `theory/`。完整正文唯一入口仍是 `draft/main.md`；Graph 方法只在 `src/phm_graph_agent/`，实验只在 `experiments/`。
 
-对相同可达历史检查四个组件条件的 provider 消息和可见工具。四组历史消息都去除旧 `decision_state` 字段；当前状态提示和工具过滤分别由各自开关决定。规范 rollout 保留可观测状态。原 `graph` 与组件实验作为不同处理报告。
+## 当前贡献链
 
-先检查 `graph-no-memory` 是否改变状态、消息或可见动作。如果每步从完整历史重建同一策略，记录其非辨识性，停止该无效消融的完整 cohort；不将机械零差异解释为记忆没有价值。
+1. **Joint graph-control treatment**：原始 Graph 同时加入 current-state cue 与 state-dependent tool visibility；不称为纯 topology effect。
+2. **Cue × filter identification**：`factorial-reactive/state/filter/both` 分离两个可见干预。
+3. **Control applicability boundary**：识别 harmful mask、inactive ablation、sequence/budget confounding；动态 public event 不等于 signal-inferred onset。
 
-## 执行与比较
+`graph-no-memory` 只有在可达开发 history 上实际改变 state/tool exposure 时才值得跑完整 cohort。base profile 的 Monitor/Revise 不可作为 dynamic revision 证据。
+
+## 本地最短执行
 
 ```bash
+export PHM_BENCHMARK_ROOT=/absolute/path/phm-agent-benchmark
+
+bash experiments/run.sh test
 bash experiments/run.sh plan --experiment graph-components \
-  --provider "$PHM_PROVIDER" --model "$PHM_MODEL" --protocol "$DEV_PROTOCOL"
-# 对应在线实验授权后，以同一模型、资产、预算和显式限额运行。
+  --provider "$PHM_PROVIDER" --model "$PHM_MODEL" --protocol "$DEV_PROTOCOL" --tasks replay
+
+# 当前在线实验获得授权后再执行
+bash experiments/run.sh run --experiment graph-components \
+  --provider "$PHM_PROVIDER" --model "$PHM_MODEL" --protocol "$DEV_PROTOCOL" --tasks replay \
+  --request-cap 128 --max-tokens 2048 --output "$STUDY_ROOT"
+
+# 不再调用模型：统计、availability、bounds 与绘图
 bash experiments/run.sh finish "$STUDY_ROOT"
 ```
 
-主比较为 `factorial-reactive/state/filter/both` 的任务效果、交互与成本。检查必要行动被过滤后是否造成任务损失，并展示实际可观察结果。最优 $Q^*$ 未知时，以受控任务证据解释机制；invalid-call rate 不作为 regret。
+同一 plan 用 `--only` 分批执行，不用旧 Graph/Generic 结果代替历史消息条件不同的新 factorial control。
 
-当前 `horizon` 同时改变选样与比例预算；报告长度／选样／资源敏感性。纯 horizon 研究需另行实现固定最长序列的嵌套前缀。dynamic-v3 使用公开条件事件，按原协议单独分析。
+## 必做实验
 
-## 验收
+- G-E1：原始 Generic vs original Graph，估计 joint graph-control effect。
+- G-E2：cue × filter 四格，状态提示/过滤 main effects 与 interaction。
+- G-E3：no-memory activity precheck；inactive 就停止该消融，不浪费付费 cohort。
+- G-E4：有益/有害 mask 的小型精确模型，验证控制损失分解；不冒充 PHM 性能。
+- G-E5：当前 `horizon` 只作为长度/选样/资源敏感性；纯 horizon 结论需新增 nested-prefix binding 与明确 budget regime。
+- G-E6：dynamic profile 只解释对已发布工况变化事件的响应，不写自主 fault-onset detection。
 
-所有四格实际输入符合定义、共享匹配环境、分配分母完整，结果支持具体的提示效应、过滤效应或其未确定范围。保留负效应和有害过滤案例。将任务结果和控制适用范围回写所属仓库现有全文；图结构示意图本身不构成效果证据。
+## 停止条件
 
-## 开始与结束
+如果 filter harm 大于 selection gain，报告 action restriction 的失效边界；如果 component 不改变 provider-visible intervention，停止该消融；如果 task primary 没有改善但成本下降，只写 efficiency result；不通过继续增加节点追求正结果。
 
-先读 [DEV](../DEV.md)、[CORE](../CORE.md) 和[当前状态](../obsidian/log/LOCAL_AGENT_STATE.md)。本仓库 `dev` 是写作与实验集成的唯一核心分支。正文入口为 [main.md](draft/main.md)。
+## 写作顺序
 
-每轮完成一个主要产物，记录实际命令、复用结果、新输出与一个下一步。在线推理须有当前任务的授权和明确请求／token 限额；历史授权不自动延续。
+Results：joint effect → cue/filter attribution → inactive/harmful controls → sequence/resource sensitivity → dynamic public-event extension → limits。图状态数量、节点访问次数和 workflow 复杂度都不能替代 task performance。
