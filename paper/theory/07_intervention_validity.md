@@ -2,7 +2,7 @@
 
 ## Object and scope
 
-Freeze $G=\text{persistent decision structure}$ and keep the shared PHM world, model, knowledge source $K_0$, response decoder, resource accounting and evaluator fixed. The explicit controller is
+We study $G=\text{persistent decision structure}$ and keep the shared PHM world, model, knowledge source $K_0$, response decoder, resource accounting and evaluator fixed. The explicit controller is
 
 $$
 G=(\mathcal M,m_{\mathrm{init}},\delta,c,\Gamma),\qquad
@@ -10,7 +10,7 @@ m_t=(z_t,\nu_t),\qquad
 m_t=\delta(m_{t-1},s_t,e_t),
 $$
 
-where $s_t=(h_t,b_t,t)$ is public history, remaining budget and time. The phase $z_t$ labels analysis progress, and $\nu_t$ is the last consumed public-event token. The cue $c(z_t)$ contains the current phase label and stage instruction; $\Gamma(z_t,s_t)$ returns tool visibility. Transitions are induced by $\delta$, rather than an independently changed topology. Public events $e_t$ are released condition metadata, not hidden targets or fault onsets inferred from the signal.
+where $s_t=(h_t,b_t,t)$ is public history, remaining budget and time. The phase $z_t$ labels analysis progress, and $\nu_t$ is the last consumed public-event token. In the original package, the cue $c(z_t)$ contains the current phase label and stage instruction; in the fixed-bank profile it contains only the phase annotation; $\Gamma(z_t,s_t)$ returns tool visibility. Transitions are induced by $\delta$, rather than an independently changed topology. Public events $e_t$ are released condition metadata, not hidden targets or fault onsets inferred from the signal.
 
 A definition containing only the phase label omits the event-deduplication memory used by the actual controller. Conversely, the model still receives public history: this implementation is not a memory-limited finite-state policy or a sufficient diagnostic belief state. Classical finite-state control and state-driven LLM workflows are precedents, not new formalisms here (Hansen, NIPS 1997, Section 3.1; StateFlow, Section 3.1).
 
@@ -24,7 +24,63 @@ $$
 
 where $\mathcal T_0$ is the common tool catalog and $\mathcal T_1$ its Graph subset. The expression denotes structured message assembly, not arithmetic on strings. All four cells use the same renderer with top-level historical decision-state metadata removed from tool messages. Numerical tool payloads, action arguments, errors, order and remaining-budget information are otherwise unchanged at the same public history.
 
-The cue factor is a label-plus-instruction package, not a pure state-name intervention. Tool identity can also convey the stage implicitly; removing the explicit cue does not remove all information about the state. Thus the estimands are direct effects of these implemented interfaces. They do not identify topology-only effects or separate latent semantic pathways. $K_0$ is the common knowledge source; state-conditioned presentation belongs to the declared $G$ intervention. A stronger claim independent of additional procedural wording needs the separately planned information-matched prompt control.
+The cue factor is a label-plus-instruction package, not a pure state-name intervention. Tool identity can also convey the stage implicitly; removing the explicit cue does not remove all information about the state. Thus the estimands are direct effects of these implemented interfaces. They do not identify topology-only effects or separate latent semantic pathways. $K_0$ is the common knowledge source; state-conditioned presentation belongs to the declared $G$ intervention. A comparison independent of newly supplied procedural wording uses the fixed-instruction profile below.
+
+## Fixed instruction inventory: organization rather than extra advice
+
+The original four cells change a label-plus-instruction cue. Their common source $K_0$ does not ensure that the same procedural text reaches the model at a given history. To test organization conditional on a fixed text inventory, define the ordered bank
+
+$$
+B=\big((z,d_z):z\in\mathcal Z_{\mathrm{base}}\big),
+$$
+
+containing the unchanged six base-stage instructions. Let $\widetilde h_t$ be the provider-visible public task, usage and action/result/error history after the common removal of top-level historical state metadata. Define a new, separate interface family
+
+$$
+I^B_{uv}(\widetilde h_t)
+=\big(\operatorname{render}(\widetilde h_t;K_0,B)\mathbin\Vert u\,\operatorname{name}(z_t),\;\mathcal T_v(z_t,\widetilde h_t)\big).
+$$
+
+The notation denotes concatenation of a structured annotation, not arithmetic on text. All six instruction entries occur once and in the same order in every arm, including annotation-off arms. The annotation adds only the current phase name, not its advice again. $u$ controls annotation; $v$ controls the existing tool restriction. The bank is independent of the current state, fitted data, targets and PHMskills retrieval. The treatment is event-free; Monitor/Revise instructions are excluded equally from every bank. The existing base state map and terminal rules are unchanged.
+
+This comparison is a specialization motivated by StateFlow's state-dependent instructions and refined-workflow baseline, not a new general prompting principle [@wu2024stateflow, Sections 3.1 and 4.1]. Its purpose is to remove a concrete content-versus-organization ambiguity in this PHM study.
+
+### Policy-class consequence
+
+Assume the full public history needed by the base phase map is retained, with fixed initialization, and $z_t=f(\widetilde h_t)$ is deterministic. The equality
+
+$$
+\sigma(\widetilde H_t,Z_t)=\sigma(\widetilde H_t)
+$$
+
+holds because $Z_t$ is measurable with respect to $\widetilde H_t$, while projection recovers $\widetilde H_t$ from the pair. In particular, the annotation provides no additional random information about a hidden target conditional on that history. This is not a claim that a finite language model can compute the annotation without effort.
+
+Let $\Pi$ contain all history-conditioned stochastic action rules in the same finite-horizon world, and let $\Pi_{\mathrm{ann}}$ contain all rules that can additionally read $f(\widetilde h)$. With the same feasible actions, environment, stopping and action-cost rules,
+
+$$
+\sup_{\pi\in\Pi_{\mathrm{ann}}}J(\pi)=\sup_{\pi\in\Pi}J(\pi),
+\qquad
+\sup_{\pi\in\Pi_{\Gamma}}J(\pi)\leq\sup_{\pi\in\Pi}J(\pi),
+$$
+
+where $\Pi_\Gamma$ restricts action support to the nonempty Graph sets.
+
+**Proof.** Any annotated rule $\pi_t(a\mid \widetilde h,z)$ defines the history-only rule $\bar\pi_t(a\mid\widetilde h)=\pi_t(a\mid\widetilde h,f(\widetilde h))$. Their action kernels agree at every history, so the common environment gives the same rollout law by induction. Conversely, an annotated rule can ignore the annotation. These inclusions give equality of the optimal values. Masked rules form a subset of $\Pi$, giving the inequality. $\square$
+
+This is ordinary policy-class inclusion, not an original policy-improvement theorem. It concerns an unrestricted decision rule under fixed world/action accounting, not equal computational cost of implementing different prompts. The frozen language model is not assumed closed under arbitrary deterministic preprocessing. Token usage, context truncation and response latency remain empirical measurements. Hidden-target access, external event information absent from the retained history, a learned estimator trained with additional knowledge, or truncated history would invalidate the stated measurability premise; the result cannot be extended to those cases by renaming them annotations.
+
+### Estimand and falsification
+
+For matched assigned assets/trials $\mathcal I$, retain the existing cohort statistic $\Theta$ and define $\theta^B_{uv}=\Theta(D^B_{uv}(\mathcal I))$. Apply simple effects, equal-weight marginal effects and interaction only within the new profile. In particular,
+
+$$
+\Delta^B_c(v)=\theta^B_{1v}-\theta^B_{0v},\qquad
+\Delta^B_{cf}=\theta^B_{11}-\theta^B_{10}-\theta^B_{01}+\theta^B_{00}.
+$$
+
+Identical assigned assets and paired asset-block resampling are required; neighboring windows and repeated seeds are not independent equipment. AP/Macro-F1 are recomputed on pooled records, not averaged per episode. An original cue-package gain does not identify an annotation gain under $B$. Negative annotation or filtering effects remain admissible. This design does not separate annotation correctness from the added line's salience/token cost, and masks can reveal stage information even when annotation is off. Those are limits on interpretation, not reasons to relabel the old controls or create unobserved PHM regret.
+
+Implementation uses the existing component factory and `configs/paper02_graph/organization.yaml` in Benchmark. The four condition names are `organization-reactive/state/filter/both`; original `factorial-*` and K conditions are preserved. Eight native tests check actual request construction, legacy prompt compatibility, contrast algebra and the real YAML plan. Input fixtures do not establish task effects.
 
 ## Lemma: equal reachable interfaces imply an inactive intervention
 
