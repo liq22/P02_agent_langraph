@@ -1,0 +1,82 @@
+schema_version: 2
+paper_id: phmgraph
+title: "PHMGraph: Separating Instruction Indexing from Workflow Gating in Tool-Using PHM Agents"
+manuscript: draft/main.md
+implementation_owner: liq22/phm-agent-benchmark
+implementation_snapshot: 8206cfef540d5f602adba482e9dcc0ebd6b0f437
+implementation_status: inspected_unmerged_draft_pr20_not_runtime_acceptance
+implementation_binding: FORMULATION_METHOD_MAP.md
+protocol_config: configs/paper02_graph/indexing_first_attempt.yaml
+protocol_stage: smoke_not_confirmatory
+source_goal: paper/goals/P02_MATCHED_CONTROL.md
+experiment_specification: experiments/EXPERIMENT_MATRIX.md
+treatment:
+  instruction_content: shared_B01_B06_catalog
+  explicit_index: [false, true]
+  tool_mask: [false, true]
+  pointer_intervention: appended_correct_active_block_sentence_including_token_and_salience_change
+  gate_intervention: joint_progress_dependent_schema_exposure_and_name_admission
+  primary_contrast_type: sequential_simple_effects_not_averaged_main_effects
+  primary_contrasts:
+    - { name: indexing_unmasked, treatment: indexed-global, control: catalog-global, fixed_gate: false }
+    - { name: masking_indexed, treatment: indexed-masked, control: indexed-global, fixed_index: true }
+  interpretation: pointer_at_global_tools_then_compound_gate_with_pointer_present
+  other_simple_effects_and_interaction: exploratory
+active_tool_surface:
+  mode: core_phase1_11
+  names:
+    - data.search
+    - data.describe
+    - data.read_window
+    - data.summarize
+    - op.list
+    - op.schema
+    - op.run
+    - model.list
+    - model.schema
+    - model.predict
+    - submit
+  excluded_adapter_actions: [artifact.describe, stop]
+  acceptance_check: actual_presented_and_admitted_names_match_this_surface_and_phase_menus
+primary:
+  task: diagnosis
+  metric: pooled_three_class_macro_f1
+  meaning: operational_accepted_label_delivery_not_necessarily_numerically_supported
+  outcome_selection: assigned_first_attempt
+  non_submission: false_negative_for_true_class_not_a_fourth_class
+  indeterminate_attempt: unresolved_no_automatic_resend_no_fabricated_score
+secondary:
+  task: replay
+  metric: average_precision
+  scope: unchanged_assigned_windows
+  grounded_diagnosis:
+    metric: pooled_three_class_macro_f1_after_grounded_label_mapping
+    role: prospective_secondary_not_replacement_primary
+    status: specified_pending_native_cohort_implementation_and_validation
+    positive_criterion:
+      accepted: true
+      submission_grounding: 1
+      artifact_lineage_completeness: 1
+    known_criterion_failure: map_scored_label_to_no_submission_keep_assigned_episode_and_true_class
+    missing_support_fields_in_accepted_outcome: secondary_unresolved_not_inferred_zero
+    native_selected_prediction: do_not_replace_with_retrospective_best_reference
+    extra_reference_validity: reported_separately_not_added_to_criterion
+    primary_scoring_and_history: unchanged
+    inference: secondary_estimates_no_inherited_primary_family_error_allocation
+numerical_opportunity:
+  audit_data: reserved_development_bearings_disjoint_from_final_evaluation
+  capability: existing_fitted_experts_and_native_feature_contract_only
+  required_observations: [prediction, feasible_continuation, selected_continuation, numerical_change, supported_label_change, correctness_change]
+  oracle_headroom: descriptive_audited_pool_only_never_agent_visible
+  feasibility_unknown: unresolved_not_absent
+  real_data_status: unestimated
+uncertainty:
+  unit: bearing
+  design: paired_true_class_stratified_bearing_bootstrap
+  contrast_intervals: nominal_97_5_percentile
+  family: two_prespecified_operational_diagnosis_contrasts
+  caveat: conditional_on_assigned_cohort_not_exact_small_sample_coverage
+figures:
+  - { id: 1, role: problem_formulation, path: assets/figures/phmgraph_problem_formulation.svg }
+  - { id: 2, role: method_overview, path: assets/figures/phmgraph_method_overview.svg }
+legacy_manifest: legacy/graph_v6_manifest.yaml

@@ -13,9 +13,9 @@
 </g>
 <g id="intervention-Z">
 <rect x="55" y="345" width="395" height="160" rx="10" fill="#edf3f7" stroke="#66737e" stroke-width="4"/>
-<text x="79" y="387" font-size="29" font-weight="bold" text-anchor="start">Intervention Z = (i, g)</text>
-<text x="79" y="429" font-size="26" font-weight="normal" text-anchor="start">Instruction localization</text>
-<text x="79" y="465" font-size="26" font-weight="normal" text-anchor="start">Temporal tool restriction</text>
+<text x="79" y="387" font-size="29" font-weight="bold" text-anchor="start">Intervention Z = (o, e)</text>
+<text x="79" y="429" font-size="26" font-weight="normal" text-anchor="start">Outer organization</text>
+<text x="79" y="465" font-size="26" font-weight="normal" text-anchor="start">Evidence feedback</text>
 </g>
 <g id="decision-process">
 <rect x="545" y="345" width="595" height="160" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
@@ -42,7 +42,7 @@
 <rect x="545" y="595" width="595" height="145" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
 <text x="569" y="637" font-size="29" font-weight="bold" text-anchor="start">Evaluated outcome Yₖᶻ</text>
 <text x="569" y="679" font-size="26" font-weight="normal" text-anchor="start">Accepted label or terminal non-submission</text>
-<text x="569" y="715" font-size="26" font-weight="normal" text-anchor="start">Numerical correctness evaluated here</text>
+<text x="569" y="715" font-size="26" font-weight="normal" text-anchor="start">Correctness and numerical support</text>
 </g>
 <g id="process-T">
 <rect x="1235" y="595" width="510" height="145" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
