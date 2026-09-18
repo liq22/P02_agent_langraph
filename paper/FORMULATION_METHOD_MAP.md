@@ -1,79 +1,68 @@
-# PHMGraph: formulation, method and evidence map
+# PHMGraph: decision–evidence mechanism and evidence map
 
-The active manuscript is `draft/main.md`; `paper.yaml` records its scientific specification, not executable scoring. Numerical tools, execution, fitting, evaluation, trace extraction and all figure source belong only to `liq22/phm-agent-benchmark`.
+The active manuscript is `draft/main.md`; `paper.yaml` specifies the current scientific protocol. Benchmark is the sole owner of numerical methods, policies, data access, runners, evaluation and drawing source. This map is author-facing source documentation, not manuscript prose or another result authority.
 
-## Scientific chain and identification boundary
+## Scientific chain and contribution boundary
 
-Question: under the same PHM procedures, numerical contract and fitted experts, how does appending a correct active-block pointer affect first-attempt diagnosis with global tools, and how does adding progress-gated exposure and admission affect diagnosis with that pointer present?
+Question → under common PHM capability, does sample-bound execution-evidence feedback change diagnosis when outer organization is present?
 
-Foundation → history-conditioned decisions, finite controllers, standard action-value accounting and pooled classification metrics. Formulation → fixed X, interface Z=(i,g), public trajectory τ, process T and evaluated outcome Y. Method → an appended pointer and a jointly exposed/enforced progress menu. Measurement → two sequential simple effects, 10−00 and 11−10, on operational diagnosis, plus the prospectively specified grounded counterpart. Evidence → pinned source inspection and execution boundaries; real paired effects and numerical headroom remain unestimated.
+Foundation → finite decision controllers and typed entity/activity provenance. Formulation → fixed X, assigned Z=(o,e), public trajectory τ, process T and evaluator outcome Y. Mechanism → input-role evidence DAG, prerequisite frontier Φ, evidence-conditioned phase/menu. Measurement → primary 11−10; other simple effects, outcome-scale interaction, grounded outcome, support and replay. Current evidence → installed native software checks on the existing synthetic numerical fixture; real PHM effects are unestimated.
 
-Chapter 2 defines the problem; Chapter 3 instantiates the interface. The pointer contrast includes adding a correct sentence, its tokens and salience; without a sham control it does not isolate pointer correctness. The gate contrast includes schema exposure, implicit progress information, admission, resulting errors and resource changes. It is not an isolated executor restriction or averaged main effect. Cell 01 supplies exploratory simple effects and interaction, not a new primary contrast.
+Typed provenance itself, generic state machines and provenance-based action gates are prior art. The proposed PHM mechanism is the binding of distinct input roles and current-sample numerical ancestry to prediction/submission eligibility. A positive factorial interaction would not alone prove a unique coupling mechanism. The feedback bundle changes a public summary, readiness admission and, with outer organization, phase routing and post-prediction continuation.
 
-## Mechanism-to-evidence correspondence
+## Equation–figure–algorithm–experiment correspondence
 
-| Object / mechanism | Mathematical object | Figure position | Method / algorithm | Experiment and claim boundary |
-|---|---|---|---|---|
-| Fixed capability and private class | Xₖ, evaluator-only cₖ | Figure 1 common setting/evaluator; Figure 2 shared blocks | Shared inputs; cₖ excluded | E0 matches task, window, fitted assets, tools, model and budgets; realized computations can differ |
-| Appended correct pointer | iL(sₜ), full B | Figure 2 block 3 | 3.2; Algorithm 1 steps 2–5 | E2: 10−00 at g=0; no new procedure and no isolated attention/correctness claim |
-| Exposure-and-admission gate | Γg(sₜ) supplied to both branches | Figure 2 block 4 → blocks 5/6 | 3.3; steps 4–7 | E2: 11−10 at i=1; compound interface effect |
-| Public progress and nonterminal recovery | sₜ=f(hₜ), error/read/catalog/prediction/schema precedence | Figure 2 block 2 and feedback loop | 3.4; steps 2, 6–8 | E4: actual transitions and recovery; terminal episodes never reopen |
-| Numerically effective continuation | Model-admissible input, feasible continuation, resolved prediction/label | Figure 2 shared numerical execution and history/output branches | 3.4; steps 6–8 | E1/E4: distinguish available operators, legal features, changed output, changed label and correctness; no useful-opportunity assumption |
-| Operational delivery | Y, accepted label ĉ, M(D) | Figure 1 outcome/cohort endpoint; Figure 2 output | 2.3; step 8 and 5.1 | Original primary score and first-outcome selection unchanged |
-| Contract-grounded delivery | G, label mapping ĉ→c̃, M(D̃) | Same evaluator/output blocks, expanded captions | 2.3; evaluator part of step 8; 5.1 | E3: prospective secondary mapping; no new execution requirement and no dropping unsupported outcomes |
+| Object / mechanism | Mathematical definition | Figure position | Section / algorithm | Native implementation and test | Empirical role |
+|---|---|---|---|---|---|
+| Fixed capability, private target | Xₖ; evaluator-only cₖ | Figure 1 common setting and evaluator | 2.1–2.3; shared inputs | Existing runtime/scope, no private label in graph or request | D0: data, split, fitted assets and first-attempt binding |
+| Outer organization | inherited f(h), common catalog B, phase menus | Figure 2 upper layer | 3.2; steps 2, 4–5 | `dual.py`, unchanged `state.py`/`components.py`; outer-only closure regression | D2: 10−00; historical pointer/gate ablations remain separate |
+| Typed numerical support | G(in), role-bound use/generation; separate citation edges | Figure 2 lower layer | 3.3; steps 1, 3, 6–7 | `EvidenceDAG.append/support/submission_prediction`; missing/rewired edge and generation tests | D1/D3: numerical paths, not just references |
+| Prerequisite frontier | F(m,w,j), Rₜ, Pₜ, ηₜ=Φ(G(in)) | Figure 2 middle feedback | 3.4; steps 3–4 | `frontier/state`; distinct-role, same-window and no-schema support checks | D2: feedback effect; incomplete/repeated-feature opportunities |
+| Coupled menu | sₜ=F(hₜ,ηₜ), Γₜ under (o,e) | Figure 2 feedback → phase and admission | 3.4; steps 4–6 | `DualGraphAgent`; deleting one required usage edge changes actual menu | D2/D3: 11−10; optional continuation, recovery and costs |
+| Computational output | outer recorded path plus selected G(sup) | Figure 2 lower output | 3.5; step 7 | `submission_prediction/support`, graph rebuilt from complete native trace | D3: task-matched submitted support; does not expose hidden reasoning |
+| Numerical replay | fresh native execution of support, fixed tolerance | Figure 2 offline output; no return to policy | 3.5, 5.2 | `replay_prediction`; native reference renaming and altered-value rejection | D3: replay coverage/agreement, not feature necessity or fault causality |
+| Lossless flat feedback | grouped frontier ↔ relational rows | Same feedback block, alternative rendering | 3.4, 5.1 | `flat_frontier`; exact reconstruction and equal menu | D4: presentation, not deletion of relation information |
 
-E0–E5 are specified in `experiments/EXPERIMENT_MATRIX.md`. Conditional stage rates are descriptive, not causal mediation effects. The compressed action-value identity is prior foundation, not a new theorem, a Macro-F1 decomposition or an estimator from action counts.
+D0–D5 are defined in `experiments/EXPERIMENT_MATRIX.md`. A supported prediction is not a guarantee that a later LLM submission will cite it correctly. Online admission checks eligibility; final native grounding and graph support are assessed independently.
 
-## Native meaning of the grounded endpoint
-
-For a resolved accepted diagnosis, G=1 requires both native submission-output fields to equal numeric 1:
-
-- `submission_grounding`: the submitted class agrees with the selected numerical prediction for the task sample.
-- `artifact_lineage_completeness`: that prediction's required feature references are included in the submitted supporting references.
-
-The runtime also requires a legal diagnosis label and a nonempty supporting-reference list for acceptance. Acceptance does not require either of the above fields to be 1. This is why a correct but unsupported accepted label can contribute to operational Macro-F1.
-
-For the secondary mapping, accepted labels with G=0 become `no_submission`; true classes, assigned episodes and the three-class averaging set do not change. Resolved terminal non-submissions already have that scored label. Missing or malformed support fields in an accepted outcome are unresolved, not inferred zeros. Such a record can leave only the secondary endpoint unresolved when the operational record is otherwise complete. A genuinely indeterminate attempt blocks any full-cohort endpoint requiring its final outcome. Never replace an attempt, silently drop a row or create a fourth diagnosis class.
-
-This criterion verifies numerical agreement and required-feature inclusion. It does not guarantee physical validity, correct diagnosis, validity of every extra reference, or a complete semantic explanation. Keep native `supporting_reference_validity` as a separate diagnostic rather than silently adding a new threshold to G. Use the native selected prediction reference; do not search retrospectively for a more favorable one.
-
-The secondary definition is fixed by this revision before this work inspects four-condition outcomes. It is **specified, not yet implemented and validated as a cohort endpoint in Benchmark**. Recompute it from native canonical evidence only after the shared extractor and metric path are validated. Historical operational scores and result records must remain unchanged. Secondary claims do not inherit the primary two-contrast Bonferroni allocation.
-
-## Figures: purpose and contract
-
-**Figure 1 — Problem formulation and observation boundaries (Section 2.3).** Distinguishes X, Z, τ/T, private c, outcome Y and cohort M(D). The revised caption explains that the grounded endpoint is another mapping of the same evaluator outcome, not a new feedback path. Every displayed variable is defined in the text. Dependencies do not identify causal mediation. No controller architecture is introduced here.
-
-**Figure 2 — PHMGraph overview and execution loop (Section 3.1).** Separates shared history, full B, fixed model and numerical tools from adapted progress f and independently configurable i/g. The gate's model and executor branches receive the same menu. Nonterminal feedback, submission and evaluator-only outcome assessment map to Algorithm 1. The pointer and gate are decomposed in Sections 3.2–3.4.
-
-Both existing SVG assets are retained unchanged; captions and the mapping above are updated. No third figure or new state is needed. Editable text and semantic groups remain in the existing vector artwork. The sole drawing source is `scripts/figures/plot_phmgraph_formulation_method.py` in Benchmark; no drawing or runtime implementation is copied here. The reference Nature-figure skill informed this decision to retain the existing diagrams rather than add decoration.
-
-## Exact inspected implementation snapshot
+## Active implementation and acceptance state
 
 Repository: `liq22/phm-agent-benchmark`.
 
-Commit: `8206cfef540d5f602adba482e9dcc0ebd6b0f437`, **unmerged Draft PR #20** at this inspection. This is an inspected implementation snapshot, not released-runtime or installed-method acceptance. Merging this paper revision does not accept PR #20 or its dependent implementation deletions.
+Active implementation commit: `45704762bd2e3ee7f8d0da4c037e67a575779703`.
 
-| Source at that commit | Blob / scientific role |
-|---|---|
-| `src/phm_graph_agent/components.py` | `0a824598216b04471afabd66d1667ce8f4f93bd0`: full B01–B06 catalog, appended active-block sentence, shared history sanitization |
-| `src/phm_graph_agent/agent.py` | `72927562b055e2cbb7141f03e0db57cec47bcb22`: ordinary phase menus and separately defined dynamic menus |
-| `src/phm_graph_agent/state.py` | `4272b5b748853009327b7c4a1208ae79714684e8`: progress precedence, recovery and sample-bound replay progression |
-| `src/phm_agent_benchmark/research/conditions.py` | `aee6e1dd1349652140294d610588c01183b70802`: four interfaces and conditional contrast definitions |
-| `src/phm_agent_benchmark/phase1/agents.py` | `86f896d69ebfbcaadbcab2d6b9b485198aaef148`: one-request decisions and allowed-tool metadata |
-| `src/phm_agent_benchmark/phase1/runtime.py` | `c005f90ab9d042fd95ae69f457083dae40ac1537`: exact feature checks, prediction references, acceptance and native grounding fields |
-| `src/phm_agent_benchmark/phase1/environment.py` | `a2e0f9547888d3377a27cbd442051a05f2aa5817`: broader adapter actions and native terminal boundaries; do not infer recovery from state logic after termination |
-| `configs/paper02_graph/indexing_first_attempt.yaml` | Authoritative configuration for this draft snapshot; smoke, not a confirmatory design |
+Tested source head: `35785d431eac21c1c8a9fbd070872a9b7b045b74`, PR #27. The two policy modules, named condition factory, network-free plan entry and sole drawing source are included. The plan entry is `configs/paper02_graph/dual_v1.yaml`; continuation is `paper/goals/P02_DUAL_GRAPH.md`. It deliberately contains a model placeholder and performs no provider request.
 
-The declared global experiment surface is the eleven Phase-1 tools listed in `paper.yaml`. Verify the actual presented and admitted names when binding the installed method; the broader adapter's `artifact.describe` and `stop` must not enter only the global arms. Do not silently expand the comparison to thirteen tools.
+The implemented Agent/Runner boundary and support replay are distinct from **accepted real-data first-attempt cohort execution**. The latter, balanced-block/indeterminate-attempt integration and the grounded cohort score remain pending in the shared Benchmark. Migration PR #20 is not accepted by this method integration. Do not run a best-available-attempt study and label it as the proposed first-attempt cohort. The historical eleven-tool surface is unchanged; `artifact.describe` and `stop` are not treatment-specific additions.
 
-Primary diagnosis uses one raw window and a fixed numerical contract. Source inspection confirms strict feature-name, raw-source and spectral-path checks; the actual set of useful alternative computations remains an empirical question. Replay's eleven successful operator-call threshold is neither eleven distinct features nor a sufficiency certificate.
+Software validation is recorded in PR #27 and the delivery receipt. Initial native tests used the real installed Benchmark and pinned data-factory dependency, not import stubs. The full research suite also exposes six errors in the unchanged analysis-applicability fixture (`input_tokens` aggregate versus canonical deltas). Focused passing tests do not imply that all repository checks passed.
 
-## Prior-art reading and source versions
+## Support, replay and unresolved outcomes
 
-The manuscript retains the existing citation keys rather than inflating its bibliography. StateFlow (arXiv:2403.11322v5, background/method and state ablations) establishes state-driven execution as prior work. TimeSage-MT (arXiv:2606.01498v1, Sections 4.1–4.4) supplies paired system comparisons and distinct outcome/capability assessments. PHMForge's accessible HTML identifies itself as arXiv:2604.01532v2; Appendix H supports the stated verification, distractor and discovery controls. This revision cites that inspected v2 rather than claiming to have reread the inaccessible v3. Standard policy-value notation follows Schulman et al. (2015). These sources support positioning; their performance values are not transferred to this PHM cohort.
+The inherited grounded endpoint remains: an accepted label with native `submission_grounding == 1` and `artifact_lineage_completeness == 1` retains its class; a resolved criterion failure maps to `no_submission`. Keep every assigned true class. Missing support information is unresolved, not an inferred zero. `supporting_reference_validity` is reported separately. Do not select a favorable prediction reference retrospectively.
 
-## Historical outputs and empirical continuation
+The graph's support predicate is stricter about recorded numerical ancestry but is not another primary scoring authority. Every condition can reconstruct its graph from the same canonical public events. Include the terminal submission when deriving the final support; the live policy object has only the prefix consumed before its final decision. Graph exports are derived views, not a seventh authoritative attempt file. A successful native prediction need not be preceded by a schema-discovery call to retain its support.
 
-The schema-version-1 manifest remains byte-for-byte at `legacy/graph_v6_manifest.yaml`, blob `9930405db6b41ce0a4a743285dc97defb696706a`. Its profiles and six original insertion-marker pairs retain their meanings. This revision does not run historical renderers or rewrite results.
+Replay uses a fresh native runtime with the original raw data and reloaded fitted assets; it never refits or substitutes cached feature values. Numeric tolerance is rtol=1e−9, atol=1e−12; class equality is exact. Public feature/prediction values and sample metadata are compared, not every hidden array. Missing sources, invalid support, failed replay and numerical disagreement need distinct outcome categories. Offline calls and cost do not become free online evidence. A replayable path establishes computational reproducibility, not causal necessity, physical correctness or language-model reasoning faithfulness.
 
-Next: E0 real waveform/assignment/native-outcome acceptance; E1 provider-free numerical headroom on reserved development data; E3 native secondary-endpoint validation; then the approved four-condition E2 pilot and E4 trace analysis. Freeze E5 before confirmatory execution. Normal PR #20 integration and rebinding to a validated Benchmark dev commit require its own acceptance gates. Do not substitute metadata readability, portable fixtures, figure rendering or this paper merge for that evidence.
+## Figures and source versions
+
+**Figure 1 — Problem formulation and observation boundaries (Section 2.3).** Shows X, Z=(o,e), τ/T, private c, Y and cohort M(D), with no controller architecture. It is needed to distinguish capability, execution and evaluation. Caption and following paragraph define the variables and their roles.
+
+**Figure 2 — Coupled decision and numerical-evidence graphs (Section 3.1).** Replaces the old pointer/menu-only overview. The upper adapted controller can cycle through recovery; the lower validated numerical paths are acyclic. One direction chooses real computations; the reverse direction supplies structural evidence state to phase/menu selection. The drawing compresses six time features and four band powers into groups; individual roles remain in the method and code. The coupled route is illustrative, not the literal state trace for all four cells. The output joins a recorded control path to its selected numerical support.
+
+Sole source: Benchmark `scripts/figures/plot_phmgraph_formulation_method.py`. Both SVGs retain editable text and separate object groups, with no embedded raster image or external font. PDF/PNG were generated from that same source and visually inspected. No third figure or runtime code was added to this paper repository.
+
+## Prior-work reading and review uptake
+
+- PROV-DM: official W3C Recommendation, 30 April 2013, entity/activity and use/generation definitions. Foundation, not new graph theory.
+- StateFlow: arXiv 2403.11322v5, state organization and reported ablations inspected. Outer-control prior.
+- PHMForge: accessible arXiv HTML 2604.01532v2, industrial tool controls inspected; no claim of reading a different version.
+- TimeSage-MT: arXiv HTML 2606.01498v1, system comparison and grounding/flexibility framing inspected.
+- MAP-Graph: arXiv 2608.10509, **author abstract inspected; full text was unavailable**. Its stated typed execution graph, ancestry and action gate already preclude a first-provenance-in-control claim. Detailed algorithm equivalence and ablation comparison remain to be checked from full text. No performance figures are transferred to PHMGraph.
+
+The new review's dual-graph and online-coupling request is adopted. Two proposed interpretations are corrected rather than copied: replay is computational support, not complete diagnostic explanation; deleting or randomizing edges changes information and is not a lossless flat-evidence control. General Bellman accounting is removed from the active theoretical chain because it does not determine this mechanism.
+
+## Historical preservation
+
+`legacy/indexing_v1_manifest.yaml` and `legacy/indexing_v1_experiment_matrix.md` preserve the preceding active specification byte-for-byte. Its source remains `8206cfef540d5f602adba482e9dcc0ebd6b0f437`; neither those cells nor their first-attempt rules become dual-v1 results. `legacy/graph_v6_manifest.yaml` and six original insertion-marker pairs retain their meanings. No historical result record is rewritten.

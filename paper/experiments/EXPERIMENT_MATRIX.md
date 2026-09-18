@@ -1,73 +1,69 @@
-# PHMGraph: sequential simple effects and evidence requirements
+# PHMGraph dual-v1 experiment specification
 
-Implementation, canonical records, fitting, scoring and analysis belong to `liq22/phm-agent-benchmark`. This file specifies the experiment; it is not another runner or result authority. The inspected snapshot is `8206cfef540d5f602adba482e9dcc0ebd6b0f437` in Draft PR #20. Its active entry is `configs/paper02_graph/indexing_first_attempt.yaml`, with `paper/goals/P02_MATCHED_CONTROL.md`. Do not substitute the older dev `indexing.yaml` or legacy best-available-outcome profiles.
+This is the scientific specification, not an execution configuration. All runners, data, fitting, evaluation and derived graph/replay outputs belong to Benchmark. Active method: `45704762bd2e3ee7f8d0da4c037e67a575779703`; network-free plan: `configs/paper02_graph/dual_v1.yaml`; execution continuation: `paper/goals/P02_DUAL_GRAPH.md`.
 
-## 1. Fixed conditions and assigned interfaces
+## 1. One new treatment family
 
-Hold the task, raw window/channel/sample-rate scope, label ontology, procedural B01–B06 catalog, numerical input contract, fitted model assets, language-model route/settings and budget caps fixed. Match asset-level data/fitting assignments, not merely filenames or model IDs. Realized computations, prompt length, usage and errors may differ as consequences of the intervention.
+Fix the admitted raw window, sample rate and channels; class ontology; common B01–B06 catalog; native numerical input contract; fitted experts; language model and generation settings; resource caps and evaluator. All arms retain complete public tool histories and build the same hidden execution graph. Realized tool calls, prompt length, errors and resource use may differ.
 
-| Cell | Name | Full catalog | Correct active-block sentence | Visible tools | Admitted tool names |
-|---|---|---|---|---|---|
-| 00 | catalog-global | common | absent | global eleven-tool surface | same global surface |
-| 10 | indexed-global | common | present | global eleven-tool surface | same global surface |
-| 01 | catalog-masked | common | absent | progress subset | same progress subset |
-| 11 | indexed-masked | common | present | progress subset | same progress subset |
+| Cell | Native name | Outer organization | Active evidence feedback | Numerical record |
+|---|---|---:|---:|---|
+| 00 | dual-v1-00 | off | off | shared hidden recorder |
+| 10 | dual-v1-10 | on | off | shared hidden recorder |
+| 01 | dual-v1-01 | off | on | shared hidden recorder |
+| 11 | dual-v1-11 | on | on | shared hidden recorder |
 
-Primary comparisons: **10−00 at g=0**, then **11−10 at i=1**. The first estimates appending the correct sentence, including salience/token changes, not correctness versus a sham pointer. The second estimates the bundle of exposure, admission and associated resource/trajectory changes, not a pure executor effect. Other simple effects and interaction are exploratory. No additional placebo or exposure-only arm is added in this revision.
+Outer organization includes the existing active-block pointer and phase menu. Feedback adds a graph-derived frontier, structural prediction/submission prerequisites and, with outer organization, evidence-conditioned phases. Supported prediction permits submission without mandatory closure of analysis. This is a defined feedback bundle, not a pure graph-topology intervention. `dual-v1-01` still has evidence admission; “outer off” does not mean no constraints.
 
-The exact active surface is in `paper.yaml`. The canonical adapter's two extra actions are not part of these eleven. Verify actual schemas and admission metadata, not just `STATE_TOOLS` or a declared count, before accepting installed-method equivalence.
+Principal diagnosis contrast: **11−10**. Secondary simple effects: **10−00**, **01−00**; interaction: **11−10−01+00** on the stated outcome scale. An interaction need not identify a unique physical or algorithmic coupling mechanism. Grouped/flat comparison: **dual-v1-11 minus dual-v1-flat11**. The flat arm preserves every frontier value and dependency binding in relational rows and uses the identical control rule. Token lengths are observed, not declared matched. This separates feedback presentation; it does not remove provenance processing. Corrupted edges are a separate intervention on a copied graph.
 
-## 2. Primary and grounded outcomes
+The earlier pointer/gate study is preserved at `legacy/indexing_v1_experiment_matrix.md` and remains an outer-interface ablation. New four-cell outcomes are not pooled with or substituted into the old protocol. Its two-contrast inference allocation does not apply to this family.
 
-The primary operational score is unchanged: pooled three-class Macro-F1 over all assigned resolved first-attempt outcomes. A canonical non-submission contributes FN to its true class; it is not averaged as a fourth class. Indeterminate attempts remain unresolved and are never silently resent, dropped or replaced.
+## 2. Endpoints on the same first-attempt cohort
 
-The prospective secondary score uses the same cohort, class set, canonical attempts and native scorer after applying this fixed label mapping:
+**Primary:** pooled three-class operational Macro-F1 over assigned resolved first attempts. A canonical non-submission contributes FN to its true class and is not a fourth averaged class. An indeterminate attempt remains unresolved, not dropped, retried automatically or converted to a score.
 
-| Native first-attempt record | Operational scored label | Grounded scored label |
-|---|---|---|
-| Accepted; `submission_grounding == 1` and `artifact_lineage_completeness == 1` | accepted label | same label |
-| Accepted; both native flags are resolved and at least one is 0 | accepted label | `no_submission` |
-| Resolved terminal non-submission | `no_submission` | `no_submission` |
-| Accepted; required support fields missing, malformed or unresolved | accepted label, if otherwise complete | unresolved; no inferred zero |
-| Indeterminate attempt | unresolved | unresolved |
+**Grounded secondary:** retain an accepted class only when its native task-matched prediction agreement and required-feature-reference completeness both equal numeric 1. Otherwise, a resolved failure maps to `no_submission`. Missing or malformed support fields leave only the secondary mapping unresolved when the operational record is otherwise complete. Do not infer support from prose, cohort-average flags or a retrospective best prediction. The native selected-reference rule and primary acceptance/scoring remain unchanged.
 
-Use per-attempt native submission output and its selected prediction reference; never cohort-averaged flags, prose claims or a retrospective best-matching prediction. Native values are numeric indicators, not arbitrary truthy strings. Agreement and inclusion of required feature references do not certify correct physical diagnosis or validity of every extra reference. Report `supporting_reference_validity` separately; it does not silently alter the fixed secondary criterion.
+**Computational support:** use role-bound raw-to-prediction ancestry and the final submission's selected prediction. Report required-role coverage, valid support paths, and submitted-support validity with explicit eligibility and cohort denominators. Extra references do not imply numerical dependence. The graph predicate does not replace native grounded scoring.
 
-The secondary mapping is **defined here but not yet validated as a Benchmark cohort endpoint**. Required native validation covers a correctly supported label, a supported wrong label, a correct unsupported accepted label, missing feature support, a terminal non-submission and unresolved support/attempt records. Validate without changing submission acceptance, the primary scorer, historical records or attempt selection. A paper-local scorer or fabricated real-data example is not acceptable evidence.
+**Replay:** report eligible, attempted, matched, mismatched, failed and unresolved counts. For a supported prediction, rerun its numerical ancestors through fresh native tools with the same data and fitted model assets; remap references. Class equality is exact; numeric rtol=1e−9, atol=1e−12. Do not report only successful replay cases. Feature and prediction agreement is computational reproducibility, not physical explanation or causal feature necessity. Record offline replay cost separately from online costs.
 
-The two primary contrasts retain their nominal 97.5% paired percentile intervals. Secondary estimates do not inherit that multiplicity allocation. Report both endpoints and their uncertainty. A gain in grounded Macro-F1 can support improved contract-grounded delivery even if operational Macro-F1 is unchanged; it cannot be relabelled as an overall operational gain. A rise in grounding rate alone is not a diagnosis-accuracy result. Do not infer equivalence from a nonsignificant pilot.
+**Cost and failure:** tool calls, model calls, token use, elapsed time and interruptions retain native definitions. Missing provider usage is not zero. Feedback computation itself must be included in measured end-to-end time. Track premature submission, repeated features, recovery and optional continuation as descriptive process variables, not mediation estimates.
 
-## 3. Minimal experiment sequence
+## 3. Minimal sufficient experiments
 
-| Stage | Required work in Benchmark | Result it can establish |
-|---|---|---|
-| E0: real-data mechanics | Verify metadata–HDF5/sample-rate/window correspondence; disjoint fitting/evaluation assets; identical Scripted/four-cell resolved assignments and reloaded fitted assets; one native Scripted episode, canonical bundle and metric recomputation | The installed task and numerical path execute on admitted real data, not treatment efficacy |
-| E1: provider-free numerical headroom | On reserved development bearings, obtain the existing diagnosis experts' legal predictions, label disagreements, resolved output differences and resource-feasible second-prediction witnesses | Whether the audited numerical alternatives can change a supported label |
-| E2: paired pilot | Run the four original cells in independent sessions with the fixed balanced first-attempt assignments and complete-block reserve | Executability, trajectory variation and mechanism frequency; not stable population effects |
-| E3: endpoint audit | Validate the above secondary mapping in the shared parser/scorer before inspecting treatment outcomes; report both matrices, submissions, grounding and failures on the same cohort | Distinguish correct label delivery from contract-grounded delivery |
-| E4: mechanism observations | Link prediction, feasible opportunity, selected continuation, numerical change, supported label change and evaluated correctness | Descriptive evidence compatible with the proposed control mechanism |
-| E5: confirmatory freeze | Fix cohort/class composition, window scope, repeats, order, exact provider/model/settings, native timeouts/failures, budgets, endpoints, inference families and bootstrap count | A prospectively specified confirmatory comparison |
+| Stage | Question / intervention | Smallest native evidence | Current status |
+|---|---|---|---|
+| D0: real-data and cohort binding | Are all arms solving the same admitted task with the same fitted capability? | Metadata–HDF5/window/rate alignment; split/fit integrity; reloaded assets; Scripted native outcome; accepted shared first-attempt bundle | Real-waveform and new-cohort acceptance pending |
+| D1: numerical opportunity | Does the existing pool contain legal, affordable alternatives? | Per-development-sample expert predictions and disagreements; verified second-prediction path plus final-submission reserve | Real-data headroom pending |
+| D2: outer × feedback | Does active evidence feedback change delivered diagnosis with outer organization? | Four independent sessions per matched unit; 11−10 primary, other effects secondary; failures retained | Native deterministic-fixture mechanics passed; real provider effects pending |
+| D3: support and replay | Are recorded dependencies actually used and reproducible? | Complete final trace; support extraction; fresh-native replay; wrong-sample, missing/rewired edge, altered-value and renamed-reference cases | Synthetic/native mechanics passed; real cohort rates pending |
+| D4: lossless flat feedback | Does grouped presentation matter beyond identical relation information and control? | Exact frontier↔row reconstruction; equal menus; coupled/flat provider comparison | Losslessness/menu equality passed; provider comparison pending |
+| D5: confirmatory freeze | What precision and comparison family will the study support? | Frozen cohort/repeats, exact model/route/order, budgets/timeouts, metrics, resampling and multiplicity rule | Not frozen; smoke is not a sample-size justification |
 
-Execution order is E0 → E1 and native E3 preparation → E2/E4 → E5. E3 defines and validates measurement before treatment outcomes are inspected; its result report accompanies E2. E1 uses no LLM provider. Data-independent native parser checks can proceed while E0 is blocked, but cannot be called real-data acceptance. Do not expand the operator/expert pool to manufacture positive headroom.
+Proceed D0 → D1 and shared endpoint preparation → D2/D3/D4 → D5. Data-independent mechanics can proceed while D0 is blocked but cannot substitute for real-waveform acceptance. Provider access is not needed for D1. Do not fit another model or add a GNN simply to make a graph branch useful.
 
-## 4. Numerical opportunity: what E1 must distinguish
+## 4. Mechanism tests and counterexamples
 
-The diagnosis pool uses the existing nearest-centroid, ridge one-versus-rest and k-nearest-neighbour experts with their shared fitted assets. Use the exact native schema and input validator. Six time-domain features and four prescribed Welch-derived band powers are required from the same raw window; additional callable operators do not automatically create accepted model inputs.
+Construct evidence only from successful native executions; failed calls retain their errors but generate no numerical entity. A duplicate reference must not overwrite an earlier entity. Input producers precede consumers. A missing or rewired input-role edge must invalidate that numerical support even when node values are unchanged. The online controller must react to a broken required path rather than merely change a retrospective illustration.
 
-For a prespecified development cohort, retain each expert's prediction and any contract failure. Report pairwise disagreement with explicit denominators and do not hide missing predictions. Distinguish a different score vector from a different class. A best-available-expert correctness calculation may quantify oracle headroom within this audited pool relative to the declared reference expert; it must not select test-time models, gates or samples. Development and final evaluation bearings remain disjoint.
+Repeated execution of one feature must not fill other required roles. Windows and predictions must match the current task. A successful native prediction retains its recorded support even without a preceding schema-discovery call. Schema-dependent structural readiness is a different predicate from post-success support; neither duplicates the native numerical validator.
 
-For each audited first-prediction context, record the shortest validated continuation to a different legal prediction, its required feature/model references and its incremental calls. Include the reserve needed for final submission. Respect tool, model-call, turn and token caps; where provider-free checks cannot certify a resource limit, mark feasibility unresolved rather than absent. Do not infer agent feasibility from tool-call counts alone or claim measured latency without provider execution.
+An eligible prediction must permit submission and leave ordinary analysis available in the coupled condition. Native terminal failures cannot be reopened. Observed prediction disagreement is disclosed, not automatically adjudicated. The deterministic fixture's identical delivered labels across arms establish wiring, not LLM equivalence or useful PHM headroom.
 
-A reread with a new identifier but identical array is not new raw information. An operator output that the predictor rejects is only an artifact-level opportunity. A legal second prediction with the same label does not establish label-changing headroom. Zero observed disagreement constrains only the audited contract, pool and development support, not every possible PHM analysis.
+Edge corruption changes recorded relation information and therefore tests dependence on those edges. Lossless flat feedback preserves information and tests presentation. A numerical feature intervention would instead test model sensitivity, but it must be legal under the declared data/model contract and cannot be interpreted as physical causality without additional assumptions. No feature-importance result is claimed from invalid input rejection.
 
-## 5. Trace measurements and denominators
+## 5. Real-data and inference freeze
 
-For each assigned attempt, retain whether it reached prediction, whether a budget-feasible legal alternative was established at that context, whether continuation was selected, whether resolved numerical output changed, whether the supported submitted label changed, and whether correctness changed. Include early submission attempts and nonterminal recovery paths. The ordinary closure statement excludes error paths; a native terminal failure cannot subsequently recover.
+Use a reserved development split for expert disagreement and feasibility. Do not select final evaluation episodes because they exhibit favorable disagreement, corruption or recoverability. Describe zero or low headroom on the audited support. Do not treat raw rereads or new artifact IDs as independent observations. Include the resource reserve for a final submission; unresolved token/latency feasibility remains unresolved.
 
-Report counts over all assigned attempts, plus explicitly named at-risk denominators for conditional rates. Distinguish false, inapplicable and unresolved events. No prediction is not proof of zero available expert disagreement; no selected continuation is not proof that none was feasible. Feasibility and subsequent execution must use the same raw scope and fitted assets. Trace stages are not causal mediation estimates and are not multiplied into a purported Macro-F1 decomposition.
+Before model-provider execution, bind the new names to the shared canonical **first-attempt** path and verify that final public events reconstruct the same graph used online. Keep one fitted numerical reference per matched assignment, independent sessions, complete balanced blocks, exact request times and resume gaps. A changed provider route or model identity requires a new study root. Never reuse best-available-attempt output under a first-attempt name.
 
-## 6. Freeze and interpretation
+For confirmatory inference, fix a paired bearing-level resampling scheme, repeat count, precision target and endpoint/contrast family. Numerical values of the familywise allocation must be settled before confirmatory outcome inspection; no existing allocation is silently borrowed. Pilot results establish variability and event incidence, not which favorable hypotheses to retain.
 
-The current single-seed/single-rotation smoke entry does not define a confirmatory sample size. Use pilot variability and event occurrence to plan a stated precision target, not pilot significance to decide whether to continue. Freeze exact model identifiers, provider route, temperature/top-p/seed, budgets, timeout handling and condition order. Keep absolute request times, complete-block identities and resumed gaps; balanced position does not remove provider drift. A route/model change creates a new study root.
+## 6. Implementation and result authority
 
-Only complete, compatible native evidence can support a performance claim. Retain adverse findings, unsupported correct guesses, supported mistakes and inactive observed restrictions. Do not merge migration PR #20 until its own real-data and equivalence requirements pass; after normal integration, update the paper's binding to the accepted Benchmark dev commit and keep one authoritative current configuration.
+The graph/online-feedback policy and a root `plan` command are implemented. Shared first-attempt cohort integration, real-data admission and grounded cohort mapping are not accepted merely because these software tests pass. The broader repository still has six unchanged applicability-fixture usage errors; preserve their logs and do not remove accounting validation.
+
+Migration PR #20 retains its separate acceptance conditions. The new policy does not authorize deleting historical paper-repository code or changing the Benchmark runner, evaluator, data protocol, fitted experts or old results. Graph exports are reproducible views of the authoritative six-file native attempt, not a second result ledger.

@@ -1,82 +1,74 @@
-schema_version: 2
+schema_version: 3
 paper_id: phmgraph
-title: "PHMGraph: Separating Instruction Indexing from Workflow Gating in Tool-Using PHM Agents"
+title: 'PHMGraph: Coupling Agent Decisions with Executed Diagnostic Evidence'
 manuscript: draft/main.md
+bibliography: refs/phmgraph_review_2026.bib
 implementation_owner: liq22/phm-agent-benchmark
-implementation_snapshot: 8206cfef540d5f602adba482e9dcc0ebd6b0f437
-implementation_status: inspected_unmerged_draft_pr20_not_runtime_acceptance
+implementation_snapshot: 45704762bd2e3ee7f8d0da4c037e67a575779703
+implementation_tested_head: 35785d431eac21c1c8a9fbd070872a9b7b045b74
+implementation_pr: 27
+implementation_status: merged_method_with_native_fixture_validation_not_real_data_acceptance
 implementation_binding: FORMULATION_METHOD_MAP.md
-protocol_config: configs/paper02_graph/indexing_first_attempt.yaml
-protocol_stage: smoke_not_confirmatory
-source_goal: paper/goals/P02_MATCHED_CONTROL.md
 experiment_specification: experiments/EXPERIMENT_MATRIX.md
-treatment:
-  instruction_content: shared_B01_B06_catalog
-  explicit_index: [false, true]
-  tool_mask: [false, true]
-  pointer_intervention: appended_correct_active_block_sentence_including_token_and_salience_change
-  gate_intervention: joint_progress_dependent_schema_exposure_and_name_admission
-  primary_contrast_type: sequential_simple_effects_not_averaged_main_effects
-  primary_contrasts:
-    - { name: indexing_unmasked, treatment: indexed-global, control: catalog-global, fixed_gate: false }
-    - { name: masking_indexed, treatment: indexed-masked, control: indexed-global, fixed_index: true }
-  interpretation: pointer_at_global_tools_then_compound_gate_with_pointer_present
-  other_simple_effects_and_interaction: exploratory
+protocol_family: graph-dual-v1
+protocol_config: configs/paper02_graph/dual_v1.yaml
+protocol_stage: plan_only_smoke
+source_goal: paper/goals/P02_DUAL_GRAPH.md
+canonical_first_attempt_cohort: pending_shared_path_acceptance
+real_phm_effects: unestimated
+factors:
+  outer: common_catalog_pointer_and_phase_menu
+  feedback: structural_frontier_plus_readiness_admission_and_evidence_conditioned_routing
+  hidden_provenance: recorded_in_all_cells_from_public_native_events
+  cells: [dual-v1-00, dual-v1-10, dual-v1-01, dual-v1-11]
+  primary_contrast: dual-v1-11_minus_dual-v1-10
+  secondary_contrasts: [outer_at_feedback_0, feedback_at_outer_0, outcome_scale_interaction]
+  historical_all_experiment: unchanged_diagnosis_only_cells_are_opt_in
+flat_control:
+  condition: dual-v1-flat11
+  design: lossless_relational_rows_same_frontier_and_controller
+  interpretation: presentation_not_removal_of_relation_information
+  corrupted_edges: separate_negative_control_not_content_matched
 active_tool_surface:
   mode: core_phase1_11
-  names:
-    - data.search
-    - data.describe
-    - data.read_window
-    - data.summarize
-    - op.list
-    - op.schema
-    - op.run
-    - model.list
-    - model.schema
-    - model.predict
-    - submit
+  names: [data.search, data.describe, data.read_window, data.summarize, op.list, op.schema, op.run, model.list, model.schema, model.predict, submit]
   excluded_adapter_actions: [artifact.describe, stop]
-  acceptance_check: actual_presented_and_admitted_names_match_this_surface_and_phase_menus
 primary:
   task: diagnosis
   metric: pooled_three_class_macro_f1
-  meaning: operational_accepted_label_delivery_not_necessarily_numerically_supported
   outcome_selection: assigned_first_attempt
   non_submission: false_negative_for_true_class_not_a_fourth_class
-  indeterminate_attempt: unresolved_no_automatic_resend_no_fabricated_score
+  indeterminate: unresolved_no_automatic_resend
 secondary:
-  task: replay
-  metric: average_precision
-  scope: unchanged_assigned_windows
-  grounded_diagnosis:
-    metric: pooled_three_class_macro_f1_after_grounded_label_mapping
-    role: prospective_secondary_not_replacement_primary
-    status: specified_pending_native_cohort_implementation_and_validation
-    positive_criterion:
-      accepted: true
-      submission_grounding: 1
-      artifact_lineage_completeness: 1
-    known_criterion_failure: map_scored_label_to_no_submission_keep_assigned_episode_and_true_class
-    missing_support_fields_in_accepted_outcome: secondary_unresolved_not_inferred_zero
-    native_selected_prediction: do_not_replace_with_retrospective_best_reference
-    extra_reference_validity: reported_separately_not_added_to_criterion
-    primary_scoring_and_history: unchanged
-    inference: secondary_estimates_no_inherited_primary_family_error_allocation
-numerical_opportunity:
-  audit_data: reserved_development_bearings_disjoint_from_final_evaluation
-  capability: existing_fitted_experts_and_native_feature_contract_only
-  required_observations: [prediction, feasible_continuation, selected_continuation, numerical_change, supported_label_change, correctness_change]
-  oracle_headroom: descriptive_audited_pool_only_never_agent_visible
-  feasibility_unknown: unresolved_not_absent
-  real_data_status: unestimated
-uncertainty:
+  grounded_score: same_cohort_label_mapping_using_native_agreement_and_required_feature_support
+  grounded_cohort_implementation: pending_shared_scorer_validation
+  missing_support_fields: unresolved_not_inferred_zero
+  provenance: input_role_support_and_native_selected_submission_prediction
+  replay: fresh_native_numerics_same_data_and_fitted_assets
+  replay_rtol: 1.0e-9
+  replay_atol: 1.0e-12
+  replay_class_match: exact
+  replay_cost: evaluator_side_reported_separately_never_free_online_evidence
+  physical_or_causal_explanation: not_established_by_replay
+inference:
   unit: bearing
-  design: paired_true_class_stratified_bearing_bootstrap
-  contrast_intervals: nominal_97_5_percentile
-  family: two_prespecified_operational_diagnosis_contrasts
-  caveat: conditional_on_assigned_cohort_not_exact_small_sample_coverage
+  pairing: matched_assignments_independent_sessions
+  confirmatory_cohort_and_repeats: pending_freeze
+  multiplicity: new_family_requires_own_rule_no_inherited_indexing_allocation
+validation:
+  focused_workflow: 35354189769
+  focused_tests_passed: 36
+  broad_workflow: 35354189755
+  broad_tests_run: 208
+  broad_tests_passed: 202
+  broad_errors: 6
+  broad_error_scope: unchanged_analysis_applicability_fixture_input_token_deltas
+  evidence_type: existing_synthetic_fixture_native_software_mechanics_not_phm_performance
 figures:
-  - { id: 1, role: problem_formulation, path: assets/figures/phmgraph_problem_formulation.svg }
-  - { id: 2, role: method_overview, path: assets/figures/phmgraph_method_overview.svg }
-legacy_manifest: legacy/graph_v6_manifest.yaml
+  - {id: 1, role: problem_formulation, path: assets/figures/phmgraph_problem_formulation.svg}
+  - {id: 2, role: dual_graph_overview, path: assets/figures/phmgraph_method_overview.svg}
+legacy:
+  indexing_manifest: legacy/indexing_v1_manifest.yaml
+  indexing_experiments: legacy/indexing_v1_experiment_matrix.md
+  earlier_manifest: legacy/graph_v6_manifest.yaml
+  outcomes_and_insertion_markers: preserved_no_relabelling

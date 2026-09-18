@@ -3,11 +3,11 @@ bibliography: ../refs/phmgraph_review_2026.bib
 link-citations: true
 ---
 
-# PHMGraph: Separating Instruction Indexing from Workflow Gating in Tool-Using PHM Agents
+# PHMGraph: Coupling Agent Decisions with Executed Diagnostic Evidence
 
 ## Abstract
 
-A prognostics and health management (PHM) agent must turn available numerical capabilities into a delivered diagnosis. PHMGraph studies two control interventions under a common procedural catalog, released data scope, fitted expert pool, language model and evaluator: appending a correct active-block pointer, and jointly gating tool-schema exposure and executable tool names by public progress. Four conditions support two prespecified sequential simple effects: the pointer with global tools, and the additional gate with the pointer present. We distinguish correct label delivery from delivery supported by a task-matched numerical prediction and its required feature references. Pooled first-attempt diagnosis Macro-F1 remains primary; a prospectively specified grounded counterpart measures the latter outcome on the same cohort. The method also exposes a testable boundary: after successful prediction, the ordinary gated path permits submission but no further analysis. A diagnostic-opportunity interpretation requires a budget-feasible continuation that can change the supported prediction, rather than merely produce another artifact. Paired PHM effects remain unestimated; the present contribution is the executable comparison and its task-specific measurement design.
+A tool-using prognostics and health management (PHM) agent must connect decisions about computation to the numerical evidence supporting its diagnosis. Workflow progress alone does not identify complete model inputs, and a provenance record used only after execution cannot affect those decisions. PHMGraph couples an outer decision controller to an inner typed graph of executed numerical dependencies. The graph derives sample-bound feature readiness and supported-prediction availability, which condition phase selection and tool admission while preserving native numerical validation. An eligible prediction permits submission without forcing post-prediction closure. A new outer-organization-by-evidence-feedback design holds potential numerical capability fixed; a lossless flat-feedback control separates presentation from relation information. Selected-path replay and edge-corruption checks assess computational support alongside operational and grounded diagnosis. The mechanism is implemented and tested on the shared native numerical fixture. Its real-data diagnostic effects, prediction-changing headroom and provider costs remain unestimated.
 
 ## 1. Introduction
 
@@ -15,20 +15,17 @@ Reliable equipment diagnosis requires both a useful numerical method and a proce
 
 Language-model agents offer a way to coordinate these decisions without replacing every numerical component. Coscientist and ChemCrow couple language reasoning with scientific tools [@boiko2023; @bran2024], while ReAct interleaves reasoning with environmental actions and Toolformer learns tool use from API-augmented examples [@yao2023react; @schick2023toolformer]. For PHM, this suggests an architecture in which signal analysis and prediction remain executable numerical operations, while the agent organizes their use. The resulting scientific question concerns the relation between available capability, its actual execution and the final diagnosis—not merely whether an agent can produce an intelligible report.
 
-Explicit workflows are an established response to this coordination problem. StateFlow uses state-dependent instructions and transitions, and evaluates refined reactive prompting and state-removal variants [@wu2024stateflow]. PHMForge studies industrial tool orchestration, including verification, distractor-tool and discovery controls [@li2026phmforge]. TimeSage-MT compares code-enabled, skill-guided and orchestrated time-series systems and reports a grounding–flexibility trade-off [@kong2026timesagemt]. These results motivate a more specific question: **with the same PHM procedures and numerical capabilities available, what changes when an agent is told which instruction is active, and what changes when the workflow additionally gates tool exposure and admission?**
+Explicit workflows are an established response to this coordination problem. StateFlow uses state-dependent instructions and transitions, and evaluates refined reactive prompting and state-removal variants [@wu2024stateflow]. PHMForge studies industrial tool orchestration, including verification, distractor-tool and discovery controls [@li2026phmforge]. TimeSage-MT compares code-enabled, skill-guided and orchestrated time-series systems and reports a grounding–flexibility trade-off [@kong2026timesagemt]. These results motivate a more specific question: **with the same PHM procedures and numerical capabilities available, how should execution evidence condition an agent’s next computation and submission, and when does that coupling change the delivered diagnosis?**
 
-These are different interventions. An active-instruction pointer locates an existing procedure within a shared catalog. A progress gate jointly changes which tool schemas are shown and which tool names are admitted. The latter can suppress an early answer that has no numerical prediction behind it, yet also prevent further analysis once a prediction exists. Procedural progress and diagnostic sufficiency are different: executing a predictor does not establish that its label is correct or that every useful computation has been exhausted. Conversely, a removed action matters to the observed task only when the unrestricted agent would select it and its consequences affect the delivered result.
+A workflow and a numerical evidence path answer different questions. The workflow specifies which computation to request next; the evidence path records how the released measurement was transformed into a prediction. A successful-call flag cannot determine whether distinct model input roles have been filled, and a prediction flag does not establish the numerical support of a later submission. A provenance graph that is produced only after the episode cannot change those decisions.
 
+We study an explicit coupling of these two objects. The inner graph records typed, role-bound dependencies from actual numerical executions. Its current-task frontier informs outer progress and prediction/submission eligibility. The same fitted experts, procedural catalog and numerical validators are shared across conditions. A supported prediction permits submission without necessarily closing further analysis; this separates evidence readiness from an assumption of diagnostic sufficiency.
 
-Three challenges follow. First, instruction content and instruction selection must be separated: adding a better procedure only to the graph agent would mix control with domain knowledge. Second, restrictions must be described through the actions they remove, rather than through state names or tool counts. A prediction-ready state need not verify a prediction, and fewer visible tools can encode progress as well as reduce choice. Third, the comparison must retain failures to deliver an answer. Evaluating only successful submissions selects a treatment-dependent subset and can conceal an operationally important effect.
+Three contributions define the study:
 
-We address these challenges with PHMGraph. A public-history controller computes analysis progress and independently exposes an opaque instruction-block index and a progress-dependent tool menu. Every condition receives the same complete procedural catalog. A paired four-condition design measures two sequential simple effects: appending the correct pointer under global tools, then adding the exposure-and-admission gate with the pointer present. The analysis connects these comparisons to the opportunities that the implemented controller permits or excludes.
-
-The contributions are threefold:
-
-1. **A content-matched PHM control comparison.** Two independently configurable interventions act on the same procedural catalog: an appended active-block pointer and progress-gated tool exposure and admission. Their specified comparisons distinguish interface changes without attributing them to new diagnostic knowledge or pure graph topology.
-2. **A task-specific characterization of execution opportunities.** We derive prediction-before-submission and post-prediction closure on the supported ordinary path, and connect them to legal numerical continuations. This separates nominally available analyses from continuations capable of changing a contract-grounded diagnosis.
-3. **A first-attempt evaluation design separating delivery from numerical support.** The original operational endpoint is retained alongside a prospective grounded endpoint, with paired bearing-level comparisons and trajectory measurements of mechanism activation. Neither procedural compliance nor unmeasured headroom is treated as evidence of diagnostic improvement.
+1. **A coupled decision–evidence formulation for PHM.** It distinguishes procedural organization from the numerical path that supports a delivered label, with matched potential capability and evaluator-only targets.
+2. **A sample-bound prerequisite-feedback mechanism.** Executed input-role dependencies determine structural feature readiness and supported-prediction availability. These conditions affect the outer phase and tool menu rather than serving only as a retrospective visualization.
+3. **A falsifiable computational-support evaluation.** Native support replay, edge corruption and lossless flat feedback complement first-attempt diagnosis outcomes. They separate execution reproducibility from correctness and physical explanation; real-data effects remain to be measured.
 
 ### 1.1 Related work and positioning
 
@@ -36,245 +33,229 @@ The contributions are threefold:
 
 **Tools and reusable experience.** Toolformer learns API use, ToolLLM combines training, tool retrieval and tool-use paths, and Gorilla studies API generation with retrieved documentation [@schick2023toolformer; @qin2023toolllm; @patil2023gorilla]. Scientific systems such as Coscientist and ChemCrow coordinate domain-specific computations [@boiko2023; @bran2024]. ReAct organizes actions through interaction history; Reflexion adds feedback across attempts; Agent Workflow Memory induces reusable routines from experience [@yao2023react; @shinn2023reflexion; @wang2024awm]. The PHM comparison here adds neither tool training nor treatment-only knowledge or experience.
 
-**Structured reasoning and workflows.** Finite controllers and reward machines provide established representations of policy or task structure [@hansen1997; @icarte2018]. StateFlow implements state-dependent instructions, execution and transitions, while StateAct combines goal prompting and state tracking [@wu2024stateflow; @rozanov2025stateact]. Tree of Thoughts and Graph of Thoughts organize alternative reasoning continuations and their dependencies [@yao2023tot; @besta2024got]. Language Agent Tree Search uses search and environment feedback, AFlow optimizes code-represented workflows, and AutoGen supports configurable multi-agent conversations [@zhou2024lats; @zhang2025aflow; @wu2023autogen]. PHMGraph instead studies two interface interventions around one fixed public-history controller and one underlying agent.
+**Structured reasoning and workflows.** Finite controllers and reward machines provide established representations of policy or task structure [@hansen1997; @icarte2018]. StateFlow implements state-dependent instructions, execution and transitions, while StateAct combines goal prompting and state tracking [@wu2024stateflow; @rozanov2025stateact]. Tree of Thoughts and Graph of Thoughts organize alternative reasoning continuations and their dependencies [@yao2023tot; @besta2024got]. Language Agent Tree Search uses search and environment feedback, AFlow optimizes code-represented workflows, and AutoGen supports configurable multi-agent conversations [@zhou2024lats; @zhang2025aflow; @wu2023autogen]. PHMGraph instead studies evidence-conditioned control around one underlying agent and a fixed numerical tool pool.
 
-**Industrial and time-series agents.** ReActXen adds review and reflection for industrial data access, CodeReAct embeds executable-code reasoning in asset-management workflows, and SPIRAL combines planning, simulation and criticism within tree search [@rayfield2025reactiot; @zhou2026codereact; @zhang2026spiral]. TimeART trains tool-augmented time-series reasoning [@wu2026timeart]. PHMForge's industrial tool controls and TimeSage-MT's paired system comparisons are especially relevant: they already examine orchestration and the trade-off between structured grounding and flexibility [@li2026phmforge; @kong2026timesagemt]. The present question concerns the two specified PHM interfaces under a common catalog and numerical contract, not the first use of workflow control.
+**Industrial and time-series agents.** ReActXen adds review and reflection for industrial data access, CodeReAct embeds executable-code reasoning in asset-management workflows, and SPIRAL combines planning, simulation and criticism within tree search [@rayfield2025reactiot; @zhou2026codereact; @zhang2026spiral]. TimeART trains tool-augmented time-series reasoning [@wu2026timeart]. PHMForge's industrial tool controls and TimeSage-MT's paired system comparisons are especially relevant: they already examine orchestration and the trade-off between structured grounding and flexibility [@li2026phmforge; @kong2026timesagemt]. The present question concerns numerical dependency feedback under a common PHM catalog and feature contract, not the first use of workflow control.
 
 **Outcome evaluation.** AgentBench, GAIA and WebArena assess interactive or functional task completion, while tau-bench additionally emphasizes consistency in tool–agent–user interaction [@liu2023agentbench; @mialon2023gaia; @zhou2024webarena; @yao2024tau]. Statistical comparison requires explicit experimental units and uncertainty rather than isolated point estimates [@demsar2006; @agarwal2021]. These foundations support a paired, bearing-level diagnostic comparison; neither a valid tool call nor a valid transition substitutes for the final diagnosis.
 
+
+**Provenance and action control.** PROV-DM establishes entity/activity provenance relations [@moreau2013prov]. MAP-Graph reports ancestry-aware memory handling and action gating [@wang2026mapgraph]. These precedents rule out treating typed provenance or its use in control as standalone novelty. The distinguishing object here is the implemented PHM numerical prerequisite, its coupling to continuation/submission, and the resulting task-specific evidence.
+
 ## 2. Basic Theory and Problem Formulation
 
-### 2.1 Problem setting
+### 2.1 Tool-using PHM diagnosis
 
-We consider an agent that diagnoses a bearing from a released vibration measurement. An episode begins with a task description and public data handles. Available actions provide bounded signal access, numerical-method inspection, feature computation, fitted prediction and diagnosis submission. The output is a submitted label from three declared fault classes or a terminal outcome without an accepted diagnosis. Replay over an ordered sequence of released windows is secondary.
+An episode asks an agent to diagnose a bearing from a released vibration measurement. The agent receives public task information, data handles, numerical-tool interfaces and a computational budget. It can acquire a bounded window, inspect numerical methods, compute features, invoke a fitted expert and submit a class with supporting references. A request $a_t=(u_t,v_t)$ consists of a tool name and its arguments. Public history $h_t$ contains requests, returned observations, errors and resource use; evaluator-only class $c_k$ never enters the policy.
 
-A request is $a_t=(u_t,v_t)$, comprising a tool name and arguments. Public history $h_t$ contains task context, previous requests, returned artifacts, errors and remaining resources. The shared setting fixes the language model, procedures, numerical tools, fitted parameters and budgets. Ground-truth class $c_k$ for episode $k$ is evaluator-only. Submission acceptance, agreement with a numerical prediction and correctness against $c_k$ are distinct properties.
+The primary task exposes one distinct raw window with fixed channels and sampling rate. Rereading may generate another identifier for the same array. Numerical experts accept specified feature roles, not arbitrary operator outputs. We hold the data scope, feature contract, fitted parameters, language model, procedural catalog and resource caps fixed across treatments. These conditions fix potential capability, not the operations actually selected.
 
-The primary task exposes one distinct raw array under fixed sample, window and channel specifications. Rereading can create another reference to that array, not an independent measurement. Alternative computations must satisfy the existing numerical input contract and fit the remaining budget. A longer trajectory therefore need not contain another admissible prediction. Resource exhaustion without an accepted diagnosis remains an operational outcome.
+Three outcomes must remain distinct: a submitted label can be accepted, supported by a task-matched numerical computation, and correct against the private class. These checks have different meanings; acceptance alone guarantees neither numerical support nor correctness. A complete computational path explains how an executed numerical result was produced; it does not establish why that fault is physically present or which feature is causally important.
 
-### 2.2 Relevant theoretical foundations
+### 2.2 Prior foundations: decision control and execution provenance
 
-**History-conditioned decisions.** ReAct conditions successive actions on reasoning and observations [@yao2023react]. Finite controllers under partial observability and state-driven language-agent workflows provide established ways to organize such decisions [@hansen1997; @wu2024stateflow]. A progress summary is an execution abstraction, not necessarily a sufficient belief state or a fault posterior.
+**Decision organization.** History-conditioned tool use and finite-state control are established foundations [@yao2023react; @hansen1997]. StateFlow explicitly uses states, transitions and state-dependent execution [@wu2024stateflow]. A decision graph $G^{\mathrm{out}}=(S,E^{\mathrm{out}})$ represents procedural states and permitted transitions, including recovery cycles. A state label is an execution abstraction rather than a diagnostic posterior.
 
-**Restricted action selection.** Invalid-action masking removes actions that an environment disallows; a workflow gate can instead remove a valid computation because a phase has ended [@huang2022masking]. Confidence-based elimination requires evidence for discarding alternatives, which a progress label alone does not supply [@evendar2006]. For standard finite-horizon optimal values $V_t^*,Q_t^*$, a nonempty retained subset $A_R(\xi)$ of valid actions, attained maxima and $a\in A_R(\xi)$,
+**Execution provenance.** PROV-DM separates entities from activities and distinguishes use, generation and derivation [@moreau2013prov]. For numerical analysis, a feature is an entity, while the operator invocation that produced it is an activity. A model's input role must identify the actual feature entity consumed. Merely listing an artifact beside a prediction does not establish this dependency. A submitted citation is likewise different from a numerical input.
 
-$$
-\begin{aligned}
-V_t^*(\xi)-Q_t^*(\xi,a)
-&=\underbrace{V_t^*(\xi)-\max_{u\in A_R(\xi)}Q_t^*(\xi,u)}_{\text{excluded opportunity}}\\
-&+\underbrace{\max_{u\in A_R(\xi)}Q_t^*(\xi,u)-Q_t^*(\xi,a)}_{\text{selection within retained actions}}.
-\end{aligned}
-$$
+**Provenance-conditioned decisions.** Provenance need not be confined to retrospective inspection. MAP-Graph reports typed execution ancestry and risk-sensitive action gating in multi-agent memory workflows [@wang2026mapgraph]. Thus, using provenance as a control signal is prior art. The present problem concerns sample-bound numerical prerequisites, selection among fitted diagnostic computations and reproduction of the resulting prediction under a shared PHM contract.
 
-Here $\xi$ includes history, time and remaining budget. This algebraic separation uses standard policy-value quantities [@schulman2015]; it distinguishes excluding a valuable action from choosing poorly among retained actions. It neither decomposes pooled Macro-F1 nor makes unobserved optimal values identifiable from tool counts [@jiang2016; @khan2024]. Its empirical role is to motivate checking whether an excluded, feasible continuation actually changes numerical output and delivered diagnosis.
+A deterministic summary of a complete public trace adds no external observation: an unrestricted policy could compute it from the trace. Its value to a bounded language model can arise from explicit organization and enforcement. Any such value must be measured against the corresponding prompt, control and resource changes, rather than attributed to new information or graph notation itself.
 
-**Information and bounded computation.** A deterministic annotation of a fully available history supplies no new information to an unrestricted decision maker that can compute it. Restricting feasible actions cannot improve that decision maker's optimal task utility under identical resources and no annotation-specific processing cost. A finite language model may nevertheless respond differently to an explicit annotation or a shorter menu. Prompt length, salience and execution cost are then part of the implemented interface, not evidence that control creates new diagnostic information.
+### 2.3 Mathematical formulation and observation boundaries
 
-### 2.3 Mathematical formulation
-
-Let $X_k$ collect the fixed task, released data scope, procedural content, global tool surface, numerical input contract, fitted experts, language-model settings, budgets and evaluator. Matching $X_k$ across conditions fixes potential capability, not realized computation. Let $Z=(i,g)$ indicate the presence of an active-block pointer and a progress-dependent tool-exposure-and-admission gate. Section 3 supplies their executable definitions.
+Let $X_k$ collect the fixed episode setting. Let $Z=(o,e)$ switch outer decision organization and inner evidence feedback. The resulting public trajectory, process measurements and evaluated outcome are
 
 $$
-\tau_k^Z\sim P_Z(\cdot\mid X_k),
-\qquad T_k^Z=t(\tau_k^Z),
-\qquad Y_k^Z=y(\tau_k^Z,c_k).
+\tau_k^Z\sim P_Z(\cdot\mid X_k),\qquad
+T_k^Z=t(\tau_k^Z),\qquad
+Y_k^Z=y(\tau_k^Z,c_k).
 $$
 
-The public trajectory $\tau$ determines process measurements $T$, including prediction use, continuation, submission timing and resource use. Outcome record $Y$ contains the delivered label, termination status and numerical-support assessment. Let $\hat c_k^Z\in\{1,2,3,\varnothing\}$ be its accepted label, with $\varnothing$ denoting a resolved terminal non-submission. An indeterminate attempt is unresolved, not a fourth outcome that can be assigned a fabricated score.
+Every condition retains the same kinds of execution records. The intervention is whether evidence-derived prerequisites are exposed to the policy and used in control, not whether only the treatment produces an auditable record. Process measurements include completed numerical input roles, prediction use, recovery, analytical continuation, submission and resource use. The specific graph construction and feedback rule are defined in Section 3.
 
-![**Problem formulation and observation boundaries.** Fixed $X_k$ and assigned interface $Z$ generate public trajectory $\tau_k^Z$ and process measurements $T_k^Z$. The evaluator alone uses private class $c_k$ to assess outcome $Y_k^Z$. The cohort functional $M(D_Z)$ measures accepted-label delivery; the grounded counterpart applies the additional numerical-support criterion defined in Section 2.3 to the same outcome records. Arrows show execution and measurement dependencies, not identified causal mediation.](../assets/figures/phmgraph_problem_formulation.svg)
+![**Problem formulation and observation boundaries.** The matched setting $X_k$ and assigned interface $Z=(o,e)$ generate a public trajectory. Process measurements $T_k^Z$ and evaluated outcome $Y_k^Z$ have different roles; only the evaluator accesses the true class $c_k$. Diagnosis is scored over a cohort, not by averaging episode-level F1. These arrows show execution and measurement dependencies, not an identified causal mediation model.](../assets/figures/phmgraph_problem_formulation.svg)
 
-Figure 1 separates capability availability, its use along the trajectory and its evaluated consequence. Numerical support is assessed from the submitted prediction and required feature references; the true class has no feedback edge to the agent.
+Figure 1 separates available capability, its execution and its evaluated consequence. A graph can faithfully record an incorrect computation, and an accepted correct guess may lack a numerical support path. Both cases remain in the assigned cohort.
 
-For assigned cohort $\mathcal I$, let $D_Z=\{Y_k^Z:k\in\mathcal I\}$ contain resolved first-attempt outcomes. The unchanged primary functional is
+Let $\hat c_k^Z\in\{1,2,3,\varnothing\}$ denote an accepted diagnosis or a resolved terminal non-submission. For resolved first-attempt records $D_Z$, the operational endpoint is
 
 $$
 M(D_Z)=\frac{1}{3}\sum_{c=1}^{3}
 \frac{2\mathrm{TP}_c(D_Z)}{2\mathrm{TP}_c(D_Z)+\mathrm{FP}_c(D_Z)+\mathrm{FN}_c(D_Z)}.
 $$
 
-Counts are pooled across the cohort. A non-submission contributes a false negative to its true class and is not a fourth averaged class. The supported cohort contains all three classes; native undefined-metric handling applies outside it. This operational metric evaluates delivered labels, including accepted labels without numerical support.
+A non-submission contributes a false negative to its true class; it is not a fourth averaged class. The cohort contains all three declared classes. An indeterminate attempt remains unresolved rather than being fabricated, discarded or automatically repeated.
 
-For the grounded secondary endpoint, define $G_k^Z=1$ exactly when an accepted diagnosis agrees with a task-matched numerical prediction and contains that prediction's required feature references. Otherwise $G_k^Z=0$ for a resolved failure of this criterion, including a terminal non-submission. Define
+The computational-grounding endpoint retains the same labels and cohort rule. An accepted label is retained only when it agrees with the native task-matched prediction and includes that prediction's required feature references; otherwise a resolved failure maps to $\varnothing$. Missing support fields leave that secondary endpoint unresolved. Support-path replay is evaluated separately from both diagnosis scores: replay agreement neither makes a wrong prediction correct nor establishes feature relevance.
 
-$$
-\widetilde c_k^Z=
-\begin{cases}
-\hat c_k^Z,&G_k^Z=1,\\
-\varnothing,&G_k^Z=0,
-\end{cases}
-\qquad M_{\mathrm{grounded}}(D_Z)=M(\widetilde D_Z),
-$$
+### 2.4 Research gap
 
-where $\widetilde D_Z$ changes only the scored labels, retaining the same assigned episodes and true classes. Grounding establishes numerical agreement and required-feature support, not correctness or physical sufficiency. An accepted outcome with unresolved support information leaves the secondary endpoint unresolved; missing support fields are not automatically zero. The operational endpoint remains computable when its own outcome records are complete.
+StateFlow supplies decision organization, PHMForge investigates industrial numerical-tool orchestration, and TimeSage-MT compares structured time-series agents [@wu2024stateflow; @li2026phmforge; @kong2026timesagemt]. Provenance standards and provenance-aware agents already supply relational execution representations [@moreau2013prov; @wang2026mapgraph]. The unresolved PHM question is how numerical dependency state should affect a workflow whose nominal progress can diverge from its available evidence.
 
-The two primary repeated-execution estimands, conditional on fixed assignments $X_{\mathcal I}$, are
+Counting successful calls cannot distinguish ten repeats of one feature from ten distinct required inputs. Reaching a prediction cannot establish that a later submission cites that prediction, or that all affordable alternatives have become useless. Conversely, when the numerical contract leaves only one effective path and the base agent follows it correctly, additional graph feedback may be redundant or costly. These alternatives make the proposed control empirically falsifiable.
 
-$$
-\Delta_{\mathrm{index}\mid g=0}
-=\mathbb E\!\left[M(D_{10})-M(D_{00})\mid X_{\mathcal I}\right],
-$$
+The required comparison therefore distinguishes passive recording from active feedback, numerical support from label correctness, and evidence availability from a feasible prediction-changing continuation. A positive effect of one compound interface does not isolate graph topology or establish a general benefit of dual-graph architectures.
+
+### 2.5 Research questions and estimands
+
+We investigate whether numerical-evidence feedback improves first-attempt diagnosis when outer organization is present, what it changes without that organization, and which effects coexist with replayable support. Conditional on fixed cohort assignments, the principal contrast is
 
 $$
-\Delta_{\mathrm{gate}\mid i=1}^{\mathrm{bundle}}
-=\mathbb E\!\left[M(D_{11})-M(D_{10})\mid X_{\mathcal I}\right].
+\Delta_{e\mid o=1}=\mathbb E\!\left[M(D_{11})-M(D_{10})\mid X_{\mathcal I}\right].
 $$
 
-Their observed statistics are the corresponding whole-cohort differences. These are sequential simple effects, not factor-averaged main effects: the second is conditional on the pointer being present. The same contrasts applied to $M_{\mathrm{grounded}}$ are secondary. Conditioning a trajectory rate on reaching prediction or submission selects a treatment-dependent subset; such summaries describe execution rather than identify mediation.
+The other simple effects compare $10-00$ and $01-00$. The factorial interaction is
 
-### 2.4 Existing limitation and research gap
+$$
+\Delta_{oe}=\mathbb E\!\left[M(D_{11})-M(D_{10})-M(D_{01})+M(D_{00})\mid X_{\mathcal I}\right].
+$$
 
-StateFlow already evaluates state-dependent execution and state ablations; PHMForge studies industrial tool-orchestration controls; TimeSage-MT compares progressively structured time-series systems [@wu2024stateflow; @li2026phmforge; @kong2026timesagemt]. These studies establish workflow control as prior art. They do not by themselves determine the two specified effects under a common PHM catalog, numerical contract and first-attempt endpoint.
-
-Three distinctions make this question testable. An appended correct pointer is not an isolated test of pointer correctness without a matched sham pointer. A gate that changes both schemas and execution admission is a compound intervention. Finally, a legal extra computation may yield no different model-admissible prediction, while an unsupported accepted label can still improve operational accuracy. A diagnostic-opportunity account therefore requires evidence of feasible numerical alternatives, their use and their consequences, rather than a shorter menu or more artifacts alone.
-
-### 2.5 Research objective
-
-This work investigates whether appending a correct active-block pointer changes first-attempt PHM diagnosis under global tools, and whether adding progress-gated exposure and admission changes diagnosis with that pointer present. It distinguishes operational delivery from contract-grounded delivery and tests which feasible numerical continuations connect control to the observed outcome.
+An interaction is defined on the chosen outcome scale; it does not by itself prove mechanistic synergy. The grounded endpoint uses the same contrasts. Conditional process rates describe treatment-dependent subsets rather than identify causal mediation. These new treatment definitions do not relabel the earlier pointer-by-gate comparisons.
 
 ## 3. Method
 
-### 3.1 Overview
+### 3.1 Dual-graph overview
 
-PHMGraph implements $Z=(i,g)$ around one unchanged tool-using language agent. A deterministic function summarizes progress from public history. The pointer switch appends the identifier of the relevant instruction in a catalog visible to every condition. The gate switch supplies a phase-dependent menu both to the model and to execution admission. The model proposes one request; shared tools return a result or error. Nonterminal feedback updates the public history, while accepted submission or a native terminal event closes the episode. Evaluation subsequently distinguishes the delivered label from its numerical support.
+PHMGraph couples an outer decision controller to an inner graph of executed numerical dependencies. After each tool result, the inner graph records what was used and generated. A graph-derived frontier identifies missing feature roles and task-supported predictions. Feedback conditions the next phase and tool menu; the fixed language model still chooses the request and its arguments. Native tools remain responsible for numerical computation and full input validation. A submitted diagnosis yields a control path and a selected numerical support subgraph, which can be replayed separately by the evaluator.
 
-![**PHMGraph overview and execution loop.** Shared history $h_t$, catalog $B$, model $\pi_\theta$, numerical tools and evaluator are inherited components. Public-progress abstraction $f$ adapts state-driven control. The pointer $iL(s_t)$ and gate $\Gamma_g(s_t)$ are separately configurable interventions. The gate jointly changes tool-schema exposure and name admission; both branches receive the same menu. Nonterminal results and errors return to history. Final outcome assessment remains evaluator-side, including both label accuracy and the grounded endpoint. Numbered blocks correspond to Algorithm 1.](../assets/figures/phmgraph_method_overview.svg)
+![**Coupled decision and numerical-evidence graphs.** The upper layer organizes decisions; the lower layer records the actual window-to-feature-to-prediction computation. The middle feedback path derives evidence state $\eta_t$ from the inner graph and conditions the outer phase and menu. Executed actions update the graph in the opposite direction. Time and band features are grouped for display; the implementation retains individual activities, artifacts and input roles. The coupled path is shown: an eligible prediction permits submission without forcing all further analysis to stop. Recovery paths are illustrative; the exact rule is in Section 3.4. Offline support replay and private labels never feed back into the episode. Numbers refer to Algorithm 1.](../assets/figures/phmgraph_method_overview.svg)
 
-Figure 2 separates the shared numerical capability from its decision interface. Section 3.2 defines pointer presentation; Section 3.3 defines the combined gate; Section 3.4 connects progress to numerical admissibility and closure. Algorithm 1 assembles these mechanisms without introducing another model, a search tree or a learned diagnostic representation.
+Figure 2 makes the two directions explicit: decisions select evidence-generating operations, while executed evidence constrains subsequent decisions. Section 3.2 specifies the reused outer interface, Section 3.3 constructs numerical support, Section 3.4 defines online coupling, and Section 3.5 assembles execution and explanation output.
 
-### 3.2 Mechanism I: appending the active-block pointer
+### 3.2 Outer decision organization
 
-The ordered catalog $B=((b_j,d_j))_{j=1}^{6}$ pairs opaque identifiers B01–B06 with fixed instructions for acquisition, analysis-family selection, typed-feature construction, numerical prediction, error correction and supported submission. Every condition receives the entire catalog in the same order on each request.
+All conditions receive the same ordered catalog $B=((b_j,d_j))_{j=1}^{6}$, with opaque identifiers B01–B06. The fixed instructions concern acquisition, analysis-family selection, feature construction, prediction, recovery and supported submission. Enabling $o$ appends the active block pointer and applies its phase menu. Disabling $o$ omits the pointer and starts from the common eleven-tool surface. Historical state annotations are removed equally from model-visible tool messages; public numerical results and errors remain available.
 
-Let $s_t=f(h_t)$ and let $L(s_t)$ identify its instruction block. For common history renderer $\rho$,
+The inherited call-history controller $f(h_t)$ first handles the latest error, then checks successful reading, catalog inspection, prediction and schema inspection. Its ordinary post-prediction state exposes submission alone. This rule is preserved in the outer-only condition and in the historical indexing experiment. It is not sufficient to establish evidence readiness, which motivates the separate feedback intervention.
 
-$$
-x_t^{ig}=\rho(h_t,B)\oplus iL(s_t)
-\oplus\operatorname{Schema}\bigl(\Gamma_g(s_t)\bigr),
-\qquad a_t\sim\pi_\theta(\cdot\mid x_t^{ig}).
-$$
-
-Here $iL(s_t)$ denotes an appended active-block sentence when $i=1$ and its omission when $i=0$. It does not duplicate the block's instruction. Historical state annotations are removed equally from model-visible tool messages, preserving numerical payloads and errors. This comparison measures the addition of a correct pointer sentence to the common catalog, including its token and salience changes. It does not separately identify the benefit of a correct versus incorrect pointer or an attention mechanism.
-
-The four interfaces are catalog-global (00), indexed-global (10), catalog-masked (01) and indexed-masked (11). The 01 condition supports the other simple effects and interaction; it is not used to reinterpret the two primary comparisons as averaged main effects.
-
-### 3.3 Mechanism II: progress-gated tool exposure and admission
-
-Let $\mathcal U$ be the common Phase-1 surface of eleven tool names: four data-access tools, three operator tools, three model tools and submission. The additional artifact-description and explicit-stop actions in the broader canonical adapter are outside this declared comparison. The unmasked interface uses $\Gamma_0(s)=\mathcal U$; the masked interface uses the phase subset $\Gamma_1(s)$.
-
-The same selected menu is presented to the model and used for name admission. For request $a_t=(u_t,v_t)$,
-
-$$
-o_{t+1}=\begin{cases}
-\mathcal E_{\mathrm{tool}}(u_t,v_t;h_t),&u_t\in\Gamma_g(s_t),\\
-\operatorname{error}(u_t),&u_t\notin\Gamma_g(s_t).
-\end{cases}
-$$
-
-The shared environment still validates arguments, data scope and artifact types. Admitted names need not yield successful computations or correct diagnoses. Rejected requests remain errors rather than being projected onto another action.
-
-| Phase / block | Exposed and admitted tools in the gated diagnosis interface |
+| Inherited phase | Available tool families |
 |---|---|
-| Inspect / B01 | Data search, description, bounded reading and summary |
-| Hypothesize / B02 | Operator catalog, model catalog and data summary |
-| Analyze / B03 | Data summary; operator catalog, schema and execution; model catalog and schema |
-| Check / B04 | Data summary; operator schema and execution; model catalog, schema and prediction |
-| Recover / B05 | Data description, reading and summary; operator and model catalogs/schemas; operator execution and model prediction |
-| Submit / B06 | Submission only |
+| Inspect | Data search, description, bounded read and summary |
+| Hypothesize | Operator/model catalogs and data summary |
+| Analyze | Data summary; operator catalog, schema and execution; model catalog and schema |
+| Check | Data summary; operator schema/execution; model catalog, schema and prediction |
+| Recover | Data description/read/summary; operator/model catalogs and schemas; operator execution and prediction |
+| Submit | Submission |
 
-These menus communicate progress, change schema length and choice, constrain executable requests and alter subsequent resource use. Accordingly, $\Delta_{\mathrm{gate}\mid i=1}^{\mathrm{bundle}}$ is the total effect of this exposure-and-admission interface, not an isolated executor, topology or action-count effect. Check permits prediction and feature computation before submission becomes available; its name does not designate a separate post-prediction verification mechanism.
+The outer graph is a procedural controller, not a learned graph or a physical fault model. Its pointer and exposure/admission operations remain distinguishable in the earlier outer-interface ablations.
 
-### 3.4 Public-progress update and numerical execution boundaries
+### 3.3 Inner numerical-evidence graph
 
-For diagnosis, let $r(h),d(h),p(h),m(h)$ indicate successful bounded reading, inspection of either catalog, numerical prediction and a model-schema request. Let $e(h)$ indicate failure of the latest recorded action. For a nonterminal episode,
-
-$$
-f(h)=\begin{cases}
-\mathrm{Recover},&e(h)=1,\\
-\mathrm{Inspect},&e(h)=0,\ r(h)=0,\\
-\mathrm{Hypothesize},&e(h)=0,\ r(h)=1,\ d(h)=0,\\
-\mathrm{Submit},&e(h)=0,\ r(h)=d(h)=p(h)=1,\\
-\mathrm{Check},&e(h)=0,\ r(h)=d(h)=m(h)=1,\ p(h)=0,\\
-\mathrm{Analyze},&\text{otherwise}.
-\end{cases}
-$$
-
-The precedence applies in all four conditions, including global-tool histories that issue actions out of order. State is recomputed from recorded execution, not advanced because the model names a desired phase. After a nonterminal action,
+For public prefix $h_t$, define
 
 $$
-h_{t+1}=h_t\oplus(a_t,o_{t+1},\text{recorded resource use}).
+G_t^{\mathrm{in}}=
+\left(V_t^{\mathrm{art}}\cup V_t^{\mathrm{act}},
+E_t^{\mathrm{use}}\cup E_t^{\mathrm{gen}}\cup E_t^{\mathrm{cite}}\right).
 $$
 
-On the supported error-free, event-free gated path, a successful read removes ordinary rereading, submission is unavailable before numerical prediction, and successful prediction leaves submission as the only ordinary next action. These are execution properties. A nonterminal error can select Recover and reopen reading or analysis; it cannot reopen an episode already terminated by the shared runtime. Repeated errors may consume the budget, so corrected-call guidance provides no recovery guarantee.
+Artifact entities include raw windows, intermediate numerical outputs, feature vectors, predictions and accepted submissions. Activity nodes record executed calls and their arguments. An input-role edge $(v,a,j)\in E^{\mathrm{use}}$ means activity $a$ consumed entity $v$ in role $j$; $(a,v)\in E^{\mathrm{gen}}$ records generation. A citation edge records a submitted reference, not numerical dependence. Operator input roles come from the actual source argument, and predictor roles from the actual feature-reference mapping.
 
-The numerical contract determines what the excluded continuation could accomplish. Diagnosis requires six specified time-domain features and four band powers from the prescribed Welch spectrum, all associated with the same raw window. A callable preprocessing or envelope operator does not thereby supply a model-admissible input. Another artifact reference may resolve to identical values. Alternative fitted experts can be queried through the same legal feature interface, but whether they return different labels and remain affordable after the first prediction must be measured. Post-prediction closure is therefore not, by itself, evidence that useful diagnostic information was removed.
+The update is an append operation on the recorded request and observation:
 
-Replay retains its separate sample-bound progression: eleven successful operator calls for the active sample trigger prediction readiness in the bound profile. This counts calls, not distinct features or evidence sufficiency. Dynamic condition-change events are outside the primary comparison.
+$$
+G_{t+1}^{\mathrm{in}}=U(G_t^{\mathrm{in}},a_t,o_{t+1}).
+$$
 
-### 3.5 Algorithm
+Successful native calls generate fresh entities. Failed calls remain recorded activities but generate no numerical evidence. Discovery and schema results supply public requirements without becoming computed features. Under fresh references and use of previously generated inputs, the successful numerical subgraph is acyclic: each input producer precedes the consuming activity, which precedes its newly generated output. Forward references, overwritten identifiers or missing input-role edges violate this support condition. The assumption concerns trusted native execution records, not protection against an adversary controlling the recorder.
 
-**Algorithm 1. PHMGraph under a fixed procedural catalog.**
+For prediction $p$, its support subgraph contains the actual numerical ancestors reached through use and generation edges. Every use must agree with the recorded input role and refer to an earlier producer. Repeated or aliased artifacts do not fill an unrelated required role. For a submission, the selected prediction is the first known prediction reference under the native submission rule; its label and required feature citations must agree with that submission. Extra citations are not silently promoted to numerical causes, and a favorable alternative prediction is not selected retrospectively.
 
-**Input:** public task and released scope, common catalog $B$, global tool surface $\mathcal U$, model $\pi_\theta$, fitted numerical tools, budgets and switches $(i,g)$.
+### 3.4 Evidence-conditioned phase and tool admission
 
-**Output:** first-attempt submission or terminal non-delivery and its public trajectory. Private labels are not inputs.
+For a publicly inspected model schema $m$, raw-window reference $w$ and required feature role $j\in\mathcal R(m)$, let $\mathcal F_{m,w,j}(G_t^{\mathrm{in}})$ contain the currently available feature entities whose typed source paths match that role and window. Define
 
-1. Initialize public history and resource accounting from the assigned task.
-2. While the episode is nonterminal and the budget permits a decision, compute $s_t=f(h_t)$ from successful calls and the latest error.
-3. Render the complete shared catalog and sanitized history; append the active-block sentence exactly when $i=1$.
-4. Set $\Gamma_g(s_t)$ to the global or gated menu and supply its schemas to the fixed model.
-5. Obtain one model decision. Retain any native provider or response-format terminal outcome without model switching or a replacement attempt.
-6. Check the proposed name against the same menu. Record a rejection or invoke the shared validating numerical environment.
-7. Append the request, result or error, and resource use. Only a nonterminal episode returns to step 2.
-8. Retain the accepted submission or native terminal non-submission. Resolve an indeterminate persisted attempt before scoring it; do not automatically resend it. The evaluator assesses the label and numerical-support criterion on the resulting record.
+$$
+R_t=\mathbf1\!\left\{\exists(m,w):
+\mathcal F_{m,w,j}(G_t^{\mathrm{in}})\ne\varnothing\ \forall j\in\mathcal R(m)\right\},
+\qquad
+P_t=\mathbf1\!\left\{\text{a task-supported native prediction exists}\right\}.
+$$
 
-The algorithm changes pointer presentation and the combined tool interface. Numerical fitting, input admissibility, submission acceptance and the primary scoring rule remain shared. The grounded endpoint is an additional outcome mapping, not a stricter execution gate that changes any condition's behavior.
+The feedback state $\eta_t=\Phi(G_t^{\mathrm{in}})$ contains these per-role candidate sets, missing roles, supported prediction references and observed label disagreement. $R_t$ establishes structural availability, not complete numerical admissibility: parameter conventions and numerical validity remain native predictor checks. $P_t$ additionally requires successful native prediction and a complete, role-correct, same-window support path for the current task. A successful native prediction can retain complete provenance even when the agent did not explicitly query its schema; missing discovery is not scored as missing numerical ancestry. Neither indicator depends on the true fault class. Disagreement is exposed as an observation, not converted into a rule for choosing the correct expert.
+
+With feedback disabled, the phase is $F_0(h_t)=f(h_t)$. With feedback enabled, a latest nonterminal error selects Recover; absence of a current-task window selects Inspect; $R_t=1$ or $P_t=1$ selects Check; otherwise the phase is Analyze. The menu begins with the phase subset when $o=1$, or global tools when $o=0$. Feedback removes prediction when $R_t=0$ and submission when $P_t=0$, and permits submission when $P_t=1$. The resulting menu $\Gamma_t$ is used identically for model-visible schemas and name admission.
+
+Consequently, the coupled path remains in Check after a supported prediction and can expose both submission and further computation. It does not force another expert call, automatically resolve disagreement, repair arguments or stop analysis solely because a predictor has run. Submission eligibility is not a guarantee that the model will supply valid supporting arguments; native submission checks and evaluator metrics still determine that outcome. A native terminal episode cannot be reopened by a recovery state.
+
+The full loop is
+
+$$
+G_t^{\mathrm{in}}\rightarrow\eta_t\rightarrow
+(s_t,\Gamma_t)\rightarrow a_t\rightarrow o_{t+1}\rightarrow G_{t+1}^{\mathrm{in}}.
+$$
+
+Feedback changes a derived prompt, prerequisite admission and, with outer organization, phase routing and post-prediction continuation. Its effect is therefore a specified bundle, not a pure topology effect. The flat-evidence control preserves every frontier value and dependency binding in a lossless row representation while leaving the graph predicates and menu unchanged. It tests presentation, not the removal of relation information. Deleted or shuffled edges are separate corruption controls.
+
+### 3.5 Algorithm and computational explanation output
+
+**Algorithm 1. Diagnosis with coupled decision and execution evidence.**
+
+**Input:** public task and scope, shared catalog and tools, fixed model and fitted numerical experts, budgets and switches $(o,e)$. **Output:** canonical first-attempt outcome, public control path and selected numerical support.
+
+1. Initialize history and an empty inner graph. Use the same graph recorder in all four conditions.
+2. Read the latest public prefix and compute the inherited progress state.
+3. Update the evidence graph from newly recorded activities and derive the current-task frontier. Only when $e=1$ expose the frontier and use its readiness predicates in control.
+4. Set the phase, optional pointer and tool menu under $(o,e)$; retain the full common procedural catalog.
+5. Request one action from the fixed language model, using the same menu later supplied to admission. Retain native provider and response-format failures without switching models or replacing the attempt.
+6. Admit the tool name or record its rejection; native tools validate and execute admitted requests. Append the result and usage. Only nonterminal episodes continue.
+7. Retain submission or terminal non-delivery. Include the final event in the derived evidence graph. For an accepted submission, extract its selected numerical support and recorded outer phase/menu path; unresolved support remains unresolved.
+
+The output pair
+
+$$
+\mathcal E_k=(\text{recorded outer control path},\ G_{k,\mathrm{sup}}^{\mathrm{in}})
+$$
+
+is a computational execution explanation, not a reconstruction of the language model's hidden reasoning. The outer component records procedural context and restrictions; the inner component reconstructs how executed data transformations produced the selected numerical prediction.
+
+Support replay is evaluator-side. In a fresh environment bound to the same data, numerical implementation and fitted models, replay the selected ancestor activities in topological order, remapping generated references rather than reusing cached results. Compare the public feature values, prediction probabilities, class and recorded sample metadata. Classes must match exactly; numeric values use a prespecified tolerance, initially relative $10^{-9}$ and absolute $10^{-12}$. Missing source assets or failed execution are unresolved replay cases, not agreement. The check does not compare every hidden intermediate array or certify physical causality. Its calls and cost are reported separately and never supplied as free evidence to the online agent.
 
 ## 4. Testable consequences
 
-The opportunity–selection distinction motivates opposing hypotheses. A pointer may change numerical execution or delivery by making an existing instruction salient. A gate may prevent premature submission, but it can impair a supported diagnosis through closure only where a legal, budget-feasible continuation can produce a different supported label. Failure to improve either endpoint is also possible.
+Evidence feedback should be behaviorally relevant where call-history progress and numerical readiness differ: incomplete feature roles, wrong-window ancestry, premature submission or a useful remaining expert prediction. Removing a required usage edge while retaining all node values should invalidate support and can alter the next admitted menu. A failed call should not create evidence. A lossless table conversion should preserve structural predicates even when its model-facing tokenization differs.
 
-We therefore distinguish six observations: prediction is reached; a legal alternative fits the remaining budget; the unrestricted agent selects a continuation; resolved numerical output changes; the supported submitted label changes; and correctness changes. These are linked measurements, not an estimated causal mediation chain. New references alone do not establish new numerical evidence, and a changed model output need not change the label. Correctness is evaluated only after submission against private labels.
+These are mechanism tests, not predictions of uniformly positive diagnostic effects. A fixed-contract single-window task can leave little prediction-changing headroom. Additional feedback can be redundant, consume tokens or restrict useful behavior. A supported numerical label may remain wrong. Real development data must therefore establish the presence and frequency of legal alternatives before a diagnostic-opportunity claim is evaluated.
 
-Each stage is reported against all assigned episodes, with explicitly labelled conditional denominators where useful. Feasibility is evaluated separately from selection using declared numerical contracts, not inferred from missing actions. A gate can be behaviorally inactive in observed traces even when its menu is smaller. An imprecise task contrast does not establish equivalence or general inactivity.
+## 5. Evaluation design
 
-## 5. Paired first-attempt evaluation
+### 5.1 New treatment family and preserved historical ablations
 
-### 5.1 Endpoints and planned contrasts
+The new diagnosis protocol crosses outer organization and active evidence feedback:
 
-The primary endpoint remains pooled three-class operational Macro-F1 over assigned first attempts, with canonical non-submissions contributing false negatives to their true classes. The two primary contrasts are the sequential simple effects in Section 2.3. The grounded counterpart is a prospectively specified secondary diagnostic endpoint on the same cohort; it neither replaces the primary metric nor drops unsupported submissions from its denominator. Native agreement and required-feature-support fields define its mapping in the accompanying experiment specification.
+| Condition | Outer organization | Evidence feedback | Hidden provenance recording |
+|---|---:|---:|---:|
+| dual-v1-00 | off | off | common |
+| dual-v1-10 | on | off | common |
+| dual-v1-01 | off | on | common |
+| dual-v1-11 | on | on | common |
 
-Report submission rate, grounding rate, both diagnosis confusion matrices with a non-submission column, and provider, response-format, unavailable-action and budget-exhaustion outcomes. Better operational Macro-F1 alone supports better label delivery, not better grounded delivery. Better grounded Macro-F1 supports that specified endpoint even if the operational metric is unchanged. A higher grounding rate without improved diagnostic endpoints supports a procedural result. Interpret all differences with their uncertainty rather than from their sign alone.
+The principal diagnosis contrast is $11-10$; other simple effects, the outcome-scale interaction and grounded counterparts complete the prespecified analysis. The coupled grouped-versus-flat comparison uses identical dependency information and control. Token counts and costs are measured, not assumed equal. Scripted numerical execution remains a reference rather than another treatment factor.
 
-Replay Average Precision retains its assigned-window and missing-score rules and remains secondary. Other simple effects and the factorial interaction are exploratory. Historical Graph–Generic or semantic-cue comparisons remain separate protocols.
+Earlier pointer-by-gate cells retain their original definitions and first-attempt requirements as outer-interface ablations. Their results are never pooled or renamed as dual-graph evidence. The new protocol must obtain its own approved cohort, provider settings, resource limits and inferential specification before confirmatory execution.
 
-### 5.2 Assignment, resources and uncertainty
+### 5.2 Task, provenance and replay measurements
 
-Bearing splits, class labels, sample/window/channel specifications, replay order, reference-fitting scope, model settings and task budgets are fixed before evaluation. Four conditions run in independent sessions within matched bearing, task, rotation and repeat blocks. Randomized cyclic order balances condition positions within one occurrence per task/rotation/repeat/budget stratum. Position balance does not eliminate provider drift; absolute request times, condition positions and resumed-block gaps are retained. A changed provider route or model identity defines a new study, not a continuation of the old comparison.
+Report operational and grounded Macro-F1 on the same assigned first-attempt cohort, alongside submission, numerical support and failure rates. For provenance, measure completed distinct required roles, valid raw-to-prediction support paths and correctly selected submission support. Replay reports the number eligible, attempted, reproduced within tolerance, failed and unresolved; do not hide unsupported submissions by reporting only successful replay cases. Private labels are used only for task outcomes.
 
-Uncertainty uses a paired, true-class-stratified bearing bootstrap. Bearings are resampled within class with their windows and repeats, and the same draws apply to every term of a contrast. Class-specific bearing counts remain fixed. The two primary operational effects receive nominal 97.5% percentile intervals through Bonferroni allocation. These intervals condition on the assigned cohort and do not guarantee exact small-sample coverage. Secondary analyses do not inherit this two-contrast error allocation; any confirmatory secondary claim requires its own prespecified inference rule.
+Delete or exchange a required use edge in a copied graph, preserving the original trace and node attributes, to test support rejection and online-predicate sensitivity. Reference-renaming replay checks that identity spelling is not treated as numerical content. These interventions test implementation dependence on provenance, not feature importance. Feature relevance requires a separately justified numerical intervention within the admitted data/model contract; an invalid feature edit is not evidence of physical causality.
 
-An invocation reserve must cover all remaining conditions in a block before it starts. The request ceiling is an operational safeguard, not a sample-size calculation. Retain canonical interrupted outcomes and do not replace failed first attempts. Indeterminate attempts require resolution rather than a fabricated failure or automatic resend. Existing compatible numerical references are reused without treatment-specific refitting.
+### 5.3 Real-data and statistical requirements
 
-### 5.3 Numerical headroom before model-provider experiments
+Before provider experiments, verify metadata-to-waveform alignment, declared sample rate and windows, disjoint fitting/development/evaluation bearings, and reload consistency of fitted experts. On reserved development bearings, measure expert disagreement and resource-feasible second-prediction paths using the native feature contract. Distinguish new artifacts from new numerical values and from changed labels. A best-expert calculation is evaluator-only descriptive headroom, not a test-time selector.
 
-Before the four-condition pilot, the same real-data assignments must support bounded reads, disjoint fitting and evaluation bearings, and a Scripted diagnosis whose persisted outcome reproduces the native metric. On a reserved development split, query the existing diagnosis experts through the native feature contract. Record per-sample predictions, pairwise label disagreement and which second-prediction sequences fit the declared remaining resources. Compare resolved numerical contents, not artifact identifiers.
-
-A best-available-expert calculation using development labels describes oracle headroom within that audited pool; it is not a deployable selector and is never exposed to the agent. Zero disagreement limits an opportunity-preservation interpretation within the audited support, without proving that every possible analysis is useless. Test labels must not select experts, revise gates or determine the cohort.
-
-The pilot tests execution and mechanism occurrence, not stable population effects. Before confirmatory execution, freeze the cohort and class composition, window scope, repeats, condition order, exact provider/model settings, timeout handling, budgets, endpoints, contrast family and bootstrap specification. Use pilot variation and event frequency to plan precision, not whether a favorable contrast happened to be significant.
+Use independent treatment sessions and matched first-attempt assignments. Keep canonical non-submissions and provider interruptions; resolve indeterminate attempts without automatic resends. Freeze model route and settings, condition order, budgets, timeouts, cohort, repeats and bootstrap specification before confirmatory execution. Paired bearing-level resampling respects dependent windows. The new primary/secondary family needs its own multiplicity rule; the earlier indexing study's two-contrast allocation does not transfer automatically. Pilot variation and event frequency guide a stated precision target, not selection of favorable outcomes.
 
 ## 6. Results
 
-Matched PHM first-attempt outcomes are not reported here. The two primary effects, grounded secondary contrasts, numerical headroom and operational costs remain unestimated.
+The implemented mechanism has software-level checks for typed support, online menu dependence and selected-path replay on the existing deterministic numerical fixture. These checks use the shared native tools and runner; they do not constitute real bearing-data performance results. Operational effects, grounded effects, real-data headroom and provider costs for the new treatment family remain unestimated.
 
 ### 6.1 Comparisons under separate protocols
 
-Earlier Graph–Generic, dynamic-revision, cross-dataset and repeated-trial comparisons address different intervention or task definitions. Their results, when available, are reported separately and are not pooled with the current first-attempt indexing–gating contrasts.
+Historical Graph–Generic, dynamic-revision, cross-dataset, repeated-trial and pointer-by-gate comparisons retain their own protocols. Their insertion slots below are not dual-graph results.
 
-<!-- Legacy result insertion slots below retain their original profile definitions.
-They are not indexing-by-gating treatment results. Historical renderers must
-remain bound to the legacy protocol manifest, not the active experiment. -->
+<!-- Legacy insertion slots retain their original profiles; never populate them with dual-v1 outcomes. -->
 <!-- P2_DYNAMIC_FORMAL:BEGIN -->
 <!-- P2_DYNAMIC_FORMAL:END -->
 
@@ -295,10 +276,8 @@ remain bound to the legacy protocol manifest, not the active experiment. -->
 
 ## 7. Discussion
 
-PHMGraph distinguishes potential numerical capability, its invocation and the supported diagnosis ultimately delivered. Its two comparisons address an appended correct pointer and an additional exposure-and-admission gate, not pure pointer correctness, graph topology or execution restriction in isolation. The fixed expert pool allows different realized computations, but the feature contract determines which computations can support a changed numerical label.
+The outer and inner graphs describe different objects: procedural decisions and executed numerical dependencies. Their coupling is implemented through sample-bound prerequisite feedback, not through new fault knowledge or stronger fitted models. The task-specific distinction is between nominal progress and numerical readiness, including the choice to permit submission without automatically closing legal analysis.
 
-Operational and grounded outcomes answer different questions. An accepted correct guess can improve label delivery without numerical support; a grounded label can still be wrong. The grounded criterion checks agreement with a task-matched prediction and inclusion of required features, not the adequacy of the physical diagnosis. Reporting both endpoints prevents procedural improvement from being substituted for diagnostic performance, while preserving the original outcome-selection rule.
-
-The single-window task supports analysis of numerical execution, premature submission and feasible post-prediction continuation. It does not test loss of an independent raw observation, dynamic condition revision or indispensable persistent memory. A nontrivial finding must connect the specified interface to delivery, numerical support or label quality with appropriate uncertainty. Missing results and imprecise contrasts remain unresolved, rather than evidence that the intervention helps, harms or has no effect.
+The representation itself is not uniquely privileged. A lossless relational table can encode the same graph; deleting its dependency information is an information ablation, not a content-matched presentation control. Likewise, numerical support and replayability are narrower than explanation of feature relevance or physical fault mechanisms. A useful scientific conclusion must establish what the specified feedback changes in diagnosis, computational support or cost, and where it is redundant. The current software evidence establishes an executable mechanism, while its PHM utility remains an empirical question.
 
 ## References
