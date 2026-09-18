@@ -1,82 +1,82 @@
 schema_version: 2
-paper_id: paper2
-paper_role: downstream_graph_study
-title: 'PHMGraph: Separating Instruction Indexing from Workflow Gating in Tool-Using PHM Agents'
-short_title: PHMGraph
-language: English
-stage: development
-active_source: paper/draft/main.md
-bibliography: paper/refs/phmgraph_review_2026.bib
-research_question: effects_of_instruction_localization_and_incremental_progress_gating_under_common_content
-chapters:
-  foundation_and_formulation: 2
-  method: 3
-  testable_consequences: 4
-  evaluation: 5
-  results: 6
-primary_task: diagnosis
-secondary_task: replay
-primary_metric: pooled_three_class_first_attempt_macro_f1
-outcome_selection: first_attempt
-non_submission_rule: false_negative_for_true_class_not_fourth_averaged_class
-indeterminate_attempt_rule: resolve_without_automatic_resend_or_invented_score
-conditions:
-  '00': catalog_global
-  '10': indexed_global
-  '01': catalog_masked
-  '11': indexed_masked
-primary_estimands:
-  - name: index_under_global_tools
-    contrast: '10 - 00'
-  - name: gate_after_indexing
-    contrast: '11 - 10'
+paper_id: phmgraph
+title: "PHMGraph: Separating Instruction Indexing from Workflow Gating in Tool-Using PHM Agents"
+manuscript: draft/main.md
+implementation_owner: liq22/phm-agent-benchmark
+implementation_snapshot: 8206cfef540d5f602adba482e9dcc0ebd6b0f437
+implementation_status: inspected_unmerged_draft_pr20_not_runtime_acceptance
+implementation_binding: FORMULATION_METHOD_MAP.md
+protocol_config: configs/paper02_graph/indexing_first_attempt.yaml
+protocol_stage: smoke_not_confirmatory
+source_goal: paper/goals/P02_MATCHED_CONTROL.md
+experiment_specification: experiments/EXPERIMENT_MATRIX.md
+treatment:
+  instruction_content: shared_B01_B06_catalog
+  explicit_index: [false, true]
+  tool_mask: [false, true]
+  pointer_intervention: appended_correct_active_block_sentence_including_token_and_salience_change
+  gate_intervention: joint_progress_dependent_schema_exposure_and_name_admission
+  primary_contrast_type: sequential_simple_effects_not_averaged_main_effects
+  primary_contrasts:
+    - { name: indexing_unmasked, treatment: indexed-global, control: catalog-global, fixed_gate: false }
+    - { name: masking_indexed, treatment: indexed-masked, control: indexed-global, fixed_index: true }
+  interpretation: pointer_at_global_tools_then_compound_gate_with_pointer_present
+  other_simple_effects_and_interaction: exploratory
+active_tool_surface:
+  mode: core_phase1_11
+  names:
+    - data.search
+    - data.describe
+    - data.read_window
+    - data.summarize
+    - op.list
+    - op.schema
+    - op.run
+    - model.list
+    - model.schema
+    - model.predict
+    - submit
+  excluded_adapter_actions: [artifact.describe, stop]
+  acceptance_check: actual_presented_and_admitted_names_match_this_surface_and_phase_menus
+primary:
+  task: diagnosis
+  metric: pooled_three_class_macro_f1
+  meaning: operational_accepted_label_delivery_not_necessarily_numerically_supported
+  outcome_selection: assigned_first_attempt
+  non_submission: false_negative_for_true_class_not_a_fourth_class
+  indeterminate_attempt: unresolved_no_automatic_resend_no_fabricated_score
+secondary:
+  task: replay
+  metric: average_precision
+  scope: unchanged_assigned_windows
+  grounded_diagnosis:
+    metric: pooled_three_class_macro_f1_after_grounded_label_mapping
+    role: prospective_secondary_not_replacement_primary
+    status: specified_pending_native_cohort_implementation_and_validation
+    positive_criterion:
+      accepted: true
+      submission_grounding: 1
+      artifact_lineage_completeness: 1
+    known_criterion_failure: map_scored_label_to_no_submission_keep_assigned_episode_and_true_class
+    missing_support_fields_in_accepted_outcome: secondary_unresolved_not_inferred_zero
+    native_selected_prediction: do_not_replace_with_retrospective_best_reference
+    extra_reference_validity: reported_separately_not_added_to_criterion
+    primary_scoring_and_history: unchanged
+    inference: secondary_estimates_no_inherited_primary_family_error_allocation
+numerical_opportunity:
+  audit_data: reserved_development_bearings_disjoint_from_final_evaluation
+  capability: existing_fitted_experts_and_native_feature_contract_only
+  required_observations: [prediction, feasible_continuation, selected_continuation, numerical_change, supported_label_change, correctness_change]
+  oracle_headroom: descriptive_audited_pool_only_never_agent_visible
+  feasibility_unknown: unresolved_not_absent
+  real_data_status: unestimated
 uncertainty:
   unit: bearing
-  paired: true
-  stratification: true_diagnosis_class
-  retain_within_bearing: [windows, model_repeats]
-  interval: percentile_bootstrap
-  nominal_interval_level_per_contrast: 0.975
-  multiplicity: bonferroni_two_prespecified_contrasts
-  exact_finite_sample_coverage_claimed: false
-experiment_spec: paper/experiments/EXPERIMENT_MATRIX.md
-implementation:
-  repository: liq22/phm-agent-benchmark
-  inspected_revision: 8206cfef540d5f602adba482e9dcc0ebd6b0f437
-  integration_status: pending_migration_pr20_not_accepted_by_paper_merge
-  config: configs/paper02_graph/indexing_first_attempt.yaml
-  config_stage: smoke_not_confirmatory_cohort
-  goal: paper/goals/P02_MATCHED_CONTROL.md
-  components: src/phm_graph_agent/components.py
-  controller: src/phm_graph_agent/state.py
-  menus: src/phm_graph_agent/agent.py
-  condition_contrasts: src/phm_agent_benchmark/research/conditions.py
+  design: paired_true_class_stratified_bearing_bootstrap
+  contrast_intervals: nominal_97_5_percentile
+  family: two_prespecified_operational_diagnosis_contrasts
+  caveat: conditional_on_assigned_cohort_not_exact_small_sample_coverage
 figures:
-  problem:
-    section: '2.3'
-    asset: paper/assets/figures/phmgraph_problem_formulation.svg
-    role: fixed_intervened_and_measured_variables
-  overview:
-    section: '3.1'
-    asset: paper/assets/figures/phmgraph_method_overview.svg
-    role: inherited_components_intervention_points_and_algorithm_loop
-  source_repository: liq22/phm-agent-benchmark
-  source: scripts/figures/plot_phmgraph_formulation_method.py
-  source_is_runtime_independent: true
-  empirical_values: false
-results:
-  matched_first_attempt_cohort_available: false
-  primary_effects_estimated: false
-  diagnostic_improvement_claimed: false
-legacy:
-  manifest: paper/legacy/graph_v6_manifest.yaml
-  original_manifest_blob: 9930405db6b41ce0a4a743285dc97defb696706a
-  original_paper_revision: dc7529fee6acd4eb79a3f3a39fb9e0b36765c7de
-  interpretation: original_profiles_only_not_factorial_treatment_results
-  retained_manuscript_markers:
-    - P2_DYNAMIC_FORMAL
-    - P2_E8_OTTAWA
-    - P2_E9_RELIABILITY
-    - GRAPH_MONITOR_PRIMARY_COMPACT
-    - GRAPH_CORE_PRIMARY_COMPACT
-    - GRAPH_FORMAL_FIGURES
+  - { id: 1, role: problem_formulation, path: assets/figures/phmgraph_problem_formulation.svg }
+  - { id: 2, role: method_overview, path: assets/figures/phmgraph_method_overview.svg }
+legacy_manifest: legacy/graph_v6_manifest.yaml
