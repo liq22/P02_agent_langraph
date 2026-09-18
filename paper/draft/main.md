@@ -1,240 +1,229 @@
-# Graph-Guided PHM Agents for Long-Horizon Diagnostic Rollouts
+---
+bibliography: ../refs/phmgraph_review_2026.bib
+link-citations: true
+---
+
+# PHMGraph: Separating Instruction Indexing from Workflow Gating in Tool-Using PHM Agents
 
 ## Abstract
 
-State-guided tool use can improve action selection while excluding an analysis needed for a correct decision. This paper studies that tradeoff in GraphDecisionAgent, a PHM policy derived from the same Generic agent as its control. A finite-horizon value decomposition separates loss from restricting the action set and loss from selection within the retained set. A cue-by-filter experiment independently varies current-state guidance and tool visibility under matched data, numerical tools and budgets. The original replay comparison uses target-adverse assigned-window Average Precision. Monitor and Revise are unreachable in the base-v6 primary; the separate dynamic profile has formal coverage of 0/240. Available evidence establishes execution mechanics and deterministic references; the matched provider cohorts are needed to determine when guidance helps and when filtering harms PHM task outcomes.
+A prognostics and health management (PHM) agent must turn available numerical capabilities into a delivered diagnosis. Explicit workflows can direct this process, but a controller that prevents premature submission may also close useful analytical opportunities. We introduce PHMGraph, a training-free control formulation that separates active-instruction indexing from progress-gated tool exposure under a common procedural catalog, released data scope, fitted expert pool, language model and evaluator. A four-condition design distinguishes the effect of an active-block pointer with global tools from the additional effect of gating after indexing. We connect these interventions to a finite-horizon opportunity–selection decomposition and to two task-supported execution boundaries: numerical prediction precedes submission, and successful prediction closes ordinary subsequent analysis in the error-free, event-free diagnosis path. The primary comparison uses pooled diagnosis Macro-F1 over assigned first attempts, retaining canonical non-submissions and provider interruptions; replay performance is secondary. Paired PHM outcomes remain to be collected, so the present analysis establishes the method, its executable boundaries and the comparisons needed to determine its diagnostic effect.
 
 ## 1. Introduction
 
-A diagnostic workflow requires choosing useful analyses, recovering from failed calls and stopping with sufficient evidence. Making state explicit can focus a tool-using agent's next decision. Restricting its visible tools can also remove an action that the current case requires.
+Reliable equipment diagnosis requires both a useful numerical method and a procedure that applies it to the available measurement. Bearing-diagnostic benchmarks expose substantial variation in the difficulty of extracting fault evidence, while transfer learning improves the representations used for classification [@smith2015; @shao2019]. The Paderborn benchmark further distinguishes experimentally generated bearing damage and measurement conditions [@lessmeier2016]. These developments primarily strengthen the mapping from measurements to predictions. A tool-using PHM agent introduces an additional decision layer: it chooses which computation to invoke, interprets the returned evidence and decides when to deliver a diagnosis. A capable predictor that is never called cannot contribute to that delivered result.
 
-GraphDecisionAgent derives state from the public Benchmark trajectory, appends state guidance and filters the shared tool catalog. Its control is the same Generic policy, represented by a zero-behavior-override Reactive wrapper. The comparison fixes data, numerical capabilities and episode budgets.
+Language-model agents offer a way to coordinate these decisions without replacing every numerical component. Coscientist and ChemCrow couple language reasoning with scientific tools [@boiko2023; @bran2024], while ReAct interleaves reasoning with environmental actions and Toolformer learns tool use from API-augmented examples [@yao2023react; @schick2023toolformer]. For PHM, this suggests an architecture in which signal analysis and prediction remain executable numerical operations, while the agent organizes their use. The resulting scientific question concerns the relation between available capability, its actual execution and the final diagnosis—not merely whether an agent can produce an intelligible report.
 
-The original treatment changes two factors together: state information and action availability. A joint improvement would therefore leave its mechanism unresolved. It could arise from better interpretation of the current state, fewer distracting tools, or a mixture whose benefits conceal harmful filtering on some tasks.
+Explicit workflows are an established response to this coordination problem. StateFlow uses state-dependent instructions and transitions, and evaluates refined reactive prompting and state-removal variants [@wu2024stateflow]. PHMForge studies industrial tool orchestration, including verification, distractor-tool and discovery controls [@li2026phmforge]. TimeSage-MT compares code-enabled, skill-guided and orchestrated time-series systems and reports a grounding–flexibility trade-off [@kong2026timesagemt]. These results motivate a more specific question: **with the same PHM procedures and numerical capabilities available, what changes when an agent is told which instruction is active, and what changes when the workflow additionally restricts executable actions?**
 
-We separate these mechanisms with a cue-by-filter design and a finite-horizon value decomposition. Relative to the unrestricted optimum, a policy loses value when its mask removes high-value actions and when it chooses poorly among the remaining actions. The identity specifies the tradeoff; real task comparisons determine whether either mechanism matters in PHM.
+Figure 1 illustrates why these are different interventions. An active-instruction pointer locates an existing procedure within a shared catalog. A progress gate changes when computations and submission are available. The latter can suppress an early answer that has no numerical prediction behind it, yet also prevent further analysis once a prediction exists. Procedural progress and diagnostic sufficiency are different: executing a predictor does not establish that its label is correct or that every useful computation has been exhausted. Conversely, a removed action matters to the observed task only when the unrestricted agent would select it and its consequences affect the delivered result.
 
-The contributions are a PHM specialization of this control-loss decomposition, matched independent cue/filter interventions, and analysis of the conditions under which control helps or harms. An equivalence criterion identifies switches that do not change the policy and hence cannot test a proposed mechanism. Length studies distinguish sequence length from changed sample selection and proportional resources. State-machine structure itself is established prior work.
+![Motivation and intervention design. **a**, All conditions share the released data scope, numerical expert pool, procedural catalog, model and declared budgets. **b**, Indexing highlights an existing instruction; gating suppresses premature submission and closes post-prediction analysis. Crossed dashed arrows denote opportunities available with global tools but excluded in the illustrated gated path. The diagram simplifies the error-free, event-free, non-replay route; catalog discovery, error recovery and replay progression follow their own rules. **c**, The four conditions separate an explicit pointer from progress-gated tool exposure. **d**, Both primary contrasts use the same first-attempt diagnosis endpoint. This is a conceptual schematic, not a performance result.](../assets/figures/phmgraph_motivation.svg)
 
-## 2. Related Work
+Three challenges follow. First, instruction content and instruction selection must be separated: adding a better procedure only to the graph agent would mix control with domain knowledge. Second, restrictions must be described through the actions they remove, rather than through state names or tool counts. A prediction-ready state need not verify a prediction, and fewer visible tools can encode progress as well as reduce choice. Third, the comparison must retain failures to deliver an answer. Evaluating only successful submissions selects a treatment-dependent subset and can conceal an operationally important effect.
 
-ReAct interleaves reasoning and environment actions so an agent can update plans and handle exceptions [@yao2023react], while Reflexion uses linguistic feedback and episodic memory to influence subsequent trials [@shinn2023reflexion]. AgentBench shows that long-horizon reasoning and decision-making remain common failure sources across interactive environments [@liu2023agentbench]. The registered object here retains the Generic ReAct-style base but makes the treatment's current decision state, legal transitions, and state-specific tool visibility explicit in the shared rollout.
+We address these challenges with PHMGraph. A public-history controller computes analysis progress and independently exposes an opaque instruction-block index and a progress-dependent tool menu. Every condition receives the same complete procedural catalog. A paired four-condition design measures indexing under global tools and the incremental gate effect after indexing, using diagnosis as the primary task. The analysis connects these comparisons to the opportunities that the implemented controller permits or excludes.
 
-TimeART trains a tool-using model on expert time-series tool trajectories [@wu2026timeart], while TimeSage-MT evaluates structured, skill-guided and code-enabled agents over 240 multi-turn tasks across eight domains [@kong2026timesagemt]. PHMForge further motivates execution-trace evaluation in PHM-oriented tool environments [@das2026phmforge]. The present comparison fixes the Generic base prompt and every computational capability and varies only the registered eight-state control.
+The contributions are threefold:
 
-Industrial agents provide two closer control-structure references. ReActXen augments a ReAct executor with Review, Reflect, and Distillation components plus a Tiny Trajectory Store for structured SCADA queries [@rayfield2025reactiot]. CodeReAct embeds executable Python in a Thought--Action--Observation loop over structured maintenance records and evaluates outer-loop reflection and adaptive temperature [@zhou2026codereact]. P2 introduces none of those treatment-only roles or executable capabilities: `GraphDecisionAgent` remains one Generic-derived policy whose added state is computed from the public Benchmark trajectory.
+1. **A content-matched PHM control formulation.** PHMGraph separates active-instruction indexing from progress-gated tool exposure while keeping procedural content and potential numerical capabilities common. This formulation makes instruction localization and executable workflow restriction independently manipulable components of a PHM agent.
+2. **A task-supported analysis of the control trade-off.** We specialize a finite-horizon value decomposition to distinguish excluded analytical opportunities from selection within retained actions, and characterize prediction-before-submission and post-prediction closure in the supported diagnosis path. The analysis distinguishes workflow progress from diagnostic sufficiency and specifies the behavior needed to connect a restriction to task outcomes.
+3. **A paired, first-attempt evaluation design for delivered diagnosis.** Two prespecified Macro-F1 contrasts separate indexing from the additional gate effect, retain canonical failed deliveries, and use bearing-clustered uncertainty. Trajectory observations then distinguish numerical execution, premature submission and post-prediction continuation without replacing the task endpoint with procedural compliance.
 
-StateAct combines repeated goal prompting with explicit state tracking [@rozanov2025stateact], motivating a distinct state-cue condition. StateFlow is the direct state-machine precedent. It models LLM task solving as a state machine, separates process grounding through states and transitions from actions within a state, and permits rule- or LLM-selected transitions over context history [@wu2024stateflow]. P2 therefore does not claim state-machine workflow formalism as new. It studies a narrower experimental question in PHM: whether deterministic public-rollout state and state-specific tool visibility change independently evaluated task outcomes when the Generic base, computational world, budget, and episode order are matched.
+## 2. Related work
 
-SPIRAL is the closest verified search-based planning comparison. It formalizes tool-use planning as state-space search and places Planner, Simulator, and Critic roles inside an MCTS loop; its Simulator predicts plausible next observations and its Critic supplies reflective feedback [@zhang2026spiral]. The P2 graph is a different intervention: it never searches predicted outcomes and adds no simulator, critic, or tree search. Its eight states and legal tool subsets are derived deterministically from actions and observations already recorded by the shared Benchmark environment.
+### 2.1 Numerical PHM capability and agent control
 
-Table 1 freezes these source-bounded distinctions. It is a structural comparison, not a numerical ranking, and imports no reported result from another task. The versioned table asset is `paper/assets/tables/graph_closest_work.md`.
+Vibration-based bearing diagnosis has a substantial signal-processing and benchmarking foundation. Smith and Randall evaluate diagnostic analyses on the CWRU data, making the quality of extracted fault evidence central to assessing a method [@smith2015]. Lessmeier et al. provide systematically generated measurements and damage descriptions, including distinctions between artificial and real damage [@lessmeier2016]. Shao et al. combine time-frequency transformation with pretrained deep representations for machine-fault diagnosis [@shao2019]. More generally, MOMENT develops pretrained representations for multiple time-series tasks [@goswami2024]. These works establish or improve numerical capabilities and the data on which they are evaluated.
 
-| Work | Documented decision structure | Documented state or grounding source | Relation to the registered P2 contrast |
-|---|---|---|---|
-| ReAct [@yao2023react] | interleaved reasoning and environment actions | model trajectory and returned observations | P2 retains the Generic base and makes treatment state plus legal tool visibility explicit |
-| ReActXen [@rayfield2025reactiot] | ReAct executor with Review, Reflect, and Distillation components and a Tiny Trajectory Store | structured SCADA query results plus curated in-context trajectories | P2 uses one Generic-derived treatment and no treatment-only auxiliary agent or trajectory store |
-| StateFlow [@wu2024stateflow] | finite-state-machine-derived workflow whose states execute predefined prompt, model, or tool output functions | current state abstracts cumulative context history; rules or an LLM select transitions | direct formalism precedent; P2 does not claim state-machine workflows as novel and instead isolates public-rollout state plus state-specific tool visibility in a matched PHM evaluation |
-| CodeReAct [@zhou2026codereact] | executable Python inside a Thought--Action--Observation loop with outer-loop reflection | structured Business Objects, analytic functions, alerts, and work orders | P2 adds an eight-state tool-visibility controller, not executable Python or adaptive model control |
-| SPIRAL [@zhang2026spiral] | Planner/Simulator/Critic roles embedded in MCTS | Simulator-predicted observations and Critic feedback guide search | P2 derives state from observed Benchmark rollout events and performs no outcome simulation or tree search |
-| PHMForge [@das2026phmforge] | PHM-oriented tool orchestration and execution traces | heterogeneous scenario-specific tools and data | P2 holds the Generic Benchmark world fixed and varies only graph control |
-| GraphDecisionAgent (this work) | eight deterministic states with declared legal transitions and state-specific views of the unchanged tool catalog | public actions, execution results, errors, budget, and optional public condition events in the canonical rollout | active v6 exposes six reachable base-route states; dynamic-v3 retains an accepted 10-cell Mock mechanics gate, a runner-ready provider-free schedule, and formal coverage 0/240 |
+PHMGraph examines a different component: the control interface through which a fixed agent invokes such capabilities. Equal access to an expert pool does not imply that two agents execute the same numerical path. One may fail to call a predictor, choose different features or submit a different supported label. Accordingly, the controlled quantity is the available pool and its fitted parameters, while realized computations are part of the treatment response. This distinction also separates PHMGraph from studies that add reusable diagnostic knowledge or train a stronger representation.
 
-## 3. Graph-Guided Policy
+### 2.2 Tool acquisition, feedback and reusable experience
 
-The implemented policy uses eight states. Inspect exposes only bounded data tools. Hypothesize exposes catalog-level operator/model discovery. Analyze exposes signal operators and model schemas. Check exposes numerical prediction and verification actions. Monitor represents a registered public equipment- or data-condition observation, and Revise replans after such an observation. Recover follows a recorded error and exposes the tools needed for one corrected call. Submit exposes only the terminal tool. State is derived from the public trajectory before each decision and is written to the resulting `TrajectoryStep`; it therefore changes both the model's policy context and the set of callable tools. The current registered v6 primary supplies no `public_condition_event`, so Monitor/Revise are unreachable, zero visitation is valid, and this cohort supports no dynamic-revision claim. Its declared transition relation is the 50-edge base-v6 relation used for primary treatment-integrity validation. Observation-conditioned behavior is isolated in a separately preregistered dynamic-full profile with its own 33-edge legal relation; that profile's provider-free mechanics gate is accepted but its formal cohort has not run. The Benchmark owns only generic public-condition event delivery; P02 owns the Graph-state interpretation.
+Toolformer learns when and how to use APIs, ToolLLM combines tool-use data construction, training and API retrieval, and Gorilla studies API generation with retrieved documentation [@schick2023toolformer; @qin2023toolllm; @patil2023gorilla]. Coscientist coordinates computation, documentation and experimental modules, while ChemCrow integrates chemistry-specific tools into language-model reasoning [@boiko2023; @bran2024]. These contributions demonstrate complementary ways to make computational capabilities usable by language models.
 
-Let $h_t$ be the public trajectory before turn $t$, $g(h_t)$ the deterministic state function, and $\mathcal{T}$ the unchanged shared tool set. The treatment action set is
+ReAct conditions actions on an evolving reasoning-and-observation history [@yao2023react]. Reflexion uses feedback and episodic verbal memory across attempts [@shinn2023reflexion], whereas Agent Workflow Memory induces reusable routines from previous experience and supplies them to guide later actions [@wang2024awm]. PHMGraph instead holds model weights and procedural content fixed within the comparison. Its pointer identifies one of the instructions already visible to every arm; it neither retrieves a new skill nor adds experience from another attempt. Consequently, an observed indexing effect concerns the use of common content, rather than acquisition of additional knowledge.
 
-$$
-\mathcal{A}_t^{\mathrm{graph}} = \mathcal{T} \cap \mathcal{A}(g(h_t)),
-$$
+### 2.3 State-driven workflows, thought graphs and search
 
-and its decision is sampled from the same Generic-base model policy as the control:
+Finite-state controllers predate language-model agents: Hansen represents partially observable policies as finite controllers, and reward machines expose structured task objectives to reinforcement-learning algorithms [@hansen1997; @icarte2018]. StateFlow brings explicit states, transitions and state-dependent execution to LLM task solving. Its verification and error-handling states, together with its ablations, make it a direct methodological precedent [@wu2024stateflow]. StateAct reinforces goals and tracks state through self-prompting and a chain of states [@rozanov2025stateact]. These approaches establish that explicit state organization itself is not the distinguishing object of the present study.
 
-$$
-a_t \sim \pi_\theta(a \mid q,h_t,\mathcal{A}_t^{\mathrm{graph}},g(h_t)).
-$$
+Other graph structures act on different objects. Tree of Thoughts explores alternative reasoning continuations, and Graph of Thoughts represents dependencies and combinations among generated thoughts [@yao2023tot; @besta2024got]. Language Agent Tree Search combines search, value assessment, reflection and environmental feedback [@zhou2024lats]. AFlow searches over code-represented agentic workflows [@zhang2025aflow], while AutoGen supports configurable multi-agent conversation patterns [@wu2023autogen]. Such methods can change candidate generation, auxiliary computation or the workflow itself. PHMGraph uses a fixed public-history controller and one underlying agent; its primary intervention is the presentation and execution boundary of an existing procedure, rather than thought-graph search or automatic workflow optimization.
 
-The Benchmark Generic (Reactive-equivalent) control receives $\mathcal{T}$ without $g$ or the state-specific filter. Thus graph guidance consists of two coupled, predeclared policy operations: exposing the current public decision state in the prompt and restricting the callable schemas to that state's subset. It does not add a computation, prediction, memory store, or private observation.
+### 2.4 Industrial and time-series agents
 
-Transitions are a deterministic function of public trajectory fields: successful tool families, the most recent error, the current ordered replay sample, the number of successful feature calls whose public `source_sample_id` matches that sample, and the set of distinct replay samples with a successful sample-bound prediction. Under the v6 runtime contract, every successful `op.run` result inherits this opaque handle from its source artifact, including chained operator outputs. The same contract linearly interpolates the PSD value at each exact requested low- and high-Hz `band_power` endpoint before trapezoidal integration. The public task observation, tool results, and policy history contain no bearing identifier or target; `bearing_id` exists only in evaluator-side experiment records for split alignment and bearing-clustered inference. Repeating a prediction for one sample, or analyzing a different sample, therefore cannot advance the current sample's graph state. The graph does not read a private target, estimate an unrecorded uncertainty, perform numerical signal processing, or change the shared tool surface. A minimal runtime can implement these transitions directly; dependency on a particular graph framework is not part of the method.
+ReActXen adds review, reflection and distillation components to industrial SCADA data access [@rayfield2025reactiot]. CodeReAct embeds executable Python in a reasoning–action–observation loop for asset-management events and work orders [@zhou2026codereact]. SPIRAL integrates Planner, Simulator and Critic roles with Monte Carlo tree search, including predicted outcomes and reflective feedback [@zhang2026spiral]. TimeART trains time-series reasoning models using tool-use trajectories [@wu2026timeart]. Each changes capabilities, feedback or decision computation beyond an active pointer over fixed instructions.
 
-![The shared eight-state topology with distinct legal-transition matrices: the 50-edge base-v6 relation, in which Monitor/Revise are unreachable because the active primary registers no public condition event, and the 33-edge dynamic-full relation whose provider-bound formal cohort has not run.](../assets/figures/graph_policy_states.svg)
+Two recent studies are particularly close. PHMForge evaluates algorithm-grounded industrial tools and distinguishes orchestration failures, including sequencing and premature termination; its control experiments already address several tool-level mechanisms [@li2026phmforge]. TimeSage-MT includes paired system comparisons and a structured pipeline whose additional stages can improve grounding while reducing other dimensions of performance [@kong2026timesagemt]. The present study builds on these findings through a narrower controlled object: an instruction pointer and a progress gate acting on a common PHM catalog. The two primary contrasts concern that specified interface, not a general comparison of all structured and unstructured agents.
 
-### 3.1 State semantics and tool visibility
-
-| State | Public condition | Tool families exposed |
+| Closest approach | Documented intervention | PHMGraph comparison object |
 |---|---|---|
-| Inspect | current sample has no successful bounded read | `data.*` |
-| Hypothesize | signal exists but analysis/model families have not been listed | catalog discovery and summary |
-| Analyze | a catalog has been inspected but the core model schema is not yet available, or the current replay sample has fewer than 11 successful feature calls | operator list/schema/run and model schema |
-| Check | the core model schema is available without a prediction, or the current replay sample has accumulated 11 successful feature calls | operator/model schema and prediction |
-| Monitor | separate dynamic profile only: the current released sample carries a new public `operating_condition_change` pulse | bounded data, operator, and model analysis/prediction tools |
-| Revise | separate full dynamic profile only: the next non-error, non-event observation follows Monitor | bounded data, operator, and model analysis/prediction tools |
-| Recover | the previous recorded step failed | the tools needed for one corrected data/operator/model call |
-| Submit | a core prediction exists, or replay has one successful prediction whose `source_sample_id` matches every ordered sample | terminal `submit` only |
+| StateFlow | State-dependent instructions, execution and transitions | Same full catalog; pointer and gate independently switched |
+| StateAct | Repeated goal prompting and state tracking | Opaque active-block identifier derived from public history |
+| ReActXen / CodeReAct | Additional reflection roles or executable-code reasoning | One base agent and a common numerical tool pool |
+| TimeART | Tool-trajectory training of time-series reasoning models | Fixed model weights and fixed fitted experts |
+| PHMForge | Industrial tool orchestration and tool-level controls | Within-catalog indexing and incremental progress gating |
+| TimeSage-MT | Code, skill and multi-stage orchestration comparisons | Four interfaces with task-primary first-attempt diagnosis |
 
-The state is derived from public trajectory fields immediately before an LLM decision. `GraphDecisionAgent.available_tools` then filters the same benchmark schemas using the active state, and the shared runner records an out-of-state tool selection as a recoverable failed action rather than executing it. Either operator-catalog or model-catalog inspection advances Hypothesize to Analyze, so every catalog exposed in that state has a declared successor. For replay, a successful prediction advances to Inspect for the next ordered sample; after the final prediction it advances to Submit. A failed grounded-submission check advances from Submit to Recover so the Agent can correct its supporting artifacts. The graph neither edits a tool result nor supplies an action on behalf of the LLM.
+The comparisons above describe intervention content; they do not transfer performance numbers across tasks or assert that earlier papers lack controlled experiments.
 
-### 3.2 Transition evaluation
+### 2.5 Task-grounded agent evaluation
 
-Every `TrajectoryStep` stores the decision state used for that action. Transition validity is the fraction of adjacent observed states that belong to the declared transition relation; an episode with no observed state receives 0, while a one-state episode with no illegal transition receives 1. State coverage, per-state step occupancy, per-state episode visitation, Recover visits, repeated actions, grounded completion, and budget exhaustion remain separate measurements; they are not compressed into a graph score. A valid transition does not imply a useful action, which is why task outcomes are primary and rollout diagnostics remain explanatory.
+AgentBench evaluates interactive agents across environments, GAIA tests general assistant tasks requiring multiple capabilities, and WebArena evaluates functional completion in realistic web environments [@liu2023agentbench; @mialon2023gaia; @zhou2024webarena]. The distinction between producing an action and accomplishing a task is also central to tool–agent–user interaction in tau-bench [@yao2024tau]. These precedents motivate outcome evaluation that extends beyond a valid tool call or a legal transition.
 
-For the non-empty observed state sequence $(s_1,\ldots,s_n)$ and declared edge relation $E$, transition validity is
+Statistical evaluation also requires the unit of comparison to match the source of dependence. Demšar studies classifier comparisons across datasets, while Agarwal et al. show how limited runs and aggregate point estimates can produce unstable conclusions [@demsar2006; @agarwal2021]. PHMGraph uses paired bearing-level resampling because windows and model repeats from the same bearing are not independent experimental assets. The use of confidence intervals follows established evaluation practice; it does not create a new reliability metric or confer deployment guarantees.
 
-$$
-V_{\mathrm{trans}} =
-\begin{cases}
-1, & n=1,\\
-\frac{1}{n-1}\sum_{t=1}^{n-1}\mathbf{1}[(s_t,s_{t+1})\in E], & n>1.
-\end{cases}
-$$
+### 2.6 Action restriction and opportunity cost
 
-An empty sequence receives 0 because it provides no evidence that the treatment entered the runtime. During replay, a successful prediction advances the state to Inspect for the next ordered sample, while the already discovered operator/model catalogs remain public trajectory knowledge. After the final numerical prediction, the state advances to Submit. These rules make cross-window persistence observable without introducing an external graph memory.
+Invalid-action masking has theoretical and empirical support in policy-gradient settings [@huang2022masking], and confidence-based action elimination studies when alternatives can be discarded using reward evidence [@evendar2006]. A PHM workflow gate is different from an environment-validity mask: it may remove an otherwise legal analysis because a prescribed phase has ended. Its diagnostic effect therefore depends on both easier selection and excluded opportunities.
 
-For task $q$, episode state sequences $(s_{i1},\ldots,s_{iT_i})$, and declared state $s$, step occupancy and episode visitation are
+Policy-value analysis supplies the relevant accounting framework [@schulman2015]. Off-policy evaluation further shows why observed trajectories alone do not reveal the values of unsupported alternatives without additional assumptions [@jiang2016; @khan2024]. We use these foundations to delimit the interpretation of PHMGraph, rather than equating invalid-call counts with regret or deriving an efficacy claim from the size of a tool menu.
+
+## 3. PHMGraph: common content, different decision interfaces
+
+### 3.1 Public progress and shared capabilities
+
+Let
 
 $$
-O_{q,s}=\frac{\sum_i\sum_{t=1}^{T_i}\mathbf{1}[s_{it}=s]}{\sum_i T_i},
-\qquad
-V_{q,s}=\frac{1}{N_q}\sum_i\mathbf{1}[\exists t:s_{it}=s].
+\mathcal W=(\mathcal D,\mathcal Q,\mathcal A,\mathcal B,P,\mathcal E)
 $$
 
-Occupancy is a proportion of recorded decision steps, not wall-clock time. Both diagnostics are reported for all eight executable states, including zero-valued states. Because the registered v6 primary has no `public_condition_event`, zero Monitor/Revise values are expected to remain admissible and must not be interpreted as evidence of dynamic revision.
-
-### 3.3 Action-set and selection losses
-
-Consider a finite horizon $T$ with state $s_t$ containing the public history, time and remaining budget, and zero terminal value. Let $A_g(s)\subseteq A(s)$ be a nonempty retained action set. For the unrestricted optimal value functions $V_t^*,Q_t^*$, define
+denote the released data scope, tasks, global actions, budgets, environment and evaluator. Public history $h_t$ contains task context, actions, returned numerical artifacts, errors and remaining resources. Private targets are available only to the evaluator. PHMGraph computes an analysis-progress phase
 
 $$
-\ell_t^{\mathrm{mask}}(s)=V_t^*(s)-\max_{u\in A_g(s)}Q_t^*(s,u),\qquad
-\ell_t^{\mathrm{select}}(s,a)=\max_{u\in A_g(s)}Q_t^*(s,u)-Q_t^*(s,a).
+z_t=f(h_t).
 $$
 
-For a policy supported on $A_g(s)$,
+The event-free base phases represent acquisition, catalog inspection, analysis, prediction readiness, recovery and submission. They describe execution progress rather than fault probabilities or evidence sufficiency. Full public history remains available to the agent, so the experiment concerns an explicit interface to that history rather than indispensable persistent memory.
+
+The procedural catalog is
 
 $$
-V_0^*(s_0)-V_0^\pi(s_0)=\mathbb E_\pi\sum_{t=0}^{T-1}
-[\ell_t^{\mathrm{mask}}(s_t)+\ell_t^{\mathrm{select}}(s_t,a_t)].
+B=((b_j,d_j))_{j=1}^{6},
 $$
 
-The two losses sum to $V_t^*-Q_t^*$. Substituting the Bellman relation and summing over time cancels consecutive optimal values, yielding the identity. The PHM environment does not supply $Q^*$, so invalid-call rates are explanatory observations rather than estimates of this regret. A finite example verifies the identity; matched task outcomes assess the real filtering tradeoff.
+where the opaque identifiers B01–B06 name six fixed instruction blocks. Every condition receives the complete catalog once, in the same order, on each request. Indexing appends the designated block identifier without replacing or expanding its instruction. The resulting comparison is conditional on this catalog, including any burden of finding the relevant block.
 
-Two interventions with identical conditional action distributions at every reachable history, the same initial state and the same environment induce identical rollout distributions by induction. A no-memory switch that reconstructs the same state from complete history therefore cannot identify a memory effect.
+### 3.2 Independently controlled interfaces
 
-## 4. Controlled Evaluation
+For pointer indicator $i\in\{0,1\}$ and gate indicator $g\in\{0,1\}$, the model input is
 
-The primary hypothesis is that graph guidance improves replay-monitoring task performance under the shared fixed action budget. The primary estimand is $\Delta^{\mathrm{replay}}_{AP}=AP^{\mathrm{Graph}}-AP^{\mathrm{Generic}}$ over 24 exact episode pairs (eight rotation-0 bearings crossed with three seeds), stored as `estimate.online_replay_monitoring.task.average_precision` in the paired result. The frozen target-adverse missing-score policy keeps all 72 assigned replay windows per arm in the AP population: an omitted positive is a miss and an omitted negative receives an adverse false-alarm rank. The 95% interval uses 2,000 bearing-clustered paired bootstrap resamples. The accepted analysis will report the estimate and interval without a significance threshold or non-inferiority margin. Grounded completion, recovery, repeated actions, budget exhaustion, latency, and cost are prespecified explanatory outcomes. Diagnosis Macro-F1 and anomaly completion-adjusted AP are registered task-primary core outcomes reported separately from the replay primary.
+$$
+x_t^{ig}=\rho(h_t,B)\oplus iL(z_t)
+\oplus\operatorname{Schema}(\Gamma_g(z_t)),
+\qquad \Gamma_0(z_t)=\mathcal A.
+$$
 
-The control and treatment use the identical Benchmark Generic base prompt, model runtime, task instances, tools, numerical experts, budgets, and stochastic seeds. The control is reported as Benchmark Generic (Reactive-equivalent); `ReactiveSequentialAgent` changes no Generic behavior. `GraphDecisionAgent` adds only the registered current-state prompt suffix and state-specific visibility over the same global tool catalog. The only varied factor is whether decision state is implicit/Generic or explicit/graph-guided.
+Here $\rho$ renders the common history and catalog, $L$ returns the active-block identifier, and $\Gamma_1$ provides the progress-dependent menu. Actions are selected by the same base model,
 
-Core diagnosis and anomaly comparisons use the Paderborn bearing dataset [@lessmeier2016conditionMonitoring] with all four bearing-grouped rotations, the sample at metadata-order index $\lfloor 2(n-1)/3 \rfloor$ from each of the 32 held-out bearings, and three paired seeds. These formal records are distinct from the exact midpoint records used during pre-formal endpoint and feature-contract development. Every bounded read contains all 8,192 samples from channel index 2, the bearing-housing vibration column mapped by the public upstream reader; the shared full-rate window contract prevents the material high-frequency aliasing identified by the benchmark sampling audit. Replay stress uses the eight held-out bearings in rotation 0, three ordered windows per bearing, and the same seeds. Fold-level expert/reference fitting and validation selection occur before the matched episodes and are identical across policies; the reported cost comparison therefore covers inference rollouts only. Core episodes have a 33-call budget; replay episodes allow 72 calls, three reads, 50 operator calls, and three model calls. These limits are shared by the Benchmark Generic and Graph arms.
+$$
+a_t\sim\pi_\theta(\cdot\mid x_t^{ig}).
+$$
 
-The extension protocols keep the same task-primary hierarchy and acceptance discipline. Dynamic-v3, horizon-v3, Ottawa P2-E8, and reliability P2-E9 all retain assigned windows and failed or partial episodes, use physical-bearing inference where registered, and admit manuscript estimates only from complete accepted cohorts. Their current execution and validation status is reported once in Section 6 and the claim--evidence matrix.
+The four conditions are catalog-global (00), indexed-global (10), catalog-masked (01) and indexed-masked (11). Historical state annotations are removed from model-visible tool messages in every condition, while numerical payloads and errors are retained. The gating operation changes both presented schemas and which actions can execute; an unavailable request remains an observed failure rather than a silently corrected action.
 
-### 4.1 Independent state cues and tool filtering
+The six distinct base menus also convey progress information. Thus, the gate effect includes menu reduction, implicit phase information and changes in permissible action sequences. It is the total effect of this specified gate, not a pure action-count or topology effect. Equal-width block identifiers likewise do not imply equal tokenizer cost.
 
-| Current-state cue | Global tools | State-filtered tools |
-|---|---|---|
-| Absent | `factorial-reactive` | `factorial-filter` |
-| Present | `factorial-state` | `factorial-both` |
+### 3.3 Execution boundaries
 
-All four component conditions remove historical `decision_state` labels from provider-visible tool messages, while canonical rollouts retain their state record. They independently vary the current-state suffix and tool visibility. These conditions are distinct from the original joint graph treatment. Task outcomes, costs and the interaction separate cue and filter effects; concrete trajectories identify cases where a necessary analysis was excluded.
+In the supported base diagnosis path, submission becomes available only after numerical prediction. After a successful prediction, the menu contains submission alone, closing ordinary subsequent analysis. A recorded submission error can reopen recovery; replay follows its released-window progression. These rules make two boundaries observable: whether an answer can precede prediction, and whether an agent can continue numerical analysis after prediction.
 
-The current horizon entry varies evenly spaced window selection and proportional budgets together. It measures length/selection/resource sensitivity. A length-only intervention requires nested prefixes of a fixed longest sequence and a separately specified resource rule. Base and dynamic profiles remain distinct; public operating-condition events are not signal-inferred fault onsets.
+The diagnosis task exposes one distinct legal raw window with fixed channel and window specifications. Successful rereads return the same array under potentially different artifact references. Gating repeated access in this task therefore changes access behavior and cost, not the number of distinct raw observations. Different processing of the same array can still matter to a bounded agent.
 
-## 5. Tasks and Metrics
+## 4. Opportunity–selection analysis
 
-Diagnosis and anomaly tasks use the shared Benchmark metrics, including diagnosis accuracy, Macro-F1, ten-bin expected calibration error and calibration coverage, and anomaly submitted-episode AP, completion-adjusted AP, AUROC, false-alarm rate, true-positive rate, full-cohort prevalence, and submitted-subset prevalence. AP requires a positive target, AUROC both classes, false-alarm rate a negative target, and true-positive rate a positive target; out-of-domain values and completion-adjusted AP when AP is undefined are N/A rather than zero. Replay monitoring composes bounded windows into longer episodes. Its primary metric is Average Precision over every protocol-assigned window under `phase1_replay_target_adverse_missing_score_v1`; each arm also reports assigned, submitted, missing, and covered windows. Grounded completion, valid and failed tool calls, Agent decision errors, reference validity, repeated actions and errors, grounded recovery, budget exhaustion, trajectory length, window/operator/model calls, LLM turns, returned scalar values and float64 bytes, latency, and cost are explanatory outcomes. No separate cycle-ratio endpoint is registered: loop behavior is represented by `repeated_action_ratio` and the Graph-only state occupancy, visitation, and transition diagnostics. Every 2,000-resample bootstrap interval reports its valid-replicate count. State-transition validity and coverage describe Graph treatment integrity only. Event-level detection metrics are excluded unless verified event annotations exist, and provider latency remains descriptive because counterbalancing cannot eliminate backend drift.
+### 4.1 Finite-horizon decomposition
 
-## 6. Implementation Validation
+Consider a finite horizon $T$ with absorbing termination, zero terminal continuation value and a history state $s_t$ that includes time and remaining budget. Let $V_t^*,Q_t^*$ be unrestricted optimal task values, and let $A_G(s)$ be a nonempty retained action set. For a supported action $a\in A_G(s)$, define
 
-The accepted P2-E0-v2 real-data Generic-base adapter/world mechanics gate reads the fixed seed-20260808 rotation-0 Benchmark Generic (Reactive-equivalent) and `GraphDecisionAgent` roots without calling a provider. It accepts 16 matched statistical episode keys per arm, verifies all 32 attempt leaves are exact-six, and counts 352 canonical action rows and 16 submitted terminal paths per arm. TaskSpecs, budgets, full-rate windows, sampling, evaluators, model identity, validation-selected numerical model, validation scores, and the global tool catalog match. The gate verifies zero control behavior overrides, direct Generic inheritance in both arms, registered Graph control only, and no P1 runtime import or bundle provenance. These observations establish one-seed adapter/world mechanics; submission counts are terminal-path mechanics rather than outcome-quality estimates.
+$$
+\ell_t^{\mathrm{mask}}(s)=V_t^*(s)-\max_{u\in A_G(s)}Q_t^*(s,u),
+$$
 
-The opt-in Generic-base dynamic-v3 implementation uses target-adverse Average Precision over every assigned replay window as its primary endpoint. Failed and partial episodes stay in the population under `phase1_replay_target_adverse_missing_score_v1`; grounded completion is secondary. Seed-level metrics are recomputed over all eight held-out bearing sequences, and the paired bootstrap and exact 256-way swap test recompute the nonlinear endpoint at the matched bearing-cluster level. Per-bearing AP averaging is forbidden because one bearing sequence can contain a single target class.
+$$
+\ell_t^{\mathrm{select}}(s,a)=\max_{u\in A_G(s)}Q_t^*(s,u)-Q_t^*(s,a).
+$$
 
-The shared Benchmark Environment releases a generic `public_condition_event` without future samples, targets, bearing identity, or Graph semantics. P02 consumes that event under `phase1_graph_dynamic_generic_ablation_v3` and implements the full and four ablation profiles. The retained v2 mechanics gate accepts 10/10 exact-six Mock cells with zero provider calls. The dedicated formal runner is implemented and ready for all 240 units; its provider-free schedule emits 240/240 dry-run commands and invokes none, while validate-only performs zero environment reads, zero probe reads, zero provider calls, and zero filesystem writes. Formal coverage is 0/240. The analyzer rebuilds private assignments through DataPort and uses canonical successful-submit prefixes as prediction authority. Runner checks pass 17/17, dynamic-focused checks pass 50/50, and accepted-consumer checks pass 20/20.
+For a policy supported on these sets,
 
-Horizon-v3 emits 144/144 dry commands with zero executions. Ottawa P2-E8 emits 18/18 unexecuted commands for 72 bundles and 36 matched pairs; analyzer/runtime checks pass 22/22 and consumer checks pass 18/18. Reliability P2-E9 emits 160/160 inert commands for 160 bundles and 80 pairs; runner/analyzer/scheduler checks pass 12/12 and consumer checks pass 20/20. No provider-bound unit or accepted result exists for these extensions.
+$$
+V_0^*(s_0)-V_0^\pi(s_0)=
+\mathbb E_\pi\sum_{t=0}^{T-1}
+\left[\ell_t^{\mathrm{mask}}(s_t)+\ell_t^{\mathrm{select}}(s_t,a_t)\right].
+$$
 
-### 6.1 Current mechanics-only evidence
+The two terms sum to $V_t^*(s_t)-Q_t^*(s_t,a_t)$. Substituting the Bellman equation and taking conditional expectations cancels successive optimal values; zero terminal continuation yields the identity. This is a finite-horizon specialization of standard value accounting [@schulman2015]. The first term captures exclusion of high-value opportunities; the second captures selection among retained alternatives. The identity concerns expected episodic return; the pooled Macro-F1 in Section 5 is a separate, non-additive operational estimand.
 
-<!-- P2_CURRENT_MECHANICS_TABLE:BEGIN -->
+PHM logs do not provide $Q^*$. Accordingly, neither component is estimated by an invalid-call rate. Different policies also induce different history distributions, so differences between these terms are not automatically causal mediation effects. Empirical malformed calls and interruptions remain outcomes in their own right; the supported-policy assumption is explicit in the analytical identity.
 
-| Gate | Matched policies | Materialized mechanics | Formal coverage | Claim boundary |
-|---|---|---:|---:|---|
-| P2-E0-v2 | Benchmark Generic (Reactive-equivalent) / GraphDecisionAgent over the same Generic base | 32 exact-six leaves (16 per arm), 352 actions and 16 submitted terminal mechanics per arm | Not a provider-bound formal cohort | Accepted adapter/world equivalence mechanics only |
-| Dynamic-v3 | Benchmark Generic (Reactive-equivalent) plus the full and four Graph profiles | 10/10 exact-six Mock cells, 0 provider calls; dedicated formal runner 17/17 and dynamic-focused 50/50 | runner ready; 240/240 dry-run commands emitted, 0 invoked; 0/240 formal units; formal gate not accepted | Event routing and profile mechanics only |
+### 4.2 Redundant information, nonredundant computation
 
-<!-- P2_CURRENT_MECHANICS_TABLE:END -->
+When the complete rendered history determines $z_t$, appending its deterministic index adds no information to an unrestricted history policy. Such a policy can internally compose $f$ with its decision rule. Restricting its action support cannot increase its optimal task value. A finite language model may nevertheless use the explicit index more effectively than it reconstructs the relevant phase, or select more effectively from a restricted menu. The empirical question concerns this bounded decision maker, not an increase in information-theoretic capability.
 
-Neither row contains a task-performance estimate or a Graph treatment effect.
-Submission counts above are terminal-path mechanics, not outcome quality. The
-standalone generated table is
-`paper/assets/tables/p2_current_mechanics_status.md`.
+The same distinction applies to rereading. For the legal raw arrays $X_2=X_1$,
 
-![Current provider-free Paper-2 mechanics evidence. P2-E0-v2 accepts matched Generic-base adapter/world execution mechanics; dynamic-v3 retains the unchanged v2 Mock gate, emits 240 dry-run commands without invoking them, and has formal coverage 0/240.](../assets/figures/p2_current_mechanics_status.svg)
+$$
+I(Y;X_2\mid X_1)=0.
+$$
 
-The accepted public aggregate `../p01-phm-agent-benchmark/paper/experiments/results/p0_active_v02_provider_free_reference_subset_v1.json` is the shared provider-free reference authority. It binds Benchmark revision `b6cf5796b7e07c20866fd1bfda743f51ee4ea940`, Data Factory revision `58050716383e32ca79fdad0d9a45ad96a19eb838`, and formal stamp `20260903T080515Z`. Within that aggregate, the B2 Scripted reference contains 64 core episodes and eight replay episodes. Core outcomes cover 32 bearings per task, grounded completion 1.0, 22 steps and 11 operator calls per episode, diagnosis Macro-F1 0.3324, and anomaly Average Precision 0.8987. Replay reports grounded completion 1.0, 50 steps and 33 operator calls per episode, and target-adverse Average Precision 0.9355. This B0/B1/B2 reference subset supplies descriptive one-seed calibration and no Generic-versus-Graph treatment estimate.
+This excludes a second independent raw-observation explanation in the present diagnosis task. It does not imply that an alternative numerical analysis of $X_1$ is computationally redundant for the agent. Task utility here also excludes interface costs: equal optimal task values need not imply equal token use, latency or priced net value.
 
-## 7. Registered Formal Analysis
+### 4.3 From a permitted opportunity to an observed effect
 
-The primary runtime is frozen to `cohere/north-mini-code:free` through the OpenRouter OpenAI-compatible Chat Completions endpoint at temperature 0.2, seeds 20260808--20260810, and a 2,048-token per-turn output cap. The accepted active-v0.2 public aggregate above supplies the provider-free reference; matched Generic-versus-Graph LLM estimates do not yet exist. The production v6 contract uses opaque public handles, binds predictions and successful operator artifacts to source samples, excludes bearing identity from the public rollout, fixes the mapped vibration column, and interpolates exact requested `band_power` endpoints before integration. Replay task Average Precision is primary, while grounded completion remains explanatory. The paired table will report Graph-minus-Generic task-primary, completion, recovery, repetition, budget, latency, token, and cost outcomes; Graph state metrics will describe treatment integrity.
+Post-prediction closure is an execution property of the error-free, event-free, supported diagnosis path. To investigate its consequence, the comparison separates three observations: whether global-tool agents continue analysis after prediction, whether the final label changes, and whether the supporting numerical results change. New reference identifiers alone do not establish new evidence. A changed label can be correct or incorrect, and a longer trajectory can be useful or wasteful.
 
-The P2-E1 finalizer consumes explicit active-v0.2 timestamped roots and validates each `cohort_index.json` against canonical exact-six leaves. The checked-in readiness artifact records `external_roots_required_no_audit_performed`, carries no retired-root counts, and emits no effect estimate. Every Graph unit must bind a completed Benchmark control unit and the exact clean Benchmark/Data Factory/P2 source topology. Once all four arm gates and both pairing gates accept, the finalizer emits four absolute arm summaries and two paired bearing-bootstrap results in `p2_e1_generic_base_formal_v2_result.json`. The accepted-only renderer independently verifies that identity and every displayed estimate, interval, and valid-replicate count. Finalizer checks pass 13/13 and renderer checks pass 18/18, including a complete 192-core/24-replay-per-arm fixture.
+These distinctions yield falsifiable alternatives. A gate may improve delivered performance chiefly by increasing numerical execution and submission, without improving label quality among submitted cases. It may reduce performance when useful continuation is selected and then removed. It may show little effect because the unrestricted agent rarely uses the excluded opportunities. The primary outcome tests the total effect; trajectory observations indicate which explanation is compatible with the observed execution, without identifying an unobserved optimal alternative.
 
-The formal-result insertion contract is fixed before observing those outcomes:
+## 5. Paired first-attempt evaluation
 
-| Result object | Canonical artifact | Manuscript use after acceptance |
-|---|---|---|
-| Current primary readiness | `paper/experiments/results/p2_e1_primary_readiness_v2.json` | fail closed while matched Generic-base keys are absent; emit no effect estimate |
-| Embedded core gates | `paper/experiments/results/p2_e1_primary_readiness_v2.json`; mirrored in `p2_e1_generic_base_formal_v2_result.json` | verify 192 v6 episodes per arm and 192 exact pairs before any diagnosis/anomaly comparison is quoted |
-| Core absolute and paired results | `paper/experiments/results/p2_e1_generic_base_formal_v2_result.json` | absolute diagnosis/anomaly task-primary estimates plus Graph-minus-Generic task and rollout deltas, intervals, and valid-replicate counts |
-| Core Graph state diagnostics | `paper/experiments/results/p2_e1_graph_state_summary_v2.json`; `paper/assets/tables/p2_e1_graph_state_summary.md` (generated after acceptance; currently absent) | Graph-only state integrity on diagnosis and anomaly episodes |
-| Embedded replay gates | `paper/experiments/results/p2_e1_primary_readiness_v2.json`; mirrored in `p2_e1_generic_base_formal_v2_result.json` | verify 24 v6 episodes per arm and 24 exact pairs before the primary estimate is quoted |
-| Replay absolute and paired results | `paper/experiments/results/p2_e1_generic_base_formal_v2_result.json` | $\Delta^{\mathrm{replay}}_{AP}$, target-adverse assigned-window accounting, and secondary long-horizon rollout deltas |
-| Replay state diagnostics | `paper/experiments/results/p2_e1_graph_state_summary_v2.json`; `paper/assets/tables/p2_e1_graph_state_summary.md` (generated after acceptance; currently absent) | eight-state occupancy, visitation, and transition integrity; zero Monitor/Revise values are valid because v6 registers no `public_condition_event` |
-| Replay mechanism case | not admitted by the active publication contract | optional descriptive output remains omitted until its extractor binds the exact accepted combined-result identity and pairing membership |
+### 5.1 Primary endpoint and contrasts
 
-An accepted combined result will provide absolute estimates, bearing-bootstrap intervals, valid-replicate counts, and eligible Graph-minus-Generic paired estimates. Formal table rows require all four arm gates and both exact pairing gates. Replay summaries preserve assigned, submitted, missing, and covered-window counts under the frozen target-adverse policy; undefined accepted-cohort metrics remain N/A. Graph state summaries are treatment-integrity diagnostics with no Generic analogue. The v6 primary contains no `public_condition_event`, so Monitor/Revise occupancy cannot measure dynamic revision. Dynamic mechanics remain separate from the primary cohort, and completion or recovery cases require matched evaluator gating.
+Diagnosis is primary. The endpoint is pooled Macro-F1 over the three declared diagnosis classes and all assigned canonical first-attempt outcomes. An attempt with no accepted diagnosis is retained as `no_submission`: it contributes a false negative to its true class and is not averaged as a fourth diagnosis class. This operational endpoint therefore reflects both delivery and label quality.
 
-<!-- P2_DYNAMIC_FORMAL:BEGIN -->
-<!-- P2_DYNAMIC_FORMAL:END -->
+For matched first-outcome records $D_{ig}^{(1)}$ under catalog $B$, the two primary contrasts are
 
-<!-- P2_E8_OTTAWA:BEGIN -->
-<!-- P2_E8_OTTAWA:END -->
+$$
+\Delta_{\mathrm{index}}^{D}=
+\operatorname{F1}_{\mathrm{macro}}(D_{10}^{(1)})-
+\operatorname{F1}_{\mathrm{macro}}(D_{00}^{(1)}),
+$$
 
-<!-- P2_E9_RELIABILITY:BEGIN -->
-<!-- P2_E9_RELIABILITY:END -->
+$$
+\Delta_{\mathrm{gate}}^{D}=
+\operatorname{F1}_{\mathrm{macro}}(D_{11}^{(1)})-
+\operatorname{F1}_{\mathrm{macro}}(D_{10}^{(1)}).
+$$
 
-<!-- GRAPH_MONITOR_PRIMARY_COMPACT:BEGIN -->
-<!-- GRAPH_MONITOR_PRIMARY_COMPACT:END -->
+The first measures the active pointer under global tools; the second measures gating after indexing. Replay Average Precision, with its unchanged assigned-window and missing-score rules, is secondary. The remaining simple effects and factorial interaction are exploratory. Earlier Graph-versus-Generic or semantic-cue profiles remain separate comparisons and are not substituted for these controls.
 
-<!-- GRAPH_CORE_PRIMARY_COMPACT:BEGIN -->
-<!-- GRAPH_CORE_PRIMARY_COMPACT:END -->
+### 5.2 Assignment, resources and uncertainty
 
-<!-- GRAPH_FORMAL_FIGURES:BEGIN -->
-<!-- GRAPH_FORMAL_FIGURES:END -->
+Bearing splits, class labels, sample/window/channel specifications, replay order, reference-fitting scope, model settings and task budgets are fixed before evaluation. The four conditions run in independent agent sessions within matched bearing, task, rotation and repeat blocks. Randomized cyclic order balances condition positions to within one occurrence per task/rotation/repeat/budget stratum. This balances positions rather than guaranteeing elimination of provider drift or carryover. Interrupted blocks retain their original assignments and any resumed time gaps.
 
-## 8. Historical Development Records
+Uncertainty uses a paired, diagnosis-class-stratified bearing bootstrap. Within each true class, bearings are resampled with their windows and model repeats, and the same draws apply to every term in a contrast. Class-specific bearing counts remain fixed, so the intervals condition on the cohort's class composition. The two prespecified effects receive nominal 97.5% percentile intervals through Bonferroni allocation. These are interval estimates, not claims of exact small-sample coverage or control of all provider randomness. A one-bearing smoke run has no inferential interpretation.
 
-Earlier PHMskills-derived Mock and provider pilots exposed transition-implementation and action-space defects before the Generic-base correction. They remain archived in the claim--evidence matrix and `paper/assets/tables/` as development records and are excluded from every active treatment estimate.
+A request reserve must cover the remaining members of a block before that block starts. Its invocation ceiling is an operational safeguard, distinct from per-condition task budgets and from the final study size. Existing first outcomes are reused without refitting the common numerical reference. Numerical reference execution and agent execution must use matching resolved task/data/fit assignments; readable metadata alone does not establish waveform correspondence.
 
-## 9. State and Recovery Analysis
+### 5.3 Incomplete delivery and mechanism observations
 
-Formal trajectories require 192 unique episodes in each Generic-base core arm and 24 in each monitoring arm, aligned by seed, fold, bearing, sample, and task. The paired analysis compares first divergence, repeated calls, steps to the next successful non-terminal action, and grounded recovery length with coverage; state occupancy, episode visitation, and transition validity describe Graph treatment integrity. The displayed paired case is descriptive. The v6 primary defines no `public_condition_event`. Observation-conditioned Monitor/Revise behavior and dynamic edge ablations belong to the separate `paderborn_graph_dynamic_ablation_v3` profile, whose retained Mock gate is mechanics-only and whose formal coverage is 0/240.
+A provider interruption that produces a canonical terminal outcome remains in its assigned first attempt. A durable request record without a complete canonical outcome is indeterminate and blocks automatic resend; it is neither an inferred diagnostic failure nor an unattempted case. A complete primary comparison requires all assigned canonical first outcomes. This distinction prevents outcome-dependent replacement while preserving genuinely unresolved attempts.
 
-## 10. Reproducibility
+Alongside Macro-F1, report submission rate, the three-class confusion matrix with a `no_submission` column, and the composition of provider interruptions, malformed responses, unavailable actions and budget exhaustion. Macro-F1 conditional on accepted submissions is a descriptive sensitivity analysis. Its treatment-dependent denominator is not a replacement for the operational endpoint.
 
-The authoritative task and split configuration is the Benchmark production protocol at `../p01-phm-agent-benchmark/paper/experiments/datasets/dataset_protocol.yaml`; Goal-pack copies are not experiment inputs. `ReactiveSequentialAgent` and `GraphDecisionAgent` derive directly from `GenericLLMToolAgent`; the former is the zero-override Benchmark Generic control, while the latter adds registered graph decision control. `src/phm_graph_agent/state.py` defines the eight-state relation, and `scripts/run_graph_experiment.py` is the single-arm implementation entry point. The active Benchmark Generic P0 launcher is `../p01-phm-agent-benchmark/paper/experiments/run_formal_paper0_v6.sh`. The provider-free downstream projection is `../p01-phm-agent-benchmark/paper/experiments/schedule_downstream_formal_v2.py --dry-run`; it emits 12 P1, 12 P2 Graph core, and three P2 Graph monitoring jobs, binds each P2 command to its completed Benchmark control unit, and reuses the Benchmark Generic P0 roots. Each episode attempt contains the canonical exact-six files, and provider errors remain immutable leaves. The provider-free P02 suite passes 214/214 against the isolated Benchmark PR #15 and P1 PR #2 sibling worktrees, covering implementation, source topology, private-assignment authority, accepted-run provenance, metric denominators, cluster inference, valid-bootstrap reporting, task/mechanism separation, P2-E7 claim boundaries, and protocol-bound atomic rendering. `scripts/render_current_mechanics_evidence.py` regenerates the current mechanics table and figure. The final ten-lens review begins after formal results, final tables and figures, and a result-grounded conclusion are available.
+Mechanism observations include attempted submission before numerical prediction, post-prediction analytical actions, changes from the first prediction to the final submitted label, numerical support changes, and submission-error recovery. Every conditional rate identifies its denominator, including attempts that never reach prediction or submission. These are descriptive trajectory analyses rather than causal subgroups. Resource reporting retains known usage, unknown interruption billing, timestamps and resumed-block gaps.
 
-## 11. Discussion and Limitations
+## 6. Results
 
-The control decomposition explains why fewer invalid calls can coexist with poorer task outcomes: a restrictive mask can remove a useful analysis before selection occurs. The cue/filter design tests this mechanism through tasks rather than through an unavailable optimal value function. Equivalent no-memory policies and mixed length/resource interventions limit which causal interpretations the existing ablations can support.
+Matched PHM first-attempt outcomes are not yet available. The two primary diagnosis effects, secondary replay effects and operational costs are therefore unestimated. The execution boundaries in Sections 3–4 specify the intervention and its testable consequences; they are not empirical estimates of diagnostic improvement or harm.
 
-The graph is hand-authored, deterministic, and small. The study covers one vibration dataset family, two core tasks, a replay stress protocol, and one primary LLM runtime. The treatment couples state text with state-specific tool-schema filtering, so the estimated intervention is their joint graph-guidance effect. The v6 primary registers no `public_condition_event`; Monitor/Revise values there are integrity diagnostics. Dynamic-v3 has retained provider-free mechanics but no provider-bound cohort. Effects can vary with episode length and Generic-base model quality. The shared experts use a short fixed window and generic time/band features without shaft-speed or bearing-geometry fault-frequency verification, which limits physics-grounded interpretation. Free-endpoint queueing, load, and backend drift make latency descriptive.
+## 7. Discussion
 
-## 12. Conclusion
+PHMGraph distinguishes providing a computation, guiding its use and enforcing its execution order. This separation is important because a fixed expert pool permits different realized numerical paths. A pointer can change which existing instruction receives attention, whereas a gate also changes what remains possible. Their effects should consequently be interpreted at the level of the specified interface and task, rather than attributed to graph structure in general.
 
-GraphDecisionAgent makes state guidance and tool filtering explicit within a shared PHM environment. The control-loss decomposition distinguishes the cost of excluding actions from the cost of selecting among retained actions; the independent cue/filter study connects that distinction to testable task outcomes. Existing mechanics and deterministic references establish the execution boundary. Matched provider comparisons remain necessary to identify beneficial control, harmful filtering and the conditions governing their tradeoff.
+The present diagnosis scope contains one distinct raw window. It supports questions about numerical execution, early submission and post-prediction continuation, but not loss of a second independent raw measurement. Full history remains available, and the primary path has no public condition-change event; persistent-memory and dynamic-revision effects require different interventions. The task-primary comparison and its uncertainty also remain conditional on the declared bearing cohort, model, catalog and budgets.
+
+A useful next empirical conclusion must therefore identify which of three outcomes occurs: improved delivery, changed diagnostic label quality, or an inactive restriction. The same design can reveal adverse effects. That symmetry is central to deciding when an explicit PHM workflow is helpful rather than treating additional control as an automatic improvement.
+
+## References

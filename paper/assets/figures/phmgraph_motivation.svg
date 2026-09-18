@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180mm" height="110mm" viewBox="0 0 1800 1100">
+<title>PHMGraph: separating instruction indexing from workflow gating</title>
+<desc>Conceptual diagram, not experimental results. The four conditions share procedural content and numerical capabilities. Indexing adds an active-block pointer. Gating restricts executable actions, including early submission and post-prediction analysis.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9" fill="#303840"/></marker></defs>
+<rect width="1800" height="1100" fill="white"/>
+<g font-family="Arial, Helvetica, sans-serif" fill="#20272d">
+<text x="45" y="55" font-size="39" font-weight="bold" text-anchor="start">Same PHM capability. Different decision control.</text>
+<text x="45" y="106" font-size="33" font-weight="bold" text-anchor="start">a</text>
+<text x="90" y="106" font-size="31" font-weight="bold" text-anchor="start">Shared information and numerical capabilities</text>
+<rect x="45" y="130" width="396" height="105" rx="12" fill="#f4f6f7" stroke="#8d989f" stroke-width="2"/>
+<text x="243" y="171" font-size="29" font-weight="bold" text-anchor="middle">Released signal</text>
+<text x="243" y="213" font-size="26" font-weight="normal" text-anchor="middle">Same legal data scope</text>
+<rect x="483" y="130" width="396" height="105" rx="12" fill="#f4f6f7" stroke="#8d989f" stroke-width="2"/>
+<text x="681" y="171" font-size="29" font-weight="bold" text-anchor="middle">Numerical tools</text>
+<text x="681" y="213" font-size="26" font-weight="normal" text-anchor="middle">Same fitted expert pool</text>
+<rect x="921" y="130" width="396" height="105" rx="12" fill="#f4f6f7" stroke="#8d989f" stroke-width="2"/>
+<text x="1119" y="171" font-size="29" font-weight="bold" text-anchor="middle">Procedure catalog</text>
+<text x="1119" y="213" font-size="26" font-weight="normal" text-anchor="middle">Same B01–B06 content</text>
+<rect x="1359" y="130" width="396" height="105" rx="12" fill="#f4f6f7" stroke="#8d989f" stroke-width="2"/>
+<text x="1557" y="171" font-size="29" font-weight="bold" text-anchor="middle">Evaluation setting</text>
+<text x="1557" y="213" font-size="26" font-weight="normal" text-anchor="middle">Same model and budgets</text>
+<text x="900" y="278" font-size="28" font-weight="normal" text-anchor="middle">Control changes what is highlighted and when an action can be executed.</text>
+<text x="45" y="338" font-size="33" font-weight="bold" text-anchor="start">b</text>
+<text x="90" y="338" font-size="31" font-weight="bold" text-anchor="start">The opportunity–selection trade-off</text>
+<rect x="45" y="364" width="980" height="462" rx="12" fill="#ffffff" stroke="#8d989f" stroke-width="2"/>
+<text x="75" y="406" font-size="25" font-weight="normal" text-anchor="start">Indexing: point to the current instruction, without adding knowledge.</text>
+<rect x="75" y="431" width="520" height="55" rx="12" fill="#f4f6f7" stroke="#8d989f" stroke-width="2"/>
+<text x="335" y="468" font-size="28" font-weight="normal" text-anchor="middle">B01   B02   B03   B04   B05   B06</text>
+<polyline points="775,459 612,459" fill="none" stroke="#303840" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="800" y="468" font-size="26" font-weight="normal" text-anchor="start">Active ID</text>
+<text x="75" y="535" font-size="27" font-weight="bold" text-anchor="start">Gating: require progress, but close some opportunities.</text>
+<rect x="75" y="624" width="185" height="66" rx="12" fill="#ffffff" stroke="#8d989f" stroke-width="2"/>
+<text x="167" y="667" font-size="29" font-weight="bold" text-anchor="middle">Read</text>
+<rect x="310" y="624" width="185" height="66" rx="12" fill="#ffffff" stroke="#8d989f" stroke-width="2"/>
+<text x="402" y="667" font-size="29" font-weight="bold" text-anchor="middle">Analyze</text>
+<rect x="545" y="624" width="185" height="66" rx="12" fill="#ffffff" stroke="#8d989f" stroke-width="2"/>
+<text x="637" y="667" font-size="29" font-weight="bold" text-anchor="middle">Predict</text>
+<rect x="780" y="624" width="185" height="66" rx="12" fill="#ffffff" stroke="#8d989f" stroke-width="2"/>
+<text x="872" y="667" font-size="29" font-weight="bold" text-anchor="middle">Submit</text>
+<polyline points="260,657 302,657" fill="none" stroke="#303840" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline points="495,657 537,657" fill="none" stroke="#303840" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline points="730,657 772,657" fill="none" stroke="#303840" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline points="402,624 402,587 872,587 872,616" fill="none" stroke="#303840" stroke-width="3" stroke-dasharray="9 7" marker-end="url(#arrow)"/>
+<path d="M648,575 L672,599 M648,599 L672,575" stroke="#303840" stroke-width="4"/>
+<text x="667" y="568" font-size="25" font-weight="normal" text-anchor="middle">Early submission blocked</text>
+<polyline points="637,690 637,744 402,744 402,699" fill="none" stroke="#303840" stroke-width="3" stroke-dasharray="9 7" marker-end="url(#arrow)"/>
+<path d="M508,732 L532,756 M508,756 L532,732" stroke="#303840" stroke-width="4"/>
+<text x="75" y="795" font-size="25" font-weight="normal" text-anchor="start">Post-prediction analysis closed in the gated base path</text>
+<text x="720" y="738" font-size="24" font-weight="normal" text-anchor="start">Dashed: global-tool</text>
+<text x="720" y="771" font-size="24" font-weight="normal" text-anchor="start">opportunities</text>
+<text x="1075" y="338" font-size="33" font-weight="bold" text-anchor="start">c</text>
+<text x="1120" y="338" font-size="31" font-weight="bold" text-anchor="start">Separate the interventions</text>
+<text x="1290" y="405" font-size="27" font-weight="bold" text-anchor="middle">Global tools</text>
+<text x="1605" y="405" font-size="27" font-weight="bold" text-anchor="middle">Gated tools</text>
+<rect x="1130" y="430" width="270" height="127" rx="12" fill="#ffffff" stroke="#8d989f" stroke-width="2"/>
+<text x="1265" y="481" font-size="35" font-weight="bold" text-anchor="middle">00</text>
+<text x="1265" y="526" font-size="26" font-weight="normal" text-anchor="middle">Catalog only</text>
+<rect x="1445" y="430" width="270" height="127" rx="12" fill="#ffffff" stroke="#8d989f" stroke-width="2"/>
+<text x="1580" y="481" font-size="35" font-weight="bold" text-anchor="middle">01</text>
+<text x="1580" y="526" font-size="26" font-weight="normal" text-anchor="middle">Catalog only</text>
+<rect x="1130" y="630" width="270" height="127" rx="12" fill="#ffffff" stroke="#8d989f" stroke-width="2"/>
+<text x="1265" y="681" font-size="35" font-weight="bold" text-anchor="middle">10</text>
+<text x="1265" y="726" font-size="26" font-weight="normal" text-anchor="middle">Active pointer</text>
+<rect x="1445" y="630" width="270" height="127" rx="12" fill="#f4f6f7" stroke="#8d989f" stroke-width="2"/>
+<text x="1580" y="681" font-size="35" font-weight="bold" text-anchor="middle">11</text>
+<text x="1580" y="726" font-size="26" font-weight="normal" text-anchor="middle">Active pointer</text>
+<polyline points="1265,566 1265,618" fill="none" stroke="#303840" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1320" y="598" font-size="25" font-weight="normal" text-anchor="start">Index</text>
+<polyline points="1408,695 1435,695" fill="none" stroke="#303840" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1430" y="804" font-size="26" font-weight="normal" text-anchor="middle">10 → 11: gate after indexing</text>
+<text x="45" y="883" font-size="33" font-weight="bold" text-anchor="start">d</text>
+<text x="90" y="883" font-size="31" font-weight="bold" text-anchor="start">Judge the delivered diagnosis, then explain the trajectory</text>
+<rect x="45" y="908" width="1710" height="113" rx="12" fill="#f4f6f7" stroke="#8d989f" stroke-width="2"/>
+<text x="80" y="950" font-size="30" font-weight="bold" text-anchor="start">Primary: first-attempt diagnosis Macro-F1; non-submissions retained</text>
+<text x="80" y="995" font-size="28" font-weight="normal" text-anchor="start">Index effect: M10 − M00     |     Gate effect: M11 − M10     |     Completion, label changes and cost</text>
+<text x="45" y="1053" font-size="24" font-weight="normal" text-anchor="start">Schematic only. Panel b shows the error-free, event-free, non-replay route; recovery and replay have separate rules.</text>
+<text x="45" y="1087" font-size="24" font-weight="normal" text-anchor="start">Restricting opportunities does not establish diagnostic benefit or harm. M denotes the same task metric in every condition.</text>
+</g></svg>
