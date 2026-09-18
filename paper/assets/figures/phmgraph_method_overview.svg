@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180mm" height="116mm" viewBox="0 0 1800 1160">
+<title>PHMGraph method overview and controlled execution loop</title>
+<desc>Conceptual scientific diagram. No empirical values. Labels are editable text.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#28313b"/></marker></defs>
+<rect width="1800" height="1160" fill="white"/>
+<g font-family="DejaVu Sans, Arial, sans-serif" fill="#202830">
+<text x="55" y="62" font-size="35" font-weight="bold" text-anchor="start">PHMGraph: locate an instruction, then control executable tools</text>
+<text x="55" y="104" font-size="25" font-weight="normal" text-anchor="start">Solid pale: shared components     Dashed: adapted progress abstraction     Heavy border: studied intervention</text>
+<g id="public-history">
+<rect x="55" y="155" width="440" height="175" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
+<text x="79" y="197" font-size="29" font-weight="bold" text-anchor="start">1 / 7  Context hₜ + B</text>
+<text x="79" y="239" font-size="26" font-weight="normal" text-anchor="start">Task and returned artifacts</text>
+<text x="79" y="275" font-size="26" font-weight="normal" text-anchor="start">Calls, errors and resource use</text>
+<text x="79" y="311" font-size="26" font-weight="normal" text-anchor="start">B included at every request</text>
+</g>
+<g id="progress-f">
+<rect x="625" y="155" width="470" height="175" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2" stroke-dasharray="9 6"/>
+<text x="649" y="197" font-size="29" font-weight="bold" text-anchor="start">2  Progress sₜ = f(hₜ)</text>
+<text x="649" y="239" font-size="26" font-weight="normal" text-anchor="start">Read / catalog / schema</text>
+<text x="649" y="275" font-size="26" font-weight="normal" text-anchor="start">Prediction and latest error</text>
+<text x="649" y="311" font-size="26" font-weight="normal" text-anchor="start">Not a diagnostic posterior</text>
+</g>
+<g id="common-catalog">
+<rect x="1225" y="155" width="520" height="175" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
+<text x="1249" y="197" font-size="29" font-weight="bold" text-anchor="start">Shared catalog B: B01–B06</text>
+<text x="1249" y="239" font-size="26" font-weight="normal" text-anchor="start">Full content in every arm</text>
+<text x="1249" y="275" font-size="26" font-weight="normal" text-anchor="start">Repeated in the same order</text>
+<text x="1249" y="311" font-size="26" font-weight="normal" text-anchor="start">Six fixed instruction blocks</text>
+</g>
+<polyline id="history-to-progress" points="495,238 615,238" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<g id="index-I">
+<rect x="545" y="405" width="555" height="145" rx="10" fill="#edf3f7" stroke="#66737e" stroke-width="4"/>
+<text x="569" y="447" font-size="29" font-weight="bold" text-anchor="start">3  Index switch i: append L(sₜ)</text>
+<text x="569" y="489" font-size="26" font-weight="normal" text-anchor="start">Only the active block identifier</text>
+<text x="569" y="525" font-size="26" font-weight="normal" text-anchor="start">No additional knowledge</text>
+</g>
+<g id="gate-G">
+<rect x="1190" y="405" width="555" height="145" rx="10" fill="#edf3f7" stroke="#66737e" stroke-width="4"/>
+<text x="1214" y="447" font-size="29" font-weight="bold" text-anchor="start">4  Gate switch g: menu Γg(sₜ)</text>
+<text x="1214" y="489" font-size="26" font-weight="normal" text-anchor="start">Global or phase-specific tool names</text>
+<text x="1214" y="525" font-size="26" font-weight="normal" text-anchor="start">Same set for model and executor</text>
+</g>
+<polyline id="progress-to-index" points="790,330 790,395" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline id="progress-to-gate" points="1060,330 1060,365 1445,365 1445,395" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<g id="model">
+<rect x="545" y="650" width="555" height="175" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
+<text x="569" y="692" font-size="29" font-weight="bold" text-anchor="start">5  Fixed language model πθ</text>
+<text x="569" y="734" font-size="26" font-weight="normal" text-anchor="start">Full B + public hₜ + optional locator</text>
+<text x="569" y="770" font-size="26" font-weight="normal" text-anchor="start">Receives schemas for Γg(sₜ)</text>
+<text x="569" y="806" font-size="26" font-weight="normal" text-anchor="start">Proposes a single request aₜ = (uₜ, vₜ)</text>
+</g>
+<g id="admission">
+<rect x="1190" y="650" width="555" height="175" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
+<text x="1214" y="692" font-size="29" font-weight="bold" text-anchor="start">6  Admit name; execute tool</text>
+<text x="1214" y="734" font-size="26" font-weight="normal" text-anchor="start">Check uₜ belongs to Γg(sₜ)</text>
+<text x="1214" y="770" font-size="26" font-weight="normal" text-anchor="start">Validate arguments; run fixed tools</text>
+<text x="1214" y="806" font-size="26" font-weight="normal" text-anchor="start">Any error returns to history</text>
+</g>
+<polyline id="index-to-model" points="825,550 825,640" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline id="gate-to-admission" points="1470,550 1470,640" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline id="gate-to-model" points="1255,550 1255,595 1020,595 1020,640" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline id="model-to-execution" points="1100,731 1180,731" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline id="catalog-to-context" points="1485,155 1485,130 220,130 220,145" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline id="history-to-model" points="220,330 220,690 535,690" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<g id="result-return">
+<rect x="55" y="865" width="1045" height="145" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
+<text x="79" y="907" font-size="29" font-weight="bold" text-anchor="start">7  Return numerical observation or error; update history</text>
+<text x="79" y="949" font-size="26" font-weight="normal" text-anchor="start">Only executed results advance progress; recovery can reopen analysis</text>
+<text x="79" y="985" font-size="26" font-weight="normal" text-anchor="start">Budget exhaustion and native terminal failures remain first outcomes</text>
+</g>
+<g id="output">
+<rect x="1190" y="865" width="555" height="145" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
+<text x="1214" y="907" font-size="29" font-weight="bold" text-anchor="start">8  Submit and evaluate</text>
+<text x="1214" y="949" font-size="26" font-weight="normal" text-anchor="start">Accepted label → shared evaluator</text>
+<text x="1214" y="985" font-size="26" font-weight="normal" text-anchor="start">Private cₖ → evaluated outcome Yₖᶻ</text>
+</g>
+<polyline id="execution-to-terminal" points="1470,825 1470,855" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline id="execution-to-history" points="1220,825 1220,837 900,837 900,855" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline id="history-feedback" points="110,865 30,865 30,238 45,238" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="55" y="1075" font-size="27" font-weight="bold" text-anchor="start">Four conditions: 00 catalog/global   ·   10 indexed/global   ·   01 catalog/gated   ·   11 indexed/gated</text>
+<text x="55" y="1122" font-size="25" font-weight="normal" text-anchor="start">Name admission ≠ valid arguments ≠ a correct diagnosis. Errors and terminal status are never silently repaired.</text>
+</g></svg>

@@ -1,13 +1,21 @@
-# Agent Entry — GraphDecisionAgent
+# Agent instructions
 
-Read DEV.md, CORE.md, paper/GOAL.md, paper/LOCAL_AGENT_PROMPT.md and obsidian/log/LOCAL_AGENT_STATE.md. This repository owns its paper and `src/phm_graph_agent`. The current source of truth is `dev`; short feature/review/figure/experiment/agent branches return through PRs to `dev`.
+## Active scope and authority
 
-Review semantic changes against dev. Keep mature text, verified citations and figures serving an explicit argument; patch useful subsets; exclude duplicated plans, stale drafts and workflow infrastructure. Preserve necessary scientific limitations and every registered result under its original conditions. The manuscript is paper/draft/main.md.
+This repository owns scientific writing, references, theory, experiment definitions and static publication assets for PHMGraph. `dev` is the integration branch; use short-lived branches and normal pull requests into `dev`.
 
-Reuse Benchmark TaskSpec, DataPort, run_rotation, Runner, evaluator and canonical rollout writer. Benchmark must run without downstream policies. Keep inference separate from evaluation; never expose private targets. RandomValid contains a planned-call candidate and is not a uniform random baseline.
+The sole active manuscript is `paper/draft/main.md`. Read `paper/README.md`, `paper/paper.yaml`, `paper/FORMULATION_METHOD_MAP.md` and `paper/experiments/EXPERIMENT_MATRIX.md` before changing the scientific claim or method. Chapter 2 contains prior foundations and problem formulation; Chapter 3 contains the proposed interface and algorithm. Preserve verified citations and supported results.
 
-Use experiments/run.sh for new studies. Preserve frozen formal scripts and source dependencies. A changed provider, model, prompt, visible tools, dataset or metric defines a new condition. Retain all attempts, failures and abstentions. Reuse existing environments and completed checks; run affected tests after relevant changes. Do not add hash/receipt/ledger mechanisms, duplicated factories or automatic backend switching.
+All runtime methods, experiments, evaluation, data access and drawing implementations are owned by `liq22/phm-agent-benchmark`. The inspected source is pinned in the active manifest and mapping. Retained local `src/phm_graph_agent`, scripts and earlier protocols are historical migration material, not permission to maintain a second implementation. Do not delete them merely because the paper has moved forward; follow the separate validated migration plan.
 
-Online inference requires current-task authorization and explicit request/token limits. Credentials remain environment variables; a request cap is not a monetary cap. No external inference is needed to inspect a plan.
+## Scientific and execution boundaries
 
-End a bounded task by updating the rolling state with actual commands, reused cells, new outputs and one next step. A merge is not an empirical or publication claim.
+Keep task specifications, evaluator-only targets, dataset scope, fitted experts and canonical outcome handling unchanged unless a separately defined scientific intervention requires a change. Equal potential capability does not imply identical realized computations. Tool names, valid parameters, numerical execution and a correct diagnosis are different claims.
+
+The primary comparison is a common-catalog pointer × gate study with first-attempt diagnosis Macro-F1. Earlier Graph/Generic, replay-primary, dynamic and external-dataset profiles retain their original meanings. The legacy manifest and registered manuscript result-marker pairs must remain recoverable; do not relabel historical outcomes as current evidence.
+
+Run inference only when its destination and payload are authorized and request/token limits are explicit. A request ceiling is not a monetary guarantee. Retain provider failures, non-submissions and indeterminate attempts under the native rules; do not silently retry, switch providers or invent missing outcomes. Do not add duplicated loaders, evaluators, result authorities or general audit infrastructure.
+
+## Delivery
+
+Modify only necessary files, preserve concurrent work, and verify the actual source and figures before merging. Keep implementation commands in Benchmark and scientific definitions here. A successful paper or figure merge is not evidence of PHM efficacy, accepted runtime migration or completed real-data validation. End with the current scientific state, changed files, validation actually performed and the next necessary scientific action.
