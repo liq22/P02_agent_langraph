@@ -1,0 +1,514 @@
+schema_version: 1
+paper_id: paper2
+paper_role: downstream_graph_study
+title: "Graph-Guided PHM Agents for Long-Horizon Diagnostic Rollouts"
+short_title: Graph-Guided PHM Agent
+language: English
+stage: development
+active_source: paper/draft/main.md
+
+research_question: >-
+  Does an explicit PHM decision-state graph improve task performance and
+  long-horizon branch choice, recovery, repetition, budget use, and completion when the same agent has the
+  same Benchmark Generic LLM base and computational capabilities?
+
+primary_hypothesis: >-
+  Under a matched Generic LLM base prompt, model, runtime, data, tasks, tools,
+  numerical experts, action budget, and evaluator, GraphDecisionAgent improves
+  target-adverse Average Precision on replay monitoring relative to the Benchmark Generic
+  control (implemented by the zero-override ReactiveSequentialAgent wrapper).
+
+primary_estimand:
+  name: replay_target_adverse_average_precision_graph_minus_generic
+  output_key: estimate.online_replay_monitoring.task.average_precision
+  pairs: 24
+  assigned_windows_per_arm: 72
+  missing_score_policy_id: phase1_replay_target_adverse_missing_score_v1
+  pairing: seed_rotation_bearing_sample_task
+  direction: graph_minus_generic
+  uncertainty: bearing_clustered_paired_bootstrap_2000
+  decision_rule: report_estimate_and_interval_without_significance_or_noninferiority_threshold
+
+shared_benchmark:
+  repository: ../p01-phm-agent-benchmark
+  protocol: ../p01-phm-agent-benchmark/paper/experiments/datasets/dataset_protocol.yaml
+  statistics_plan: ../p01-phm-agent-benchmark/paper/experiments/statistics.md
+  base_policy: GenericLLMToolAgent
+  control_display_name: Benchmark Generic (Reactive-equivalent)
+  control_policy: ReactiveSequentialAgent
+  control_behavior_overrides: []
+  treatment_policy: GraphDecisionAgent
+  p1_runtime_dependency: none
+  only_varied_factor: registered_graph_decision_control
+  window_contract: phase1_single_vibration_full_rate_v3
+  window_channel_indices: [2]
+  window_channel_semantics: bearing_housing_acceleration
+  adapter_world_equivalence_gate:
+    gate_id: P2-E0-v2
+    status: accepted_provider_free_real_data_generic_base_mechanics
+    analyzer: scripts/analyze_p2_e0_generic_base_adapter_equivalence_v2.py
+    acceptance_artifact: paper/experiments/results/p2_e0_generic_base_adapter_equivalence_v2.json
+    focused_test: tests/test_p2_e0_generic_base_adapter_equivalence_v2.py
+    seed: 20260808
+    rotation: rotation_0
+    matched_statistical_episode_keys_per_arm: 16
+    exact_six_attempt_leaves_total: 32
+    canonical_action_rows_per_arm: 352
+    submitted_per_arm: 16
+    provider_calls_for_gate: 0
+    treatment_only_tools: []
+    reactive_is_zero_override_generic_control: true
+    graph_is_generic_derived: true
+    no_p1_runtime_import_or_bundle_provenance: true
+    legacy_phmskills_gate_status: historical_non_authoritative
+    supports_p2_e1_or_performance_claims: false
+
+states:
+  - Inspect
+  - Hypothesize
+  - Analyze
+  - Check
+  - Monitor
+  - Revise
+  - Recover
+  - Submit
+
+observation_conditioning:
+  primary_v6_public_condition_event: not_registered
+  zero_monitor_revise_visitation: valid_under_primary_v6
+  dynamic_revision_claim_supported_by_primary: false
+  dynamic_ablation_profile:
+    protocol_id: paderborn_graph_dynamic_ablation_v3
+    protocol: paper/experiments/graph_dynamic_ablation_protocol_v3.yaml
+    runtime_contract: phase1_graph_dynamic_generic_ablation_v3
+    benchmark_event_contract: phase1_public_condition_event_v1
+    event_key: public_condition_event
+    status: generic_base_mock_gate_accepted_formal_runner_ready_not_run
+    event_emitter_implemented: true
+    dynamic_runtime_profile_implemented: true
+    ablation_conversation_profiles_implemented: true
+    single_unit_runner_implemented: true
+    formal_matrix_scheduler_implemented: true
+    formal_runner_implemented: true
+    provider_free_registered_cells_exercised: 10
+    exact_six_provider_free_acceptance_gate_passed: true
+    provider_free_acceptance_gate: paper/experiments/runs/mechanics/graph_dynamic_ablation_v2/mock_acceptance/gate.json
+    formal_acceptance: null
+    formal_result: null
+    accepted_manuscript_consumer: scripts/render_graph_dynamic_manuscript.py
+    accepted_manuscript_table: paper/assets/tables/p2_dynamic_formal_results.md
+    accepted_manuscript_figure: paper/assets/figures/p2_dynamic_formal_primary.svg
+    accepted_manuscript: paper/draft/main.md
+    accepted_manuscript_marker: P2_DYNAMIC_FORMAL
+    accepted_manuscript_consumer_ready: true
+    accepted_manuscript_rows_emitted: 0
+    accepted_manuscript_consumer_provider_calls: 0
+    accepted_manuscript_consumer_raw_private_reads: 0
+    accepted_manuscript_consumer_focused_tests_passed: 20
+    accepted_manuscript_consumer_focused_tests_total: 20
+    accepted_result_root_bound_to_protocol_formal_root: true
+    accepted_manuscript_valid_bootstrap_replicates_reported: true
+    accepted_manuscript_existing_output_contract: absent_or_ordinary_single_link_regular_file
+    accepted_manuscript_production_cli_protocol_fixed: true
+    accepted_manuscript_task_primary_rows_after_acceptance: 8
+    accepted_manuscript_secondary_mechanism_rows_after_acceptance: 26
+    formal_registered_units: 240
+    formal_observed_units: 0
+    formal_planned_commands: 240
+    formal_dry_run_commands_emitted: 240
+    formal_commands_invoked: 0
+    formal_launch_allowed: false
+    focused_formal_runner_tests_passed: 17
+    focused_formal_runner_tests_total: 17
+    dynamic_focused_tests_passed: 50
+    dynamic_focused_tests_total: 50
+    task_primary_metric: target_adverse_window_average_precision
+    missing_score_policy_id: phase1_replay_target_adverse_missing_score_v1
+    private_target_authority: registered_private_data_port_assignment
+    prediction_authority: canonical_rollout_successful_submit_prefix
+    derived_evaluation_jsonl_ingested: false
+    private_paths_serialized: false
+    completion_role: secondary_rollout_metric
+    per_bearing_average_precision: forbidden
+    formal_acceptance_passed: false
+    first_missing_unit: reactive_sequential_generic_v2/seed_20260808/rotation_0/horizon_3/episodes/sequence-0001
+    provider_bound_formal_cohort_executed: false
+    formal_results_exist: false
+    pooled_with_primary_v6: false
+    legacy_v1_status: superseded_historical_mechanics_non_authoritative
+
+runtime:
+  llm_interface: LLMClient
+  compatibility_baseline: openai_compatible_messages_and_tools
+  primary_model: cohere/north-mini-code:free
+  primary_provider: openrouter-free
+  protocol_endpoint: https://openrouter.ai/api/v1
+  runtime_contract: phase1_opaque_sample_vibration_feature_schema_v6
+  band_power_boundary_contract: exact_hz_endpoints_linear_interpolation_before_trapezoid
+  max_output_tokens_per_turn: 2048
+  temperature: 0.2
+  seeds: [20260808, 20260809, 20260810]
+  input_token_price_usd_per_million: 0.0
+  output_token_price_usd_per_million: 0.0
+  price_checked: 2026-08-08
+  evaluator_calls_llm: false
+  mock_results_support_performance_claims: false
+
+formal_orchestration:
+  benchmark_generic_launcher: ../p01-phm-agent-benchmark/paper/experiments/run_formal_paper0_v6.sh
+  downstream_provider_free_scheduler: ../p01-phm-agent-benchmark/paper/experiments/schedule_downstream_formal_v2.py
+  downstream_schedule_schema: downstream_formal_schedule_v2
+  downstream_jobs_total: 27
+  p1_jobs: 12
+  p2_graph_core_jobs: 12
+  p2_graph_monitor_jobs: 3
+  p2_control_policy: reuse_Benchmark_Generic_roots_no_duplicate_Reactive_execution
+  scheduler_provider_calls: 0
+  scheduler_is_result_evidence: false
+
+tasks:
+  core:
+    - cold_start_fault_diagnosis
+    - unsupervised_anomaly_detection
+  stress:
+    - online_replay_monitoring
+
+outcomes:
+  primary: fixed_action_budget_replay_target_adverse_average_precision
+  task:
+    - accuracy
+    - macro_f1
+    - calibration_error
+    - calibration_coverage
+    - average_precision
+    - completion_adjusted_average_precision
+    - auroc
+    - false_alarm_rate
+    - true_positive_rate
+    - cohort_prevalence
+    - submitted_prevalence
+  rollout:
+    - submission_rate
+    - grounded_completion
+    - valid_tool_call_rate
+    - tool_execution_failure_rate
+    - agent_decision_error_rate
+    - submission_grounding
+    - artifact_lineage_completeness
+    - supporting_reference_validity
+    - repeated_action_ratio
+    - submitted_after_failure
+    - grounded_recovery_success
+    - recovery_coverage
+    - steps_to_next_success_after_failure
+    - steps_to_recovery
+    - repeated_error_rate
+    - budget_exhaustion
+    - steps
+    - window_reads
+    - data_points_read
+    - data_bytes_read
+    - operator_calls
+    - model_calls
+    - llm_turns
+    - input_tokens
+    - output_tokens
+    - wall_clock_seconds
+    - p95_step_latency_seconds
+    - estimated_model_cost_usd
+  treatment_integrity:
+    - state_transition_validity
+    - state_coverage
+    - state_step_occupancy_proportion
+    - state_episode_visitation_rate
+
+shared_provider_free_reference:
+  status: accepted_active_v0_2_reference_subset
+  aggregate: ../p01-phm-agent-benchmark/paper/experiments/results/p0_active_v02_provider_free_reference_subset_v1.json
+  schema_version: paper0_active_v0_2_provider_free_reference_subset_v1
+  evidence_class: formal
+  result_role: reference
+  accepted_scope: B0_B1_B2_active_v0_2_provider_free_reference_subset_only
+  formal_run_stamp: 20260903T080515Z
+  benchmark_revision: b6cf5796b7e07c20866fd1bfda743f51ee4ea940
+  benchmark_revision_short: b6cf5796
+  data_factory_revision: 58050716383e32ca79fdad0d9a45ad96a19eb838
+  data_factory_revision_short: "5805071"
+  provider_calls: 0
+  scripted_arm: B2
+  core_episodes: 64
+  replay_episodes: 8
+  supports_graph_treatment_effect: false
+
+provider_bound_generic_base_primary:
+  frozen_as_of: "2026-09-03"
+  status: external_roots_required_no_audit_no_effect_estimate
+  readiness_artifact: paper/experiments/results/p2_e1_primary_readiness_v2.json
+  finalizer: scripts/finalize_p2_e1_generic_base_formal_v2.py
+  accepted_result_consumer: scripts/render_graph_manuscript_table.py
+  control: Benchmark_GenericLLMToolAgent
+  treatment: P02_GraphDecisionAgent_over_same_Generic_base
+  duplicate_reactive_provider_execution_required: false
+  external_roots_audited_in_checked_in_snapshot: false
+  expected_core_per_arm: 192
+  expected_monitor_per_arm: 24
+  generic_core:
+    attempt_leaves: null
+    statistical_outcomes: null
+    provider_error_attempts: null
+  graph_core_v2:
+    attempt_leaves: null
+    statistical_outcomes: null
+    provider_error_attempts: null
+  generic_monitor:
+    attempt_leaves: null
+    statistical_outcomes: null
+  graph_monitor_v2:
+    attempt_leaves: null
+    statistical_outcomes: null
+  matched_core_statistical_keys: null
+  matched_monitor_statistical_keys: null
+  effect_estimates_emitted: 0
+  focused_finalizer_tests_passed: 13
+  focused_finalizer_tests_total: 13
+  focused_consumer_tests_passed: 18
+  focused_consumer_tests_total: 18
+  complete_fixture_core_per_arm: 192
+  complete_fixture_replay_per_arm: 24
+  accepted_publication_outputs:
+    table: paper/assets/tables/graph_monitor_manuscript_results.md
+    core_figure: paper/assets/figures/p2_e1_core_primary.svg
+    graph_state_json: paper/experiments/results/p2_e1_graph_state_summary_v2.json
+    graph_state_table: paper/assets/tables/p2_e1_graph_state_summary.md
+    manuscript: paper/draft/main.md
+  accepted_publication_grouped_replace_with_exception_rollback: true
+  accepted_publication_external_state_override_allowed: false
+  optional_mechanism_case_blocks_primary_figure: false
+  optional_mechanism_case_status: omitted_until_bound_extractor
+  legacy_multifile_publication_allowed: false
+  legacy_phmskills_derived_graph_leaves: historical_non_authoritative_excluded
+  accepted_provider_bound_cohort_gates: false
+  partial_aggregation_allowed: false
+  treatment_effect_claim_allowed: false
+
+provider_free_execution_readiness:
+  supports_performance_or_effect_claims: false
+  dynamic_generic_base_v3:
+    protocol: paper/experiments/graph_dynamic_ablation_protocol_v3.yaml
+    status: task_primary_amendment_ten_of_ten_retained_mock_mechanics_runner_ready_formal_zero_of_240
+    exact_six_mechanics_gate_passed: true
+    provider_calls_for_mechanics_gate: 0
+    formal_schedule_units: 240
+    dry_run_commands_emitted: 240
+    commands_invoked: 0
+    formal_launch_allowed: false
+    formal_results_exist: false
+    accepted_manuscript_consumer: scripts/render_graph_dynamic_manuscript.py
+    accepted_manuscript_consumer_ready: true
+    accepted_manuscript_rows_emitted: 0
+    accepted_manuscript_consumer_focused_tests_passed: 20
+    accepted_manuscript_consumer_focused_tests_total: 20
+    accepted_result_root_bound_to_protocol_formal_root: true
+    accepted_manuscript_valid_bootstrap_replicates_reported: true
+    accepted_manuscript_existing_output_contract: absent_or_ordinary_single_link_regular_file
+    accepted_manuscript_production_cli_protocol_fixed: true
+    focused_formal_runner_tests_passed: 17
+    focused_formal_runner_tests_total: 17
+    dynamic_focused_tests_passed: 50
+    dynamic_focused_tests_total: 50
+    private_target_authority: registered_private_data_port_assignment
+    prediction_authority: canonical_rollout_successful_submit_prefix
+    derived_evaluation_jsonl_ingested: false
+    private_paths_serialized: false
+    performance_claims_allowed: false
+    horizon_claim_allowed: false
+    ablation_claim_allowed: false
+    legacy_dynamic_v1_status: superseded_historical_non_authoritative
+  horizon_scaling_p2e2_v1:
+    status: historical_pre_generic_base_scheduler_non_authoritative
+    formal_results_exist: false
+  horizon_scaling_p2e2_v3:
+    protocol: paper/experiments/graph_horizon_scaling_protocol_v3.yaml
+    status: preregistered_task_primary_runner_ready_dry_schedule_zero_results
+    registered_units: 144
+    schedule_units: 144
+    dry_run_commands_emitted: 144
+    commands_invoked: 0
+    formal_results_exist: false
+    formal_launch: false
+  reliability_p2e9_v1:
+    protocol: paper/experiments/graph_reliability_protocol_v1.yaml
+    scheduler: scripts/schedule_graph_reliability.py
+    analyzer: scripts/analyze_graph_reliability.py
+    status: pre_generic_base_shell_no_formal_result
+    repeats: 10
+    matched_pairs: 80
+    scheduled_arm_episodes: 160
+    provider_execution_performed: false
+    accepted_cohort: false
+    formal_results_exist: false
+    pooled_with_three_seed_primary: false
+  reliability_p2e9_v2:
+    protocol: paper/experiments/graph_reliability_protocol_v2.yaml
+    scheduler: scripts/schedule_graph_reliability.py
+    analyzer: scripts/analyze_graph_reliability.py
+    runner: scripts/run_graph_reliability_v2.py
+    status: preregistered_task_primary_analyzer_and_accepted_consumer_ready_dry_schedule_160_zero_results
+    registered_pairs: 80
+    registered_episode_bundles: 160
+    dedicated_runner_contract_ready: true
+    dry_schedule_commands_emitted: 160
+    commands_executed: 0
+    scheduler_filesystem_writes: 0
+    scheduler_provider_calls: 0
+    provider_execution_performed: false
+    formal_results_exist: false
+    accepted_manuscript_consumer: scripts/render_graph_reliability_manuscript.py
+    accepted_manuscript_table: paper/assets/tables/p2_e9_reliability_results.md
+    accepted_manuscript_figure: paper/assets/figures/p2_e9_reliability_primary.svg
+    accepted_manuscript: paper/draft/main.md
+    accepted_manuscript_marker: P2_E9_RELIABILITY
+    accepted_manuscript_consumer_ready: true
+    accepted_manuscript_rows_emitted: 0
+    accepted_manuscript_consumer_provider_calls: 0
+    accepted_manuscript_consumer_raw_private_reads: 0
+    runner_analyzer_scheduler_focused_tests_passed: 12
+    runner_analyzer_scheduler_focused_tests_total: 12
+    accepted_manuscript_consumer_focused_tests_passed: 20
+    accepted_manuscript_consumer_focused_tests_total: 20
+    accepted_result_root_bound_to_protocol_formal_root: true
+    accepted_manuscript_valid_bootstrap_replicates_reported: true
+    accepted_manuscript_existing_output_contract: absent_or_ordinary_single_link_regular_file
+    accepted_manuscript_production_cli_protocol_fixed: true
+    primary_metric: task.average_precision
+    primary_missing_score_policy: phase1_replay_target_adverse_missing_score_v1
+    primary_repeat_population: 24_assigned_windows_recomputed_within_each_repeat
+    private_target_authority: registered_private_data_port_assignment
+    prediction_authority: canonical_rollout_successful_submit_prefix
+    grounded_reliability_role: explanatory
+    derived_evaluation_jsonl_ingested: false
+    focused_tests_passed: 7
+    focused_tests_total: 7
+    pooled_with_three_seed_primary: false
+  cross_dataset_p2e8_v1:
+    status: superseded_fail_closed_after_generic_base_authority_correction
+    eligible_datasets: 0
+    formal_results_exist: false
+    launch_allowed: false
+  cross_dataset_p2e8_v2:
+    protocol: paper/experiments/graph_cross_dataset_replay_protocol_v2.yaml
+    protocol_id: phm_graph_cross_dataset_replay_generic_base_p2e8_v2
+    status: preregistered_generic_base_fail_closed_no_eligible_external_outcome_target
+    current_authority: false
+    eligible_datasets: 0
+    units: 0
+    commands_emitted: 0
+    formal_launch: false
+    formal_results_exist: false
+    focused_tests_passed: 11
+    focused_tests_total: 11
+  cross_dataset_p2e8_v3:
+    protocol: paper/experiments/graph_cross_dataset_replay_protocol_v3.yaml
+    protocol_id: phm_graph_cross_dataset_replay_ottawa_generic_base_p2e8_v3
+    scheduler: scripts/schedule_graph_cross_dataset_replay.py
+    runner: scripts/run_graph_experiment.py
+    analyzer: scripts/analyze_graph_cross_dataset_replay.py
+    accepted_result_consumer: scripts/render_graph_cross_dataset_manuscript.py
+    accepted_result_schema: p2_e8_ottawa_generic_base_result_v2
+    accepted_result: paper/experiments/results/graph_cross_dataset_replay_v3/paper2-cross-dataset-ottawa-generic-v1/formal_result.json
+    accepted_manuscript_table: paper/assets/tables/p2_e8_ottawa_results.md
+    accepted_manuscript_figure: paper/assets/figures/p2_e8_ottawa_primary.svg
+    accepted_manuscript: paper/draft/main.md
+    manuscript_marker: P2_E8_OTTAWA
+    status: provider_free_analyzer_and_accepted_consumer_ready_external_execution_not_authorized_formal_not_run
+    current_authority: true
+    eligible_datasets: 1
+    dataset_id: university-of-ottawa-uored-vafcls-v5
+    dry_schedule_commands_emitted: 18
+    registered_episode_bundles: 72
+    registered_matched_pairs: 36
+    registered_assigned_windows_across_arms: 216
+    provider_free_preflight_ready: true
+    formal_launch: false
+    current_blocker: explicit_provider_destination_and_payload_egress_authorization_required
+    post_authorization_requirement: complete_72_bundle_cohort_before_analysis_or_publication
+    commands_executed: 0
+    formal_results_exist: false
+    consumer_rows_emitted: 0
+    accepted_result_root_bound_to_scheduled_stamp: true
+    accepted_manuscript_existing_output_contract: absent_or_ordinary_single_link_regular_file
+    accepted_manuscript_production_cli_protocol_fixed: true
+    analyzer_scheduler_runtime_tests_passed: 22
+    analyzer_scheduler_runtime_tests_total: 22
+    consumer_focused_tests_passed: 18
+    consumer_focused_tests_total: 18
+    cross_dataset_focused_tests_passed: 40
+    cross_dataset_focused_tests_total: 40
+  generic_base_extensions:
+    horizon_scaling: preregistered_runner_ready_144_dry_commands_zero_executions_zero_results
+    reliability: preregistered_runner_ready_160_inert_commands_zero_executions_zero_results
+    cross_dataset: ottawa_source_runtime_analyzer_and_accepted_consumer_ready_external_execution_not_authorized_zero_results
+
+current_mechanics_assets:
+  renderer: scripts/render_current_mechanics_evidence.py
+  table: paper/assets/tables/p2_current_mechanics_status.md
+  figure: paper/assets/figures/p2_current_mechanics_status.svg
+  e0_v2_exact_six_attempt_leaves: 32
+  e0_v2_canonical_actions_per_arm: 352
+  retained_dynamic_v2_mock_cells: 10
+  dynamic_v3_formal_observed: 0
+  dynamic_v3_formal_registered: 240
+  dynamic_v3_dry_run_commands_emitted: 240
+  dynamic_v3_commands_invoked: 0
+  performance_claims_allowed: false
+
+implementation_validation:
+  provider_free_tests: 214
+  provider_free_tests_passed: 214
+  provider_calls: 0
+
+result_reporting:
+  status: pending_matched_generic_graph_llm_cohorts
+  require_accepted_cohort_gates: true
+  undefined_metrics: N/A
+  report_bootstrap_valid_replicates: true
+  default_mechanism_case: omitted_until_bound_extractor
+  recovery_case_requires_matched_evaluator_gating: true
+  no_eligible_recovery_case: N/A
+  dynamic_v3_consumer: scripts/render_graph_dynamic_manuscript.py
+  dynamic_v3_acceptance_required: true
+  dynamic_v3_task_primary_rows_after_acceptance: 8
+  dynamic_v3_secondary_mechanism_rows_after_acceptance: 26
+  dynamic_v3_registered_rows_after_acceptance: 34
+  dynamic_v3_current_rows_emitted: 0
+  dynamic_v3_grouped_replace_with_exception_rollback: true
+  dynamic_v3_protocol_bound_mode_preserving_publication: true
+  cross_dataset_v3_consumer: scripts/render_graph_cross_dataset_manuscript.py
+  cross_dataset_v3_acceptance_required: true
+  cross_dataset_v3_registered_rows_after_acceptance: 5
+  cross_dataset_v3_current_rows_emitted: 0
+  cross_dataset_v3_grouped_replace_with_exception_rollback: true
+  cross_dataset_v3_protocol_bound_mode_preserving_publication: true
+  reliability_v2_consumer: scripts/render_graph_reliability_manuscript.py
+  reliability_v2_acceptance_required: true
+  reliability_v2_registered_rows_after_acceptance: 8
+  reliability_v2_current_rows_emitted: 0
+  reliability_v2_grouped_replace_with_exception_rollback: true
+  reliability_v2_protocol_bound_mode_preserving_publication: true
+
+review_readiness:
+  shared_provider_free_reference_subset_accepted: true
+  generic_graph_llm_results_accepted: false
+  formal_real_data_results_accepted: false
+  final_tables_and_figures_ready: false
+  runnable_method_path_documented: true
+  result_complete_manuscript_ready: false
+  final_ten_lens_review_allowed: false
+
+manuscript:
+  bibliography: paper/refs/references.bib
+  literature_matrix: paper/literature_matrix.md
+  figures: paper/assets/figures
+  tables: paper/assets/tables
+  authors: TODO
+  target_venue: TODO

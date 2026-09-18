@@ -1,11 +1,29 @@
 # PHMGraph paper
 
-The sole active manuscript is [draft/main.md](draft/main.md). Its bibliography is [refs/phmgraph_review_2026.bib](refs/phmgraph_review_2026.bib): 38 distinct references, all cited in the manuscript. The [literature review](refs/phmgraph_literature_review.md) records each source, its contribution, relation to this study and reading depth.
+The sole active manuscript is [draft/main.md](draft/main.md). [paper.yaml](paper.yaml) records the current title, bibliography, first-attempt diagnosis contrasts and exact implementation binding. The active bibliography [refs/phmgraph_review_2026.bib](refs/phmgraph_review_2026.bib) contains 38 cited works; the [literature map](refs/phmgraph_literature_review.md) records their contribution and reading depth.
 
-The current scientific question separates an active instruction-block pointer from progress-gated executable tool exposure under the same B01–B06 procedural catalog. [EXPERIMENT_MATRIX](experiments/EXPERIMENT_MATRIX.md) preserves the first-attempt diagnosis protocol from the inspected scientific working branch. Diagnosis Macro-F1 is primary; replay AP is secondary. Actual matched PHM outcomes remain unestimated. Earlier Graph/Generic, semantic-cue and dynamic profiles retain their original definitions; historical outputs are not relabelled as evidence for the new comparison.
+Chapter 2 defines prior foundations, task, variables, gap and objective. Chapter 3 specifies indexing, gating, actual public-history precedence and Algorithm 1. [FORMULATION_METHOD_MAP.md](FORMULATION_METHOD_MAP.md) connects symbols, two figures, algorithm steps, implementation and experiments. [EXPERIMENT_MATRIX.md](experiments/EXPERIMENT_MATRIX.md) retains the scientific protocol: diagnosis Macro-F1 is primary; replay AP is secondary; actual paired effects remain unestimated.
 
-The [motivation figure](assets/figures/phmgraph_motivation.svg) is an editable, original vector schematic, not a performance plot. Its sole drawing implementation is [plot_phmgraph_motivation.py in Benchmark](https://github.com/liq22/phm-agent-benchmark/blob/dev/scripts/figures/plot_phmgraph_motivation.py), with a regeneration note alongside it. No drawing implementation is duplicated in this paper repository.
+## Reproducible method and figures
 
-Runtime methods, experiment execution, evaluation and derived plots remain owned by `liq22/phm-agent-benchmark`. The inspected current experiment entry is `configs/paper02_graph/indexing_first_attempt.yaml`; operational continuation is documented in Benchmark `paper/goals/P02_MATCHED_CONTROL.md`. Use the actual implementation branch until its integration requirements have passed; merging this manuscript does not accept a runtime migration or a real-data test.
+The inspected method is `liq22/phm-agent-benchmark@8206cfef540d5f602adba482e9dcc0ebd6b0f437`. Its configuration is `configs/paper02_graph/indexing_first_attempt.yaml`, and its operational goal is `paper/goals/P02_MATCHED_CONTROL.md`. This is an explicit source binding, not acceptance of migration PR #20 or of real-data execution. Do not substitute a changing branch head without checking the method and protocol together.
 
-Use `dev` for manuscript integration. Existing `GOAL.md`, `RESEARCH.md`, theory files and older protocol/result assets retain their historical context; the current manuscript and experiment matrix take precedence where older endpoint or contribution wording differs. The former bibliographies remain available for those historical documents and should not be combined blindly with the active bibliography, which contains overlapping works under current keys.
+The two publication SVGs are in `assets/figures/`. Their only drawing source is Benchmark `scripts/figures/plot_phmgraph_formulation_method.py`. From a Benchmark checkout containing that source:
+
+```bash
+python scripts/figures/plot_phmgraph_formulation_method.py --output-dir /path/to/P02_agent_langraph/paper/assets/figures
+```
+
+SVG export uses the Python standard library with `--svg-only`; PDF/PNG additionally use CairoSVG. No agent runtime, data or provider connection is required. The previous motivation source/asset remains historical; the current manuscript displays the problem and method figures instead.
+
+For a PDF proof, first generate those PDFs. From `paper/draft/`, convert image references to their same-source PDF exports for LaTeX:
+
+```bash
+sed 's/\.svg)/.pdf)/g' main.md | pandoc --from=markdown --citeproc --pdf-engine=xelatex -V documentclass=article -V fontsize=10pt -V geometry:margin=20mm -o PHMGraph.pdf
+```
+
+## Historical compatibility
+
+The old manifest is preserved exactly at [legacy/graph_v6_manifest.yaml](legacy/graph_v6_manifest.yaml). Its experiments and old result files retain their original definitions, not the current factorial interpretation. Six legacy result-marker pairs are restored in the manuscript; a renderer must remain bound to its own legacy protocol. Schema-version-2 `paper.yaml` must not be silently used as a legacy execution configuration.
+
+Use `dev` for paper integration. Runtime, experiments, evaluation and all drawing code are owned by Benchmark. Older Goal/Research documents and historical protocols do not override the active manuscript, experiment matrix or pinned method binding.

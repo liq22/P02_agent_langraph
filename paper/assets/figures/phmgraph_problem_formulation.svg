@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180mm" height="93mm" viewBox="0 0 1800 930">
+<title>PHMGraph problem formulation and observation boundaries</title>
+<desc>Conceptual scientific diagram. No empirical values. Labels are editable text.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#28313b"/></marker></defs>
+<rect width="1800" height="930" fill="white"/>
+<g font-family="DejaVu Sans, Arial, sans-serif" fill="#202830">
+<text x="55" y="62" font-size="36" font-weight="bold" text-anchor="start">Problem: same capabilities, different decision interfaces</text>
+<g id="fixed-X">
+<rect x="55" y="110" width="1690" height="155" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
+<text x="79" y="152" font-size="29" font-weight="bold" text-anchor="start">Fixed conditions Xₖ</text>
+<text x="79" y="194" font-size="26" font-weight="normal" text-anchor="start">Task and released measurement scope · full procedural content · global numerical tools</text>
+<text x="79" y="230" font-size="26" font-weight="normal" text-anchor="start">Same model settings, fitted experts, budgets and evaluator across matched conditions</text>
+</g>
+<g id="intervention-Z">
+<rect x="55" y="345" width="395" height="160" rx="10" fill="#edf3f7" stroke="#66737e" stroke-width="4"/>
+<text x="79" y="387" font-size="29" font-weight="bold" text-anchor="start">Intervention Z = (i, g)</text>
+<text x="79" y="429" font-size="26" font-weight="normal" text-anchor="start">Instruction localization</text>
+<text x="79" y="465" font-size="26" font-weight="normal" text-anchor="start">Temporal tool restriction</text>
+</g>
+<g id="decision-process">
+<rect x="545" y="345" width="595" height="160" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
+<text x="569" y="387" font-size="29" font-weight="bold" text-anchor="start">History-conditioned interaction</text>
+<text x="569" y="429" font-size="26" font-weight="normal" text-anchor="start">Public input → action → observation</text>
+<text x="569" y="465" font-size="26" font-weight="normal" text-anchor="start">Tool results and errors update history</text>
+</g>
+<g id="trajectory">
+<rect x="1235" y="345" width="510" height="160" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
+<text x="1259" y="387" font-size="29" font-weight="bold" text-anchor="start">Observed trajectory τₖᶻ</text>
+<text x="1259" y="429" font-size="26" font-weight="normal" text-anchor="start">Requested and executed actions</text>
+<text x="1259" y="465" font-size="26" font-weight="normal" text-anchor="start">Evidence and terminal status</text>
+</g>
+<polyline id="fixed-to-process" points="842,265 842,335" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline id="intervention-to-process" points="450,425 535,425" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline id="process-to-trajectory" points="1140,425 1225,425" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<g id="private-target">
+<rect x="55" y="595" width="395" height="145" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
+<text x="79" y="637" font-size="29" font-weight="bold" text-anchor="start">Evaluator-only cₖ</text>
+<text x="79" y="679" font-size="26" font-weight="normal" text-anchor="start">True diagnosis class</text>
+<text x="79" y="715" font-size="26" font-weight="normal" text-anchor="start">Never sent to the agent</text>
+</g>
+<g id="outcome-Y">
+<rect x="545" y="595" width="595" height="145" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
+<text x="569" y="637" font-size="29" font-weight="bold" text-anchor="start">Evaluated outcome Yₖᶻ</text>
+<text x="569" y="679" font-size="26" font-weight="normal" text-anchor="start">Accepted label or terminal non-submission</text>
+<text x="569" y="715" font-size="26" font-weight="normal" text-anchor="start">Numerical correctness evaluated here</text>
+</g>
+<g id="process-T">
+<rect x="1235" y="595" width="510" height="145" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
+<text x="1259" y="637" font-size="29" font-weight="bold" text-anchor="start">Process measurements Tₖᶻ</text>
+<text x="1259" y="679" font-size="26" font-weight="normal" text-anchor="start">Prediction use · continuation · errors</text>
+<text x="1259" y="715" font-size="26" font-weight="normal" text-anchor="start">Submission timing and resource use</text>
+</g>
+<polyline id="target-to-outcome" points="450,667 535,667" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline id="trajectory-to-process-measures" points="1490,505 1490,585" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline id="trajectory-to-outcome" points="1280,505 1280,550 842,550 842,585" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="872" y="538" font-size="24" font-weight="normal" text-anchor="start">Submitted diagnosis / status</text>
+<text x="55" y="823" font-size="26" font-weight="bold" text-anchor="start">Matched cohort; no episode-wise F1 average</text>
+<g id="cohort-M">
+<rect x="1055" y="785" width="690" height="85" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
+<text x="1079" y="827" font-size="29" font-weight="bold" text-anchor="start">Cohort Macro-F1: M(Dᶻ)</text>
+</g>
+<polyline id="outcomes-to-metric" points="842,740 842,827 1045,827" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="55" y="905" font-size="25" font-weight="normal" text-anchor="start">Arrows show execution and measurement dependencies; they do not identify causal mediation.</text>
+</g></svg>
