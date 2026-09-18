@@ -252,15 +252,9 @@ Mechanism observations include attempted submission before numerical prediction,
 
 Matched PHM first-attempt outcomes are not yet available. The two primary diagnosis effects, secondary replay effects and operational costs are therefore unestimated. The execution boundaries and hypotheses in Sections 3–4 specify the intervention and its testable consequences; they are not empirical estimates of diagnostic improvement or harm.
 
-## 7. Discussion
+### 6.1 Comparisons under separate protocols
 
-PHMGraph distinguishes providing a computation, guiding its use and enforcing its execution order. This separation is important because a fixed expert pool permits different realized numerical paths. A pointer can change which existing instruction receives attention, whereas a gate also changes what remains possible. Their effects should consequently be interpreted at the level of the specified interface and task, rather than attributed to graph structure in general.
-
-The present diagnosis scope contains one distinct raw window. It supports questions about numerical execution, early submission and post-prediction continuation, but not loss of a second independent raw measurement. Full history remains available, and the primary path has no public condition-change event; persistent-memory and dynamic-revision effects require different interventions. The task-primary comparison and its uncertainty also remain conditional on the declared bearing cohort, model, catalog and budgets.
-
-A useful next empirical conclusion must therefore identify which of three outcomes occurs: improved delivery, changed diagnostic label quality, or an inactive restriction. The same design can reveal adverse effects. That symmetry is central to deciding when an explicit PHM workflow is helpful rather than treating additional control as an automatic improvement.
-
-## References
+Earlier Graph–Generic, dynamic-revision, cross-dataset and repeated-trial comparisons address different intervention or task definitions. Their results, when available, are reported separately and are not pooled with the current first-attempt indexing–gating contrasts.
 
 <!-- Legacy result insertion slots below retain their original profile definitions.
 They are not indexing-by-gating treatment results. Historical renderers must
@@ -283,3 +277,12 @@ remain bound to the legacy protocol manifest, not the active experiment. -->
 <!-- GRAPH_FORMAL_FIGURES:BEGIN -->
 <!-- GRAPH_FORMAL_FIGURES:END -->
 
+## 7. Discussion
+
+PHMGraph distinguishes providing a computation, guiding its use and enforcing its execution order. This separation is important because a fixed expert pool permits different realized numerical paths. A pointer can change which existing instruction receives attention, whereas a gate also changes what remains possible. Their effects should consequently be interpreted at the level of the specified interface and task, rather than attributed to graph structure in general.
+
+The present diagnosis scope contains one distinct raw window. It supports questions about numerical execution, early submission and post-prediction continuation, but not loss of a second independent raw measurement. Full history remains available, and the primary path has no public condition-change event; persistent-memory and dynamic-revision effects require different interventions. The task-primary comparison and its uncertainty also remain conditional on the declared bearing cohort, model, catalog and budgets.
+
+A useful next empirical conclusion must therefore identify which of three outcomes occurs: improved delivery, changed diagnostic label quality, or an inactive restriction. The same design can reveal adverse effects. That symmetry is central to deciding when an explicit PHM workflow is helpful rather than treating additional control as an automatic improvement.
+
+## References
