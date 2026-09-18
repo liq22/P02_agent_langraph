@@ -1,17 +1,5 @@
-# Superseded Material
+# Superseded execution ownership
 
-`CORE.md` is the active Paper 2 authority.
+The former graph package, dynamic runtime, experiments entry, scripts, tests and executable configs no longer define an active implementation here. Their prior Git versions remain indexed by experiment_spec/SOURCE_HISTORY.md. Do not recreate compatibility execution layers in the paper checkout.
 
-The following themes are historical when they conflict with it:
-
-```text
-AutoResearch or manuscript-node governance as the paper object
-Canvas, web, dashboard, or Tauri as scientific contributions
-claim-evidence registries and reviewer closure as the method
-PHMGA/Vibench provider gates as the central experiment
-software exception injection as the main recovery problem
-general-purpose LangGraph platform development
-hash/checksum/digest/receipt/ledger validation
-```
-
-Existing graph code, research nodes, manuscripts, and the PHMGA submodule may contain reusable work. Reuse must serve the benchmark-facing GraphDecisionAgent comparison defined in `CORE.md`.
+Scientific manuscripts, proofs, references, review notes and publication assets remain research material. Root GOAL and Benchmark config/artifact mappings govern new work.
