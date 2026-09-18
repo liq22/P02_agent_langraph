@@ -1,7 +1,11 @@
-# GraphDecisionAgent paper
+# PHMGraph paper
 
-The sole manuscript source is [draft/main.md](draft/main.md). Edit its existing sections and preserve the registered result insertion markers. The active bibliography is [refs/references.bib](refs/references.bib); figure and table assets support that manuscript.
+The sole active manuscript is [draft/main.md](draft/main.md). Its bibliography is [refs/phmgraph_review_2026.bib](refs/phmgraph_review_2026.bib): 38 distinct references, all cited in the manuscript. The [literature review](refs/phmgraph_literature_review.md) records each source, its contribution, relation to this study and reading depth.
 
-[Goal](GOAL.md) selects the next scientific task. [RESEARCH](RESEARCH.md) and [theory](theory/) document assumptions and controlled comparisons. [Experiments](../experiments/README.md) contains executable commands; `paper/experiments/` preserves registered protocols and results under their recorded conditions.
+The current scientific question separates an active instruction-block pointer from progress-gated executable tool exposure under the same B01–B06 procedural catalog. [EXPERIMENT_MATRIX](experiments/EXPERIMENT_MATRIX.md) preserves the first-attempt diagnosis protocol from the inspected scientific working branch. Diagnosis Macro-F1 is primary; replay AP is secondary. Actual matched PHM outcomes remain unestimated. Earlier Graph/Generic, semantic-cue and dynamic profiles retain their original definitions; historical outputs are not relabelled as evidence for the new comparison.
 
-Use `dev` for integration. Historical drafts and inactive templates are recoverable through the pre-convergence Git tag. Current results determine the abstract and conclusions; mechanics fixtures remain labeled as such.
+The [motivation figure](assets/figures/phmgraph_motivation.svg) is an editable, original vector schematic, not a performance plot. Its sole drawing implementation is [plot_phmgraph_motivation.py in Benchmark](https://github.com/liq22/phm-agent-benchmark/blob/dev/scripts/figures/plot_phmgraph_motivation.py), with a regeneration note alongside it. No drawing implementation is duplicated in this paper repository.
+
+Runtime methods, experiment execution, evaluation and derived plots remain owned by `liq22/phm-agent-benchmark`. The inspected current experiment entry is `configs/paper02_graph/indexing_first_attempt.yaml`; operational continuation is documented in Benchmark `paper/goals/P02_MATCHED_CONTROL.md`. Use the actual implementation branch until its integration requirements have passed; merging this manuscript does not accept a runtime migration or a real-data test.
+
+Use `dev` for manuscript integration. Existing `GOAL.md`, `RESEARCH.md`, theory files and older protocol/result assets retain their historical context; the current manuscript and experiment matrix take precedence where older endpoint or contribution wording differs. The former bibliographies remain available for those historical documents and should not be combined blindly with the active bibliography, which contains overlapping works under current keys.
