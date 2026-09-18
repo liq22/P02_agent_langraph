@@ -1,9 +1,9 @@
-# Paper 2 — instruction indexing and tool exposure
+# Paper 2 — indexing and workflow gating under a fixed diagnosis scope
 
-The active scientific question is whether a block pointer and a stage-conditioned tool menu change PHM decisions under the same fixed instruction catalog, numerical capability and evaluator. This is not a topology-only or persistent-memory efficacy claim.
+Scientific question: under the same procedural catalog, released data scope and potential numerical experts, how do an active-block pointer and progress-gated tool interface change delivered PHM diagnoses?
 
-Read `paper/draft/main.md`, `paper/theory/07_intervention_validity.md` and `paper/experiments/EXPERIMENT_MATRIX.md`. The primary prospective comparison is the four `graph-indexing` conditions. Original Graph/Generic is secondary; older cue packages are diagnostic context, not interchangeable controls.
+The primary endpoint is native three-class Macro-F1 over canonical first attempts, including no-submission outcomes. The two contrasts are index-with-global-tools and gating-after-indexing. Replay is secondary. Current diagnosis permits one distinct raw array; a single-read restriction is not a demonstrated loss of additional raw observations. Actual numerical use, premature submission and post-prediction continuation are the relevant candidates.
 
-All implementation, data access, experiments, evaluation and plotting belong to `liq22/phm-agent-benchmark`. Its sole current execution handoff is `paper/goals/P02_MATCHED_CONTROL.md`. This repository contains scientific writing and mappings only.
+Read `paper/draft/main.md`, `paper/theory/07_intervention_validity.md` and `paper/experiments/EXPERIMENT_MATRIX.md`. Benchmark owns every executable component. Its existing `paper/goals/P02_MATCHED_CONTROL.md` is the sole operational handoff.
 
-The metadata index has been obtained and parsed; actual signal access and matched Agent outcomes remain unverified. Portable CI is separate from the retained local-data acceptance. Keep the migration Draft until real acceptance, then merge Benchmark before removing the paper repository's duplicate implementation. Do not alter master, force-push, relabel old results or repeat completed toys.
+Do not apply the superseded candidate blocking.py patch. Reuse the current native first-attempt schedule, request reserve and shared fit. The prospective cyclic order and new study identity preserve earlier results separately. Portable native checks have passed, but real HDF5 acceptance and matched provider outcomes remain absent. No task improvement, lost useful evidence, topology benefit or persistent-memory efficacy is inferred from source tests. Merge Benchmark only after actual local acceptance, then the paper-only cleanup; no master change or force push.
