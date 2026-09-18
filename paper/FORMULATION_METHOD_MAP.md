@@ -1,68 +1,45 @@
-# PHMGraph: decision–evidence mechanism and evidence map
+# PHMGraph: literature–mechanism–measurement map
 
-The active manuscript is `draft/main.md`; `paper.yaml` specifies the current scientific protocol. Benchmark is the sole owner of numerical methods, policies, data access, runners, evaluation and drawing source. This map is author-facing source documentation, not manuscript prose or another result authority.
+This author-facing map binds `draft/main.md` to the sole implementation in Benchmark. It is not manuscript prose or a second result ledger.
 
-## Scientific chain and contribution boundary
+## Scientific chain
 
-Question → under common PHM capability, does sample-bound execution-evidence feedback change diagnosis when outer organization is present?
+**Question.** With fixed vibration scope, fitted numerical experts, native validators, procedural catalog and language model, when does anticipatory execution-evidence feedback change supported diagnosis or cost beyond call-history control?
 
-Foundation → finite decision controllers and typed entity/activity provenance. Formulation → fixed X, assigned Z=(o,e), public trajectory τ, process T and evaluator outcome Y. Mechanism → input-role evidence DAG, prerequisite frontier Φ, evidence-conditioned phase/menu. Measurement → primary 11−10; other simple effects, outcome-scale interaction, grounded outcome, support and replay. Current evidence → installed native software checks on the existing synthetic numerical fixture; real PHM effects are unestimated.
+**Closest foundations.** AiiDA distinguishes workflow logic from data provenance; LLMCompiler schedules dependent calls and replans from intermediate results; TimeSage-MT uses typed dependencies and measures the grounding–flexibility trade-off; PHMForge supplies industrial algorithm-grounded tools and verification/discovery controls. The [30-paper matrix](refs/phmgraph_literature_review.md) gives the inspected methods, changed variables and experimental evidence. PROV-DM is an additional standard. MAP-Graph is an additional author-abstract-only positioning source, not counted as full-method reading.
 
-Typed provenance itself, generic state machines and provenance-based action gates are prior art. The proposed PHM mechanism is the binding of distinct input roles and current-sample numerical ancestry to prediction/submission eligibility. A positive factorial interaction would not alone prove a unique coupling mechanism. The feedback bundle changes a public summary, readiness admission and, with outer organization, phase routing and post-prediction continuation.
+**Gap.** Native rejection of incompatible numerical inputs is already present in every arm. Its protection does not establish whether anticipatory readiness feedback improves a bounded agent's subsequent decisions. The current study isolates that incremental intervention; it does not establish graph-storage necessity or the first dependency-aware controller.
 
-## Equation–figure–algorithm–experiment correspondence
+## Challenge → method → figure → experiment
 
-| Object / mechanism | Mathematical definition | Figure position | Section / algorithm | Native implementation and test | Empirical role |
-|---|---|---|---|---|---|
-| Fixed capability, private target | Xₖ; evaluator-only cₖ | Figure 1 common setting and evaluator | 2.1–2.3; shared inputs | Existing runtime/scope, no private label in graph or request | D0: data, split, fitted assets and first-attempt binding |
-| Outer organization | inherited f(h), common catalog B, phase menus | Figure 2 upper layer | 3.2; steps 2, 4–5 | `dual.py`, unchanged `state.py`/`components.py`; outer-only closure regression | D2: 10−00; historical pointer/gate ablations remain separate |
-| Typed numerical support | G(in), role-bound use/generation; separate citation edges | Figure 2 lower layer | 3.3; steps 1, 3, 6–7 | `EvidenceDAG.append/support/submission_prediction`; missing/rewired edge and generation tests | D1/D3: numerical paths, not just references |
-| Prerequisite frontier | F(m,w,j), Rₜ, Pₜ, ηₜ=Φ(G(in)) | Figure 2 middle feedback | 3.4; steps 3–4 | `frontier/state`; distinct-role, same-window and no-schema support checks | D2: feedback effect; incomplete/repeated-feature opportunities |
-| Coupled menu | sₜ=F(hₜ,ηₜ), Γₜ under (o,e) | Figure 2 feedback → phase and admission | 3.4; steps 4–6 | `DualGraphAgent`; deleting one required usage edge changes actual menu | D2/D3: 11−10; optional continuation, recovery and costs |
-| Computational output | outer recorded path plus selected G(sup) | Figure 2 lower output | 3.5; step 7 | `submission_prediction/support`, graph rebuilt from complete native trace | D3: task-matched submitted support; does not expose hidden reasoning |
-| Numerical replay | fresh native execution of support, fixed tolerance | Figure 2 offline output; no return to policy | 3.5, 5.2 | `replay_prediction`; native reference renaming and altered-value rejection | D3: replay coverage/agreement, not feature necessity or fault causality |
-| Lossless flat feedback | grouped frontier ↔ relational rows | Same feedback block, alternative rendering | 3.4, 5.1 | `flat_frontier`; exact reconstruction and equal menu | D4: presentation, not deletion of relation information |
+| Challenge | Defined object / mechanism | Figure and section | Algorithm / implementation | Observable consequence / experiment |
+|---|---|---|---|---|
+| Distinguish nominal progress from compatible evidence | Actual use/generation roles, per-role candidate sets and binary readiness vectors | Figure 1a; Figure 2 lower/middle; 3.3–3.4 | Steps 1, 3, 6; `EvidenceDAG.append/support/frontier/state` | Distinct required-role completion, current-window support, premature requests; D1/D2/D3 |
+| Isolate anticipatory feedback from extra capability and representation | Shared X, Z=(o,e), deterministic η=Φ(G), phase s and menu Γ; lossless flat feedback | Figure 1b; Figure 2 feedback arrows; 2.3/3.4 | Steps 2–5; `DualGraphAgent`, `flat_frontier` | Primary 11−10, secondary simple effects/interaction, grouped-vs-flat presentation; D2/D4 |
+| Distinguish supported delivery from correct diagnosis and positive net value | Operational and grounded cohort scores; selected support; isolated replay and costs | Figure 1 outcomes; Figure 2 output; 3.5/5.2 | Step 7; native submission, `submission_prediction`, `replay_prediction` | First-attempt Macro-F1, support/replay rates with explicit denominators, common and incremental costs; D0/D3/D5 |
 
-D0–D5 are defined in `experiments/EXPERIMENT_MATRIX.md`. A supported prediction is not a guarantee that a later LLM submission will cite it correctly. Online admission checks eligibility; final native grounding and graph support are assessed independently.
+D0–D5 are specified in `experiments/EXPERIMENT_MATRIX.md`. A source-file mechanism is not an empirical benefit. Three contributions correspond to the three rows: contract-grounded formulation, deterministic non-closing prerequisite feedback, and matched diagnosis–support–cost evaluation.
 
-## Active implementation and acceptance state
+## Exact scope and interpretation
 
-Repository: `liq22/phm-agent-benchmark`.
+The current predictor requires six direct time-domain features and four band powers from its prescribed Welch-PSD route, all from one declared task window. Repeated RMS does not fill kurtosis; an arbitrary FFT/envelope output does not satisfy a Welch-band role. This is a model contract, not a universal law of PHM. The graph does not correct spectral leakage, nonstationarity or lack of discriminative signal information.
 
-Active implementation commit: `45704762bd2e3ee7f8d0da4c037e67a575779703`.
+η is computed by deterministic role/path checks, not an LLM summary or subgraph-isomorphism solver. Structural readiness is weaker than full native admissibility. A successful task-bound prediction may retain its support without a preceding schema query. Disagreement is reported, not arbitrated using private labels.
 
-Tested source head: `35785d431eac21c1c8a9fbd070872a9b7b045b74`, PR #27. The two policy modules, named condition factory, network-free plan entry and sole drawing source are included. The plan entry is `configs/paper02_graph/dual_v1.yaml`; continuation is `paper/goals/P02_DUAL_GRAPH.md`. It deliberately contains a model placeholder and performs no provider request.
+All four cells construct G **and compute Φ**. Only e=1 exposes the summary and conditions control. Accordingly, 11−10 measures active feedback over common evidence processing, not total graph overhead against an uninstrumented Agent. D00 is a matched common-catalog reactive control, not an unmodified Generic baseline. Flat11 retains all relation information and the identical controller; the difference is grouped versus relational-row serialization. Edge corruption is an information-changing negative control, not a content-matched baseline.
 
-The implemented Agent/Runner boundary and support replay are distinct from **accepted real-data first-attempt cohort execution**. The latter, balanced-block/indeterminate-attempt integration and the grounded cohort score remain pending in the shared Benchmark. Migration PR #20 is not accepted by this method integration. Do not run a best-available-attempt study and label it as the proposed first-attempt cohort. The historical eleven-tool surface is unchanged; `artifact.describe` and `stop` are not treatment-specific additions.
+Support replay performs fresh numerical executions with the same raw slice, channels, sampling rate, fitted assets and declared environment. It never calls the LLM, refits or substitutes cached features as computed outputs. Random state is fixed for stochastic numerical operations when present. The numeric tolerance (rtol=1e−9, atol=1e−12) and exact class comparison define a test, not a universal cross-hardware guarantee. Checkpointed replay from cached tensors validates only its downstream segment. Computational support is not hidden-reasoning faithfulness, feature necessity or physical fault causality.
 
-Software validation is recorded in PR #27 and the delivery receipt. Initial native tests used the real installed Benchmark and pinned data-factory dependency, not import stubs. The full research suite also exposes six errors in the unchanged analysis-applicability fixture (`input_tokens` aggregate versus canonical deltas). Focused passing tests do not imply that all repository checks passed.
+## Figures and reproducibility
 
-## Support, replay and unresolved outcomes
+The sole drawing source is Benchmark `scripts/figures/plot_phmgraph_formulation_method.py`. Figure 1 replaces the previous generic setting diagram with the specific role-versus-progress ambiguity and common-validator comparison; it remains referenced by Section 2. Figure 2 labels G, η, s and Γ consistently with Algorithm 1 and explicitly notes common Φ computation. Editable SVG text, independent objects, vector-font PDF and high-resolution PNG are generated from that same source. The regeneration and manuscript build commands are in `README.md`.
 
-The inherited grounded endpoint remains: an accepted label with native `submission_grounding == 1` and `artifact_lineage_completeness == 1` retains its class; a resolved criterion failure maps to `no_submission`. Keep every assigned true class. Missing support information is unresolved, not an inferred zero. `supporting_reference_validity` is reported separately. Do not select a favorable prediction reference retrospectively.
+## Source binding and validation
 
-The graph's support predicate is stricter about recorded numerical ancestry but is not another primary scoring authority. Every condition can reconstruct its graph from the same canonical public events. Include the terminal submission when deriving the final support; the live policy object has only the prefix consumed before its final decision. Graph exports are derived views, not a seventh authoritative attempt file. A successful native prediction need not be preceded by a schema-discovery call to retain its support.
+Active Benchmark source: `467a16570c55da086f2d67fe79365c7bf006d9ac`. Core numerical-policy implementation remains the normally merged PR #27 version. PR #29 changes only the applicability fixture, drawing source and continuation instructions, not production numerical behavior.
 
-Replay uses a fresh native runtime with the original raw data and reloaded fitted assets; it never refits or substitutes cached feature values. Numeric tolerance is rtol=1e−9, atol=1e−12; class equality is exact. Public feature/prediction values and sample metadata are compared, not every hidden array. Missing sources, invalid support, failed replay and numerical disagreement need distinct outcome categories. Offline calls and cost do not become free online evidence. A replayable path establishes computational reproducibility, not causal necessity, physical correctness or language-model reasoning faithfulness.
+Installed source `c040d2a3721901f32f6f2d8681e5bd75c14d0ce6` passed workflow `35362929546`: 208 research tests, 52 selected portable core tests and published-metadata parsing. One pre-existing local-HDF5 acceptance test was not run. Initial run `35359714765` retained the failure history: correcting known-zero tokens exposed the fixture's missing native-contract declaration; both were then corrected without weakening any original assertion or production validator. Final-head checks are recorded in PR #29.
 
-## Figures and source versions
+Real HDF5/split/fitted-asset acceptance, canonical first-attempt integration and grounded cohort mapping remain pending. No provider result or real-data superiority is inferred from native synthetic fixtures. Migration PR #20 remains independent; no retained paper-repository runtime is deleted here. Existing six-file native attempts remain the sole execution authority; derived graph views do not create another ledger.
 
-**Figure 1 — Problem formulation and observation boundaries (Section 2.3).** Shows X, Z=(o,e), τ/T, private c, Y and cohort M(D), with no controller architecture. It is needed to distinguish capability, execution and evaluation. Caption and following paragraph define the variables and their roles.
-
-**Figure 2 — Coupled decision and numerical-evidence graphs (Section 3.1).** Replaces the old pointer/menu-only overview. The upper adapted controller can cycle through recovery; the lower validated numerical paths are acyclic. One direction chooses real computations; the reverse direction supplies structural evidence state to phase/menu selection. The drawing compresses six time features and four band powers into groups; individual roles remain in the method and code. The coupled route is illustrative, not the literal state trace for all four cells. The output joins a recorded control path to its selected numerical support.
-
-Sole source: Benchmark `scripts/figures/plot_phmgraph_formulation_method.py`. Both SVGs retain editable text and separate object groups, with no embedded raster image or external font. PDF/PNG were generated from that same source and visually inspected. No third figure or runtime code was added to this paper repository.
-
-## Prior-work reading and review uptake
-
-- PROV-DM: official W3C Recommendation, 30 April 2013, entity/activity and use/generation definitions. Foundation, not new graph theory.
-- StateFlow: arXiv 2403.11322v5, state organization and reported ablations inspected. Outer-control prior.
-- PHMForge: accessible arXiv HTML 2604.01532v2, industrial tool controls inspected; no claim of reading a different version.
-- TimeSage-MT: arXiv HTML 2606.01498v1, system comparison and grounding/flexibility framing inspected.
-- MAP-Graph: arXiv 2608.10509, **author abstract inspected; full text was unavailable**. Its stated typed execution graph, ancestry and action gate already preclude a first-provenance-in-control claim. Detailed algorithm equivalence and ablation comparison remain to be checked from full text. No performance figures are transferred to PHMGraph.
-
-The new review's dual-graph and online-coupling request is adopted. Two proposed interpretations are corrected rather than copied: replay is computational support, not complete diagnostic explanation; deleting or randomizing edges changes information and is not a lossless flat-evidence control. General Bellman accounting is removed from the active theoretical chain because it does not determine this mechanism.
-
-## Historical preservation
-
-`legacy/indexing_v1_manifest.yaml` and `legacy/indexing_v1_experiment_matrix.md` preserve the preceding active specification byte-for-byte. Its source remains `8206cfef540d5f602adba482e9dcc0ebd6b0f437`; neither those cells nor their first-attempt rules become dual-v1 results. `legacy/graph_v6_manifest.yaml` and six original insertion-marker pairs retain their meanings. No historical result record is rewritten.
+The preceding indexing manifest/matrix and all six historical insertion-marker pairs are unchanged. New dual-v1 outcomes must not be inserted into those older families.
