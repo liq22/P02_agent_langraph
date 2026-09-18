@@ -1,127 +1,84 @@
-# Persistent structure, interface interventions and inactive ablations
+# Instruction indexing, menu exposure and reachable behavior
 
-## Object and scope
+## Scope and notation
 
-We study $G=\text{persistent decision structure}$ and keep the shared PHM world, model, knowledge source $K_0$, response decoder, resource accounting and evaluator fixed. The explicit controller is
+The primary prospective comparison uses one fixed ordered catalog $B=((b_j,d_j))_{j=1}^6$. IDs B01–B06 correspond to the existing Inspect, Hypothesize, Analyze, Check, Recover and Submit instructions. All four arms receive every instruction once; only the active-block pointer and schema exposure vary. Semantic `organization-*` and earlier `factorial-*` treatments retain their definitions and are not controls for this new profile.
 
-$$
-G=(\mathcal M,m_{\mathrm{init}},\delta,c,\Gamma),\qquad
-m_t=(z_t,\nu_t),\qquad
-m_t=\delta(m_{t-1},s_t,e_t),
-$$
+Let $\widetilde h_t$ contain the public task, usage and ordered action-argument/result/error history after common removal of top-level historical decision-state metadata. In the event-free base, the stage function reads only: whether a successful read/catalog/model-schema/prediction exists, the latest call error, and, for replay, public replay sample IDs and source IDs/counts of successful operators. It does not read the removed state labels, private diagnosis targets, interface token counts or a learned fault posterior.
 
-where $s_t=(h_t,b_t,t)$ is public history, remaining budget and time. The phase $z_t$ labels analysis progress, and $\nu_t$ is the last consumed public-event token. In the original package, the cue $c(z_t)$ contains the current phase label and stage instruction; in the fixed-bank profile it contains only the phase annotation; $\Gamma(z_t,s_t)$ returns tool visibility. Transitions are induced by $\delta$, rather than an independently changed topology. Public events $e_t$ are released condition metadata, not hidden targets or fault onsets inferred from the signal.
+The required history-sufficiency premise is
 
-A definition containing only the phase label omits the event-deduplication memory used by the actual controller. Conversely, the model still receives public history: this implementation is not a memory-limited finite-state policy or a sufficient diagnostic belief state. Classical finite-state control and state-driven LLM workflows are precedents, not new formalisms here (Hansen, NIPS 1997, Section 3.1; StateFlow, Section 3.1).
+$$\widetilde h_t=\widetilde h'_t\Longrightarrow z_t=z'_t.$$
 
-## Four-cell intervention
+For this base source, each used field is retained and previous state can only activate event-dependent Monitor/Revise branches. Those branches are unreachable from Inspect without events. The consumed-event cache remains empty. This supplies a source argument for sufficiency under fixed initialization and flags; finitely many fixtures alone would not prove it. The premise is not extended to dynamic event caches, truncated histories, private metadata or an alternative controller without a new argument.
 
-For indicators $u,v\in\{0,1\}$, the model-facing interface is
+The prospective interface is
 
 $$
-I_{uv}(h_t)=\left(\operatorname{render}(h_t;K_0)+u\,c(z_t),\ \mathcal T_v(z_t,h_t)\right),
+I^B_{im}(\widetilde h_t)=\big(\rho(\widetilde h_t,B)\mathbin\Vert iL(z_t),\operatorname{Schema}(\Gamma_m(z_t))\big).
 $$
 
-where $\mathcal T_0$ is the common tool catalog and $\mathcal T_1$ its Graph subset. The expression denotes structured message assembly, not arithmetic on strings. All four cells use the same renderer with top-level historical decision-state metadata removed from tool messages. Numerical tool payloads, action arguments, errors, order and remaining-budget information are otherwise unchanged at the same public history.
+Indexing adds the text `Active instruction block: B03.` in the relevant case. B03 is an index into the common bank, not the word Analyze or another imperative stage name. Equal-width characters do not prove equal tokenization, and ordered identifiers may still carry positional cues. The treatment does not independently identify pointer correctness versus line salience.
 
-The cue factor is a label-plus-instruction package, not a pure state-name intervention. Tool identity can also convey the stage implicitly; removing the explicit cue does not remove all information about the state. Thus the estimands are direct effects of these implemented interfaces. They do not identify topology-only effects or separate latent semantic pathways. $K_0$ is the common knowledge source; state-conditioned presentation belongs to the declared $G$ intervention. A comparison independent of newly supplied procedural wording uses the fixed-instruction profile below.
+## Task-value equivalence, not cost equivalence
 
-## Fixed instruction inventory: organization rather than extra advice
+Assume complete retained history, $Z_t=f(\widetilde H_t)$, a fixed finite-horizon world, and identical feasible actions and task-relevant stopping rules. Then
 
-The original four cells change a label-plus-instruction cue. Their common source $K_0$ does not ensure that the same procedural text reaches the model at a given history. To test organization conditional on a fixed text inventory, define the ordered bank
+$$\sigma(\widetilde H_t,Z_t)=\sigma(\widetilde H_t).$$
 
-$$
-B=\big((z,d_z):z\in\mathcal Z_{\mathrm{base}}\big),
-$$
+For all history-conditioned stochastic policies $\Pi$ and policies $\Pi_{\rm ann}$ that also receive $f(\widetilde h)$,
 
-containing the unchanged six base-stage instructions. Let $\widetilde h_t$ be the provider-visible public task, usage and action/result/error history after the common removal of top-level historical state metadata. Define a new, separate interface family
+$$\sup_{\pi\in\Pi_{\rm ann}}J_{\rm task}(\pi)=\sup_{\pi\in\Pi}J_{\rm task}(\pi).$$
 
-$$
-I^B_{uv}(\widetilde h_t)
-=\big(\operatorname{render}(\widetilde h_t;K_0,B)\mathbin\Vert u\,\operatorname{name}(z_t),\;\mathcal T_v(z_t,\widetilde h_t)\big).
-$$
+**Proof.** Compose any annotated rule with $f$: $\bar\pi_t(a\mid\widetilde h)=\pi_t(a\mid\widetilde h,f(\widetilde h))$. Action kernels and hence rollout laws agree by induction through the same environmental kernel. Conversely, an annotated rule may ignore its index. $\square$
 
-The notation denotes concatenation of a structured annotation, not arithmetic on text. All six instruction entries occur once and in the same order in every arm, including annotation-off arms. The annotation adds only the current phase name, not its advice again. $u$ controls annotation; $v$ controls the existing tool restriction. The bank is independent of the current state, fitted data, targets and PHMskills retrieval. The treatment is event-free; Monitor/Revise instructions are excluded equally from every bank. The existing base state map and terminal rules are unchanged.
+This is standard deterministic-feature/policy-class reasoning, not an original control-optimality theorem. $J_{\rm task}=\mathbb E[R_{\rm task}]$ excludes interface computation/serialization cost. The empirical cost vector records input tokens, output tokens, elapsed time and tool usage in their own units. A priced scalar cost may be introduced only with its conversion stated. For example, identical task reward 1 but an additional interface charge $c>0$ changes $J_\lambda=J_{\rm task}-\lambda C$ by $-\lambda c$. Thus the task-only equivalence does not imply cost-adjusted equivalence. Token-budget truncation that changes feasible continuations also invalidates the common-world premise.
 
-This comparison is a specialization motivated by StateFlow's state-dependent instructions and refined-workflow baseline, not a new general prompting principle [@wu2024stateflow, Sections 3.1 and 4.1]. Its purpose is to remove a concrete content-versus-organization ambiguity in this PHM study.
+A fixed language model is not assumed closed under arbitrary policy composition. The empirical index effect can be nonzero even when the annotation adds no evidence to complete history.
 
-### Policy-class consequence
+## Oracle action support versus implemented menu exposure
 
-Assume the full public history needed by the base phase map is retained, with fixed initialization, and $z_t=f(\widetilde h_t)$ is deterministic. The equality
+For supported policies $\Pi_\Gamma\subseteq\Pi$, ordinary inclusion gives
 
-$$
-\sigma(\widetilde H_t,Z_t)=\sigma(\widetilde H_t)
-$$
+$$\sup_{\pi\in\Pi_\Gamma}J_{\rm task}(\pi)\leq\sup_{\pi\in\Pi}J_{\rm task}(\pi).$$
 
-holds because $Z_t$ is measurable with respect to $\widetilde H_t$, while projection recovers $\widetilde H_t$ from the pair. In particular, the annotation provides no additional random information about a hidden target conditional on that history. This is not a claim that a finite language model can compute the annotation without effort.
+This oracle-level comparison does not model all changes induced by deleting tool schemas. Actual schema exposure changes the model input and implicit stage cues as well as its allowed-name list. The measured contrast is the total effect of that defined interface. The mask/select identity in theory04 assumes supported actions; rejected off-menu calls must remain failures in the empirical denominator, not be evaluated as if they were valid within-set selections.
 
-Let $\Pi$ contain all history-conditioned stochastic action rules in the same finite-horizon world, and let $\Pi_{\mathrm{ann}}$ contain all rules that can additionally read $f(\widetilde h)$. With the same feasible actions, environment, stopping and action-cost rules,
+The six base menus are pairwise distinct provided the global catalog contains the declared tool names. Therefore there is an inverse $g$ on these six menus with $z=g(\Gamma(z))$. An index in the masked arm adds no new abstract phase information conditional on that menu, although its explicit presentation may still alter a finite model's behavior. Dynamic Monitor, Revise and Recover share a menu; this collision does not occur among the six base menus. No inference about the model's ability to decode a menu follows from injectivity alone.
 
-$$
-\sup_{\pi\in\Pi_{\mathrm{ann}}}J(\pi)=\sup_{\pi\in\Pi}J(\pi),
-\qquad
-\sup_{\pi\in\Pi_{\Gamma}}J(\pi)\leq\sup_{\pi\in\Pi}J(\pi),
-$$
+## Implementation-specific single-acquisition invariant
 
-where $\Pi_\Gamma$ restricts action support to the nonempty Graph sets.
+**Claim.** In event-free, non-replay base episodes starting at Inspect, any supported trajectory without tool-call errors contains at most one successful `data.read_window`.
 
-**Proof.** Any annotated rule $\pi_t(a\mid \widetilde h,z)$ defines the history-only rule $\bar\pi_t(a\mid\widetilde h)=\pi_t(a\mid\widetilde h,f(\widetilde h))$. Their action kernels agree at every history, so the common environment gives the same rollout law by induction. Conversely, an annotated rule can ignore the annotation. These inclusions give equality of the optimal values. Masked rules form a subset of $\Pi$, giving the inequality. $\square$
+**Proof.** Before a successful read, the base phase map returns Inspect. After the first successful read, that success remains in full history, so the map cannot again return Inspect. On a trajectory without call errors, it cannot return Recover; event-free execution excludes Monitor and Revise. Its remaining phases are Hypothesize, Analyze, Check and Submit. None of their declared menus contains `data.read_window`. Hence no second successful read is exposed along such a trajectory. $\square$
 
-This is ordinary policy-class inclusion, not an original policy-improvement theorem. It concerns an unrestricted decision rule under fixed world/action accounting, not equal computational cost of implementing different prompts. The frozen language model is not assumed closed under arbitrary deterministic preprocessing. Token usage, context truncation and response latency remain empirical measurements. Hidden-target access, external event information absent from the retained history, a learned estimator trained with additional knowledge, or truncated history would invalidate the stated measurability premise; the result cannot be extended to those cases by renaming them annotations.
+This conditional invariant follows from the actual source, not from an assumed diagram. It does not claim global impossibility: a call error activates Recover, whose menu allows another read. A valid but uninformative first read does not itself activate that recovery edge. The globally allowed read budget can therefore exceed error-free acquisition opportunities under the mask. Whether that harms diagnosis requires a task where additional evidence matters. No observed task loss is assigned to this restriction without such data. The result excludes replay, where a completed prediction can move to the next sample's Inspect stage.
 
-### Estimand and falsification
+## Static instruction/menu compatibility
 
-For matched assigned assets/trials $\mathcal I$, retain the existing cohort statistic $\Theta$ and define $\theta^B_{uv}=\Theta(D^B_{uv}(\mathcal I))$. Apply simple effects, equal-weight marginal effects and interaction only within the new profile. In particular,
+The current instructions use capability-level wording and contain no literal tool-function references. The bank's common header asks for the block relevant to current progress; it does not instruct simultaneous execution of all blocks.
 
-$$
-\Delta^B_c(v)=\theta^B_{1v}-\theta^B_{0v},\qquad
-\Delta^B_{cf}=\theta^B_{11}-\theta^B_{10}-\theta^B_{01}+\theta^B_{00}.
-$$
+| Block / internal phase | Instruction capability | Available implementation capability | Boundary |
+|---|---|---|---|
+| B01 / Inspect | Bounded signal context | Read/describe/summarize | Only error-free acquisition phase in non-replay |
+| B02 / Hypothesize | Choose analysis family | Operator/model catalogs | No actual fault posterior is constructed |
+| B03 / Analyze | Typed feature artifacts | Operator schema and execution | Further reads absent |
+| B04 / Check | Numerical prediction/checking | Model schema and prediction | Further reads absent; name does not certify sufficiency |
+| B05 / Recover | Correct an observed error | Data/operator/model actions | Additional acquisition requires an error trigger |
+| B06 / Submit | Submit result with references | Submission | No numerical result is manufactured by the controller |
 
-Identical assigned assets and paired asset-block resampling are required; neighboring windows and repeated seeds are not independent equipment. AP/Macro-F1 are recomputed on pooled records, not averaged per episode. An original cue-package gain does not identify an annotation gain under $B$. Negative annotation or filtering effects remain admissible. This design does not separate annotation correctness from the added line's salience/token cost, and masks can reveal stage information even when annotation is off. Those are limits on interpretation, not reasons to relabel the old controls or create unobserved PHM regret.
+This table rules out an explicit absent-function-name reference in the active instruction; it is not semantic proof that the whole catalog is harmless or that each stage transition is diagnostically justified. The full directory can itself impose an attention burden shared by all four arms.
 
-Implementation uses the existing component factory and `configs/paper02_graph/organization.yaml` in Benchmark. The four condition names are `organization-reactive/state/filter/both`; original `factorial-*` and K conditions are preserved. Eight native tests check actual request construction, legacy prompt compatibility, contrast algebra and the real YAML plan. Input fixtures do not establish task effects.
+## Estimands and interpretation
 
-## Lemma: equal reachable interfaces imply an inactive intervention
+For the existing cohort statistic $\Theta$ and fixed matched assignment $\mathcal I$, define $\theta^B_{im}=\Theta(D^B_{im}(\mathcal I))$. Primary contrasts are
 
-Assume two policies have the same initial world distribution. At every history reachable under either policy, they use the same model conditional response distribution, identical model-facing messages and schemas, and identical response-to-action decoding, stopping and resource rules. Then they induce the same action and rollout distributions.
+$$\theta^B_{10}-\theta^B_{00},\qquad\theta^B_{11}-\theta^B_{10}.$$
 
-**Proof.** Their first model-response laws agree because the initial interfaces agree. The common decoder gives the same action law. Applying the common environment kernel and resource update gives the same next-history law. Repeating this argument up to the bounded horizon or absorbing termination proves equality of the complete rollout laws. Identical strings alone would not suffice if decoding, termination or charging differed. $\square$
+They estimate indexing under global tools and menu exposure after indexing. The other simple effects, joint effect and interaction are secondary; they are not pure topology or regret mediation. AP/Macro-F1 are recomputed from pooled records in identically drawn asset-block resamples. The number of task families, bearings and stochastic repeats are distinct. Post-treatment transition strata are descriptive, not causal subgroup estimates.
 
-This is an elementary coupling argument, not a policy-improvement theorem. Equality on finitely many fixtures is not a proof over all reachable histories. A changed input is a useful activation witness but does not by itself imply a changed model action distribution or task outcome.
+The original system comparison is secondary; older semantic-cue designs are diagnostic context. No cross-profile subtraction or relabelling is valid. Base memory/replanning remain inactive under the existing event-free assumptions; dynamic-history-matched experiments retain their distinct event and rendering contracts. Persistent-memory and pure-horizon efficacy are not established by indexing.
 
-## Corollary: the event-free base memory and replanning ablations are inactive
+## Verification
 
-Assume the current base profile, initial phase Inspect, no public events in the task or observations, and no change to the history supplied to the model. In the existing state function, the phase is determined by public read/catalog/operator/prediction progress or the latest error. Previous state and the replanning flag can affect phase selection only through Monitor/Revise, which are unreachable under these assumptions. The event token is never populated. Full, no-persistent-state and no-replanning therefore produce the same phase, cue and visible tools at every reachable history. Their historical metadata also agree by induction. The lemma yields equal rollout laws under the common decoder and environment.
-
-A measured zero difference is consequently a null-manipulation check for this base profile, not evidence that persistent control or replanning is generally useless. Noise between independently sampled finite cohorts does not turn the inactive switch into an active mechanism test. The base memory configuration remains available as a negative control, not as the next efficacy experiment.
-
-## Dynamic profiles and matched history
-
-The prospective dynamic-history-matched cohort removes historical decision-state metadata in every dynamic arm, including full, no-memory and no-replanning. Previously only no-memory did so, mixing persistent-memory removal with a history-disclosure change. The correction changes future full-dynamic inputs; old dynamic-full runs are not equivalent controls and cannot be relabelled or pooled with this cohort.
-
-A repeated valid operating-condition event provides an input-level witness. From an Analyze-compatible public history, the first event selects Monitor. On the next presentation of the same event, full consumes the token only once and selects Revise; no-memory sees the event anew and remains Monitor; no-replanning consumes the token but returns to Analyze. Monitor and Revise currently expose the same tool set, so this witness can distinguish cues while leaving visibility equal. It does not establish that the model replans, nor that this sequence is realized by the shared Runner. Those require actual released-event episodes.
-
-Base inputs containing public events are rejected before event-cache mutation. Direct attempts to seed base with Monitor or Revise are also rejected. Dynamic fault-onset names and unreleased event indices remain invalid. Legacy transition tables remain unchanged for interpreting historical records; no task metric or data protocol is redefined.
-
-## Connection to mask and selection losses
-
-For the bounded finite-action model in theory04, the standard Bellman identity remains
-
-$$
-V_0^*-V_0^\pi=\mathbb E_\pi\sum_{t<T}
-(\ell_t^{\mathrm{mask}}+\ell_t^{\mathrm{select}}).
-$$
-
-Changing a cue can change selection and future visitation; changing a mask can change both losses and future visitation. The four-cell task contrasts do not directly observe these latent terms. Transition validity, tool count and invalid calls therefore remain explanatory measurements, not numerical substitutes for regret. The interval bound, its support requirements and the retained counterexamples in theory04–06 are unchanged.
-
-## Verification and falsification
-
-The shared implementation owns `experiments/tests/test_graph_intervention_contract.py`. Native command:
-
-```bash
-python -m unittest discover -v -s experiments/tests \
-  -p 'test_graph_intervention_contract.py'
-```
-
-The tests stop deliberately at the provider boundary without producing a model response. They inspect the four cells on six progress fixtures, unchanged base requests, rejection of event/profile misuse and equal dynamic history disclosure. They also retain the repeated-event witness and the eleven-call replay rule, including the fact that repeated operators can meet that count. These are input-contract checks, not PHM performance experiments. A native-import failure blocks integration acceptance; isolated source checks cannot replace it.
+Benchmark owns `experiments/tests/test_graph_indexing.py`, the existing component factory, `configs/paper02_graph/indexing.yaml` and its six within-profile contrasts. The tests capture actual requests, check six menu classes and the reacquisition boundary, and exercise the real plan entry. `menus.csv` reports static source-derived rules, not PHM performance. The earlier exact value/support/cardinality results remain in theory04–06 and are not rerun by this slice.

@@ -1,61 +1,62 @@
-# Decision Structure and Action Restrictions in Graph-Guided PHM Agents
+# Instruction Indexing and Tool Exposure in Graph-Guided PHM Agents
 
 ## Abstract
 
-Decision organization can affect a PHM agent through additional procedural instructions, explicit progress tracking, or restrictions on its next action. We separate these mechanisms with the language model, PHM knowledge, numerical experts, observation access, budgets and evaluation held fixed. A persistent decision structure maps public history to an analysis-progress state, a current-state annotation and a tool-visibility mask. The original cue/filter comparison treats the cue as a label-plus-instruction package. A complementary fixed-instruction comparison gives every condition the same complete stage guide and varies only the current-state annotation and tool restriction. Standard policy-class and value arguments show that a deterministic annotation adds no information beyond the retained history to an unrestricted decision rule, while restrictions can remove valuable actions. A fixed language model may nevertheless respond differently to the organization of that information. Exclusion and within-set selection losses characterize this trade-off, with exact counterexamples demonstrating why valid workflow execution or fewer tools need not improve return. The PHM study estimates task-level effects and interactions over matched assets, retaining failed outcomes and incurred costs. Diagnostic benefit under the fixed-instruction comparison remains an empirical question.
+A PHM agent must choose not only a diagnosis but also the analyses that support it. Explicit control can focus these choices while preventing further inspection when the current evidence is insufficient. We study this trade-off with the language model, procedural instruction catalog, numerical experts, observation access, budgets and evaluator held fixed. A history-conditioned controller supplies an optional active-block index and a stage-dependent tool menu. Four conditions separate indexing from tool-schema exposure without introducing additional stage-specific advice. The two primary contrasts measure indexing with global tools and menu restriction after indexing. A finite-horizon analysis separates excluded action value from selection error within the visible set. The controller also has a concrete acquisition boundary: in event-free, non-replay trajectories without call errors, its masked policies cannot read a second window after the first successful acquisition. This property motivates testing whether lower workflow error comes at the cost of restricted evidence collection. Existing exact calculations illustrate beneficial, null and harmful restrictions. Matched PHM task outcomes, rather than state compliance, are required to determine the diagnostic and cost consequences of the proposed comparisons.
 
 ## 1. Introduction
 
-Long-running PHM involves a succession of decisions rather than a single tool call. An assistant must acquire relevant signal windows, choose numerical analyses, examine their outputs and decide whether to continue, revise or submit. Scientific assistants such as Coscientist and ChemCrow demonstrate how language models can coordinate external computation [@boiko2023; @bran2024]. In mechanical diagnosis, the corresponding question is whether that coordination makes useful decisions within limited observation and computation budgets. A completed sequence of valid calls can still omit a necessary analysis.
+Mechanical diagnosis depends on a sequence of evidence-gathering decisions. An agent acquires a bounded vibration window, selects numerical analyses, examines the resulting artifacts and decides whether to inspect further or submit. Scientific assistants such as Coscientist and ChemCrow demonstrate how language models coordinate external computation [@boiko2023; @bran2024]. In PHM, the relevant question is whether this coordination supports reliable decisions under limited measurement and computational resources. A valid computation can still operate on insufficient evidence.
 
-Reactive agents already retain information in their interaction history. ReAct interleaves reasoning with actions and observations, while Reflexion uses feedback and memory across attempts [@yao2023react; @shinn2023reflexion]. An explicit controller does not create memory where none existed. It makes a particular state update and its consequences for the next decision inspectable. Its effect must therefore be distinguished from differences in model capability, supplied knowledge and available numerical experts.
+Reactive agents already use interaction history. ReAct interleaves actions and observations, and Reflexion incorporates feedback into subsequent attempts [@yao2023react; @shinn2023reflexion]. Explicit control provides a particular interpretation of progress and changes how the next decision is presented. Its benefit therefore cannot be attributed merely to the existence of memory, nor separated from supplied procedural advice by comparing a detailed controller prompt with a shorter generic prompt.
 
-State-based control is established. Finite-state controllers represent policies under partial observability [@hansen1997], and StateFlow defines context-dependent transitions, state instructions and output functions for language-model workflows [@wu2024stateflow]. StateFlow also evaluates refined prompts and state removals. PHMForge studies domain-tool orchestration with verification, distractor and data-discovery ablations [@li2026phmforge]. These precedents rule out identifying the novelty with a state machine, additional workflow stages or the use of PHM tools.
+State-driven workflows are established. Finite-state controllers represent policies under partial observability [@hansen1997]. StateFlow extends state-dependent instructions and transitions to language-model workflows and includes refined-prompt and state-removal comparisons [@wu2024stateflow]. PHMForge evaluates industrial tool orchestration, including verification, distracting tools and data discovery [@li2026phmforge]. These works motivate a more specific PHM question: what changes when an agent receives an explicit pointer to already available instructions and a stage-dependent menu of tools?
 
-The unresolved question in the present PHM setting is whether organizing already available procedural instructions improves decisions beyond simply supplying those instructions. The original state cue adds both a phase label and a stage-specific instruction, while the visibility rule changes the available interface. Separating cue and filtering alone does not separate instruction content from its organization. A fixed-instruction comparison is therefore needed alongside the original package comparison. Restrictions may simplify selection while excluding a useful analysis, so both beneficial and harmful effects are admissible.
+The two interventions require separate interpretation. A semantic stage label such as Analyze also acts as a concise instruction. A tool menu changes prompt content, the choices exposed to the model and the inferred stage. We therefore give all conditions the same numbered instruction catalog and manipulate only its active-block index and tool-schema exposure. The comparison is conditional on that catalog; it does not equate catalog-guided behavior with an unconstrained reactive baseline.
 
-We define $G$ as a persistent decision structure. It maintains an analysis-progress state and the identity of the last consumed public condition event. Its outputs specify how the current phase is presented and which tools are exposed. In the fixed-instruction comparison, a common ordered bank $B$ contains all six base-stage instructions in every condition; a separate annotation identifies the current phase without adding its instruction again. This distinguishes the organization intervention from a change to PHM knowledge content. The model, numerical capabilities and evaluation remain fixed.
+Restricting a menu can reduce distracting choices but also hide a useful action. Standard value analysis separates exclusion loss from selection loss among retained actions [@schulman2015; @geist2019]. Confidence-based elimination supplies a conditional bound on omitted value [@evendar2006], while off-policy analysis explains why executed logs alone may not identify that value [@jiang2016; @khan2024]. These distinctions motivate task-level comparisons rather than interpreting fewer calls or valid transitions as lower diagnostic regret.
 
-The theoretical analysis separates exclusion loss from selection loss [@schulman2015; @geist2019]. Confidence-based action elimination motivates a conditional bound on omitted value [@evendar2006], but neither this bound nor workflow compliance supplies an observed PHM regret. Unsupported logged actions introduce an additional identification limit [@jiang2016; @khan2024]. The useful design objective is to reduce selection loss without an excessive increase in exclusion loss, rather than to minimize tool count.
-
-The study develops a PHM comparison that separates the supplied instruction inventory from its state-dependent organization, a minimal controller family for that comparison, and a task-level evaluation of helpful and harmful restrictions. The theoretical arguments specialize established policy comparison and information reasoning rather than introduce a general control theorem. Joint Graph control, the original cue package and the fixed-instruction controls answer different questions; active persistence, sequence/resource sensitivity and dynamic revision extend those comparisons. Exact-model counterexamples motivate the design, while matched PHM outcomes test industrial benefit.
+The study specifies a controlled intervention on instruction indexing and tool exposure, derives its implementation-specific acquisition boundary, and evaluates the associated hypotheses through paired PHM tasks. The central empirical questions are whether indexing helps under global tools and whether restriction helps once the active instruction is explicit. The original Graph-versus-Generic comparison remains a secondary system comparison; earlier semantic-cue variants explain the development of the design. No effect is obtained by subtracting results from these different prompt families.
 
 ## 2. Related work
 
-**Persistent control and state-driven agents.** Hansen represents POMDP policies through controller states, associated actions and observation-conditioned successors, and evaluates them under a specified model [@hansen1997]. StateFlow uses cumulative context in its transition and output functions [@wu2024stateflow]. The present controller retains full public history alongside explicit state, so it is neither a sufficient diagnosis-belief state nor an optimal finite-memory controller. No model-based policy-improvement guarantee is imported from these precedents.
+**State-driven decision control.** Hansen studies finite-state policy evaluation with a specified environmental model [@hansen1997]. StateFlow defines transition and output functions over cumulative context [@wu2024stateflow]. Its refined ReAct baseline follows an intended workflow without the full state controller. Removing its Observe state still allows table exploration through the Solve prompt. Thus removing a state need not remove the associated capability. The present study focuses on the actual interfaces exposed to a fixed PHM agent, rather than the number or names of controller states.
 
-**State ablations and masking.** StateFlow's refined ReAct and state-removal comparisons directly concern instruction and control. Its removal of Observe still permits table exploration through the Solve prompt [@wu2024stateflow]. Thus a removed state need not remove the corresponding action. Its refined-prompt comparison is also a direct precedent for separating workflow advice from an explicit controller; the fixed-instruction condition here is a PHM-specific controlled comparison, not a claim to originate that distinction. Invalid-action masking has a policy-gradient analysis [@huang2022masking]; our visibility rule additionally restricts tool interfaces that the shared environment otherwise provides. The cue/filter design estimates the implemented interface effects, not topology in isolation.
+**Scientific and industrial tool use.** Coscientist and ChemCrow couple model decisions to external numerical tools [@boiko2023; @bran2024]. PHMForge provides PHM-oriented tools and mechanism ablations [@li2026phmforge]. Here numerical capability is fixed within each comparison. The question is how an agent selects and executes available computations, including whether a progress-dependent menu prevents further evidence acquisition.
 
-**PHM and scientific agents.** Coscientist and ChemCrow couple language decisions to external computation [@boiko2023; @bran2024]. PHMForge includes verification, distractor and data-discovery controls [@li2026phmforge]. Here both arms share the same numerical capabilities, and a secondary cardinality-matched control changes tool identities only in designated analysis states. Removing distractors or adding PHM tools is not itself a new contribution.
+**Action masking, value and support.** Invalid-action masking has an established policy-gradient analysis [@huang2022masking]. A PHM workflow menu additionally hides actions that the global environment permits. Even-Dar, Mannor and Mansour develop confidence-based action elimination [@evendar2006]; Jiang and Li study off-policy evaluation [@jiang2016]; Khan, Saveski and Ugander study partial identification without overlap [@khan2024]. Our value bounds and equivalence arguments specialize this reasoning. They do not identify an unobserved PHM action value or provide a general improvement theorem for language-model menus.
 
-**Action values and identification.** Even-Dar, Mannor and Mansour establish value-confidence comparisons for action elimination and stopping [@evendar2006]. Jiang and Li study sequential off-policy evaluation, and Khan, Saveski and Ugander derive partial-identification bounds without overlap [@jiang2016; @khan2024]. Our interval diagnostic and bounded one-step identification region specialize this reasoning; logged execution does not identify all omitted continuation values.
+**Numerical representation.** Fixed features, learned representations and foundation models such as MOMENT can improve prediction independently of agent control [@goswami2024]. Reference models, validation-selected single methods, static fusion and numerical routing belong to a separate capability comparison. Changing that capability in only one controller arm would prevent attribution to decision organization.
 
-**Numerical capability.** Fixed features, learned representations and foundation models such as MOMENT can change numerical prediction independently of control [@goswami2024]. A frozen reference, validation-selected single representation, static fusion and numerical routing therefore form a separate capability axis. Each admitted expert pool must be exposed equally to compared agents.
+## 3. Problem and intervention
 
-## 3. Problem formulation
+The shared world is $\mathcal W=(\mathcal D,\mathcal T,\mathcal A,\mathcal B,P,\mathcal E)$: data access, tasks, global actions, budgets, environmental response and independent evaluation. Public task context, ordered action/result/error history and remaining budget form $h_t$. Private diagnosis targets are available only to $\mathcal E$. Policies share access and release rules but may produce different realized histories.
 
-The fixed world is $\mathcal W=(\mathcal D,\mathcal T,\mathcal A,\mathcal B,P,\mathcal E)$: data access, tasks, actions, resource limits, environment responses and independent evaluation. At step $t$, public history, budget and time form $s_t=(h_t,b_t,t)$. Equal observation access and release rules do not force different policies to realize identical histories.
+A controller is $G=(\mathcal M,m_0,\delta,c,\Gamma)$, with memory $m_t=(z_t,\nu_t)$ updated by $\delta$. The phase $z_t$ represents analysis progress; $\nu_t$ records the last consumed public event. The current base profile is event-free. Its phases correspond to acquisition, catalog inspection, numerical analysis, prediction checking, recovery and submission. The model retains public history alongside this explicit controller state. These phases are not a posterior distribution over faults.
 
-Define
+Let the fixed instruction catalog be
 
 $$
-G=(\mathcal M,m_{\mathrm{init}},\delta,c,\Gamma),\qquad
-m_t=(z_t,\nu_t)=\delta(m_{t-1},s_t,e_t).
+B=((b_j,d_j))_{j=1}^{6},\qquad b_j\in\{\mathrm{B01},\ldots,\mathrm{B06}\}.
 $$
 
-Here $z_t$ is the phase, $\nu_t$ the last consumed public-event token, $c(z_t)$ the profile-specific cue (label plus instruction in the original package; phase annotation under the fixed bank), and $\Gamma(z_t,s_t)$ the visible tool set. The explicit edges are induced by $\delta$. The model also receives public history. Private targets enter only the evaluator.
+Each $d_j$ is the unchanged base-stage instruction. Every condition receives the complete catalog in the same order, once per request. An index supplies only the corresponding block identifier. It does not repeat the selected instruction. The identifiers remove imperative stage names from the pointer; their common character width does not assert tokenizer equivalence or eliminate order-related cues.
 
-The base profile uses Inspect, Hypothesize, Analyze, Check, Recover and Submit. These are analysis-progress states, not posterior fault hypotheses. Hypothesize follows catalog discovery. In replay, Check follows eleven successful operator calls associated with the current sample after its read; repeated operators can meet this count, so it does not certify distinct-feature completeness. Recovery responds to an observed call error. Submission remains a model-chosen action whose admissibility and result are handled by the shared environment.
+For index indicator $i$ and menu indicator $m$, the model receives
 
-Monitor and Revise belong to the dynamic profile. The public event is an operating-condition change at a released replay index, not an onset inferred from vibration. Base inputs carrying these events are rejected rather than silently routed dynamically. Dynamic event identity and release-index checks remain explicit.
+$$
+x_t^{im}=\rho(h_t,B)\oplus i\,L(z_t)\oplus\operatorname{Schema}(\Gamma_m(z_t)),
+$$
 
-The finite-action value analysis concerns fully specified actions and a policy supported on its declared action set. For parameterized tools, family-value intervals must cover the best permitted continuation over the full parameter family. The operational implementation masks tool names; it has no fitted, calibrated PHM continuation-value estimator. Diagnosis Macro-F1 and registered anomaly/replay metrics remain primary and are not replaced by the additive utility used in the theory.
+where $\Gamma_0$ is the global catalog, $\Gamma_1$ the existing stage-conditioned subset, and $\rho$ applies the same historical-state rendering in every arm. The term $L$ is the block-index annotation. This defines four conditions: catalog-global, indexed-global, catalog-masked and indexed-masked.
 
-## 4. Control-loss and intervention analysis
+Schema exposure is a composite interface intervention. It changes visible descriptions, menu size, implicit phase information and the allowed-name list used by the common execution path. Its effect is not equivalent to applying a pure support constraint to an otherwise identical model input.
+
+## 4. Value and behavioral boundaries
 
 ### 4.1 Exclusion and selection
 
-For unrestricted optimal continuation values $V_t^*$ and $Q_t^*$, let $A_G(s)$ be the retained action set and define
+For a finite-horizon decision model with absorbing termination, let $Q_t^*,V_t^*$ denote unrestricted optimal task values and let $A_G(s)$ be a nonempty retained action set. Define
 
 $$
 \ell_t^{\mathrm{mask}}(s)=V_t^*(s)-\max_{u\in A_G(s)}Q_t^*(s,u),
@@ -64,162 +65,114 @@ $$
 \ell_t^{\mathrm{select}}(s,a)=\max_{u\in A_G(s)}Q_t^*(s,u)-Q_t^*(s,a).
 $$
 
-For finite horizon $T$, absorbing termination and zero terminal continuation value,
+For a policy supported on that set,
 
 $$
 V_0^*(s_0)-V_0^\pi(s_0)
-=\mathbb E_\pi\sum_{t<T}
-\left(\ell_t^{\mathrm{mask}}+\ell_t^{\mathrm{select}}\right).
+=\mathbb E_\pi\sum_{t<T}\big(\ell_t^{\mathrm{mask}}+\ell_t^{\mathrm{select}}\big).
 $$
 
-The summands add to $V_t^*-Q_t^*$. Substitution of the Bellman relation telescopes the continuation terms. This standard identity uses the policy's own history distribution; subtracting its terms between policies does not automatically identify causal mediation. In real PHM, $Q^*$ is unknown. Transition validity, invalid-call rate and tool count are not substitutes for either loss.
+The equality follows by substituting the Bellman relation into $V_t^*-Q_t^*$ and telescoping. Different policies visit different states, so differences of these terms are not automatically causal mediation effects. Rejected calls and provider failures remain in empirical outcomes; they are not silently treated as valid within-set choices. In PHM, unknown $Q^*$ prevents transition validity, tool count or invalid-call rate from serving as observed regret.
 
-### 4.2 Conditional coverage and selection
-
-Suppose finite intervals $[L_a,U_a]$ cover all relevant continuation values simultaneously at a state. For a nonempty mask $A_G$, define
+If simultaneous intervals $[L_a,U_a]$ cover all action continuation values, then
 
 $$
-C(A_G;s)=\max\left(0,\max_{a\notin A_G}U_a-\max_{u\in A_G}L_u\right),
+0\leq\ell^{\mathrm{mask}}(s)\leq
+\max\left(0,\max_{a\notin A_G}U_a-\max_{u\in A_G}L_u\right).
 $$
 
-with $C=0$ under full exposure. On the coverage event,
+The bound is zero for full exposure. It specializes confidence-based elimination; the operational controller does not estimate such calibrated PHM intervals. Even valid coverage does not guarantee better selection after expanding the menu. The supplementary analysis preserves the corresponding selection and unsupported-logging counterexamples.
 
-$$0\leq\ell^{\mathrm{mask}}(s)\leq C(A_G;s).$$
+### 4.2 Information equivalence and interface cost
 
-The best omitted value cannot exceed the omitted upper maximum, and a retained alternative reaches at least the retained lower maximum. Adding the omitted action with greatest upper endpoint cannot increase $C$; repetition reaches any finite nonnegative tolerance after finitely many additions. This proves conditional coverage and termination, not optimal mask size or policy improvement. Adaptive histories require justified simultaneous rather than merely marginal coverage.
-
-For a one-step selector, let $J(M)=\mathbb E_{a\sim\pi_M}Q(a)$ and $e(M)=\max_{a\in M}Q(a)-J(M)$. At the same state,
+For the event-free base, suppose the complete retained history suffices for the phase map: equal rendered public histories imply equal phases. Then $Z_t=f(\widetilde H_t)$ and
 
 $$
-J(M')-J(M)=\ell^{\mathrm{mask}}(M)-\ell^{\mathrm{mask}}(M')-[e(M')-e(M)].
+\sigma(\widetilde H_t,Z_t)=\sigma(\widetilde H_t).
 $$
 
-A reduction in exclusion loss can be outweighed by worse selection. Changed visitation also matters in multistep comparisons. The current graph remains a progress controller, not an interval-estimation policy.
+An unrestricted annotated policy can be composed with $f$ to obtain a history-only policy with the same action kernel. Conversely, the annotated policy may ignore the index. Therefore their optimal **task utilities** agree; restricting feasible action support cannot increase that unrestricted optimum.
 
-### 4.3 Support and tool count
+Here $J_{\mathrm{task}}=\mathbb E[R_{\mathrm{task}}]$ excludes the computation and serialization of the interface. Input/output tokens, elapsed time and tool use are reported separately. With a priced cost $C$ and $J_\lambda=J_{\mathrm{task}}-\lambda C$, equal task value need not give equal net value. A fixed language model is also not assumed to implement every history-policy composition. Indexing can alter its computational behavior without adding fault evidence.
 
-If a one-step logging policy always selects a retained action of mean $v\in[0,1]$ and never an omitted action, bounded reward alone gives the sharp region
+### 4.3 Menu information and reacquisition
 
-$$\mathcal I_{\mathrm{mask}}(v)=[0,1-v].$$
+The six base-stage tool sets are distinct when the shared catalog contains the declared tools. Their identities therefore determine the base phase, even without an explicit index. Indexing under the masked menu measures an incremental presentation effect after this implicit phase signal. It is not an independent introduction of all phase information. The dynamic Monitor, Revise and Recover rules share a menu, but that observation does not describe the event-free experiment.
 
-The omitted mean can vary across $[0,1]$ without changing the logging law. This is population identification, not a sampled confidence interval [@khan2024]. Additional action coverage or justified structural assumptions are needed for omitted PHM values.
-
-For $n$ fixed one-step values $q_a$, a uniformly drawn size-$k$ subset $S$ and a uniform selector within it satisfy
+The non-replay base has a stronger operational boundary. After the first successful read, its public history permanently records that acquisition. Without a call error, subsequent phases belong to catalog inspection, analysis, checking or submission; none exposes another window read. Thus, for supported error-free non-replay trajectories,
 
 $$
-\mathbb E_S J(S)=\frac{1}{k}\sum_aq_a\Pr(a\in S)=\frac{1}{n}\sum_aq_a.
+N_{\mathrm{successful\ window\ reads}}\leq 1.
 $$
 
-For ordered values $q_{(1)}\leq\cdots\leq q_{(n)}$,
+Recovery reopens acquisition after an observed error. Consequently, a valid but insufficient first window does not itself open an error-free reacquisition route. The result does not state that every diagnosis needs a second window, nor that recovery makes reacquisition globally impossible. It identifies a falsifiable restriction: a menu may reduce invalid calls while preventing further evidence collection within a larger global read budget. Replay is excluded because successful prediction can advance it to acquisition of the next released window.
+
+### 4.4 Inactive ablations and risk
+
+Under the event-free base and unchanged history handling, persistence and replanning switches affect only unreachable event-dependent branches. Full, no-memory and no-replanning consequently induce identical interfaces on reachable histories. With common response, decoding and environment rules, induction gives the same rollout law. These switches are negative controls for this task, not evidence against memory or replanning generally.
+
+Population risk averages task loss over the intended asset distribution and model randomness; empirical risk is computed on the assigned assets and trials. Repeated runs do not create new independent bearings. Nonlinear cohort statistics such as Macro-F1 and Average Precision are recomputed within paired asset-block resamples rather than averaged across episodes. Neither the task-value identity nor a low observed error establishes a guarantee under an untested deployment shift.
+
+## 5. Experimental design
+
+### 5.1 Primary contrasts and comparison hierarchy
+
+For a fixed catalog $B$ and matched assignment set $\mathcal I$, let
 
 $$
-\mathbb E_S\max_{a\in S}q_a
-=\sum_{j=k}^n q_{(j)}\frac{\binom{j-1}{k-1}}{\binom nk}.
+\theta^B_{im}=\Theta(D^B_{im}(\mathcal I))
 $$
 
-These elementary counting identities motivate a tool-count control. They do not assume that an LLM selects uniformly or predict its task performance. The supplementary theory covers forced terminal membership.
-
-### 4.4 Ablation validity
-
-Two policies with identical model-facing messages and schemas at every reachable history induce the same rollout law when the response distribution, decoding, environment, stopping and resource rules also agree. The proof couples the first response and action, then repeats the argument after the common environment update.
-
-In the event-free base profile initialized at Inspect, previous state and replanning can affect the existing transition function only through unreachable Monitor/Revise branches. The event token remains empty. Full, no-persistent-state and no-replanning therefore produce the same phases, cues and masks on all reachable histories, and the coupling argument applies. A zero result is a null-manipulation check, not evidence against memory or replanning in general.
-
-A changed model input is an activation witness, not evidence of changed action probabilities or task benefit. Finite fixture checks alone also do not prove equality on every reachable history. The supplementary proof separates the source-level equivalence argument from empirical activation tests.
-
-### 4.5 Risk and sampling units
-
-Population risk is $R_{\mathcal D}(\pi)=\mathbb E_{e\sim\mathcal D,\xi}L(e,\pi,\xi)$; empirical risk averages observed losses on held-out assets and trials. Conditional on fitted experts and frozen policies, independent asset blocks support concentration for additive bounded loss. Macro-F1 and AP are instead recomputed inside paired asset-block resamples. Repeated trials do not create independent assets, and training risk does not establish performance under a shifted deployment distribution.
-
-## 5. Minimal method
-
-The primary comparison is original Generic versus Graph, a joint control effect. The component study independently switches the current-state cue and tool filtering. All four cells remove top-level historical decision-state metadata from provider-visible tool messages while preserving action arguments, numerical payloads, errors and order at the same history. Historical Generic is not the new factorial-reactive; original Graph is not the new factorial-both.
-
-The original cue contains both a phase label and its stage instruction. Its effect is therefore a cue-package effect. The fixed-instruction comparison instead supplies the same ordered bank
+be the registered pooled task statistic. The two primary contrasts are
 
 $$
-B=\big((z,d_z):z\in\mathcal Z_{\mathrm{base}}\big)
+\Delta_{\mathrm{index}}^{\mathrm{global}}(B)=\theta^B_{10}-\theta^B_{00},
+\qquad
+\Delta_{\mathrm{exposure}}^{\mathrm{indexed}}(B)=\theta^B_{11}-\theta^B_{10}.
 $$
 
-to every condition on every turn. Here $d_z$ is the unchanged stage instruction. The four conditions cross an optional current-state annotation with the existing visibility mask. Annotation adds the current phase name only; it does not repeat a selected instruction, hide other instructions or retrieve PHMskills content. All conditions share historical-state sanitation, response decoding and numerical tools.
-
-At a common history, the instruction bank is identical. Actual histories, model token use and execution costs may differ. Tool visibility can itself reveal the stage, so removing the explicit annotation does not remove every state cue. The annotation effect also includes the added text and its salience; distinguishing correct state information from a length-matched irrelevant annotation would require an additional placebo comparison. The present design identifies the specified organization intervention under $B$, not a topology-only or token-matched effect.
-
-For the event-free base, the annotation is computed from public task and action-result history already available to the agent. With that history retained, any unrestricted policy using the annotation can be composed into a history-only policy. Hence annotation does not improve the unrestricted information limit; a tool-restricted policy family is a subset of the unrestricted family. A fixed language model is not assumed to implement every such composition. The empirical question is whether explicit organization improves its realized selection under the actual resource limits. Supplementary theory states the policy-class argument and its observation and cost assumptions.
-
-The existing secondary cardinality control changes only Analyze/Check tool identities. It samples a fixed-seed subset of the sorted common nonterminal catalog with the original cardinality, preserves submit/stop membership, and preserves tool order and schemas. Other stages are unchanged; revisits do not redraw, and coincident subsets are retained. Conditional count matching does not imply token matching or equal realized trajectory costs.
-
-All prospective dynamic-history-matched profiles remove historical decision-state metadata equally. Removing it only for no-memory would jointly change memory and history disclosure. This prospective rendering differs from legacy full-dynamic rendering, so old full-dynamic outcomes are not reused as matched controls. Persistent memory includes both the previous phase and event-token consumption. A repeated public event can induce full Monitor-to-Revise, no-memory Monitor-to-Monitor and no-replanning Monitor-to-Analyze updates. Actual revision requires an observed change in subsequent decisions, not just a changed label. Dynamic execution uses the sole shared Runner.
-
-## 6. Experimental design
-
-### 6.1 Priority and capability controls
-
-The joint Graph comparison measures the original system effect. The original cue/filter cells measure the effect of a label-plus-instruction package and visibility. The fixed-instruction cells measure organization conditional on a common stage guide. The last comparison is required for an interpretation beyond merely supplying additional stage instructions; outcomes are never pooled across these different control definitions. They share assigned assets, task ontology, windows, numerical pool, model settings and budgets within each comparison. Base memory remains a negative control, and a dynamic mechanism claim requires a matched released-event cohort with symmetric history handling.
-
-Generic reactive, full Graph, state-only, filter-only, both and Scripted are the immediate references. StateFlow, Reflexion or planning methods become formal baselines only after faithful mechanism reproduction and accounting for all calls and allowed feedback. The shared numerical axis compares a frozen reference, validation-selected single representation, static fusion and training-only routing. Learned experts are available to every arm. The current graph is training-free and has no optimization loss to ablate.
-
-### 6.2 Sequence and transport
-
-Pure horizon comparisons fix one longest assigned sequence and use nested prefixes. Fixed-total and fixed-per-window budget experiments are separate. The existing horizon configuration changes count, sample selection and proportional resources and therefore supports only horizon/sampling/resource sensitivity. Public operating-condition changes are not inferred fault-onset annotations.
-
-The existing supplementary transport specification covers PTB-XL ECG, UCI HAR inertial activity, SMAP/MSL spacecraft telemetry, SMD servers and SWaT process instrumentation. Each requires its own valid task binding, label mapping and independent-unit or temporal split. These studies follow the core PHM comparison; they do not replace it or support a pooled mechanical headline score. Fitted numerical models and normalizers use no test access. When a method defines a checkpoint, its reload is verified against retained predictions with the unchanged scorer; training-free control does not introduce a checkpoint contract.
-
-### 6.3 Estimands, failures and interpretation
-
-Let $\theta_{uv}$ be the declared pooled cohort statistic for cue $u$ and filter $v$. Report
+The first changes the explicit pointer with global tools retained. The second changes schema exposure after the pointer is already explicit. The other simple effects, joint contrast and interaction are secondary:
 
 $$
-\Delta_c(v)=\theta_{1v}-\theta_{0v},\qquad
-\Delta_f(u)=\theta_{u1}-\theta_{u0},\qquad
-\Delta_{cf}=\theta_{11}-\theta_{10}-\theta_{01}+\theta_{00}.
+\Delta_{\mathrm{int}}(B)=\theta^B_{11}-\theta^B_{10}-\theta^B_{01}+\theta^B_{00}.
 $$
 
-Equal-weight marginal effects average the two simple effects. For the fixed-instruction comparison use separate statistics $\theta^B_{uv}$ and apply the same contrasts only within that profile:
+Interaction can reflect redundant, complementary or conflicting interface signals; it does not by itself identify graph-topology synergy. All effects are conditional on $B$, including the burden of searching its catalog. An index gain is not a comparison against concise ReAct, and an absent gain does not establish that domain knowledge is ineffective.
 
-$$
-\Delta^B_c(v)=\theta^B_{1v}-\theta^B_{0v},\qquad
-\Delta^B_f(u)=\theta^B_{u1}-\theta^B_{u0},\qquad
-\Delta^B_{cf}=\theta^B_{11}-\theta^B_{10}-\theta^B_{01}+\theta^B_{00}.
-$$
+The original Graph-versus-Generic study is a secondary system comparison. Earlier semantic-cue and fixed-semantic-catalog variants document the design progression and may be reported separately when compatible results exist. They do not provide interchangeable controls or quantities that can be subtracted to isolate the new effect. The existing cardinality-matched menu control addresses a different question about analysis-stage tool identities and remains supplementary.
 
-These are pooled task-statistic contrasts on identical assigned assets and trials, not averages of episode-level F1 or AP. A positive original cue-package effect does not establish $\Delta^B_c(v)>0$. A nonpositive fixed-instruction effect does not refute the value of PHM knowledge or every possible controller. Original Generic and either older factorial arm cannot serve as the fixed-instruction control. Persistence is compared only after activation, with matched history handling and public events.
+### 5.2 Tasks, controls and falsification
 
-For the cardinality comparison, let $\mathcal I$ be the frozen asset/trial/seed assignment and $D_p(\mathcal I)$ the retained evaluation records. The registered effect is
+The core tasks are vibration fault diagnosis and ordered-window replay through the shared PHM environment. Each comparison fixes asset assignment, labels, measurement channels and sampling, numerical experts, model settings, budget and evaluation. Fitting and model selection use the designated training and validation assets. The existing shared fitted reference is reused across matched treatments.
 
-$$
-\widehat\Delta_{\mathrm{rel}}^{\mathrm{pool}}
-=\Theta(D_{01}(\mathcal I))-\Theta(D_C(\mathcal I)).
-$$
+Indexing is tested against improved instruction selection and execution, not against increased information about the fault. Menu exposure is tested against reduced distraction, implicit phase signaling, instruction/menu conflict and prevented reacquisition. Completion, numerical grounding, repeated actions, premature submission and recovery provide supporting observations. A global read budget larger than one does not itself prove that another read is useful; reacquisition effects require task evidence rather than read counts alone.
 
-For nonlinear AP or Macro-F1, this pooled contrast differs from averaging per-seed statistics. Uncertainty is conditional on the frozen seed schedule, with identical asset-block resample indices across arms. It is not uncertainty over all possible masks.
+The current graph is training-free. Representation, training loss, fusion and numerical routing are varied only in a separately justified capability study, with the resulting expert pool supplied equally to all controller arms. StateFlow, Reflexion and planning methods require faithful implementations and matched call accounting before serving as same-protocol baselines; their published scores are not local reproductions.
 
-Task performance is primary. Grounded completion, visits, transitions, recovery, revision, repeated actions, premature submission and tool/token/time costs explain observed outcomes without replacing them. All stops, invalid outputs, budget exhaustion and provider failures remain in the assigned population; resumed attempts retain earlier costs. Undefined metrics are reported. Cue benefit with harmful filtering, cost-only benefit, benefit limited to longer sequences and no joint improvement are all admissible findings.
+### 5.3 Sampling, temporal execution and cost
 
-## 7. Results
+Dataset families, independent assets and stochastic repeats are separate sample counts. Diagnosis and replay are analyzed separately. Repeated reliability requires actual repeated outcomes and a complete assigned denominator, not eight task/condition configuration entries. Paired resampling retains the physical asset as the cluster. Observed-only pilot summaries do not estimate provider uncertainty.
 
-### 7.1 Finite-horizon reference
+Condition order is randomized within the existing seed/rotation/task schedule, with independent agent histories. This current schedule executes each condition over its assigned cohort; it is not asset-level interleaving. Fine-grained attribution under a changing provider requires an asset/trial-block interleaved schedule or an explicitly narrower temporal interpretation. Timestamps and observed provider/model fields must remain available. A formal temporal-stability claim is not supported by the present plan alone.
 
-The existing exact model has two equally likely public contexts and three abstract analysis routes. At four steps, the best fixed route returns 0.6000, static uniform selection 0.55833, an aligned two-route mask 0.7625, and a harmful singleton 0.5000. Interval expansion with uniform selection returns 0.7125. Covered greedy choice and the unrestricted oracle return 0.9250 because the intervals are centered on known toy values. Across 24 horizon/policy configurations, the recorded maximum decomposition residual is $1.67\times10^{-16}$. Normalized returns are constant over the three even horizons by construction, yielding a null length effect.
+All assigned stops, malformed outputs, exhausted budgets and provider failures remain recorded. Resuming a run does not erase prior costs. The two primary task contrasts are specified before evaluation; secondary process comparisons do not replace a failed primary result. Transition-count strata describe observed behavior and are not causal subgroups, because transitions themselves depend on treatment.
 
-### 7.2 Coverage and support counterexamples
+### 5.4 Length and dynamic scope
 
-Deliberately uncovered intervals give $C=0$ with true exclusion loss 0.85. A separate covered example assigns retained, useful and distracting actions values 0.8, 0.9 and 0, with intervals [0.8,0.8], [0.9,0.9] and [0,1]. Optimistic exposure lowers the bound from 0.2 to 0.1 to zero, while the uniform selector's return changes from 0.8 to 0.4 to 0.5667. Full exposure removes exclusion loss but leaves selection loss 0.3333.
+A pure horizon study fixes a longest sequence and uses nested prefixes, with fixed-total and fixed-per-window resource regimes analyzed separately. The current window-count variation also changes selected samples and resource allowances, so it measures joint sensitivity. Long-horizon benefit and persistent-memory efficacy remain separate empirical hypotheses.
 
-Two logging worlds assign the retained action the same Bernoulli mean 0.5 and the omitted action means 0.1 and 0.95. The logger never chooses the latter. Complete enumeration at sample counts 1, 4 and 8 gives total-variation distance zero between the logging distributions, although their exclusion losses are 0 and 0.45. Both belong to the identified region [0,0.5].
+Dynamic revision additionally requires the same released public operating-condition events and common history rendering across arms. Such an event is not a fault onset inferred from vibration. Dynamic states must run through the shared execution path; a stage change alone does not demonstrate a revised action. External sensor-domain transport follows the core PHM results only after task-specific admission and preserves its own target and temporal semantics.
 
-### 7.3 Complete cardinality enumeration
+## 6. Results and current evidence
 
-Six one-step actions have values 0, 0.2, 0.4, 0.6, 0.8 and 1. All 63 nonempty subsets are enumerated, yielding 6, 15, 20, 15, 6 and 1 subsets at cardinalities one through six. Within each cardinality the subsets are equally weighted, and selection within a subset is uniform.
+Existing exact calculations validate the distinction between restricted opportunity and actual selection. In the four-step reference, the best fixed route, aligned two-route mask and harmful singleton return 0.6000, 0.7625 and 0.5000, respectively. Across the retained 24 horizon/policy settings, the maximum decomposition residual is $1.67\times10^{-16}$. Equal normalized values across the three even horizons are a construction-dependent null result, not evidence about real long sequences.
 
-Mean return is 0.5 at every cardinality. At cardinality three, the optimal action survives in half of the subsets; mean exclusion and selection losses are 0.15 and 0.35. The best and worst three-action subsets return 0.8 and 0.2. Rational-arithmetic evaluation gives zero residual for both the loss decomposition and the order-statistic identity. These exact results separate tool count, retained opportunity and selector outcome; they are not performance estimates for a fitted PHM controller.
+A failed-coverage example reports a zero bound while true exclusion loss is 0.85. A covered example reduces its bound from 0.2 to zero while uniform-selection return changes from 0.8 through 0.4 to 0.5667. Two observationally identical masked logging worlds have exclusion losses 0 and 0.45. Finally, enumeration of all 63 nonempty subsets of six fixed-value actions gives average return 0.5 at every cardinality, while equally sized three-action sets range from 0.2 to 0.8. These retained calculations support the analytical boundaries; they are not fitted PHM or language-model outcomes.
 
-### 7.4 PHM comparisons
+The base menu distinctions and error-free single-acquisition property follow from the declared controller. Their diagnostic consequences, the two primary index/exposure contrasts and repeated reliability have not yet been established on matched PHM cohorts. No industrial improvement is inferred from implementation tests, metadata readability or the exact examples. The empirical result table remains contingent on the declared four-condition task study.
 
-Matched PHM and external-domain cohorts have not yet produced the required policy-effect estimates. Their evaluation will distinguish total Graph effect, cue/filter attribution, cardinality-matched identity effects, active persistence, numerical capability, length/resource sensitivity and incurred cost. No diagnostic improvement is inferred from the finite-model calculations.
+## 7. Discussion
 
-## 8. Discussion and conclusion
+The useful question is not whether an agent has a graph, but which decision-relevant consequences the graph introduces. A common numbered catalog isolates the effect of an active-block pointer from adding new stage-specific advice. The accompanying tool menu remains a composite intervention whose informational and operational effects should be interpreted together.
 
-Explicit organization and additional instructions are different interventions. Keeping the full stage guide available in every condition makes their distinction testable without changing the underlying numerical diagnosis. Structure can simplify selection and also restrict necessary action; its value is therefore judged by PHM task outcomes rather than state count or transition compliance. A deterministic state annotation can change the behavior of a bounded language model without adding evidence to its retained history. The exclusion/selection analysis specifies the corresponding opportunity and restriction trade-off.
-
-The current base is a progress controller with inactive persistence/replanning switches under event-free conditions. Dynamic recurrence is a different, prospectively matched intervention; it requires public-event episodes and observed decision changes. The four-cell study is therefore the immediate empirical test. Only its real task, reliability and cost findings can establish the industrial value of $G$ and support subsequent Benchmark synthesis.
+The present controller also shows why progress tracking and evidence sufficiency should not be conflated. A successful read advances the non-replay workflow even when another measurement could be useful, and acquisition becomes available again only through error recovery. This is a concrete candidate failure mechanism, not proof that its task performance is worse. Real paired outcomes must establish when indexing helps, when exposure restrictions harm, and whether any benefit is diagnostic, reliability-related or economic. Broader claims about persistent memory, topology or long-horizon reasoning require their corresponding interventions and evidence.
