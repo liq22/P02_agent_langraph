@@ -5,10 +5,10 @@
 <rect width="1800" height="1500" fill="white"/>
 <g font-family="DejaVu Sans, Arial, sans-serif" fill="#202830">
 <text x="55" y="60" font-size="33" font-weight="bold" text-anchor="start">PHMGraph: decisions act on evidence; evidence constrains decisions</text>
-<text x="55" y="102" font-size="25" font-weight="normal" text-anchor="start">Grey: shared numerics     Dashed: adapted workflow     Blue: studied evidence feedback</text>
+<text x="55" y="102" font-size="25" font-weight="normal" text-anchor="start">Grey: common evidence / numerics    Dashed: inherited control    Blue: active feedback</text>
 <g id="outer-graph">
 <rect x="55" y="150" width="1040" height="310" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2" stroke-dasharray="9 6"/>
-<text x="79" y="192" font-size="29" font-weight="bold" text-anchor="start">2 / 5  Outer decision graph G(out)</text>
+<text x="79" y="192" font-size="29" font-weight="bold" text-anchor="start">2 / 4  Outer state sₜ in Gᵒᵘᵗ</text>
 </g>
 <g id="phase-inspect">
 <rect x="95" y="230" width="220" height="85" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
@@ -40,23 +40,23 @@
 <text x="1219" y="270" font-size="26" font-weight="normal" text-anchor="start">Pointer and admissible menu Γₜ</text>
 <text x="1219" y="306" font-size="26" font-weight="normal" text-anchor="start">Fixed LLM proposes one request aₜ</text>
 <text x="1219" y="342" font-size="26" font-weight="normal" text-anchor="start">Native tools validate and execute</text>
-<text x="1219" y="378" font-size="26" font-weight="normal" text-anchor="start">No repaired or invented results</text>
+<text x="1219" y="378" font-size="26" font-weight="normal" text-anchor="start">Structural readiness ≠ full validation</text>
 </g>
 <polyline id="phase-to-interface" points="1095,290 1185,290" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
 <g id="evidence-feedback">
 <rect x="345" y="535" width="1400" height="145" rx="10" fill="#edf3f7" stroke="#66737e" stroke-width="4"/>
-<text x="369" y="577" font-size="29" font-weight="bold" text-anchor="start">3  Evidence state ηₜ = Φ(G(in)ₜ)</text>
-<text x="369" y="619" font-size="26" font-weight="normal" text-anchor="start">Distinct required features · same-window paths · supported predictions · observed disagreement</text>
+<text x="369" y="577" font-size="29" font-weight="bold" text-anchor="start">3  Deterministic evidence state ηₜ = Φ(Gᶦⁿₜ)</text>
+<text x="369" y="619" font-size="26" font-weight="normal" text-anchor="start">Role readiness r(m,w,t) · same-window support · native predictions · observed disagreement</text>
 <text x="369" y="655" font-size="26" font-weight="normal" text-anchor="start">Missing prerequisites delay prediction / submission; eligible submission need not close analysis</text>
 </g>
 <polyline id="evidence-to-phase" points="510,535 510,470" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
-<text x="545" y="505" font-size="25" font-weight="normal" text-anchor="start">Conditions phase and tool admission</text>
+<text x="545" y="505" font-size="25" font-weight="normal" text-anchor="start">Conditions state sₜ and menu Γₜ</text>
 <polyline id="evidence-to-menu" points="1550,535 1550,470" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
 <polyline id="execution-to-update" points="1745,370 1775,370 1775,720 1685,720 1685,760" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
-<text x="1195" y="745" font-size="25" font-weight="normal" text-anchor="start">6  Append actual execution only</text>
+<text x="1195" y="745" font-size="25" font-weight="normal" text-anchor="start">6  Observed result oₜ₊₁ → append</text>
 <g id="inner-graph">
 <rect x="55" y="770" width="1690" height="450" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
-<text x="79" y="812" font-size="29" font-weight="bold" text-anchor="start">1 / 6  Inner evidence DAG G(in): entities and executed activities</text>
+<text x="79" y="812" font-size="29" font-weight="bold" text-anchor="start">1 / 3 / 6  Inner evidence DAG Gᶦⁿₜ: entities and executed activities</text>
 </g>
 <g id="raw-window">
 <rect x="95" y="955" width="195" height="105" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
@@ -108,7 +108,7 @@
 <polyline id="prediction-generation" points="1380,970 1450,970" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
 <text x="95" y="1190" font-size="24" font-weight="normal" text-anchor="start">Arrows bind actual input roles and generated artifacts; feature groups are compressed for display.</text>
 <polyline id="inner-to-frontier" points="825,770 825,690" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
-<text x="355" y="745" font-size="25" font-weight="normal" text-anchor="start">Read dependency structure</text>
+<text x="355" y="745" font-size="25" font-weight="normal" text-anchor="start">3  Compute Φ in every condition</text>
 <g id="explanation-output">
 <rect x="55" y="1300" width="1690" height="145" rx="10" fill="#f6f7f8" stroke="#66737e" stroke-width="2"/>
 <text x="79" y="1342" font-size="29" font-weight="bold" text-anchor="start">7  Output: outer control path + selected numerical support subgraph</text>
@@ -117,5 +117,5 @@
 </g>
 <polyline id="prediction-to-selected-support" points="1580,1020 1580,1290" fill="none" stroke="#28313b" stroke-width="3" marker-end="url(#arrow)"/>
 <text x="95" y="1270" font-size="25" font-weight="bold" text-anchor="start">No feedback edge from private labels or offline replay to the Agent</text>
-<text x="55" y="1480" font-size="24" font-weight="normal" text-anchor="start">Coupled path shown. Error recovery may cycle; validated numerical generation paths remain acyclic.</text>
+<text x="55" y="1480" font-size="24" font-weight="normal" text-anchor="start">Coupled path shown; o and e switch outer organization and active feedback, not numerical capability.</text>
 </g></svg>

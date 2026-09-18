@@ -1,12 +1,13 @@
 schema_version: 3
 paper_id: phmgraph
-title: 'PHMGraph: Coupling Agent Decisions with Executed Diagnostic Evidence'
+title: 'PHMGraph: Contract-Grounded Decision Control for Tool-Using Fault Diagnosis'
 manuscript: draft/main.md
 bibliography: refs/phmgraph_review_2026.bib
 implementation_owner: liq22/phm-agent-benchmark
-implementation_snapshot: 45704762bd2e3ee7f8d0da4c037e67a575779703
-implementation_tested_head: 35785d431eac21c1c8a9fbd070872a9b7b045b74
-implementation_pr: 27
+implementation_snapshot: 467a16570c55da086f2d67fe79365c7bf006d9ac
+implementation_tested_head: c040d2a3721901f32f6f2d8681e5bd75c14d0ce6
+implementation_pr: 29
+core_method_pr: 27
 implementation_status: merged_method_with_native_fixture_validation_not_real_data_acceptance
 implementation_binding: FORMULATION_METHOD_MAP.md
 experiment_specification: experiments/EXPERIMENT_MATRIX.md
@@ -19,7 +20,9 @@ real_phm_effects: unestimated
 factors:
   outer: common_catalog_pointer_and_phase_menu
   feedback: structural_frontier_plus_readiness_admission_and_evidence_conditioned_routing
-  hidden_provenance: recorded_in_all_cells_from_public_native_events
+  hidden_provenance: graph_and_deterministic_frontier_computed_in_all_cells
+  baseline_00: common_catalog_reactive_not_unmodified_generic
+  cost_estimand: active_feedback_over_common_graph_and_frontier_processing
   cells: [dual-v1-00, dual-v1-10, dual-v1-01, dual-v1-11]
   primary_contrast: dual-v1-11_minus_dual-v1-10
   secondary_contrasts: [outer_at_feedback_0, feedback_at_outer_0, outcome_scale_interaction]
@@ -27,7 +30,7 @@ factors:
 flat_control:
   condition: dual-v1-flat11
   design: lossless_relational_rows_same_frontier_and_controller
-  interpretation: presentation_not_removal_of_relation_information
+  interpretation: grouped_vs_relational_json_not_graph_necessity
   corrupted_edges: separate_negative_control_not_content_matched
 active_tool_surface:
   mode: core_phase1_11
@@ -49,6 +52,9 @@ secondary:
   replay_atol: 1.0e-12
   replay_class_match: exact
   replay_cost: evaluator_side_reported_separately_never_free_online_evidence
+  replay_isolation: original_scope_fitted_assets_and_declared_numerical_environment
+  cached_start: downstream_validation_only_not_fresh_raw_to_prediction
+  denominators: assigned_resolved_submitted_supported_eligible_attempted_reported_separately
   physical_or_causal_explanation: not_established_by_replay
 inference:
   unit: bearing
@@ -56,16 +62,21 @@ inference:
   confirmatory_cohort_and_repeats: pending_freeze
   multiplicity: new_family_requires_own_rule_no_inherited_indexing_allocation
 validation:
-  focused_workflow: 35354189769
-  focused_tests_passed: 36
-  broad_workflow: 35354189755
-  broad_tests_run: 208
-  broad_tests_passed: 202
-  broad_errors: 6
-  broad_error_scope: unchanged_analysis_applicability_fixture_input_token_deltas
-  evidence_type: existing_synthetic_fixture_native_software_mechanics_not_phm_performance
+  installed_workflow: 35362929546
+  research_tests_passed: 208
+  portable_core_tests_passed: 52
+  real_hdf5_acceptance_test: not_run_preexisting_workflow_exclusion
+  applicability_fixture: known_zero_tokens_and_native_contract_corrected
+  production_accounting: unchanged
+  final_head_record: Benchmark_PR_29
+  evidence_type: synthetic_native_software_mechanics_not_phm_performance
+literature:
+  original_papers_used: 30
+  additional_standard: PROV_DM
+  abstract_only_not_counted: MAP_Graph
+  reading_matrix: refs/phmgraph_literature_review.md
 figures:
-  - {id: 1, role: problem_formulation, path: assets/figures/phmgraph_problem_formulation.svg}
+  - {id: 1, role: motivation_and_problem_formulation, path: assets/figures/phmgraph_problem_formulation.svg}
   - {id: 2, role: dual_graph_overview, path: assets/figures/phmgraph_method_overview.svg}
 legacy:
   indexing_manifest: legacy/indexing_v1_manifest.yaml
