@@ -1,13 +1,13 @@
 # PHMGraph dual-v1 experiment specification
 
-This is the scientific specification, not an execution configuration. All runners, data, fitting, evaluation and derived graph/replay outputs belong to Benchmark. Active source: `1cc9310e8b24eae0f84a35a208b835c5e0c73772`; network-free plan: `configs/paper02_graph/dual_v1.yaml`; continuation: `paper/goals/P02_DUAL_GRAPH.md`.
+This is the scientific specification, not an execution configuration. All runners, data, fitting, evaluation and derived graph/replay outputs belong to Benchmark. Active source: `eceada18ebe18ef1e3b8210830b326cc4343c6b7`; network-free plan: `configs/paper02_graph/dual_v1.yaml`; continuation: `paper/goals/P02_DUAL_GRAPH.md`.
 
 ## 1. Core family and matched comparators
 
 Fix the admitted raw window, sample rate and channels; class ontology; B01–B06 catalog; native numerical input contract; fitted experts; language model and generation settings; resource caps and evaluator. All arms retain public tool histories, build the same hidden graph and compute the same deterministic frontier Φ. D00 is a common-catalog reactive control, not unmodified Generic. Realized calls, prompt length, errors and resource use may differ.
 
 | Cell | Native name | Outer organization | Active evidence feedback | Numerical processing |
-|---|---|---:|---:|---|
+|---|---|---|---|---|
 | 00 | dual-v1-00 | off | off | common G and Φ |
 | 10 | dual-v1-10 | on | off | common G and Φ |
 | 01 | dual-v1-01 | off | on | common G and Φ |
@@ -30,7 +30,9 @@ The earlier pointer/gate matrix in `legacy/indexing_v1_experiment_matrix.md` rem
 
 **Computational support:** retain role-bound raw-to-prediction ancestry and the final submission's selected prediction. Report required-role coverage, valid paths and submitted support with explicit denominators. Extra references do not imply numerical dependence; the graph predicate is not a replacement scorer.
 
-**Replay:** report assigned, resolved, submitted, support-valid, eligible, attempted, matched, mismatched, failed and unresolved counts. Give support rates per submitted diagnosis and per assignment, and replay agreement among attempted paths with its coverage. Undefined denominators are not zero. Execute supported ancestors afresh with the same raw identity/slice/channels/rate and fitted assets; remap references. Freeze relevant software, hardware, floating-point and numerical random-state conditions. Class equality is exact; numeric rtol=1e−9 and atol=1e−12. Do not substitute cached outputs; cached-start checks validate only their downstream segment. Offline cost is separate. Computational reproduction is not a hardware-independent guarantee, physical explanation or causal feature necessity.
+**Replay:** report assigned, resolved, submitted, support-valid, observation-complete, eligible, attempted, matched, mismatched, failed and unresolved counts. Give support rates per submitted diagnosis and per assignment, and replay agreement among attempted paths with its unresolved coverage. Undefined denominators are not zero. Execute supported ancestors afresh with the same raw identity/slice/channels/rate and fitted assets; remap references. Freeze relevant software, hardware, floating-point and numerical random-state conditions. Class, identities and recorded window scope match exactly; feature/probability scalar tolerance is rtol=1e−9 and atol=1e−12. Do not substitute cached outputs; cached-start checks validate only their downstream segment. Offline cost is separate. Computational reproduction is not a hardware-independent guarantee, physical explanation or causal feature necessity.
+
+**Replay observation requirement:** validate the selected original support before any replay call. It must contain usable raw count/rate, nonempty finite feature vectors, and recorded model/sample identities, class and nonempty finite prediction probabilities. A path can be support-valid but lack these comparison observations. Missing, empty or nonfinite original observations make replay unresolved and unattempted; missing/unusable recomputed observations make it unresolved after an attempt. Finite differences are mismatches, not missing evidence. Never silently narrow the compared fields, erase the assigned case, fabricate a zero, or change the original diagnosis/support scores. The existing replayer raises `ValueError` with an `unresolved replay` message for these observation cases. Shared cohort integration must preserve the distinction from finite `matched=False` outcomes and native execution failures.
 
 **Cost and failure:** retain native calls, tokens, latency and interruptions. Report common G/Φ computation separately from active-feedback tokens, changed execution and end-to-end cost; 11−10 does not estimate total instrumentation overhead. Count repetitions using the same bound inputs, operator/model and parameters; a new reference name is not new evidence. Distinguish intended verification from unintended repetition and unchanged results from a changed expert or input. Missing provider usage is not zero. Track premature submission, repeated roles, recovery and continuation descriptively, not as mediation estimates.
 
@@ -41,7 +43,7 @@ The earlier pointer/gate matrix in `legacy/indexing_v1_experiment_matrix.md` rem
 | D0: data and cohort binding | Same admitted task and fitted capability? | Metadata–HDF5/window/rate alignment; split/fit integrity; reloaded assets; Scripted outcome; accepted first-attempt bundle | Real acceptance pending |
 | D1: numerical opportunity | Legal affordable alternatives exist? | Development expert predictions/disagreement; second-prediction path plus final-submission reserve | Real headroom pending |
 | D2: core and continuation controls | What changes beyond outer-only and open outer control? | Original four independent sessions plus compatible10⁺; retain 11−10 and explanatory 10⁺−10,11−10⁺ | Native mechanics passed; real effects pending |
-| D3: support and replay | Dependencies used and reproducible? | Complete final trace, support extraction, fresh replay, wrong-sample/missing-edge/rewiring/value/renaming controls | Native fixture checks passed; real rates pending |
+| D3: support and replay | Dependencies used and comparable numerical observations reproduced? | Complete final trace, observation preflight, fresh replay, missing/nonfinite/value/scope controls plus existing edge/renaming checks | Native fixture checks passed; real rates pending |
 | D4: lossless flat feedback | Presentation matters with the same information/control? | Exact frontier↔row reconstruction, equal menus, coupled/flat provider comparison | Losslessness passed; provider comparison pending |
 | D5: confirmatory freeze | What precision and comparison family? | Cohort/repeats, exact model/route/order, budgets/timeouts, endpoints, resampling and multiplicity | Not frozen |
 
@@ -55,6 +57,8 @@ On the same ordinary post-prediction prefix with f(h)=Submit and W=R=P=N=1, 10�
 
 Failed calls generate no numerical entities; duplicate IDs cannot overwrite prior entities; input producers precede consumers. Missing or rewired role edges must invalidate support with node attributes fixed and change relevant online predicates. Repeating one feature cannot fill another role. A successful native prediction can retain support without a schema query. Conversely, R=1 does not certify the particular proposed arguments. Native validation remains responsible for that distinction.
 
+Deleting original numerical values while retaining graph edges is a separate observation-completeness test: it must prevent replay agreement without retroactively denying a known native prediction's support. Seven added replay regression methods cover the original false positive, zero calls on incomplete records, empty/nonfinite observations, missing recomputed values, finite probability changes and exact scope comparison even under permissive numerical tolerance.
+
 Observed expert disagreement is disclosed, not resolved using private labels. The deterministic fixture's equal labels across arms establish wiring, not LLM equivalence. Lossless flattening changes presentation; edge corruption changes information. A numerical feature intervention tests model sensitivity only when valid under the contract; invalid-input rejection is not evidence of physical causality or feature importance.
 
 ## 5. Real-data and inference freeze
@@ -67,6 +71,6 @@ Before pilot outcome inspection, freeze the principal package contrast and the a
 
 ## 6. Implementation and result authority
 
-Benchmark PR #32 exposes the existing control maps and adds four tests. Final focused workflow35422864775 passes44 tests; broad workflow35422864773 passes255 research and52 selected portable core tests. One pre-existing real-HDF5 acceptance test remains unrun; these suites overlap. The prior PR29 applicability-fixture fix is preserved. Production accounting, numerical validators, registered arms and native result semantics are unchanged.
+Benchmark PR #35 fixes replay observation completeness and adds seven regression methods. Final focused workflow35427170354 passes51 tests; broad workflow35427170356 passes262 research and52 selected portable core tests. One pre-existing real-HDF5 acceptance test remains unrun; these suites overlap. The prior PR29 applicability-fixture fix is preserved. Production accounting, numerical validators, registered arms and native diagnostic result semantics are unchanged.
 
 Shared first-attempt acceptance, real-waveform admission, grounded cohort mapping and actual PHM/provider effects remain pending. Migration PR #20 has independent gates and does not authorize deleting historical paper code. Graph exports remain derived views of the six-file authoritative native attempt, not a second result ledger. Preserve historical result slots and outcomes.
