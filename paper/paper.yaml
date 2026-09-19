@@ -4,10 +4,11 @@ title: 'PHMGraph: Contract-Grounded Decision Control for Tool-Using Fault Diagno
 manuscript: draft/main.md
 bibliography: refs/phmgraph_review_2026.bib
 implementation_owner: liq22/phm-agent-benchmark
-implementation_snapshot: 467a16570c55da086f2d67fe79365c7bf006d9ac
-implementation_tested_head: c040d2a3721901f32f6f2d8681e5bd75c14d0ce6
-implementation_pr: 29
+implementation_snapshot: 1cc9310e8b24eae0f84a35a208b835c5e0c73772
+implementation_tested_head: e95e16be669fbc412015fac86aaa8c3abf8f21ad
+implementation_pr: 32
 core_method_pr: 27
+continuation_control_pr: 30
 implementation_status: merged_method_with_native_fixture_validation_not_real_data_acceptance
 implementation_binding: FORMULATION_METHOD_MAP.md
 experiment_specification: experiments/EXPERIMENT_MATRIX.md
@@ -27,6 +28,22 @@ factors:
   primary_contrast: dual-v1-11_minus_dual-v1-10
   secondary_contrasts: [outer_at_feedback_0, feedback_at_outer_0, outcome_scale_interaction]
   historical_all_experiment: unchanged_diagnosis_only_cells_are_opt_in
+continuation_control:
+  notation: '10+'
+  condition: dual-v1-open10
+  family: graph-dual-continuation-v1
+  trigger: successful_public_current_task_prediction_not_graph_support
+  explanatory_contrasts: [open10_minus_10, '11_minus_open10']
+  shared_cohort_required: true
+  interpretation: opening_then_remaining_feedback_bundle_not_mediation
+  local_menu_match: same_nonterminal_fSubmit_W_R_P_N_equal_one
+  counterexample: P_N_equal_one_R_zero_open10_alone_admits_prediction
+  original_primary_and_cells: unchanged
+control_rules:
+  phase: src/phm_graph_agent/dual.py:evidence_phase
+  menu: src/phm_graph_agent/dual.py:evidence_menu
+  semantics: existing_maps_extracted_without_treatment_change
+  readiness: existential_structural_coverage_not_proposed_argument_validity
 flat_control:
   condition: dual-v1-flat11
   design: lossless_relational_rows_same_frontier_and_controller
@@ -62,13 +79,18 @@ inference:
   confirmatory_cohort_and_repeats: pending_freeze
   multiplicity: new_family_requires_own_rule_no_inherited_indexing_allocation
 validation:
-  installed_workflow: 35362929546
-  research_tests_passed: 208
+  focused_workflow: 35422864775
+  focused_tests_passed: 44
+  installed_workflow: 35422864773
+  research_tests_passed: 255
   portable_core_tests_passed: 52
+  suites_overlap: true
+  added_test_methods: 4
+  phase_rule_evaluations: 96
   real_hdf5_acceptance_test: not_run_preexisting_workflow_exclusion
-  applicability_fixture: known_zero_tokens_and_native_contract_corrected
+  applicability_fixture: prior_fix_preserved
   production_accounting: unchanged
-  final_head_record: Benchmark_PR_29
+  final_head_record: Benchmark_PR_32
   evidence_type: synthetic_native_software_mechanics_not_phm_performance
 literature:
   original_papers_used: 30
@@ -77,7 +99,7 @@ literature:
   reading_matrix: refs/phmgraph_literature_review.md
 figures:
   - {id: 1, role: motivation_and_problem_formulation, path: assets/figures/phmgraph_problem_formulation.svg}
-  - {id: 2, role: dual_graph_overview, path: assets/figures/phmgraph_method_overview.svg}
+  - {id: 2, role: dual_graph_and_matched_control_overview, path: assets/figures/phmgraph_method_overview.svg}
 legacy:
   indexing_manifest: legacy/indexing_v1_manifest.yaml
   indexing_experiments: legacy/indexing_v1_experiment_matrix.md
