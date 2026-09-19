@@ -1,45 +1,49 @@
-# PHMGraph: literature–mechanism–measurement map
+# PHMGraph: formulation–control–measurement map
 
 This author-facing map binds `draft/main.md` to the sole implementation in Benchmark. It is not manuscript prose or a second result ledger.
 
-## Scientific chain
+## Scientific chain and prior foundations
 
-**Question.** With fixed vibration scope, fitted numerical experts, native validators, procedural catalog and language model, when does anticipatory execution-evidence feedback change supported diagnosis or cost beyond call-history control?
+**Question.** With fixed vibration scope, fitted experts, native validation, procedural content and language model, what does evidence feedback change beyond call-history control, and what remains after allowing the outer-only controller to continue after prediction?
 
-**Closest foundations.** AiiDA distinguishes workflow logic from data provenance; LLMCompiler schedules dependent calls and replans from intermediate results; TimeSage-MT uses typed dependencies and measures the grounding–flexibility trade-off; PHMForge supplies industrial algorithm-grounded tools and verification/discovery controls. The [30-paper matrix](refs/phmgraph_literature_review.md) gives the inspected methods, changed variables and experimental evidence. PROV-DM is an additional standard. MAP-Graph is an additional author-abstract-only positioning source, not counted as full-method reading.
+**Foundation.** AiiDA separates workflow logic from numerical provenance; StateFlow provides state-driven control; LLMCompiler schedules dependent calls; TimeSage-MT and PHMForge evaluate structured time-series/industrial tool use. The existing 30-paper matrix and 32-entry active bibliography are retained unchanged. PROV-DM is an additional standard; MAP-Graph remains an abstract-only positioning source, not a full-method comparison.
 
-**Gap.** Native rejection of incompatible numerical inputs is already present in every arm. Its protection does not establish whether anticipatory readiness feedback improves a bounded agent's subsequent decisions. The current study isolates that incremental intervention; it does not establish graph-storage necessity or the first dependency-aware controller.
+**Gap.** The original 11−10 effect bundles readiness feedback with a changed stopping interface. The already implemented 10⁺ comparator permits post-prediction continuation without evidence disclosure or support predicates. Comparing 10⁺−10 and 11−10⁺ addresses that alternative explanation without identifying a pure readiness, topology or mediation effect.
 
-## Challenge → method → figure → experiment
+Chapter 2 defines fixed X, Z, public trajectory/process/outcome, the numerical endpoints and estimands. Chapter 3 alone defines the graph update, readiness state, phase/menu maps, matched controller and algorithm. The principal package effect remains unchanged.
 
-| Challenge | Defined object / mechanism | Figure and section | Algorithm / implementation | Observable consequence / experiment |
+## Formula → figure → method → algorithm → experiment
+
+| Object | Formula / variable | Figure / section | Algorithm / implementation | Test or contrast |
 |---|---|---|---|---|
-| Distinguish nominal progress from compatible evidence | Actual use/generation roles, per-role candidate sets and binary readiness vectors | Figure 1a; Figure 2 lower/middle; 3.3–3.4 | Steps 1, 3, 6; `EvidenceDAG.append/support/frontier/state` | Distinct required-role completion, current-window support, premature requests; D1/D2/D3 |
-| Isolate anticipatory feedback from extra capability and representation | Shared X, Z=(o,e), deterministic η=Φ(G), phase s and menu Γ; lossless flat feedback | Figure 1b; Figure 2 feedback arrows; 2.3/3.4 | Steps 2–5; `DualGraphAgent`, `flat_frontier` | Primary 11−10, secondary simple effects/interaction, grouped-vs-flat presentation; D2/D4 |
-| Distinguish supported delivery from correct diagnosis and positive net value | Operational and grounded cohort scores; selected support; isolated replay and costs | Figure 1 outcomes; Figure 2 output; 3.5/5.2 | Step 7; native submission, `submission_prediction`, `replay_prediction` | First-attempt Macro-F1, support/replay rates with explicit denominators, common and incremental costs; D0/D3/D5 |
+| Fixed capability and private labels | Xₖ, τₖ, Tₖ, Yₖ, cₖ | Figure 1; 2.1–2.3 | Shared inputs; evaluator-only target | D0: real data, assignment and fitted-asset acceptance |
+| Distinct compatible inputs | F(m,w,j), r(m,w,j,t), Rₜ | Figure 2 lower/middle; 3.3–3.4 | Steps 1, 3, 6; `EvidenceDAG.frontier/state` | Missing role, wrong source, repeated feature |
+| Supported numerical prediction | Pₜ; current-task ancestry | Figure 2 prediction/feedback; 3.3–3.4 | Steps 3, 7; `prediction_supported` | Native successful prediction without schema discovery |
+| Deterministic phase | Wₜ, Eₜ, Rₜ, Pₜ → sₜ | Figure 2 middle→upper; 3.4 | Steps 2–4; `evidence_phase` | 96 predicate/state cases in one test; error precedence |
+| Exposure and admission | Bₒ(s), Qᵣ, Jₚ → Γₜ | Figure 2 feedback→decision/execution; 3.4 | Steps 4–6; `evidence_menu` | No source-menu mutation; R does not introduce an otherwise forbidden prediction |
+| Open outer comparator | Public native success Nₜ → sₜ⁺, Γₜ⁺ | Figure 2 comparison strip; 2.3/3.4 | Step 4; existing `ContinuationMatchedOuterAgent` | D2 continuation: 10⁺−10 and 11−10⁺ |
+| Supported but not schema-ready | P=N=1, R=0 | Figure 2 feedback/comparison boundary; 3.4 | Same native numerical trace, schema discovery removed from a copy | Both allow analysis/submission; only 10⁺ permits prediction |
+| Computational output | Recorded control path plus selected support | Figure 2 output; 3.5 | Step 7; native submission/support replay | D3: agreement, support validity and fresh replay separately |
+| Representation control | Same η and Γ, grouped vs relational rows | Figure 2 same feedback block; 3.4 | Step 4; `flat_frontier` | D4: losslessness and equal controller, not removal of information |
 
-D0–D5 are specified in `experiments/EXPERIMENT_MATRIX.md`. A source-file mechanism is not an empirical benefit. Three contributions correspond to the three rows: contract-grounded formulation, deterministic non-closing prerequisite feedback, and matched diagnosis–support–cost evaluation.
+## Matching and cost boundaries
 
-## Exact scope and interpretation
+The six time-domain and four prescribed Welch-band roles describe the current numerical contract, not universal PHM requirements. Structural readiness is existential coverage of compatible recorded roles; it does not guarantee the validity of the particular arguments proposed by the language model. Full numerical validation remains shared. The state is deterministic, not an LLM summary or subgraph-isomorphism solver.
 
-The current predictor requires six direct time-domain features and four band powers from its prescribed Welch-PSD route, all from one declared task window. Repeated RMS does not fill kurtosis; an arbitrary FFT/envelope output does not satisfy a Welch-band role. This is a model contract, not a universal law of PHM. The graph does not correct spectral leakage, nonstationarity or lack of discriminative signal information.
+On the same nonterminal prefix with inherited f(h)=Submit and W=R=P=N=1, 10⁺ and11 both select Check with its menu plus submit. Their evidence prompts still differ. P=N=1 with R=0 is a native-record counterexample to global menu equality: both permit analysis and submission, but only 10⁺ admits another prediction. This copied-trace test establishes a software boundary, not its frequency on real PHM tasks.
 
-η is computed by deterministic role/path checks, not an LLM summary or subgraph-isomorphism solver. Structural readiness is weaker than full native admissibility. A successful task-bound prediction may retain its support without a preceding schema query. Disagreement is reported, not arbitrated using private labels.
+All conditions build G and compute Φ. The feedback contrast therefore does not measure total instrumentation overhead against an uninstrumented agent. Keep common computation, incremental feedback tokens, execution changes, end-to-end latency and offline replay cost distinct. The shared 10⁺ cohort must enter both explanatory differences; arithmetic cancellation of cohort metrics is not causal mediation.
 
-All four cells construct G **and compute Φ**. Only e=1 exposes the summary and conditions control. Accordingly, 11−10 measures active feedback over common evidence processing, not total graph overhead against an uninstrumented Agent. D00 is a matched common-catalog reactive control, not an unmodified Generic baseline. Flat11 retains all relation information and the identical controller; the difference is grouped versus relational-row serialization. Edge corruption is an information-changing negative control, not a content-matched baseline.
+Fresh replay uses the same raw identity/slice/channels/rate and fitted assets in a declared numerical environment. It never calls the LLM, refits or substitutes cached features as computed outputs. Numeric tolerance is rtol=1e−9, atol=1e−12; class equality is exact. These are comparison rules, not cross-hardware determinism guarantees. Cached-start replay validates only its downstream segment. Grounding, replay, physical fault causality and hidden-reasoning faithfulness are different claims.
 
-Support replay performs fresh numerical executions with the same raw slice, channels, sampling rate, fitted assets and declared environment. It never calls the LLM, refits or substitutes cached features as computed outputs. Random state is fixed for stochastic numerical operations when present. The numeric tolerance (rtol=1e−9, atol=1e−12) and exact class comparison define a test, not a universal cross-hardware guarantee. Checkpointed replay from cached tensors validates only its downstream segment. Computational support is not hidden-reasoning faithfulness, feature necessity or physical fault causality.
+## Figure roles and regeneration
 
-## Figures and reproducibility
+Figure 1 remains unchanged: motivation/problem variables and common native validation. Figure 2 retains the decision–evidence loop and adds the independent 10/10⁺/11 comparison strip, not new execution stages. The public W/E predicates, η, s, Γ and N are matched to Section 3.4 and Algorithm 1. The sole generator remains `scripts/figures/plot_phmgraph_formulation_method.py` in Benchmark; editable SVG, PDF and PNG derive from it. The paper stores only the modified Figure 2 SVG. No third figure or duplicated drawing implementation is added.
 
-The sole drawing source is Benchmark `scripts/figures/plot_phmgraph_formulation_method.py`. Figure 1 replaces the previous generic setting diagram with the specific role-versus-progress ambiguity and common-validator comparison; it remains referenced by Section 2. Figure 2 labels G, η, s and Γ consistently with Algorithm 1 and explicitly notes common Φ computation. Editable SVG text, independent objects, vector-font PDF and high-resolution PNG are generated from that same source. The regeneration and manuscript build commands are in `README.md`.
+## Source binding and actual validation
 
-## Source binding and validation
+Merged Benchmark source: `1cc9310e8b24eae0f84a35a208b835c5e0c73772`, PR #32. Tested head: `e95e16be669fbc412015fac86aaa8c3abf8f21ad`; tested merge ref: `af2c6abd5ea39b2998b57ad5f08301a51ed1c29e`. The underlying dual method is PR #27; the continuation comparator is PR #30. This revision extracts the existing scalar maps without changing registered behavior and adds four tests plus figure/Goal alignment.
 
-Active Benchmark source: `467a16570c55da086f2d67fe79365c7bf006d9ac`. Core numerical-policy implementation remains the normally merged PR #27 version. PR #29 changes only the applicability fixture, drawing source and continuation instructions, not production numerical behavior.
+Final installed workflow `35422864775` passed 44 focused tests. Workflow `35422864773` passed 255 research tests and 52 selected portable core tests; one pre-existing real-HDF5 acceptance test was explicitly deselected. The suites overlap. Actual Factory submodule `58050716383e32ca79fdad0d9a45ad96a19eb838` was installed and `pip check` passed. The earlier six applicability-fixture errors remain fixed. No production validator was weakened.
 
-Installed source `c040d2a3721901f32f6f2d8681e5bd75c14d0ce6` passed workflow `35362929546`: 208 research tests, 52 selected portable core tests and published-metadata parsing. One pre-existing local-HDF5 acceptance test was not run. Initial run `35359714765` retained the failure history: correcting known-zero tokens exposed the fixture's missing native-contract declaration; both were then corrected without weakening any original assertion or production validator. Final-head checks are recorded in PR #29.
-
-Real HDF5/split/fitted-asset acceptance, canonical first-attempt integration and grounded cohort mapping remain pending. No provider result or real-data superiority is inferred from native synthetic fixtures. Migration PR #20 remains independent; no retained paper-repository runtime is deleted here. Existing six-file native attempts remain the sole execution authority; derived graph views do not create another ledger.
-
-The preceding indexing manifest/matrix and all six historical insertion-marker pairs are unchanged. New dual-v1 outcomes must not be inserted into those older families.
+Real waveform/split/fitted-asset acceptance, shared canonical first-attempt binding, grounded cohort mapping and real treatment effects remain pending. Migration PR #20 is independent. The historical indexing manifests/matrix and six result-marker pairs are unchanged. Neither native synthetic checks nor this paper merge can populate those slots with new efficacy claims.

@@ -7,7 +7,7 @@ link-citations: true
 
 ## Abstract
 
-A tool-using fault-diagnosis agent can complete many computations without assembling the inputs required by its numerical predictor. Native input validation rejects an incompatible request, but does not determine how the agent should use the remaining budget. PHMGraph studies this distinction through contract-grounded decision control. A deterministic execution state tracks distinct feature roles, their signal-transformation ancestry and task-supported predictions. This state conditions workflow progress and tool admission while leaving numerical computation and validation unchanged. A supported prediction permits submission without forcing the end of further analysis. The formulation separates the availability of a computation, its numerical support and its diagnostic consequence. A matched outer-organization-by-evidence-feedback design compares first-attempt diagnosis, supported delivery and resource use; a lossless table control tests feedback presentation. Numerical support is evaluated by fresh execution under declared replay conditions, separately from label correctness. The present study specifies and implements these mechanisms; their diagnostic benefit and net cost on real PHM data remain to be established.
+A tool-using fault-diagnosis agent can complete many computations without assembling the inputs required by its numerical predictor. Native input validation rejects an incompatible request, but does not determine how the agent should use the remaining budget. PHMGraph studies this distinction through contract-grounded decision control. A deterministic execution state tracks distinct feature roles, their signal-transformation ancestry and task-supported predictions. This state conditions workflow progress and tool admission while leaving numerical computation and validation unchanged. A supported prediction permits submission without forcing the end of further analysis. The formulation separates the availability of a computation, its numerical support and its diagnostic consequence. A matched outer-organization-by-evidence-feedback design compares first-attempt diagnosis, supported delivery and resource use; a continuation-matched control distinguishes the stopping-interface change, and a lossless table control tests feedback presentation. Numerical support is evaluated by fresh execution under declared replay conditions, separately from label correctness. The present study specifies and implements these mechanisms; their diagnostic benefit and net cost on real PHM data remain to be established.
 
 ## 1. Introduction
 
@@ -31,7 +31,7 @@ The study makes three methodological contributions:
 
 1. **A contract-grounded PHM control formulation.** It separates distinct transformation-compatible inputs, supported predictions and diagnostic correctness under fixed numerical capability, making divergence between call progress and evidence readiness an explicit experimental object.
 2. **Deterministic prerequisite feedback with non-closing submission eligibility.** Role-bound execution ancestry supplies the state used for phase selection and tool admission; a supported prediction permits, but does not force, submission. The mechanism is testable through missing-role, incompatible-source and continuation contrasts.
-3. **A matched diagnosis–support–cost evaluation design.** Outer organization and active feedback are crossed with common evidence processing. Lossless feedback presentation, native support checks and isolated numerical replay distinguish interface effects, computational support and real diagnostic benefit.
+3. **A matched diagnosis–support–cost evaluation design.** Outer organization and active feedback are crossed with common evidence processing. A continuation-matched outer control, lossless feedback presentation and isolated numerical replay distinguish stopping-interface effects, the remaining feedback bundle and computational support.
 
 ### 1.1 Related work
 
@@ -81,7 +81,7 @@ A deterministic function of a complete public trace introduces no external obser
 
 ### 2.3 Mathematical formulation and observation boundaries
 
-Let $X_k$ collect the fixed episode setting. Let $Z=(o,e)$ switch outer decision organization and inner evidence feedback. The resulting public trajectory, process measurements and evaluated outcome are
+Let $X_k$ collect the fixed task, released window and sampling scope, numerical input contract, fitted experts, procedural catalog, language-model settings, budgets and evaluator. For the core four conditions, $Z=(o,e)$ switches outer decision organization and inner evidence feedback. The resulting public trajectory, process measurements and evaluated outcome are
 
 $$
 \tau_k^Z\sim P_Z(\cdot\mid X_k),\qquad
@@ -104,27 +104,32 @@ A non-submission contributes a false negative to its true class; it is not a fou
 
 The computational-grounding endpoint retains the same labels and cohort rule. An accepted label is retained only when it agrees with the native task-matched prediction and includes that prediction's required feature references; otherwise a resolved failure maps to $\varnothing$. Missing support fields leave that secondary endpoint unresolved. Support-path replay is evaluated separately from both diagnosis scores: replay agreement neither makes a wrong prediction correct nor establishes feature relevance.
 
+The original principal comparison is the total feedback package with outer organization. Write $10^+$ for an outer-only control that changes its stopping interface after a successful current-task prediction, without exposing or enforcing evidence readiness. It is one additional comparator, not a third fully crossed factor. On the same assigned cohort, define
+
+$$
+\begin{aligned}
+\Delta_{\mathrm{package}}
+&=\mathbb E[M(D_{11})-M(D_{10})\mid X_{\mathcal I}],\\
+\Delta_{\mathrm{open}}
+&=\mathbb E[M(D_{10^+})-M(D_{10})\mid X_{\mathcal I}],\\
+\Delta_{\mathrm{remaining}}
+&=\mathbb E[M(D_{11})-M(D_{10^+})\mid X_{\mathcal I}].
+\end{aligned}
+$$
+
+The first retains the original principal estimand. The latter two are explanatory contrasts, with $\Delta_{\mathrm{package}}=\Delta_{\mathrm{open}}+\Delta_{\mathrm{remaining}}$ by addition of the same cohort functional. This identity does not decompose causal mediation or make Macro-F1 additive across episodes. The remaining contrast includes the evidence summary, pre-prediction admission and routing, and any later support-dependent differences. It is not a pure readiness or topology effect. Section 3 defines exactly which continuation opportunities are matched.
+
+Other core simple effects compare $10-00$ and $01-00$; their factorial interaction is $\mathbb E[M(D_{11})-M(D_{10})-M(D_{01})+M(D_{00})\mid X_{\mathcal I}]$. Grounded diagnosis uses the same comparisons. These are effects on a chosen outcome scale. Conditioning process measurements on reaching prediction or submission selects a treatment-dependent subset and does not identify mediation.
+
 ### 2.4 Research gap
 
-Dependency execution, provenance and state-conditioned agent control are established [@huber2020aiida; @kim2024llmcompiler; @wu2024stateflow]. Industrial and time-series agent evaluations additionally demonstrate that structured grounding and flexible computation can trade off [@li2026phmforge; @kong2026timesagemt]. The missing evidence for the present problem is a matched estimate of active numerical-readiness feedback beyond the same native validator and fitted capability.
+Dependency execution, provenance and state-conditioned agent control are established [@huber2020aiida; @kim2024llmcompiler; @wu2024stateflow]. Industrial and time-series agent evaluations additionally demonstrate that structured grounding and flexible computation can trade off [@li2026phmforge; @kong2026timesagemt]. The unresolved PHM question is whether active evidence-conditioned control improves supported delivery beyond the same native validator and fitted capability. Because the feedback package also changes whether prediction ends ordinary analysis, its total effect alone cannot distinguish prerequisite feedback from an open stopping interface.
 
-This distinction is falsifiable. Repeated calls can leave required roles unfilled; a feature can have the wrong source; and an eligible prediction can leave a useful alternative affordable. Conversely, complete inputs, agreeing experts and no effective continuation can make feedback redundant. The comparison must measure these opportunities rather than assume them from the tool catalog. It must also separate supported execution from correct labels and total recording cost from the marginal cost of exposing and enforcing feedback.
+This distinction is falsifiable. Repeated calls can leave required roles unfilled; a feature can have the wrong source; and an eligible prediction can leave a useful alternative affordable. Conversely, complete inputs, agreeing experts and no effective continuation can make feedback redundant. The comparison must measure these opportunities rather than assume them from the tool catalog. It must also separate supported execution from correct labels, continuation availability from its actual selection, and common evidence-processing cost from the incremental cost of feedback.
 
-### 2.5 Research questions and estimands
+### 2.5 Research objective
 
-We investigate whether numerical-evidence feedback improves first-attempt diagnosis when outer organization is present, what it changes without that organization, and which effects coexist with replayable support. Conditional on fixed cohort assignments, the principal contrast is
-
-$$
-\Delta_{e\mid o=1}=\mathbb E\!\left[M(D_{11})-M(D_{10})\mid X_{\mathcal I}\right].
-$$
-
-The other simple effects compare $10-00$ and $01-00$. The factorial interaction is
-
-$$
-\Delta_{oe}=\mathbb E\!\left[M(D_{11})-M(D_{10})-M(D_{01})+M(D_{00})\mid X_{\mathcal I}\right].
-$$
-
-An interaction is defined on the chosen outcome scale; it does not by itself prove mechanistic synergy. The grounded endpoint uses the same contrasts. Conditional process rates describe treatment-dependent subsets rather than identify causal mediation. These new treatment definitions do not relabel the earlier pointer-by-gate comparisons.
+This work investigates the effect of contract-grounded evidence feedback on first-attempt diagnosis, numerical support and cost. It distinguishes the whole feedback package from opening post-prediction continuation and tests the remaining feedback against an outer controller that also permits continuation. The aim is to determine which measurable changes occur under the declared numerical contract, including adverse and negligible effects.
 
 ## 3. Method
 
@@ -132,15 +137,15 @@ An interaction is defined on the chosen outcome scale; it does not by itself pro
 
 PHMGraph couples an outer decision controller to an inner graph of executed numerical dependencies. After each tool result, the inner graph records what was used and generated. A graph-derived frontier identifies missing feature roles and task-supported predictions. Feedback conditions the next phase and tool menu; the fixed language model still chooses the request and its arguments. Native tools remain responsible for numerical computation and full input validation. A submitted diagnosis yields a control path and a selected numerical support subgraph, which can be replayed separately by the evaluator.
 
-![**Coupled decision and numerical-evidence graphs.** The upper layer organizes decisions; the lower layer records the actual window-to-feature-to-prediction computation. The middle feedback path derives evidence state $\eta_t$ from the inner graph and conditions the outer phase and menu. Executed actions update the graph in the opposite direction. Time and band features are grouped for display; the implementation retains individual activities, artifacts and input roles. The coupled path is shown: an eligible prediction permits submission without forcing all further analysis to stop. Recovery paths are illustrative; the exact rule is in Section 3.4. Offline support replay and private labels never feed back into the episode. Numbers refer to Algorithm 1.](../assets/figures/phmgraph_method_overview.svg)
+![**Coupled decision and numerical-evidence graphs.** The upper layer organizes decisions; the lower layer records the actual window-to-feature-to-prediction computation. The middle feedback path derives evidence state $\eta_t$ from the inner graph and conditions the outer phase and menu. Executed actions update the graph in the opposite direction. Time and band features are grouped for display; the implementation retains individual activities, artifacts and input roles. The coupled path is shown: an eligible prediction permits submission without forcing all further analysis to stop. The lower comparison strip separates outer-only control $10$, continuation-matched $10^+$ and full feedback $11$. The state and menu maps are specified in Section 3.4; recovery arrows are illustrative. Offline support replay and private labels never feed back into the episode. Numbers refer to Algorithm 1.](../assets/figures/phmgraph_method_overview.svg)
 
-Figure 2 makes the two directions explicit: decisions select evidence-generating operations, while executed evidence constrains subsequent decisions. Section 3.2 specifies the reused outer interface, Section 3.3 constructs numerical support, Section 3.4 defines online coupling, and Section 3.5 assembles execution and explanation output.
+Figure 2 makes the two directions explicit: decisions select evidence-generating operations, while executed evidence constrains subsequent decisions. Its comparison strip distinguishes changing the stopping interface from adding evidence-conditioned control. Section 3.2 specifies the reused outer interface, Section 3.3 constructs numerical support, Section 3.4 defines online coupling, and Section 3.5 assembles execution and explanation output.
 
 ### 3.2 Outer decision organization
 
 All conditions receive the same ordered catalog $B=((b_j,d_j))_{j=1}^{6}$, with opaque identifiers B01–B06. The fixed instructions concern acquisition, analysis-family selection, feature construction, prediction, recovery and supported submission. Enabling $o$ appends the active block pointer and applies its phase menu. Disabling $o$ omits the pointer and starts from the common eleven-tool surface. Historical state annotations are removed equally from model-visible tool messages; public numerical results and errors remain available.
 
-The inherited call-history controller $f(h_t)$ first handles the latest error, then checks successful reading, catalog inspection, prediction and schema inspection. Its ordinary post-prediction state exposes submission alone. This rule is preserved in the outer-only condition and in the historical indexing experiment. It is not sufficient to establish evidence readiness, which motivates the separate feedback intervention.
+Let $\mathcal U$ denote the shared eleven-tool surface and $\mathcal A(s)\subseteq\mathcal U$ the inherited menu in state $s$. The call-history controller $f(h_t)$ first handles the latest error, then checks successful reading, catalog inspection, prediction and schema inspection. Its ordinary post-prediction state exposes submission alone. This rule is preserved in the outer-only condition and in the historical indexing experiment. It is not sufficient to establish evidence readiness, which motivates the separate feedback intervention.
 
 | Inherited phase | Available tool families |
 |---|---|
@@ -199,16 +204,59 @@ In the studied PHM contract, six roles are direct time-domain features; four are
 
 The readiness check is deliberately narrower than the native numerical validator. It checks structural role availability and declared source attributes, not every operator convention, admissible parameter or numerical value. Full model validation is unchanged. In particular, reaching $R_t=1$ does not guarantee that an arbitrary feature bundle proposed by the agent will be accepted. After successful native prediction, $\mathcal P_t$ additionally requires complete role-bound ancestry, current-task agreement and the native required supporting references. A successful prediction can retain this support even when no separate schema-discovery call preceded it. $D_t$ reports disagreement but does not choose an expert or infer the true label.
 
-With feedback off, $s_t=f(h_t)$ is the inherited call-history phase. With feedback on, the latest nonterminal error selects Recover; otherwise absence of a current-task window selects Inspect; $R_t=1$ or $P_t=1$ selects Check; the remaining case selects Analyze. Let the starting menu be the phase subset for $o=1$ and the common global set for $o=0$. Active feedback removes prediction when $R_t=0$, removes submission when $P_t=0$, and admits submission when $P_t=1$. The resulting menu $\Gamma_t$ is used both for visible tool schemas and name admission.
-
-The coupled path therefore remains able to analyze after a supported prediction. It neither forces another call nor assumes that the existing prediction is diagnostically sufficient. Native submission validation still checks the actual proposed label and references, and a terminal episode cannot be reopened. The resulting decision loop is
+**Phase selection.** Let $W_t$ indicate a recorded current-task window and $E_t$ indicate that the latest action returned an error in a nonterminal episode. The phase is
 
 $$
-G_t^{\mathrm{in}}\rightarrow\eta_t\rightarrow
-(s_t,\Gamma_t)\rightarrow a_t\rightarrow o_{t+1}\rightarrow G_{t+1}^{\mathrm{in}}.
+s_t^{oe}=\begin{cases}
+f(h_t),&e=0\ \text{or}\ E_t=1,\\
+\mathrm{Inspect},&e=1,\ E_t=0,\ W_t=0,\\
+\mathrm{Check},&e=1,\ E_t=0,\ W_t=1,\ R_t\lor P_t=1,\\
+\mathrm{Analyze},&\text{otherwise}.
+\end{cases}
 $$
 
-All four conditions construct $G_t^{\mathrm{in}}$ and compute $\Phi$; only $e=1$ exposes the frontier and uses it in control. Thus, $11-10$ measures active feedback on top of common evidence processing, not the total overhead of adding a graph to an uninstrumented system. The intervention includes a derived prompt, prerequisite admission and, with outer organization, phase routing and non-closing submission eligibility. The lossless flat control changes the frontier's serialization into relational rows but preserves every dependency binding, readiness value and control rule. It tests presentation, not graph necessity.
+The inherited rule returns Recover for a latest native error. When outer organization is off, the internal phase is not supplied as an active-block pointer. Terminal events are handled before another control decision, so these rules cannot reopen a terminated episode.
+
+**Tool-name admission.** Define $\mathcal B_o(s)=\mathcal A(s)$ for $o=1$ and $\mathcal B_o(s)=\mathcal U$ for $o=0$. Let $Q_R=\{\mathtt{model.predict}\}$ when $R=0$ and $Q_R=\varnothing$ otherwise; let $J_P=\{\mathtt{submit}\}$ when $P=1$ and $J_P=\varnothing$ otherwise. Then
+
+$$
+\Gamma_t^{oe}=\begin{cases}
+\mathcal B_o(s_t^{oe}),&e=0,\\
+\bigl(\mathcal B_o(s_t^{oe})\setminus(\{\mathtt{submit}\}\cup Q_{R_t})\bigr)
+\cup J_{P_t},&e=1.
+\end{cases}
+$$
+
+All other starting-menu names are retained. In particular, $R_t=1$ does not add prediction to a phase that otherwise forbids it; $P_t=1$ permits submission independently of schema-derived readiness. The identical $\Gamma_t$ supplies model-visible schemas and execution-side name admission. Argument validation, feature conventions and numerical computation remain native tool responsibilities.
+
+For common history/catalog renderer $\rho$, active-block pointer $L$ and evidence serialization $S$, the unchanged language model selects
+
+$$
+a_t\sim\pi_\theta\!\left(\cdot\mid
+\rho(h_t,B)\oplus oL(s_t^{oe})\oplus eS(\eta_t)
+\oplus\operatorname{Schema}(\Gamma_t^{oe})\right).
+$$
+
+The notation $oL$ or $eS$ means inclusion when the switch is on and omission otherwise. The lossless flat control changes only $S$ to relational rows; the evidence values and control maps are identical. All conditions construct $G_t^{\mathrm{in}}$ and compute $\Phi$, including controls that do not expose or use it.
+
+**Continuation-matched outer control.** Let $N_t=1$ when public history contains a successful native prediction for the current task. Unlike $P_t$, this flag does not consult graph-support predicates. For $10^+$, retain the outer-only prompt and define
+
+$$
+s_t^+=\begin{cases}
+\mathrm{Check},&f(h_t)=\mathrm{Submit},\ N_t=1,\\
+f(h_t),&\text{otherwise},
+\end{cases}
+\qquad
+\Gamma_t^+=\mathcal A(s_t^+)\cup
+\begin{cases}
+\{\mathtt{submit}\},&N_t=1,\ s_t^+\in\{\mathrm{Check},\mathrm{Recover}\},\\
+\varnothing,&\text{otherwise}.
+\end{cases}
+$$
+
+Before a current-task prediction, $10^+$ has the same prompt and menu as $10$ on an identical public history. After ordinary successful prediction, it can offer both analysis and submission without a readiness summary or support gate. This opens an opportunity; it does not force the agent to use it.
+
+**Local matching and its limit.** On the same nonterminal prefix with $f(h_t)=\mathrm{Submit}$ and $W_t=R_t=P_t=N_t=1$, conditions $10^+$ and $11$ both select Check and expose $\mathcal A(\mathrm{Check})\cup\{\mathtt{submit}\}$. Their evidence prompts still differ. This equality is local, not an equality of complete policies or their induced trajectories. A successful supported prediction without a preceding schema query can instead yield $P_t=N_t=1$ and $R_t=0$: both arms permit submission and analysis, but only $10^+$ admits another prediction. Such histories delimit the continuation match and remain part of the remaining-feedback contrast. Likewise, existential role coverage does not guarantee that the model chooses a compatible bundle.
 
 **Cost and failure boundary.** Record common graph/state computation separately from active-feedback prompt tokens, changed tool execution and end-to-end latency. Readiness processing may cost more than the invalid requests it prevents; no positive net value is assumed. With fixed, inexpensive experts, fewer rejected calls need not produce material savings or better diagnosis. Missing schemas can delay readiness, and structurally complete inputs can still fail native validation. These cases are measured alongside opportunities for useful continuation.
 
@@ -216,12 +264,12 @@ All four conditions construct $G_t^{\mathrm{in}}$ and compute $\Phi$; only $e=1$
 
 **Algorithm 1. Diagnosis with coupled decision and execution evidence.**
 
-**Input:** public task and scope, shared catalog and tools, fixed model and fitted numerical experts, budgets and switches $(o,e)$. **Output:** canonical first-attempt outcome, public control path and selected numerical support.
+**Input:** public task and scope, shared catalog and tools, fixed model and fitted numerical experts, budgets, and one prespecified core or matched-control condition. **Output:** canonical first-attempt outcome, public control path and selected numerical support.
 
-1. Initialize history and an empty inner graph. Use the same graph recorder in all four conditions.
+1. Initialize history and an empty inner graph. Use the same recorder and evidence-state computation in all conditions.
 2. Read public history $h_t$ and compute the inherited progress state $f(h_t)$.
 3. Append newly recorded activities to $G_t^{\mathrm{in}}$ and deterministically compute $\eta_t=\Phi(G_t^{\mathrm{in}})$ in every condition. Expose $\eta_t$ and use its predicates only when $e=1$.
-4. Set the phase $s_t$, optional pointer and menu $\Gamma_t$ under $(o,e)$; retain the full common procedural catalog.
+4. Evaluate the phase and menu maps in Section 3.4 for $(o,e)$ or the $10^+$ rule based on $N_t$. Render the optional pointer and feedback serialization; retain the complete common catalog.
 5. Request one action from the fixed language model, using the same menu later supplied to admission. Retain native provider and response-format failures without switching models or replacing the attempt.
 6. Admit the tool name or record its rejection; native tools validate and execute admitted requests. Append the result and usage. Only nonterminal episodes continue.
 7. Retain submission or terminal non-delivery. Include the final event in the derived evidence graph. For an accepted submission, extract its selected numerical support and recorded outer phase/menu path; unresolved support remains unresolved.
@@ -240,7 +288,7 @@ Compare public feature values, prediction probabilities, class and sample metada
 
 ## 4. Testable consequences
 
-Evidence feedback should be behaviorally relevant where call-history progress and numerical readiness differ: incomplete feature roles, wrong-window ancestry, premature submission or a useful remaining expert prediction. Removing a required usage edge while retaining all node values should invalidate support and can alter the next admitted menu. A failed call should not create evidence. A lossless table conversion should preserve structural predicates even when its model-facing tokenization differs.
+Evidence feedback should be behaviorally relevant where call-history progress and numerical readiness differ: incomplete feature roles, wrong-window ancestry, premature submission or a useful remaining expert prediction. Removing a required usage edge while retaining all node values should invalidate support and can alter the next admitted menu. A failed call should not create evidence. A lossless table conversion should preserve structural predicates even when its model-facing tokenization differs. On a shared ready post-prediction prefix, $10^+$ and $11$ should match the continuation menu; a supported but schema-undiscovered prefix tests the precise limit of that match.
 
 These are mechanism tests, not predictions of uniformly positive diagnostic effects. A fixed-contract single-window task can leave little prediction-changing headroom. Additional feedback can be redundant, consume tokens or restrict useful behavior. A supported numerical label may remain wrong. Real development data must therefore establish the presence and frequency of legal alternatives before a diagnostic-opportunity claim is evaluated.
 
@@ -257,7 +305,7 @@ The new diagnosis protocol crosses outer organization and active evidence feedba
 | dual-v1-01 | off | on | common |
 | dual-v1-11 | on | on | common |
 
-Condition 00 is a common-catalog reactive control, not an unmodified vanilla agent. The principal diagnosis contrast is $11-10$; other simple effects, the outcome-scale interaction and grounded counterparts complete the prespecified analysis. The coupled grouped-versus-flat comparison uses identical dependency information and control. Token counts and costs are measured, not assumed equal. Common provenance/state computation is timed separately from active feedback; the factorial does not estimate its uninstrumented overhead. Scripted numerical execution remains a reference rather than another treatment factor.
+Condition 00 is a common-catalog reactive control, not an unmodified vanilla agent. The additional $10^+$ condition uses the same outer-only instructions but the public-success continuation rule in Section 3.4. It is compared as $10^+-10$ and $11-10^+$, without replacing the principal $11-10$ contrast. The same compatible $10^+$ cohort must enter both differences; separate convenience samples would destroy the stated additive identity. The principal diagnosis contrast is $11-10$; other simple effects, the outcome-scale interaction and grounded counterparts complete the prespecified analysis. The continuation comparison is conditional on the specific implemented rule, not globally matched menus. The separate coupled grouped-versus-flat comparison uses identical dependency information and control. Token counts and costs are measured, not assumed equal. Common provenance/state computation is timed separately from active feedback; the factorial does not estimate its uninstrumented overhead. Scripted numerical execution remains a reference rather than another treatment factor.
 
 Earlier pointer-by-gate cells retain their original definitions and first-attempt requirements as outer-interface ablations. Their results are never pooled or renamed as dual-graph evidence. The new protocol must obtain its own approved cohort, provider settings, resource limits and inferential specification before confirmatory execution.
 
@@ -302,8 +350,8 @@ Current validation concerns software mechanics on a deterministic numerical fixt
 
 ## 7. Discussion
 
-PHMGraph studies how a declared numerical contract becomes usable decision state for a bounded agent. Its graph objects inherit established workflow and provenance ideas; its empirical object is the effect of deterministic, current-task prerequisite feedback beyond unchanged native validation. A supported prediction may remain wrong, and a valid continuation may add cost without changing the delivered label.
+PHMGraph studies how a declared numerical contract becomes usable decision state for a bounded agent. Its graph objects inherit established workflow and provenance ideas; its empirical object is a defined feedback package beyond unchanged native validation, with an additional contrast against continuation-matched outer control. A supported prediction may remain wrong, and a valid continuation may add cost without changing the delivered label.
 
-The four-condition comparison identifies the specified feedback bundle on top of common evidence processing. It does not isolate a pure topology effect or measure total instrumentation overhead. A lossless relational table is an equally valid carrier of the dependency information; its presentation comparison must not be confused with deletion of that information. Numerical replay tests computational reproduction under stated conditions, not feature necessity, physical-fault causality or the language model's hidden reasoning. The decisive remaining evidence is whether real diagnostic tasks contain readiness failures or useful alternatives often enough for the proposed control to improve supported delivery at an acceptable cost.
+The four-condition comparison identifies the specified feedback bundle on top of common evidence processing. The $10^+$ comparison addresses the stopping-interface explanation while retaining the remaining differences in readiness, routing and evidence presentation. It does not isolate a pure topology effect or measure total instrumentation overhead. A lossless relational table is an equally valid carrier of the dependency information; its presentation comparison must not be confused with deletion of that information. Numerical replay tests computational reproduction under stated conditions, not feature necessity, physical-fault causality or the language model's hidden reasoning. The decisive remaining evidence is whether real diagnostic tasks contain readiness failures or useful alternatives often enough for the proposed control to improve supported delivery at an acceptable cost.
 
 ## References
