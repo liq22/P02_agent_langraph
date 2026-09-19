@@ -4,11 +4,12 @@ title: 'PHMGraph: Contract-Grounded Decision Control for Tool-Using Fault Diagno
 manuscript: draft/main.md
 bibliography: refs/phmgraph_review_2026.bib
 implementation_owner: liq22/phm-agent-benchmark
-implementation_snapshot: 1cc9310e8b24eae0f84a35a208b835c5e0c73772
-implementation_tested_head: e95e16be669fbc412015fac86aaa8c3abf8f21ad
-implementation_pr: 32
+implementation_snapshot: eceada18ebe18ef1e3b8210830b326cc4343c6b7
+implementation_tested_head: fd17dad2e896e89600ee14069eb22d404265ce4e
+implementation_pr: 35
 core_method_pr: 27
 continuation_control_pr: 30
+control_equations_pr: 32
 implementation_status: merged_method_with_native_fixture_validation_not_real_data_acceptance
 implementation_binding: FORMULATION_METHOD_MAP.md
 experiment_specification: experiments/EXPERIMENT_MATRIX.md
@@ -68,10 +69,15 @@ secondary:
   replay_rtol: 1.0e-9
   replay_atol: 1.0e-12
   replay_class_match: exact
+  replay_scope_and_identity_match: exact_not_float_tolerance
+  replay_required_observations: window_count_rate_feature_values_prediction_identity_class_probabilities
+  replay_original_preflight: all_selected_support_before_any_replay_call
+  replay_missing_or_unusable: unresolved_not_agreement_or_numeric_mismatch
+  replay_finite_difference: resolved_mismatch
   replay_cost: evaluator_side_reported_separately_never_free_online_evidence
   replay_isolation: original_scope_fitted_assets_and_declared_numerical_environment
   cached_start: downstream_validation_only_not_fresh_raw_to_prediction
-  denominators: assigned_resolved_submitted_supported_eligible_attempted_reported_separately
+  denominators: assigned_resolved_submitted_supported_observable_eligible_attempted_reported_separately
   physical_or_causal_explanation: not_established_by_replay
 inference:
   unit: bearing
@@ -79,18 +85,18 @@ inference:
   confirmatory_cohort_and_repeats: pending_freeze
   multiplicity: new_family_requires_own_rule_no_inherited_indexing_allocation
 validation:
-  focused_workflow: 35422864775
-  focused_tests_passed: 44
-  installed_workflow: 35422864773
-  research_tests_passed: 255
+  focused_workflow: 35427170354
+  focused_tests_passed: 51
+  installed_workflow: 35427170356
+  research_tests_passed: 262
   portable_core_tests_passed: 52
   suites_overlap: true
-  added_test_methods: 4
+  added_test_methods: 7
   phase_rule_evaluations: 96
   real_hdf5_acceptance_test: not_run_preexisting_workflow_exclusion
   applicability_fixture: prior_fix_preserved
   production_accounting: unchanged
-  final_head_record: Benchmark_PR_32
+  final_head_record: Benchmark_PR_35
   evidence_type: synthetic_native_software_mechanics_not_phm_performance
 literature:
   original_papers_used: 30
